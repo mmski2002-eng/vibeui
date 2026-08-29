@@ -12,6 +12,24 @@ import { getBlockSource } from "@/registry/source.server"
 
 export const dynamicParams = false
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+  const block = getBlock(slug)
+
+  if (!block) {
+    return {}
+  }
+
+  return {
+    title: block.title ?? block.name,
+    description: block.description,
+  }
+}
+
 export function generateStaticParams() {
   return getBlocks().map((block) => ({ slug: block.name }))
 }
