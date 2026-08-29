@@ -15,7 +15,9 @@ const SECTION_WIDTH = 1280
  *   1280px и вписывается в карточку масштабированием;
  * - `component` — мелкий компонент показывается в натуральную величину и
  *   центрируется. Тот же section-масштаб (~0.26) превратил бы кнопку
- *   в нечитаемую точку.
+ *   в нечитаемую точку. Подложка светлая нейтральная: большинство
+ *   UI-компонентов рассчитаны на светлую поверхность, на тёмной текстовые
+ *   и «тихие» кнопки не читаются.
  *
  * Оба режима держат одинаковую пропорцию кадра, чтобы сетка каталога
  * не прыгала, и оба используют один и тот же файл из registry.
@@ -31,7 +33,7 @@ export function CatalogThumbnail({ slug }: { slug: string }) {
   // кликабельна карточка целиком, а не то, что внутри миниатюры.
   if (getItemKind(slug) === "component") {
     return (
-      <div className="bg-shell-elevated flex aspect-[16/9] w-full items-center justify-center overflow-hidden p-6">
+      <div className="bg-shell-surface flex aspect-[16/9] w-full items-center justify-center overflow-hidden p-6">
         <div inert className="pointer-events-none">
           <Preview />
         </div>

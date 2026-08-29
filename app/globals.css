@@ -13,6 +13,7 @@
   --color-shell: var(--shell-bg);
   --color-shell-panel: var(--shell-panel);
   --color-shell-elevated: var(--shell-elevated);
+  --color-shell-surface: var(--shell-surface);
   --color-shell-border: var(--shell-border);
   --color-shell-border-strong: var(--shell-border-strong);
   --color-shell-fg: var(--shell-fg);
@@ -148,6 +149,10 @@
     --shell-bg: oklch(0.145 0 0);
     --shell-panel: oklch(0.185 0 0);
     --shell-elevated: oklch(0.225 0 0);
+    /* Подложка превью мелкого компонента. Светлая нейтральная, а не
+       тёмная: большинство UI-компонентов рассчитаны на светлую
+       поверхность, и на тёмной подложке текстовые кнопки не читаются. */
+    --shell-surface: oklch(0.97 0.002 265);
     --shell-border: oklch(1 0 0 / 10%);
     --shell-border-strong: oklch(1 0 0 / 22%);
     --shell-fg: oklch(0.985 0 0);
