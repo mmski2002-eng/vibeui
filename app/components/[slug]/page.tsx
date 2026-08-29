@@ -111,38 +111,73 @@ export default async function ComponentPage({
           <BlockPreview slug={block.name} />
         </section>
 
-        <section aria-labelledby="install-heading" className="mb-12">
-          <h2 id="install-heading" className="mb-4 text-lg font-medium">
-            Installation
+        {/* Главное действие страницы стоит сразу под превью: пользователь
+            пришёл за инструкцией для агента, а не за исходником. */}
+        <section
+          aria-labelledby="use-heading"
+          className="bg-muted/30 mb-12 rounded-xl border p-5 sm:p-6"
+        >
+          <h2 id="use-heading" className="text-lg font-medium">
+            Использовать с AI
           </h2>
-          {installCommand ? (
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <code className="bg-muted/40 min-w-0 flex-1 overflow-x-auto rounded-md border px-3 py-2 font-mono text-sm">
-                {installCommand}
-              </code>
-              <CopyButton value={installCommand} label="Copy command" />
-            </div>
-          ) : (
-            <p className="text-muted-foreground text-sm">
-              Команда установки недоступна: переменная окружения
-              <code className="mx-1 font-mono">REGISTRY_BASE_URL</code>
-              не задана.
+          <p className="text-muted-foreground mt-2 max-w-2xl text-sm text-pretty">
+            Скопируйте инструкцию и вставьте её в Claude Code, Cursor или
+            другого агента. В ней уже есть команда установки, список
+            зависимостей и правила: что в блоке сохранить, а что можно менять.
+          </p>
+
+          <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <CopyButton
+              value={aiPrompt}
+              label="Copy for AI"
+              variant="primary"
+              className="h-11 px-5 sm:w-auto"
+            />
+            <a
+              href="#ai-prompt"
+              className="text-muted-foreground hover:text-foreground text-sm"
+            >
+              Посмотреть текст инструкции
+            </a>
+          </div>
+
+          <div className="mt-6 border-t pt-5">
+            <p className="text-muted-foreground mb-3 text-xs font-medium tracking-wide uppercase">
+              Или поставьте вручную
             </p>
-          )}
-          {block.docs ? (
-            <p className="text-muted-foreground mt-3 max-w-2xl text-sm">
-              {block.docs}
-            </p>
-          ) : null}
+            {installCommand ? (
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <code className="bg-background min-w-0 flex-1 overflow-x-auto rounded-md border px-3 py-2 font-mono text-sm">
+                  {installCommand}
+                </code>
+                <CopyButton value={installCommand} label="Copy command" />
+              </div>
+            ) : (
+              <p className="text-muted-foreground text-sm">
+                Команда установки недоступна: переменная окружения
+                <code className="mx-1 font-mono">REGISTRY_BASE_URL</code>
+                не задана.
+              </p>
+            )}
+            {block.docs ? (
+              <p className="text-muted-foreground mt-3 max-w-2xl text-sm text-pretty">
+                {block.docs}
+              </p>
+            ) : null}
+          </div>
         </section>
 
         <section aria-labelledby="code-heading" className="mb-12">
-          <div className="mb-4 flex items-center justify-between gap-3">
+          <div className="mb-2 flex items-center justify-between gap-3">
             <h2 id="code-heading" className="text-lg font-medium">
-              Code
+              Исходник
             </h2>
             <CopyButton value={source} label="Copy code" />
           </div>
+          <p className="text-muted-foreground mb-4 max-w-2xl text-sm text-pretty">
+            Тот же файл, который поставит агент. Нужен, если вы предпочитаете
+            скопировать код руками.
+          </p>
           {source ? (
             <CodeBlock code={source} />
           ) : (
@@ -152,10 +187,14 @@ export default async function ComponentPage({
           )}
         </section>
 
-        <section aria-labelledby="ai-heading">
-          <div className="mb-4 flex items-center justify-between gap-3">
+        <section
+          aria-labelledby="ai-heading"
+          id="ai-prompt"
+          className="scroll-mt-6"
+        >
+          <div className="mb-2 flex items-center justify-between gap-3">
             <h2 id="ai-heading" className="text-lg font-medium">
-              Copy for AI
+              Текст инструкции
             </h2>
             <CopyButton
               value={aiPrompt}
@@ -163,9 +202,9 @@ export default async function ComponentPage({
               variant="primary"
             />
           </div>
-          <p className="text-muted-foreground mb-4 max-w-2xl text-sm">
-            Инструкция для AI-агента: что установить, что сохранить и что можно
-            менять. Генерируется из metadata компонента.
+          <p className="text-muted-foreground mb-4 max-w-2xl text-sm text-pretty">
+            То, что попадёт агенту. Генерируется из metadata компонента, вручную
+            для каждого блока не пишется.
           </p>
           <pre className="bg-muted/40 max-h-96 overflow-auto rounded-lg border p-4 text-xs leading-relaxed whitespace-pre-wrap">
             {aiPrompt}
