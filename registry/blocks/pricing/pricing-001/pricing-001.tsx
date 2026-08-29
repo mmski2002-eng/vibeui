@@ -1,0 +1,326 @@
+import type { CSSProperties } from "react"
+
+type Pricing001Action = {
+  label: string
+  href: string
+}
+
+type Pricing001Plan = {
+  name: string
+  description: string
+  price: string
+  period?: string
+  features: string[]
+  action: Pricing001Action
+  featured?: boolean
+}
+
+export type Pricing001Props = {
+  eyebrow?: string
+  title?: string
+  titleAccent?: string
+  description?: string
+  plans?: Pricing001Plan[]
+  footnote?: string
+  accent?: string
+  accentForeground?: string
+  className?: string
+}
+
+// Весь CSS блока живёт здесь, а не в globals.css проекта: палитра, раскладка
+// и keyframes. Переменные объявлены в :where() с нулевой специфичностью,
+// поэтому пользователь переопределяет их чем угодно.
+//
+// Секция светлая, но рекомендованный план — инвертированная тёмная панель.
+// Это единственная «тяжёлая» поверхность в блоке: она и создаёт иерархию,
+// поэтому у остальных планов нет ни рамок-карточек, ни теней.
+//
+// container-type делает блок собственным query-контейнером: раскладка и размер
+// шрифта считаются от ширины блока, а не от ширины окна. Поэтому три колонки
+// видны и в миниатюре каталога, где блок рендерится в 1280px внутри узкого
+// окна. Правила раскладки — плоским CSS, а не Tailwind-вариантами, чтобы блок
+// не зависел от версии Tailwind в чужом проекте; специфичность (0,2,0) выше
+// утилит.
+const STYLES = `
+:where([data-vibeui-block="pricing-001"]){
+--vibeui-pricing-001-bg:oklch(0.985 0.002 285);
+--vibeui-pricing-001-card:oklch(1 0 0);
+--vibeui-pricing-001-ink:oklch(0.2 0.015 285);
+--vibeui-pricing-001-muted:oklch(0.5 0.012 285);
+--vibeui-pricing-001-border:oklch(0.9 0.006 285);
+--vibeui-pricing-001-accent:oklch(0.55 0.19 295);
+--vibeui-pricing-001-accent-fg:oklch(0.99 0.003 285);
+--vibeui-pricing-001-featured-bg:oklch(0.2 0.015 285);
+--vibeui-pricing-001-featured-fg:oklch(0.98 0.002 285);
+--vibeui-pricing-001-featured-muted:oklch(0.74 0.01 285);
+--vibeui-pricing-001-featured-border:oklch(1 0 0 / 14%);
+--vibeui-pricing-001-ring:color-mix(in oklab, var(--vibeui-pricing-001-accent) 70%, transparent);
+--vibeui-pricing-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="pricing-001"]{container-type:inline-size}
+@container (min-width:48rem){
+[data-vibeui-block="pricing-001"] [data-part="frame"]{min-height:660px;padding-left:2.5rem;padding-right:2.5rem}
+[data-vibeui-block="pricing-001"] [data-part="plans"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+[data-vibeui-block="pricing-001"] [data-part="plan"][data-featured="true"]{margin-block:-1rem}
+}
+@container (min-width:80rem){
+[data-vibeui-block="pricing-001"] [data-part="frame"]{min-height:720px;padding-left:4rem;padding-right:4rem;padding-top:4rem;padding-bottom:4rem}
+[data-vibeui-block="pricing-001"] [data-part="inner"]{max-width:1120px;margin-inline:auto}
+}
+@keyframes vibeui-pricing-001-fade-up{from{opacity:0;transform:translate3d(0,12px,0)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="pricing-001"] *{animation:none!important;transition:none!important}}
+`
+
+const ENTER =
+  "animate-[vibeui-pricing-001-fade-up_0.5s_cubic-bezier(0.16,1,0.3,1)_both]"
+
+const ACTION_BASE =
+  "inline-flex h-10 w-full items-center justify-center rounded-lg px-4 text-[0.875rem] font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--vibeui-pricing-001-ring)]"
+
+const PLAN_DELAYS = [
+  "[animation-delay:90ms]",
+  "[animation-delay:150ms]",
+  "[animation-delay:210ms]",
+]
+
+function cx(...classes: (string | false | undefined)[]) {
+  return classes.filter(Boolean).join(" ")
+}
+
+function CheckIcon({ featured }: { featured: boolean }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 16 16"
+      fill="none"
+      className={cx(
+        "mt-0.5 size-4 shrink-0",
+        featured
+          ? "text-[var(--vibeui-pricing-001-featured-fg)]"
+          : "text-[var(--vibeui-pricing-001-accent)]",
+      )}
+    >
+      <path
+        d="M3.5 8.5 6.5 11.5 12.5 5"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+/**
+ * Единственная логика блока: какой план подсвечен. Первый с featured, иначе
+ * средний. Никакого биллинга, тарифных расчётов и состояния — цены статичны.
+ */
+function resolveFeaturedIndex(plans: Pricing001Plan[]): number {
+  const explicit = plans.findIndex((plan) => plan.featured)
+
+  return explicit === -1 ? Math.floor((plans.length - 1) / 2) : explicit
+}
+
+export function Pricing001({
+  eyebrow = "Pricing",
+  title = "Priced for teams that",
+  titleAccent = "ship weekly",
+  description = "Every plan includes the full component library. You pay for seats and support, not for features.",
+  plans = [
+    {
+      name: "Solo",
+      description: "For one person shipping side projects.",
+      price: "$0",
+      period: "forever",
+      features: ["1 project", "Community support", "MIT license"],
+      action: { label: "Start for free", href: "#" },
+    },
+    {
+      name: "Team",
+      description: "For product teams with a shared design language.",
+      price: "$29",
+      period: "per seat / month",
+      features: [
+        "Unlimited projects",
+        "Priority support",
+        "Design tokens sync",
+        "Private component registry",
+      ],
+      action: { label: "Start 14-day trial", href: "#" },
+      featured: true,
+    },
+    {
+      name: "Studio",
+      description: "For agencies delivering to many clients.",
+      price: "$79",
+      period: "per seat / month",
+      features: ["Everything in Team", "Client handoff", "SSO and audit log"],
+      action: { label: "Talk to sales", href: "#" },
+    },
+  ],
+  footnote = "Billed annually, switch anytime. 30-day refund, no questions asked.",
+  accent,
+  accentForeground,
+  className,
+}: Pricing001Props) {
+  const style = {
+    ...(accent ? { "--vibeui-pricing-001-accent": accent } : {}),
+    ...(accentForeground
+      ? { "--vibeui-pricing-001-accent-fg": accentForeground }
+      : {}),
+  } as CSSProperties
+
+  const visiblePlans = plans.slice(0, 3)
+  const featuredIndex = resolveFeaturedIndex(visiblePlans)
+
+  return (
+    <section
+      data-vibeui-block="pricing-001"
+      style={style}
+      className={cx(
+        "relative isolate overflow-hidden bg-[var(--vibeui-pricing-001-bg)] font-[family-name:var(--vibeui-pricing-001-font)] text-[var(--vibeui-pricing-001-ink)] antialiased",
+        className,
+      )}
+    >
+      <style href="vibeui-pricing-001" precedence="medium">
+        {STYLES}
+      </style>
+
+      {/* Отступы и высота живут на внутреннем слое: container-запросы читают
+          ширину секции, а сама секция своим контейнером быть не может. */}
+      <div
+        data-part="frame"
+        className="flex min-h-[560px] items-center px-5 py-12"
+      >
+        <div data-part="inner" className="w-full">
+          <header className={cx(ENTER, "mx-auto max-w-[40rem] text-center")}>
+            {eyebrow ? (
+              <p className="text-[0.75rem] font-medium tracking-[0.09em] text-[var(--vibeui-pricing-001-accent)] uppercase">
+                {eyebrow}
+              </p>
+            ) : null}
+
+            <h2 className="mt-4 text-[clamp(1.75rem,3cqi,2.25rem)] leading-[1.12] font-semibold tracking-tight text-balance break-words">
+              {title}
+              {titleAccent ? (
+                <>
+                  {" "}
+                  <span className="text-[var(--vibeui-pricing-001-accent)]">
+                    {titleAccent}
+                  </span>
+                </>
+              ) : null}
+            </h2>
+
+            {description ? (
+              <p className="mt-3 text-[clamp(0.9375rem,1.15cqi,1rem)] leading-relaxed text-pretty break-words text-[var(--vibeui-pricing-001-muted)]">
+                {description}
+              </p>
+            ) : null}
+          </header>
+
+          <ul data-part="plans" className="mt-8 grid items-stretch gap-4">
+            {visiblePlans.map((plan, index) => {
+              const featured = index === featuredIndex
+
+              return (
+                <li
+                  key={plan.name}
+                  data-part="plan"
+                  data-featured={featured ? "true" : undefined}
+                  className={cx(
+                    ENTER,
+                    PLAN_DELAYS[index],
+                    "flex flex-col rounded-xl border p-6",
+                    featured
+                      ? "border-[var(--vibeui-pricing-001-featured-border)] bg-[var(--vibeui-pricing-001-featured-bg)] text-[var(--vibeui-pricing-001-featured-fg)]"
+                      : "border-[var(--vibeui-pricing-001-border)] bg-[var(--vibeui-pricing-001-card)]",
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <h3 className="text-[1rem] font-medium">{plan.name}</h3>
+                    {featured ? (
+                      <span className="rounded-full bg-[var(--vibeui-pricing-001-accent)] px-2 py-0.5 text-[0.6875rem] font-medium text-[var(--vibeui-pricing-001-accent-fg)]">
+                        Recommended
+                      </span>
+                    ) : null}
+                  </div>
+
+                  <p
+                    className={cx(
+                      "mt-2 text-[0.8125rem] leading-relaxed text-pretty",
+                      featured
+                        ? "text-[var(--vibeui-pricing-001-featured-muted)]"
+                        : "text-[var(--vibeui-pricing-001-muted)]",
+                    )}
+                  >
+                    {plan.description}
+                  </p>
+
+                  <p className="mt-5 flex items-baseline gap-2">
+                    <span className="text-[2.25rem] leading-none font-semibold tabular-nums">
+                      {plan.price}
+                    </span>
+                    {plan.period ? (
+                      <span
+                        className={cx(
+                          "text-[0.8125rem]",
+                          featured
+                            ? "text-[var(--vibeui-pricing-001-featured-muted)]"
+                            : "text-[var(--vibeui-pricing-001-muted)]",
+                        )}
+                      >
+                        {plan.period}
+                      </span>
+                    ) : null}
+                  </p>
+
+                  <a
+                    href={plan.action.href}
+                    className={cx(
+                      ACTION_BASE,
+                      "mt-5",
+                      featured
+                        ? "bg-[var(--vibeui-pricing-001-accent)] text-[var(--vibeui-pricing-001-accent-fg)] transition-[filter] duration-150 hover:brightness-110"
+                        : "border border-[var(--vibeui-pricing-001-border)] transition-colors duration-150 hover:bg-[var(--vibeui-pricing-001-bg)]",
+                    )}
+                  >
+                    {plan.action.label}
+                  </a>
+
+                  <ul className="mt-6 flex flex-col gap-2.5">
+                    {plan.features.slice(0, 4).map((feature) => (
+                      <li
+                        key={feature}
+                        className={cx(
+                          "flex gap-2.5 text-[0.8125rem]",
+                          featured
+                            ? "text-[var(--vibeui-pricing-001-featured-muted)]"
+                            : "text-[var(--vibeui-pricing-001-muted)]",
+                        )}
+                      >
+                        <CheckIcon featured={featured} />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              )
+            })}
+          </ul>
+
+          {footnote ? (
+            <p
+              className={cx(
+                ENTER,
+                "mt-8 text-center text-[0.8125rem] text-[var(--vibeui-pricing-001-muted)] [animation-delay:270ms]",
+              )}
+            >
+              {footnote}
+            </p>
+          ) : null}
+        </div>
+      </div>
+    </section>
+  )
+}

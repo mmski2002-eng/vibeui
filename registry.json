@@ -4,6 +4,7 @@
   "homepage": "https://vibeui.ru",
   "include": [
     "registry/blocks/hero/registry.json",
-    "registry/blocks/features/registry.json"
+    "registry/blocks/features/registry.json",
+    "registry/blocks/pricing/registry.json"
   ]
 }

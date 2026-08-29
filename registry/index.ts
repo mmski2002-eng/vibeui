@@ -2,6 +2,7 @@ import { CATEGORIES } from "@/registry/categories"
 import type { BlockItem } from "@/registry/meta"
 import featuresRegistry from "@/registry/blocks/features/registry.json"
 import heroRegistry from "@/registry/blocks/hero/registry.json"
+import pricingRegistry from "@/registry/blocks/pricing/registry.json"
 
 // Категории, попадающие на сайт. Служебные registry-файлы (_smoke) сюда не
 // включаются, поэтому их slug'и на сайте недоступны в принципе.
@@ -9,6 +10,7 @@ import heroRegistry from "@/registry/blocks/hero/registry.json"
 const SOURCES = [
   { directory: "registry/blocks/hero", items: heroRegistry.items },
   { directory: "registry/blocks/features", items: featuresRegistry.items },
+  { directory: "registry/blocks/pricing", items: pricingRegistry.items },
 ] as const
 
 type BlockEntry = {
