@@ -43,15 +43,6 @@ export function getCategoryLabel(slug: string): string {
   return CATEGORIES.find((category) => category.slug === slug)?.label ?? slug
 }
 
-export function getFeaturedBlocks(): BlockItem[] {
-  return getBlocks().filter((block) => block.meta?.featured)
-}
-
-/** Первый блок категории. Нужен витрине: она собирает страницу из типов секций. */
-export function getBlockByCategory(category: string): BlockItem | undefined {
-  return getBlocks().find((block) => block.categories?.[0] === category)
-}
-
 /** Категории, в которых реально есть блоки, с количеством. Для фильтра каталога. */
 export function getUsedCategories(): {
   slug: string

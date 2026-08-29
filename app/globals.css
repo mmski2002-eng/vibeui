@@ -10,6 +10,16 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --font-heading: var(--font-sans);
+  --color-shell: var(--shell-bg);
+  --color-shell-panel: var(--shell-panel);
+  --color-shell-elevated: var(--shell-elevated);
+  --color-shell-border: var(--shell-border);
+  --color-shell-border-strong: var(--shell-border-strong);
+  --color-shell-fg: var(--shell-fg);
+  --color-shell-muted: var(--shell-muted);
+  --color-shell-accent: var(--shell-accent);
+  --color-shell-accent-fg: var(--shell-accent-fg);
+  --color-shell-ring: var(--shell-ring);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -130,6 +140,23 @@
 }
 
 @layer components {
+  /* Тёмная оболочка каталога. Токены объявлены локально и не трогают :root:
+     глобальная тема сайта остаётся светлой, а registry-блоки внутри миниатюр
+     и preview не должны перекрашиваться от контекста каталога. Поэтому здесь
+     не используется класс .dark — он каскадит на всё поддерево, включая блоки. */
+  .catalog-shell {
+    --shell-bg: oklch(0.145 0 0);
+    --shell-panel: oklch(0.185 0 0);
+    --shell-elevated: oklch(0.225 0 0);
+    --shell-border: oklch(1 0 0 / 10%);
+    --shell-border-strong: oklch(1 0 0 / 22%);
+    --shell-fg: oklch(0.985 0 0);
+    --shell-muted: oklch(0.708 0 0);
+    --shell-accent: oklch(0.985 0 0);
+    --shell-accent-fg: oklch(0.185 0 0);
+    --shell-ring: oklch(0.708 0 0);
+  }
+
   /* Миниатюра блока в каталоге: блок рендерится в свою «настоящую» ширину
      и вписывается в карточку масштабированием.
 
@@ -143,22 +170,31 @@
     width: var(--thumbnail-width);
     /* Запасные фиксированные масштабы: Firefox не умеет делить длины в calc(),
        и без @supports сбрасывает transform в none вместе с этим значением.
-       Значения посчитаны под ширину карточки на каждом шаге сетки каталога. */
+       Значения посчитаны под ширину карточки на каждом шаге сетки каталога:
+       контейнер max-w-[1440px], sidebar 14rem + gap 2rem от lg,
+       сетка 1 / 2 (sm) / 3 (xl) колонки с gap 1rem. */
     transform: scale(0.27);
     transform-origin: top left;
   }
 
-  /* 2 колонки от sm */
+  /* 2 колонки от sm: карточка ~296px */
   @media (min-width: 40rem) {
     .block-thumbnail-scale {
-      transform: scale(0.27);
+      transform: scale(0.23);
     }
   }
 
-  /* 3 колонки от lg: карточка ~307px, прежние 0.27 обрезали блок на 12% */
-  @media (min-width: 64rem) {
+  /* те же 2 колонки, но шире: карточка ~360px */
+  @media (min-width: 48rem) {
     .block-thumbnail-scale {
-      transform: scale(0.24);
+      transform: scale(0.28);
+    }
+  }
+
+  /* 3 колонки от xl рядом с sidebar: карточка 315–368px */
+  @media (min-width: 80rem) {
+    .block-thumbnail-scale {
+      transform: scale(0.26);
     }
   }
 

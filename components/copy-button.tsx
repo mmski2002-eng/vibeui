@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 
+import { cn } from "@/lib/utils"
+
 type CopyButtonProps = {
   value: string | null
   label: string
@@ -12,10 +14,13 @@ type CopyButtonProps = {
 
 type CopyState = "idle" | "copied" | "failed"
 
+// Кнопка живёт только внутри тёмной оболочки каталога, поэтому опирается
+// на её токены --shell-*, а не на глобальную светлую тему.
 const VARIANTS = {
   primary:
-    "bg-foreground text-background border-foreground hover:opacity-90 shadow-sm ",
-  secondary: "hover:bg-muted ",
+    "bg-shell-accent text-shell-accent-fg border-shell-accent hover:opacity-90 ",
+  secondary:
+    "border-shell-border text-shell-fg hover:bg-shell-elevated hover:border-shell-border-strong ",
 }
 
 export function CopyButton({
@@ -47,13 +52,13 @@ export function CopyButton({
       type="button"
       onClick={copy}
       disabled={!value}
-      className={
-        "focus-visible:ring-ring inline-flex h-9 shrink-0 items-center justify-center rounded-md border px-3 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 " +
-        (state === "failed"
-          ? "border-destructive text-destructive "
-          : VARIANTS[variant]) +
-        (className ?? "")
-      }
+      className={cn(
+        "focus-visible:ring-shell-ring inline-flex h-9 shrink-0 items-center justify-center rounded-md border px-3 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+        state === "failed"
+          ? "border-destructive text-destructive"
+          : VARIANTS[variant],
+        className,
+      )}
     >
       {state === "copied"
         ? copiedLabel

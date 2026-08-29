@@ -61,7 +61,7 @@ export function BlockPreview({ slug }: { slug: string }) {
         <div
           role="group"
           aria-label="Preview viewport"
-          className="inline-flex rounded-md border p-0.5"
+          className="border-shell-border inline-flex rounded-md border p-0.5"
         >
           {VIEWPORTS.map((item) => (
             <button
@@ -73,10 +73,10 @@ export function BlockPreview({ slug }: { slug: string }) {
                 setViewport(item.id)
               }}
               className={
-                "focus-visible:ring-ring rounded px-3 py-1.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none " +
+                "focus-visible:ring-shell-ring rounded px-3 py-1.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none " +
                 (viewport === item.id
-                  ? "bg-foreground text-background"
-                  : "text-muted-foreground hover:text-foreground")
+                  ? "bg-shell-accent text-shell-accent-fg"
+                  : "text-shell-muted hover:text-shell-fg")
               }
             >
               {item.label}
@@ -84,21 +84,24 @@ export function BlockPreview({ slug }: { slug: string }) {
           ))}
         </div>
 
-        <div className="text-muted-foreground flex min-w-0 flex-wrap items-center gap-2 text-xs">
+        <div className="text-shell-muted flex min-w-0 flex-wrap items-center gap-2 text-xs">
           <span>{frameWidth}px</span>
           <span aria-hidden="true">·</span>
           <span>Host theme</span>
           <button
             type="button"
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            className="focus-visible:ring-ring hover:text-foreground rounded border px-2 py-1 transition-colors focus-visible:ring-2 focus-visible:outline-none"
+            className="focus-visible:ring-shell-ring hover:text-shell-fg border-shell-border hover:border-shell-border-strong rounded border px-2 py-1 transition-colors focus-visible:ring-2 focus-visible:outline-none"
           >
             {theme === "light" ? "Light" : "Dark"}
           </button>
         </div>
       </div>
 
-      <div ref={containerRef} className="overflow-hidden rounded-lg border">
+      <div
+        ref={containerRef}
+        className="border-shell-border overflow-hidden rounded-lg border"
+      >
         {/* Фрейм шире контейнера и вписывается масштабом. position:absolute
             держит его вне потока: страница не может уехать по горизонтали,
             даже если transform по какой-то причине не применился. */}

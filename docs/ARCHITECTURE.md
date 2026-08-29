@@ -23,12 +23,13 @@
 app/
   layout.tsx                     root layout, шрифты
   globals.css                    Tailwind v4 + тема (единственный источник токенов)
-  page.tsx                       landing
-  components/page.tsx            каталог
+  page.tsx                       каталог (catalog-first главная)
+  components/page.tsx            тот же каталог
   components/[slug]/page.tsx     страница компонента
   preview/[slug]/page.tsx        изолированный рендер блока для iframe
   r/[name]/route.ts              registry endpoint (shadcn-compatible JSON)
-components/                      UI сайта: шапка, фильтры, карточки, viewport switcher
+components/                      UI сайта: preview, миниатюра, кнопки копирования
+components/catalog/              оболочка каталога: shell, topbar, sidebar, nav, grid, card
 components/ui/                   primitives из shadcn (button.tsx и т.д.)
 registry/
   registry.ts                    индекс блоков + metadata
@@ -133,17 +134,23 @@ production-домен. Значение доезжает в собранный `
 
 ## Каталог
 
-`/components` и `/` — статические Server Components, данные берут из
-`registry/index.ts`. Карточка каталога рендерит **тот же** компонент блока,
-что уходит пользователю: iframe и скриншотов в каталоге нет, поэтому число
-блоков не увеличивает число фреймов.
+`/components` и `/` — один и тот же каталог: статические Server Components,
+данные берут из `registry/index.ts`. Оболочка — `components/catalog/*`
+(`CatalogShell`, `CatalogTopbar`, `CatalogSidebar`, `CatalogNav`,
+`CatalogGrid`, `CatalogCard`), тёмная за счёт локальных токенов `--shell-*`
+в `.catalog-shell`, а не глобальной dark-темы. Карточка каталога рендерит
+**тот же** компонент блока, что уходит пользователю: iframe и скриншотов
+в каталоге нет, поэтому число блоков не увеличивает число фреймов. Copy for AI
+собирается на сервере прямо в карточке и доступен из сетки.
 
 Миниатюра: блок рендерится в свою «настоящую» ширину (1280px) и вписывается
 в карточку через `transform: scale(calc(100cqw / var(--thumbnail-width)))`
 внутри container-query контекста; перед этим объявлен фиксированный запасной
 масштаб для браузеров без деления длин в `calc()`. Обёртка получает `inert`
 и `pointer-events-none`, поэтому ссылки внутри блока не попадают в Tab-порядок
-каталога — кликабельна карточка целиком. JS для миниатюры не используется.
+каталога — кликабельна карточка целиком, а кнопка Copy for AI поднята над
+растянутым псевдоэлементом ссылки через `relative z-10`. JS для миниатюры
+не используется.
 
 ## Single source of truth
 
