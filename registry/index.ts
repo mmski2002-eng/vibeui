@@ -1,11 +1,14 @@
 import { CATEGORIES } from "@/registry/categories"
 import type { BlockItem } from "@/registry/meta"
+import featuresRegistry from "@/registry/blocks/features/registry.json"
 import heroRegistry from "@/registry/blocks/hero/registry.json"
 
 // Категории, попадающие на сайт. Служебные registry-файлы (_smoke) сюда не
 // включаются, поэтому их slug'и на сайте недоступны в принципе.
+// Порядок этого списка задаёт порядок блоков в каталоге.
 const SOURCES = [
   { directory: "registry/blocks/hero", items: heroRegistry.items },
+  { directory: "registry/blocks/features", items: featuresRegistry.items },
 ] as const
 
 type BlockEntry = {
