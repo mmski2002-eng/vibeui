@@ -33,7 +33,11 @@ components/catalog/              оболочка каталога: shell, topba
 components/ui/                   primitives из shadcn (button.tsx и т.д.)
 registry/
   registry.ts                    индекс блоков + metadata
-  blocks/<name>/                 распространяемый блок — source of truth
+  categories.ts                  таксономия: kinds, categories, groups
+  meta.ts                        типы CatalogItem / CatalogMeta
+  previews.ts                    карта slug -> React-компонент
+  blocks/<category>/<name>/      распространяемая секция — source of truth
+  components/<category>/<name>/  мелкие компоненты (пока пусто)
 lib/utils.ts                     cn() и утилиты
 components.json                  конфиг shadcn CLI
 public/r/                        сгенерированные registry JSON (позже)
@@ -151,6 +155,30 @@ production-домен. Значение доезжает в собранный `
 каталога — кликабельна карточка целиком, а кнопка Copy for AI поднята над
 растянутым псевдоэлементом ссылки через `relative z-10`. JS для миниатюры
 не используется.
+
+## Registry как файловая база каталога
+
+У каталога нет БД и нет бэкенда. Роль базы играют сами `registry.json`:
+`registry/index.ts` импортирует их на сборке, отбрасывает служебные items
+(`meta.internal`) и отдаёт UI готовый список. Всё остальное — производные
+этих файлов, поэтому параллельных источников данных (`components-data.ts`
+и подобных) быть не может.
+
+Каталог различает два типа installable items — `block` (большая секция)
+и `component` (мелкий UI-компонент); `template` зарезервирован. Тип
+объявляется один раз на реестр в `SOURCES`, предметная область (`group`)
+выводится из категории. В metadata items ни то, ни другое не пишется,
+поэтому публикуемый `/r/<name>.json` от введения модели не изменился.
+
+Таксономия — `registry/categories.ts` (`KINDS`, `CATEGORIES`, `GROUPS`),
+типы — `registry/meta.ts` (`CatalogItem`, `CatalogMeta`), доступ —
+`registry/index.ts` (`getCatalogItems`, `getCatalogItem`, `getItemsByKind`,
+`getUsedCategories`, `getCatalogNavSections`). Карта slug → React-компонент
+для миниатюр и `/preview/[slug]` — `registry/previews.ts`; она называется
+так, чтобы не конфликтовать с директорией `registry/components/`.
+
+Подробности модели и порядок добавления первого мелкого компонента —
+в [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md), раздел «Catalog Data Model v1».
 
 ## Single source of truth
 

@@ -174,6 +174,7 @@ Metadata также должна жить в одном месте:
 
 - [PRODUCT.md](PRODUCT.md) — продукт, аудитория, ключевой сценарий.
 - [ARCHITECTURE.md](ARCHITECTURE.md) — устройство кода и registry.
+- [DELIVERY.md](DELIVERY.md) — Product Delivery Model: как компонент попадает к пользователю.
 - [ROADMAP.md](ROADMAP.md) — фазы и Definition of Done.
 - [DEPLOY.md](DEPLOY.md) — production deployment.
 - [../CLAUDE.md](../CLAUDE.md) — инструкции для AI-разработчика.
@@ -217,6 +218,12 @@ Complete:
   sidebar с категориями и counts, плотная сетка карточек, Copy for AI прямо
   на карточке. Лендинг на `/` заменён каталогом; `PageComposition`,
   `BlockCard`, `CatalogFilter` и `SiteHeader` удалены.
+- Catalog Data Model v1 — каталог знает два типа items (`block`,
+  `component`) плюс зарезервированный `template`; `kind` выводится из
+  реестра, `group` — из категории, публикуемый `/r/*.json` не изменился.
+  Карточка приведена к библиотечному виду: описание вместо тегов, действия
+  Copy for AI / Registry URL / View code. Items типа `component` ещё нет —
+  добавлена только модель и точки подключения.
 
 ## Статус Phase 3
 
@@ -284,19 +291,101 @@ VibeUI catalog-first: лендинга больше нет, `/` — это са�
 
 ### Registry как база карточек
 
-Отдельной базы данных каталога нет и не будет. Карточка целиком выводится из
-registry metadata: `getBlocks()`, `getUsedCategories()` (категории и counts),
-`getCategoryLabel()`, `meta.tags`. Пункт «Все» — `getBlocks().length`.
-Фильтр — client wrapper, переключающий `data-catalog-filter` на `<main>`;
-карточки остаются серверными, правила выводятся из `CATEGORIES`, обе страницы
-каталога остаются статическими. URL-состояния у фильтра в v1 нет.
+Отдельной базы данных каталога нет и не будет. Файловая база — сами
+`registry.json`; `registry/index.ts` читает их на сборке и отдаёт UI.
+Ручных массивов вроде `components-data.ts` не существует и заводить их нельзя.
 
-### Copy for AI на карточке
+## Catalog Data Model v1
 
-Главное действие продукта доступно из сетки, без захода на страницу блока.
-Карточка — Server Component: `buildCopyForAiPrompt(block, getInstallCommand(block.name))`
+Каталог держит **два типа installable items** (третий зарезервирован):
+
+| kind        | что это                                   | где живёт                         |
+| ----------- | ----------------------------------------- | --------------------------------- |
+| `block`     | большая секция: hero, features, pricing   | `registry/blocks/<category>/`     |
+| `component` | мелкий UI-компонент: button, input, badge | `registry/components/<category>/` |
+| `template`  | целая страница из блоков                  | зарезервировано, реализации нет   |
+
+Три независимые оси таксономии, все в `registry/categories.ts`:
+
+- `KINDS` — тип единицы установки;
+- `CATEGORIES` — тип секции, штатное поле схемы shadcn (`categories[0]`);
+- `GROUPS` — предметная область (`marketing`, `application`, `data`,
+  `commerce`, `navigation`), у каждой категории проставлена своя.
+
+**Ключевое правило: `kind` и `group` не пишутся в metadata items.**
+`kind` объявляется один раз на реестр в `SOURCES` (все items одного
+`registry.json` — одного типа), `group` выводится из категории. Поля
+`meta.kind` и `meta.group` в типе есть, но это точечное исключение —
+их использование означает, что item выбивается из своего реестра.
+
+Следствие, которое надо сохранять: публикуемые `/r/<name>.json` от введения
+модели не изменились ни на байт. Проверяется сравнением `public/r/*.json`
+до и после сборки.
+
+Типы — `registry/meta.ts`: `CatalogMeta` (tags, ai, kind?, group?, internal?,
+featured?) и `CatalogItem = RegistryItem & { meta?: CatalogMeta }`.
+
+API `registry/index.ts`:
+
+- `getCatalogItems()` / `getCatalogItem(slug)` — весь каталог и один item;
+- `getItemsByKind(kind)` — items одного типа;
+- `getItemKind(slug)` / `getItemGroup(slug)` / `getItemDirectory(slug)` —
+  резолв по slug;
+- `getUsedCategories(kind?)` — категории с counts, опционально внутри типа;
+- `getCatalogNavSections()` — разделы sidebar: типы, внутри — категории.
+
+### Как добавить первый мелкий компонент
+
+Модель готова, items ещё нет — `registry/components/` пустая. Порядок:
+
+1. `registry/components/<category>/registry.json` + сам компонент рядом;
+2. корневой `registry.json` → `include[]`;
+3. `registry/index.ts` → импорт + строка в `SOURCES` с `kind: "component"`;
+4. `registry/components/<category>/components.ts` + расстилка
+   в `registry/previews.ts`.
+
+Категории для мелких компонентов (`buttons`, `inputs`, `display`,
+`feedback`, `tables`) в `CATEGORIES` уже заведены.
+
+Sidebar и фильтр подхватят новый тип сами: строки типов появляются, только
+когда типов в каталоге больше одного, и категории считаются внутри типа —
+поэтому blocks и components не смешиваются в одну кашу.
+
+`registry/previews.ts` (бывший `registry/components.ts`) переименован
+специально: имя `registry/components.ts` конфликтовало бы с директорией
+`registry/components/`.
+
+### Фильтр каталога
+
+Фильтр одномерный: активен либо тип (`kind:block`), либо категория (`hero`).
+Client wrapper переключает `data-catalog-filter` на `<main>`, карточки
+остаются серверными, правила выводятся из `KINDS` + `CATEGORIES`, обе
+страницы каталога остаются статическими. URL-состояния у фильтра в v1 нет.
+
+### Product Delivery Model
+
+Полностью — в [DELIVERY.md](DELIVERY.md). Коротко, потому что это правило
+перевешивает developer UX:
+
+- **главный output — agent prompt.** Не код и не registry URL;
+- **registry URL — транспорт внутри промпта.** Наружу вынесен только для
+  тех, кто сам работает с CLI;
+- **код — доверие и отладка для программистов.** Не путь установки;
+- **пользователь не должен выбирать** между кодом, URL и промптом. Одно
+  очевидное действие, остальное глубже.
+
+Следствия в UI: на карточке ровно одно действие — Copy for AI, рядом
+приглушённое «Подробнее»; registry URL и исходник живут только на странице
+item'а, в блоке «Для разработчика», исходник свёрнут. После копирования
+кнопка говорит «Скопировано — вставьте агенту».
+
+Карточка — Server Component: `buildCopyForAiPrompt(item, getInstallCommand(item.name))`
 считается на сервере, клиент получает готовую строку и не тянет registry
 в бандл.
+
+Известный блокер: для `kind: component` нужен отдельный режим превью —
+мелкий компонент нельзя показывать section-масштабом 1280px. Решать вместе
+с первым `button-001`, см. DELIVERY.md.
 
 Обернуть миниатюру в ссылку нельзя — внутри блоков есть свои `<a>`, вложенные
 ссылки дают ошибку гидратации. Кликабельность карточки даёт растянутый
@@ -323,7 +412,7 @@ Tab-порядка атрибутом `inert` на обёртке миниатю
 3. `registry/index.ts` → импорт + запись в `SOURCES` (порядок этого списка
    задаёт порядок блоков в каталоге);
 4. `registry/blocks/<category>/components.ts` + расстилка в
-   `registry/components.ts`.
+   `registry/previews.ts`.
 
 `registry/source.server.ts`, страницы и карточка каталога не трогаются:
 путь к исходнику считается от директории объявившего реестра, а метка

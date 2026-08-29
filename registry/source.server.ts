@@ -3,19 +3,19 @@ import "server-only"
 import { readFile } from "node:fs/promises"
 import path from "node:path"
 
-import { getBlock, getBlockDirectory } from "@/registry/index"
+import { getCatalogItem, getItemDirectory } from "@/registry/index"
 
 const REGISTRY_ROOT = "registry"
 
 /**
- * Читает исходник блока. Путь берётся только из registry item, slug служит
+ * Читает исходник item'а каталога. Путь берётся только из registry item, slug служит
  * ключом поиска по известной карте — произвольный путь снаружи попасть не может.
  * База пути статична (`<cwd>/registry`), чтобы трассировка сборки не утягивала
  * в серверный бандл весь проект.
  */
 export async function getBlockSource(slug: string): Promise<string | null> {
-  const item = getBlock(slug)
-  const directory = getBlockDirectory(slug)
+  const item = getCatalogItem(slug)
+  const directory = getItemDirectory(slug)
 
   if (!item || !directory) {
     return null

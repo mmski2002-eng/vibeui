@@ -1,17 +1,21 @@
 import { CatalogGrid } from "@/components/catalog/catalog-grid"
 import { CatalogNav } from "@/components/catalog/catalog-nav"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
-import { getBlocks, getUsedCategories } from "@/registry/index"
+import { getCatalogItems, getCatalogNavSections } from "@/registry/index"
 
 export default function HomePage() {
-  const blocks = getBlocks()
-  const categories = getUsedCategories()
+  const items = getCatalogItems()
+  const sections = getCatalogNavSections()
+  const categoryCount = sections.reduce(
+    (total, section) => total + section.categories.length,
+    0,
+  )
 
   return (
     <CatalogShell>
       <CatalogNav
-        categories={categories}
-        total={blocks.length}
+        sections={sections}
+        total={items.length}
         heading={
           <div className="border-shell-border mb-6 border-b pb-6">
             <h1 className="text-shell-fg text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
@@ -23,13 +27,13 @@ export default function HomePage() {
               по описанию.
             </p>
             <p className="text-shell-muted mt-4 text-xs">
-              {blocks.length} блоков · {categories.length} типа секций ·
-              установка одной командой
+              items: {items.length} · категорий: {categoryCount} · установка
+              одной командой
             </p>
           </div>
         }
       >
-        <CatalogGrid blocks={blocks} />
+        <CatalogGrid items={items} />
       </CatalogNav>
     </CatalogShell>
   )

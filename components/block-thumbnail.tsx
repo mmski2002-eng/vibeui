@@ -1,15 +1,18 @@
 import type { CSSProperties } from "react"
 
-import { BLOCK_COMPONENTS } from "@/registry/components"
+import { CATALOG_PREVIEWS } from "@/registry/previews"
 
 const THUMBNAIL_WIDTH = 1280
 
 /**
  * Миниатюра каталога рендерит тот самый компонент, который получает
  * пользователь. Отдельной demo-копии нет и быть не должно.
+ *
+ * Один и тот же pipeline для всех kind: и секция, и мелкий компонент
+ * рендерятся масштабированием реального компонента, без iframe.
  */
 export function BlockThumbnail({ slug }: { slug: string }) {
-  const Block = BLOCK_COMPONENTS[slug]
+  const Block = CATALOG_PREVIEWS[slug]
 
   if (!Block) {
     return <div className="bg-shell-elevated aspect-[16/9] w-full" />

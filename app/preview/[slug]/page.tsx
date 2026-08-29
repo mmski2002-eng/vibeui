@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation"
 
-import { BLOCK_COMPONENTS } from "@/registry/components"
+import { CATALOG_PREVIEWS } from "@/registry/previews"
 
 export function generateStaticParams() {
-  return Object.keys(BLOCK_COMPONENTS).map((slug) => ({ slug }))
+  return Object.keys(CATALOG_PREVIEWS).map((slug) => ({ slug }))
 }
 
 export default async function PreviewPage({
@@ -15,7 +15,7 @@ export default async function PreviewPage({
 }) {
   const { slug } = await params
   const { theme } = await searchParams
-  const Block = BLOCK_COMPONENTS[slug]
+  const Block = CATALOG_PREVIEWS[slug]
 
   if (!Block) {
     notFound()

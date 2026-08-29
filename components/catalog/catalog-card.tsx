@@ -5,61 +5,62 @@ import { CopyButton } from "@/components/copy-button"
 import { buildCopyForAiPrompt } from "@/lib/copy-for-ai"
 import { getInstallCommand } from "@/lib/site"
 import { getCategoryLabel } from "@/registry/index"
-import type { BlockItem } from "@/registry/meta"
+import type { CatalogItem } from "@/registry/meta"
 
-export function CatalogCard({ block }: { block: BlockItem }) {
-  const category = block.categories?.[0]
-  const tags = block.meta?.tags?.slice(0, 3) ?? []
+/**
+ * Карточка витрины. Действие ровно одно — Copy for AI: главный артефакт
+ * продукта это промпт для агента, а не код и не registry URL. Оба остались
+ * на странице item'а как вторичные developer-действия; на карточке они
+ * конкурировали бы с главным сценарием (см. docs/DELIVERY.md).
+ */
+export function CatalogCard({ item }: { item: CatalogItem }) {
+  const category = item.categories?.[0]
   // Карточка серверная: промпт собирается из metadata здесь, клиент получает
-  // только готовую строку и не тянет registry в бандл.
-  const prompt = buildCopyForAiPrompt(block, getInstallCommand(block.name))
+  // готовую строку и не тянет registry в бандл.
+  const prompt = buildCopyForAiPrompt(item, getInstallCommand(item.name))
 
   return (
     // Ссылка не оборачивает миниатюру: внутри блока есть свои <a>, а вложенные
     // ссылки — невалидный HTML. Кликабельность карточки даёт растянутый
-    // псевдоэлемент заголовка; кнопка Copy поднята над ним через z-10.
+    // псевдоэлемент заголовка; строка действий поднята над ним через z-10.
     <article className="border-shell-border bg-shell-panel hover:border-shell-border-strong focus-within:ring-shell-ring relative flex h-full flex-col overflow-hidden rounded-xl border transition-colors focus-within:ring-2">
-      <BlockThumbnail slug={block.name} />
+      <BlockThumbnail slug={item.name} />
 
-      <div className="border-shell-border flex flex-1 flex-col border-t p-4">
-        {category ? (
-          <p className="text-shell-muted mb-1 text-xs font-medium tracking-wide uppercase">
-            {getCategoryLabel(category)}
-          </p>
-        ) : null}
+      <div className="border-shell-border flex flex-1 flex-col gap-1 border-t p-4">
+        <p className="text-shell-muted flex items-center gap-1.5 text-xs font-medium tracking-wide uppercase">
+          {category ? <span>{getCategoryLabel(category)}</span> : null}
+          {category ? <span aria-hidden="true">·</span> : null}
+          <span className="font-mono normal-case">{item.name}</span>
+        </p>
 
         <h3 className="text-shell-fg text-base font-medium">
           <Link
-            href={`/components/${block.name}`}
+            href={`/components/${item.name}`}
             className="after:absolute after:inset-0 focus-visible:outline-none"
           >
-            {block.title ?? block.name}
+            {item.title ?? item.name}
           </Link>
         </h3>
 
-        {tags.length > 0 ? (
-          <ul className="mt-3 flex flex-wrap gap-1.5">
-            {tags.map((tag) => (
-              <li
-                key={tag}
-                className="border-shell-border text-shell-muted rounded-full border px-2 py-0.5 text-xs"
-              >
-                {tag}
-              </li>
-            ))}
-          </ul>
+        {item.description ? (
+          <p className="text-shell-muted line-clamp-2 text-sm text-pretty">
+            {item.description}
+          </p>
         ) : null}
 
-        <div className="relative z-10 mt-auto flex items-center gap-3 pt-4">
+        {/* Над растянутой ссылкой поднимается только кнопка: ей нужен свой
+            клик. «Подробнее» остаётся визуальным аффордансом — клик по нему
+            ловит та же растянутая ссылка заголовка, поэтому второй ссылки
+            на тот же адрес в разметке нет. */}
+        <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-2 pt-4">
           <CopyButton
             value={prompt}
             label="Copy for AI"
+            copiedLabel="Скопировано — вставьте агенту"
             variant="primary"
-            className="h-8 px-3 text-xs"
+            className="relative z-10 h-8 px-3 text-xs"
           />
-          <code className="text-shell-muted min-w-0 truncate font-mono text-xs">
-            {block.name}
-          </code>
+          <span className="text-shell-muted ml-auto text-xs">Подробнее</span>
         </div>
       </div>
     </article>

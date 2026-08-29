@@ -1,7 +1,7 @@
 import { CatalogGrid } from "@/components/catalog/catalog-grid"
 import { CatalogNav } from "@/components/catalog/catalog-nav"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
-import { getBlocks, getUsedCategories } from "@/registry/index"
+import { getCatalogItems, getCatalogNavSections } from "@/registry/index"
 
 export const metadata = {
   title: "Каталог",
@@ -10,14 +10,14 @@ export const metadata = {
 }
 
 export default function ComponentsPage() {
-  const blocks = getBlocks()
-  const categories = getUsedCategories()
+  const items = getCatalogItems()
+  const sections = getCatalogNavSections()
 
   return (
     <CatalogShell>
       <CatalogNav
-        categories={categories}
-        total={blocks.length}
+        sections={sections}
+        total={items.length}
         heading={
           <div className="border-shell-border mb-6 border-b pb-6">
             <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -31,7 +31,7 @@ export default function ComponentsPage() {
           </div>
         }
       >
-        <CatalogGrid blocks={blocks} />
+        <CatalogGrid items={items} />
       </CatalogNav>
     </CatalogShell>
   )

@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-export function CatalogTopbar({ blockCount }: { blockCount: number }) {
+export function CatalogTopbar({ itemCount }: { itemCount: number }) {
   return (
     <header className="border-shell-border bg-shell sticky top-0 z-30 border-b">
       <div className="mx-auto flex h-14 w-full max-w-[1440px] items-center justify-between gap-4 px-4 lg:px-6">
@@ -12,7 +12,7 @@ export function CatalogTopbar({ blockCount }: { blockCount: number }) {
             VibeUI
           </Link>
           <span className="border-shell-border text-shell-muted hidden rounded-full border px-2 py-0.5 text-xs sm:inline">
-            {blockCount} блоков
+            {itemCount} items
           </span>
         </div>
 

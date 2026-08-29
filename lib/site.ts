@@ -16,8 +16,15 @@ export function getRegistryBaseUrl(): string | null {
     : null
 }
 
-export function getInstallCommand(name: string): string | null {
+/** Публичный URL registry item'а — то, что вставляют в CLI или в промпт агента. */
+export function getRegistryItemUrl(name: string): string | null {
   const baseUrl = getRegistryBaseUrl()
 
-  return baseUrl ? `npx shadcn@latest add ${baseUrl}/${name}.json` : null
+  return baseUrl ? `${baseUrl}/${name}.json` : null
+}
+
+export function getInstallCommand(name: string): string | null {
+  const url = getRegistryItemUrl(name)
+
+  return url ? `npx shadcn@latest add ${url}` : null
 }

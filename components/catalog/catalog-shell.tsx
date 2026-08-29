@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 
 import { CatalogTopbar } from "@/components/catalog/catalog-topbar"
-import { getBlocks } from "@/registry/index"
+import { getCatalogItems } from "@/registry/index"
 
 /**
  * Тёмная app-оболочка каталога. Палитра живёт в локальных токенах
@@ -14,7 +14,7 @@ import { getBlocks } from "@/registry/index"
 export function CatalogShell({ children }: { children: ReactNode }) {
   return (
     <div className="catalog-shell bg-shell text-shell-fg flex min-h-screen flex-col">
-      <CatalogTopbar blockCount={getBlocks().length} />
+      <CatalogTopbar itemCount={getCatalogItems().length} />
       <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col px-4 lg:flex-row lg:gap-8 lg:px-6">
         {children}
       </div>

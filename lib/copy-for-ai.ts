@@ -1,4 +1,4 @@
-import type { BlockItem } from "@/registry/meta"
+import type { CatalogItem } from "@/registry/meta"
 
 function section(title: string, lines: string[]): string[] {
   return lines.length > 0
@@ -9,10 +9,10 @@ function section(title: string, lines: string[]): string[] {
 /**
  * Первая версия инструкции для агента. Собирается только из metadata блока,
  * вручную ничего не дописывается. Phase 3 заменит функцию шаблонным движком
- * с профилями агентов — контракт (BlockItem -> строка) останется прежним.
+ * с профилями агентов — контракт (CatalogItem -> строка) останется прежним.
  */
 export function buildCopyForAiPrompt(
-  item: BlockItem,
+  item: CatalogItem,
   installCommand: string | null,
 ): string {
   const ai = item.meta?.ai

@@ -3,58 +3,88 @@
 import { useState, type ReactNode } from "react"
 
 import { CatalogSidebar } from "@/components/catalog/catalog-sidebar"
+import type { CatalogNavSection } from "@/registry/index"
 
-type Category = {
-  slug: string
+type Tab = {
+  value: string
   label: string
   count: number
+  nested?: boolean
 }
 
 const ACTIVE_ITEM = "bg-shell-elevated text-shell-fg "
 const IDLE_ITEM = "text-shell-muted hover:text-shell-fg hover:bg-shell-panel "
 
 /**
- * Навигация по категориям. Карточки остаются серверными: клиент только
- * переключает `data-catalog-filter` на `<main>`, а блоки прячутся правилами
- * из CSS каталога (см. CatalogGrid). Так фильтр не тянет блоки в бандл.
+ * Плоский список фильтров, выведенный из разделов каталога. Типы и категории
+ * живут на одной оси: активен всегда ровно один фильтр. Если тип в каталоге
+ * один, строка типа не показывается — она дублировала бы «Всё».
+ */
+function buildTabs(sections: CatalogNavSection[], total: number): Tab[] {
+  const showKinds = sections.length > 1
+  const tabs: Tab[] = [{ value: "all", label: "Всё", count: total }]
+
+  for (const section of sections) {
+    if (showKinds) {
+      tabs.push({
+        value: `kind:${section.kind}`,
+        label: section.label,
+        count: section.count,
+      })
+    }
+
+    for (const category of section.categories) {
+      tabs.push({
+        value: category.slug,
+        label: category.label,
+        count: category.count,
+        nested: showKinds,
+      })
+    }
+  }
+
+  return tabs
+}
+
+/**
+ * Навигация по каталогу. Карточки остаются серверными: клиент только
+ * переключает `data-catalog-filter` на `<main>`, а items прячутся правилами
+ * из CSS каталога (см. CatalogGrid). Так фильтр не тянет items в бандл.
  *
  * Desktop — вертикальный список в sidebar, mobile — горизонтальная лента
  * над сеткой. URL-состояния в v1 нет: обе страницы каталога статические.
  */
 export function CatalogNav({
-  categories,
+  sections,
   total,
   heading,
   children,
 }: {
-  categories: Category[]
+  sections: CatalogNavSection[]
   total: number
   heading: ReactNode
   children: ReactNode
 }) {
   const [active, setActive] = useState("all")
-  const tabs = [{ slug: "all", label: "Все", count: total }, ...categories]
+  const tabs = buildTabs(sections, total)
 
   return (
     <>
       <CatalogSidebar>
         <p className="text-shell-muted mb-3 px-3 text-xs font-medium tracking-wide uppercase">
-          Категории
+          Каталог
         </p>
-        <ul
-          role="group"
-          aria-label="Фильтр по типу блока"
-          className="space-y-1"
-        >
+        <ul role="group" aria-label="Фильтр каталога" className="space-y-1">
           {tabs.map((tab) => (
-            <li key={tab.slug}>
+            <li key={tab.value}>
               <button
                 type="button"
-                aria-pressed={active === tab.slug}
-                onClick={() => setActive(tab.slug)}
+                aria-pressed={active === tab.value}
+                onClick={() => setActive(tab.value)}
                 className={
-                  "focus-visible:ring-shell-ring flex w-full items-center justify-between gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none " +
-                  (active === tab.slug ? ACTIVE_ITEM : IDLE_ITEM)
+                  "focus-visible:ring-shell-ring flex w-full items-center justify-between gap-2 rounded-md py-2 pr-3 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none " +
+                  (tab.nested ? "pl-6 " : "pl-3 ") +
+                  (active === tab.value ? ACTIVE_ITEM : IDLE_ITEM)
                 }
               >
                 {tab.label}
@@ -73,22 +103,22 @@ export function CatalogNav({
       >
         {heading}
 
-        {/* Мобильная лента категорий: bleed за поля оболочки, чтобы первая
+        {/* Мобильная лента фильтров: bleed за поля оболочки, чтобы первая
             кнопка совпадала по левому краю с сеткой. */}
         <div
           role="group"
-          aria-label="Фильтр по типу блока"
+          aria-label="Фильтр каталога"
           className="-mx-4 mb-6 flex [scrollbar-width:none] gap-2 overflow-x-auto px-4 pb-1 [-ms-overflow-style:none] lg:hidden [&::-webkit-scrollbar]:hidden"
         >
           {tabs.map((tab) => (
             <button
-              key={tab.slug}
+              key={tab.value}
               type="button"
-              aria-pressed={active === tab.slug}
-              onClick={() => setActive(tab.slug)}
+              aria-pressed={active === tab.value}
+              onClick={() => setActive(tab.value)}
               className={
                 "focus-visible:ring-shell-ring inline-flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none " +
-                (active === tab.slug
+                (active === tab.value
                   ? "bg-shell-accent text-shell-accent-fg border-shell-accent"
                   : "border-shell-border text-shell-muted hover:text-shell-fg hover:border-shell-border-strong")
               }

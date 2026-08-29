@@ -2,14 +2,18 @@ import { notFound } from "next/navigation"
 import Link from "next/link"
 
 import { BlockPreview } from "@/components/block-preview"
-import { CatalogBlockNav } from "@/components/catalog/catalog-block-nav"
+import { CatalogItemNav } from "@/components/catalog/catalog-item-nav"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { CatalogSidebar } from "@/components/catalog/catalog-sidebar"
 import { CodeBlock } from "@/components/code-block"
 import { CopyButton } from "@/components/copy-button"
 import { buildCopyForAiPrompt } from "@/lib/copy-for-ai"
-import { getInstallCommand } from "@/lib/site"
-import { getBlock, getBlocks, getCategoryLabel } from "@/registry/index"
+import { getInstallCommand, getRegistryItemUrl } from "@/lib/site"
+import {
+  getCatalogItem,
+  getCatalogItems,
+  getCategoryLabel,
+} from "@/registry/index"
 import { getBlockSource } from "@/registry/source.server"
 
 export const dynamicParams = false
@@ -20,7 +24,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const block = getBlock(slug)
+  const block = getCatalogItem(slug)
 
   if (!block) {
     return {}
@@ -33,7 +37,7 @@ export async function generateMetadata({
 }
 
 export function generateStaticParams() {
-  return getBlocks().map((block) => ({ slug: block.name }))
+  return getCatalogItems().map((item) => ({ slug: item.name }))
 }
 
 export default async function ComponentPage({
@@ -42,7 +46,7 @@ export default async function ComponentPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const block = getBlock(slug)
+  const block = getCatalogItem(slug)
 
   if (!block) {
     notFound()
@@ -50,6 +54,7 @@ export default async function ComponentPage({
 
   const source = await getBlockSource(slug)
   const installCommand = getInstallCommand(block.name)
+  const registryUrl = getRegistryItemUrl(block.name)
   const aiPrompt = buildCopyForAiPrompt(block, installCommand)
   const category = block.categories?.[0]
   const tags = block.meta?.tags ?? []
@@ -57,7 +62,7 @@ export default async function ComponentPage({
   return (
     <CatalogShell>
       <CatalogSidebar>
-        <CatalogBlockNav activeSlug={block.name} />
+        <CatalogItemNav activeSlug={block.name} />
       </CatalogSidebar>
 
       <main className="min-w-0 flex-1 py-6 lg:py-8">
@@ -119,47 +124,79 @@ export default async function ComponentPage({
           <BlockPreview slug={block.name} />
         </section>
 
-        {/* Главное действие страницы стоит сразу под превью: пользователь
-            пришёл за инструкцией для агента, а не за исходником. */}
+        {/* Главный блок страницы: пользователь пришёл за инструкцией для
+            агента. Промпт — продукт, registry URL внутри него — транспорт,
+            исходник — доверие и правка руками. Поэтому текст инструкции
+            и код свёрнуты, а это действие открыто. См. docs/DELIVERY.md. */}
         <section
           aria-labelledby="use-heading"
-          className="bg-shell-panel border-shell-border mb-12 rounded-xl border p-5 sm:p-6"
+          className="bg-shell-panel border-shell-border-strong mb-10 rounded-xl border p-5 sm:p-6"
         >
-          <h2 id="use-heading" className="text-shell-fg text-lg font-medium">
+          <h2 id="use-heading" className="text-shell-fg text-xl font-medium">
             Использовать с AI
           </h2>
-          <p className="text-shell-muted mt-2 max-w-2xl text-sm text-pretty">
-            Скопируйте инструкцию и вставьте её в Claude Code, Cursor или
-            другого агента. В ней уже есть команда установки, список
-            зависимостей и правила: что в блоке сохранить, а что можно менять.
-          </p>
 
-          <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <ol className="text-shell-muted mt-4 max-w-2xl space-y-1.5 text-sm">
+            <li>1. Скопируйте инструкцию.</li>
+            <li>2. Вставьте её агенту — Claude Code, Cursor или другому.</li>
+            <li>
+              3. Допишите своими словами, куда поставить: «размести на главной
+              над тарифами».
+            </li>
+          </ol>
+
+          <div className="mt-5">
             <CopyButton
               value={aiPrompt}
               label="Copy for AI"
+              copiedLabel="Скопировано — вставьте агенту"
               variant="primary"
-              className="h-11 px-5 sm:w-auto"
+              className="h-11 px-5"
             />
-            <a
-              href="#ai-prompt"
-              className="text-shell-muted hover:text-shell-fg text-sm"
-            >
-              Посмотреть текст инструкции
-            </a>
           </div>
 
-          <div className="border-shell-border mt-6 border-t pt-5">
-            <p className="text-shell-muted mb-3 text-xs font-medium tracking-wide uppercase">
-              Или поставьте вручную
+          <details
+            id="ai-prompt"
+            className="border-shell-border mt-6 scroll-mt-20 border-t pt-5"
+          >
+            <summary className="text-shell-muted hover:text-shell-fg cursor-pointer text-sm select-none marker:content-none [&::-webkit-details-marker]:hidden">
+              Показать текст инструкции
+            </summary>
+            <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty">
+              То, что попадёт агенту. Генерируется из metadata компонента,
+              вручную для каждого блока не пишется.
             </p>
-            {installCommand ? (
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <code className="bg-shell-elevated border-shell-border text-shell-fg min-w-0 flex-1 overflow-x-auto rounded-md border px-3 py-2 font-mono text-sm">
-                  {installCommand}
-                </code>
-                <CopyButton value={installCommand} label="Copy command" />
-              </div>
+            <pre className="bg-shell-elevated border-shell-border text-shell-fg mt-3 max-h-96 overflow-auto rounded-lg border p-4 text-xs leading-relaxed whitespace-pre-wrap">
+              {aiPrompt}
+            </pre>
+          </details>
+        </section>
+
+        {/* Вторичное: developer / inspection. Не путь установки. */}
+        <section aria-labelledby="dev-heading" className="mb-12">
+          <h2
+            id="dev-heading"
+            className="text-shell-muted mb-4 text-xs font-medium tracking-wide uppercase"
+          >
+            Для разработчика
+          </h2>
+
+          <div className="space-y-3">
+            {installCommand && registryUrl ? (
+              <>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <code className="bg-shell-elevated border-shell-border text-shell-fg min-w-0 flex-1 overflow-x-auto rounded-md border px-3 py-2 font-mono text-sm">
+                    {installCommand}
+                  </code>
+                  <CopyButton value={installCommand} label="Copy command" />
+                </div>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <code className="bg-shell-elevated border-shell-border text-shell-muted min-w-0 flex-1 overflow-x-auto rounded-md border px-3 py-2 font-mono text-sm">
+                    {registryUrl}
+                  </code>
+                  <CopyButton value={registryUrl} label="Registry URL" />
+                </div>
+              </>
             ) : (
               <p className="text-shell-muted text-sm">
                 Команда установки недоступна: переменная окружения
@@ -167,56 +204,38 @@ export default async function ComponentPage({
                 не задана.
               </p>
             )}
-            {block.docs ? (
-              <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty">
-                {block.docs}
-              </p>
-            ) : null}
           </div>
-        </section>
 
-        <section aria-labelledby="code-heading" className="mb-12">
-          <div className="mb-2 flex items-center justify-between gap-3">
-            <h2 id="code-heading" className="text-shell-fg text-lg font-medium">
-              Исходник
-            </h2>
-            <CopyButton value={source} label="Copy code" />
-          </div>
-          <p className="text-shell-muted mb-4 max-w-2xl text-sm text-pretty">
-            Тот же файл, который поставит агент. Нужен, если вы предпочитаете
-            скопировать код руками.
-          </p>
-          {source ? (
-            <CodeBlock code={source} />
-          ) : (
-            <p className="text-shell-muted text-sm">
-              Исходник компонента не найден.
+          {block.docs ? (
+            <p className="text-shell-muted mt-4 max-w-2xl text-sm text-pretty">
+              {block.docs}
             </p>
-          )}
-        </section>
+          ) : null}
 
-        <section
-          aria-labelledby="ai-heading"
-          id="ai-prompt"
-          className="scroll-mt-20"
-        >
-          <div className="mb-2 flex items-center justify-between gap-3">
-            <h2 id="ai-heading" className="text-shell-fg text-lg font-medium">
-              Текст инструкции
-            </h2>
-            <CopyButton
-              value={aiPrompt}
-              label="Copy for AI"
-              variant="primary"
-            />
-          </div>
-          <p className="text-shell-muted mb-4 max-w-2xl text-sm text-pretty">
-            То, что попадёт агенту. Генерируется из metadata компонента, вручную
-            для каждого блока не пишется.
-          </p>
-          <pre className="bg-shell-elevated border-shell-border text-shell-fg max-h-96 overflow-auto rounded-lg border p-4 text-xs leading-relaxed whitespace-pre-wrap">
-            {aiPrompt}
-          </pre>
+          <details
+            id="code"
+            className="border-shell-border mt-4 scroll-mt-20 rounded-xl border"
+          >
+            <summary className="text-shell-fg hover:text-shell-fg cursor-pointer px-4 py-3 text-sm font-medium select-none marker:content-none [&::-webkit-details-marker]:hidden">
+              Исходник компонента
+            </summary>
+            <div className="border-shell-border border-t p-4">
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <p className="text-shell-muted max-w-2xl text-sm text-pretty">
+                  Тот же файл, который поставит агент. Нужен, если вы
+                  предпочитаете скопировать код руками.
+                </p>
+                <CopyButton value={source} label="Copy code" />
+              </div>
+              {source ? (
+                <CodeBlock code={source} />
+              ) : (
+                <p className="text-shell-muted text-sm">
+                  Исходник компонента не найден.
+                </p>
+              )}
+            </div>
+          </details>
         </section>
       </main>
     </CatalogShell>
