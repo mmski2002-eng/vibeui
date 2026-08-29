@@ -48,8 +48,9 @@ auth, billing, subscriptions, referrals, marketplace, MCP, visual builder,
 - Tailwind CSS v4 через `@tailwindcss/postcss`. Конфиг-файла нет:
   токены и тема живут в `app/globals.css` (`@theme inline`, CSS-переменные)
 - shadcn/ui (CLI `shadcn`, `components.json`, style `base-nova`, baseColor `neutral`).
-  Внимание: primitives — `@base-ui/react`, **не** Radix
-- `class-variance-authority`, `clsx`, `tailwind-merge`, `tw-animate-css`
+  Установленных primitives сейчас нет, `components/ui/` пуст. Когда
+  понадобятся — `npx shadcn add` принесёт `@base-ui/react`, **не** Radix
+- `clsx`, `tailwind-merge`, `tw-animate-css`
 - `lucide-react` — иконки
 - ESLint 9 (flat config, `eslint-config-next`) + Prettier 3 с `prettier-plugin-tailwindcss`
 - Пакетный менеджер: npm
@@ -88,7 +89,7 @@ app/
   components/[slug]/page.tsx     страница компонента
   r/[name]/route.ts              registry endpoint (shadcn-compatible JSON)
 components/                      UI приложения (шапка, фильтры, карточки)
-components/ui/                   primitives из shadcn (button.tsx и т.д.)
+components/ui/                   primitives из shadcn (сейчас пусто)
 registry/
   index.ts                       индекс блоков для сайта
   blocks/<category>/registry.json  metadata блоков (source of truth)

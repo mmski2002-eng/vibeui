@@ -100,7 +100,8 @@ Claude — сначала диагностировать и объяснять. 
 - TypeScript strict;
 - Tailwind CSS v4;
 - shadcn-compatible registry;
-- `@base-ui/react` primitives, не Radix;
+- shadcn CLI настроен, установленных primitives нет (`components/ui/` пуст);
+  когда понадобятся — `@base-ui/react`, не Radix;
 - `lucide-react`;
 - npm;
 - Next standalone output;
@@ -164,11 +165,13 @@ Metadata также должна жить в одном месте:
   категории, которые должны быть доступны снаружи;
 - `npm run registry:build` очищает `public/r/` перед сборкой: иначе
   удалённый из реестра item продолжает раздаваться со старой сборки;
-- служебный item `_smoke` (`registry/blocks/_smoke/`) из production-реестра
-  исключён и по HTTPS больше не публикуется. Файлы остались в репозитории,
-  но ни один корневой реестр на них не ссылается. Отдельный dev-реестр
-  завести не получилось: `shadcn` требует, чтобы корневой файл назывался
-  ровно `registry.json`.
+- служебных items в реестре больше нет: `_smoke` сначала исключили из
+  корневого `include[]`, затем удалили из репозитория вместе с
+  `components/ui/button.tsx`, который он один и держал. Production registry —
+  только публичный каталог. Отдельный dev-реестр завести не получилось:
+  `shadcn` требует, чтобы корневой файл назывался ровно `registry.json`;
+  если служебный item понадобится снова, его придётся держать вне
+  `include[]`, как раньше.
 
 ## Важные файлы
 
@@ -228,13 +231,18 @@ Complete:
   секций, включая How to use it, Where to place it и Verify; поля
   `meta.ai.export` и `meta.ai.usage`; дублирующая строка про «не
   пересоздавай» убрана из metadata всех блоков.
+- Удалён служебный smoke-test: `registry/blocks/_smoke/` и
+  `components/ui/button.tsx`, который он один и держал. Следом убраны
+  ставшие ненужными `@base-ui/react` и `class-variance-authority`.
+  `components/ui/` физически исчез, алиас `ui` в `components.json`
+  оставлен — он нужен shadcn CLI.
 
 ## Статус Phase 3
 
 Закрыты фактически: 5 пользовательских блоков (hero-001/002/003,
 features-001, pricing-001), **три типа блоков** (hero, features, pricing),
-каталог и главная из registry metadata, публикация по HTTPS, `_smoke` вне
-публикации, `REGISTRY_BASE_URL` на реальном домене, метаданные нигде не
+каталог и главная из registry metadata, публикация по HTTPS, служебных
+items нет, `REGISTRY_BASE_URL` на реальном домене, метаданные нигде не
 дублируются, все проверки зелёные.
 
 Осталось: проверить установку по HTTPS в чистом проекте на features и pricing

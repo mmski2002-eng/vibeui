@@ -9,8 +9,9 @@
 - Tailwind CSS v4 через `@tailwindcss/postcss`; конфиг-файла нет, тема и токены —
   в `app/globals.css` (`@theme inline`, CSS-переменные)
 - shadcn/ui CLI v4 (`components.json`, style `base-nova`, baseColor `neutral`);
-  primitives — `@base-ui/react`, **не** Radix
-- `class-variance-authority`, `clsx`, `tailwind-merge`, `tw-animate-css`, `lucide-react`
+  установленных primitives сейчас нет — когда понадобятся, `npx shadcn add`
+  принесёт `@base-ui/react`, **не** Radix (стиль `base-nova`)
+- `clsx`, `tailwind-merge`, `tw-animate-css`, `lucide-react`
 - ESLint 9 (flat) + Prettier 3 с `prettier-plugin-tailwindcss`
 - npm; деплой self-hosted на VPS: Next standalone (`output: "standalone"`),
   systemd, nginx с TLS — подробности в [DEPLOY.md](DEPLOY.md)
@@ -30,7 +31,7 @@ app/
   r/[name]/route.ts              registry endpoint (shadcn-compatible JSON)
 components/                      UI сайта: preview, миниатюра, кнопки копирования
 components/catalog/              оболочка каталога: shell, topbar, sidebar, nav, grid, card
-components/ui/                   primitives из shadcn (button.tsx и т.д.)
+components/ui/                   primitives из shadcn (сейчас пусто)
 registry/
   registry.ts                    индекс блоков + metadata
   categories.ts                  таксономия: kinds, categories, groups
@@ -47,7 +48,9 @@ docs/                            эти документы
 ## Где обычные UI components
 
 `components/ui/` — primitives (button, dialog, tabs…), поставленные через
-`npx shadcn@latest add <name>`. Используются интерфейсом самого сайта.
+`npx shadcn@latest add <name>`. Сейчас каталог пуст: сайт обходится
+собственными компонентами, а первый же `shadcn add` создаст его заново.
+Алиас `ui` в `components.json` оставлен именно для этого.
 
 `components/` — компоненты сайта: карточка каталога, фильтры, переключатель
 viewport, кнопка Copy for AI. Это код продукта, наружу не раздаётся.
@@ -88,7 +91,7 @@ item'е резолвятся относительно объявившего е�
 уникальны по всему дереву.
 
 Корневой `include[]` — это и есть граница публикации: попало в него —
-раздаётся по HTTPS. Служебный `_smoke` в него не входит.
+раздаётся по HTTPS.
 
 ```
 registry.json                       корень: include[] — что публикуется
@@ -96,7 +99,6 @@ registry/
   categories.ts                     список категорий каталога
   meta.ts                           типы поля meta (tags + AI-описание)
   blocks/
-    _smoke/                         технический item, вне публикации
     hero/registry.json              items категории
     hero/hero-001/hero-001.tsx      исходник блока
 public/r/                           артефакт сборки, в git не коммитится

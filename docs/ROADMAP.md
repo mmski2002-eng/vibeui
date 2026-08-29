@@ -73,7 +73,8 @@ DoD:
 - нет `.env.example` и документации по `REGISTRY_BASE_URL`;
 - автотестов нет, проверки ручные и скриптовые;
 - служебный item `_smoke` остаётся в registry;
-  ✅ закрыто: убран из корневого `include[]`, по HTTPS не публикуется.
+  ✅ закрыто: убран из корневого `include[]`, затем удалён из репозитория
+  вместе с `components/ui/button.tsx`.
 
 ## Phase 3 — Catalog + Public MVP
 
@@ -99,8 +100,8 @@ DoD:
 - [ ] установка по HTTPS проверена в чистом проекте;
 - [ ] Copy for AI протестирован на hero / features / pricing;
 - [ ] проверены 375 и 1440;
-- [x] `_smoke` нигде не появляется публично — исключён из корневого
-      `include[]`, `registry:build` чистит `public/r/` перед сборкой.
+- [x] служебных items в реестре нет — `_smoke` удалён из репозитория,
+      `registry:build` чистит `public/r/` перед сборкой.
 
 Каждый новый блок проходит отдельный цикл specification → implementation →
 review, как hero-001. Четыре блока одним запросом не делаются.

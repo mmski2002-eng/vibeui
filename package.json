@@ -14,8 +14,6 @@
     "registry:build": "node -e \"require('node:fs').rmSync('public/r',{recursive:true,force:true})\" && shadcn build"
   },
   "dependencies": {
-    "@base-ui/react": "^1.7.0",
-    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.37.0",
     "next": "16.3.3",
