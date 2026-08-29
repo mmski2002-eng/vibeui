@@ -1,0 +1,222 @@
+import type { CSSProperties } from "react"
+
+type Hero001Action = {
+  label: string
+  href: string
+}
+
+export type Hero001Props = {
+  badge?: string
+  title?: string
+  titleAccent?: string
+  description?: string
+  primaryAction?: Hero001Action
+  secondaryAction?: Hero001Action
+  highlights?: string[]
+  accent?: string
+  accentForeground?: string
+  className?: string
+}
+
+// Блок везде выглядит одинаково, поэтому палитра, шрифт и keyframes живут здесь,
+// а не в globals.css проекта. Селектор в :where() — нулевая специфичность,
+// так что любой класс или inline style пользователя переопределяет значение.
+const STYLES = `
+:where([data-vibeui-block="hero-001"]){
+--vibeui-hero-bg:oklch(0.16 0.014 266);
+--vibeui-hero-fg:oklch(0.98 0.003 266);
+--vibeui-hero-muted:oklch(0.75 0.019 266);
+--vibeui-hero-border:oklch(1 0 0 / 14%);
+--vibeui-hero-accent:oklch(0.72 0.163 264);
+--vibeui-hero-accent-fg:oklch(0.17 0.02 266);
+--vibeui-hero-ring:color-mix(in oklab, var(--vibeui-hero-accent) 75%, transparent);
+--vibeui-hero-glow:color-mix(in oklab, var(--vibeui-hero-accent) 38%, transparent);
+--vibeui-hero-grid:oklch(1 0 0 / 6%);
+--vibeui-hero-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+@keyframes vibeui-hero-001-fade-up{from{opacity:0;transform:translate3d(0,14px,0)}to{opacity:1;transform:none}}
+@keyframes vibeui-hero-001-glow{0%,100%{opacity:.68}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-001"] *{animation:none!important;transition:none!important}}
+`
+
+const ENTER =
+  "animate-[vibeui-hero-001-fade-up_0.6s_cubic-bezier(0.16,1,0.3,1)_both]"
+
+const ACTION_BASE =
+  "group inline-flex h-12 items-center justify-center gap-2 rounded-full px-7 text-[0.95rem] font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--vibeui-hero-ring)]"
+
+function cx(...classes: (string | false | undefined)[]) {
+  return classes.filter(Boolean).join(" ")
+}
+
+export function Hero001({
+  badge = "Now in public beta",
+  title = "Ship your product",
+  titleAccent = "twice as fast",
+  description = "Everything your team needs to design, build and launch — in one workspace that stays out of the way.",
+  primaryAction = { label: "Start building", href: "#" },
+  secondaryAction = { label: "Book a demo", href: "#" },
+  highlights = ["No credit card", "14-day trial", "SOC 2 compliant"],
+  accent,
+  accentForeground,
+  className,
+}: Hero001Props) {
+  const style = {
+    ...(accent ? { "--vibeui-hero-accent": accent } : {}),
+    ...(accentForeground
+      ? { "--vibeui-hero-accent-fg": accentForeground }
+      : {}),
+  } as CSSProperties
+
+  return (
+    <section
+      data-vibeui-block="hero-001"
+      style={style}
+      className={cx(
+        "relative isolate flex min-h-[560px] items-center overflow-hidden bg-[var(--vibeui-hero-bg)] px-6 py-24 font-[family-name:var(--vibeui-hero-font)] text-[var(--vibeui-hero-fg)] antialiased sm:px-10 md:min-h-[680px] md:py-32",
+        className,
+      )}
+    >
+      <style href="vibeui-hero-001" precedence="medium">
+        {STYLES}
+      </style>
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 -top-[35%] h-[85%] animate-[vibeui-hero-001-glow_12s_ease-in-out_infinite]"
+        style={{
+          background:
+            "radial-gradient(50% 50% at 50% 55%, var(--vibeui-hero-glow), transparent 72%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, var(--vibeui-hero-grid) 1px, transparent 1px), linear-gradient(to bottom, var(--vibeui-hero-grid) 1px, transparent 1px)",
+          backgroundSize: "64px 64px",
+          maskImage:
+            "radial-gradient(60% 55% at 50% 45%, black, transparent 100%)",
+          WebkitMaskImage:
+            "radial-gradient(60% 55% at 50% 45%, black, transparent 100%)",
+        }}
+      />
+
+      <div className="relative mx-auto flex w-full max-w-3xl flex-col items-center text-center">
+        {badge ? (
+          <span
+            className={cx(
+              ENTER,
+              "inline-flex items-center gap-2 rounded-full border border-[var(--vibeui-hero-border)] px-3.5 py-1.5 text-xs font-medium tracking-wide text-[var(--vibeui-hero-muted)]",
+            )}
+          >
+            <span
+              aria-hidden="true"
+              className="size-1.5 rounded-full bg-[var(--vibeui-hero-accent)]"
+            />
+            {badge}
+          </span>
+        ) : null}
+
+        <h1
+          className={cx(
+            ENTER,
+            "mt-7 text-[clamp(2.5rem,6vw,4.75rem)] leading-[1.04] font-semibold tracking-tight text-balance [animation-delay:60ms]",
+          )}
+        >
+          {title}
+          {titleAccent ? (
+            <>
+              {" "}
+              <span className="text-[var(--vibeui-hero-muted)]">
+                {titleAccent}
+              </span>
+            </>
+          ) : null}
+        </h1>
+
+        {description ? (
+          <p
+            className={cx(
+              ENTER,
+              "mt-6 max-w-xl text-[clamp(1rem,1.6vw,1.15rem)] leading-relaxed text-pretty text-[var(--vibeui-hero-muted)] [animation-delay:120ms]",
+            )}
+          >
+            {description}
+          </p>
+        ) : null}
+
+        <div
+          className={cx(
+            ENTER,
+            "mt-10 flex w-full flex-col gap-3 [animation-delay:180ms] sm:w-auto sm:flex-row",
+          )}
+        >
+          {primaryAction ? (
+            <a
+              href={primaryAction.href}
+              className={cx(
+                ACTION_BASE,
+                "bg-[var(--vibeui-hero-accent)] text-[var(--vibeui-hero-accent-fg)] transition-[filter,transform] duration-150 hover:-translate-y-px hover:brightness-110",
+              )}
+              style={{
+                boxShadow:
+                  "0 14px 40px -14px color-mix(in oklab, var(--vibeui-hero-accent) 70%, transparent)",
+              }}
+            >
+              {primaryAction.label}
+            </a>
+          ) : null}
+
+          {secondaryAction ? (
+            <a
+              href={secondaryAction.href}
+              className={cx(
+                ACTION_BASE,
+                "border border-[var(--vibeui-hero-border)] text-[var(--vibeui-hero-fg)] transition-colors duration-150 hover:bg-[color-mix(in_oklab,var(--vibeui-hero-fg)_10%,transparent)]",
+              )}
+            >
+              {secondaryAction.label}
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 16 16"
+                fill="none"
+                className="size-4 transition-transform duration-150 group-hover:translate-x-0.5"
+              >
+                <path
+                  d="M3 8h9m0 0L8.5 4.5M12 8l-3.5 3.5"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </a>
+          ) : null}
+        </div>
+
+        {highlights.length > 0 ? (
+          <ul
+            className={cx(
+              ENTER,
+              "mt-10 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-[var(--vibeui-hero-muted)] [animation-delay:240ms]",
+            )}
+          >
+            {highlights.map((highlight, index) => (
+              <li key={highlight} className="flex items-center gap-3">
+                {index > 0 ? (
+                  <span
+                    aria-hidden="true"
+                    className="size-1 rounded-full bg-[var(--vibeui-hero-border)]"
+                  />
+                ) : null}
+                {highlight}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </div>
+    </section>
+  )
+}

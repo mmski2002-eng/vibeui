@@ -1,0 +1,130 @@
+# ROADMAP
+
+Фазы идут строго по порядку. Следующая не начинается, пока DoD текущей не выполнен.
+Последние две фазы вне текущего scope (см. CLAUDE.md) — здесь только для контекста.
+
+Нумерация пересобрана по факту: Copy for AI v0 и локальная проверка
+registry-установки уехали в Phase 2, поэтому бывшие «Phase 3 Copy for AI»,
+«Phase 4 Registry install» и «Phase 5 5–10 components» свёрнуты в Phase 3,
+а остальные сдвинулись.
+
+## Phase 0 — Workspace ✅ complete
+
+Цель: рабочий каркас, на котором можно строить каталог без переделки.
+
+DoD:
+
+- [x] Next.js 16 + TypeScript strict + Tailwind v4 + shadcn инициализированы;
+- [x] `lint`, `typecheck`, `build` зелёные;
+- [x] git-репозиторий, `.gitignore`;
+- [x] `CLAUDE.md` и `docs/` на месте;
+- [x] shadcn-registry foundation: `registry.json`, `registry:validate`,
+      `registry:build` → `public/r/`.
+
+## Phase 1 — Hero 001 ✅ complete
+
+Цель: первый настоящий блок, эталон для всех следующих.
+
+DoD:
+
+- [x] `registry/blocks/hero/hero-001/hero-001.tsx` — единственный исходник;
+- [x] item в `registry/blocks/hero/registry.json` с `meta.tags` и `meta.ai`;
+- [x] блок самодостаточен: `dependencies: []`, `registryDependencies: []`,
+      локальная палитра `--vibeui-hero-*`, свои keyframes, свой шрифт;
+- [x] проверен на 375 / 768 / 1440, на светлом и тёмном хосте;
+- [x] контраст посчитан, `prefers-reduced-motion` работает, фокус с клавиатуры есть;
+- [x] установка в чистый проект: один файл, ноль новых зависимостей,
+      `globals.css` не тронут.
+
+## Phase 2 — Component page ✅ complete
+
+Цель: страница одного компонента как шаблон для всех будущих.
+
+DoD:
+
+- [x] `/components/[slug]`, SSG, unknown и internal slug → `notFound()`;
+- [x] metadata из registry item, ручных копий нет;
+- [x] live preview в iframe через `/preview/[slug]`, тот же файл блока;
+- [x] Desktop 1440 / Tablet 768 / Mobile 375 с масштабированием под контейнер;
+- [x] Light / Dark host toggle как debug-контрол;
+- [x] секция Code читает исходник с диска (`registry/source.server.ts`);
+- [x] Installation с командой из `REGISTRY_BASE_URL`, без выдуманного домена;
+- [x] Copy for AI v0 — генерируется из `meta.ai`, проверен в чистой AI-сессии:
+      агент установил блок из registry, не пересоздал, поменял только
+      разрешённое, зависимостей не добавил.
+
+### Технический долг Phase 2
+
+Зафиксировано, не исправляется задним числом:
+
+- фиксированная высота preview-iframe (760px), авто-высоты нет —
+  блок выше будет обрезан;
+- два параллельных индекса: `registry.json` (metadata) и `components.ts`
+  (React-компонент). Карта ведётся руками;
+- `/preview/[slug]` динамический — читает `searchParams` ради темы хоста;
+- типизация импортированного JSON — приведение к `BlockItem[]`;
+  кривой item ловит только `registry:validate`, не тайпчек;
+- ссылка «Components» в шапке ведёт на `hero-001`: каталога ещё нет;
+- Copy for AI v0 общий, без профилей агентов; правило про `<a>` слишком
+  жёсткое (живёт в `meta.ai.notes` блока, не в билдере);
+- метаданные сайта дефолтные (`<title>` = «Create Next App»), favicon от Next;
+- Desktop-превью на узком экране сжимается до ~0.24 — читается плохо;
+- нет `.env.example` и документации по `REGISTRY_BASE_URL`;
+- автотестов нет, проверки ручные и скриптовые;
+- служебный item `_smoke` остаётся в registry.
+
+## Phase 3 — Catalog + Public MVP
+
+Цель: превратить вертикальный срез в маленький публичный продукт, который
+отправляется внешнему пользователю одной ссылкой.
+
+Путь: `/` → `/components` → блок → `/components/[slug]` → preview →
+Copy for AI → установка из публичного HTTPS registry.
+
+DoD:
+
+- [ ] `/` — минимальная публичная главная: позиционирование, CTA на каталог,
+      несколько featured-блоков;
+- [ ] `/components` — каталог, построенный из registry metadata;
+- [ ] `/components/[slug]` работает для всех публичных блоков;
+- [ ] 5 пользовательских блоков: hero-001, hero-002, hero-003,
+      features-001, pricing-001;
+- [ ] минимум 3 типа блоков;
+- [ ] metadata нигде не дублируется руками;
+- [ ] `registry:validate`, `registry:build`, `typecheck`, `lint`, `build` зелёные;
+- [ ] приложение опубликовано по HTTPS;
+- [ ] `REGISTRY_BASE_URL` указывает на реальный публичный деплой;
+- [ ] установка по HTTPS проверена в чистом проекте;
+- [ ] Copy for AI протестирован на hero / features / pricing;
+- [ ] проверены 375 и 1440;
+- [ ] `_smoke` нигде не появляется публично.
+
+Каждый новый блок проходит отдельный цикл specification → implementation →
+review, как hero-001. Четыре блока одним запросом не делаются.
+
+Вне Phase 3: auth, БД, платежи, подписки, избранное, аккаунты, рефералы,
+MCP, Agent Skill, AI API, профили агентов, поиск, CMS, админка, marketplace,
+visual builder.
+
+## Phase 4 — Page composer MVP
+
+Цель: собрать из блоков страницу и отдать её агенту целиком.
+
+DoD: выбор блоков и порядок (состояние в клиенте, без БД); Copy Page for AI
+отдаёт структуру страницы, id блоков, зависимости и требования к интеграции;
+проверено вручную — агент собирает страницу из экспорта.
+
+## Phase 5 — Payments (вне текущего scope)
+
+Цель: Free/Pro и приём первого платежа.
+
+DoD: paywall на Pro-блоки, checkout, состояния подписки, entitlement выдаётся
+и снимается корректно, покупка проверена end-to-end. Требует auth и хранилища —
+до этой фазы их не заводить.
+
+## Phase 6 — Referrals (вне текущего scope)
+
+Цель: канал привлечения через авторов.
+
+DoD: `?ref=` и промокоды сохраняют attribution, кабинет с переходами
+и покупками, подборки автора, attribution проверена тестовой покупкой.

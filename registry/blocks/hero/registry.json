@@ -1,0 +1,51 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "hero-001",
+      "type": "registry:block",
+      "title": "Aurora Hero",
+      "description": "Тёмный SaaS hero с ambient-свечением, grid-подложкой, badge и парой CTA. Самодостаточен: не зависит от темы и стиля проекта.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-001/hero-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, всегда тёмный независимо от темы проекта. Цвета живут в локальных переменных --vibeui-hero-*; акцент меняется пропом accent. Keyframes и prefers-reduced-motion лежат внутри компонента, globals.css править не нужно.",
+      "meta": {
+        "tags": ["dark", "saas", "gradient", "animated", "centered", "landing"],
+        "featured": true,
+        "ai": {
+          "summary": "Тёмный центрированный SaaS-hero: badge, крупный заголовок в две части, подзаголовок, две CTA-ссылки, строка фактов. Ambient-свечение и grid-подложка на чистом CSS, ноль зависимостей, один файл.",
+          "preserve": [
+            "тёмный фон блока независимо от темы проекта",
+            "локальную палитру --vibeui-hero-* — не заменять её на токены темы проекта (bg-background, text-foreground, primary и т.п.)",
+            "ambient glow и grid-подложку",
+            "clamp-типографику заголовка и tracking",
+            "entrance-анимации и стагер через animation-delay",
+            "responsive-поведение CTA: столбик на мобильном, строка от sm",
+            "семантику: один h1, CTA как <a href>, декоративные слои aria-hidden",
+            "блок <style> внутри компонента — в нём keyframes и prefers-reduced-motion"
+          ],
+          "adapt": [
+            "тексты badge, title, titleAccent, description, CTA и highlights",
+            "href у CTA",
+            "акцентный цвет — проп accent (и accentForeground для контраста текста на кнопке)",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Не пересоздавай компонент по описанию — установи файл из registry.",
+            "Сохраняй семантику ссылок. Для внутренней навигации можно использовать компонент роутера проекта, если сохраняются визуальные стили, доступность и поведение href.",
+            "Не добавляй motion-библиотеки: анимации уже на CSS.",
+            "Не выноси CSS-переменные в globals.css: блок должен оставаться одним файлом."
+          ]
+        }
+      }
+    }
+  ]
+}
