@@ -11,15 +11,26 @@ const VIEWPORTS = [
 type ViewportId = (typeof VIEWPORTS)[number]["id"]
 type HostTheme = "light" | "dark"
 
-// TODO: высота фрейма фиксирована. Блок выше 760px будет обрезан — авто-высота
+// TODO: высота фрейма фиксирована. Блок выше неё будет обрезан — авто-высота
 // через postMessage откладывается до появления таких блоков.
-const FRAME_HEIGHT = 760
+const SECTION_FRAME_HEIGHT = 760
+
+// Мелкому компоненту секционная высота не нужна: под одной кнопкой оставалось
+// бы больше 600px пустого фрейма.
+const COMPONENT_FRAME_HEIGHT = 320
 
 // Ниже этой ширины Desktop-фрейм сжимается сильнее чем вдвое и не читается,
 // поэтому по умолчанию показываем Mobile.
 const NARROW_CONTAINER = 700
 
-export function BlockPreview({ slug }: { slug: string }) {
+export function BlockPreview({
+  slug,
+  compact = false,
+}: {
+  slug: string
+  compact?: boolean
+}) {
+  const frameHeight = compact ? COMPONENT_FRAME_HEIGHT : SECTION_FRAME_HEIGHT
   const [viewport, setViewport] = useState<ViewportId>("desktop")
   const [theme, setTheme] = useState<HostTheme>("light")
   const [containerWidth, setContainerWidth] = useState<number | null>(null)
@@ -108,14 +119,14 @@ export function BlockPreview({ slug }: { slug: string }) {
         <div
           className="relative"
           style={{
-            height: measured ? FRAME_HEIGHT * scale : FRAME_HEIGHT,
+            height: measured ? frameHeight * scale : frameHeight,
           }}
         >
           <iframe
             title={`Preview of ${slug}`}
             src={`/preview/${slug}?theme=${theme}`}
             width={frameWidth}
-            height={FRAME_HEIGHT}
+            height={frameHeight}
             className={
               measured
                 ? "absolute top-0 left-0 block border-0"

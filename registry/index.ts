@@ -8,6 +8,7 @@ import type { CatalogItem } from "@/registry/meta"
 import featuresRegistry from "@/registry/blocks/features/registry.json"
 import heroRegistry from "@/registry/blocks/hero/registry.json"
 import pricingRegistry from "@/registry/blocks/pricing/registry.json"
+import buttonsRegistry from "@/registry/components/buttons/registry.json"
 
 /**
  * Реестры, попадающие на сайт. Это и есть файловая база каталога: другого
@@ -16,11 +17,7 @@ import pricingRegistry from "@/registry/blocks/pricing/registry.json"
  *
  * Порядок списка задаёт порядок items в каталоге. `kind` объявляется на
  * уровне реестра, а не у каждого item'а: все items одного реестра —
- * одного типа. Мелкие компоненты добавляются одной строкой, например:
- *
- *   import buttonsRegistry from "@/registry/components/buttons/registry.json"
- *   { directory: "registry/components/buttons", kind: "component",
- *     items: buttonsRegistry.items },
+ * одного типа.
  */
 const SOURCES = [
   {
@@ -37,6 +34,11 @@ const SOURCES = [
     directory: "registry/blocks/pricing",
     kind: "block",
     items: pricingRegistry.items,
+  },
+  {
+    directory: "registry/components/buttons",
+    kind: "component",
+    items: buttonsRegistry.items,
   },
 ] as const satisfies readonly {
   directory: string

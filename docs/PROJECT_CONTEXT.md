@@ -184,7 +184,7 @@ Metadata также должна жить в одном месте:
 - [../registry/blocks/hero/registry.json](../registry/blocks/hero/registry.json) — metadata hero-блоков.
 - [../registry/blocks/hero/hero-001/hero-001.tsx](../registry/blocks/hero/hero-001/hero-001.tsx) — первый эталонный блок.
 - [../components/block-preview.tsx](../components/block-preview.tsx) — iframe preview.
-- [../components/block-thumbnail.tsx](../components/block-thumbnail.tsx) — live thumbnail в каталоге.
+- [../components/catalog/catalog-thumbnail.tsx](../components/catalog/catalog-thumbnail.tsx) — live thumbnail в каталоге.
 - [../components/catalog/catalog-shell.tsx](../components/catalog/catalog-shell.tsx) — тёмная оболочка каталога.
 - [../components/catalog/catalog-card.tsx](../components/catalog/catalog-card.tsx) — карточка с Copy for AI.
 - [../app/globals.css](../app/globals.css) — тема, токены и масштабирование миниатюры.
@@ -236,6 +236,10 @@ Complete:
   ставшие ненужными `@base-ui/react` и `class-variance-authority`.
   `components/ui/` физически исчез, алиас `ui` в `components.json`
   оставлен — он нужен shadcn CLI.
+- Component preview mode + `button-001` — первый item типа `component`:
+  `registry/components/buttons/button-001/`. Превью выбирается по `kind`,
+  поэтому кнопка показывается в натуральную величину, а не точкой.
+  Каталог: 6 items, два типа, sidebar раскрылся в два уровня.
 
 ## Статус Phase 3
 
@@ -291,8 +295,8 @@ VibeUI catalog-first: лендинга больше нет, `/` — это са�
 
 ### Ограничение: shell-only компоненты
 
-`CopyButton`, `CodeBlock`, `BlockPreview` и `BlockThumbnail` лежат в
-`components/`, но сейчас это **catalog-shell UI**: их цвета завязаны на
+`CopyButton`, `CodeBlock`, `BlockPreview` и `CatalogThumbnail` — это
+**catalog-shell UI**: их цвета завязаны на
 токены `--shell-*`, а те объявлены только на `.catalog-shell`. Вне оболочки
 цвета не разрешатся и компонент отрендерится сломанным.
 
@@ -346,9 +350,9 @@ API `registry/index.ts`:
 - `getUsedCategories(kind?)` — категории с counts, опционально внутри типа;
 - `getCatalogNavSections()` — разделы sidebar: типы, внутри — категории.
 
-### Как добавить первый мелкий компонент
+### Как добавить мелкий компонент
 
-Модель готова, items ещё нет — `registry/components/` пустая. Порядок:
+Первый — `button-001` в `registry/components/buttons/`. Порядок тот же:
 
 1. `registry/components/<category>/registry.json` + сам компонент рядом;
 2. корневой `registry.json` → `include[]`;
@@ -417,10 +421,9 @@ metadata пяти существующих блоков; **для `kind: compone
 единственное изменение публикуемых `/r/*.json` — по одной строке на item,
 остальное содержимое побайтово прежнее.
 
-Известный блокер остаётся: для `kind: component` нужен отдельный режим
-превью — мелкий компонент нельзя показывать section-масштабом 1280px.
-Промпт к первому `button-001` уже готов, превью — нет. Решать вместе
-с первым компонентом, см. DELIVERY.md.
+Режимы превью закрыты вместе с первым компонентом: миниатюра и фрейм
+выбираются по `kind` — секция масштабируется из 1280px, мелкий компонент
+показывается в натуральную величину по центру кадра. См. DELIVERY.md.
 
 Обернуть миниатюру в ссылку нельзя — внутри блоков есть свои `<a>`, вложенные
 ссылки дают ошибку гидратации. Кликабельность карточки даёт растянутый
@@ -430,8 +433,8 @@ Tab-порядка атрибутом `inert` на обёртке миниатю
 
 ### Миниатюры
 
-`BlockThumbnail` не изменился по существу: тот же блок, тот же масштаб от
-собственной ширины. Подложка — цвет панели карточки, чтобы блок ниже 16/9 не
+`CatalogThumbnail` (тогда — `BlockThumbnail`) не изменился по существу: тот
+же блок, тот же масштаб от собственной ширины. Подложка — цвет панели карточки, чтобы блок ниже 16/9 не
 читался как обрезанная серая полоса. Запасные фиксированные масштабы
 в `.block-thumbnail-scale` посчитаны под ширину карточки в новой сетке
 (контейнер `max-w-[1440px]`, sidebar 14rem + gap 2rem от `lg`,

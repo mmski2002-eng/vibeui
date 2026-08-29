@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { BlockThumbnail } from "@/components/block-thumbnail"
+import { CatalogThumbnail } from "@/components/catalog/catalog-thumbnail"
 import { CopyButton } from "@/components/copy-button"
 import { buildCopyForAiPrompt } from "@/lib/copy-for-ai"
 import { getInstallCommand, getRegistryItemUrl } from "@/lib/site"
@@ -28,7 +28,7 @@ export function CatalogCard({ item }: { item: CatalogItem }) {
     // ссылки — невалидный HTML. Кликабельность карточки даёт растянутый
     // псевдоэлемент заголовка; строка действий поднята над ним через z-10.
     <article className="border-shell-border bg-shell-panel hover:border-shell-border-strong focus-within:ring-shell-ring relative flex h-full flex-col overflow-hidden rounded-xl border transition-colors focus-within:ring-2">
-      <BlockThumbnail slug={item.name} />
+      <CatalogThumbnail slug={item.name} />
 
       <div className="border-shell-border flex flex-1 flex-col gap-1 border-t p-4">
         <p className="text-shell-muted flex items-center gap-1.5 text-xs font-medium tracking-wide uppercase">

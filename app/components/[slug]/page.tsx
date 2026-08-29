@@ -56,10 +56,11 @@ export default async function ComponentPage({
   const source = await getBlockSource(slug)
   const installCommand = getInstallCommand(block.name)
   const registryUrl = getRegistryItemUrl(block.name)
+  const kind = getItemKind(block.name) ?? "block"
   const aiPrompt = buildCopyForAiPrompt(block, {
     installCommand,
     registryUrl,
-    kind: getItemKind(block.name) ?? "block",
+    kind,
   })
   const category = block.categories?.[0]
   const tags = block.meta?.tags ?? []
@@ -126,7 +127,7 @@ export default async function ComponentPage({
           >
             Preview
           </h2>
-          <BlockPreview slug={block.name} />
+          <BlockPreview slug={block.name} compact={kind === "component"} />
         </section>
 
         {/* Главный блок страницы: пользователь пришёл за инструкцией для

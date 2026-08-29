@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation"
 
+import { getItemKind } from "@/registry/index"
 import { CATALOG_PREVIEWS } from "@/registry/previews"
 
 export function generateStaticParams() {
@@ -21,12 +22,16 @@ export default async function PreviewPage({
     notFound()
   }
 
+  // Секция занимает фрейм целиком, мелкий компонент — нет: его нужно
+  // центрировать, иначе кнопка окажется в углу пустой страницы 1440×760.
+  const centered = getItemKind(slug) === "component"
+
   return (
     <div
       className={
-        theme === "dark"
-          ? "dark bg-background min-h-screen"
-          : "bg-background min-h-screen"
+        (theme === "dark" ? "dark " : "") +
+        "bg-background min-h-screen" +
+        (centered ? " flex items-center justify-center p-10" : "")
       }
     >
       <Block />

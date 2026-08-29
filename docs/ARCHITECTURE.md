@@ -38,7 +38,7 @@ registry/
   meta.ts                        типы CatalogItem / CatalogMeta
   previews.ts                    карта slug -> React-компонент
   blocks/<category>/<name>/      распространяемая секция — source of truth
-  components/<category>/<name>/  мелкие компоненты (пока пусто)
+  components/<category>/<name>/  мелкие компоненты
 lib/utils.ts                     cn() и утилиты
 components.json                  конфиг shadcn CLI
 public/r/                        сгенерированные registry JSON (позже)
@@ -100,7 +100,10 @@ registry/
   meta.ts                           типы поля meta (tags + AI-описание)
   blocks/
     hero/registry.json              items категории
-    hero/hero-001/hero-001.tsx      исходник блока
+    hero/hero-001/hero-001.tsx      исходник секции
+  components/
+    buttons/registry.json           items категории
+    buttons/button-001/button-001.tsx  исходник компонента
 public/r/                           артефакт сборки, в git не коммитится
 ```
 
@@ -149,7 +152,11 @@ production-домен. Значение доезжает в собранный `
 в каталоге нет, поэтому число блоков не увеличивает число фреймов. Copy for AI
 собирается на сервере прямо в карточке и доступен из сетки.
 
-Миниатюра: блок рендерится в свою «настоящую» ширину (1280px) и вписывается
+Миниатюра зависит от `kind`. Мелкий компонент (`kind: component`)
+показывается в натуральную величину по центру кадра: секционный масштаб
+превратил бы кнопку в точку. Дальше — про секции.
+
+Миниатюра секции: блок рендерится в свою «настоящую» ширину (1280px) и вписывается
 в карточку через `transform: scale(calc(100cqw / var(--thumbnail-width)))`
 внутри container-query контекста; перед этим объявлен фиксированный запасной
 масштаб для браузеров без деления длин в `calc()`. Обёртка получает `inert`
