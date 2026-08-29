@@ -135,8 +135,15 @@
      фиксированный масштаб для браузеров без деления длин в calc(). */
   .block-thumbnail-scale {
     width: var(--thumbnail-width);
+    /* Запасной фиксированный масштаб: Firefox не умеет делить длины в calc(),
+       и без @supports сбрасывает transform в none вместе с этим значением. */
     transform: scale(0.27);
-    transform: scale(calc(100cqw / var(--thumbnail-width)));
     transform-origin: top left;
+  }
+
+  @supports (transform: scale(calc(100cqw / 1280px))) {
+    .block-thumbnail-scale {
+      transform: scale(calc(100cqw / var(--thumbnail-width)));
+    }
   }
 }
