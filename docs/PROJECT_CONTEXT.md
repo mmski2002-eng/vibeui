@@ -194,8 +194,10 @@ Complete:
 - Phase 2 — component page, preview, install command, Copy for AI.
 - Phase 3A — catalog + home.
 - Phase 3A+ — self-hosted production на https://vibeui.ru.
-- Phase 3A++ — foundation fixes перед Hero 002 (см. ниже). В репозитории,
-  на production ещё не задеплоено.
+- Phase 3A++ — foundation fixes перед Hero 002 (см. ниже), задеплоено
+  коммитом `920bdbb`.
+- Hero 002 / Console Hero — светлый split B2B SaaS с product mockup справа.
+  В репозитории, на production ещё не задеплоен.
 
 Hero 001:
 
@@ -302,13 +304,14 @@ Production реально рендерился через Edge headless на:
 
 1. ~~Исправить foundation issues после visual audit.~~ сделано;
 2. ~~Перепроверить local render на mobile/tablet/desktop.~~ сделано;
-3. задеплоить foundation fixes на production и перепроверить там же;
-4. утвердить specification Hero 002;
-5. только потом реализовывать Hero 002.
+3. ~~задеплоить foundation fixes на production.~~ сделано, `920bdbb`;
+4. ~~утвердить specification Hero 002.~~ сделано;
+5. ~~реализовать Hero 002.~~ сделано, ждёт ревью;
+6. задеплоить Hero 002 и проверить установку по HTTPS в чистый проект;
+7. решить по `meta.featured` для hero-002 после ревью на production.
 
-Текущая точка: шаг 3. Изменения лежат в рабочем дереве, не закоммичены
-и не задеплоены — production отдаёт старую сборку. Спецификация Hero 002
-подготовлена, но не утверждена.
+Текущая точка: шаг 6. Hero 002 лежит в рабочем дереве и проверен локально;
+production отдаёт сборку без него. `meta.featured` у hero-002 не выставлен.
 
 ## Направление Hero 002
 

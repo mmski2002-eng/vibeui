@@ -5,7 +5,9 @@ import type { ComponentType } from "react"
 // генерировать из registry.json, а не вести руками.
 
 import { Hero001 } from "@/registry/blocks/hero/hero-001/hero-001"
+import { Hero002 } from "@/registry/blocks/hero/hero-002/hero-002"
 
 export const HERO_COMPONENTS: Record<string, ComponentType> = {
   "hero-001": Hero001,
+  "hero-002": Hero002,
 }
