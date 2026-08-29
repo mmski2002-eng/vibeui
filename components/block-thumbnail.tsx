@@ -17,7 +17,7 @@ export function BlockThumbnail({ slug }: { slug: string }) {
 
   return (
     <div
-      className="bg-muted @container aspect-[16/9] w-full overflow-hidden"
+      className="bg-muted @container relative aspect-[16/9] w-full overflow-hidden"
       style={{ "--thumbnail-width": `${THUMBNAIL_WIDTH}px` } as CSSProperties}
     >
       {/* inert убирает ссылки блока из Tab-порядка каталога */}

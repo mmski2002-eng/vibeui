@@ -1,9 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "vibeui",
-  "homepage": "https://vibeui.dev",
-  "include": [
-    "registry/blocks/_smoke/registry.json",
-    "registry/blocks/hero/registry.json"
-  ]
+  "homepage": "https://vibeui.ru",
+  "include": ["registry/blocks/hero/registry.json"]
 }

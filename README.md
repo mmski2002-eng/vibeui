@@ -11,7 +11,15 @@ shadcn-совместимый, поэтому агенты работают с �
 ## Стек
 
 Next.js 16 (App Router) · React 19 · TypeScript strict · Tailwind CSS v4 ·
-shadcn/ui · npm · Vercel
+shadcn/ui · npm
+
+## Деплой
+
+Self-hosted на собственном VPS: `output: "standalone"`, systemd-юнит,
+nginx как реверс-прокси с TLS. Docker не используется.
+
+Production — [vibeui.ru](https://vibeui.ru), registry —
+[vibeui.ru/r](https://vibeui.ru/r). Шаги и конфиги: [docs/DEPLOY.md](docs/DEPLOY.md).
 
 ## Команды
 

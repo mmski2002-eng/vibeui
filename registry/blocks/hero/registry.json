@@ -26,9 +26,10 @@
             "тёмный фон блока независимо от темы проекта",
             "локальную палитру --vibeui-hero-* — не заменять её на токены темы проекта (bg-background, text-foreground, primary и т.п.)",
             "ambient glow и grid-подложку",
-            "clamp-типографику заголовка и tracking",
+            "clamp-типографику заголовка и tracking в единицах cqi",
             "entrance-анимации и стагер через animation-delay",
-            "responsive-поведение CTA: столбик на мобильном, строка от sm",
+            "container-type: inline-size на корне блока и @container-правила в его <style> — блок меряет собственную ширину, а не ширину окна; не переписывай их на viewport-медиазапросы",
+            "responsive-поведение CTA: столбик на узком блоке, строка от 40rem ширины блока",
             "семантику: один h1, CTA как <a href>, декоративные слои aria-hidden",
             "блок <style> внутри компонента — в нём keyframes и prefers-reduced-motion"
           ],

@@ -131,14 +131,35 @@
 
 @layer components {
   /* Миниатюра блока в каталоге: блок рендерится в свою «настоящую» ширину
-     и вписывается в карточку масштабированием. Первая строка — запасной
-     фиксированный масштаб для браузеров без деления длин в calc(). */
+     и вписывается в карточку масштабированием.
+
+     position:absolute убирает широкий слой из потока: даже если движок не
+     применит transform, слой останется обрезанным карточкой и не сможет
+     растянуть страницу по горизонтали. */
   .block-thumbnail-scale {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: var(--thumbnail-width);
-    /* Запасной фиксированный масштаб: Firefox не умеет делить длины в calc(),
-       и без @supports сбрасывает transform в none вместе с этим значением. */
+    /* Запасные фиксированные масштабы: Firefox не умеет делить длины в calc(),
+       и без @supports сбрасывает transform в none вместе с этим значением.
+       Значения посчитаны под ширину карточки на каждом шаге сетки каталога. */
     transform: scale(0.27);
     transform-origin: top left;
+  }
+
+  /* 2 колонки от sm */
+  @media (min-width: 40rem) {
+    .block-thumbnail-scale {
+      transform: scale(0.27);
+    }
+  }
+
+  /* 3 колонки от lg: карточка ~307px, прежние 0.27 обрезали блок на 12% */
+  @media (min-width: 64rem) {
+    .block-thumbnail-scale {
+      transform: scale(0.24);
+    }
   }
 
   @supports (transform: scale(calc(100cqw / 1280px))) {

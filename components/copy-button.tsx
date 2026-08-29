@@ -6,15 +6,23 @@ type CopyButtonProps = {
   value: string | null
   label: string
   copiedLabel?: string
+  variant?: "primary" | "secondary"
   className?: string
 }
 
 type CopyState = "idle" | "copied" | "failed"
 
+const VARIANTS = {
+  primary:
+    "bg-foreground text-background border-foreground hover:opacity-90 shadow-sm ",
+  secondary: "hover:bg-muted ",
+}
+
 export function CopyButton({
   value,
   label,
   copiedLabel = "Copied",
+  variant = "secondary",
   className,
 }: CopyButtonProps) {
   const [state, setState] = useState<CopyState>("idle")
@@ -43,7 +51,7 @@ export function CopyButton({
         "focus-visible:ring-ring inline-flex h-9 shrink-0 items-center justify-center rounded-md border px-3 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 " +
         (state === "failed"
           ? "border-destructive text-destructive "
-          : "hover:bg-muted ") +
+          : VARIANTS[variant]) +
         (className ?? "")
       }
     >

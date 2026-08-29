@@ -21,6 +21,13 @@ export type Hero001Props = {
 // Блок везде выглядит одинаково, поэтому палитра, шрифт и keyframes живут здесь,
 // а не в globals.css проекта. Селектор в :where() — нулевая специфичность,
 // так что любой класс или inline style пользователя переопределяет значение.
+//
+// container-type делает блок собственным query-контейнером: раскладка и размер
+// шрифта считаются от ширины блока, а не от ширины окна. Поэтому блок выглядит
+// одинаково и на странице, и в масштабированной миниатюре каталога, где он
+// рендерится в 1280px внутри узкого окна. Правила раскладки живут здесь, а не
+// в Tailwind-вариантах, чтобы блок не зависел от версии Tailwind в чужом
+// проекте; специфичность (0,2,0) — выше утилит, поэтому они переопределяются.
 const STYLES = `
 :where([data-vibeui-block="hero-001"]){
 --vibeui-hero-bg:oklch(0.16 0.014 266);
@@ -33,6 +40,14 @@ const STYLES = `
 --vibeui-hero-glow:color-mix(in oklab, var(--vibeui-hero-accent) 38%, transparent);
 --vibeui-hero-grid:oklch(1 0 0 / 6%);
 --vibeui-hero-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="hero-001"]{container-type:inline-size}
+@container (min-width:40rem){
+[data-vibeui-block="hero-001"] [data-part="frame"]{padding-left:2.5rem;padding-right:2.5rem}
+[data-vibeui-block="hero-001"] [data-part="actions"]{width:auto;flex-direction:row}
+}
+@container (min-width:48rem){
+[data-vibeui-block="hero-001"] [data-part="frame"]{min-height:680px;padding-top:8rem;padding-bottom:8rem}
 }
 @keyframes vibeui-hero-001-fade-up{from{opacity:0;transform:translate3d(0,14px,0)}to{opacity:1;transform:none}}
 @keyframes vibeui-hero-001-glow{0%,100%{opacity:.68}50%{opacity:1}}
@@ -73,7 +88,7 @@ export function Hero001({
       data-vibeui-block="hero-001"
       style={style}
       className={cx(
-        "relative isolate flex min-h-[560px] items-center overflow-hidden bg-[var(--vibeui-hero-bg)] px-6 py-24 font-[family-name:var(--vibeui-hero-font)] text-[var(--vibeui-hero-fg)] antialiased sm:px-10 md:min-h-[680px] md:py-32",
+        "relative isolate overflow-hidden bg-[var(--vibeui-hero-bg)] font-[family-name:var(--vibeui-hero-font)] text-[var(--vibeui-hero-fg)] antialiased",
         className,
       )}
     >
@@ -103,119 +118,127 @@ export function Hero001({
         }}
       />
 
-      <div className="relative mx-auto flex w-full max-w-3xl flex-col items-center text-center">
-        {badge ? (
-          <span
-            className={cx(
-              ENTER,
-              "inline-flex items-center gap-2 rounded-full border border-[var(--vibeui-hero-border)] px-3.5 py-1.5 text-xs font-medium tracking-wide text-[var(--vibeui-hero-muted)]",
-            )}
-          >
+      {/* Отступы и высота живут на внутреннем слое: container-запросы читают
+          ширину секции, а сама секция своим контейнером быть не может. */}
+      <div
+        data-part="frame"
+        className="relative flex min-h-[560px] items-center px-6 py-24"
+      >
+        <div className="mx-auto flex w-full max-w-3xl flex-col items-center text-center">
+          {badge ? (
             <span
-              aria-hidden="true"
-              className="size-1.5 rounded-full bg-[var(--vibeui-hero-accent)]"
-            />
-            {badge}
-          </span>
-        ) : null}
-
-        <h1
-          className={cx(
-            ENTER,
-            "mt-7 text-[clamp(2.5rem,6vw,4.75rem)] leading-[1.04] font-semibold tracking-tight text-balance [animation-delay:60ms]",
-          )}
-        >
-          {title}
-          {titleAccent ? (
-            <>
-              {" "}
-              <span className="text-[var(--vibeui-hero-muted)]">
-                {titleAccent}
-              </span>
-            </>
+              className={cx(
+                ENTER,
+                "inline-flex items-center gap-2 rounded-full border border-[var(--vibeui-hero-border)] px-3.5 py-1.5 text-xs font-medium tracking-wide text-[var(--vibeui-hero-muted)]",
+              )}
+            >
+              <span
+                aria-hidden="true"
+                className="size-1.5 rounded-full bg-[var(--vibeui-hero-accent)]"
+              />
+              {badge}
+            </span>
           ) : null}
-        </h1>
 
-        {description ? (
-          <p
+          <h1
             className={cx(
               ENTER,
-              "mt-6 max-w-xl text-[clamp(1rem,1.6vw,1.15rem)] leading-relaxed text-pretty text-[var(--vibeui-hero-muted)] [animation-delay:120ms]",
+              "mt-7 text-[clamp(2.25rem,6cqi,4.75rem)] leading-[1.04] font-semibold tracking-tight text-balance break-words [animation-delay:60ms]",
             )}
           >
-            {description}
-          </p>
-        ) : null}
+            {title}
+            {titleAccent ? (
+              <>
+                {" "}
+                <span className="text-[var(--vibeui-hero-muted)]">
+                  {titleAccent}
+                </span>
+              </>
+            ) : null}
+          </h1>
 
-        <div
-          className={cx(
-            ENTER,
-            "mt-10 flex w-full flex-col gap-3 [animation-delay:180ms] sm:w-auto sm:flex-row",
-          )}
-        >
-          {primaryAction ? (
-            <a
-              href={primaryAction.href}
+          {description ? (
+            <p
               className={cx(
-                ACTION_BASE,
-                "bg-[var(--vibeui-hero-accent)] text-[var(--vibeui-hero-accent-fg)] transition-[filter,transform] duration-150 hover:-translate-y-px hover:brightness-110",
+                ENTER,
+                "mt-6 max-w-xl text-[clamp(1rem,1.6cqi,1.15rem)] leading-relaxed text-pretty break-words text-[var(--vibeui-hero-muted)] [animation-delay:120ms]",
               )}
-              style={{
-                boxShadow:
-                  "0 14px 40px -14px color-mix(in oklab, var(--vibeui-hero-accent) 70%, transparent)",
-              }}
             >
-              {primaryAction.label}
-            </a>
+              {description}
+            </p>
           ) : null}
 
-          {secondaryAction ? (
-            <a
-              href={secondaryAction.href}
+          <div
+            data-part="actions"
+            className={cx(
+              ENTER,
+              "mt-10 flex w-full max-w-full flex-col gap-3 [animation-delay:180ms]",
+            )}
+          >
+            {primaryAction ? (
+              <a
+                href={primaryAction.href}
+                className={cx(
+                  ACTION_BASE,
+                  "bg-[var(--vibeui-hero-accent)] text-[var(--vibeui-hero-accent-fg)] transition-[filter,transform] duration-150 hover:-translate-y-px hover:brightness-110",
+                )}
+                style={{
+                  boxShadow:
+                    "0 14px 40px -14px color-mix(in oklab, var(--vibeui-hero-accent) 70%, transparent)",
+                }}
+              >
+                {primaryAction.label}
+              </a>
+            ) : null}
+
+            {secondaryAction ? (
+              <a
+                href={secondaryAction.href}
+                className={cx(
+                  ACTION_BASE,
+                  "border border-[var(--vibeui-hero-border)] text-[var(--vibeui-hero-fg)] transition-colors duration-150 hover:bg-[color-mix(in_oklab,var(--vibeui-hero-fg)_10%,transparent)]",
+                )}
+              >
+                {secondaryAction.label}
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  className="size-4 transition-transform duration-150 group-hover:translate-x-0.5"
+                >
+                  <path
+                    d="M3 8h9m0 0L8.5 4.5M12 8l-3.5 3.5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </a>
+            ) : null}
+          </div>
+
+          {highlights.length > 0 ? (
+            <ul
               className={cx(
-                ACTION_BASE,
-                "border border-[var(--vibeui-hero-border)] text-[var(--vibeui-hero-fg)] transition-colors duration-150 hover:bg-[color-mix(in_oklab,var(--vibeui-hero-fg)_10%,transparent)]",
+                ENTER,
+                "mt-10 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-[var(--vibeui-hero-muted)] [animation-delay:240ms]",
               )}
             >
-              {secondaryAction.label}
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 16 16"
-                fill="none"
-                className="size-4 transition-transform duration-150 group-hover:translate-x-0.5"
-              >
-                <path
-                  d="M3 8h9m0 0L8.5 4.5M12 8l-3.5 3.5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </a>
+              {highlights.map((highlight, index) => (
+                <li key={highlight} className="flex items-center gap-3">
+                  {index > 0 ? (
+                    <span
+                      aria-hidden="true"
+                      className="size-1 rounded-full bg-[var(--vibeui-hero-border)]"
+                    />
+                  ) : null}
+                  {highlight}
+                </li>
+              ))}
+            </ul>
           ) : null}
         </div>
-
-        {highlights.length > 0 ? (
-          <ul
-            className={cx(
-              ENTER,
-              "mt-10 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-[var(--vibeui-hero-muted)] [animation-delay:240ms]",
-            )}
-          >
-            {highlights.map((highlight, index) => (
-              <li key={highlight} className="flex items-center gap-3">
-                {index > 0 ? (
-                  <span
-                    aria-hidden="true"
-                    className="size-1 rounded-full bg-[var(--vibeui-hero-border)]"
-                  />
-                ) : null}
-                {highlight}
-              </li>
-            ))}
-          </ul>
-        ) : null}
       </div>
     </section>
   )

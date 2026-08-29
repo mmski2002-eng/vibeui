@@ -12,7 +12,8 @@
   primitives — `@base-ui/react`, **не** Radix
 - `class-variance-authority`, `clsx`, `tailwind-merge`, `tw-animate-css`, `lucide-react`
 - ESLint 9 (flat) + Prettier 3 с `prettier-plugin-tailwindcss`
-- npm, деплой Vercel
+- npm; деплой self-hosted на VPS: Next standalone (`output: "standalone"`),
+  systemd, nginx с TLS — подробности в [DEPLOY.md](DEPLOY.md)
 
 Без БД и бэкенд-сервисов: данные каталога статические, из кода.
 
@@ -81,13 +82,16 @@ Source: корневой `registry.json` (name, homepage, `include[]`) + по о
 item'е резолвятся относительно объявившего его `registry.json`. Имена item'ов
 уникальны по всему дереву.
 
+Корневой `include[]` — это и есть граница публикации: попало в него —
+раздаётся по HTTPS. Служебный `_smoke` в него не входит.
+
 ```
-registry.json                       корень: include[]
+registry.json                       корень: include[] — что публикуется
 registry/
   categories.ts                     список категорий каталога
   meta.ts                           типы поля meta (tags + AI-описание)
   blocks/
-    _smoke/                         технический item для проверки pipeline
+    _smoke/                         технический item, вне публикации
     hero/registry.json              items категории
     hero/hero-001/hero-001.tsx      исходник блока
 public/r/                           артефакт сборки, в git не коммитится
@@ -101,15 +105,19 @@ public/r/                           артефакт сборки, в git не �
 
 ```bash
 npm run registry:validate   # shadcn registry validate ./registry.json
-npm run registry:build      # shadcn build -> public/r/
+npm run registry:build      # очистка public/r/, затем shadcn build -> public/r/
 npm run build               # registry:build + next build
 ```
+
+`registry:build` чистит `public/r/` перед сборкой: без этого item, удалённый
+из `include[]`, продолжал бы раздаваться со старой сборки.
 
 Установка у пользователя:
 `npx shadcn@latest add https://<domain>/r/<name>.json`.
 
-`homepage` в корневом `registry.json` — заглушка `https://vibeui.dev`,
-поменять на реальный домен до первой публикации.
+`homepage` в корневом `registry.json` — `https://vibeui.ru`, реальный
+production-домен. Значение доезжает в собранный `public/r/registry.json`,
+поэтому при смене домена его нужно менять вместе с `REGISTRY_BASE_URL`.
 
 ### REGISTRY_BASE_URL
 

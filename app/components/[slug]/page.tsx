@@ -157,7 +157,11 @@ export default async function ComponentPage({
             <h2 id="ai-heading" className="text-lg font-medium">
               Copy for AI
             </h2>
-            <CopyButton value={aiPrompt} label="Copy for AI" />
+            <CopyButton
+              value={aiPrompt}
+              label="Copy for AI"
+              variant="primary"
+            />
           </div>
           <p className="text-muted-foreground mb-4 max-w-2xl text-sm">
             Инструкция для AI-агента: что установить, что сохранить и что можно

@@ -11,7 +11,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "registry:validate": "shadcn registry validate ./registry.json",
-    "registry:build": "shadcn build"
+    "registry:build": "node -e \"require('node:fs').rmSync('public/r',{recursive:true,force:true})\" && shadcn build"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

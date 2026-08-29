@@ -2,6 +2,10 @@
 
 Инструкции для AI-разработчика. Читать перед любой задачей.
 
+Быстрый актуальный контекст проекта для новой сессии:
+[docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md). Если сведения расходятся,
+предпочитать более свежий `PROJECT_CONTEXT.md` и фактический код/`package.json`.
+
 Контекст: [docs/PRODUCT.md](docs/PRODUCT.md) — продукт и сценарий, [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — устройство кода, [docs/ROADMAP.md](docs/ROADMAP.md) — фазы и Definition of Done.
 
 ## Product
@@ -49,7 +53,8 @@ auth, billing, subscriptions, referrals, marketplace, MCP, visual builder,
 - `lucide-react` — иконки
 - ESLint 9 (flat config, `eslint-config-next`) + Prettier 3 с `prettier-plugin-tailwindcss`
 - Пакетный менеджер: npm
-- Деплой: Vercel
+- Деплой: self-hosted VPS — Next standalone (`output: "standalone"`),
+  systemd, nginx с TLS. Не Vercel, не Docker. См. `docs/DEPLOY.md`
 
 Ничего сверх этого списка без явной необходимости и согласования.
 
