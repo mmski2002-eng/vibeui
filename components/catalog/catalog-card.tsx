@@ -3,8 +3,8 @@ import Link from "next/link"
 import { BlockThumbnail } from "@/components/block-thumbnail"
 import { CopyButton } from "@/components/copy-button"
 import { buildCopyForAiPrompt } from "@/lib/copy-for-ai"
-import { getInstallCommand } from "@/lib/site"
-import { getCategoryLabel } from "@/registry/index"
+import { getInstallCommand, getRegistryItemUrl } from "@/lib/site"
+import { getCategoryLabel, getItemKind } from "@/registry/index"
 import type { CatalogItem } from "@/registry/meta"
 
 /**
@@ -17,7 +17,11 @@ export function CatalogCard({ item }: { item: CatalogItem }) {
   const category = item.categories?.[0]
   // Карточка серверная: промпт собирается из metadata здесь, клиент получает
   // готовую строку и не тянет registry в бандл.
-  const prompt = buildCopyForAiPrompt(item, getInstallCommand(item.name))
+  const prompt = buildCopyForAiPrompt(item, {
+    installCommand: getInstallCommand(item.name),
+    registryUrl: getRegistryItemUrl(item.name),
+    kind: getItemKind(item.name) ?? "block",
+  })
 
   return (
     // Ссылка не оборачивает миниатюру: внутри блока есть свои <a>, а вложенные

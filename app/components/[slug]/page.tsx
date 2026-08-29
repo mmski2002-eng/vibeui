@@ -13,6 +13,7 @@ import {
   getCatalogItem,
   getCatalogItems,
   getCategoryLabel,
+  getItemKind,
 } from "@/registry/index"
 import { getBlockSource } from "@/registry/source.server"
 
@@ -55,7 +56,11 @@ export default async function ComponentPage({
   const source = await getBlockSource(slug)
   const installCommand = getInstallCommand(block.name)
   const registryUrl = getRegistryItemUrl(block.name)
-  const aiPrompt = buildCopyForAiPrompt(block, installCommand)
+  const aiPrompt = buildCopyForAiPrompt(block, {
+    installCommand,
+    registryUrl,
+    kind: getItemKind(block.name) ?? "block",
+  })
   const category = block.categories?.[0]
   const tags = block.meta?.tags ?? []
 

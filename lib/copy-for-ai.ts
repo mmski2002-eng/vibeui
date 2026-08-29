@@ -1,30 +1,119 @@
+import type { ItemKind } from "@/registry/categories"
 import type { CatalogItem } from "@/registry/meta"
 
-function section(title: string, lines: string[]): string[] {
-  return lines.length > 0
-    ? [title, ...lines.map((line) => `- ${line}`), ""]
-    : []
+export type CopyForAiContext = {
+  installCommand: string | null
+  registryUrl: string | null
+  kind: ItemKind
 }
 
 /**
- * Первая версия инструкции для агента. Собирается только из metadata блока,
- * вручную ничего не дописывается. Phase 3 заменит функцию шаблонным движком
- * с профилями агентов — контракт (CatalogItem -> строка) останется прежним.
+ * Куда item попадёт после установки. `files[0].target` объявлен в схеме
+ * shadcn как `@components/vibeui/<name>.tsx`; ведущая `@` — алиас проекта,
+ * агенту полезнее видеть обычный путь.
+ */
+function installPath(item: CatalogItem): string | null {
+  const target = item.files?.[0]?.target
+
+  return target ? target.replace(/^@/, "") : null
+}
+
+function importPath(item: CatalogItem): string | null {
+  const path = installPath(item)
+
+  return path ? `@/${path.replace(/\.[jt]sx?$/, "")}` : null
+}
+
+function bullets(lines: string[]): string[] {
+  return lines.map((line) => `- ${line}`)
+}
+
+function section(heading: string, body: string[]): string[] {
+  return body.length > 0 ? [heading, ...body, ""] : []
+}
+
+/** Секция 3 отличает выдачу мелкого компонента от выдачи секции. */
+function howToUse(item: CatalogItem, kind: ItemKind): string[] {
+  const ai = item.meta?.ai
+  const from = importPath(item)
+  const lines: string[] = []
+
+  if (ai?.export && from) {
+    lines.push(`import { ${ai.export} } from "${from}"`, "")
+  }
+
+  if (ai?.usage) {
+    lines.push(ai.usage, "")
+    lines.push("Read the installed file for the full prop list.")
+  } else if (kind === "block") {
+    lines.push(
+      "This is a whole page section. Render it as one piece — do not copy",
+      "fragments out of it and do not rebuild it from smaller components.",
+      "Read the installed file for the export name and its props.",
+    )
+  } else {
+    lines.push(
+      "Read the installed file for the export name, its props and how to",
+      "render it. Do not guess the API.",
+    )
+  }
+
+  return lines
+}
+
+/** Секция 4 — прямой ответ на «размести вот это тут». */
+function wherePlace(kind: ItemKind): string[] {
+  if (kind === "component") {
+    return [
+      "This is a small inline component. Put it exactly where the user asked,",
+      "inside the existing markup. Do not create a new page, section or",
+      "wrapper for it. If a similar control already sits in that spot,",
+      "replace it instead of adding a second one.",
+    ]
+  }
+
+  if (kind === "template") {
+    return [
+      "This is a whole page. Use it as the content root of the page the user",
+      "named. Do not nest it inside another page's layout.",
+    ]
+  }
+
+  return [
+    "This is a full-width page section. Place it as a direct child of the",
+    "page layout, in the section order the user asked for. Do not nest it",
+    "inside a card, sidebar, modal or any narrow inline container: the",
+    "section measures its own width and will lay out wrong there.",
+  ]
+}
+
+/**
+ * Инструкция для агента. Собирается только из metadata item'а, вручную
+ * ничего не дописывается. Структура — Product Delivery Model v1,
+ * см. docs/DELIVERY.md: промпт должен ответить не только «как установить»,
+ * но и «как использовать» и «куда поставить».
  */
 export function buildCopyForAiPrompt(
   item: CatalogItem,
-  installCommand: string | null,
+  context: CopyForAiContext,
 ): string {
+  const { installCommand, registryUrl, kind } = context
   const ai = item.meta?.ai
   const title = item.title ?? item.name
+  const target = installPath(item)
 
   const lines: string[] = [
-    `Use the VibeUI component "${item.name}" (${title}) in this project.`,
+    `# Install and place "${item.name}" (${title}) from VibeUI`,
     "",
+    "## 1. Install first — do not skip, do not recreate",
   ]
 
   if (installCommand) {
-    lines.push("Install it with this exact command:", installCommand, "")
+    lines.push(
+      "Run this exact command before writing any code:",
+      installCommand,
+      "",
+    )
   } else {
     lines.push(
       "Install command is unavailable: the VibeUI registry URL is not configured.",
@@ -32,35 +121,70 @@ export function buildCopyForAiPrompt(
     )
   }
 
-  if (item.description) {
-    lines.push("What it is:", item.description, "")
+  if (registryUrl) {
+    lines.push(`Registry item: ${registryUrl}`)
   }
 
-  if (ai?.summary) {
-    lines.push("How it looks and behaves:", ai.summary, "")
-  }
-
-  if (item.dependencies?.length) {
-    lines.push(`npm dependencies: ${item.dependencies.join(", ")}`, "")
-  } else {
-    lines.push("npm dependencies: none.", "")
-  }
-
-  if (item.registryDependencies?.length) {
+  if (target) {
     lines.push(
-      `Registry dependencies: ${item.registryDependencies.join(", ")}`,
-      "",
+      `Installs to: ${target} (the exact path follows this project's components.json aliases).`,
     )
   }
 
   lines.push(
-    ...section("Preserve exactly as installed:", ai?.preserve ?? []),
-    ...section("You may adapt:", ai?.adapt ?? []),
-    ...section("Rules:", ai?.notes ?? []),
+    item.dependencies?.length
+      ? `npm dependencies: ${item.dependencies.join(", ")}`
+      : "npm dependencies: none.",
   )
 
   lines.push(
-    "Do not recreate this component from the description: install it from the registry and edit only the parts listed as adaptable.",
+    item.registryDependencies?.length
+      ? `Registry dependencies: ${item.registryDependencies.join(", ")}`
+      : "Registry dependencies: none.",
+  )
+
+  lines.push(
+    "",
+    "Install it from the registry. Do not recreate it from the description,",
+    "do not substitute a similar component from another library, and do not",
+    "rewrite it to match the project's existing style.",
+    "",
+  )
+
+  lines.push("## 2. What it is")
+
+  if (item.description) {
+    lines.push(item.description, "")
+  }
+
+  if (ai?.summary) {
+    lines.push(ai.summary, "")
+  }
+
+  lines.push(
+    "## 3. How to use it",
+    ...howToUse(item, kind),
+    "",
+    "## 4. Where to place it",
+    ...wherePlace(kind),
+    "",
+    "Placement: ___",
+    "(The user fills this line in. If it is still blank, ask where to put it",
+    "instead of guessing.)",
+    "",
+  )
+
+  lines.push(
+    ...section("## 5. Keep exactly as installed", bullets(ai?.preserve ?? [])),
+    ...section("## 6. You may change", bullets(ai?.adapt ?? [])),
+    ...section("## 7. Rules", bullets(ai?.notes ?? [])),
+  )
+
+  lines.push(
+    "## 8. Verify",
+    "- it renders with no console errors;",
+    "- it looks like the preview on the VibeUI page you copied this from;",
+    "- if it does not, you changed something listed in section 5 — put it back.",
   )
 
   return lines.join("\n")
