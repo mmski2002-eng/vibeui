@@ -196,8 +196,15 @@ Complete:
 - Phase 3A+ — self-hosted production на https://vibeui.ru.
 - Phase 3A++ — foundation fixes перед Hero 002 (см. ниже), задеплоено
   коммитом `920bdbb`.
-- Hero 002 / Console Hero — светлый split B2B SaaS с product mockup справа.
-  В репозитории, на production ещё не задеплоен.
+- Hero 002 / Console Hero — светлый split B2B SaaS с product mockup справа,
+  задеплоен коммитом `4f3bbad`.
+- Hero 003 / Mosaic Hero — тёплый светлый hero из пяти плиток фиксированных
+  ролей. В репозитории, на production ещё не задеплоен.
+
+**Следующий блок — `features-001`, не hero-004.** Трёх hero достаточно, чтобы
+показать выбор дизайн-направления; дальше каталог упирается в другой пункт DoD
+Phase 3 — «минимум 3 типа блоков». Четвёртый hero его не двигает, а features-блок
+закрывает сразу и тип, и первую проверку Copy for AI на не-hero.
 
 Hero 001:
 
@@ -307,11 +314,15 @@ Production реально рендерился через Edge headless на:
 3. ~~задеплоить foundation fixes на production.~~ сделано, `920bdbb`;
 4. ~~утвердить specification Hero 002.~~ сделано;
 5. ~~реализовать Hero 002.~~ сделано, ждёт ревью;
-6. задеплоить Hero 002 и проверить установку по HTTPS в чистый проект;
-7. решить по `meta.featured` для hero-002 после ревью на production.
+6. ~~задеплоить Hero 002.~~ сделано, `4f3bbad`;
+7. ~~реализовать Hero 003.~~ сделано, ждёт ревью;
+8. задеплоить Hero 003 и проверить установку по HTTPS в чистый проект;
+9. решить по `meta.featured` для hero-002 и hero-003 после ревью на production;
+10. дальше — `features-001`.
 
-Текущая точка: шаг 6. Hero 002 лежит в рабочем дереве и проверен локально;
-production отдаёт сборку без него. `meta.featured` у hero-002 не выставлен.
+Текущая точка: шаг 8. Hero 003 лежит в рабочем дереве и проверен локально;
+production отдаёт сборку без него. `meta.featured` не выставлен ни у hero-002,
+ни у hero-003.
 
 ## Направление Hero 002
 

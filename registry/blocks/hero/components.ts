@@ -6,8 +6,10 @@ import type { ComponentType } from "react"
 
 import { Hero001 } from "@/registry/blocks/hero/hero-001/hero-001"
 import { Hero002 } from "@/registry/blocks/hero/hero-002/hero-002"
+import { Hero003 } from "@/registry/blocks/hero/hero-003/hero-003"
 
 export const HERO_COMPONENTS: Record<string, ComponentType> = {
   "hero-001": Hero001,
   "hero-002": Hero002,
+  "hero-003": Hero003,
 }
