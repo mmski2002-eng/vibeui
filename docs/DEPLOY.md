@@ -5,7 +5,12 @@
 Приложение собирается в самодостаточный сервер (`output: "standalone"`),
 слушает `127.0.0.1:3000`, наружу его отдаёт nginx с TLS.
 
-Ниже `<domain>` — ваш домен, `<user>` — пользователь, от которого работает
+Фактическая установка: `vibeui.ru`, сервер `216.173.70.241`, каталог
+`/srv/vibeui`, порт `127.0.0.1:3003`, юнит `vibeui.service`.
+Порты 3000–3002 на этом сервере заняты другими проектами.
+Секреты — в `SECRETS.local.md` (не в git).
+
+Ниже `<domain>` — домен, `<user>` — пользователь, от которого работает
 приложение. Команды выполняются на сервере.
 
 ## 0. Подготовка
@@ -20,15 +25,26 @@ DNS: A-запись `<domain>` должна указывать на IP серв�
 
 ## 1. Код
 
+Репозиторий приватный. На сервере используется read-only deploy key —
+личный токен на сервер не кладём:
+
 ```bash
-sudo mkdir -p /srv/vibeui && sudo chown <user>:<user> /srv/vibeui
-git clone https://github.com/mmski2002-eng/vibeui.git /srv/vibeui
+ssh-keygen -t ed25519 -N "" -C "vibeui-deploy@vps" -f /root/.ssh/vibeui_deploy
+cat /root/.ssh/vibeui_deploy.pub
+# добавить этот ключ: GitHub → репозиторий → Settings → Deploy keys → Add
+cat >> /root/.ssh/config <<'EOF'
+Host github-vibeui
+  HostName github.com
+  User git
+  IdentityFile /root/.ssh/vibeui_deploy
+  IdentitiesOnly yes
+EOF
+chmod 600 /root/.ssh/config
+
+git clone git@github-vibeui:mmski2002-eng/vibeui.git /srv/vibeui
 cd /srv/vibeui
 npm ci
 ```
-
-Репозиторий приватный: git спросит логин и пароль. Пароль — personal access
-token с правом `repo`. Токен в файлы проекта не записывать.
 
 ## 2. Сборка
 
@@ -53,9 +69,9 @@ cp -r .next/static .next/standalone/.next/static
 Проверка до nginx:
 
 ```bash
-PORT=3000 HOSTNAME=127.0.0.1 node .next/standalone/server.js
-curl -I http://127.0.0.1:3000/
-curl -s http://127.0.0.1:3000/r/hero-001.json | head -c 80
+PORT=3003 HOSTNAME=127.0.0.1 node .next/standalone/server.js
+curl -I http://127.0.0.1:3003/
+curl -s http://127.0.0.1:3003/r/hero-001.json | head -c 80
 ```
 
 Первый запрос к странице может ответить 404 (`NoFallbackError`) — это прогрев
@@ -75,7 +91,7 @@ Type=simple
 User=<user>
 WorkingDirectory=/srv/vibeui/.next/standalone
 Environment=NODE_ENV=production
-Environment=PORT=3000
+Environment=PORT=3003
 Environment=HOSTNAME=127.0.0.1
 ExecStart=/usr/bin/node server.js
 Restart=on-failure
@@ -103,7 +119,7 @@ server {
     server_name <domain>;
 
     location / {
-        proxy_pass http://127.0.0.1:3000;
+        proxy_pass http://127.0.0.1:3003;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -114,7 +130,7 @@ server {
     }
 
     location /_next/static/ {
-        proxy_pass http://127.0.0.1:3000;
+        proxy_pass http://127.0.0.1:3003;
         proxy_cache_valid 200 1y;
         add_header Cache-Control "public, max-age=31536000, immutable";
     }
@@ -128,13 +144,28 @@ sudo nginx -t && sudo systemctl reload nginx
 
 ## 5. HTTPS
 
+Если nginx-плагина certbot нет (проверяется командой
+`certbot --nginx` — ошибка «plugin does not appear to be installed»),
+используется webroot: в 80-м server-блоке уже есть
+`location /.well-known/acme-challenge/ { root /var/www/certbot; }`.
+
 ```bash
-sudo apt install -y certbot python3-certbot-nginx
-sudo certbot --nginx -d <domain>
+sudo mkdir -p /var/www/certbot
+sudo certbot certonly --webroot -w /var/www/certbot   -d <domain> -d www.<domain> --agree-tos -m <email>
 ```
 
-Certbot сам добавит 443-й server-блок и редирект с 80. Автопродление ставится
-таймером `certbot.timer`.
+После выпуска сертификата 443-й server-блок дописывается вручную. Важно для
+nginx 1.18: директива `http2 on;` не поддерживается, нужно
+`listen 443 ssl http2;`. Шаблонов `options-ssl-nginx.conf` и `ssl-dhparams.pem`
+при webroot-установке может не быть — TLS-параметры задаются явно:
+
+```nginx
+ssl_certificate /etc/letsencrypt/live/<domain>/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/<domain>/privkey.pem;
+ssl_protocols TLSv1.2 TLSv1.3;
+ssl_session_cache shared:SSL:10m;
+ssl_session_timeout 1d;
+```
 
 ## 6. Проверка
 
@@ -166,5 +197,7 @@ sudo systemctl restart vibeui
 
 - `public/r/` — артефакт сборки, в git его нет; он создаётся `npm run build`;
 - смена `REGISTRY_BASE_URL` требует пересборки, не только рестарта;
-- порт 3000 наружу не открывать: приложение слушает только localhost;
+- порт приложения наружу не открывать: оно слушает только localhost;
+- `nginx -t` проверять **до** `systemctl reload nginx`, и не прятать код
+  возврата за пайпом (`nginx -t | tail` всегда возвращает 0);
 - `.env` на сервере не нужен — переменная задаётся в окружении сборки.
