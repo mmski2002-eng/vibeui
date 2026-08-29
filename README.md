@@ -45,4 +45,5 @@ npx shadcn@latest add <REGISTRY_BASE_URL>/hero-001.json
 `REGISTRY_BASE_URL` задаётся переменной окружения (см. `.env.example`).
 
 Подробности: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md),
-[docs/PRODUCT.md](docs/PRODUCT.md), [docs/ROADMAP.md](docs/ROADMAP.md).
+[docs/PRODUCT.md](docs/PRODUCT.md), [docs/ROADMAP.md](docs/ROADMAP.md),
+[docs/DEPLOY.md](docs/DEPLOY.md).
