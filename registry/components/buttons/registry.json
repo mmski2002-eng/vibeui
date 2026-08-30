@@ -88,7 +88,61 @@
             "type": "color",
             "default": ""
           }
-        ]
+        ],
+        "i18n": {
+          "en": {
+            "description": "The primary action button: three sizes, three tones and a loading state. Self-contained — one file, no dependencies, indifferent to your project's theme.",
+            "ai": {
+              "summary": "A compact action button. Three sizes (sm/md/lg), three tones (solid fills with the accent, soft sits on a translucent wash, outline is border only) and a loading state whose spinner is pure CSS. Ships with focus-visible and disabled handling. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-button-001-* palette — do not swap it for your theme tokens (bg-primary, text-primary-foreground, bg-background and the like)",
+                "the heights, horizontal padding and font sizes of sm/md/lg — those proportions are the button",
+                "the --vibeui-button-001-radius corner radius: it is shared across all three sizes",
+                "the three tones as distinct values of the tone prop — do not collapse them into one variant or invent a fourth",
+                "the focus-visible outline and its offset: without them the button is unusable from the keyboard",
+                "the loading behaviour: the button goes disabled and gains aria-busy, and the label is not replaced by the spinner",
+                "the CSS-animated spinner and its prefers-reduced-motion rule",
+                "the <style> block inside the component — it holds the whole palette, the sizes and the keyframes"
+              ],
+              "adapt": [
+                "the label and any children, including an icon next to the text",
+                "the accent colour through the accent prop (and accentForeground for label contrast)",
+                "the size and tone values to suit the spot in the interface",
+                "any native button props: onClick, type, form, name, disabled, aria-*",
+                "outer spacing and width through className",
+                "the loading state — the calling code owns it, the button waits for nothing on its own"
+              ],
+              "notes": [
+                "This is an inline component, not a section. Do not wrap it in an extra <div> for spacing — use className.",
+                "Do not pull in an icon library for the spinner: it is already there in CSS. An icon beside the text can be passed as children.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "Do not swap <button> for <a>. For navigation use a plain link or your router's component, not this button."
+              ],
+              "usage": "<Button001 tone=\"solid\" size=\"md\" onClick={handleSubmit}>\n  Get started\n</Button001>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Get started"
+              },
+              "tone": {
+                "label": "Tone"
+              },
+              "size": {
+                "label": "Size"
+              },
+              "loading": {
+                "label": "Loading"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "accentForeground": {
+                "label": "Label color"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -160,7 +214,51 @@
             "type": "color",
             "default": ""
           }
-        ]
+        ],
+        "i18n": {
+          "en": {
+            "description": "An action with a variants attachment: the main action on the left, alternatives on the right, a hairline between them. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "Two zones inside one control: the main action on the left, a narrow chevron attachment on the right for alternatives. A hairline separates them and the attachment sits slightly darker, so it reads as part of the button rather than a second one. Zero dependencies, one file.",
+              "preserve": [
+                "the two zones inside one shape, sharing a radius and overflow:hidden — do not split them into two separate buttons with a gap",
+                "the hairline via inset box-shadow and the recessed background of the right zone: that is the trick separating a split button from a pair of buttons",
+                "the width of the attachment: it is noticeably narrower than the main zone",
+                "the aria-label on the attachment — it carries no text label",
+                "focus-visible with z-index:1, otherwise the second zone's ring slides under the first",
+                "the <style> block inside the component"
+              ],
+              "adapt": [
+                "the main label and menuLabel",
+                "the onClick and onMenuClick handlers",
+                "the accent through the accent prop (and accentForeground)",
+                "outer spacing through className — it lands on the group"
+              ],
+              "notes": [
+                "Do not turn the attachment into a <select> or a native dropdown: the component only fires a handler, the menu is your app's job.",
+                "Do not drop the separator — without it the two zones melt into one button.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button002 onClick={publish} onMenuClick={openVariants} menuLabel=\"More options\">\n  Publish\n</Button002>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Publish"
+              },
+              "menuLabel": {
+                "label": "Attachment label",
+                "default": "More options"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "accentForeground": {
+                "label": "Label color"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -225,7 +323,47 @@
             "type": "color",
             "default": ""
           }
-        ]
+        ],
+        "i18n": {
+          "en": {
+            "description": "A large CTA that pulls the cursor in: it lifts on hover, the glow spreads, a sheen sweeps across it. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A large gradient CTA pill. On hover it lifts and grows a little, the shadow beneath it spreads, and a light sheen sweeps left to right across the surface while the arrow slides forward. All of it runs on CSS transitions. Zero dependencies, one file.",
+              "preserve": [
+                "the lift, the scale and the spreading shadow on hover — together they make the pull, separately they do nothing",
+                "the sheen through ::after with translateX and a long easing — do not replace it with an opacity blink",
+                "the gradient built from the accent and accent-2 variables rather than a flat fill",
+                "the 9999px radius and the generous metrics: this is a hero CTA, not an ordinary button",
+                "the cubic-bezier(0.16,1,0.3,1) easing — on linear easing the pull reads as a twitch",
+                "the prefers-reduced-motion rule, which kills both the transform and the sheen"
+              ],
+              "adapt": [
+                "the label",
+                "the onClick handler",
+                "the accent colours through the accent and accentForeground props",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not add a motion library: the whole animation is already CSS.",
+                "Do not drop this button into a dense toolbar — it is built to be the one main CTA on screen.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button003 onClick={startTrial}>Start for free</Button003>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Start for free"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "accentForeground": {
+                "label": "Label color"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -290,7 +428,47 @@
             "type": "color",
             "default": ""
           }
-        ]
+        ],
+        "i18n": {
+          "en": {
+            "description": "A quiet secondary action: no border, no fill at rest — the surface appears only on hover and focus. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A button of minimal weight: at rest there is no border and no fill, only the label and a small marker dot on the left. Hover and focus bring in a soft neutral wash, the text darkens and the dot grows. The palette is deliberately neutral: this button is built not to compete with the primary action.",
+              "preserve": [
+                "the absence of a border and a fill at rest — that is the whole idea of the component",
+                "the neutral palette with no accent colour: highlighting appears only on interaction",
+                "the marker dot and the way it grows on hover",
+                "the wash on focus-visible, not only on hover: the button has to be visible from the keyboard too",
+                "the smaller metrics compared to the rest of the set: 2.25rem tall"
+              ],
+              "adapt": [
+                "the label",
+                "the onClick handler",
+                "whether the dot shows, through the marker prop",
+                "the dot colour through the tint prop",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not give it a border or a fill at rest: it stops being quiet and starts arguing with the primary button.",
+                "Do not use it as the only action on screen — it is meant to sit next to a primary one.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button004 onClick={cancel}>Cancel</Button004>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Cancel"
+              },
+              "marker": {
+                "label": "Marker dot"
+              },
+              "tint": {
+                "label": "Dot color"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -365,7 +543,52 @@
             "type": "color",
             "default": ""
           }
-        ]
+        ],
+        "i18n": {
+          "en": {
+            "description": "Two-step confirmation inside the button itself: the first click opens a confirm window with a draining time bar, the second one confirms. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "Two-step confirmation without a modal. The first click arms the button: the label turns into a question, the background goes to a warning tone, and a bar along the bottom edge drains the remaining time. A second click inside that window calls onConfirm; otherwise the button returns to rest on its own.",
+              "preserve": [
+                "the two steps: the first click only arms, the action happens on the second — do not shorten it to one click",
+                "the automatic return on timeout: an armed state must not hang around forever",
+                "the draining bar along the bottom edge — it shows how much time is left",
+                "the label change between the resting and the armed state",
+                "the warning palette of the armed state, distinct from the resting one",
+                "the prefers-reduced-motion rule: the bar stops animating, the state stays"
+              ],
+              "adapt": [
+                "the children and confirmLabel labels",
+                "the length of the window through the timeout prop",
+                "the onConfirm handler",
+                "the bar colour through the accent prop",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not replace the built-in confirmation with window.confirm or a modal — the point of the component is that confirmation happens in place.",
+                "Do not pass onClick: the component owns the click, and your action arrives through onConfirm.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button005 onConfirm={deleteProject} confirmLabel=\"Delete for real?\" timeout={3000}>\n  Delete project\n</Button005>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Delete project"
+              },
+              "confirmLabel": {
+                "label": "Confirm label",
+                "default": "Delete for real?"
+              },
+              "timeout": {
+                "label": "Confirm window, ms"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -424,7 +647,44 @@
             "type": "color",
             "default": ""
           }
-        ]
+        ],
+        "i18n": {
+          "en": {
+            "description": "An irreversible action: warning hatching slides in from the left edge and pushes the label aside. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A button for irreversible actions. At rest it is a solid red fill with a dark border; on hover and focus a band of diagonal hatching slides in from the left and physically pushes the label aside by growing the inner padding. The hatching works as a signal independently of colour vision.",
+              "preserve": [
+                "the hatched band as a second signal beside colour — it is what reaches people who cannot tell red apart",
+                "the hatching sliding in on both hover and focus-visible: the warning has to appear for keyboard users too",
+                "the padding-left growing along with the hatching — the label moves aside instead of being covered",
+                "the dark border around the fill: it separates the button from a red background if there is one",
+                "the heavier weight and letter spacing of the label compared to the rest of the set"
+              ],
+              "adapt": [
+                "the label",
+                "the onClick handler",
+                "the danger hue through the danger prop",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not use it for reversible actions: its visual weight is calibrated for irreversible ones.",
+                "Do not drop the hatching and keep only the red — the signal then runs on a single channel.",
+                "For actions that need confirmation, pair it with the two-step confirm button rather than replacing one with the other.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button006 onClick={dropDatabase}>Delete permanently</Button006>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Delete permanently"
+              },
+              "danger": {
+                "label": "Danger color"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -492,7 +752,50 @@
             "type": "color",
             "default": ""
           }
-        ]
+        ],
+        "i18n": {
+          "en": {
+            "description": "A CTA carrying its own social proof: a stack of initial avatars and a quiet counter beside the label. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A dark pill button with social proof built in. On the left sits a stack of overlapping round avatars drawn from initials, then the label, then a quiet counter line. On hover the stack opens up and the avatars spread apart. The avatars are pure CSS — no images, no requests.",
+              "preserve": [
+                "the CSS avatars built from initials — do not swap them for <img>, that adds requests and breaks the component's self-sufficiency",
+                "the overlap via negative margin and the ring in the button's own background colour: without it the stack merges into a blob",
+                "the way the stack spreads on hover",
+                "the different tints on the first three avatars: identical ones read as a single block",
+                "the counter line at a smaller size and a muted colour — it must not compete with the label",
+                "aria-hidden on the stack: to a screen reader it is decoration, not content"
+              ],
+              "adapt": [
+                "the label",
+                "the initials through the people prop",
+                "the counter text through the hint prop",
+                "the avatar colour through the accent prop",
+                "the onClick handler",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not put real user names into people without their consent — this is a showcase element.",
+                "Do not grow the stack past four avatars: beyond that it stops reading at button size.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button007 people={[\"AK\", \"MD\", \"LP\"]} hint=\"+2,400 teams\" onClick={signUp}>\n  Join them\n</Button007>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Join them"
+              },
+              "hint": {
+                "label": "Counter line",
+                "default": "+2,400 teams"
+              },
+              "accent": {
+                "label": "Avatar color"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -551,7 +854,44 @@
             "type": "color",
             "default": ""
           }
-        ]
+        ],
+        "i18n": {
+          "en": {
+            "description": "A command button with a shortcut hint: real keycaps on the right that press down on hover. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A light command button with a keyboard shortcut hint. On the right it carries real keycaps rather than a text tail: each is its own kbd with an inner ring and a bottom edge that gives it depth. On hover the keys press down — the edge disappears and they drop by a pixel. The label is set in the regular face, the keys in monospace.",
+              "preserve": [
+                "the keys as separate kbd elements with a bottom edge — a flat text tail kills the idea of the component",
+                "the press effect on hover: the edge disappears and the keys drop",
+                "the monospace face on the keys against the proportional one on the label",
+                "aria-hidden on the key group: it is a hint, not the button's content",
+                "the light neutral palette — this button is built for a toolbar, not for a hero"
+              ],
+              "adapt": [
+                "the label",
+                "the key set through the keys prop",
+                "the key glyph colour through the accent prop",
+                "the onClick handler",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "The component only displays the shortcut. Binding the actual hotkey is your app's job — do not add a listener inside the component.",
+                "Keep keys in step with the real shortcut and the user's platform, otherwise the hint lies.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button008 keys={[\"⌘\", \"K\"]} onClick={openCommandMenu}>\n  Quick search\n</Button008>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Quick search"
+              },
+              "accent": {
+                "label": "Key color"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -623,7 +963,51 @@
             "type": "color",
             "default": ""
           }
-        ]
+        ],
+        "i18n": {
+          "en": {
+            "description": "A button that toggles: label and track share one shape, and the state is announced through aria-pressed. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A button and a switch in one shape. The label sits on the left and changes with the state; a track with a round knob sits on the right and the knob slides across when pressed. Turning it on changes both the pill background and the track colour. The state is announced through aria-pressed, so this stays a button rather than becoming a checkbox.",
+              "preserve": [
+                "aria-pressed as the carrier of state — do not swap it for a checkbox or role=switch without reworking the markup",
+                "the label changing with the state: the state has to be readable without colour",
+                "the knob sliding and the track changing colour — together, since separately the state reads worse",
+                "the pill shape and the track sitting to the right of the label",
+                "the different background and text colour between the on and off states"
+              ],
+              "adapt": [
+                "the onLabel and offLabel labels",
+                "the starting state through defaultPressed",
+                "the onPressedChange handler",
+                "the on-state colour through the accent prop",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not pass onClick: the component owns the toggle, and changes arrive through onPressedChange.",
+                "Do not leave onLabel and offLabel identical — the state would then be visible only by colour.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button009\n  defaultPressed={false}\n  onPressedChange={setNotifications}\n  onLabel=\"Notifications on\"\n  offLabel=\"Notifications off\"\n/>"
+            },
+            "controls": {
+              "onLabel": {
+                "label": "On label",
+                "default": "Notifications on"
+              },
+              "offLabel": {
+                "label": "Off label",
+                "default": "Notifications off"
+              },
+              "defaultPressed": {
+                "label": "On by default"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -713,7 +1097,60 @@
             "type": "color",
             "default": ""
           }
-        ]
+        ],
+        "i18n": {
+          "en": {
+            "description": "A download button whose progress fills its own surface: status and percentage are driven from outside. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A download button with the progress inside its own surface. At rest it is a dark button with a down arrow that hops on hover. While loading, the background fills left to right by percentage, the label shows the number in tabular figures, and the button locks and gains aria-busy. When done, the fill turns green and a checkmark replaces the arrow.",
+              "preserve": [
+                "the progress filling the button's own surface rather than a separate bar beside it — that is the idea of the component",
+                "the three states idle / loading / done and a distinct label for each",
+                "the lock and aria-busy while loading: a second click must not go through",
+                "tabular-nums on the percentage, otherwise the button's width jumps at every step",
+                "the fill colour change on done and the checkmark replacing the arrow",
+                "the left transform-origin on the fill: progress grows from the left edge"
+              ],
+              "adapt": [
+                "the children, loadingLabel and doneLabel labels",
+                "the fill colour through the accent prop",
+                "the onClick handler",
+                "outer spacing through className",
+                "the status prop: idle, loading or done — the component never switches it on its own",
+                "the progress value from 0 to 100 — it comes from outside, the button downloads nothing"
+              ],
+              "notes": [
+                "The component does not download anything: status and progress come from outside. Do not add a fetch inside it and do not give it internal loading state.",
+                "Do not leave status on loading without updating progress — the fill freezes and reads as a hang.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button010 status={status} progress={percent} onClick={startDownload}>\n  Download report\n</Button010>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Download report"
+              },
+              "status": {
+                "label": "Status"
+              },
+              "progress": {
+                "label": "Progress, %"
+              },
+              "loadingLabel": {
+                "label": "Loading label",
+                "default": "Downloading…"
+              },
+              "doneLabel": {
+                "label": "Done label",
+                "default": "Done"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -778,7 +1215,47 @@
             "type": "color",
             "default": ""
           }
-        ]
+        ],
+        "i18n": {
+          "en": {
+            "description": "The lightest action in the set: text with an arrow, the underline drawing itself in from the left on hover. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A text action with no background, no border and no fixed height — it sits straight in a line of copy. At rest there is no underline: a thin line draws itself left to right on hover and focus, the colour shifts to the accent, and the arrow slides forward. The lightest element in the set.",
+              "preserve": [
+                "the absence of a background, a border and a fixed height — the component has to sit inside a line of text",
+                "the underline drawn with scaleX from a left transform-origin rather than a permanent line",
+                "the underline appearing on focus-visible as well, not only on hover",
+                "the arrow sliding forward",
+                "the zero padding: any spacing is set from outside through className"
+              ],
+              "adapt": [
+                "the label",
+                "whether the arrow shows, through the arrow prop",
+                "the accent colour through the accent prop",
+                "the onClick handler",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not swap <button> for <a>. For navigation use a plain link or your router's component, not this button.",
+                "Do not give it a background or a border: it stops being distinguishable from the rest of the set.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button011 onClick={openFeatures}>See all features</Button011>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "See all features"
+              },
+              "arrow": {
+                "label": "Arrow"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
       }
     }
   ]

@@ -44,6 +44,36 @@
             "Не добавляй motion-библиотеки: анимации уже на CSS.",
             "Не выноси CSS-переменные в globals.css: блок должен оставаться одним файлом."
           ]
+        },
+        "i18n": {
+          "en": {
+            "description": "A dark SaaS hero with ambient glow, a grid backdrop, a badge and a pair of CTAs. Self-contained — indifferent to your project's theme and style.",
+            "ai": {
+              "summary": "A dark, centred SaaS hero: badge, a large two-part headline, a subhead, two CTA links and a row of facts. The ambient glow and grid backdrop are pure CSS. Zero dependencies, one file.",
+              "preserve": [
+                "the dark background of the block, whatever theme the project runs",
+                "the local --vibeui-hero-* palette — do not swap it for your theme tokens (bg-background, text-foreground, primary and the like)",
+                "the ambient glow and the grid backdrop",
+                "the clamped headline typography and the tracking in cqi units",
+                "the entrance animations and their stagger through animation-delay",
+                "container-type: inline-size on the block root and the @container rules in its <style> — the block measures its own width, not the window's; do not rewrite them as viewport media queries",
+                "the responsive CTA behaviour: stacked on a narrow block, in a row from 40rem of block width",
+                "the semantics: a single h1, CTAs as <a href>, decorative layers aria-hidden",
+                "the <style> block inside the component — it holds the keyframes and prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the badge, title, titleAccent, description, CTA and highlights copy",
+                "the CTA hrefs",
+                "the accent colour through the accent prop (and accentForeground for text contrast on the button)",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Keep the link semantics. For internal navigation your router's component is fine, as long as the visual styling, the accessibility and the href behaviour survive.",
+                "Do not add a motion library: the animations are already CSS.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ]
+            }
+          }
         }
       }
     },
@@ -96,6 +126,42 @@
             "Если меняешь accent, проверь контраст текста на кнопке: нужно не менее 4.5:1.",
             "Сохраняй семантику ссылок. Для внутренней навигации можно использовать компонент роутера проекта, если сохраняются визуальные стили, доступность и поведение href."
           ]
+        },
+        "i18n": {
+          "en": {
+            "description": "A light B2B SaaS hero in a split layout: copy and two CTAs on the left, a decorative product visual on the right. Self-contained — indifferent to your project's theme and style.",
+            "ai": {
+              "summary": "A light B2B SaaS hero in a split composition. Left: an eyebrow pill, a large two-part headline, a description, two CTA links and a trust line with a decorative avatar stack. Right: a decorative app window — a title bar with dots, a side rail, two metric tiles, an area chart in inline SVG, an activity feed and a floating chip. Zero dependencies, one file; layout and typography are measured against the block's own width through container queries and cqi.",
+              "preserve": [
+                "the split layout: copy on the left, the product visual on the right from 64rem of block width",
+                "the product mockup itself — it is part of the design, not a placeholder; do not delete it, do not swap it for an <img>, a screenshot, a picture or a dashboard component from the project",
+                "the light local --vibeui-hero-002-* palette — do not swap it for your theme tokens (bg-background, text-foreground, primary, border and the like)",
+                "container-type: inline-size on the block root and the @container rules in its <style> — the block measures its own width, not the window's; do not rewrite them as viewport media queries",
+                "the typography in cqi units, clamp and tracking",
+                "the area chart as inline SVG on a fixed path — it is an illustration, not data",
+                "the window treatment: the border, the radius, the soft shadow, the dotted title bar, the side rail, the structure of the metric tiles and the floating chip",
+                "rounded-lg on the CTAs — that is what sets this hero apart from hero-001 and its pill buttons; do not change it to rounded-full",
+                "the one-shot entrance animations and their stagger; this block has no looping animation",
+                "the <style> block inside the component — it holds the palette, the container rules, the keyframes and prefers-reduced-motion",
+                "the semantics: a single h1, CTAs as <a href>, the whole mockup and every decorative layer aria-hidden"
+              ],
+              "adapt": [
+                "the eyebrow, title, titleAccent, description, CTA, proof and panelTitle copy",
+                "the CTA hrefs",
+                "the label, value and delta of the two metrics",
+                "the accent colour through the accent prop (and accentForeground for text contrast on the button)",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not pull in a chart library (recharts, chart.js, visx and friends): the chart is decorative and already drawn as inline SVG.",
+                "Do not add a motion library: the animations are already CSS.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file.",
+                "Do not replace the visual on the right with a real product screenshot or an existing dashboard component — it breaks the composition of the block.",
+                "If you change accent, check the text contrast on the button: 4.5:1 minimum.",
+                "Keep the link semantics. For internal navigation your router's component is fine, as long as the visual styling, the accessibility and the href behaviour survive."
+              ]
+            }
+          }
         }
       }
     },
@@ -152,6 +218,46 @@
             "Если меняешь accent, проверь контраст текста на залитой плитке: нужно не менее 4.5:1.",
             "Сохраняй семантику ссылок. Для внутренней навигации можно использовать компонент роутера проекта, если сохраняются визуальные стили, доступность и поведение href."
           ]
+        },
+        "i18n": {
+          "en": {
+            "description": "A warm, light hero laid out as a mosaic of five tiles: an offer tile with the headline and CTAs, a metric, an accent-filled statement tile, a short checklist and a decorative pattern. Self-contained — indifferent to your project's theme and style.",
+            "ai": {
+              "summary": "A warm, light hero built from five tiles with fixed roles: a large offer tile carrying an eyebrow, a two-part serif headline, a description and a pair of CTAs; a metric tile; a terracotta-filled tile with a short statement and an arrow; a tile with a three-item checklist; and a decorative hatched tile. A warm neutral base, a cool grey-blue layer in the borders and secondary tiles, terracotta used only as an accent. Flat tiles with tight radii and no shadows. The tiles appear in sequence. Zero dependencies, one file; layout and typography are measured against the block's own width through container queries and cqi.",
+              "preserve": [
+                "the five-tile mosaic and the roles of the tiles — lead, stat, accent, panel, pattern — do not flatten it into one column on a wide screen, into a centred block, or into two equal columns",
+                "the lead offer tile as the centre of the composition: the headline and the CTAs live only there, the other tiles support it",
+                "the terracotta-filled accent tile — it is the visual accent of the composition, not a decorative backdrop; do not remove the fill or turn it into an ordinary card",
+                "the checklist short: at most three items, no descriptions, no illustrative icons — this is a hero, not a features section",
+                "the --vibeui-hero-003-* palette: a warm neutral base, a cool grey-blue layer in the borders and secondary tiles, terracotta used sparingly. Do not swap it for your theme tokens (bg-background, text-foreground, primary, border and the like) and do not turn the block into one flat beige fill",
+                "the type pairing: a system serif for the headline and the metric figure, a system sans for everything else; do not load a web font and do not move the headline to sans",
+                "the tight radii of the tiles and CTAs and the absence of shadows — that is what sets this hero apart from hero-002 with its soft corners and shadows",
+                "the dark fill of the primary CTA: in this block the accent colour belongs to the tile, not to the button",
+                "container-type: inline-size on the block root and the @container rules in its <style> — the block measures its own width, not the window's; do not rewrite them as viewport media queries",
+                "the typography in cqi units, clamp and tracking",
+                "the tiles appearing in sequence and the absence of looping animation",
+                "the <style> block inside the component — it holds the palette, the container rules, the keyframes and prefers-reduced-motion",
+                "the semantics: a single h1, CTAs as <a href>, the checklist as <ul>/<li>, the decorative tile and the background layer aria-hidden"
+              ],
+              "adapt": [
+                "the eyebrow, title, titleAccent, description, CTA, accentNote and metric copy",
+                "the CTA hrefs",
+                "the value and label of the metric",
+                "up to three checklist items",
+                "the accent colour through the accent prop (and accentForeground for text contrast on the accent tile)",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not add a motion library: the animations are already CSS.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file.",
+                "Do not add tiles to the mosaic and do not reorder them: the cast is fixed and it is part of the composition.",
+                "Do not grow the checklist to a fourth item and do not give the items descriptions — the block turns into a features section.",
+                "Do not put images, screenshots or logos into the tiles — the block is built with no external assets.",
+                "If you change accent, check the text contrast on the filled tile: 4.5:1 minimum.",
+                "Keep the link semantics. For internal navigation your router's component is fine, as long as the visual styling, the accessibility and the href behaviour survive."
+              ]
+            }
+          }
         }
       }
     }

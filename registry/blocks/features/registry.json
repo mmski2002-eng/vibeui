@@ -52,6 +52,45 @@
             "Если меняешь accent, проверь контраст акцентного текста на тёмном фоне: нужно не менее 4.5:1.",
             "Сохраняй семантику ссылок. Для внутренней навигации можно использовать компонент роутера проекта, если сохраняются визуальные стили, доступность и поведение href."
           ]
+        },
+        "i18n": {
+          "en": {
+            "description": "A dark features section with a hierarchy: a full-width header, a large panel holding one headline feature with abstract geometry, and three secondary rows on hairlines beside it. Self-contained — indifferent to your project's theme and style.",
+            "ai": {
+              "summary": "A dark graphite features section. A full-width header: an accent rule with an eyebrow, a two-part h2, a description and an optional link. Below it an asymmetric body: on the left a panel with one headline feature — title, paragraph and an abstract geometric illustration in inline SVG; on the right exactly three secondary features as rows separated by hairlines, with accented indices. Flat, with no shadows and no glow. The dividers draw themselves in and the content appears with a stagger. Zero dependencies, one file; layout and typography are measured against the block's own width through container queries and cqi.",
+              "preserve": [
+                "the hierarchy: one headline feature in a large panel and exactly three secondary ones as rows — do not level them into a grid of identical cards or turn them into three features with icons",
+                "the asymmetric body from 64rem: the panel is wider than the list; the header stays full width above the body",
+                "the abstract geometry in the panel — it is an illustration, not an interface; do not turn it into an app window, a dashboard, a chart with axes or a screenshot, and do not swap it for an <img>",
+                "the secondary features as a list on hairlines: no cards, no borders around each one, no illustrative icons",
+                "the dark low-chroma graphite --vibeui-features-001-* palette — do not swap it for your theme tokens (bg-background, text-foreground, primary, border) and do not add glow, gradient blobs or large shadows",
+                "the flatness: no shadows, a tight radius on the panel only, everything else held by hairlines",
+                "the h2 as the section heading — this block sits under a hero and must not bring a second h1 onto the page; feature titles stay h3",
+                "container-type: inline-size on the block root and the @container rules in its <style> — the block measures its own width, not the window's; do not rewrite them as viewport media queries",
+                "the typography in cqi units, clamp and tracking",
+                "the divider animation and the one-shot stagger; this block has no looping animation",
+                "the <style> block inside the component — it holds the palette, the container rules, the keyframes and prefers-reduced-motion",
+                "the semantics: the list as <ul>/<li>, the diagram and decorative lines aria-hidden, the indices decorative"
+              ],
+              "adapt": [
+                "the eyebrow, title, titleAccent and description copy",
+                "the label and href of the action link",
+                "the title and description of the headline feature",
+                "the titles and descriptions of the three secondary features",
+                "the accent colour through the accent prop (and accentForeground)",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not add a fourth secondary feature and do not drop the headline one: the number of zones is fixed and it is part of the composition.",
+                "Do not add icons from an icon library: the block is built with no dependencies.",
+                "Do not add a motion library: the animations are already CSS.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file.",
+                "Keep the secondary descriptions to a single thought — the block is built for short copy, and long paragraphs break the rhythm of the list.",
+                "If you change accent, check the contrast of the accent text on the dark background: 4.5:1 minimum.",
+                "Keep the link semantics. For internal navigation your router's component is fine, as long as the visual styling, the accessibility and the href behaviour survive."
+              ]
+            }
+          }
         }
       }
     }

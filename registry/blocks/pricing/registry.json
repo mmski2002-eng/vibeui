@@ -54,6 +54,47 @@
             "Если меняешь accent, проверь контраст текста на акцентном CTA и на бейдже: нужно не менее 4.5:1.",
             "Сохраняй семантику ссылок. Для внутренней навигации можно использовать компонент роутера проекта, если сохраняются визуальные стили, доступность и поведение href."
           ]
+        },
+        "i18n": {
+          "en": {
+            "description": "A light pricing section of three plans: the recommended one stands out as an inverted dark panel while the others stay light. Self-contained — indifferent to your project's theme and style.",
+            "ai": {
+              "summary": "A light pricing section. A centred header: eyebrow, a two-part h2 and a description. Below it three plans in a row: name, description, a large price with its period, a CTA link and a list of up to four points with checkmarks. The recommended plan is the only heavy surface in the block: an inverted dark panel with an accent badge, raised above its neighbours. A footnote about terms sits under the plans. Zero dependencies, one file; layout and typography are measured against the block's own width through container queries and cqi.",
+              "preserve": [
+                "the hierarchy: exactly one recommended plan marked by an inverted dark panel, the others staying light and shadowless — do not level all three into identical cards",
+                "inversion as the device: the dark panel is the only heavy surface in the section and it is what creates the accent; do not replace it with a border, a shadow or another shade of light",
+                "the recommended plan sitting raised above its neighbours from 48rem of block width",
+                "the light --vibeui-pricing-001-* palette — do not swap it for your theme tokens (bg-background, text-foreground, primary, border) and do not take the whole section dark",
+                "the structure of a plan: name, description, price with period, CTA, list of points — and the order of those elements",
+                "the CTAs as ordinary <a href> links: this is a landing section, not a checkout; do not turn them into payment buttons and do not add a form",
+                "the h2 as the section heading — this block sits after a hero and must not bring a second h1 onto the page; plan names stay h3",
+                "container-type: inline-size on the block root and the @container rules in its <style> — the block measures its own width, not the window's; do not rewrite them as viewport media queries",
+                "the typography in cqi units, clamp and tracking",
+                "the one-shot stagger of the plans; this block has no looping animation",
+                "the <style> block inside the component — it holds the palette, the container rules, the keyframes and prefers-reduced-motion",
+                "the semantics: plans and points as <ul>/<li>, the checkmark icons aria-hidden"
+              ],
+              "adapt": [
+                "the eyebrow, title, titleAccent, description and footnote copy",
+                "up to three plans: name, description, price, period",
+                "up to four points inside each plan",
+                "the labels and hrefs of each plan's CTA",
+                "which plan is recommended, through the featured flag on that plan",
+                "the accent colour through the accent prop (and accentForeground for text contrast on the accent)",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not add billing: the block has no subscriptions, no payment, no auth, no API calls and no state, and it should stay that way. Prices are static text.",
+                "Do not add a monthly/yearly switch: its absence is deliberate, and the billing period is explained by the footnote. A dead switch that looks clickable misleads people.",
+                "Do not add a fourth plan and do not drop the recommended one: the first three plans and the first four points of each are what render.",
+                "Do not add icons from an icon library: the block is built with no dependencies.",
+                "Do not add a motion library: the animations are already CSS.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file.",
+                "If you change accent, check the text contrast on the accent CTA and on the badge: 4.5:1 minimum.",
+                "Keep the link semantics. For internal navigation your router's component is fine, as long as the visual styling, the accessibility and the href behaviour survive."
+              ]
+            }
+          }
         }
       }
     }
