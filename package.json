@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run registry:build && next build",
+    "build": "npm run meta:validate && npm run registry:build && next build",
+    "meta:validate": "node scripts/validate-meta.mjs",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",

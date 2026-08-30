@@ -38,7 +38,8 @@
             "акцентный цвет — проп accent (и accentForeground для контраста подписи)",
             "значения пропов size и tone под конкретное место в интерфейсе",
             "любые нативные пропсы button: onClick, type, form, name, disabled, aria-*",
-            "внешние отступы и ширину через className"
+            "внешние отступы и ширину через className",
+            "состояние loading — им управляет вызывающий код, кнопка сама ничего не ждёт"
           ],
           "notes": [
             "Это inline-компонент, а не секция. Не оборачивай его в дополнительный <div> ради отступа — используй className.",
@@ -46,7 +47,48 @@
             "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом.",
             "Не заменяй <button> на <a>. Для ссылки используй обычный <a> или компонент роутера, а не эту кнопку."
           ]
-        }
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Get started",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "solid",
+            "options": ["solid", "soft", "outline"]
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": ["sm", "md", "lg"]
+          },
+          {
+            "prop": "loading",
+            "label": "Загрузка",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "accentForeground",
+            "label": "Цвет подписи",
+            "type": "color",
+            "default": ""
+          }
+        ]
       }
     },
     {
@@ -90,7 +132,35 @@
             "Не убирай разделитель — без него две зоны сливаются в одну кнопку.",
             "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
           ]
-        }
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Опубликовать",
+            "maxLength": 40
+          },
+          {
+            "prop": "menuLabel",
+            "label": "Подпись второй зоны",
+            "type": "text",
+            "default": "Другие варианты",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "accentForeground",
+            "label": "Цвет подписи",
+            "type": "color",
+            "default": ""
+          }
+        ]
       }
     },
     {
@@ -134,7 +204,28 @@
             "Не ставь эту кнопку в плотный ряд управления — она рассчитана на одну главную CTA на экране.",
             "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
           ]
-        }
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Начать бесплатно",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "accentForeground",
+            "label": "Цвет подписи",
+            "type": "color",
+            "default": ""
+          }
+        ]
       }
     },
     {
@@ -178,7 +269,28 @@
             "Не используй как единственное действие на экране — она рассчитана на пару с основной кнопкой.",
             "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
           ]
-        }
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Отменить",
+            "maxLength": 40
+          },
+          {
+            "prop": "marker",
+            "label": "Точка-маркер",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "tint",
+            "label": "Цвет маркера",
+            "type": "color",
+            "default": ""
+          }
+        ]
       }
     },
     {
@@ -223,7 +335,37 @@
             "Не передавай onClick: компонент управляет кликом сам, действие приходит через onConfirm.",
             "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
           ]
-        }
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Удалить проект",
+            "maxLength": 40
+          },
+          {
+            "prop": "confirmLabel",
+            "label": "Подпись подтверждения",
+            "type": "text",
+            "default": "Точно удалить?",
+            "maxLength": 40
+          },
+          {
+            "prop": "timeout",
+            "label": "Окно подтверждения, мс",
+            "type": "number",
+            "default": 3000,
+            "min": 1000,
+            "max": 10000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ]
       }
     },
     {
@@ -267,7 +409,22 @@
             "Для действий, требующих подтверждения, ставь её вместе с двухшаговой кнопкой, а не вместо неё.",
             "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
           ]
-        }
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Удалить навсегда",
+            "maxLength": 40
+          },
+          {
+            "prop": "danger",
+            "label": "Цвет опасности",
+            "type": "color",
+            "default": ""
+          }
+        ]
       }
     },
     {
@@ -313,7 +470,29 @@
             "Не увеличивай стопку сверх четырёх аватаров: дальше она перестаёт читаться в размере кнопки.",
             "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
           ]
-        }
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Присоединиться",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Строка количества",
+            "type": "text",
+            "default": "+2 400 команд",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет аватаров",
+            "type": "color",
+            "default": ""
+          }
+        ]
       }
     },
     {
@@ -357,7 +536,22 @@
             "Держи keys в соответствии с реальным сочетанием и платформой пользователя, иначе подсказка врёт.",
             "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
           ]
-        }
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Быстрый поиск",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет клавиш",
+            "type": "color",
+            "default": ""
+          }
+        ]
       }
     },
     {
@@ -401,7 +595,35 @@
             "Не оставляй onLabel и offLabel одинаковыми — тогда состояние будет видно только по цвету.",
             "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
           ]
-        }
+        },
+        "controls": [
+          {
+            "prop": "onLabel",
+            "label": "Подпись включено",
+            "type": "text",
+            "default": "Уведомления включены",
+            "maxLength": 40
+          },
+          {
+            "prop": "offLabel",
+            "label": "Подпись выключено",
+            "type": "text",
+            "default": "Уведомления выключены",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Включено по умолчанию",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ]
       }
     },
     {
@@ -438,14 +660,60 @@
             "подписи children, loadingLabel и doneLabel",
             "цвет заливки — проп accent",
             "обработчик onClick",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "проп status: idle, loading или done — компонент не переключает его сам",
+            "значение progress от 0 до 100 — приходит снаружи, кнопка ничего не качает"
           ],
           "notes": [
             "Компонент не качает файл сам: status и progress приходят снаружи. Не добавляй внутрь fetch и не заводи внутреннее состояние загрузки.",
             "Не оставляй status loading без обновления progress — иначе заливка замрёт и будет выглядеть как зависание.",
             "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
           ]
-        }
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Скачать отчёт",
+            "maxLength": 40
+          },
+          {
+            "prop": "status",
+            "label": "Статус",
+            "type": "select",
+            "default": "idle",
+            "options": ["idle", "loading", "done"]
+          },
+          {
+            "prop": "progress",
+            "label": "Прогресс, %",
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "loadingLabel",
+            "label": "Подпись загрузки",
+            "type": "text",
+            "default": "Загружаем…",
+            "maxLength": 40
+          },
+          {
+            "prop": "doneLabel",
+            "label": "Подпись завершения",
+            "type": "text",
+            "default": "Готово",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ]
       }
     },
     {
@@ -489,7 +757,28 @@
             "Не добавляй ей фон или рамку: тогда она перестанет отличаться от остальных кнопок набора.",
             "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
           ]
-        }
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Смотреть все возможности",
+            "maxLength": 40
+          },
+          {
+            "prop": "arrow",
+            "label": "Стрелка",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ]
       }
     }
   ]

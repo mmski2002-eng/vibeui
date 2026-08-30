@@ -1,6 +1,8 @@
 import { CatalogThumbnail } from "@/components/catalog/catalog-thumbnail"
+import { ConfigureToggle } from "@/components/catalog/configure-toggle"
 import { PreviewTheme } from "@/components/catalog/preview-theme"
 import { CopyButton } from "@/components/copy-button"
+import { getControls } from "@/lib/controls"
 import { getItemDocUrl } from "@/lib/site"
 import type { CatalogItem } from "@/registry/meta"
 
@@ -21,7 +23,13 @@ export function CatalogCard({ item }: { item: CatalogItem }) {
     <article className="bg-shell border-shell-border relative flex h-full flex-col overflow-hidden rounded-2xl border p-0.5 shadow-sm shadow-black/5">
       <div className="border-shell-border relative flex min-h-44 min-w-0 flex-1 flex-col overflow-hidden rounded-xl border">
         <PreviewTheme>
-          <CatalogThumbnail slug={item.name} />
+          {getControls(item).length > 0 ? (
+            <ConfigureToggle item={item} docUrl={docUrl}>
+              <CatalogThumbnail slug={item.name} />
+            </ConfigureToggle>
+          ) : (
+            <CatalogThumbnail slug={item.name} />
+          )}
         </PreviewTheme>
       </div>
 

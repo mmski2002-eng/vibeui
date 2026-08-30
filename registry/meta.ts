@@ -11,6 +11,29 @@ import type { ItemGroup, ItemKind } from "@/registry/categories"
  * категории (см. `registry/categories.ts`). Проставлять их руками у каждого
  * item'а не нужно и не следует — это было бы дублирование metadata.
  */
+/**
+ * Настраиваемый атрибут item'а. Контролы — машиночитаемая форма `ai.adapt`:
+ * объявлять контрол можно только для того, что инструкция и так разрешает
+ * менять. Для того, что лежит в `ai.preserve`, контрола быть не может —
+ * иначе интерфейс предлагает сломать то, что промпт запрещает трогать.
+ *
+ * Контрол настраивает **проп**, а не исходник: установленный файл обязан
+ * оставаться побайтово равным тому, что раздаёт реестр (см. docs/CONTROLS.md).
+ */
+export type ItemControl = {
+  /** Имя пропа компонента. `children` — тоже контрол. */
+  prop: string
+  label: string
+} & (
+  | { type: "text"; default: string; maxLength?: number }
+  | { type: "select"; default: string; options: string[] }
+  | { type: "color"; default: string }
+  | { type: "boolean"; default: boolean }
+  | { type: "number"; default: number; min?: number; max?: number }
+)
+
+export type ControlValue = string | number | boolean
+
 export type CatalogMeta = {
   tags: string[]
   ai: {
@@ -35,6 +58,12 @@ export type CatalogMeta = {
      */
     usage?: string
   }
+  /**
+   * Что пользователь может настроить на витрине до выдачи агенту. Значения
+   * едут в ссылке `/c/<name>?prop=value` и подставляются в сниппет
+   * использования. Обязательны по соглашению для `kind: component`.
+   */
+  controls?: ItemControl[]
   kind?: ItemKind
   group?: ItemGroup
   internal?: boolean

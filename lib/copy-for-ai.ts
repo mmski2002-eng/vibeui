@@ -1,3 +1,4 @@
+import { buildUsage, getControls, type ControlValues } from "@/lib/controls"
 import type { ItemKind } from "@/registry/categories"
 import type { CatalogItem } from "@/registry/meta"
 
@@ -102,9 +103,11 @@ export function buildAgentBrief(
   context: CopyForAiContext & {
     pageUrl: string | null
     fileUrl: string | null
+    values: ControlValues
   },
 ): string {
-  const { installCommand, registryUrl, kind, pageUrl, fileUrl } = context
+  const { installCommand, registryUrl, kind, pageUrl, fileUrl, values } =
+    context
   const ai = item.meta?.ai
   const title = item.title ?? item.name
   const target = installPath(item)
@@ -148,8 +151,23 @@ export function buildAgentBrief(
       : "npm-зависимости: нет",
   )
 
-  if (ai?.usage) {
-    lines.push("", "Использование:", ai.usage)
+  // Сниппет собирается из значений, которые пользователь выставил на витрине.
+  // Меняются только пропы: установленный файл остаётся тем же.
+  const usage = buildUsage(item, values)
+
+  if (usage) {
+    lines.push("", "Использование:", usage)
+  }
+
+  const configured = getControls(item).some(
+    (control) => values[control.prop] !== control.default,
+  )
+
+  if (configured) {
+    lines.push(
+      "",
+      "Пропсы в сниппете выбрал пользователь — вставляй компонент именно с ними.",
+    )
   }
 
   // Три первых правила — самые важные; остальное агент прочитает в файле,

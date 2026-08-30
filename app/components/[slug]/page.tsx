@@ -2,11 +2,13 @@ import { notFound } from "next/navigation"
 import Link from "next/link"
 
 import { BlockPreview } from "@/components/block-preview"
+import { ItemConfigurator } from "@/components/catalog/item-configurator"
 import { CatalogItemNav } from "@/components/catalog/catalog-item-nav"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { CatalogSidebar } from "@/components/catalog/catalog-sidebar"
 import { CodeBlock } from "@/components/code-block"
 import { CopyButton } from "@/components/copy-button"
+import { getControls } from "@/lib/controls"
 import { buildCopyForAiPrompt } from "@/lib/copy-for-ai"
 import {
   getInstallCommand,
@@ -61,6 +63,7 @@ export default async function ComponentPage({
   const installCommand = getInstallCommand(block.name)
   const registryUrl = getRegistryItemUrl(block.name)
   const docUrl = getItemDocUrl(block.name)
+  const controls = getControls(block)
   const kind = getItemKind(block.name) ?? "block"
   const aiPrompt = buildCopyForAiPrompt(block, {
     installCommand,
@@ -164,15 +167,23 @@ export default async function ComponentPage({
             </p>
           ) : null}
 
-          <div className="mt-5">
-            <CopyButton
-              value={docUrl}
-              label="Copy for AI"
-              copiedLabel="Ссылка скопирована"
-              variant="primary"
-              className="h-11 px-5"
-            />
-          </div>
+          {controls.length > 0 ? (
+            // Настройка меняет пропсы и ссылку, но не исходник: установленный
+            // файл обязан остаться тем же (см. docs/CONTROLS.md).
+            <div className="border-shell-border bg-shell mt-5 overflow-hidden rounded-xl border">
+              <ItemConfigurator item={block} docUrl={docUrl} />
+            </div>
+          ) : (
+            <div className="mt-5">
+              <CopyButton
+                value={docUrl}
+                label="Copy for AI"
+                copiedLabel="Ссылка скопирована"
+                variant="primary"
+                className="h-11 px-5"
+              />
+            </div>
+          )}
 
           {/* Запасной путь: если агент не может открыть ссылку, инструкцию
               копируют целиком. */}
