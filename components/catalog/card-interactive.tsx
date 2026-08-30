@@ -59,7 +59,9 @@ export function CardInteractive({
   children: ReactNode
 }) {
   const t = getDictionary(locale)
-  const [theme, setTheme] = useState<PreviewTheme>("dark")
+  const [theme, setTheme] = useState<PreviewTheme>(
+    item.meta?.preview?.surface ?? "dark",
+  )
   const [values, setValues] = useState<ControlValues>(() => defaultValues(item))
   const [open, setOpen] = useState(false)
 

@@ -63,26 +63,36 @@ if (!categories.includes(`slug: "${category}"`)) {
   )
 }
 
-const tree = TREES.find((entry) =>
-  existsSync(path.join(ROOT, entry.root, category)),
-)
-
-if (!tree) {
-  fail(
-    `нет директории категории. Создай registry/blocks/${category}/ или registry/components/${category}/ с registry.json`,
-  )
-}
+const kindArgument = process.argv.includes("--block") ? "block" : "component"
+const tree =
+  TREES.find((entry) => existsSync(path.join(ROOT, entry.root, category))) ??
+  TREES.find((entry) => entry.kind === kindArgument)
 
 const directory = path.join(ROOT, tree.root, category)
 const manifestPath = path.join(directory, "registry.json")
 
+// Первая категория заводится вместе с первым item'ом: пустой реестр всё
+// равно ничего не публикует, а забыть `$schema` в нём — легко.
 if (!existsSync(manifestPath)) {
-  fail(`${tree.root}/${category}: нет registry.json`)
+  mkdirSync(directory, { recursive: true })
+  writeFileSync(
+    manifestPath,
+    `${JSON.stringify(
+      { $schema: "https://ui.shadcn.com/schema/registry.json", items: [] },
+      null,
+      2,
+    )}\n`,
+  )
+  console.log(`  заведена категория ${tree.root}/${category}`)
 }
 
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"))
 const prefix = prefixArgument ?? defaultPrefix(category)
+
+// Нумерация ведётся внутри префикса: в одной категории могут жить
+// `checkbox-001` и `switch-001` — это разные компоненты, а не варианты.
 const taken = (manifest.items ?? [])
+  .filter((item) => item.name.startsWith(`${prefix}-`))
   .map((item) => Number(item.name.slice(prefix.length + 1)))
   .filter((value) => Number.isInteger(value))
 const number = String(Math.max(0, ...taken) + 1).padStart(3, "0")

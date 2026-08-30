@@ -19,6 +19,12 @@ import { Button008 } from "@/registry/components/buttons/button-008/button-008"
 import { Button009 } from "@/registry/components/buttons/button-009/button-009"
 import { Button010 } from "@/registry/components/buttons/button-010/button-010"
 import { Button011 } from "@/registry/components/buttons/button-011/button-011"
+import { Input001 } from "@/registry/components/inputs/input-001/input-001"
+import { Input002 } from "@/registry/components/inputs/input-002/input-002"
+import { Textarea001 } from "@/registry/components/inputs/textarea-001/textarea-001"
+import { Select001 } from "@/registry/components/inputs/select-001/select-001"
+import { Checkbox001 } from "@/registry/components/inputs/checkbox-001/checkbox-001"
+import { Switch001 } from "@/registry/components/inputs/switch-001/switch-001"
 
 /**
  * Карта slug -> React-компонент. Из неё рендерятся и миниатюра каталога,
@@ -44,4 +50,10 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "button-009": Button009,
   "button-010": Button010,
   "button-011": Button011,
+  "input-001": Input001,
+  "input-002": Input002,
+  "textarea-001": Textarea001,
+  "select-001": Select001,
+  "checkbox-001": Checkbox001,
+  "switch-001": Switch001,
 }

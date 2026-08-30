@@ -101,4 +101,34 @@ export const LAZY_PREVIEWS = {
       (module) => module.Button011,
     ),
   ),
+  "input-001": dynamic(() =>
+    import("@/registry/components/inputs/input-001/input-001").then(
+      (module) => module.Input001,
+    ),
+  ),
+  "input-002": dynamic(() =>
+    import("@/registry/components/inputs/input-002/input-002").then(
+      (module) => module.Input002,
+    ),
+  ),
+  "textarea-001": dynamic(() =>
+    import("@/registry/components/inputs/textarea-001/textarea-001").then(
+      (module) => module.Textarea001,
+    ),
+  ),
+  "select-001": dynamic(() =>
+    import("@/registry/components/inputs/select-001/select-001").then(
+      (module) => module.Select001,
+    ),
+  ),
+  "checkbox-001": dynamic(() =>
+    import("@/registry/components/inputs/checkbox-001/checkbox-001").then(
+      (module) => module.Checkbox001,
+    ),
+  ),
+  "switch-001": dynamic(() =>
+    import("@/registry/components/inputs/switch-001/switch-001").then(
+      (module) => module.Switch001,
+    ),
+  ),
 } as unknown as Record<string, ComponentType<PreviewProps>>

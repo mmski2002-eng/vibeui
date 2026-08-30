@@ -7,6 +7,7 @@ import heroRegistry from "@/registry/blocks/hero/registry.json"
 import featuresRegistry from "@/registry/blocks/features/registry.json"
 import pricingRegistry from "@/registry/blocks/pricing/registry.json"
 import buttonsRegistry from "@/registry/components/buttons/registry.json"
+import inputsRegistry from "@/registry/components/inputs/registry.json"
 
 /**
  * Реестры, попадающие на сайт. Это и есть файловая база каталога: другого
@@ -37,6 +38,11 @@ export const SOURCES = [
     directory: "registry/components/buttons",
     kind: "component",
     items: buttonsRegistry.items,
+  },
+  {
+    directory: "registry/components/inputs",
+    kind: "component",
+    items: inputsRegistry.items,
   },
 ] as const satisfies readonly {
   directory: string
