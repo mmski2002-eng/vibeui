@@ -289,16 +289,17 @@ Complete:
   темы проекта-хозяина, переменные без префикса `--vibeui-`, анимация без
   `prefers-reduced-motion`. Публикуемые `/r/*.json` при переходе не
   изменились ни на байт. Подробности — [PIPELINE.md](PIPELINE.md).
-- **Наполнение каталога волнами.** 51 item в 12 категориях: компоненты —
-  `buttons` (11), `inputs` (6), `display` (6), `feedback` (6), `navigation`
-  (6), `tables` (3), `charts` (3); блоки — `hero` (3), `features`,
-  `pricing`, `navbar`, `cta`, `faq`, `testimonials`, `footer`. Вместе с hero,
-  features и pricing блоки собирают целый лендинг. Большинство items не несёт
+- **Наполнение каталога волнами.** 101 item в 19 реестрах: компоненты —
+  `buttons` (11), `accordion` (11), `alert` (20), `dialog` (14), `aspect` (8),
+  `inputs` (6), `display` (5), `feedback` (4), `navigation` (6), `tables` (3),
+  `charts` (3); блоки — `hero` (3), `features`, `pricing`, `navbar`, `cta`,
+  `faq`, `testimonials`, `footer`. Вместе с hero, features и pricing блоки
+  собирают целый лендинг. Большинство items не несёт
   клиентского JS: раскрытие держат `details`, модалки и меню — HTML popover,
   графики считаются на сервере в SVG и разметке.
 - **Витринные поля metadata.** `meta.preview` объявляет, как показывать item
-  на карточке: `surface` (тёмная или светлая подложка), `width` (`auto` или
-  `full`) и `props` — демо-пропсы только для витрины. В устанавливаемый файл
+  на карточке: `width` (`auto` или `full`) и `props` — демо-пропсы только для
+  витрины. Подложка карточки всегда тёмная, светлая — только переключателем. В устанавливаемый файл
   это не попадает и дефолты компонента не меняет.
 
 ## Статус Phase 3

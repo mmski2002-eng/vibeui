@@ -69,6 +69,14 @@ import { Dialog011 } from "@/registry/components/dialog/dialog-011/dialog-011"
 import { Dialog012 } from "@/registry/components/dialog/dialog-012/dialog-012"
 import { Dialog013 } from "@/registry/components/dialog/dialog-013/dialog-013"
 import { Dialog014 } from "@/registry/components/dialog/dialog-014/dialog-014"
+import { Aspect001 } from "@/registry/components/aspect/aspect-001/aspect-001"
+import { Aspect002 } from "@/registry/components/aspect/aspect-002/aspect-002"
+import { Aspect003 } from "@/registry/components/aspect/aspect-003/aspect-003"
+import { Aspect004 } from "@/registry/components/aspect/aspect-004/aspect-004"
+import { Aspect005 } from "@/registry/components/aspect/aspect-005/aspect-005"
+import { Aspect006 } from "@/registry/components/aspect/aspect-006/aspect-006"
+import { Aspect007 } from "@/registry/components/aspect/aspect-007/aspect-007"
+import { Aspect008 } from "@/registry/components/aspect/aspect-008/aspect-008"
 import { Input001 } from "@/registry/components/inputs/input-001/input-001"
 import { Input002 } from "@/registry/components/inputs/input-002/input-002"
 import { Textarea001 } from "@/registry/components/inputs/textarea-001/textarea-001"
@@ -171,6 +179,14 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "dialog-012": Dialog012,
   "dialog-013": Dialog013,
   "dialog-014": Dialog014,
+  "aspect-001": Aspect001,
+  "aspect-002": Aspect002,
+  "aspect-003": Aspect003,
+  "aspect-004": Aspect004,
+  "aspect-005": Aspect005,
+  "aspect-006": Aspect006,
+  "aspect-007": Aspect007,
+  "aspect-008": Aspect008,
   "input-001": Input001,
   "input-002": Input002,
   "textarea-001": Textarea001,

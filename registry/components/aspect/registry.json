@@ -1,0 +1,907 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "aspect-001",
+      "type": "registry:component",
+      "title": "Ratio Frame",
+      "description": "Рамка заданного соотношения: держит место до загрузки содержимого. Пропорция приходит переменной, а не классом — «16 / 9» это данные.",
+      "categories": ["aspect"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "aspect-001/aspect-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/aspect-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-001-*. Соотношение приходит пропом в переменную --vibeui-aspect-001-ratio и подставляется в aspect-ratio: плодить класс на каждую пропорцию значит заранее решать за пользователя, какие ему понадобятся. Прямые потомки img, video и iframe растягиваются на всю рамку с object-fit:cover. Пустая рамка показывает штриховку и подпись, чтобы не выглядеть поломкой.",
+      "meta": {
+        "tags": ["aspect ratio", "media", "placeholder", "layout"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Aspect001",
+          "usage": "<Aspect001 ratio=\"16 / 9\">\n  <img src=\"/cover.jpg\" alt=\"Обложка статьи\" />\n</Aspect001>",
+          "summary": "Рамка с заданным соотношением сторон: содержимое заполняет её целиком, пустая показывает штриховку с подписью. Пропорция задаётся строкой в пропе, поэтому подходит любая — 16/9, 4/3, 1/1, 21/9. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-aspect-001-* и не подменять её токенами вашей темы (bg-muted, border-border и подобными)",
+            "соотношение через переменную, а не набор классов: пропорция — это данные",
+            "object-fit:cover у прямых потомков: без него картинка растягивается и соотношение теряет смысл",
+            "overflow:hidden вместе со скруглением — иначе картинка вылезет за углы",
+            "штриховку и подпись у пустой рамки: пустой серый прямоугольник читается как поломка",
+            "aria-hidden у подписи-заглушки: она декоративная"
+          ],
+          "adapt": [
+            "ratio — любое соотношение строкой: «16 / 9», «4 / 3», «1 / 1»",
+            "children — img, video, iframe или собственная разметка",
+            "label — подпись пустой рамки",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Компонент не грузит изображения и не следит за загрузкой: он только держит место.",
+            "У <img> внутри обязателен alt — рамка его не подставляет.",
+            "Не задавайте высоту рамке через className: она вычисляется из ширины и соотношения.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "ratio",
+            "label": "Соотношение",
+            "type": "select",
+            "default": "16 / 9",
+            "options": ["16 / 9", "4 / 3", "1 / 1", "3 / 4", "21 / 9"]
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "16 / 9",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A frame with a fixed ratio that holds the space until the content loads. The ratio arrives as a variable rather than a class — \"16 / 9\" is data.",
+            "ai": {
+              "summary": "A frame with a fixed aspect ratio: the content fills it completely, and an empty one shows hatching with a label. The ratio is a string prop, so any works — 16/9, 4/3, 1/1, 21/9. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-aspect-001-* palette — do not swap it for your theme tokens (bg-muted, border-border and the like)",
+                "the ratio as a variable rather than a set of classes: a proportion is data",
+                "object-fit:cover on the direct children: without it the image stretches and the ratio loses its point",
+                "overflow:hidden together with the radius — otherwise the image escapes the corners",
+                "the hatching and label on an empty frame: a plain grey box reads as broken",
+                "aria-hidden on the placeholder label: it is decorative"
+              ],
+              "adapt": [
+                "ratio — any proportion as a string: \"16 / 9\", \"4 / 3\", \"1 / 1\"",
+                "children — an img, video, iframe or your own markup",
+                "label — the empty-frame caption",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "The component loads no images and tracks no loading: it only holds the space.",
+                "An <img> inside needs an alt — the frame does not supply one.",
+                "Do not set a height through className: it is derived from the width and the ratio.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Aspect001 ratio=\"16 / 9\">\n  <img src=\"/cover.jpg\" alt=\"Article cover\" />\n</Aspect001>"
+            },
+            "controls": {
+              "ratio": {
+                "label": "Ratio"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "16 / 9"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "aspect-002",
+      "type": "registry:component",
+      "title": "Video Frame",
+      "description": "Превью видео 16:9 с кнопкой воспроизведения: лёгкий кадр вместо тяжёлого плеера до клика.",
+      "categories": ["aspect"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "aspect-002/aspect-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/aspect-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-002-*. Кадр держит 16:9 и по умолчанию рендерится ссылкой: iframe плеера весит сотни килобайт и подключается уже по клику. Треугольник воспроизведения нарисован границами, длительность лежит плашкой в углу, подпись — поверх градиента снизу.",
+      "meta": {
+        "tags": ["aspect ratio", "video", "thumbnail", "performance"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Aspect002",
+          "usage": "<Aspect002\n  title=\"Как собрать лендинг за вечер\"\n  duration=\"12:04\"\n  href=\"/video/landing\"\n/>",
+          "summary": "Превью видео 16:9: круглая кнопка воспроизведения по центру, длительность в углу, подпись поверх градиента. Весь кадр — ссылка, плеер подключается уже по клику. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-aspect-002-* и не подменять её токенами вашей темы",
+            "отказ от плеера до клика: встроенный iframe тянет сотни килобайт на каждой странице со списком роликов",
+            "треугольник из границ вместо иконки: библиотека ради одного знака не нужна",
+            "градиент под подписью — без него текст не читается на светлом кадре",
+            "aria-label у ссылки с названием ролика: «ссылка» без текста непонятна",
+            "пропорцию 16:9: при другой видео придётся обрезать"
+          ],
+          "adapt": [
+            "title и duration — подпись и длительность",
+            "href — адрес страницы или плеера",
+            "акцент через проп accent — цвет кнопки воспроизведения",
+            "обложку: положите <img> внутрь, он ляжет под кнопку"
+          ],
+          "notes": [
+            "Компонент ничего не воспроизводит: по клику вы сами подставляете плеер или ведёте на страницу.",
+            "Длительность не вычисляется — передавайте её вместе с данными ролика.",
+            "Для вертикальных роликов возьмите aspect-004: 16:9 обрежет их до полосы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Название",
+            "type": "text",
+            "default": "Как собрать лендинг за вечер",
+            "maxLength": 60
+          },
+          {
+            "prop": "duration",
+            "label": "Длительность",
+            "type": "text",
+            "default": "12:04",
+            "maxLength": 10
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A 16:9 video thumbnail with a play button: a light frame instead of a heavy player before the click.",
+            "ai": {
+              "summary": "A 16:9 video preview: a round play button in the centre, the duration in the corner and the title over a gradient. The whole frame is a link, and the player loads only after the click. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-aspect-002-* palette — do not swap it for your theme tokens",
+                "not loading the player before the click: an embedded iframe costs hundreds of kilobytes on every list page",
+                "the triangle built from borders instead of an icon: no library for a single glyph",
+                "the gradient under the title — without it the text disappears on a light frame",
+                "the aria-label on the link carrying the video title: a link with no text says nothing",
+                "the 16:9 ratio: anything else means cropping the video"
+              ],
+              "adapt": [
+                "title and duration — the caption and length",
+                "href — the page or player address",
+                "the accent through the accent prop — the play button colour",
+                "the thumbnail: put an <img> inside and it sits under the button"
+              ],
+              "notes": [
+                "The component plays nothing: on click you swap in a player or navigate.",
+                "The duration is not computed — pass it with the video data.",
+                "For vertical clips use aspect-004: 16:9 crops them to a strip.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Aspect002\n  title=\"Build a landing page in an evening\"\n  duration=\"12:04\"\n  href=\"/video/landing\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Build a landing page in an evening"
+              },
+              "duration": {
+                "label": "Duration",
+                "default": "12:04"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "aspect-003",
+      "type": "registry:component",
+      "title": "Product Frame",
+      "description": "Квадратный кадр товара: в сетке магазина карточки обязаны быть одной высоты, а фотографии приходят разные — квадрат обрезает их предсказуемо.",
+      "categories": ["aspect"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "aspect-003/aspect-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/aspect-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-003-*. Кадр держит 1:1, плашка со скидкой лежит в его углу, название обрезается двумя строками, цена и зачёркнутая старая цена стоят под кадром. Ссылка названия растягивается на всю карточку через ::after, поэтому в сетке остаётся одна ссылка на товар.",
+      "meta": {
+        "tags": ["aspect ratio", "product", "commerce", "grid"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Aspect003",
+          "usage": "<Aspect003\n  title=\"Настольная лампа «Полёт»\"\n  price=\"4 900 ₽\"\n  oldPrice=\"6 900 ₽\"\n  badge=\"−30 %\"\n/>",
+          "summary": "Карточка товара с квадратным кадром: плашка скидки в углу, название в две строки, цена и зачёркнутая старая цена под кадром. Клик по карточке ведёт по одной ссылке. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-aspect-003-* и не подменять её токенами вашей темы",
+            "квадрат: в сетке магазина карточки обязаны быть одной высоты при разных фотографиях",
+            "цену под кадром, а не поверх: поверх её не прочитать на светлой фотографии",
+            "обрезку названия двумя строками — иначе длинное имя ломает ряд",
+            "зачёркнутую старую цену приглушённой: рядом с новой её только сравнивают",
+            "растянутую ссылку через ::after: в сетке из сорока товаров лишние ссылки мешают"
+          ],
+          "adapt": [
+            "тексты title, price, oldPrice и badge",
+            "href — адрес карточки товара",
+            "акцент через проп accent — цвет плашки скидки",
+            "фотографию: положите <img> внутрь [data-part=\"frame\"]"
+          ],
+          "notes": [
+            "Цена — строка: форматирование и валюта остаются за вызывающим кодом.",
+            "Не показывайте старую цену, если скидки нет: перечёркнутая цифра без скидки читается как обман.",
+            "Плашка рассчитана на короткий текст — «−30 %», «Хит», не на предложение.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Название",
+            "type": "text",
+            "default": "Настольная лампа «Полёт», тёплый свет",
+            "maxLength": 60
+          },
+          {
+            "prop": "price",
+            "label": "Цена",
+            "type": "text",
+            "default": "4 900 ₽",
+            "maxLength": 20
+          },
+          {
+            "prop": "badge",
+            "label": "Плашка",
+            "type": "text",
+            "default": "−30 %",
+            "maxLength": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A square product frame: in a shop grid the cards must share one height while the photos differ — a square crops them predictably.",
+            "ai": {
+              "summary": "A product card with a square frame: a discount pill in the corner, a two-line title, the price and a struck-through old price beneath. The whole card follows a single link. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-aspect-003-* palette — do not swap it for your theme tokens",
+                "the square: in a shop grid the cards must share a height across different photos",
+                "the price under the frame rather than over it: over a light photo it cannot be read",
+                "clamping the title to two lines — a long name otherwise breaks the row",
+                "the struck-through old price kept muted: next to the new one it is only for comparison",
+                "the stretched ::after link: in a grid of forty products extra links get in the way"
+              ],
+              "adapt": [
+                "the title, price, oldPrice and badge copy",
+                "href — the product page",
+                "the accent through the accent prop — the discount pill colour",
+                "the photo: put an <img> inside [data-part=\"frame\"]"
+              ],
+              "notes": [
+                "The price is a string: formatting and currency belong to the caller.",
+                "Do not show an old price without a discount: a struck-through figure with no saving reads as a trick.",
+                "The pill fits short text — \"−30 %\", \"Top\" — not an offer.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Aspect003\n  title=\"Flight desk lamp\"\n  price=\"€49\"\n  oldPrice=\"€69\"\n  badge=\"−30 %\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Flight desk lamp, warm light"
+              },
+              "price": {
+                "label": "Price",
+                "default": "€49"
+              },
+              "badge": {
+                "label": "Pill",
+                "default": "−30 %"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "aspect-004",
+      "type": "registry:component",
+      "title": "Portrait Frame",
+      "description": "Портретный кадр 3:4 с подписью поверх тонированного градиента: чёрная плёнка на тёплом снимке даёт грязный серый, тонированная — нет.",
+      "categories": ["aspect"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "aspect-004/aspect-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/aspect-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-004-*. Кадр держит 3:4 и рендерится ссылкой. Кегль заголовка считается в cqi от собственной ширины кадра, поэтому подпись не ломается в узкой колонке. Градиент под текстом собран из собственного тёмного тона, а не из полупрозрачного чёрного.",
+      "meta": {
+        "tags": ["aspect ratio", "portrait", "cover", "editorial"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Aspect004",
+          "usage": "<Aspect004\n  eyebrow=\"Портфолио\"\n  title=\"Вечерний свет над мастерской\"\n  subtitle=\"Съёмка студии «Полёт»\"\n/>",
+          "summary": "Портретный кадр 3:4: плашка рубрики в верхнем углу, засечный заголовок и подпись поверх градиента снизу. Кегль считается от ширины кадра, поэтому подпись не ломается в узкой колонке. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-aspect-004-* и не подменять её токенами вашей темы",
+            "тонированный градиент вместо полупрозрачного чёрного: чёрная плёнка пачкает тёплый снимок",
+            "пропорцию 3:4 — она для портретов и вертикальных обложек",
+            "кегль заголовка в cqi: в узкой колонке фиксированный размер ломает подпись",
+            "засечную гарнитуру заголовка: она отличает обложку от карточки товара",
+            "aria-hidden у слоя градиента"
+          ],
+          "adapt": [
+            "тексты eyebrow, title и subtitle",
+            "href — адрес материала",
+            "акцент через проп accent — цвет кольца фокуса",
+            "фотографию: положите <img> внутрь, он ляжет под градиент"
+          ],
+          "notes": [
+            "Не ставьте сюда длинный заголовок: три строки поверх снимка перестают читаться.",
+            "Для горизонтальных обложек берите aspect-002 или aspect-005 — 3:4 обрежет их по краям.",
+            "У <img> обязателен alt: подпись поверх кадра его не заменяет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "eyebrow",
+            "label": "Рубрика",
+            "type": "text",
+            "default": "Портфолио",
+            "maxLength": 20
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вечерний свет над мастерской",
+            "maxLength": 50
+          },
+          {
+            "prop": "subtitle",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Съёмка студии «Полёт», март",
+            "maxLength": 50
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A 3:4 portrait frame with the caption over a tinted gradient: a black scrim muddies a warm photograph, a tinted one does not.",
+            "ai": {
+              "summary": "A 3:4 portrait frame: a category pill in the top corner, a serif heading and a caption over the bottom gradient. The type size is measured against the frame's width, so the caption survives a narrow column. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-aspect-004-* palette — do not swap it for your theme tokens",
+                "the tinted gradient instead of translucent black: a black scrim muddies a warm photograph",
+                "the 3:4 ratio — it is for portraits and vertical covers",
+                "the cqi-based heading size: a fixed size breaks the caption in a narrow column",
+                "the serif heading: it separates a cover from a product card",
+                "aria-hidden on the gradient layer"
+              ],
+              "adapt": [
+                "the eyebrow, title and subtitle copy",
+                "href — the destination",
+                "the accent through the accent prop — the focus ring",
+                "the photo: put an <img> inside and it sits under the gradient"
+              ],
+              "notes": [
+                "Do not use a long heading here: three lines over a photograph stop being readable.",
+                "For horizontal covers use aspect-002 or aspect-005 — 3:4 crops them at the sides.",
+                "An <img> needs an alt: the caption over the frame does not replace it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Aspect004\n  eyebrow=\"Portfolio\"\n  title=\"Evening light over the workshop\"\n  subtitle=\"Shot at Flight studio\"\n/>"
+            },
+            "controls": {
+              "eyebrow": {
+                "label": "Category",
+                "default": "Portfolio"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Evening light over the workshop"
+              },
+              "subtitle": {
+                "label": "Caption",
+                "default": "Shot at Flight studio, March"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "aspect-005",
+      "type": "registry:component",
+      "title": "Cinematic Banner",
+      "description": "Широкая полоса 21:9, которая на телефоне становится 4:3: киношная пропорция в 360 пикселях превратилась бы в щель высотой 154 пикселя.",
+      "categories": ["aspect"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "aspect-005/aspect-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/aspect-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-005-*. Соотношение и вся раскладка живут на внутренней рамке, а не на корне: корень объявлен контейнером, а контейнерный запрос применяется только к потомкам. От 30rem собственной ширины пропорция переключается с 21:9 на 4:3. Кегль и отступы считаются в cqi.",
+      "meta": {
+        "tags": ["aspect ratio", "banner", "hero", "responsive"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Aspect005",
+          "usage": "<Aspect005\n  title=\"Соберите страницу за вечер\"\n  actionLabel=\"Открыть каталог\"\n  actionHref=\"/components\"\n/>",
+          "summary": "Широкая полоса 21:9 с заголовком, описанием и кнопкой слева. В узкой колонке сама переключается на 4:3, потому что киношная пропорция на телефоне вырождается в щель. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-aspect-005-* и не подменять её токенами вашей темы",
+            "переключение пропорции в узкой колонке: 21:9 на телефоне даёт полосу высотой в полторы строки",
+            "раскладку на внутренней рамке: контейнерный запрос не применяется к самому контейнеру",
+            "кегль и отступы в cqi — они считаются от ширины полосы, а не окна",
+            "ограничение ширины текста: на широком экране строка через весь баннер не читается",
+            "контраст текста: под ним лежит градиент, а не сплошная заливка"
+          ],
+          "adapt": [
+            "тексты title и description",
+            "actionLabel и actionHref — действие полосы",
+            "акцент через проп accent — цвет свечения и кнопки",
+            "фотографию: положите <img> внутрь рамки, она ляжет под текст"
+          ],
+          "notes": [
+            "Полоса рассчитана на всю ширину страницы. В колонке 20rem она превращается в обычную карточку — это нормально.",
+            "Не ставьте больше одной кнопки: у баннера одно действие, иначе он перестаёт быть баннером.",
+            "У фотографии внутри обязателен alt — либо aria-hidden, если она чисто декоративная.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Соберите страницу за вечер",
+            "maxLength": 50
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Готовые блоки, установка одной командой и инструкция для ИИ-агента.",
+            "maxLength": 120
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Открыть каталог",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A 21:9 band that becomes 4:3 on a phone: at 360 pixels the cinematic ratio collapses into a 154-pixel slot.",
+            "ai": {
+              "summary": "A wide 21:9 band with a heading, description and button on the left. In a narrow column it switches itself to 4:3, because the cinematic ratio degenerates into a slot on a phone. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-aspect-005-* palette — do not swap it for your theme tokens",
+                "the ratio switch in a narrow column: 21:9 on a phone leaves a band a line and a half tall",
+                "the layout on the inner frame: a container query does not apply to the container itself",
+                "the cqi-based type and padding — measured against the band, not the window",
+                "the text width limit: a line spanning the whole banner does not read",
+                "the text contrast: a gradient sits beneath it, not a flat fill"
+              ],
+              "adapt": [
+                "the title and description copy",
+                "actionLabel and actionHref — the band's action",
+                "the accent through the accent prop — the glow and the button",
+                "the photo: put an <img> inside the frame and it sits under the text"
+              ],
+              "notes": [
+                "The band expects the full page width. In a 20rem column it becomes an ordinary card — that is fine.",
+                "Do not add a second button: a banner has one action, otherwise it stops being a banner.",
+                "A photo inside needs an alt — or aria-hidden if it is purely decorative.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Aspect005\n  title=\"Build a page in an evening\"\n  actionLabel=\"Open the catalog\"\n  actionHref=\"/components\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Build a page in an evening"
+              },
+              "description": {
+                "label": "Description",
+                "default": "Ready-made blocks, one-command install and instructions your agent can follow."
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Open the catalog"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "aspect-006",
+      "type": "registry:component",
+      "title": "Collage Grid",
+      "description": "Коллаж кадров: соотношение держит вся сетка, а не каждая плитка. Главный кадр занимает две колонки, хвост сворачивается в счётчик.",
+      "categories": ["aspect"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "aspect-006/aspect-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/aspect-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-006-*. Сетка и её соотношение 3:2 живут на внутреннем элементе, потому что корень объявлен контейнером, а контейнерный запрос действует только на потомков. Первая плитка занимает две колонки и две строки; в узкой колонке сетка перестраивается в две колонки и три строки с пропорцией 3:4. Оттенок плитки задаётся переменной.",
+      "meta": {
+        "tags": ["aspect ratio", "collage", "gallery", "grid"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Aspect006",
+          "usage": "<Aspect006\n  tiles={[{ label: \"Главная\", hue: 250 }, { label: \"Услуги\", hue: 30 }]}\n  visible={5}\n/>",
+          "summary": "Коллаж из кадров: главный крупный, остальные мелкие, вся композиция держит 3:2 и перестраивается в узкой колонке. Хвост списка сворачивается в счётчик на последней плитке. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-aspect-006-* и не подменять её токенами вашей темы",
+            "соотношение на сетке, а не на плитках: иначе коллаж рассыпается при разном числе кадров",
+            "сетку на внутреннем элементе: контейнерный запрос не применяется к самому контейнеру",
+            "главную плитку размером в две колонки и две строки — без иерархии коллаж читается как мозаика",
+            "счётчик на последней плитке: галерея не должна расти бесконечно",
+            "перестроение в две колонки в узкой ширине"
+          ],
+          "adapt": [
+            "массив tiles: подпись и оттенок каждой плитки",
+            "visible — сколько кадров показывать до сворачивания",
+            "moreLabel — знак перед числом скрытых",
+            "фотографии: положите <img> внутрь плиток"
+          ],
+          "notes": [
+            "Меньше трёх кадров ломают композицию: главная плитка займёт всё, а мелких не останется.",
+            "Оттенок — заглушка на случай, когда фотографии ещё нет. С реальными снимками он не виден.",
+            "Компонент не открывает просмотрщик: клик по плитке вешает вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "visible",
+            "label": "Кадров",
+            "type": "number",
+            "default": 5,
+            "min": 3,
+            "max": 6
+          },
+          {
+            "prop": "moreLabel",
+            "label": "Знак счётчика",
+            "type": "text",
+            "default": "+",
+            "maxLength": 4
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A collage of frames where the grid holds the ratio rather than each tile. The lead frame spans two columns and the tail folds into a counter.",
+            "ai": {
+              "summary": "A collage of frames: one lead tile and smaller ones, the whole composition holding 3:2 and reflowing in a narrow column. The tail of the list folds into a counter on the last tile. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-aspect-006-* palette — do not swap it for your theme tokens",
+                "the ratio on the grid rather than the tiles: otherwise the collage falls apart at a different count",
+                "the grid on an inner element: a container query does not apply to the container itself",
+                "the lead tile spanning two columns and two rows — without hierarchy a collage reads as mosaic",
+                "the counter on the last tile: a gallery must not grow without end",
+                "the reflow to two columns at narrow widths"
+              ],
+              "adapt": [
+                "the tiles array: label and hue per tile",
+                "visible — how many frames show before folding",
+                "moreLabel — the glyph before the hidden count",
+                "the photos: put an <img> inside the tiles"
+              ],
+              "notes": [
+                "Fewer than three frames break the composition: the lead tile takes everything and no small ones remain.",
+                "The hue is a placeholder for when a photo is missing. With real images it is invisible.",
+                "The component opens no lightbox: clicking a tile is the caller's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Aspect006\n  tiles={[{ label: \"Home\", hue: 250 }, { label: \"Services\", hue: 30 }]}\n  visible={5}\n/>"
+            },
+            "controls": {
+              "visible": {
+                "label": "Frames"
+              },
+              "moreLabel": {
+                "label": "Counter glyph",
+                "default": "+"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "aspect-007",
+      "type": "registry:component",
+      "title": "Embed Frame",
+      "description": "Рамка для чужого встраиваемого содержимого: пока адрес не передан, кадр остаётся заглушкой с сеткой — чужой iframe грузится по клику, а не при открытии страницы.",
+      "categories": ["aspect"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "aspect-007/aspect-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/aspect-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-007-*. Кадр держит 16:10 — привычную пропорцию карты и презентации. У iframe проставлены loading=\"lazy\" и title: без title скринридер называет вставку просто «frame». Заглушка нарисована сеткой из двух градиентов и меткой-каплей, поэтому пустая рамка читается как карта.",
+      "meta": {
+        "tags": ["aspect ratio", "embed", "map", "iframe"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Aspect007",
+          "usage": "<Aspect007\n  title=\"Карта проезда\"\n  src=\"https://maps.example.com/embed\"\n  source=\"Источник: OpenStreetMap\"\n/>",
+          "summary": "Рамка встраивания 16:10: пока src не передан, показывает заглушку с сеткой и меткой; с адресом рендерит iframe с ленивой загрузкой и подписью. Под кадром — строка источника. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-aspect-007-* и не подменять её токенами вашей темы",
+            "loading=\"lazy\" и title у iframe: без title вставка безымянна для скринридера",
+            "заглушку с сеткой: пустой прямоугольник вместо карты выглядит поломкой",
+            "подпись источника под кадром — у чужого содержимого должен быть виден автор",
+            "пропорцию 16:10: карты и презентации приходят в ней",
+            "фигуру figure/figcaption: кадр с подписью — это иллюстрация"
+          ],
+          "adapt": [
+            "src — адрес встраиваемого документа",
+            "title — что именно встроено; он же уходит в title у iframe",
+            "source — строка источника под кадром",
+            "акцент через проп accent — цвет метки на заглушке"
+          ],
+          "notes": [
+            "Чужой iframe тянет сторонние скрипты и cookie: подключайте его после согласия, если это требуется по закону.",
+            "Не отдавайте в src ненадёжный адрес из пользовательского ввода без проверки.",
+            "Заглушка не имитирует конкретную карту: это схема, а не скриншот сервиса.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Что встроено",
+            "type": "text",
+            "default": "Карта проезда к студии",
+            "maxLength": 50
+          },
+          {
+            "prop": "source",
+            "label": "Источник",
+            "type": "text",
+            "default": "Источник: OpenStreetMap",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A frame for third-party embeds: without a src it stays a grid placeholder — someone else's iframe loads on click, not on page open.",
+            "ai": {
+              "summary": "A 16:10 embed frame: without src it shows a grid placeholder with a pin; with one it renders a lazy iframe carrying a title. A source line sits below the frame. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-aspect-007-* palette — do not swap it for your theme tokens",
+                "loading=\"lazy\" and title on the iframe: without a title the embed is nameless to a screen reader",
+                "the grid placeholder: an empty rectangle in place of a map reads as broken",
+                "the source line under the frame — third-party content should name its author",
+                "the 16:10 ratio: maps and slides arrive in it",
+                "the figure/figcaption pairing: a frame with a caption is an illustration"
+              ],
+              "adapt": [
+                "src — the embedded document",
+                "title — what is embedded; it also becomes the iframe's title",
+                "source — the attribution line",
+                "the accent through the accent prop — the placeholder pin"
+              ],
+              "notes": [
+                "A third-party iframe pulls in scripts and cookies: load it after consent where the law requires it.",
+                "Do not pass an unvetted user-supplied URL into src.",
+                "The placeholder imitates no particular map: it is a diagram, not a screenshot of a service.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Aspect007\n  title=\"Directions map\"\n  src=\"https://maps.example.com/embed\"\n  source=\"Source: OpenStreetMap\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Embedded",
+                "default": "Directions to the studio"
+              },
+              "source": {
+                "label": "Source",
+                "default": "Source: OpenStreetMap"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "aspect-008",
+      "type": "registry:component",
+      "title": "Gallery Skeleton",
+      "description": "Заглушка галереи: кадры занимают ровно то место, которое займут снимки, поэтому при загрузке страница не прыгает.",
+      "categories": ["aspect"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "aspect-008/aspect-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/aspect-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-008-*. Сетка живёт на внутреннем элементе, потому что корень объявлен контейнером. Соотношение задаётся один раз переменной и применяется ко всем плиткам. Блик идёт по градиенту с задержкой по плиткам: одновременная вспышка выглядит как мигание экрана. Контейнер объявлен role=\"status\" с aria-busy.",
+      "meta": {
+        "tags": ["aspect ratio", "skeleton", "gallery", "loading"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Aspect008",
+          "usage": "<Aspect008 ratio=\"4 / 3\" count={6} label=\"Загружаются снимки\" />",
+          "summary": "Сетка заглушек под галерею: плитки держат заданное соотношение, блик проходит по ним с задержкой, число кадров и пропорция задаются пропами. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-aspect-008-* и не подменять её токенами вашей темы (bg-muted, animate-pulse и подобными)",
+            "совпадение соотношения с будущими снимками: в этом весь смысл заглушки с пропорцией",
+            "сетку на внутреннем элементе: контейнерный запрос не применяется к самому контейнеру",
+            "задержку блика по плиткам — одновременная вспышка читается как мигание экрана",
+            "role=\"status\" и aria-busy: без них загрузка для скринридера не существует",
+            "правило prefers-reduced-motion, гасящее блик"
+          ],
+          "adapt": [
+            "ratio — пропорция будущих снимков",
+            "count — сколько заглушек показывать",
+            "label — что именно грузится",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Число заглушек должно совпадать с ожидаемым числом снимков: шесть плиток перед двумя фотографиями выглядят как ошибка.",
+            "Не держите заглушку дольше пары секунд как единственный ответ: для долгой загрузки нужен прогресс или объяснение.",
+            "Задержка блика прописана для шести плиток; для большего числа добавьте правила nth-child в своей копии.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "ratio",
+            "label": "Соотношение",
+            "type": "select",
+            "default": "4 / 3",
+            "options": ["16 / 9", "4 / 3", "1 / 1", "3 / 4"]
+          },
+          {
+            "prop": "count",
+            "label": "Кадров",
+            "type": "number",
+            "default": 6,
+            "min": 2,
+            "max": 6
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Загружаются снимки",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A gallery skeleton: the frames occupy exactly the space the photos will, so the page does not jump when they load.",
+            "ai": {
+              "summary": "A grid of gallery placeholders: the tiles hold the given ratio, a shimmer passes across them with a delay, and both count and proportion are props. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-aspect-008-* palette — do not swap it for your theme tokens (bg-muted, animate-pulse and the like)",
+                "matching the ratio of the real photos: that is the whole point of a proportional skeleton",
+                "the grid on an inner element: a container query does not apply to the container itself",
+                "the staggered shimmer — a simultaneous flash reads as the screen blinking",
+                "role=\"status\" and aria-busy: without them the loading state does not exist for a screen reader",
+                "the prefers-reduced-motion rule that kills the shimmer"
+              ],
+              "adapt": [
+                "ratio — the proportion of the coming photos",
+                "count — how many placeholders to show",
+                "label — what is loading",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "The placeholder count should match the expected photo count: six tiles before two images reads as a bug.",
+                "Do not leave the skeleton as the only answer for more than a couple of seconds: long loads need progress or an explanation.",
+                "The shimmer delays are written for six tiles; for more, add nth-child rules in your copy.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Aspect008 ratio=\"4 / 3\" count={6} label=\"Loading photos\" />"
+            },
+            "controls": {
+              "ratio": {
+                "label": "Ratio"
+              },
+              "count": {
+                "label": "Frames"
+              },
+              "label": {
+                "label": "Label",
+                "default": "Loading photos"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

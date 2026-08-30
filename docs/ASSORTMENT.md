@@ -20,25 +20,27 @@
 
 ## Оси
 
-Таксономия — `registry/categories.ts`. Категорий компонентов сейчас семь
-(`buttons`, `inputs`, `display`, `feedback`, `navigation`, `tables`,
-`charts`); для полного ассортимента нужны ещё две — `overlays` и `calendar`.
+Таксономия — `registry/categories.ts`. Категорий компонентов сейчас
+одиннадцать (`buttons`, `accordion`, `alert`, `dialog`, `aspect`, `inputs`,
+`display`, `feedback`, `navigation`, `tables`, `charts`); для полного
+ассортимента нужна ещё одна — `calendar`.
 
 ## kind: component
 
-| категория    | что входит                                                                                                                                                                               | спрос | у нас |
-| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----: | ----: |
-| `buttons`    | button, button group, toggle, toggle group, kbd                                                                                                                                          |  ~155 |    11 |
-| `inputs`     | input, input group, select, combobox, autocomplete, checkbox, radio, switch, slider, textarea, number, otp, phone, label, field, file upload, date selector, cascader, rating            |  ~300 |     6 |
-| `accordion`  | аккордеоны и раскрывающиеся разделы                                                                                                                                                      |   ~11 |    11 |
-| `display`    | avatar, badge, card, item, icon tile, icon stack, aspect ratio, separator, frame, code block, timeline, carousel, collapsible, scroll area, resizable, tree, skeleton, spinner, progress |  ~265 |     5 |
-| `alert`      | сообщения, подтверждения, статусы, согласия                                                                                                                                              |   ~20 |    20 |
-| `dialog`     | модальные окна: подтверждения, формы, результаты, мастера                                                                                                                                |   ~14 |    14 |
-| `feedback`   | drawer, sheet, popover, tooltip, hover card, toast, empty state                                                                                                                          |  ~130 |     4 |
-| `navigation` | breadcrumb, dropdown menu, context menu, menubar, navigation menu, tabs, stepper, command, scrollspy                                                                                     |   ~85 |     6 |
-| `tables`     | table, data grid, pagination                                                                                                                                                             |   ~60 |     3 |
-| `charts`     | chart (line, bar, area, pie, radial), sparkline                                                                                                                                          |   ~55 |     3 |
-| `calendar`   | calendar, event calendar, gantt, kanban, sortable, filters                                                                                                                               |   ~70 |     0 |
+| категория    | что входит                                                                                                                                                                    | спрос | у нас |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----: | ----: |
+| `buttons`    | button, button group, toggle, toggle group, kbd                                                                                                                               |  ~155 |    11 |
+| `inputs`     | input, input group, select, combobox, autocomplete, checkbox, radio, switch, slider, textarea, number, otp, phone, label, field, file upload, date selector, cascader, rating |  ~300 |     6 |
+| `accordion`  | аккордеоны и раскрывающиеся разделы                                                                                                                                           |   ~11 |    11 |
+| `display`    | avatar, badge, card, item, icon tile, icon stack, separator, frame, code block, timeline, carousel, collapsible, scroll area, resizable, tree, skeleton, spinner, progress    |  ~265 |     5 |
+| `alert`      | сообщения, подтверждения, статусы, согласия                                                                                                                                   |   ~20 |    20 |
+| `dialog`     | модальные окна: подтверждения, формы, результаты, мастера                                                                                                                     |   ~14 |    14 |
+| `aspect`     | кадры с заданной пропорцией: обложки, видео, карты, коллажи                                                                                                                   |    ~8 |     8 |
+| `feedback`   | drawer, sheet, popover, tooltip, hover card, toast, empty state                                                                                                               |  ~130 |     4 |
+| `navigation` | breadcrumb, dropdown menu, context menu, menubar, navigation menu, tabs, stepper, command, scrollspy                                                                          |   ~85 |     6 |
+| `tables`     | table, data grid, pagination                                                                                                                                                  |   ~60 |     3 |
+| `charts`     | chart (line, bar, area, pie, radial), sparkline                                                                                                                               |   ~55 |     3 |
+| `calendar`   | calendar, event calendar, gantt, kanban, sortable, filters                                                                                                                    |   ~70 |     0 |
 
 ## kind: block
 
@@ -83,33 +85,36 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
    операции, неотменяемый прогресс, лист действий снизу, доступ и ссылка,
    мастер на два шага, горячие клавиши, превью с обложкой, показ секрета,
    отзыв и истекающая сессия. Тринадцать из четырнадцати — без клиентского JS.
-5. `accordion` — категория закрыта полностью, 11 вариантов: нативный,
+5. `aspect` — категория закрыта полностью, 8 вариантов: рамка с пропорцией,
+   кадр видео, квадрат товара, портрет 3:4, киношная полоса 21:9, коллаж,
+   рамка встраивания и заглушка галереи. Все без клиентского JS.
+6. `accordion` — категория закрыта полностью, 11 вариантов: нативный,
    карточки, безрамочный, плотный со значением, с состояниями, чеклист,
    с плитками-метками, вложенный, лента событий, в две колонки, тёмный.
-6. `display` — первая волна закрыта: `badge-001` (цвет только у точки),
+7. `display` — первая волна закрыта: `badge-001` (цвет только у точки),
    `avatar-001` (оттенок из имени), `card-001` (одна ссылка на всю площадь),
    `skeleton-001` (метрика будущего текста), `progress-001` (честное
    неизвестное), `accordion-001` (details/summary без JS).
    Дальше: separator, timeline, code block, carousel, tree.
-7. `feedback` — первая волна закрыта: `alert-001` (тон в полосе, не в
+8. `feedback` — первая волна закрыта: `alert-001` (тон в полосе, не в
    заливке), `dialog-001` (модалка на HTML popover без JS), `toast-001`
    (полоса оставшегося времени), `empty-001` (экран объясняет следующий шаг),
    `tooltip-001` (открывается и с клавиатуры), `banner-001`.
    Дальше: drawer, sheet, hover card, alert dialog.
-8. `navigation` — первая волна закрыта: `tabs-001` (полная клавиатура),
+9. `navigation` — первая волна закрыта: `tabs-001` (полная клавиатура),
    `breadcrumb-001` (свёртка середины), `dropdown-001` (popover + якоря,
    без JS), `stepper-001`, `pagination-001` (ссылки, не кнопки),
    `sidebar-001`. Дальше: menubar, command, scrollspy, context menu.
-9. `tables` — первая волна закрыта: `table-001` (данные, липкая шапка),
-   `table-002` (сравнение, липкая первая колонка), `table-003` (счёт с
-   итогом из строк). Дальше: data grid с сортировкой.
-10. Блоки для лендинга — закрыты: `navbar-001`, `cta-001`, `faq-001`,
+10. `tables` — первая волна закрыта: `table-001` (данные, липкая шапка),
+    `table-002` (сравнение, липкая первая колонка), `table-003` (счёт с
+    итогом из строк). Дальше: data grid с сортировкой.
+11. Блоки для лендинга — закрыты: `navbar-001`, `cta-001`, `faq-001`,
     `testimonials-001`, `footer-001`. Вместе с hero, features и pricing
     собирается целая страница.
-11. `charts` — первая волна закрыта: `chart-001` (линия на SVG),
+12. `charts` — первая волна закрыта: `chart-001` (линия на SVG),
     `chart-002` (столбцы на разметке), `sparkline-001` (показатель со
     встроенной кривой). Дальше: area, pie, radial.
-12. Дальше: блоки `dashboard` и `ai`, категории `overlays` и `calendar`,
+13. Дальше: блоки `dashboard` и `ai`, категории `overlays` и `calendar`,
     вторые варианты в уже закрытых категориях.
 
 Ритм — пачка на категорию: спека всех items категории сразу (иначе выходят
