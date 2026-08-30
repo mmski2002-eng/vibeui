@@ -966,6 +966,46 @@ export const LAZY_PREVIEWS = {
       (module) => module.Progress001,
     ),
   ),
+  "separator-001": dynamic(() =>
+    import("@/registry/components/display/separator-001/separator-001").then(
+      (module) => module.Separator001,
+    ),
+  ),
+  "kbd-001": dynamic(() =>
+    import("@/registry/components/display/kbd-001/kbd-001").then(
+      (module) => module.Kbd001,
+    ),
+  ),
+  "code-001": dynamic(() =>
+    import("@/registry/components/display/code-001/code-001").then(
+      (module) => module.Code001,
+    ),
+  ),
+  "timeline-001": dynamic(() =>
+    import("@/registry/components/display/timeline-001/timeline-001").then(
+      (module) => module.Timeline001,
+    ),
+  ),
+  "tree-001": dynamic(() =>
+    import("@/registry/components/display/tree-001/tree-001").then(
+      (module) => module.Tree001,
+    ),
+  ),
+  "scrollarea-001": dynamic(() =>
+    import("@/registry/components/display/scrollarea-001/scrollarea-001").then(
+      (module) => module.Scrollarea001,
+    ),
+  ),
+  "item-001": dynamic(() =>
+    import("@/registry/components/display/item-001/item-001").then(
+      (module) => module.Item001,
+    ),
+  ),
+  "spinner-001": dynamic(() =>
+    import("@/registry/components/display/spinner-001/spinner-001").then(
+      (module) => module.Spinner001,
+    ),
+  ),
   "toast-001": dynamic(() =>
     import("@/registry/components/feedback/toast-001/toast-001").then(
       (module) => module.Toast001,

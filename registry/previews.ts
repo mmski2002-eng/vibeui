@@ -192,6 +192,14 @@ import { Currency001 } from "@/registry/components/inputs/currency-001/currency-
 import { Textarea002 } from "@/registry/components/inputs/textarea-002/textarea-002"
 import { Skeleton001 } from "@/registry/components/display/skeleton-001/skeleton-001"
 import { Progress001 } from "@/registry/components/display/progress-001/progress-001"
+import { Separator001 } from "@/registry/components/display/separator-001/separator-001"
+import { Kbd001 } from "@/registry/components/display/kbd-001/kbd-001"
+import { Code001 } from "@/registry/components/display/code-001/code-001"
+import { Timeline001 } from "@/registry/components/display/timeline-001/timeline-001"
+import { Tree001 } from "@/registry/components/display/tree-001/tree-001"
+import { Scrollarea001 } from "@/registry/components/display/scrollarea-001/scrollarea-001"
+import { Item001 } from "@/registry/components/display/item-001/item-001"
+import { Spinner001 } from "@/registry/components/display/spinner-001/spinner-001"
 import { Toast001 } from "@/registry/components/feedback/toast-001/toast-001"
 import { Empty001 } from "@/registry/components/feedback/empty-001/empty-001"
 import { Tooltip001 } from "@/registry/components/feedback/tooltip-001/tooltip-001"
@@ -418,6 +426,14 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "textarea-002": Textarea002,
   "skeleton-001": Skeleton001,
   "progress-001": Progress001,
+  "separator-001": Separator001,
+  "kbd-001": Kbd001,
+  "code-001": Code001,
+  "timeline-001": Timeline001,
+  "tree-001": Tree001,
+  "scrollarea-001": Scrollarea001,
+  "item-001": Item001,
+  "spinner-001": Spinner001,
   "toast-001": Toast001,
   "empty-001": Empty001,
   "tooltip-001": Tooltip001,

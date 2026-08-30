@@ -33,7 +33,7 @@
 | `buttons`    | button, button group, toggle, toggle group, kbd                                                                                                                               |  ~155 |    11 |
 | `inputs`     | input, input group, select, combobox, autocomplete, checkbox, radio, switch, slider, textarea, number, otp, phone, label, field, file upload, date selector, cascader, rating |  ~300 |     6 |
 | `accordion`  | аккордеоны и раскрывающиеся разделы                                                                                                                                           |   ~11 |    11 |
-| `display`    | avatar, badge, card, item, icon tile, icon stack, separator, frame, code block, timeline, carousel, collapsible, scroll area, resizable, tree, skeleton, spinner, progress    |  ~265 |     5 |
+| `display`    | avatar, badge, card, item, icon tile, icon stack, separator, frame, code block, timeline, carousel, collapsible, scroll area, resizable, tree, skeleton, spinner, progress    |  ~265 |    10 |
 | `alert`      | сообщения, подтверждения, статусы, согласия                                                                                                                                   |   ~20 |    20 |
 | `dialog`     | модальные окна: подтверждения, формы, результаты, мастера                                                                                                                     |   ~14 |    14 |
 | `aspect`     | кадры с заданной пропорцией: обложки, видео, карты, коллажи                                                                                                                   |    ~8 |     8 |
@@ -139,11 +139,15 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
 15. `accordion` — категория закрыта полностью, 11 вариантов: нативный,
     карточки, безрамочный, плотный со значением, с состояниями, чеклист,
     с плитками-метками, вложенный, лента событий, в две колонки, тёмный.
-16. `display` — первая волна закрыта: `badge-001` (цвет только у точки),
-    `avatar-001` (оттенок из имени), `card-001` (одна ссылка на всю площадь),
-    `skeleton-001` (метрика будущего текста), `progress-001` (честное
-    неизвестное), `accordion-001` (details/summary без JS).
-    Дальше: separator, timeline, code block, carousel, tree.
+16. `display` — 10 items в двух волнах. Первая: `skeleton-001` (метрика
+    будущего текста), `progress-001` (честное неизвестное). Вторая:
+    `separator-001` (линия сеткой, а не фоном под текстом), `kbd-001` (плюс
+    между клавишами в разметке, чтобы сочетание читалось вслух), `code-001`
+    (перенос длинной команды вместо прокрутки), `timeline-001` (линия
+    бордюром события), `tree-001` (вложенные details), `scrollarea-001`
+    (подтёртые края как признак продолжения), `item-001` (растянутая ссылка
+    и фокус на всей строке), `spinner-001` (подпись обязательна).
+    Дальше: collapsible, resizable, icon tile.
 17. `feedback` — 11 items в двух волнах. Первая: `alert-001` (тон в полосе, не в
     заливке), `dialog-001` (модалка на HTML popover без JS), `toast-001`
     (полоса оставшегося времени), `empty-001` (экран объясняет следующий шаг),
@@ -164,8 +168,8 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
     conic-gradient, рейтинг горизонтальными полосами, полоса долей, график с
     заливкой, полукруглая шкала с целью, воронка с переходами и сравнение
     двух периодов.
-22. Дальше: блоки `dashboard` и `ai`, вторые волны в inputs, display,
-    feedback, navigation и tables.
+22. Дальше: блоки `dashboard` и `ai`, вторые волны в inputs, navigation
+    и tables.
 
 Ритм — пачка на категорию: спека всех items категории сразу (иначе выходят
 вариации одного и того же), потом реализация по одному, потом отдельный

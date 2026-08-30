@@ -245,6 +245,803 @@
           }
         }
       }
+    },
+    {
+      "name": "separator-001",
+      "type": "registry:component",
+      "title": "Labelled Separator",
+      "description": "Разделитель с подписью посередине: линия набрана сеткой из трёх колонок и работает на любой подложке.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "separator-001/separator-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/separator-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-separator-001-*. Серверный: хуков нет. Линия с подписью — грид из трёх колонок, поэтому не нужен приём с фоном под текстом и разделитель работает на любой подложке. Вертикальный вариант тянется по высоте соседей. Роль separator объявлена с aria-orientation.",
+      "meta": {
+        "tags": ["separator", "divider", "layout", "a11y"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Separator001",
+          "usage": "<Separator001 label=\"или\" />",
+          "summary": "Разделитель: горизонтальный с подписью посередине или вертикальный без неё. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-separator-001-* и не подменять её токенами вашей темы",
+            "сетку вместо фона под текстом: так подпись живёт на любой подложке",
+            "role=\"separator\" с aria-orientation",
+            "вертикальный вариант, который тянется по высоте соседей, а не задаёт её",
+            "капитель у подписи: она служебная и не должна спорить с текстом вокруг",
+            "толщину в один пиксель — разделитель отделяет, а не рисует рамку"
+          ],
+          "adapt": [
+            "label — подпись или её отсутствие",
+            "orientation — horizontal или vertical",
+            "цвет линии",
+            "величину отступов вокруг"
+          ],
+          "notes": [
+            "Разделитель без подписи не нуждается в имени: aria-label добавляется только когда текст есть.",
+            "Вертикальному варианту нужна высота от родителя: в блоке без высоты он схлопнется.",
+            "Не используйте разделитель вместо отступа: если группы и так разделены, линия лишняя.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "или",
+            "maxLength": 24
+          },
+          {
+            "prop": "orientation",
+            "label": "Направление",
+            "type": "select",
+            "default": "horizontal",
+            "options": ["horizontal", "vertical"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A separator with a centred label: the line is a three-column grid, so it works on any background.",
+            "ai": {
+              "summary": "A separator: horizontal with a centred label, or vertical without one. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-separator-001-* palette — do not swap it for your theme tokens",
+                "the grid instead of a background behind the text: the label then works on any surface",
+                "role=\"separator\" with aria-orientation",
+                "the vertical variant stretching to its neighbours rather than setting their height",
+                "the small caps label: it is auxiliary and must not compete with the surrounding text",
+                "the one-pixel thickness — a separator divides, it does not draw a frame"
+              ],
+              "adapt": [
+                "label — the caption or none",
+                "orientation — horizontal or vertical",
+                "the line colour",
+                "the surrounding spacing"
+              ],
+              "notes": [
+                "An unlabelled separator needs no name: aria-label is added only when there is text.",
+                "The vertical variant needs height from its parent: in a height-less block it collapses.",
+                "Do not use a separator instead of spacing: if the groups already read apart, the line is noise.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Separator001 label=\"or\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "or"
+              },
+              "orientation": {
+                "label": "Orientation"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kbd-001",
+      "type": "registry:component",
+      "title": "Shortcut List",
+      "description": "Список горячих клавиш: клавиши набраны тегом kbd, а плюс между ними стоит в разметке, чтобы сочетание читалось вслух.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kbd-001/kbd-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kbd-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kbd-001-*. Серверный: хуков нет. Клавиши выводятся тегом kbd с утолщённой нижней гранью — так они читаются как физические. Разделитель между клавишами лежит в разметке, поэтому скринридер произносит «command плюс K», а не две отдельные клавиши.",
+      "meta": {
+        "tags": ["kbd", "shortcuts", "help", "keyboard"],
+        "ai": {
+          "export": "Kbd001",
+          "usage": "<Kbd001 rows={[{ action: \"Поиск\", keys: [\"⌘\", \"K\"] }]} />",
+          "summary": "Список сочетаний клавиш: действие слева, клавиши справа тегом kbd, плюс между ними в разметке. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-kbd-001-* и не подменять её токенами вашей темы",
+            "тег kbd: это его прямое назначение, и скринридер объявит клавиши как ввод",
+            "плюс в разметке, а не в CSS — иначе сочетание читается как две клавиши",
+            "утолщённую нижнюю грань: клавиша выглядит нажимаемой",
+            "минимальную ширину клавиши, чтобы «K» и «Esc» стояли ровным столбцом",
+            "действие слева, клавиши справа — так список сканируют"
+          ],
+          "adapt": [
+            "массив rows с действиями и клавишами",
+            "title — заголовок списка",
+            "цвет и радиус клавиш",
+            "ширину блока"
+          ],
+          "notes": [
+            "Символы клавиш зависят от системы: на Windows вместо ⌘ должен стоять Ctrl.",
+            "Компонент ничего не слушает: сами сочетания вешает вызывающий код.",
+            "Список не место для всех клавиш подряд: показывайте те, что экономят время.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Горячие клавиши",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A shortcut list: keys marked up with kbd and the plus sign in the markup, so a combination reads aloud as one.",
+            "ai": {
+              "summary": "A list of shortcuts: the action on the left, the keys on the right as kbd elements with the plus in the markup. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-kbd-001-* palette — do not swap it for your theme tokens",
+                "the kbd element: that is its purpose, and screen readers announce keys as input",
+                "the plus in the markup rather than CSS — otherwise a combination reads as two keys",
+                "the thicker bottom border: the key looks pressable",
+                "the minimum key width so \"K\" and \"Esc\" line up",
+                "the action left, keys right — that is how the list gets scanned"
+              ],
+              "adapt": [
+                "the rows array of actions and keys",
+                "title — the list heading",
+                "the key colour and radius",
+                "the block width"
+              ],
+              "notes": [
+                "Key glyphs depend on the platform: Windows needs Ctrl where macOS shows ⌘.",
+                "The component listens to nothing: the caller binds the shortcuts.",
+                "This is not a place for every key: show the ones that save time.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kbd001 rows={[{ action: \"Search\", keys: [\"⌘\", \"K\"] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Keyboard shortcuts"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "code-001",
+      "type": "registry:component",
+      "title": "Code Block",
+      "description": "Блок кода с копированием: длинная команда переносится с отступом продолжения, а не требует горизонтальной прокрутки.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "code-001/code-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/code-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-code-001-*. Клиентский: \"use client\" ради копирования. Перенос строк сделан парой white-space: pre-wrap и overflow-wrap: anywhere, а продолжение сдвинуто отрицательным text-indent. Подсветки синтаксиса нет намеренно: она стоит библиотеки.",
+      "meta": {
+        "tags": ["code", "copy", "install", "mono"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Code001",
+          "usage": "<Code001 title=\"Установка\" code=\"npx shadcn@latest add ...\" />",
+          "summary": "Тёмный блок кода: заголовок с языком, кнопка копирования с отчётом и перенос длинных строк вместо прокрутки. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-code-001-* и не подменять её токенами вашей темы",
+            "перенос длинных команд: горизонтальная прокрутка прячет половину строки",
+            "отступ продолжения — по нему видно, что строка одна",
+            "отчёт о копировании в самой кнопке, а не всплывающим сообщением",
+            "моноширинный шрифт: в командах важны дефисы и точки",
+            "отсутствие подсветки синтаксиса: команда её не требует, а библиотека весит"
+          ],
+          "adapt": [
+            "code, title и language",
+            "обработчик onCopy",
+            "цвета блока под свою тёмную тему",
+            "ширину блока"
+          ],
+          "notes": [
+            "navigator.clipboard работает только в защищённом контексте: по http кнопка промолчит.",
+            "Для многострочного кода с подсветкой возьмите отдельную библиотеку — этот блок про команды.",
+            "Номера строк не выводятся: они мешают выделять и копировать команду.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Установка",
+            "maxLength": 24
+          },
+          {
+            "prop": "language",
+            "label": "Язык",
+            "type": "text",
+            "default": "bash",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A code block with copy: a long command wraps with a hanging indent instead of demanding horizontal scrolling.",
+            "ai": {
+              "summary": "A dark code block: a heading with the language, a copy button that reports back and wrapping instead of scrolling. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-code-001-* palette — do not swap it for your theme tokens",
+                "wrapping long commands: horizontal scrolling hides half the line",
+                "the hanging indent — it shows the line is a single one",
+                "the copy report inside the button rather than a toast",
+                "the monospaced face: dashes and dots matter in commands",
+                "no syntax highlighting: a command does not need it and a library costs weight"
+              ],
+              "adapt": [
+                "code, title and language",
+                "the onCopy handler",
+                "the block colours for your dark theme",
+                "the block width"
+              ],
+              "notes": [
+                "navigator.clipboard needs a secure context: over http the button stays silent.",
+                "For highlighted multi-line code use a dedicated library — this block is about commands.",
+                "Line numbers are omitted: they get in the way of selecting and copying.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Code001 title=\"Install\" code=\"npx shadcn@latest add ...\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Install"
+              },
+              "language": {
+                "label": "Language",
+                "default": "bash"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "timeline-001",
+      "type": "registry:component",
+      "title": "Event Timeline",
+      "description": "Лента событий: линия нарисована бордюром самого события, поэтому тянется от точки к точке и не торчит за последним.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "timeline-001/timeline-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/timeline-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-timeline-001-*. Серверный: хуков нет. Линия — левый бордюр элемента списка, у последнего он прозрачный. Состояние задаётся data-state: пройденное — заливка точки, текущее — кольцо, будущее — пустая точка и приглушённый текст.",
+      "meta": {
+        "tags": ["timeline", "events", "status", "delivery"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Timeline001",
+          "usage": "<Timeline001 events={[{ time: \"Сегодня\", title: \"В пути\", state: \"current\" }]} />",
+          "summary": "Лента событий со временем, заголовком и пояснением: линия между точками, разные формы для пройденного, текущего и будущего. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-timeline-001-* и не подменять её токенами вашей темы",
+            "линию бордюром события: отдельный столбик всегда торчит за последней точкой",
+            "разные формы точек: заливка, кольцо и пустая — состояние не только цветом",
+            "приглушённый текст будущих шагов",
+            "порядок сверху вниз по времени",
+            "время отдельной строкой над заголовком — его сканируют первым"
+          ],
+          "adapt": [
+            "массив events и их состояния",
+            "акцент через проп accent",
+            "цвет пройденного шага",
+            "ширину блока"
+          ],
+          "notes": [
+            "Сортировку компонент не делает: события выводятся в порядке массива.",
+            "Текущее событие должно быть одно: два кольца читаются как ошибка данных.",
+            "Для длинной истории добавьте свёртку — двадцать точек подряд не читаются.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An event timeline: the line is the event's own border, so it runs dot to dot and never juts past the last one.",
+            "ai": {
+              "summary": "An event timeline with time, title and note: a line between dots and distinct shapes for done, current and upcoming. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-timeline-001-* palette — do not swap it for your theme tokens",
+                "the line as the event's border: a separate column always overshoots the last dot",
+                "distinct dot shapes: filled, ringed and hollow — state is not colour alone",
+                "the muted text on upcoming steps",
+                "chronological order top to bottom",
+                "the time on its own line above the title — it gets scanned first"
+              ],
+              "adapt": [
+                "the events array and their states",
+                "the accent through the accent prop",
+                "the completed-step colour",
+                "the block width"
+              ],
+              "notes": [
+                "The component does not sort: events render in array order.",
+                "There should be one current event: two rings read as broken data.",
+                "For long histories add collapsing — twenty dots in a row do not read.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Timeline001 events={[{ time: \"Today\", title: \"In transit\", state: \"current\" }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tree-001",
+      "type": "registry:component",
+      "title": "File Tree",
+      "description": "Дерево файлов на вложенных details: раскрытие, клавиатура и память об открытых ветках достаются от браузера.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-001/tree-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tree-001-*. Серверный: хуков нет, ветки рисуются рекурсивной функцией. Каждая папка — <details> с <summary>, лист — ссылка. Отступ вложенности отмечен левой линией у контейнера детей. Шрифт моноширинный: имена файлов сравнивают посимвольно.",
+      "meta": {
+        "tags": ["tree", "files", "details", "no-js"],
+        "ai": {
+          "export": "Tree001",
+          "usage": "<Tree001 nodes={[{ name: \"registry\", open: true, children: [{ name: \"index.ts\" }] }]} />",
+          "summary": "Дерево файлов: папки на details с поворачивающимся шевроном, листья ссылками, линия отступа у вложенных веток. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-001-* и не подменять её токенами вашей темы",
+            "details для папок: раскрытие и клавиатура достаются от браузера",
+            "линию отступа — по ней видно, к какой ветке относится строка",
+            "моноширинный шрифт: имена файлов сравнивают посимвольно",
+            "поворот шеврона по details[open] вместо смены символа",
+            "ссылки на листьях, а не div с обработчиком"
+          ],
+          "adapt": [
+            "массив nodes и стартовые open",
+            "адреса листьев",
+            "акцент через проп accent",
+            "ширину блока"
+          ],
+          "notes": [
+            "Полная клавиатурная модель дерева (стрелки по узлам) требует JS: здесь работает Tab и Enter.",
+            "Роль tree проставлена контейнеру, но узлы не размечены treeitem: для строгого соответствия нужна своя реализация.",
+            "Очень глубокая вложенность съедает ширину: от пятого уровня лучше показывать путь строкой.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A file tree on nested details: expansion, keyboard support and remembered branches come from the browser.",
+            "ai": {
+              "summary": "A file tree: folders as details with a rotating chevron, leaves as links and an indent line on nested branches. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-tree-001-* palette — do not swap it for your theme tokens",
+                "details for folders: expansion and keyboard support come free",
+                "the indent line — it shows which branch a row belongs to",
+                "the monospaced face: file names get compared character by character",
+                "rotating the chevron via details[open] instead of swapping glyphs",
+                "links on the leaves rather than divs with handlers"
+              ],
+              "adapt": [
+                "the nodes array and initial open flags",
+                "the leaf URLs",
+                "the accent through the accent prop",
+                "the block width"
+              ],
+              "notes": [
+                "A full tree keyboard model (arrow keys between nodes) needs JS: Tab and Enter work here.",
+                "The container carries role=tree but nodes are not marked treeitem: strict conformance needs a custom build.",
+                "Deep nesting eats width: past the fifth level show a path string instead.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree001 nodes={[{ name: \"registry\", open: true, children: [{ name: \"index.ts\" }] }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollarea-001",
+      "type": "registry:component",
+      "title": "Scroll Area",
+      "description": "Область прокрутки с подтёртыми краями: тень у границы — единственный честный признак, что список продолжается.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollarea-001/scrollarea-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollarea-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-scrollarea-001-*. Серверный: хуков нет. Края подтёрты mask-градиентом сверху и снизу, высота задаётся переменной. Область получает tabIndex и role=\"group\" с именем: иначе с клавиатуры её не прокрутить. Полоса прокрутки остаётся видимой.",
+      "meta": {
+        "tags": ["scroll", "list", "mask", "overflow"],
+        "ai": {
+          "export": "Scrollarea001",
+          "usage": "<Scrollarea001 title=\"Последние\" items={items} height=\"12rem\" />",
+          "summary": "Прокручиваемый список фиксированной высоты: шапка со счётчиком, подтёртые края и полосатые строки. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollarea-001-* и не подменять её токенами вашей темы",
+            "маску у краёв: обрезанная строка иначе читается как последняя",
+            "видимую полосу прокрутки: спрятанная убирает второй признак и возможность тащить мышью",
+            "tabIndex и role=\"group\" на области — иначе её не прокрутить с клавиатуры",
+            "overscroll-behavior: contain, чтобы прокрутка не уходила на страницу",
+            "счётчик в шапке: он говорит, сколько всего строк"
+          ],
+          "adapt": [
+            "title и массив items",
+            "height — высота области",
+            "чередование фона строк",
+            "ширину блока"
+          ],
+          "notes": [
+            "Виртуализации нет: для тысяч строк нужен другой компонент.",
+            "Маска рисуется поверх содержимого: не кладите у краёв ничего интерактивного.",
+            "Высота фиксированная: если список короче, останется пустое место — задавайте её по смыслу.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Последние компоненты",
+            "maxLength": 30
+          },
+          {
+            "prop": "height",
+            "label": "Высота",
+            "type": "text",
+            "default": "12rem",
+            "maxLength": 10
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A scroll area with masked edges: the fade is the only honest sign that the list continues.",
+            "ai": {
+              "summary": "A fixed-height scrollable list: a header with a counter, masked edges and striped rows. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-scrollarea-001-* palette — do not swap it for your theme tokens",
+                "the edge mask: a clipped row otherwise reads as the last one",
+                "the visible scrollbar: hiding it removes the second cue and the drag affordance",
+                "tabIndex and role=\"group\" on the area — otherwise it cannot be scrolled by keyboard",
+                "overscroll-behavior: contain so the scroll does not escape to the page",
+                "the counter in the header: it says how many rows exist"
+              ],
+              "adapt": [
+                "title and the items array",
+                "height — the area's height",
+                "the row striping",
+                "the block width"
+              ],
+              "notes": [
+                "There is no virtualisation: thousands of rows need a different component.",
+                "The mask paints over content: keep interactive elements away from the edges.",
+                "The height is fixed: a short list leaves empty space — choose it deliberately.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollarea001 title=\"Recent\" items={items} height=\"12rem\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Recent components"
+              },
+              "height": {
+                "label": "Height",
+                "default": "12rem"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "item-001",
+      "type": "registry:component",
+      "title": "List Row",
+      "description": "Строка списка со ссылкой на всю площадь: обводка фокуса ставится на строку, а не на одно название.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "item-001/item-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/item-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-001-*. Серверный: хуков нет. Ссылка растянута псевдоэлементом ::after, обводка фокуса ставится на корень через :has(a:focus-visible). Корень — <li>, поэтому строки кладутся в обычный список. Значение выровнено вправо табличными цифрами.",
+      "meta": {
+        "tags": ["item", "list", "row", "link"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Item001",
+          "usage": "<Item001 title=\"Счёт № 300\" value=\"24 000 ₽\" href=\"/invoices/300\" />",
+          "summary": "Строка списка: название-ссылка на всю площадь, служебная строка снизу, значение и статус справа. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-item-001-* и не подменять её токенами вашей темы",
+            "растянутую ссылку: попадать надо в строку, а не в название",
+            "обводку фокуса на строке через :has(a:focus-visible)",
+            "табличные цифры у значения — по нему сравнивают строки",
+            "тег li: строки живут в списке, а не в наборе div",
+            "сетку из двух колонок: значение и статус всегда справа"
+          ],
+          "adapt": [
+            "title, meta, value и status",
+            "href — адрес строки",
+            "акцент через проп accent",
+            "ширину строки"
+          ],
+          "notes": [
+            "Внутри строки не должно быть второй ссылки: растянутая перекроет её.",
+            "Если действий несколько, растягивать ссылку нельзя — сделайте кнопку отдельной целью, как в card-004.",
+            "Оберните строки в <ul>: одиночный li без списка невалиден.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Название",
+            "type": "text",
+            "default": "Счёт № 300 · ООО «Полёт»",
+            "maxLength": 40
+          },
+          {
+            "prop": "value",
+            "label": "Значение",
+            "type": "text",
+            "default": "24 000 ₽",
+            "maxLength": 16
+          },
+          {
+            "prop": "status",
+            "label": "Статус",
+            "type": "text",
+            "default": "Ожидает оплаты",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A list row with a link covering the whole area: the focus ring lands on the row, not on the title alone.",
+            "ai": {
+              "summary": "A list row: a title link covering the row, a secondary line below, and a value with a status on the right. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-item-001-* palette — do not swap it for your theme tokens",
+                "the stretched link: the target is the row, not the title",
+                "the focus ring on the row via :has(a:focus-visible)",
+                "tabular figures on the value — that is what rows get compared by",
+                "the li element: rows belong in a list, not a pile of divs",
+                "the two-column grid keeping value and status on the right"
+              ],
+              "adapt": [
+                "title, meta, value and status",
+                "href — the row's target",
+                "the accent through the accent prop",
+                "the row width"
+              ],
+              "notes": [
+                "No second link inside the row: the stretched one would cover it.",
+                "With several actions do not stretch the link — make the button its own target, as in card-004.",
+                "Wrap the rows in a <ul>: a lone li outside a list is invalid.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Item001 title=\"Invoice 300\" value=\"$240\" href=\"/invoices/300\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Invoice 300 · Polyot Ltd"
+              },
+              "value": {
+                "label": "Value",
+                "default": "$240"
+              },
+              "status": {
+                "label": "Status",
+                "default": "Awaiting payment"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "spinner-001",
+      "type": "registry:component",
+      "title": "Labelled Spinner",
+      "description": "Ожидание с обязательной подписью: кольцо само по себе не сообщает ни что происходит, ни сколько ждать.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "spinner-001/spinner-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/spinner-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-spinner-001-*. Серверный: хуков нет. Кольцо собрано из бордюра с окрашенной верхней гранью, размер задаётся одной переменной. Блок объявлен role=\"status\" с aria-live. При prefers-reduced-motion вращение заменяется пульсацией прозрачности.",
+      "meta": {
+        "tags": ["spinner", "loading", "status", "a11y"],
+        "ai": {
+          "export": "Spinner001",
+          "usage": "<Spinner001 label=\"Собираем каталог\" hint=\"Меньше минуты\" size=\"md\" />",
+          "summary": "Индикатор ожидания: кольцо, подпись действия и оценка времени. Три размера, пульсация вместо вращения при отключённой анимации. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-spinner-001-* и не подменять её токенами вашей темы",
+            "обязательную подпись: кольцо не сообщает, что именно происходит",
+            "role=\"status\" с aria-live — ожидание должно быть услышано",
+            "пульсацию вместо вращения при prefers-reduced-motion: состояние остаётся видимым",
+            "собственную светлую подложку: ожидание показывают поверх любого фона",
+            "размер одной переменной, чтобы кольцо совпадало с кеглем рядом",
+            "оценку времени, когда она известна"
+          ],
+          "adapt": [
+            "label и hint",
+            "size — sm, md или lg",
+            "акцент через проп accent",
+            "толщину кольца"
+          ],
+          "notes": [
+            "Оценку времени не выдумывайте: неверная раздражает сильнее её отсутствия.",
+            "Для ожидания дольше пары секунд лучше показать прогресс или объяснение, а не кольцо.",
+            "Не ставьте спиннер вместо содержимого списка: для этого есть заглушки-скелеты.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Действие",
+            "type": "text",
+            "default": "Собираем каталог",
+            "maxLength": 30
+          },
+          {
+            "prop": "hint",
+            "label": "Оценка",
+            "type": "text",
+            "default": "Обычно занимает меньше минуты",
+            "maxLength": 40
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": ["sm", "md", "lg"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A spinner with a mandatory label: a ring alone says neither what is happening nor how long it takes.",
+            "ai": {
+              "summary": "A loading indicator: a ring, the action's name and a time estimate. Three sizes, pulsing instead of spinning when motion is reduced. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-spinner-001-* palette — do not swap it for your theme tokens",
+                "the mandatory label: a ring does not say what is running",
+                "role=\"status\" with aria-live — waiting has to be heard",
+                "pulsing instead of spinning under prefers-reduced-motion: the state stays visible",
+                "its own light surface: waiting gets shown over any background",
+                "the single size variable so the ring matches the type beside it",
+                "the time estimate when it is known"
+              ],
+              "adapt": [
+                "label and hint",
+                "size — sm, md or lg",
+                "the accent through the accent prop",
+                "the ring thickness"
+              ],
+              "notes": [
+                "Do not invent the estimate: a wrong one annoys more than none.",
+                "Past a couple of seconds show progress or a reason rather than a ring.",
+                "Do not use a spinner in place of list content: skeletons exist for that.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Spinner001 label=\"Building the catalog\" hint=\"Under a minute\" size=\"md\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Action",
+                "default": "Building the catalog"
+              },
+              "hint": {
+                "label": "Estimate",
+                "default": "Usually under a minute"
+              },
+              "size": {
+                "label": "Size"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
