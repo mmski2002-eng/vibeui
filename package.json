@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run meta:validate && npm run registry:build && next build",
+    "build": "npm run indexes && npm run meta:validate && npm run registry:build && next build",
     "meta:validate": "node scripts/validate-meta.mjs",
     "start": "next start",
     "lint": "eslint",
@@ -12,7 +12,11 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "registry:validate": "shadcn registry validate ./registry.json",
-    "registry:build": "node -e \"require('node:fs').rmSync('public/r',{recursive:true,force:true})\" && shadcn build"
+    "registry:build": "node -e \"require('node:fs').rmSync('public/r',{recursive:true,force:true})\" && shadcn build",
+    "indexes": "node scripts/build-indexes.mjs",
+    "indexes:check": "node scripts/build-indexes.mjs --check",
+    "predev": "npm run indexes",
+    "item": "node scripts/new-item.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

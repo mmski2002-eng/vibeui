@@ -1,3 +1,6 @@
+// Сгенерировано `npm run indexes` из registry/**/registry.json.
+// Не править руками: правки затрёт следующая сборка.
+
 import dynamic from "next/dynamic"
 import type { ComponentType } from "react"
 
@@ -14,13 +17,35 @@ import type { ComponentType } from "react"
  * Пропсы типизированы как `Record<string, unknown>`: значения приходят из
  * контролов самого item'а, то есть по построению совпадают с его API.
  * Проверить это статически нельзя — карта индексируется по slug.
- *
- * TODO: третий индекс, который ведётся руками рядом с registry.json и
- * previews.ts. Генерировать все три из реестра, когда items станет много.
  */
 export type PreviewProps = Record<string, unknown>
 
 export const LAZY_PREVIEWS = {
+  "hero-001": dynamic(() =>
+    import("@/registry/blocks/hero/hero-001/hero-001").then(
+      (module) => module.Hero001,
+    ),
+  ),
+  "hero-002": dynamic(() =>
+    import("@/registry/blocks/hero/hero-002/hero-002").then(
+      (module) => module.Hero002,
+    ),
+  ),
+  "hero-003": dynamic(() =>
+    import("@/registry/blocks/hero/hero-003/hero-003").then(
+      (module) => module.Hero003,
+    ),
+  ),
+  "features-001": dynamic(() =>
+    import("@/registry/blocks/features/features-001/features-001").then(
+      (module) => module.Features001,
+    ),
+  ),
+  "pricing-001": dynamic(() =>
+    import("@/registry/blocks/pricing/pricing-001/pricing-001").then(
+      (module) => module.Pricing001,
+    ),
+  ),
   "button-001": dynamic(() =>
     import("@/registry/components/buttons/button-001/button-001").then(
       (module) => module.Button001,

@@ -70,11 +70,17 @@ npm run typecheck     # tsc --noEmit
 npm run format        # Prettier --write .
 npm run format:check  # Prettier --check .
 
+npm run item -- <category>  # скаффолд нового item'а
+npm run indexes            # пересобрать индексы каталога из registry.json
+npm run indexes:check      # упасть, если индексы устарели
+npm run meta:validate      # проверить metadata и исходники items
+npm run registry:build     # shadcn build → public/r/
+
 npx shadcn@latest add <name>   # добавить primitive из upstream shadcn
 ```
 
-Сборка registry (`npx shadcn build` → `public/r/`) появится вместе с
-`registry.json`; тогда же добавить скрипт `registry` в `package.json`.
+`npm run build` сам гоняет `indexes`, `meta:validate` и `registry:build`.
+Конвейер целиком — [docs/PIPELINE.md](docs/PIPELINE.md).
 
 После изменений обязательно: `npm run lint` и `npm run build`.
 
@@ -157,14 +163,18 @@ public/r/                        сгенерированные registry JSON
 
 Мелкая правка — делать сразу, без плана.
 
-Новый компонент — по чек-листу:
+Новый item — по чек-листу ([docs/PIPELINE.md](docs/PIPELINE.md)):
 
-- [ ] файл в `registry/blocks/<name>/`;
-- [ ] запись в `registry/blocks/<category>/registry.json` с category, tags, dependencies;
-- [ ] страница компонента открывается, preview рендерится;
-- [ ] preview корректен на mobile / tablet / desktop;
-- [ ] Copy for AI выдаёт полную инструкцию;
-- [ ] `lint` и `build` зелёные.
+- [ ] `npm run item -- <category>` — папка, заготовка `.tsx`, запись в
+      `registry.json`; индексы генерятся, руками их не править;
+- [ ] компонент написан: своя палитра `--vibeui-<name>-*`, ноль зависимостей,
+      раскладка от собственной ширины, `prefers-reduced-motion`;
+- [ ] metadata без `TODO`: description, tags, `ai.summary/preserve/adapt`,
+      для компонентов — `ai.usage` и `controls`;
+- [ ] перевод `meta.i18n.en` с тем же числом пунктов в списках;
+- [ ] `npm run meta:validate`, `lint`, `build` зелёные;
+- [ ] глазами: `/preview/<name>`, карточка каталога, страница item'а,
+      обе подложки превью, mobile / tablet / desktop.
 
 ## Git
 

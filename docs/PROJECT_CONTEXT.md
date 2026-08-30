@@ -161,6 +161,13 @@ Metadata также должна жить в одном месте:
 
 ## Registry pipeline
 
+- ручной источник ровно один: `registry/**/registry.json` плюс сам `.tsx`
+  item'а. Индексы (`registry/sources.ts`, `registry/previews.ts`,
+  `registry/previews.lazy.ts`, `include[]` корневого реестра) генерируются
+  командой `npm run indexes` и правятся только через генератор.
+  Конвейер целиком — [PIPELINE.md](PIPELINE.md);
+- новый item заводится скаффолдом `npm run item -- <категория>`; заготовка
+  намеренно не проходит `meta:validate`, пока в metadata остались `TODO`;
 - корневой `registry.json` — то, что публикуется; в `include[]` только
   категории, которые должны быть доступны снаружи;
 - `npm run registry:build` очищает `public/r/` перед сборкой: иначе
@@ -181,6 +188,7 @@ Metadata также должна жить в одном месте:
 - [CONTROLS.md](CONTROLS.md) — настройка item'а на витрине и вопрос про базу данных.
 - [I18N.md](I18N.md) — два языка: маршруты, словари, метаданные, промпты.
 - [ASSORTMENT.md](ASSORTMENT.md) — карта ассортимента и очередь работ.
+- [PIPELINE.md](PIPELINE.md) — конвейер: скаффолд, генерация индексов, проверки.
 - [ROADMAP.md](ROADMAP.md) — фазы и Definition of Done.
 - [DEPLOY.md](DEPLOY.md) — production deployment.
 - [../CLAUDE.md](../CLAUDE.md) — инструкции для AI-разработчика.
@@ -273,6 +281,14 @@ Complete:
 - **Два языка.** Русский в корне, английский под `/en`; переключатель в
   шапке. Переведены интерфейс, метаданные всех 16 items и обе инструкции
   для агента (`?lang=en`). Подробности — [I18N.md](I18N.md).
+- **Конвейер наполнения.** Три ручных индекса (`components.ts` категорий,
+  `previews.ts`, `previews.lazy.ts`) и `SOURCES` заменены генерацией из
+  `registry.json` (`npm run indexes`), добавлен скаффолд `npm run item`.
+  `meta:validate` дорос до жёстких правил: полнота metadata, паритет
+  перевода `i18n.en`, а также сам исходник item'а — чужие импорты, классы
+  темы проекта-хозяина, переменные без префикса `--vibeui-`, анимация без
+  `prefers-reduced-motion`. Публикуемые `/r/*.json` при переходе не
+  изменились ни на байт. Подробности — [PIPELINE.md](PIPELINE.md).
 
 ## Статус Phase 3
 

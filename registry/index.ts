@@ -5,46 +5,7 @@ import {
   type ItemKind,
 } from "@/registry/categories"
 import type { CatalogItem } from "@/registry/meta"
-import featuresRegistry from "@/registry/blocks/features/registry.json"
-import heroRegistry from "@/registry/blocks/hero/registry.json"
-import pricingRegistry from "@/registry/blocks/pricing/registry.json"
-import buttonsRegistry from "@/registry/components/buttons/registry.json"
-
-/**
- * Реестры, попадающие на сайт. Это и есть файловая база каталога: другого
- * источника данных нет. Служебные реестры сюда не включаются, поэтому их
- * slug'и на сайте недоступны в принципе.
- *
- * Порядок списка задаёт порядок items в каталоге. `kind` объявляется на
- * уровне реестра, а не у каждого item'а: все items одного реестра —
- * одного типа.
- */
-const SOURCES = [
-  {
-    directory: "registry/blocks/hero",
-    kind: "block",
-    items: heroRegistry.items,
-  },
-  {
-    directory: "registry/blocks/features",
-    kind: "block",
-    items: featuresRegistry.items,
-  },
-  {
-    directory: "registry/blocks/pricing",
-    kind: "block",
-    items: pricingRegistry.items,
-  },
-  {
-    directory: "registry/components/buttons",
-    kind: "component",
-    items: buttonsRegistry.items,
-  },
-] as const satisfies readonly {
-  directory: string
-  kind: ItemKind
-  items: unknown[]
-}[]
+import { SOURCES } from "@/registry/sources"
 
 type CatalogEntry = {
   item: CatalogItem
