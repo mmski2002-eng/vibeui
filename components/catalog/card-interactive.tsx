@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Moon, SlidersHorizontal, Sun, X } from "lucide-react"
 import { useState, type ReactNode } from "react"
 
+import { CodeSheet } from "@/components/catalog/code-sheet"
 import { CopyButton } from "@/components/copy-button"
 import {
   defaultValues,
@@ -47,6 +48,7 @@ export function CardInteractive({
   title,
   categoryLabel,
   configurable,
+  installCommand,
   children,
 }: {
   item: CatalogItem
@@ -56,14 +58,14 @@ export function CardInteractive({
   title: string
   categoryLabel: string | null
   configurable: boolean
+  installCommand: string | null
   children: ReactNode
 }) {
   const t = getDictionary(locale)
-  const [theme, setTheme] = useState<PreviewTheme>(
-    item.meta?.preview?.surface ?? "dark",
-  )
+  const [theme, setTheme] = useState<PreviewTheme>("dark")
   const [values, setValues] = useState<ControlValues>(() => defaultValues(item))
   const [open, setOpen] = useState(false)
+  const [sheet, setSheet] = useState(false)
 
   const isDark = theme === "dark"
   const params = toSearchParams(item, values)
@@ -159,7 +161,7 @@ export function CardInteractive({
         <h3 className="text-shell-muted flex min-w-0 flex-1 items-center gap-1.5 truncate text-xs">
           <Link
             href={`${itemUrl}?${itemParams}`}
-            className="truncate after:absolute after:inset-0 focus-visible:outline-none"
+            className="hover:text-shell-fg truncate transition-colors focus-visible:outline-none"
             title={title}
           >
             {title}
@@ -172,6 +174,13 @@ export function CardInteractive({
               {categoryLabel}
             </span>
           ) : null}
+          <button
+            type="button"
+            onClick={() => setSheet(true)}
+            className="border-shell-border text-shell-fg hover:bg-shell-elevated hover:border-shell-border-strong focus-visible:ring-shell-ring inline-flex h-7 items-center rounded-md border px-3 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
+          >
+            {t.card.getCode}
+          </button>
           <CopyButton
             value={docLink}
             label={t.card.copy}
@@ -180,6 +189,16 @@ export function CardInteractive({
           />
         </div>
       </div>
+
+      <CodeSheet
+        name={item.name}
+        title={title}
+        installCommand={installCommand}
+        itemUrl={itemUrl}
+        locale={locale}
+        open={sheet}
+        onClose={() => setSheet(false)}
+      />
     </>
   )
 }

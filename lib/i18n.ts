@@ -40,6 +40,14 @@ type Dictionary = {
     toLight: string
     toDark: string
     reset: string
+    getCode: string
+    install: string
+    code: string
+    copyCode: string
+    copyCommand: string
+    openPage: string
+    close: string
+    loading: string
   }
   control: { unset: string; clear: string }
   item: {
@@ -94,6 +102,14 @@ const RU: Dictionary = {
     toLight: "Светлая подложка превью",
     toDark: "Тёмная подложка превью",
     reset: "Сбросить настройки",
+    getCode: "Get Code",
+    install: "Установка",
+    code: "Код",
+    copyCode: "Скопировать код",
+    copyCommand: "Скопировать команду",
+    openPage: "Открыть страницу",
+    close: "Закрыть",
+    loading: "Загружается…",
   },
   control: { unset: "по умолчанию", clear: "сбросить" },
   item: {
@@ -156,6 +172,14 @@ const EN: Dictionary = {
     toLight: "Switch preview to a light surface",
     toDark: "Switch preview to a dark surface",
     reset: "Reset settings",
+    getCode: "Get Code",
+    install: "Installation",
+    code: "Code",
+    copyCode: "Copy the code",
+    copyCommand: "Copy the command",
+    openPage: "Open the page",
+    close: "Close",
+    loading: "Loading…",
   },
   control: { unset: "default", clear: "clear" },
   item: {

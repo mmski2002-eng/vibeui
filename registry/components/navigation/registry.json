@@ -20,7 +20,6 @@
       "meta": {
         "tags": ["tabs", "navigation", "keyboard", "aria"],
         "preview": {
-          "surface": "light",
           "width": "full"
         },
         "ai": {
@@ -126,9 +125,6 @@
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-001-*. Разметка семантическая: <nav> с подписью, внутри <ol> — порядок уровней имеет значение. Текущий уровень не ссылка и помечен aria-current=\"page\". Разделитель — грань квадрата, повёрнутая на 45°, поэтому шрифтовые символы и иконки не нужны. Свёртка считается по maxVisible: первый уровень, многоточие, затем последние.",
       "meta": {
         "tags": ["breadcrumb", "navigation", "path", "aria"],
-        "preview": {
-          "surface": "light"
-        },
         "ai": {
           "export": "Breadcrumb001",
           "usage": "<Breadcrumb001\n  items={[\n    { label: \"Проекты\", href: \"/projects\" },\n    { label: \"Сайт студии\", href: \"/projects/studio\" },\n    { label: \"Главная\" },\n  ]}\n/>",
@@ -230,7 +226,6 @@
       "meta": {
         "tags": ["dropdown", "menu", "popover", "no-js"],
         "preview": {
-          "surface": "light",
           "props": {
             "open": true
           }
@@ -349,7 +344,6 @@
       "meta": {
         "tags": ["stepper", "progress", "wizard", "onboarding"],
         "preview": {
-          "surface": "light",
           "width": "full"
         },
         "ai": {
@@ -452,9 +446,6 @@
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-001-*. Номера — обычные <a>, адрес собирает функция hrefOf, по умолчанию `?page=N`. Окно вокруг текущей страницы считает windowOf: первая, последняя, соседи и разрывы между ними. Текущая страница помечена aria-current=\"page\". Края не исчезают на первой и последней странице, а гасятся через aria-disabled, поэтому ряд не прыгает.",
       "meta": {
         "tags": ["pagination", "navigation", "links", "list"],
-        "preview": {
-          "surface": "light"
-        },
         "ai": {
           "export": "Pagination001",
           "usage": "<Pagination001\n  page={4}\n  total={12}\n  hrefOf={(page) => `/blog?page=${page}`}\n/>",
@@ -579,9 +570,6 @@
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sidebar-001-*. Разметка семантическая: <nav> с подписью, внутри разделы с заголовками и списки <ul>. Активный пункт определяется сравнением подписи с activeLabel и получает aria-current=\"page\", плотный фон и полосу через ::before. Счётчик — необязательное число справа с tabular-nums.",
       "meta": {
         "tags": ["sidebar", "navigation", "app shell", "menu"],
-        "preview": {
-          "surface": "light"
-        },
         "ai": {
           "export": "Sidebar001",
           "usage": "<Sidebar001\n  activeLabel=\"Страницы\"\n  sections={[\n    { title: \"Проект\", items: [{ label: \"Обзор\", href: \"/\" }, { label: \"Страницы\", href: \"/pages\", count: 12 }] },\n  ]}\n/>",

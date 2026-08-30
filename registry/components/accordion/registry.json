@@ -1,0 +1,1213 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "accordion-001",
+      "type": "registry:component",
+      "title": "Native Accordion",
+      "description": "Аккордеон на нативных details и summary: раскрытие без единой строки JS, взаимное исключение разделов — атрибутом name.",
+      "categories": ["accordion"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-001/accordion-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-001-*. Раскрытие держат нативные <details>/<summary>, поэтому состояние работает до гидратации и не требует React. Взаимное исключение включается атрибутом name у details: у разделов с одним именем открытым остаётся только один. Значок — две грани квадрата, поворот привязан к details[open]. Внутренние отступы и кегль считаются от собственной ширины через @container.",
+      "meta": {
+        "tags": ["accordion", "faq", "details", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion001",
+          "usage": "<Accordion001\n  items={[\n    { question: \"Что я получаю после установки?\", answer: \"Один файл компонента в вашем проекте.\" },\n  ]}\n/>",
+          "summary": "Аккордеон без JS: раскрытие держат нативные details и summary, а взаимное исключение — атрибут name на details. Отсюда бесплатно работают клавиатура, поиск по странице (браузер раскрывает найденный раздел) и состояние до гидратации. Значок и раскладка на CSS, отступы считаются от собственной ширины. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-accordion-001-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "нативные details/summary: замена на кнопки с useState забирает поиск по странице, клавиатуру и работу до гидратации",
+            "атрибут name у details — это и есть взаимное исключение разделов, отдельное состояние для него не нужно",
+            "скрытый системный маркер (list-style:none и ::-webkit-details-marker) вместе со своим значком",
+            "outline focus-visible у summary с отрицательным offset: заголовки перебирают с клавиатуры",
+            "поворот значка, привязанный к details[open], и правило prefers-reduced-motion",
+            "@container-запрос вместо медиазапроса: аккордеон живёт и в узкой колонке, и на всю ширину",
+            "блок <style> внутри компонента — в нём вся палитра, раскладка и значок"
+          ],
+          "adapt": [
+            "массив items: вопросы и ответы",
+            "exclusive — оставлять ли открытым только один раздел",
+            "defaultOpen — номер раздела, открытого сразу; -1 закрывает все",
+            "акцент через проп accent — цвет наведения, фокуса и значка",
+            "максимальную ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Не кладите в ответ ссылку, ведущую в другой раздел того же аккордеона: при exclusive он закроет текущий.",
+            "Атрибут name у details поддерживают современные браузеры; в старых разделы просто останутся независимыми — это не ломает компонент.",
+            "Не анимируйте высоту раскрытия вручную: у нативных details её нет, а имитация вернёт JS, ради отсутствия которого компонент и сделан.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "exclusive",
+            "label": "Один раздел",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт раздел",
+            "type": "number",
+            "default": 0,
+            "min": -1,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An accordion built on native details and summary: it opens without a line of JS, and the name attribute keeps only one section open.",
+            "ai": {
+              "summary": "A JS-free accordion: native details and summary handle opening, and the name attribute on details makes the sections exclusive. Keyboard support, find-on-page (the browser opens the matching section) and pre-hydration behaviour all come for free. The chevron and layout are CSS, and spacing is measured against the component's own width. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-accordion-001-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the native details/summary: replacing them with buttons and useState gives up find-on-page, keyboard behaviour and pre-hydration state",
+                "the name attribute on details — that is the exclusivity, no separate state is needed for it",
+                "hiding the system marker (list-style:none and ::-webkit-details-marker) alongside the custom chevron",
+                "the focus-visible outline on summary with its negative offset: headings are tabbed through",
+                "the chevron rotation tied to details[open] and the prefers-reduced-motion rule",
+                "the @container query instead of a media query: the accordion lives both in a narrow column and full width",
+                "the <style> block inside the component — it holds the palette, the layout and the chevron"
+              ],
+              "adapt": [
+                "the items array: questions and answers",
+                "exclusive — whether only one section stays open",
+                "defaultOpen — which section starts open; -1 closes them all",
+                "the accent through the accent prop — it colours hover, focus and the chevron",
+                "max width and outer spacing through className"
+              ],
+              "notes": [
+                "Do not put a link to another section of the same accordion in an answer: with exclusive on, it closes the current one.",
+                "The name attribute on details is supported by current browsers; older ones simply leave the sections independent, which does not break the component.",
+                "Do not animate the open height by hand: native details has no such animation, and faking it brings back the JS this component exists to avoid.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Accordion001\n  items={[\n    { question: \"What do I get after installing?\", answer: \"One component file in your project.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "exclusive": {
+                "label": "One at a time"
+              },
+              "defaultOpen": {
+                "label": "Open section"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-002",
+      "type": "registry:component",
+      "title": "Card Accordion",
+      "description": "Аккордеон из отдельных карточек: у каждого раздела своя рамка, а открытый приподнимается тенью. Разделы независимы — в списке карточек взаимное закрытие выглядит поломкой.",
+      "categories": ["accordion"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-002/accordion-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-002-*. Раскрытие держат нативные <details>/<summary>: состояние работает до гидратации, а найденный поиском по странице раздел браузер раскрывает сам. В отличие от accordion-001 разделы независимы и не связаны атрибутом name, каждый несёт собственную рамку и тень в открытом состоянии. Значок — грани квадрата в круглой лунке; отступы и кегль считаются от собственной ширины через @container.",
+      "meta": {
+        "tags": ["accordion", "cards", "faq", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion002",
+          "usage": "<Accordion002\n  items={[{ question: \"Как устроена оплата?\", answer: \"Помесячно или за год.\" }]}\n/>",
+          "summary": "Аккордеон, где каждый раздел — самостоятельная карточка с рамкой и скруглением. Открытая карточка получает акцентную рамку и мягкую тень, поэтому видно, что это отдельная единица, а не строка сплошного списка. Раскрытие на нативных details, клиентского JS нет. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-accordion-002-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "нативные details/summary: замена на кнопки с useState забирает поиск по странице, клавиатуру и работу до гидратации",
+            "независимость разделов: карточки живут сами по себе, и закрытие соседней при открытии текущей читается как сбой",
+            "тень и акцентную рамку у открытой карточки — по ним она отличается от закрытых соседей",
+            "скрытый системный маркер (list-style:none и ::-webkit-details-marker) вместе со своим значком",
+            "outline focus-visible у summary с отрицательным offset: заголовки перебирают с клавиатуры",
+            "@container-запрос вместо медиазапроса: карточки живут и в узкой колонке, и во всю ширину",
+            "блок <style> внутри компонента — в нём вся палитра, раскладка и значок"
+          ],
+          "adapt": [
+            "массив items: вопросы и ответы",
+            "defaultOpen — номер раздела, открытого сразу; -1 закрывает все",
+            "акцент через проп accent — цвет рамки открытой карточки, лунки значка и фокуса",
+            "максимальную ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Нужен режим «открыт только один» — берите accordion-001: он связывает разделы атрибутом name.",
+            "Не анимируйте высоту раскрытия вручную: у нативных details её нет, а имитация вернёт JS, ради отсутствия которого компонент и сделан.",
+            "Больше семи карточек подряд читаются хуже плоского списка: длинный перечень лучше разбить заголовками.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт раздел",
+            "type": "number",
+            "default": 0,
+            "min": -1,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An accordion of separate cards: every section carries its own border, and the open one lifts on a shadow. The sections are independent — in a list of cards, closing one to open another reads as a bug.",
+            "ai": {
+              "summary": "An accordion where each section is a standalone card with its own border and radius. The open card takes an accent border and a soft shadow, so it reads as a unit rather than a row in a continuous list. Opening rests on native details, with no client JS. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-accordion-002-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the native details/summary: replacing them with useState buttons gives up find-on-page, keyboard behaviour and pre-hydration state",
+                "the independence of the sections: cards stand on their own, and closing a neighbour to open one reads as a fault",
+                "the shadow and accent border on the open card — they are what separates it from its closed neighbours",
+                "hiding the system marker (list-style:none and ::-webkit-details-marker) alongside the custom chevron",
+                "the focus-visible outline on summary with its negative offset: headings are tabbed through",
+                "the @container query instead of a media query: the cards live in a narrow column and full width alike",
+                "the <style> block inside the component — it holds the palette, the layout and the chevron"
+              ],
+              "adapt": [
+                "the items array: questions and answers",
+                "defaultOpen — which section starts open; -1 closes them all",
+                "the accent through the accent prop — it colours the open card's border, the chevron well and focus",
+                "max width and outer spacing through className"
+              ],
+              "notes": [
+                "If you need one-at-a-time behaviour, use accordion-001: it links the sections through the name attribute.",
+                "Do not animate the open height by hand: native details has no such animation, and faking it brings back the JS this component exists to avoid.",
+                "More than seven cards in a row read worse than a flat list: break a long set up with headings.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Accordion002\n  items={[{ question: \"How does billing work?\", answer: \"Monthly or yearly.\" }]}\n/>"
+            },
+            "controls": {
+              "defaultOpen": {
+                "label": "Open section"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-003",
+      "type": "registry:component",
+      "title": "Borderless Accordion",
+      "description": "Аккордеон без рамок: только строки и волосяные линии между ними. Не выглядит вставкой на странице, поэтому годится для списка вопросов внутри текста.",
+      "categories": ["accordion"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-003/accordion-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-003-*. Раскрытие держат нативные <details>/<summary>. Знак «плюс» собран из двух псевдоэлементов: горизонтальная полоса стоит на месте, вертикальная поворачивается в неё при раскрытии, поэтому «плюс» превращается в «минус» без второй иконки. Пропом exclusive включается взаимное исключение через атрибут name у details. Отступы и кегль считаются от собственной ширины через @container.",
+      "meta": {
+        "tags": ["accordion", "faq", "minimal", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion003",
+          "usage": "<Accordion003\n  exclusive\n  items={[{ question: \"Сколько занимает подключение?\", answer: \"Полчаса на первый проект.\" }]}\n/>",
+          "summary": "Аккордеон без рамок и заливок: строки вопросов, волосяные линии между ними и знак «плюс», который поворотом одной полосы становится «минусом». Не создаёт визуальной коробки, поэтому встаёт в текстовую страницу. Взаимное исключение включается одним пропом. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-accordion-003-* и не подменять её токенами вашей темы (border-border, text-muted-foreground и подобными)",
+            "отсутствие рамки и фона: как только появляется коробка, теряется весь смысл варианта — он для встраивания в текст",
+            "нативные details/summary вместо кнопок с состоянием",
+            "знак из двух полос с поворотом второй: замена на иконку из библиотеки добавит зависимость там, где хватает CSS",
+            "верхнюю границу списка и нижние границы разделов — только они держат ритм без рамок",
+            "outline focus-visible у summary: заголовки перебирают с клавиатуры",
+            "ограничение ширины ответа в ch: без рамки строка иначе растягивается на всю страницу",
+            "блок <style> внутри компонента — в нём вся палитра, линии и знак"
+          ],
+          "adapt": [
+            "массив items: вопросы и ответы",
+            "exclusive — оставлять ли открытым только один раздел",
+            "defaultOpen — номер раздела, открытого сразу; по умолчанию закрыты все",
+            "акцент через проп accent — цвет заголовка при наведении, знака и фокуса",
+            "максимальную ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Вариант рассчитан на светлый фон страницы. На цветной подложке добавьте фон родителю, а не компоненту.",
+            "Не ставьте его внутрь карточки с рамкой: получится коробка в коробке, для этого есть accordion-002.",
+            "По умолчанию все разделы закрыты намеренно: открытый первый ответ сдвигает остальные вопросы вниз.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "exclusive",
+            "label": "Один раздел",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт раздел",
+            "type": "number",
+            "default": -1,
+            "min": -1,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A borderless accordion: rows and hairlines, nothing else. It does not read as a box dropped on the page, which makes it right for a list of questions inside running text.",
+            "ai": {
+              "summary": "An accordion with no borders or fills: question rows, hairlines between them and a plus sign that becomes a minus by rotating one bar. It never forms a visual box, so it belongs inside a text page. One-at-a-time behaviour is a single prop. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-accordion-003-* palette — do not swap it for your theme tokens (border-border, text-muted-foreground and the like)",
+                "the absence of a border and background: the moment a box appears the whole point of this variant is gone — it exists to sit in text",
+                "the native details/summary instead of stateful buttons",
+                "the two-bar sign with its rotation: swapping in a library icon adds a dependency where CSS is enough",
+                "the top rule of the list and the bottom rules of the sections — without borders they are the only thing holding the rhythm",
+                "the focus-visible outline on summary: headings are tabbed through",
+                "the ch-based width limit on answers: with no border the line otherwise spans the page",
+                "the <style> block inside the component — it holds the palette, the rules and the sign"
+              ],
+              "adapt": [
+                "the items array: questions and answers",
+                "exclusive — whether only one section stays open",
+                "defaultOpen — which section starts open; by default all are closed",
+                "the accent through the accent prop — it colours hover, the sign and focus",
+                "max width and outer spacing through className"
+              ],
+              "notes": [
+                "This variant assumes a light page background. On a tinted surface give the parent a background, not the component.",
+                "Do not nest it inside a bordered card: that is a box in a box, and accordion-002 already covers it.",
+                "Every section starts closed on purpose: an open first answer pushes the other questions down.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Accordion003\n  exclusive\n  items={[{ question: \"How long does setup take?\", answer: \"Half an hour for the first project.\" }]}\n/>"
+            },
+            "controls": {
+              "exclusive": {
+                "label": "One at a time"
+              },
+              "defaultOpen": {
+                "label": "Open section"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-004",
+      "type": "registry:component",
+      "title": "Dense Accordion",
+      "description": "Плотный аккордеон со значением в правой колонке: срок, объём или цена. Такой список читают по правому краю, вообще не раскрывая разделы.",
+      "categories": ["accordion"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-004/accordion-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-004-*. Раскрытие держат нативные <details>/<summary>. Стрелка стоит слева и поворачивается на 90° — она отмечает состояние строки, а не завершает её; правая колонка занята значением с tabular-nums, поэтому цифры выравниваются между строками. Открытая строка получает другую подложку, но не меняет высоту: список не прыгает при раскрытии.",
+      "meta": {
+        "tags": ["accordion", "list", "dense", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion004",
+          "usage": "<Accordion004\n  items={[{ title: \"Вёрстка и сборка\", meta: \"7 дней\", body: \"Сборка страниц из блоков.\" }]}\n/>",
+          "summary": "Плотный аккордеон-список: слева стрелка состояния, посередине название, справа значение — срок, объём или цена. Значения идут моноширинными цифрами и выравниваются в столбик, поэтому список читается целиком без раскрытия. Раскрытая строка меняет подложку, а не высоту. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-accordion-004-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
+            "правую колонку значений с font-variant-numeric:tabular-nums — ради неё вариант и существует, без выравнивания это обычный аккордеон",
+            "стрелку слева: справа её место занято значением, а состояние строки должно быть видно на входе в строку",
+            "нативные details/summary вместо кнопок с состоянием",
+            "смену подложки у открытой строки вместо изменения её высоты: в плотном списке прыжок теряет место чтения",
+            "white-space:nowrap у значения — перенос «7 дней» на две строки ломает ритм колонки",
+            "outline focus-visible у summary: строки перебирают с клавиатуры",
+            "блок <style> внутри компонента — в нём вся палитра, раскладка и стрелка"
+          ],
+          "adapt": [
+            "массив items: название, значение meta и текст body",
+            "defaultOpen — номер раскрытой строки; -1 закрывает все",
+            "акцент через проп accent — цвет стрелки открытой строки и фокуса",
+            "максимальную ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Значения в колонке должны быть одного рода: смесь «7 дней» и «12 000 ₽» в одном списке не читается.",
+            "Это не таблица: сортировки и заголовков колонок здесь нет. Нужны они — берите table-001.",
+            "Не кладите в meta длинную фразу — колонка рассчитана на два-три слова.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultOpen",
+            "label": "Открыта строка",
+            "type": "number",
+            "default": 1,
+            "min": -1,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dense accordion with a value column on the right: a duration, a quantity or a price. A list like this is read down the right edge without opening anything.",
+            "ai": {
+              "summary": "A dense accordion list: a state arrow on the left, the title in the middle, a value on the right — duration, quantity or price. The values are set in tabular figures and line up in a column, so the list reads whole without opening a thing. An open row changes its background rather than its height. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-accordion-004-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
+                "the right-hand value column with font-variant-numeric:tabular-nums — it is why this variant exists; without the alignment it is just another accordion",
+                "the arrow on the left: the right side is taken by the value, and the row's state has to be visible where the row begins",
+                "the native details/summary instead of stateful buttons",
+                "changing the open row's background rather than its height: in a dense list a jump loses the reading position",
+                "white-space:nowrap on the value — wrapping \"7 days\" onto two lines breaks the column rhythm",
+                "the focus-visible outline on summary: rows are tabbed through",
+                "the <style> block inside the component — it holds the palette, the layout and the arrow"
+              ],
+              "adapt": [
+                "the items array: title, the meta value and the body text",
+                "defaultOpen — which row starts open; -1 closes them all",
+                "the accent through the accent prop — it colours the open row's arrow and focus",
+                "max width and outer spacing through className"
+              ],
+              "notes": [
+                "The values must be of one kind: mixing \"7 days\" and \"€12,000\" in one list does not read.",
+                "This is not a table: there is no sorting and no column headers. If you need them, use table-001.",
+                "Do not put a long phrase in meta — the column is sized for two or three words.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Accordion004\n  items={[{ title: \"Build and assembly\", meta: \"7 days\", body: \"Pages assembled from blocks.\" }]}\n/>"
+            },
+            "controls": {
+              "defaultOpen": {
+                "label": "Open row"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-005",
+      "type": "registry:component",
+      "title": "Stateful Accordion",
+      "description": "Аккордеон, у разделов которого есть состояния: требующий внимания отмечен полосой и подписью, недоступный не раскрывается и сам объясняет причину.",
+      "categories": ["accordion"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-005/accordion-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-005-*. Обычные разделы — нативные <details>/<summary>. Недоступный раздел рендерится не как details, а как статичный блок с aria-disabled: раскрывать в нём нечего, а неработающая стрелка обманывает. Подсветка требующего внимания раздела держится на data-атрибуте: полоса через ::before, тёплая рамка и подпись состояния — цвет не единственный признак.",
+      "meta": {
+        "tags": ["accordion", "states", "checklist", "settings"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion005",
+          "usage": "<Accordion005\n  items={[\n    { title: \"Подтверждение почты\", status: \"Нужен ответ\", highlighted: true, body: \"Письмо отправлено.\" },\n    { title: \"Экспорт бухгалтерии\", status: \"Недоступно\", disabled: true, body: \"Откроется после подтверждения почты.\" },\n  ]}\n/>",
+          "summary": "Аккордеон настроек, где у разделов есть состояния: обычный, требующий внимания и недоступный. Требующий внимания получает полосу у края, тёплую рамку и подпись; недоступный вообще не раскрывается и вместо этого показывает причину. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-accordion-005-* и не подменять её токенами вашей темы (bg-muted, text-destructive и подобными)",
+            "недоступный раздел как статичный блок, а не как details с disabled: у details нет такого атрибута, а стрелка, которая ничего не делает, обманывает",
+            "видимость недоступного раздела: спрятать его — значит скрыть, что шаг вообще существует",
+            "двойную метку требующего внимания: полоса у края плюс подпись состояния, а не только цвет",
+            "aria-disabled у недоступного раздела и причину рядом с ним",
+            "нативные details/summary у обычных разделов",
+            "outline focus-visible у summary: разделы перебирают с клавиатуры",
+            "блок <style> внутри компонента — в нём вся палитра, состояния и полоса"
+          ],
+          "adapt": [
+            "массив items: заголовок, текст, подпись состояния и флаги highlighted и disabled",
+            "defaultOpen — номер раскрытого раздела",
+            "акцент через проп accent — цвет кольца фокуса",
+            "максимальную ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "У недоступного раздела body — это причина недоступности, а не спрятанное содержимое. Пишите там, что нужно сделать, чтобы он открылся.",
+            "Подсвечивайте не больше одного раздела: два «важных» отменяют друг друга.",
+            "Флаг highlighted не делает раздел открытым. Если внимание нужно прямо сейчас, откройте его через defaultOpen.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт раздел",
+            "type": "number",
+            "default": 1,
+            "min": -1,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An accordion whose sections carry state: the one needing attention gets an edge bar and a label, and the unavailable one does not open at all — it explains why instead.",
+            "ai": {
+              "summary": "A settings accordion with section states: ordinary, needs attention and unavailable. The one needing attention gets an edge bar, a warm border and a status label; the unavailable one never opens and shows its reason instead. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-accordion-005-* palette — do not swap it for your theme tokens (bg-muted, text-destructive and the like)",
+                "the unavailable section as a static block rather than a details with disabled: details has no such attribute, and an arrow that does nothing lies to the user",
+                "keeping the unavailable section visible: hiding it hides the fact that the step exists at all",
+                "the double marking of the attention state: an edge bar plus a status label, not colour alone",
+                "aria-disabled on the unavailable section and the reason next to it",
+                "the native details/summary on ordinary sections",
+                "the focus-visible outline on summary: sections are tabbed through",
+                "the <style> block inside the component — it holds the palette, the states and the bar"
+              ],
+              "adapt": [
+                "the items array: title, body, status label and the highlighted and disabled flags",
+                "defaultOpen — which section starts open",
+                "the accent through the accent prop — it colours the focus ring",
+                "max width and outer spacing through className"
+              ],
+              "notes": [
+                "On an unavailable section the body is the reason, not hidden content. Write what has to happen for it to open.",
+                "Highlight at most one section: two \"important\" ones cancel each other out.",
+                "The highlighted flag does not open a section. If it needs attention right now, open it through defaultOpen.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Accordion005\n  items={[\n    { title: \"Confirm your email\", status: \"Needs you\", highlighted: true, body: \"The message has been sent.\" },\n    { title: \"Accounting export\", status: \"Unavailable\", disabled: true, body: \"Opens once the email is confirmed.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "defaultOpen": {
+                "label": "Open section"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-006",
+      "type": "registry:component",
+      "title": "Checklist Accordion",
+      "description": "Аккордеон-чеклист онбординга: нумерованные шаги, галочки у выполненных и прогресс, который считается из самих шагов. Раскрыт первый невыполненный.",
+      "categories": ["accordion"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-006/accordion-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-006-*. Шапка несёт счётчик «сделано из всего» и полосу прогресса; и то и другое считается из массива шагов, отдельного пропа с числом нет. Раскрытие держат нативные <details>/<summary>, а открытым по умолчанию оказывается первый шаг без флага done — пользователь попадает туда, где остановился. Ширина полосы приходит переменной --vibeui-accordion-006-progress. В узкой колонке подсказки справа скрываются через @container.",
+      "meta": {
+        "tags": ["accordion", "checklist", "onboarding", "progress"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion006",
+          "usage": "<Accordion006\n  title=\"Настройка проекта\"\n  steps={[\n    { title: \"Создать проект\", hint: \"2 минуты\", done: true, body: \"Название можно поменять позже.\" },\n    { title: \"Подключить домен\", hint: \"5 минут\", body: \"Добавьте A-запись у регистратора.\" },\n  ]}\n/>",
+          "summary": "Аккордеон-чеклист для онбординга: заголовок со счётчиком и полосой прогресса, нумерованные плитки шагов, галочка и приглушённая подпись у выполненных. Прогресс считается из шагов, поэтому разойтись со списком не может, а раскрытым открывается первый невыполненный шаг. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-accordion-006-* и не подменять её токенами вашей темы (bg-primary, bg-muted и подобными)",
+            "подсчёт прогресса из массива шагов, а не отдельным пропом: число и список обязаны иметь один источник",
+            "раскрытие первого невыполненного шага по умолчанию — это и делает компонент чеклистом, а не просто списком",
+            "галочку у выполненного шага вместо одного лишь цвета: состояние должно читаться и в печати",
+            "разметку progressbar у полосы с aria-valuenow и aria-valuemax",
+            "нативные details/summary: состояние работает до гидратации",
+            "@container-запрос, прячущий подсказки в узкой колонке",
+            "блок <style> внутри компонента — в нём вся палитра, плитки и полоса"
+          ],
+          "adapt": [
+            "массив steps: заголовок, текст, подсказка справа и флаг done",
+            "title — заголовок чеклиста",
+            "defaultOpen — если нужно раскрыть конкретный шаг вместо первого невыполненного",
+            "акцент через проп accent — цвет кольца фокуса",
+            "максимальную ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Флаг done приходит снаружи: компонент ничего не отмечает сам и не хранит состояние между заходами.",
+            "Больше шести шагов в онбординге не работает — длинный список читается как работа, а не как начало.",
+            "Когда все шаги выполнены, чеклист стоит убрать со страницы целиком, а не оставлять полностью зелёным.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Настройка проекта",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт шаг",
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An onboarding checklist accordion: numbered steps, checks on the finished ones and a progress bar computed from the steps themselves. The first unfinished step starts open.",
+            "ai": {
+              "summary": "A checklist accordion for onboarding: a header with a counter and progress bar, numbered step tiles, a check and a dimmed label on finished ones. The progress is computed from the steps, so it cannot drift from the list, and the first unfinished step opens by default. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-accordion-006-* palette — do not swap it for your theme tokens (bg-primary, bg-muted and the like)",
+                "computing progress from the steps array rather than taking it as a prop: the number and the list must share one source",
+                "opening the first unfinished step by default — that is what makes this a checklist rather than a list",
+                "the check on a finished step instead of colour alone: the state has to survive print",
+                "the progressbar semantics with aria-valuenow and aria-valuemax",
+                "the native details/summary: the state works before hydration",
+                "the @container query that hides the hints in a narrow column",
+                "the <style> block inside the component — it holds the palette, the tiles and the bar"
+              ],
+              "adapt": [
+                "the steps array: title, body, the right-hand hint and the done flag",
+                "title — the checklist heading",
+                "defaultOpen — when a specific step should open instead of the first unfinished one",
+                "the accent through the accent prop — it colours the focus ring",
+                "max width and outer spacing through className"
+              ],
+              "notes": [
+                "The done flag comes from outside: the component marks nothing itself and keeps no state between visits.",
+                "More than six onboarding steps stops working — a long list reads as work rather than a start.",
+                "Once every step is done, remove the checklist from the page rather than leaving it fully green.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Accordion006\n  title=\"Project setup\"\n  steps={[\n    { title: \"Create a project\", hint: \"2 min\", done: true, body: \"The name can change later.\" },\n    { title: \"Connect a domain\", hint: \"5 min\", body: \"Add an A record at your registrar.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Project setup"
+              },
+              "defaultOpen": {
+                "label": "Open step"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-007",
+      "type": "registry:component",
+      "title": "Labelled Accordion",
+      "description": "Аккордеон с плитками-метками и счётчиками: в списке из десяти разделов взгляд цепляется за плитку, а не перечитывает заголовки.",
+      "categories": ["accordion"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-007/accordion-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-007-*. Раскрытие держат нативные <details>/<summary>. Плитка слева — текст в квадрате, а не иконка из библиотеки: набор разделов у каждого свой, а зависимость осталась бы навсегда. Плашка справа принимает и число, и слово. В узкой колонке плашка скрывается через @container, чтобы заголовок не сжимался.",
+      "meta": {
+        "tags": ["accordion", "icons", "badges", "settings"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion007",
+          "usage": "<Accordion007\n  items={[{ glyph: \"Дс\", title: \"Доступ и роли\", badge: \"12\", body: \"Владелец, редактор и читатель.\" }]}\n/>",
+          "summary": "Аккордеон настроек: слева плитка с двумя-тремя буквами, посередине заголовок, справа плашка со счётчиком или меткой вроде «Beta». Плитка открытого раздела окрашивается акцентом, поэтому позиция в длинном списке видна без чтения. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-accordion-007-* и не подменять её токенами вашей темы (bg-muted, text-primary и подобными)",
+            "плитку как текст в квадрате: иконочная библиотека ради четырёх значков — это зависимость на весь срок жизни проекта",
+            "aria-hidden у плитки: смысл несёт заголовок, плитка только помогает его найти",
+            "нативные details/summary вместо кнопок с состоянием",
+            "окрашивание плитки у открытого раздела — это метка позиции в списке",
+            "@container-запрос, прячущий плашку в узкой колонке: иначе заголовок сжимается в столбик",
+            "блок <style> внутри компонента — в нём вся палитра, плитки и раскладка"
+          ],
+          "adapt": [
+            "массив items: плитка, заголовок, плашка и текст",
+            "defaultOpen — номер раскрытого раздела; -1 закрывает все",
+            "содержимое плитки: две-три буквы или один символ — больше не поместится",
+            "акцент через проп accent — цвет открытой плитки и фокуса",
+            "максимальную ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Плитки должны быть разными: четыре одинаковых сокращения хуже, чем ни одного.",
+            "Плашка — это счётчик или короткая метка, а не второй заголовок: в неё помещается до шести символов.",
+            "Нужны настоящие иконки — подставьте свой <svg> вместо текста в плитке, размеры не менять.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт раздел",
+            "type": "number",
+            "default": 0,
+            "min": -1,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An accordion with label tiles and counters: across ten sections the eye catches the tile instead of re-reading the headings.",
+            "ai": {
+              "summary": "A settings accordion: a two- or three-letter tile on the left, the heading in the middle, a badge with a count or a label such as \"Beta\" on the right. The open section's tile takes the accent colour, so the position in a long list is visible without reading. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-accordion-007-* palette — do not swap it for your theme tokens (bg-muted, text-primary and the like)",
+                "the tile as text in a square: an icon library for four glyphs is a dependency for the life of the project",
+                "aria-hidden on the tile: the heading carries the meaning, the tile only helps find it",
+                "the native details/summary instead of stateful buttons",
+                "colouring the open section's tile — it marks the position in the list",
+                "the @container query that hides the badge in a narrow column: otherwise the heading collapses",
+                "the <style> block inside the component — it holds the palette, the tiles and the layout"
+              ],
+              "adapt": [
+                "the items array: tile, heading, badge and body",
+                "defaultOpen — which section starts open; -1 closes them all",
+                "the tile content: two or three letters, or one symbol — more will not fit",
+                "the accent through the accent prop — it colours the open tile and focus",
+                "max width and outer spacing through className"
+              ],
+              "notes": [
+                "The tiles have to differ: four identical abbreviations are worse than none.",
+                "The badge is a count or a short label, not a second heading: about six characters fit.",
+                "If you need real icons, put your own <svg> in the tile and keep the sizes.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Accordion007\n  items={[{ glyph: \"Ac\", title: \"Access and roles\", badge: \"12\", body: \"Owner, editor and viewer.\" }]}\n/>"
+            },
+            "controls": {
+              "defaultOpen": {
+                "label": "Open section"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-008",
+      "type": "registry:component",
+      "title": "Nested Accordion",
+      "description": "Двухуровневый аккордеон для справки: главы и статьи внутри них. Вложенность показана линией от заголовка главы, а не отступом.",
+      "categories": ["accordion"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-008/accordion-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-008-*. Оба уровня — нативные <details>/<summary>, поэтому поиск по странице раскрывает сразу и главу, и статью внутри неё. Вложенность обозначена вертикальной линией слева от группы, а не отступом: отступ на втором уровне съедает ширину строки. Селекторы разделены на `> details` и `[data-part=\"children\"] details`, чтобы стили уровней не смешивались.",
+      "meta": {
+        "tags": ["accordion", "nested", "docs", "help"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion008",
+          "usage": "<Accordion008\n  sections={[{ title: \"Установка\", meta: \"3\", children: [{ title: \"Через shadcn CLI\", body: \"Одна команда с адресом реестра.\" }] }]}\n/>",
+          "summary": "Аккордеон на два уровня: внешний раздел — глава со счётчиком статей, внутренний — сама статья. Оба уровня нативные, поэтому поиск по странице раскрывает нужную статью вместе с её главой. Вложенность держится линией слева. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-accordion-008-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "нативные details на обоих уровнях: именно поэтому поиск по странице раскрывает и главу, и статью",
+            "линию слева вместо отступа: на втором уровне отступ съедает ширину строки",
+            "разделение селекторов на `> details` и `[data-part=\"children\"] details` — без него стили уровней смешиваются",
+            "разный вес и цвет заголовков уровней: одинаковые строки превращают дерево в кашу",
+            "outline focus-visible у summary обоих уровней",
+            "блок <style> внутри компонента — в нём вся палитра, линия и оба уровня"
+          ],
+          "adapt": [
+            "массив sections: заголовок главы, подпись meta и массив children",
+            "defaultOpen — номер раскрытой главы",
+            "акцент через проп accent — цвет открытой статьи и фокуса",
+            "максимальную ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Третий уровень не поддержан намеренно: дерево глубже двух уровней в аккордеоне не читается, нужен отдельный компонент навигации.",
+            "Счётчик в meta не считается сам — передавайте его вместе с данными.",
+            "Не делайте главы с одной статьёй внутри: такой раздел проще показать плоским.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultOpen",
+            "label": "Открыта глава",
+            "type": "number",
+            "default": 0,
+            "min": -1,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A two-level accordion for help pages: chapters with articles inside. The nesting is drawn as a line from the chapter heading rather than an indent.",
+            "ai": {
+              "summary": "A two-level accordion: the outer section is a chapter with an article count, the inner one is the article. Both levels are native, so find-on-page opens the article together with its chapter. The nesting rests on a line down the left. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-accordion-008-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "native details on both levels: that is exactly why find-on-page opens both the chapter and the article",
+                "the left-hand line instead of an indent: on the second level an indent eats the line width",
+                "splitting the selectors into `> details` and `[data-part=\"children\"] details` — without it the levels' styles bleed together",
+                "the different weight and colour of the two heading levels: identical rows turn the tree into mush",
+                "the focus-visible outline on summary at both levels",
+                "the <style> block inside the component — it holds the palette, the line and both levels"
+              ],
+              "adapt": [
+                "the sections array: chapter title, the meta caption and the children array",
+                "defaultOpen — which chapter starts open",
+                "the accent through the accent prop — it colours the open article and focus",
+                "max width and outer spacing through className"
+              ],
+              "notes": [
+                "A third level is deliberately unsupported: deeper than two levels an accordion stops being readable and needs a navigation component instead.",
+                "The meta count is not computed — pass it with the data.",
+                "Do not create chapters holding a single article: show that section flat instead.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Accordion008\n  sections={[{ title: \"Installation\", meta: \"3\", children: [{ title: \"With the shadcn CLI\", body: \"One command with the registry URL.\" }] }]}\n/>"
+            },
+            "controls": {
+              "defaultOpen": {
+                "label": "Open chapter"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-009",
+      "type": "registry:component",
+      "title": "Timeline Accordion",
+      "description": "Аккордеон-лента событий: слева линия с точками, справа раскрывающиеся записи. Так читают историю изменений — сначала по датам, потом вглубь одной записи.",
+      "categories": ["accordion"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-009/accordion-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-009-*. Линия ленты и точка — псевдоэлементы каждой записи, поэтому лишних элементов в разметке нет; у последней записи линия обрывается на её точке. Точка первой записи залита акцентом: свежее событие важнее остальных. От 34rem собственной ширины дата уходит в отдельную колонку слева от заголовка.",
+      "meta": {
+        "tags": ["accordion", "timeline", "changelog", "history"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion009",
+          "usage": "<Accordion009\n  entries={[{ date: \"12 марта\", tag: \"Релиз\", title: \"Панель кода\", body: \"Код открывается прямо на витрине.\" }]}\n/>",
+          "summary": "Лента событий с раскрывающимися записями: непрерывная линия слева, точки у каждой записи, дата и метка выпуска в строке заголовка. Точка верхней записи залита акцентом, линия обрывается на последней. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-accordion-009-* и не подменять её токенами вашей темы (border-border, text-muted-foreground и подобными)",
+            "линию и точки как псевдоэлементы записей: отдельные элементы разъезжаются при переносе строки",
+            "обрыв линии на последней записи — идущая в пустоту линия читается как незагруженный список",
+            "залитую точку у первой записи: в ленте важнее всего свежее событие",
+            "нативные details/summary вместо кнопок с состоянием",
+            "tabular-nums у даты: без них колонка дат пляшет",
+            "@container-запрос, выносящий дату в отдельную колонку на широкой раскладке",
+            "блок <style> внутри компонента — в нём вся палитра, лента и точки"
+          ],
+          "adapt": [
+            "массив entries: дата, метка, заголовок и текст записи",
+            "defaultOpen — номер раскрытой записи; -1 закрывает все",
+            "акцент через проп accent — цвет точки, метки и заголовка при наведении",
+            "максимальную ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Порядок записей — от свежих к старым: акцентная точка стоит на первой, и переставлять их наоборот нельзя.",
+            "Дата приходит строкой: форматирование остаётся за вызывающим кодом, компонент не разбирает Date и не знает локали.",
+            "Для длинной истории добавляйте разбивку по годам снаружи, а не растите один список до сотни записей.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultOpen",
+            "label": "Открыта запись",
+            "type": "number",
+            "default": 0,
+            "min": -1,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A timeline accordion: a line with dots on the left, expandable entries on the right. That is how a changelog is read — by date first, then into one entry.",
+            "ai": {
+              "summary": "A timeline of expandable entries: a continuous line on the left, a dot per entry, the date and a release tag in the heading row. The top entry's dot is filled with the accent and the line stops at the last one. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-accordion-009-* palette — do not swap it for your theme tokens (border-border, text-muted-foreground and the like)",
+                "the line and dots as pseudo-elements of the entries: separate elements drift apart when a row wraps",
+                "stopping the line at the last entry — a line running into empty space reads as an unloaded list",
+                "the filled dot on the first entry: in a timeline the newest event matters most",
+                "the native details/summary instead of stateful buttons",
+                "tabular-nums on the date: without them the date column jitters",
+                "the @container query that moves the date into its own column on the wide layout",
+                "the <style> block inside the component — it holds the palette, the line and the dots"
+              ],
+              "adapt": [
+                "the entries array: date, tag, title and body",
+                "defaultOpen — which entry starts open; -1 closes them all",
+                "the accent through the accent prop — it colours the dot, the tag and hover",
+                "max width and outer spacing through className"
+              ],
+              "notes": [
+                "Entries run newest first: the accent dot sits on the first one, so do not reverse the order.",
+                "The date arrives as a string: formatting belongs to the caller, the component parses no Date and knows no locale.",
+                "For a long history group by year outside the component rather than growing one list to a hundred entries.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Accordion009\n  entries={[{ date: \"12 March\", tag: \"Release\", title: \"Code panel\", body: \"The code opens right on the catalog card.\" }]}\n/>"
+            },
+            "controls": {
+              "defaultOpen": {
+                "label": "Open entry"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-010",
+      "type": "registry:component",
+      "title": "Split Accordion",
+      "description": "Аккордеон в две колонки: на широкой раскладке вопрос остаётся слева, а ответ раскрывается справа — глаз не теряет вопрос под длинным текстом.",
+      "categories": ["accordion"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-010/accordion-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-010-*. Раскрытие держат нативные <details>/<summary>. От 44rem собственной ширины сам <details> становится grid в две колонки: summary слева, ответ справа; в узкой колонке всё возвращается к обычному списку. Закрытый ответ на широкой раскладке скрывается правилом display:none у details:not([open]) — иначе grid оставил бы пустую колонку.",
+      "meta": {
+        "tags": ["accordion", "faq", "two column", "wide"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion010",
+          "usage": "<Accordion010\n  numbered\n  items={[{ question: \"Чем это отличается от библиотеки?\", answer: \"Компонент приходит одним файлом и становится вашим.\" }]}\n/>",
+          "summary": "Аккордеон для широких страниц: вопрос с номером слева, развёрнутый ответ справа в той же строке. Нумерация помогает ссылаться на пункт в переписке. В узкой колонке блок сам складывается в обычный вертикальный список. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-accordion-010-* и не подменять её токенами вашей темы (border-border, text-muted-foreground и подобными)",
+            "grid на самом <details>: две колонки должны принадлежать одной строке, иначе ответ уедет под вопрос",
+            "правило display:none у закрытого ответа в широкой раскладке — без него grid держит пустую правую колонку",
+            "@container вместо медиазапроса: две колонки включаются от ширины блока, а не окна",
+            "нативные details/summary вместо кнопок с состоянием",
+            "нумерацию моноширинными цифрами с ведущим нулём: номера должны стоять в столбик",
+            "ограничение ширины ответа в ch: в правой колонке строка иначе становится нечитаемо длинной",
+            "блок <style> внутри компонента — в нём вся палитра и обе раскладки"
+          ],
+          "adapt": [
+            "массив items: вопросы и ответы",
+            "numbered — показывать ли номера",
+            "defaultOpen — номер раскрытого вопроса; -1 закрывает все",
+            "акцент через проп accent — цвет номера открытого вопроса и наведения",
+            "максимальную ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Компонент рассчитан на широкую полосу: в колонке уже 44rem он выглядит как обычный аккордеон, и это нормально.",
+            "Ответы здесь длиннее обычного — вариант для развёрнутых объяснений, а не для списка из десяти коротких пунктов.",
+            "Номера не якоря: ссылку на конкретный вопрос делает вызывающий код через id.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "numbered",
+            "label": "Нумерация",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт вопрос",
+            "type": "number",
+            "default": 0,
+            "min": -1,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A two-column accordion: on a wide layout the question stays on the left while the answer opens on the right, so the eye never loses the question under a long answer.",
+            "ai": {
+              "summary": "An accordion for wide pages: a numbered question on the left, the full answer on the right of the same row. The numbering makes it easy to refer to a point in a conversation. In a narrow column it folds back into an ordinary vertical list. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-accordion-010-* palette — do not swap it for your theme tokens (border-border, text-muted-foreground and the like)",
+                "the grid on the <details> itself: both columns have to belong to one row, otherwise the answer slides under the question",
+                "the display:none rule on a closed answer in the wide layout — without it the grid keeps an empty right column",
+                "@container rather than a media query: two columns switch on the block's width, not the window's",
+                "the native details/summary instead of stateful buttons",
+                "the zero-padded numbering in tabular figures: the numbers have to line up",
+                "the ch-based width limit on answers: in the right column the line otherwise gets unreadably long",
+                "the <style> block inside the component — it holds the palette and both layouts"
+              ],
+              "adapt": [
+                "the items array: questions and answers",
+                "numbered — whether the numbers show",
+                "defaultOpen — which question starts open; -1 closes them all",
+                "the accent through the accent prop — it colours the open number and hover",
+                "max width and outer spacing through className"
+              ],
+              "notes": [
+                "This variant expects a wide band: inside a column narrower than 44rem it looks like an ordinary accordion, which is fine.",
+                "The answers here run longer than usual — it is built for full explanations, not for ten short points.",
+                "The numbers are not anchors: linking to a specific question is the caller's job through an id.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Accordion010\n  numbered\n  items={[{ question: \"How is this different from a library?\", answer: \"The component arrives as one file and becomes yours.\" }]}\n/>"
+            },
+            "controls": {
+              "numbered": {
+                "label": "Numbering"
+              },
+              "defaultOpen": {
+                "label": "Open question"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-011",
+      "type": "registry:component",
+      "title": "Dark Accordion",
+      "description": "Тёмный аккордеон для тёмных секций: собственная тёмная палитра, а не инверсия светлой. Открытый раздел светится изнутри — тени на тёмном фоне не работают.",
+      "categories": ["accordion"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-011/accordion-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-011-*. Палитра тёмная по построению: фон, приподнятая поверхность открытого раздела и полупрозрачные границы через oklch с альфой. Активный раздел получает градиентную подсветку от левого края вместо тени. Значок вынесен в круглую лунку: на тёмном фоне тонкая грань без подложки теряется. Разделы связаны атрибутом name, поэтому открыт только один.",
+      "meta": {
+        "tags": ["accordion", "dark", "faq", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion011",
+          "usage": "<Accordion011\n  items={[{ question: \"Подойдёт для тёмной секции?\", answer: \"Да, у него собственная тёмная палитра.\" }]}\n/>",
+          "summary": "Тёмный аккордеон: графитовый фон, полупрозрачные границы, открытый раздел светлеет и получает подсветку от левого края. Значок сидит в круглой лунке, чтобы не потеряться на тёмном. Открытым остаётся один раздел — связка идёт атрибутом name. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-accordion-011-* — она тёмная по построению, а не инверсия светлой; подмена токенами темы (bg-card, bg-background) сломает вариант",
+            "подсветку открытого раздела градиентом вместо тени: затемнять тёмное нечем, тень там не читается",
+            "приподнятую поверхность открытого раздела: на тёмном фоне разница по светлоте — единственный доступный способ показать активность",
+            "значок в круглой лунке: тонкая грань без подложки теряется на тёмном",
+            "полупрозрачные границы через oklch с альфой — сплошная светлая линия на тёмном выглядит как разрыв",
+            "атрибут name у details: он и есть взаимное исключение разделов",
+            "блок <style> внутри компонента — в нём вся палитра, подсветка и значок"
+          ],
+          "adapt": [
+            "массив items: вопросы и ответы",
+            "exclusive — оставлять ли открытым только один раздел",
+            "defaultOpen — номер раскрытого раздела; -1 закрывает все",
+            "акцент через проп accent — цвет подсветки, значка и фокуса",
+            "максимальную ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Вариант для тёмной секции. На светлой странице он выглядит вырезанной наклейкой — там берите accordion-001 или accordion-002.",
+            "Не переключайте его на светлую палитру через prefers-color-scheme: компонент выбирается под секцию, а не под системную тему пользователя.",
+            "Атрибут name у details поддерживают современные браузеры; в старых разделы останутся независимыми — компонент от этого не ломается.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "exclusive",
+            "label": "Один раздел",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт раздел",
+            "type": "number",
+            "default": 0,
+            "min": -1,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dark accordion for dark sections: a palette built dark rather than an inverted light one. The open section glows from within — shadows do not work on a dark ground.",
+            "ai": {
+              "summary": "A dark accordion: a graphite ground, translucent rules, and an open section that lightens and picks up a glow from the left edge. The chevron sits in a round well so it does not disappear against the dark. Only one section stays open, linked through the name attribute. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-accordion-011-* palette — it is built dark rather than inverted from a light one; swapping in theme tokens (bg-card, bg-background) breaks the variant",
+                "the glow on the open section instead of a shadow: there is nothing to darken on a dark ground, so a shadow never reads",
+                "the raised surface of the open section: on a dark ground a difference in lightness is the only way left to show activity",
+                "the chevron in its round well: a thin border loses itself on dark without a backing",
+                "the translucent rules through oklch with alpha — a solid light line on dark reads as a gap",
+                "the name attribute on details: it is the exclusivity itself",
+                "the <style> block inside the component — it holds the palette, the glow and the chevron"
+              ],
+              "adapt": [
+                "the items array: questions and answers",
+                "exclusive — whether only one section stays open",
+                "defaultOpen — which section starts open; -1 closes them all",
+                "the accent through the accent prop — it colours the glow, the chevron and focus",
+                "max width and outer spacing through className"
+              ],
+              "notes": [
+                "This is for a dark section. On a light page it looks like a sticker cut out and dropped on — use accordion-001 or accordion-002 there.",
+                "Do not switch it to a light palette through prefers-color-scheme: the variant is chosen for the section, not for the visitor's system theme.",
+                "The name attribute on details is supported by current browsers; older ones leave the sections independent, which does not break the component.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Accordion011\n  items={[{ question: \"Does it fit a dark section?\", answer: \"Yes — it carries a palette built dark.\" }]}\n/>"
+            },
+            "controls": {
+              "exclusive": {
+                "label": "One at a time"
+              },
+              "defaultOpen": {
+                "label": "Open section"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -24,6 +24,17 @@ import { Button008 } from "@/registry/components/buttons/button-008/button-008"
 import { Button009 } from "@/registry/components/buttons/button-009/button-009"
 import { Button010 } from "@/registry/components/buttons/button-010/button-010"
 import { Button011 } from "@/registry/components/buttons/button-011/button-011"
+import { Accordion001 } from "@/registry/components/accordion/accordion-001/accordion-001"
+import { Accordion002 } from "@/registry/components/accordion/accordion-002/accordion-002"
+import { Accordion003 } from "@/registry/components/accordion/accordion-003/accordion-003"
+import { Accordion004 } from "@/registry/components/accordion/accordion-004/accordion-004"
+import { Accordion005 } from "@/registry/components/accordion/accordion-005/accordion-005"
+import { Accordion006 } from "@/registry/components/accordion/accordion-006/accordion-006"
+import { Accordion007 } from "@/registry/components/accordion/accordion-007/accordion-007"
+import { Accordion008 } from "@/registry/components/accordion/accordion-008/accordion-008"
+import { Accordion009 } from "@/registry/components/accordion/accordion-009/accordion-009"
+import { Accordion010 } from "@/registry/components/accordion/accordion-010/accordion-010"
+import { Accordion011 } from "@/registry/components/accordion/accordion-011/accordion-011"
 import { Input001 } from "@/registry/components/inputs/input-001/input-001"
 import { Input002 } from "@/registry/components/inputs/input-002/input-002"
 import { Textarea001 } from "@/registry/components/inputs/textarea-001/textarea-001"
@@ -35,12 +46,6 @@ import { Avatar001 } from "@/registry/components/display/avatar-001/avatar-001"
 import { Card001 } from "@/registry/components/display/card-001/card-001"
 import { Skeleton001 } from "@/registry/components/display/skeleton-001/skeleton-001"
 import { Progress001 } from "@/registry/components/display/progress-001/progress-001"
-import { Accordion001 } from "@/registry/components/display/accordion-001/accordion-001"
-import { Accordion002 } from "@/registry/components/display/accordion-002/accordion-002"
-import { Accordion003 } from "@/registry/components/display/accordion-003/accordion-003"
-import { Accordion004 } from "@/registry/components/display/accordion-004/accordion-004"
-import { Accordion005 } from "@/registry/components/display/accordion-005/accordion-005"
-import { Accordion006 } from "@/registry/components/display/accordion-006/accordion-006"
 import { Alert001 } from "@/registry/components/feedback/alert-001/alert-001"
 import { Dialog001 } from "@/registry/components/feedback/dialog-001/dialog-001"
 import { Toast001 } from "@/registry/components/feedback/toast-001/toast-001"
@@ -89,6 +94,17 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "button-009": Button009,
   "button-010": Button010,
   "button-011": Button011,
+  "accordion-001": Accordion001,
+  "accordion-002": Accordion002,
+  "accordion-003": Accordion003,
+  "accordion-004": Accordion004,
+  "accordion-005": Accordion005,
+  "accordion-006": Accordion006,
+  "accordion-007": Accordion007,
+  "accordion-008": Accordion008,
+  "accordion-009": Accordion009,
+  "accordion-010": Accordion010,
+  "accordion-011": Accordion011,
   "input-001": Input001,
   "input-002": Input002,
   "textarea-001": Textarea001,
@@ -100,12 +116,6 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "card-001": Card001,
   "skeleton-001": Skeleton001,
   "progress-001": Progress001,
-  "accordion-001": Accordion001,
-  "accordion-002": Accordion002,
-  "accordion-003": Accordion003,
-  "accordion-004": Accordion004,
-  "accordion-005": Accordion005,
-  "accordion-006": Accordion006,
   "alert-001": Alert001,
   "dialog-001": Dialog001,
   "toast-001": Toast001,

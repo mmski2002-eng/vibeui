@@ -47,10 +47,7 @@ export async function ItemPage({
       typeof value === "string" ? [[key, value] as [string, string]] : [],
     ),
   )
-  const initialTheme = resolvePreviewTheme(
-    flat.get("theme") ?? undefined,
-    block,
-  )
+  const initialTheme = resolvePreviewTheme(flat.get("theme") ?? undefined)
   const initialValues = resolveControlValues(block, flat)
 
   const source = await getBlockSource(slug)

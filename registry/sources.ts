@@ -12,6 +12,7 @@ import faqRegistry from "@/registry/blocks/faq/registry.json"
 import ctaRegistry from "@/registry/blocks/cta/registry.json"
 import footerRegistry from "@/registry/blocks/footer/registry.json"
 import buttonsRegistry from "@/registry/components/buttons/registry.json"
+import accordionRegistry from "@/registry/components/accordion/registry.json"
 import inputsRegistry from "@/registry/components/inputs/registry.json"
 import displayRegistry from "@/registry/components/display/registry.json"
 import feedbackRegistry from "@/registry/components/feedback/registry.json"
@@ -73,6 +74,11 @@ export const SOURCES = [
     directory: "registry/components/buttons",
     kind: "component",
     items: buttonsRegistry.items,
+  },
+  {
+    directory: "registry/components/accordion",
+    kind: "component",
+    items: accordionRegistry.items,
   },
   {
     directory: "registry/components/inputs",

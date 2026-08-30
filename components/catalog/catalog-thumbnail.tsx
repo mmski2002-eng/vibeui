@@ -29,8 +29,9 @@ export function CatalogThumbnail({ slug }: { slug: string }) {
     return <div className="bg-shell-elevated aspect-[16/9] w-full" />
   }
 
-  // inert убирает интерактивные узлы превью из Tab-порядка каталога:
-  // кликабельна карточка целиком, а не то, что внутри миниатюры.
+  // Превью интерактивно: витрина показывает, как компонент себя ведёт, а не
+  // только как он выглядит. Поэтому inert снят — кнопки нажимаются, разделы
+  // раскрываются, и содержимое попадает в Tab-порядок, как на живой странице.
   if (getItemKind(slug) === "component") {
     // Компоненту, которому нужна настоящая ширина строки, её надо дать:
     // во flex-кадре он иначе схлопывается по содержимому и врёт про дизайн.
@@ -40,12 +41,7 @@ export function CatalogThumbnail({ slug }: { slug: string }) {
 
     return (
       <div className="bg-preview-surface flex min-h-44 w-full flex-1 items-center justify-center overflow-hidden p-6 lg:px-8 lg:py-10">
-        <div
-          inert
-          className={
-            "pointer-events-none" + (full ? " w-full max-w-[30rem]" : "")
-          }
-        >
+        <div className={full ? "w-full max-w-[30rem]" : undefined}>
           <Demo {...(preview?.props ?? {})} />
         </div>
       </div>
@@ -59,7 +55,7 @@ export function CatalogThumbnail({ slug }: { slug: string }) {
       className="bg-preview-surface @container relative aspect-[16/9] w-full overflow-hidden"
       style={{ "--thumbnail-width": `${SECTION_WIDTH}px` } as CSSProperties}
     >
-      <div inert className="block-thumbnail-frame pointer-events-none">
+      <div className="block-thumbnail-frame">
         <div className="block-thumbnail-scale">
           <Preview />
         </div>

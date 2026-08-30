@@ -20,7 +20,6 @@
       "meta": {
         "tags": ["table", "data", "sticky header", "numbers"],
         "preview": {
-          "surface": "light",
           "width": "full"
         },
         "ai": {
@@ -135,7 +134,6 @@
       "meta": {
         "tags": ["comparison", "table", "pricing", "features"],
         "preview": {
-          "surface": "light",
           "width": "full"
         },
         "ai": {
@@ -241,7 +239,6 @@
       "meta": {
         "tags": ["invoice", "table", "total", "money"],
         "preview": {
-          "surface": "light",
           "width": "full"
         },
         "ai": {

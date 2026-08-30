@@ -143,7 +143,6 @@
           }
         },
         "preview": {
-          "surface": "light",
           "width": "full"
         }
       }
@@ -291,7 +290,6 @@
           }
         },
         "preview": {
-          "surface": "light",
           "width": "full"
         }
       }
@@ -443,7 +441,6 @@
           }
         },
         "preview": {
-          "surface": "light",
           "width": "full"
         }
       }
@@ -579,7 +576,6 @@
           }
         },
         "preview": {
-          "surface": "light",
           "width": "full"
         }
       }
@@ -716,7 +712,6 @@
           }
         },
         "preview": {
-          "surface": "light",
           "width": "full"
         }
       }
@@ -863,7 +858,6 @@
           }
         },
         "preview": {
-          "surface": "light",
           "width": "full"
         }
       }

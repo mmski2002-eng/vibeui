@@ -20,7 +20,6 @@
       "meta": {
         "tags": ["chart", "line", "svg", "analytics"],
         "preview": {
-          "surface": "light",
           "width": "full"
         },
         "ai": {
@@ -150,7 +149,6 @@
       "meta": {
         "tags": ["chart", "bar", "analytics", "no-svg"],
         "preview": {
-          "surface": "light",
           "width": "full"
         },
         "ai": {
@@ -277,9 +275,6 @@
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sparkline-001-*. Кривая — SVG-путь, посчитанный из массива значений на сервере: клиентского JS нет. Направление выводится из пропа delta и попадает в data-trend, от которого зависят и цвет линии, и поворот стрелки: цвет нельзя задать вручную вразрез со знаком. Компонент inline-flex, поэтому встаёт в ячейку таблицы и в строку карточки.",
       "meta": {
         "tags": ["sparkline", "metric", "kpi", "trend"],
-        "preview": {
-          "surface": "light"
-        },
         "ai": {
           "export": "Sparkline001",
           "usage": "<Sparkline001\n  label=\"Установок за месяц\"\n  value=\"1 284\"\n  delta={12.4}\n  values={[12, 15, 13, 19, 24, 31, 41]}\n/>",

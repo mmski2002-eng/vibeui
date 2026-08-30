@@ -223,4 +223,63 @@
       transform: scale(calc(100cqw / var(--thumbnail-width)));
     }
   }
+
+  /* Панель кода: нативный <dialog> в top layer, прижатый к правому краю.
+     Модальность, Esc и ловушка фокуса достаются от showModal(), от нас —
+     геометрия и выезд. Переменные --shell-* наследуются по DOM, поэтому
+     панель остаётся в палитре оболочки, хотя рисуется в верхнем слое. */
+  .code-sheet {
+    position: fixed;
+    inset: 0 0 0 auto;
+    max-width: min(42rem, 100vw);
+    width: 100%;
+    max-height: 100dvh;
+    height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border-width: 0 0 0 1px;
+    border-style: solid;
+    overflow: hidden;
+    translate: 100% 0;
+    transition:
+      translate 0.24s cubic-bezier(0.32, 0.72, 0, 1),
+      display 0.24s allow-discrete,
+      overlay 0.24s allow-discrete;
+  }
+
+  .code-sheet[open] {
+    translate: 0 0;
+  }
+
+  @starting-style {
+    .code-sheet[open] {
+      translate: 100% 0;
+    }
+  }
+
+  .code-sheet::backdrop {
+    background: oklch(0.15 0.02 265 / 55%);
+    opacity: 0;
+    transition:
+      opacity 0.24s ease,
+      display 0.24s allow-discrete,
+      overlay 0.24s allow-discrete;
+  }
+
+  .code-sheet[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .code-sheet[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .code-sheet,
+    .code-sheet::backdrop {
+      transition: none;
+    }
+  }
 }

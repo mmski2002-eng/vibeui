@@ -23,15 +23,8 @@ export function defaultValues(item: CatalogItem): ControlValues {
   return values
 }
 
-export function resolvePreviewTheme(
-  raw: string | undefined,
-  item?: CatalogItem,
-): PreviewTheme {
-  if (raw === "light" || raw === "dark") {
-    return raw
-  }
-
-  return item?.meta?.preview?.surface ?? "dark"
+export function resolvePreviewTheme(raw: string | undefined): PreviewTheme {
+  return raw === "light" ? "light" : "dark"
 }
 
 /**
