@@ -1,0 +1,1178 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "card-001",
+      "type": "registry:component",
+      "title": "Content Card",
+      "description": "Карточка материала: обложка, надзаголовок, заголовок и подвал. Кликается вся площадь, но ссылка внутри остаётся одна.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-001/card-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-001-*. Приём с ::after у ссылки заголовка растягивает её область на всю карточку: клик работает по любому месту, а в дереве доступности остаётся одна ссылка. Обложка нарисована градиентами и не требует картинки. Внутренние отступы и кегль заголовка считаются от собственной ширины карточки через @container, поэтому карточка одинаково выглядит в узкой колонке и в широкой сетке.",
+      "meta": {
+        "tags": ["card", "content", "link", "grid"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Card001",
+          "usage": "<Card001\n  eyebrow=\"Практика\"\n  title=\"Как собрать лендинг за вечер\"\n  description=\"Разбираем сборку страницы из готовых блоков.\"\n  href=\"/blog/landing\"\n  footer=\"8 минут чтения\"\n/>",
+          "summary": "Карточка материала для сетки: обложка на градиентах, надзаголовок, заголовок-ссылка, описание и подвал. Вся площадь кликабельна за счёт ::after у единственной ссылки, поэтому в списке из двадцати карточек не появляется шестидесяти ссылок. Раскладка считается от ширины самой карточки. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-card-001-* и не подменять её токенами вашей темы (bg-card, border-border, text-muted-foreground и подобными)",
+            "приём с одной ссылкой: position:relative у карточки и ::after у ссылки заголовка — из-за нескольких ссылок карточка станет неудобной для скринридера",
+            "focus-within у карточки: фокус приходит на ссылку внутри, а рамку должна показывать вся карточка",
+            "@container-запрос вместо медиазапроса: карточка живёт в сетке и обязана считать раскладку от своей ширины, а не от ширины окна",
+            "подъём на hover вместе с отменой transform в prefers-reduced-motion",
+            "структуру заголовков: заголовок карточки — h3, а не div с крупным шрифтом",
+            "блок <style> внутри компонента — в нём вся палитра, обложка и раскладка"
+          ],
+          "adapt": [
+            "тексты title, description, eyebrow и содержимое footer — в подвал можно положить свой элемент",
+            "href — адрес материала; уберите его, и карточка перестанет быть ссылкой",
+            "акцент через проп accent — цвет надзаголовка, обложки и рамки при наведении",
+            "обложку: замените градиент в [data-part=\"media\"] на <img> с тем же aspect-ratio",
+            "максимальную ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Не добавляйте в карточку вторую ссылку или кнопку поверх ::after: они окажутся под невидимым слоем. Если нужна кнопка — поднимите её через position:relative и z-index.",
+            "Не заменяйте заголовок на div: в сетке карточек заголовки формируют структуру страницы.",
+            "Не растягивайте карточку на всю ширину экрана: max-width задан намеренно, длинная строка описания читается плохо.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Практика",
+            "maxLength": 24
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Как собрать лендинг за вечер",
+            "maxLength": 60
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Разбираем сборку страницы из готовых блоков: что отдать агенту, а что править руками.",
+            "maxLength": 120
+          },
+          {
+            "prop": "footer",
+            "label": "Подвал",
+            "type": "text",
+            "default": "8 минут чтения",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A content card: cover, eyebrow, title and footer. The whole surface is clickable while it still contains a single link.",
+            "ai": {
+              "summary": "A content card for a grid: a gradient cover, an eyebrow, a title link, a description and a footer. The entire surface is clickable through ::after on the one link, so twenty cards do not become sixty links. The layout is measured against the card's own width. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-card-001-* palette — do not swap it for your theme tokens (bg-card, border-border, text-muted-foreground and the like)",
+                "the single-link technique: position:relative on the card and ::after on the title link — several links make the card tedious in a screen reader",
+                "focus-within on the card: focus lands on the inner link, but the whole card has to show the ring",
+                "the @container query instead of a media query: the card lives in a grid and must measure against its own width, not the window's",
+                "the hover lift together with the transform reset under prefers-reduced-motion",
+                "the heading structure: the card title is an h3, not a div with a big font",
+                "the <style> block inside the component — it holds the palette, the cover and the layout"
+              ],
+              "adapt": [
+                "the title, description and eyebrow copy and the footer content — the footer accepts your own element",
+                "href — the destination; drop it and the card stops being a link",
+                "the accent through the accent prop — it colours the eyebrow, the cover and the hover border",
+                "the cover: replace the gradient in [data-part=\"media\"] with an <img> at the same aspect-ratio",
+                "max width and outer spacing through className"
+              ],
+              "notes": [
+                "Do not add a second link or a button on top of ::after — they end up under the invisible layer. If you need a button, lift it with position:relative and z-index.",
+                "Do not swap the heading for a div: in a card grid the titles are the page structure.",
+                "Do not stretch the card to full screen width: the max-width is deliberate, a long description line reads poorly.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card001\n  eyebrow=\"Guide\"\n  title=\"Build a landing page in an evening\"\n  description=\"Assembling a page out of ready-made blocks.\"\n  href=\"/blog/landing\"\n  footer=\"8 min read\"\n/>"
+            },
+            "controls": {
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Guide"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Build a landing page in an evening"
+              },
+              "description": {
+                "label": "Description",
+                "default": "Assembling a page out of ready-made blocks: what to hand the agent and what to write yourself."
+              },
+              "footer": {
+                "label": "Footer",
+                "default": "8 min read"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-002",
+      "type": "registry:component",
+      "title": "Metric Card",
+      "description": "Карточка показателя: число крупно, изменение со знаком и стрелкой, под ними столбики динамики — одно число не отличает тренд от случайности.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-002/card-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-002-*. Серверный: хуков нет. Столбики динамики — флекс с процентными высотами от максимума ряда, поэтому график не тянет библиотеку. Хорошее направление задаётся пропом goodDirection: у оттока рост — плохая новость. Изменение продублировано словами в aria-label.",
+      "meta": {
+        "tags": ["card", "metric", "dashboard", "chart"],
+        "ai": {
+          "export": "Card002",
+          "usage": "<Card002 title=\"Выручка\" value=\"1 284 000 ₽\" change={12.4} series={[42, 55, 61]} />",
+          "summary": "Карточка показателя для дашборда: заголовок, число, изменение со стрелкой и столбики истории без библиотеки графиков. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-002-* и не подменять её токенами вашей темы",
+            "историю рядом с числом: одно значение не отличает тренд от случайности",
+            "проп goodDirection — рост оттока и рост выручки красятся по-разному",
+            "знак и стрелку рядом с цветом: в чёрно-белой печати цвет исчезает",
+            "табличные цифры у значения и изменения",
+            "столбики на флексе вместо библиотеки: восемь чисел не стоят зависимости"
+          ],
+          "adapt": [
+            "title, value и change",
+            "series — ряд значений для столбиков",
+            "period — подпись под карточкой",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Значения приходят готовыми строками: компонент ничего не считает и не форматирует.",
+            "Ряд короче шести значений выглядит случайным, длиннее двенадцати — превращается в кашу.",
+            "Последний столбик выделен как текущий период: если ряд заканчивается неполной неделей, это стоит подписать.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Показатель",
+            "type": "text",
+            "default": "Выручка за неделю",
+            "maxLength": 30
+          },
+          {
+            "prop": "value",
+            "label": "Значение",
+            "type": "text",
+            "default": "1 284 000 ₽",
+            "maxLength": 20
+          },
+          {
+            "prop": "change",
+            "label": "Изменение, %",
+            "type": "number",
+            "default": 12.4,
+            "min": -100,
+            "max": 100
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A metric card: the number large, the change with a sign and arrow, and history bars below — one figure never separates a trend from noise.",
+            "ai": {
+              "summary": "A dashboard metric card: title, value, signed change with an arrow and history bars drawn without a charting library. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-002-* palette — do not swap it for your theme tokens",
+                "the history beside the number: one value cannot separate a trend from noise",
+                "the goodDirection prop — rising churn and rising revenue must colour differently",
+                "the sign and arrow alongside colour: colour vanishes in print",
+                "tabular figures on the value and the change",
+                "flex bars instead of a library: eight numbers are not worth a dependency"
+              ],
+              "adapt": [
+                "title, value and change",
+                "series — the values behind the bars",
+                "period — the caption below",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Values arrive as ready strings: the component neither computes nor formats.",
+                "Fewer than six points look accidental, more than twelve turn to mush.",
+                "The last bar is marked as the current period: if the series ends mid-week, say so.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card002 title=\"Revenue\" value=\"$14,200\" change={12.4} series={[42, 55, 61]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Metric",
+                "default": "Revenue this week"
+              },
+              "value": {
+                "label": "Value",
+                "default": "$14,200"
+              },
+              "change": {
+                "label": "Change, %"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-003",
+      "type": "registry:component",
+      "title": "Person Card",
+      "description": "Карточка человека: аватар, роль, цифры в ряд и два действия; текст «о себе» обрезан двумя строками, чтобы сетка не рассыпалась.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-003/card-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-003-*. Серверный: хуков нет. Оттенок аватара считается из имени FNV-1a по двенадцати ступеням круга. Текст обрезается -webkit-line-clamp двумя строками, цифры вынесены в ряд между границами, действия занимают равную ширину.",
+      "meta": {
+        "tags": ["card", "person", "team", "profile"],
+        "ai": {
+          "export": "Card003",
+          "usage": "<Card003 name=\"Мария Гурова\" role=\"Дизайнер\" stats={[{ label: \"Проектов\", value: \"14\" }]} />",
+          "summary": "Карточка человека для списка команды: инициалы с цветом из имени, роль, короткое описание, ряд цифр и два действия. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-003-* и не подменять её токенами вашей темы",
+            "обрезку описания двумя строками: карточки в сетке обязаны быть одной высоты",
+            "цифры в ряд между границами — их сравнивают между карточками",
+            "оттенок аватара из имени: один человек всегда одного цвета",
+            "равную ширину действий: главное и второстепенное не должны прыгать по ширине",
+            "видимое фокусное кольцо на кнопках"
+          ],
+          "adapt": [
+            "name, role и about",
+            "массив stats",
+            "actionLabel и secondaryLabel",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Больше трёх цифр в ряд не помещается: остальное — на странице профиля.",
+            "Кнопки ничего не делают: обработчики навешивает вызывающий код.",
+            "Если есть фотография, положите <img> внутрь кружка — размеры уже заданы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя",
+            "type": "text",
+            "default": "Мария Гурова",
+            "maxLength": 30
+          },
+          {
+            "prop": "role",
+            "label": "Роль",
+            "type": "text",
+            "default": "Продуктовый дизайнер",
+            "maxLength": 30
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Написать",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A person card: avatar, role, a row of figures and two actions; the bio is clamped to two lines so the grid stays even.",
+            "ai": {
+              "summary": "A person card for a team list: name-derived initials, role, a short bio, a row of figures and two actions. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-003-* palette — do not swap it for your theme tokens",
+                "clamping the bio to two lines: cards in a grid must share one height",
+                "the figures in a row between rules — they get compared across cards",
+                "the name-derived avatar hue: one person keeps one colour",
+                "equal-width actions: primary and secondary must not shift about",
+                "the visible focus ring on the buttons"
+              ],
+              "adapt": [
+                "name, role and about",
+                "the stats array",
+                "actionLabel and secondaryLabel",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "More than three figures do not fit the row: the rest belong on the profile page.",
+                "The buttons do nothing: handlers belong to the caller.",
+                "If you have a photo, put an <img> inside the circle — the sizing is ready.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card003 name=\"Maria Gurova\" role=\"Designer\" stats={[{ label: \"Projects\", value: \"14\" }]} />"
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Maria Gurova"
+              },
+              "role": {
+                "label": "Role",
+                "default": "Product designer"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Message"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-004",
+      "type": "registry:component",
+      "title": "Product Card",
+      "description": "Карточка товара для сетки: кнопка «в корзину» — отдельная цель поверх ссылки, иначе добавление начнёт открывать страницу.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-004/card-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-004-*. Серверный: хуков нет. Ссылка растянута на карточку псевдоэлементом ::after, а кнопка поднята z-index, поэтому обе цели не конфликтуют. Обводка фокуса ставится на карточку через :has(). Звезда нарисована clip-path, рейтинг продублирован текстом в aria-label.",
+      "meta": {
+        "tags": ["card", "product", "commerce", "grid"],
+        "ai": {
+          "export": "Card004",
+          "usage": "<Card004 title=\"Лампа «Полёт»\" price=\"4 900 ₽\" rating={4.7} reviews={128} />",
+          "summary": "Карточка товара: квадратный кадр, плашка скидки, название в две строки, рейтинг с числом, цена со старой ценой и кнопка в корзину. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-004-* и не подменять её токенами вашей темы",
+            "разделение целей: кнопка поверх растянутой ссылки, иначе корзина открывает страницу",
+            "рейтинг числом рядом со звездой — закрашенные фигуры точнее не скажут",
+            "квадратный кадр: в сетке карточки обязаны быть одной высоты",
+            "обрезку названия двумя строками",
+            "обводку фокуса на всей карточке через :has(a:focus-visible)"
+          ],
+          "adapt": [
+            "title, price, oldPrice и badge",
+            "rating и reviews",
+            "actionLabel — подпись кнопки",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Цены — строки: форматируйте их на своей стороне, компонент ничего не считает.",
+            "Старая цена без реальной скидки — обман: показывайте её, только если цена действительно была выше.",
+            "Кадр пустой: положите <img> внутрь, CSS уже готов.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Название",
+            "type": "text",
+            "default": "Настольная лампа «Полёт», тёплый свет",
+            "maxLength": 50
+          },
+          {
+            "prop": "price",
+            "label": "Цена",
+            "type": "text",
+            "default": "4 900 ₽",
+            "maxLength": 16
+          },
+          {
+            "prop": "badge",
+            "label": "Плашка",
+            "type": "text",
+            "default": "−30 %",
+            "maxLength": 12
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "В корзину",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A product card for a grid: the add-to-cart button is its own target above the link, or adding would open the page instead.",
+            "ai": {
+              "summary": "A product card: a square frame, a discount badge, a two-line title, a numeric rating, price with a struck-through old price and an add-to-cart button. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-004-* palette — do not swap it for your theme tokens",
+                "keeping the targets apart: the button sits above the stretched link, or the cart opens the page",
+                "the numeric rating beside the star — filled shapes are less precise",
+                "the square frame: cards in a grid must share one height",
+                "clamping the title to two lines",
+                "the focus ring on the whole card via :has(a:focus-visible)"
+              ],
+              "adapt": [
+                "title, price, oldPrice and badge",
+                "rating and reviews",
+                "actionLabel — the button's text",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Prices are strings: format them upstream, the component computes nothing.",
+                "An old price with no real discount is a lie: show it only when the price truly was higher.",
+                "The frame is empty: drop an <img> inside, the CSS is ready.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card004 title=\"Polyot desk lamp\" price=\"$59\" rating={4.7} reviews={128} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Polyot desk lamp, warm light"
+              },
+              "price": {
+                "label": "Price",
+                "default": "$59"
+              },
+              "badge": {
+                "label": "Badge",
+                "default": "−30%"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Add to cart"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-005",
+      "type": "registry:component",
+      "title": "Choice Cards",
+      "description": "Выбор тарифа карточками на настоящих radio: цель нажатия размером с карточку, а не с кружок в 16 пикселей.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-005/card-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-005-*. Клиентский: \"use client\". Вся карточка — <label> с прозрачным radio внутри, поэтому клавиатурная модель радиогруппы работает без обработчиков. Выбранная карточка стилизуется через :has(input:checked) и отличается рамкой, кружком и внутренней обводкой.",
+      "meta": {
+        "tags": ["card", "radio", "pricing", "choice"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Card005",
+          "usage": "<Card005 options={options} defaultValue=\"year\" onChange={setPlan} />",
+          "summary": "Выбор одного варианта карточками: настоящие radio, вся карточка кликабельна, выбранная отличается рамкой и кружком. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-card-005-* и не подменять её токенами вашей темы",
+            "label вокруг всей карточки: попадать надо в карточку, а не в кружок",
+            "настоящие radio: стрелки и объявление «2 из 3» браузер даёт сам",
+            "fieldset с legend — у группы выбора обязано быть имя",
+            "кружок в дополнение к рамке: одна рамка при дальтонизме читается хуже",
+            "цену справа отдельной колонкой, чтобы её было видно при сравнении"
+          ],
+          "adapt": [
+            "массив options: заголовок, описание, цена и примечание",
+            "legend — название группы",
+            "обработчик onChange",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Больше четырёх вариантов карточками не читаются: там нужна таблица сравнения.",
+            "Примечание вроде «два месяца в подарок» — не место для условий: их пишут рядом с формой.",
+            "Компонент не отправляет форму: имя группы генерируется useId, для сервера задайте своё.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Название группы",
+            "type": "text",
+            "default": "Как платить",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Plan selection as cards on real radios: the tap target is the whole card, not a 16-pixel circle.",
+            "ai": {
+              "summary": "Single-choice cards: real radios, the whole card clickable, and the selected one marked by a border and a dot. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-card-005-* palette — do not swap it for your theme tokens",
+                "the label wrapping the whole card: the target is the card, not the circle",
+                "real radios: arrows and \"2 of 3\" come from the browser",
+                "the fieldset with a legend — a choice group must have a name",
+                "the dot in addition to the border: a border alone reads poorly for colour-blind users",
+                "the price in its own right-hand column so it survives comparison"
+              ],
+              "adapt": [
+                "the options array: title, description, price and note",
+                "legend — the group's name",
+                "the onChange handler",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "More than four options stop reading as cards: that calls for a comparison table.",
+                "A note like \"two months free\" is not the place for terms: those go beside the form.",
+                "The component submits nothing: the group name comes from useId, set your own for a server.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card005 options={options} defaultValue=\"year\" onChange={setPlan} />"
+            },
+            "controls": {
+              "legend": {
+                "label": "Group name",
+                "default": "How to pay"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-006",
+      "type": "registry:component",
+      "title": "Task Card",
+      "description": "Карточка задачи: статус плашкой, прогресс подзадач числами «7 из 12» и срок, который краснеет только когда прошёл.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-006/card-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-006-*. Серверный: хуков нет. Статус переключается data-status и красит плашку через color-mix от одной переменной. Полоса прогресса объявлена role=\"progressbar\" с aria-valuenow и подписью. Оттенок аватара исполнителя выводится из имени.",
+      "meta": {
+        "tags": ["card", "task", "progress", "kanban"],
+        "ai": {
+          "export": "Card006",
+          "usage": "<Card006 title=\"Собрать каталог\" status=\"doing\" done={7} total={12} />",
+          "summary": "Карточка задачи для доски: плашка статуса, прогресс подзадач числами и процентом, исполнитель и срок. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-006-* и не подменять её токенами вашей темы",
+            "числа рядом с полосой: по длине полосы никто не назовёт остаток",
+            "role=\"progressbar\" с aria-valuenow — полоса без роли для скринридера невидима",
+            "статус словом, а не только цветом плашки",
+            "срок обычным цветом, пока он не прошёл: заранее пугать бессмысленно",
+            "цвет статуса через одну переменную и color-mix"
+          ],
+          "adapt": [
+            "title, status, done и total",
+            "due — срок словами",
+            "assignee — исполнитель",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Просрочка определяется по тексту срока только в демонстрации: в проекте передавайте признак отдельно.",
+            "Прогресс считается из подзадач: если их нет, полосу лучше не показывать вовсе.",
+            "Четыре статуса покрывают простую доску; для своего процесса добавьте правило data-status.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Задача",
+            "type": "text",
+            "default": "Собрать каталог компонентов",
+            "maxLength": 40
+          },
+          {
+            "prop": "status",
+            "label": "Статус",
+            "type": "select",
+            "default": "doing",
+            "options": ["todo", "doing", "review", "done"]
+          },
+          {
+            "prop": "done",
+            "label": "Готово",
+            "type": "number",
+            "default": 7,
+            "min": 0,
+            "max": 12
+          },
+          {
+            "prop": "total",
+            "label": "Всего",
+            "type": "number",
+            "default": 12,
+            "min": 1,
+            "max": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A task card: a status chip, subtask progress spelled \"7 of 12\", and a due date that turns red only once it has passed.",
+            "ai": {
+              "summary": "A board task card: a status chip, subtask progress in numbers and percent, an assignee and a due date. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-006-* palette — do not swap it for your theme tokens",
+                "the numbers beside the bar: nobody reads the remainder off a bar's length",
+                "role=\"progressbar\" with aria-valuenow — an unroled bar is invisible to screen readers",
+                "the status as a word, not just a chip colour",
+                "the due date in plain colour until it passes: pre-emptive alarm helps nobody",
+                "the status colour from one variable through color-mix"
+              ],
+              "adapt": [
+                "title, status, done and total",
+                "due — the deadline in words",
+                "assignee — who is on it",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Lateness is inferred from the due text only in the demo: pass an explicit flag in a project.",
+                "Progress comes from subtasks: with none, drop the bar entirely.",
+                "Four statuses cover a simple board; add a data-status rule for your own process.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card006 title=\"Build the catalog\" status=\"doing\" done={7} total={12} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Task",
+                "default": "Build the component catalog"
+              },
+              "status": {
+                "label": "Status"
+              },
+              "done": {
+                "label": "Done"
+              },
+              "total": {
+                "label": "Total"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-007",
+      "type": "registry:component",
+      "title": "Notification Card",
+      "description": "Уведомление с действиями внутри: ответить можно не открывая письмо, а после ответа карточка остаётся с отчётом.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-007/card-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-007-*. Клиентский: \"use client\". После ответа кнопки заменяются строкой результата с role=\"status\", поэтому смена состояния объявляется скринридеру. Точка непрочитанного помечена aria-label. Оттенок аватара считается из имени отправителя.",
+      "meta": {
+        "tags": ["card", "notification", "inbox", "actions"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Card007",
+          "usage": "<Card007 from=\"Анна Петрова\" title=\"Приглашает в проект\" primaryLabel=\"Принять\" />",
+          "summary": "Карточка уведомления: отправитель, заголовок, две строки текста и пара действий, которые заменяются отчётом о результате. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-card-007-* и не подменять её токенами вашей темы",
+            "действия внутри карточки: половина уведомлений требует одного нажатия",
+            "отчёт вместо исчезновения: пропавшая строка читается как потерянная",
+            "role=\"status\" на строке результата — смену состояния надо услышать",
+            "aria-label у точки непрочитанного: цветная точка вслух не читается",
+            "обрезку текста двумя строками, чтобы список оставался ровным"
+          ],
+          "adapt": [
+            "from, title, body и time",
+            "primaryLabel и secondaryLabel",
+            "текст отчёта после ответа",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Ответ сохраняется только в состоянии компонента: отправку на сервер делает вызывающий код.",
+            "Опасные действия (удалить, заблокировать) в уведомлении лучше не давать без подтверждения.",
+            "Время — строка вроде «12 мин»: пересчёт «сколько прошло» делайте на своей стороне.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "from",
+            "label": "Отправитель",
+            "type": "text",
+            "default": "Анна Петрова",
+            "maxLength": 30
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Приглашает в проект «Каталог»",
+            "maxLength": 40
+          },
+          {
+            "prop": "primaryLabel",
+            "label": "Главное действие",
+            "type": "text",
+            "default": "Принять",
+            "maxLength": 20
+          },
+          {
+            "prop": "secondaryLabel",
+            "label": "Второе действие",
+            "type": "text",
+            "default": "Отклонить",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A notification with inline actions: answer without opening it, and after the answer the card stays with a report.",
+            "ai": {
+              "summary": "A notification card: sender, headline, two lines of text and a pair of actions that give way to a result line. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-card-007-* palette — do not swap it for your theme tokens",
+                "inline actions: half of all notifications need one tap",
+                "a report instead of disappearing: a vanished row reads as lost",
+                "role=\"status\" on the result line — the change has to be heard",
+                "the aria-label on the unread dot: a coloured dot is silent",
+                "clamping the text to two lines so the list stays even"
+              ],
+              "adapt": [
+                "from, title, body and time",
+                "primaryLabel and secondaryLabel",
+                "the report wording after an answer",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The answer lives in component state only: sending it is the caller's job.",
+                "Destructive actions do not belong in a notification without a confirmation.",
+                "Time is a string like \"12 min\": compute the elapsed time upstream.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card007 from=\"Anna Petrova\" title=\"Invites you to a project\" primaryLabel=\"Accept\" />"
+            },
+            "controls": {
+              "from": {
+                "label": "Sender",
+                "default": "Anna Petrova"
+              },
+              "title": {
+                "label": "Headline",
+                "default": "Invites you to the Catalog project"
+              },
+              "primaryLabel": {
+                "label": "Primary action",
+                "default": "Accept"
+              },
+              "secondaryLabel": {
+                "label": "Secondary action",
+                "default": "Decline"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-008",
+      "type": "registry:component",
+      "title": "Add Card",
+      "description": "Пустая карточка «добавить»: пунктирная и прозрачная, потому что не содержит данных и не должна выглядеть как настоящая.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-008/card-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-008-*. Серверный: хуков нет. Корень — <button>, а не div с onClick: роль, клавиатура и фокус достаются даром. Минимальная высота задана так, чтобы карточка совпадала с настоящими в ряду. Плюс нарисован кругом с двумя псевдоэлементами.",
+      "meta": {
+        "tags": ["card", "empty", "add", "grid"],
+        "ai": {
+          "export": "Card008",
+          "usage": "<Card008 title=\"Добавить проект\" hint=\"Пустой проект с одной страницей\" />",
+          "summary": "Пустая карточка добавления: пунктирная рамка, плюс и подпись, что появится после нажатия. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-008-* и не подменять её токенами вашей темы",
+            "пунктир и прозрачный фон: сплошная карточка читается как ещё один элемент данных",
+            "тег button вместо div с onClick — роль и клавиатура достаются даром",
+            "подпись, объясняющую результат: «плюс» не говорит, что появится",
+            "минимальную высоту вровень с настоящими карточками",
+            "видимое фокусное кольцо"
+          ],
+          "adapt": [
+            "title — что добавляем",
+            "hint — что появится после нажатия",
+            "акцент через проп accent",
+            "минимальную высоту под свою сетку"
+          ],
+          "notes": [
+            "Место в сетке у пустой карточки — последнее: первым идёт то, что уже есть.",
+            "Если добавление недоступно по правам, не показывайте карточку вовсе, а не блокируйте её.",
+            "Пунктир — признак заготовки: не используйте его для настоящих карточек.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Действие",
+            "type": "text",
+            "default": "Добавить проект",
+            "maxLength": 24
+          },
+          {
+            "prop": "hint",
+            "label": "Что появится",
+            "type": "text",
+            "default": "Пустой проект с одной страницей и вашей темой",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An empty \"add\" card: dashed and transparent, because it holds no data and must not look like a real one.",
+            "ai": {
+              "summary": "An add card: a dashed border, a plus and a line explaining what appears after the click. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-008-* palette — do not swap it for your theme tokens",
+                "the dashed border and transparent fill: a solid card reads as another data item",
+                "a button rather than a div with onClick — role and keyboard come free",
+                "the line explaining the outcome: a plus does not say what appears",
+                "the minimum height matching the real cards",
+                "the visible focus ring"
+              ],
+              "adapt": [
+                "title — what gets added",
+                "hint — what appears afterwards",
+                "the accent through the accent prop",
+                "the minimum height for your grid"
+              ],
+              "notes": [
+                "The empty card belongs last in the grid: existing things come first.",
+                "If permissions forbid adding, hide the card rather than disabling it.",
+                "The dashed border signals a placeholder: never use it on real cards.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card008 title=\"Add a project\" hint=\"An empty project with one page\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Action",
+                "default": "Add a project"
+              },
+              "hint": {
+                "label": "What appears",
+                "default": "An empty project with one page and your theme"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-009",
+      "type": "registry:component",
+      "title": "Details Card",
+      "description": "Карточка с подробностями на нативном details: главное видно всегда, под кат уходит то, что нужно не каждому.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-009/card-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-009-*. Серверный компонент: раскрытие держит нативный <details>, useId нужен для имени группы. Подробности выложены словарём dl с display:contents у строк, поэтому пары «подпись — значение» остаются парами в разметке и раскладываются сеткой.",
+      "meta": {
+        "tags": ["card", "details", "order", "no-js"],
+        "preview": {
+          "props": {
+            "defaultOpen": true
+          }
+        },
+        "ai": {
+          "export": "Card009",
+          "usage": "<Card009 title=\"Заказ отправлен\" rows={[{ label: \"Сумма\", value: \"12 480 ₽\" }]} />",
+          "summary": "Карточка со сводкой и раскрывающимися подробностями: нативный details, словарь пар «подпись — значение», ноль клиентского кода. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-card-009-* и не подменять её токенами вашей темы",
+            "details/summary вместо кнопки с состоянием: клавиатура и роль достаются даром",
+            "главное над катом: статус и суть должны быть видны без раскрытия",
+            "словарь dl для пар «подпись — значение» вместо таблицы из div",
+            "display:contents у строки: пара остаётся парой в разметке",
+            "поворот шеврона по details[open] — состояние видно без текста"
+          ],
+          "adapt": [
+            "title и summary",
+            "массив rows",
+            "moreLabel — подпись раскрытия",
+            "defaultOpen — раскрыть сразу"
+          ],
+          "notes": [
+            "Числа выравниваются по правому краю: для длинных текстов это выравнивание лучше убрать.",
+            "Details не закрывается по внешнему клику: для карточки это и не нужно.",
+            "Если подробностей больше семи строк, лучше вести на отдельную страницу.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Заказ отправлен",
+            "maxLength": 30
+          },
+          {
+            "prop": "moreLabel",
+            "label": "Подпись раскрытия",
+            "type": "text",
+            "default": "Подробности заказа",
+            "maxLength": 30
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Раскрыть сразу",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A card with details on a native details element: the essentials stay visible, the rest hides for those who need it.",
+            "ai": {
+              "summary": "A card with a summary and expandable details: native details, a definition list of label–value pairs, zero client code. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-card-009-* palette — do not swap it for your theme tokens",
+                "details/summary instead of a stateful button: keyboard and role come free",
+                "the essentials above the fold: status and gist must read without expanding",
+                "a dl for label–value pairs instead of a grid of divs",
+                "display:contents on the row: the pair stays a pair in the markup",
+                "the chevron rotation on details[open] — state without extra words"
+              ],
+              "adapt": [
+                "title and summary",
+                "the rows array",
+                "moreLabel — the disclosure text",
+                "defaultOpen — start expanded"
+              ],
+              "notes": [
+                "Values are right-aligned: drop that for long text.",
+                "Details does not close on an outside click, which a card does not need.",
+                "Beyond seven rows, link to a page instead.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card009 title=\"Order shipped\" rows={[{ label: \"Total\", value: \"$148\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Order shipped"
+              },
+              "moreLabel": {
+                "label": "Disclosure text",
+                "default": "Order details"
+              },
+              "defaultOpen": {
+                "label": "Start expanded"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-010",
+      "type": "registry:component",
+      "title": "Card Skeleton",
+      "description": "Заглушка карточки товара: обложка квадратом и строки той же длины — совпадение метрик и есть смысл заглушки.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-010/card-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-010-*. Серверный: хуков нет. Пропорции повторяют card-004: квадратная обложка, две строки заголовка и короткая строка цены. Блик — движущийся градиент с задержкой по строкам; в prefers-reduced-motion он снимается, а фигуры заливаются ровным тоном.",
+      "meta": {
+        "tags": ["card", "skeleton", "loading", "grid"],
+        "ai": {
+          "export": "Card010",
+          "usage": "<Card010 label=\"Загружается карточка товара\" lines={3} />",
+          "summary": "Заглушка карточки: квадратная обложка и строки, повторяющие метрики настоящей карточки товара. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-010-* и не подменять её токенами вашей темы (bg-muted, animate-pulse и подобными)",
+            "совпадение метрик с настоящей карточкой: иначе при загрузке содержимое прыгает",
+            "разную длину строк — одинаковые читаются как таблица",
+            "role=\"status\" и aria-busy: без них загрузка для скринридера не существует",
+            "задержку блика по строкам",
+            "правило prefers-reduced-motion, гасящее блик"
+          ],
+          "adapt": [
+            "label — что именно грузится",
+            "lines — сколько строк",
+            "media — показывать ли обложку",
+            "ширину под свою сетку"
+          ],
+          "notes": [
+            "Число заглушек должно совпадать с ожидаемым числом карточек: восемь перед двумя выглядят ошибкой.",
+            "Если ответ приходит дольше пары секунд, заглушки мало: покажите прогресс или причину.",
+            "Метрики привязаны к card-004: меняя настоящую карточку, поправьте и заглушку.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "lines",
+            "label": "Строк",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 4
+          },
+          {
+            "prop": "media",
+            "label": "Обложка",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Загружается карточка товара",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A product-card skeleton: a square cover and lines of matching length — matching the metrics is the whole point.",
+            "ai": {
+              "summary": "A card skeleton: a square cover and lines mirroring the metrics of the real product card. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-010-* palette — do not swap it for your theme tokens (bg-muted, animate-pulse and the like)",
+                "matching the real card's metrics: otherwise the content jumps on arrival",
+                "the varying line lengths — equal ones read as a table",
+                "role=\"status\" and aria-busy: without them loading does not exist for a screen reader",
+                "the staggered shimmer across the lines",
+                "the prefers-reduced-motion rule that stops the shimmer"
+              ],
+              "adapt": [
+                "label — what is loading",
+                "lines — how many lines",
+                "media — whether to show the cover",
+                "the width for your grid"
+              ],
+              "notes": [
+                "The placeholder count should match the expected cards: eight before two reads as a bug.",
+                "If the response takes more than a couple of seconds, a skeleton is not enough: show progress or a reason.",
+                "The metrics are tied to card-004: change the real card and fix the skeleton too.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card010 label=\"Loading a product card\" lines={3} />"
+            },
+            "controls": {
+              "lines": {
+                "label": "Lines"
+              },
+              "media": {
+                "label": "Cover"
+              },
+              "label": {
+                "label": "Label",
+                "default": "Loading a product card"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    }
+  ]
+}

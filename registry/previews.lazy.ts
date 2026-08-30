@@ -726,6 +726,56 @@ export const LAZY_PREVIEWS = {
       (module) => module.Calendar010,
     ),
   ),
+  "card-001": dynamic(() =>
+    import("@/registry/components/card/card-001/card-001").then(
+      (module) => module.Card001,
+    ),
+  ),
+  "card-002": dynamic(() =>
+    import("@/registry/components/card/card-002/card-002").then(
+      (module) => module.Card002,
+    ),
+  ),
+  "card-003": dynamic(() =>
+    import("@/registry/components/card/card-003/card-003").then(
+      (module) => module.Card003,
+    ),
+  ),
+  "card-004": dynamic(() =>
+    import("@/registry/components/card/card-004/card-004").then(
+      (module) => module.Card004,
+    ),
+  ),
+  "card-005": dynamic(() =>
+    import("@/registry/components/card/card-005/card-005").then(
+      (module) => module.Card005,
+    ),
+  ),
+  "card-006": dynamic(() =>
+    import("@/registry/components/card/card-006/card-006").then(
+      (module) => module.Card006,
+    ),
+  ),
+  "card-007": dynamic(() =>
+    import("@/registry/components/card/card-007/card-007").then(
+      (module) => module.Card007,
+    ),
+  ),
+  "card-008": dynamic(() =>
+    import("@/registry/components/card/card-008/card-008").then(
+      (module) => module.Card008,
+    ),
+  ),
+  "card-009": dynamic(() =>
+    import("@/registry/components/card/card-009/card-009").then(
+      (module) => module.Card009,
+    ),
+  ),
+  "card-010": dynamic(() =>
+    import("@/registry/components/card/card-010/card-010").then(
+      (module) => module.Card010,
+    ),
+  ),
   "input-001": dynamic(() =>
     import("@/registry/components/inputs/input-001/input-001").then(
       (module) => module.Input001,
@@ -754,11 +804,6 @@ export const LAZY_PREVIEWS = {
   "switch-001": dynamic(() =>
     import("@/registry/components/inputs/switch-001/switch-001").then(
       (module) => module.Switch001,
-    ),
-  ),
-  "card-001": dynamic(() =>
-    import("@/registry/components/display/card-001/card-001").then(
-      (module) => module.Card001,
     ),
   ),
   "skeleton-001": dynamic(() =>

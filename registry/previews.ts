@@ -144,13 +144,22 @@ import { Calendar007 } from "@/registry/components/calendar/calendar-007/calenda
 import { Calendar008 } from "@/registry/components/calendar/calendar-008/calendar-008"
 import { Calendar009 } from "@/registry/components/calendar/calendar-009/calendar-009"
 import { Calendar010 } from "@/registry/components/calendar/calendar-010/calendar-010"
+import { Card001 } from "@/registry/components/card/card-001/card-001"
+import { Card002 } from "@/registry/components/card/card-002/card-002"
+import { Card003 } from "@/registry/components/card/card-003/card-003"
+import { Card004 } from "@/registry/components/card/card-004/card-004"
+import { Card005 } from "@/registry/components/card/card-005/card-005"
+import { Card006 } from "@/registry/components/card/card-006/card-006"
+import { Card007 } from "@/registry/components/card/card-007/card-007"
+import { Card008 } from "@/registry/components/card/card-008/card-008"
+import { Card009 } from "@/registry/components/card/card-009/card-009"
+import { Card010 } from "@/registry/components/card/card-010/card-010"
 import { Input001 } from "@/registry/components/inputs/input-001/input-001"
 import { Input002 } from "@/registry/components/inputs/input-002/input-002"
 import { Textarea001 } from "@/registry/components/inputs/textarea-001/textarea-001"
 import { Select001 } from "@/registry/components/inputs/select-001/select-001"
 import { Checkbox001 } from "@/registry/components/inputs/checkbox-001/checkbox-001"
 import { Switch001 } from "@/registry/components/inputs/switch-001/switch-001"
-import { Card001 } from "@/registry/components/display/card-001/card-001"
 import { Skeleton001 } from "@/registry/components/display/skeleton-001/skeleton-001"
 import { Progress001 } from "@/registry/components/display/progress-001/progress-001"
 import { Toast001 } from "@/registry/components/feedback/toast-001/toast-001"
@@ -318,13 +327,22 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "calendar-008": Calendar008,
   "calendar-009": Calendar009,
   "calendar-010": Calendar010,
+  "card-001": Card001,
+  "card-002": Card002,
+  "card-003": Card003,
+  "card-004": Card004,
+  "card-005": Card005,
+  "card-006": Card006,
+  "card-007": Card007,
+  "card-008": Card008,
+  "card-009": Card009,
+  "card-010": Card010,
   "input-001": Input001,
   "input-002": Input002,
   "textarea-001": Textarea001,
   "select-001": Select001,
   "checkbox-001": Checkbox001,
   "switch-001": Switch001,
-  "card-001": Card001,
   "skeleton-001": Skeleton001,
   "progress-001": Progress001,
   "toast-001": Toast001,
