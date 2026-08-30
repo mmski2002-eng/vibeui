@@ -28,7 +28,10 @@ const STYLES = `
 container-type:inline-size;
 }
 [data-vibeui-block="banner-001"]{
-display:flex;align-items:center;gap:0.75rem;
+/* flex-wrap живёт здесь, а не в @container: контейнерный запрос применяется
+   к потомкам контейнера, но не к нему самому. На широкой раскладке перенос
+   ни на что не влияет — всё умещается в строку. */
+display:flex;flex-wrap:wrap;align-items:center;gap:0.375rem 0.75rem;
 width:100%;box-sizing:border-box;
 padding:0.625rem 0.875rem;
 background:
@@ -62,7 +65,6 @@ transition:background-color .16s ease,color .16s ease;
 [data-vibeui-block="banner-001"] [data-part="close"]:focus-visible{outline:2px solid var(--vibeui-banner-001-accent);outline-offset:2px}
 /* Узкая полоса: действие переносится под текст, а не сжимает его в столбик. */
 @container (max-width: 30rem){
-[data-vibeui-block="banner-001"]{flex-wrap:wrap;row-gap:0.375rem}
 [data-vibeui-block="banner-001"] [data-part="message"]{flex:1 1 100%;order:2}
 [data-vibeui-block="banner-001"] [data-part="action"]{order:3}
 }

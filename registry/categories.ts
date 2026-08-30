@@ -43,6 +43,7 @@ export const CATEGORIES = [
   // Категории мелких компонентов. Появятся вместе с registry/components/*.
   { slug: "buttons", label: "Buttons", group: "application" },
   { slug: "accordion", label: "Accordion", group: "application" },
+  { slug: "alert", label: "Alert", group: "application" },
   { slug: "inputs", label: "Inputs", group: "application" },
   { slug: "display", label: "Display", group: "application" },
   { slug: "feedback", label: "Feedback", group: "application" },

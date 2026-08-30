@@ -1,0 +1,152 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Alert013Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "title" | "children"
+> & {
+  title?: string
+  description?: string
+  policyLabel?: string
+  policyHref?: string
+  acceptLabel?: string
+  rejectLabel?: string
+  settingsLabel?: string
+  onAccept?: () => void
+  onReject?: () => void
+  onSettings?: () => void
+  accent?: string
+}
+
+// Идея компонента: запрос согласия на cookie. Отказ равен согласию по весу —
+// это не вежливость, а требование закона: кнопка «Отклонить» не может быть
+// серее и мельче «Принять». Настройка вынесена третьей ссылкой, чтобы выбор
+// из двух вариантов оставался очевидным.
+const STYLES = `
+:where([data-vibeui-block="alert-013"]){
+--vibeui-alert-013-fg:oklch(0.22 0.014 265);
+--vibeui-alert-013-muted:oklch(0.5 0.014 265);
+--vibeui-alert-013-bg:oklch(1 0 0);
+--vibeui-alert-013-border:oklch(0.89 0.006 265);
+--vibeui-alert-013-accent:oklch(0.55 0.2 262);
+--vibeui-alert-013-radius:1rem;
+--vibeui-alert-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+container-type:inline-size;
+}
+[data-vibeui-block="alert-013"]{
+/* flex-wrap живёт здесь, а не в @container: контейнерный запрос применяется
+   к потомкам контейнера, но не к нему самому. На широкой раскладке перенос
+   ни на что не влияет — всё умещается в строку. */
+display:flex;flex-wrap:wrap;align-items:center;gap:0.875rem 1.25rem;
+width:100%;max-width:44rem;box-sizing:border-box;
+padding:1rem 1.125rem;
+border:1px solid var(--vibeui-alert-013-border);
+border-radius:var(--vibeui-alert-013-radius);
+background:var(--vibeui-alert-013-bg);color:var(--vibeui-alert-013-fg);
+font-family:var(--vibeui-alert-013-font);
+box-shadow:0 18px 40px -28px oklch(0.2 0.03 265 / 45%);
+}
+[data-vibeui-block="alert-013"] [data-part="text"]{display:flex;flex-direction:column;gap:0.1875rem;flex:1 1 auto;min-width:0}
+[data-vibeui-block="alert-013"] [data-part="title"]{font-size:0.875rem;font-weight:600;line-height:1.4}
+[data-vibeui-block="alert-013"] [data-part="description"]{font-size:0.8125rem;line-height:1.55;color:var(--vibeui-alert-013-muted);max-width:60ch}
+[data-vibeui-block="alert-013"] [data-part="policy"]{color:var(--vibeui-alert-013-accent);text-decoration:underline}
+[data-vibeui-block="alert-013"] [data-part="actions"]{display:flex;align-items:center;gap:0.5rem;flex:none}
+/* Отказ и согласие одного веса: разный размер кнопок здесь — тёмный приём. */
+[data-vibeui-block="alert-013"] [data-part="accept"],
+[data-vibeui-block="alert-013"] [data-part="reject"]{
+appearance:none;cursor:pointer;font:inherit;
+display:inline-flex;align-items:center;height:2.125rem;padding:0 1rem;
+border-radius:0.5rem;border:1px solid transparent;
+font-size:0.8125rem;font-weight:600;
+transition:background-color .16s ease,border-color .16s ease;
+}
+[data-vibeui-block="alert-013"] [data-part="accept"]{
+background:var(--vibeui-alert-013-accent);color:oklch(1 0 0);
+}
+[data-vibeui-block="alert-013"] [data-part="accept"]:hover{filter:brightness(0.94)}
+[data-vibeui-block="alert-013"] [data-part="reject"]{
+background:transparent;color:var(--vibeui-alert-013-fg);
+border-color:var(--vibeui-alert-013-border);
+}
+[data-vibeui-block="alert-013"] [data-part="reject"]:hover{background:color-mix(in oklab,var(--vibeui-alert-013-border) 40%,transparent)}
+[data-vibeui-block="alert-013"] [data-part="settings"]{
+appearance:none;border:0;background:none;cursor:pointer;padding:0;
+color:var(--vibeui-alert-013-muted);font:inherit;font-size:0.8125rem;text-decoration:underline;
+}
+[data-vibeui-block="alert-013"] [data-part="settings"]:hover{color:var(--vibeui-alert-013-fg)}
+[data-vibeui-block="alert-013"] a:focus-visible,
+[data-vibeui-block="alert-013"] button:focus-visible{outline:2px solid var(--vibeui-alert-013-accent);outline-offset:2px;border-radius:0.375rem}
+@container (max-width: 34rem){
+[data-vibeui-block="alert-013"] [data-part="text"]{flex:1 1 100%}
+[data-vibeui-block="alert-013"] [data-part="actions"]{flex:1 1 100%;flex-wrap:wrap}
+[data-vibeui-block="alert-013"] [data-part="accept"],
+[data-vibeui-block="alert-013"] [data-part="reject"]{flex:1 1 0;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="alert-013"] *{animation:none!important;transition:none!important}}
+`
+
+/**
+ * Запрос согласия на cookie: отказ равен согласию по весу.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Alert013({
+  title = "Cookie и аналитика",
+  description = "Обязательные cookie нужны для входа и работы сайта. Аналитические помогают понять, какими разделами пользуются, — их можно отключить.",
+  policyLabel = "Политика конфиденциальности",
+  policyHref = "#privacy",
+  acceptLabel = "Принять всё",
+  rejectLabel = "Только обязательные",
+  settingsLabel = "Настроить",
+  onAccept,
+  onReject,
+  onSettings,
+  accent,
+  className,
+  style,
+  ...props
+}: Alert013Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-alert-013-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-alert-013" precedence="medium">
+        {STYLES}
+      </style>
+      <div
+        {...props}
+        data-vibeui-block="alert-013"
+        role="region"
+        aria-label={title}
+        className={className}
+        style={palette}
+      >
+        <span data-part="text">
+          <span data-part="title">{title}</span>
+          <span data-part="description">
+            {description}{" "}
+            {policyLabel ? (
+              <a data-part="policy" href={policyHref}>
+                {policyLabel}
+              </a>
+            ) : null}
+          </span>
+        </span>
+        <span data-part="actions">
+          <button data-part="reject" type="button" onClick={onReject}>
+            {rejectLabel}
+          </button>
+          <button data-part="accept" type="button" onClick={onAccept}>
+            {acceptLabel}
+          </button>
+          {settingsLabel ? (
+            <button data-part="settings" type="button" onClick={onSettings}>
+              {settingsLabel}
+            </button>
+          ) : null}
+        </span>
+      </div>
+    </>
+  )
+}

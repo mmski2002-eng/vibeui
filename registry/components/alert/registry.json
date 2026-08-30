@@ -1,0 +1,2472 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "alert-001",
+      "type": "registry:component",
+      "title": "Inline Alert",
+      "description": "Встроенное уведомление, где тон несёт полоса слева и значок, а не заливка во всю ширину. Три сообщения подряд не превращают экран в светофор.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-001/alert-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-001-*. Четыре тона переключаются data-атрибутом и меняют одну переменную: цвет полосы слева и значка. Роль выбирается по тону: danger объявляется как alert (скринридер прерывает чтение), остальные — как status. В узкой колонке действие уходит под текст через @container, а не сжимает его.",
+      "meta": {
+        "tags": ["alert", "notification", "inline", "status"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert001",
+          "usage": "<Alert001\n  tone=\"warning\"\n  title=\"Домен ещё не подключён\"\n  description=\"Сайт открывается по временному адресу.\"\n  action={<a href=\"/domains\">Подключить</a>}\n/>",
+          "summary": "Встроенное уведомление: полоса тона слева, круглый значок, заголовок, описание и действие справа. Цвет живёт в полосе и значке, фон остаётся нейтральным, поэтому несколько уведомлений подряд читаются спокойно. Четыре тона, роль status или alert в зависимости от тона, перенос действия в узкой колонке. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-001-* и не подменять её токенами вашей темы (bg-destructive, text-destructive-foreground и подобными)",
+            "главное решение: тон меняет полосу и значок, а не заливает всё уведомление цветом",
+            "выбор роли по тону: danger — role=\"alert\", остальные — role=\"status\"; постоянный alert заставляет скринридер прерывать чтение на каждую мелочь",
+            "полосу через ::before вместе с overflow:hidden — иначе она вылезет за скруглённый угол",
+            "значок как отдельный элемент с aria-hidden: смысл несёт текст",
+            "@container-запрос, переносящий действие под текст: в узкой колонке иначе схлопывается заголовок",
+            "блок <style> внутри компонента — в нём вся палитра, тона и раскладка"
+          ],
+          "adapt": [
+            "tone: info, success, warning, danger",
+            "тексты title и description",
+            "action — это ReactNode: положите туда ссылку или свою кнопку",
+            "ширину и внешние отступы через className: по умолчанию уведомление занимает всю ширину родителя"
+          ],
+          "notes": [
+            "Не используйте это как всплывающее уведомление: компонент встраивается в поток страницы. Для всплывающего нужен toast.",
+            "Не показывайте больше двух уведомлений подряд: третье перестают читать.",
+            "Не полагайтесь на цвет как на единственный признак — заголовок обязан объяснять, что произошло.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "warning",
+            "options": ["info", "success", "warning", "danger"]
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Домен ещё не подключён",
+            "maxLength": 60
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Сайт открывается по временному адресу. Подключите домен, чтобы им можно было делиться.",
+            "maxLength": 120
+          },
+          {
+            "prop": "action",
+            "label": "Действие",
+            "type": "text",
+            "default": "Подключить",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An inline alert where the tone lives in the left bar and the icon rather than a full-width fill. Three of them in a row do not turn the screen into traffic lights.",
+            "ai": {
+              "summary": "An inline alert: a tone bar on the left, a round glyph, a title, a description and an action on the right. The colour stays in the bar and the glyph while the background stays neutral, so several alerts read calmly. Four tones, role status or alert depending on the tone, and the action wraps in a narrow column. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-001-* palette — do not swap it for your theme tokens (bg-destructive, text-destructive-foreground and the like)",
+                "the core decision: the tone colours the bar and the glyph, it does not flood the alert",
+                "picking the role from the tone: danger is role=\"alert\", the rest are role=\"status\"; a permanent alert makes a screen reader interrupt for every trifle",
+                "the bar through ::before together with overflow:hidden — otherwise it escapes the rounded corner",
+                "the glyph as a separate aria-hidden element: the text carries the meaning",
+                "the @container query that moves the action below the text: in a narrow column the title collapses otherwise",
+                "the <style> block inside the component — it holds the palette, the tones and the layout"
+              ],
+              "adapt": [
+                "tone: info, success, warning, danger",
+                "the title and description copy",
+                "action is a ReactNode: put a link or your own button in it",
+                "width and outer spacing through className: by default the alert fills its parent"
+              ],
+              "notes": [
+                "Do not use this as a floating notification: it belongs in the page flow. Floating needs a toast.",
+                "Do not stack more than two alerts: the third one stops being read.",
+                "Never rely on colour alone — the title has to say what happened.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert001\n  tone=\"warning\"\n  title=\"No domain connected yet\"\n  description=\"The site is served from a temporary address.\"\n  action={<a href=\"/domains\">Connect</a>}\n/>"
+            },
+            "controls": {
+              "tone": {
+                "label": "Tone"
+              },
+              "title": {
+                "label": "Title",
+                "default": "No domain connected yet"
+              },
+              "description": {
+                "label": "Description",
+                "default": "The site is served from a temporary address. Connect a domain so you can share it."
+              },
+              "action": {
+                "label": "Action",
+                "default": "Connect"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-002",
+      "type": "registry:component",
+      "title": "Solid Alert",
+      "description": "Залитый тоном алерт — самый тяжёлый вес в наборе. Для единственного случая, когда сообщение нельзя пропустить: оплата не прошла, сервис лежит, данные вот-вот удалятся.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-002/alert-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-002-*. Четыре тона переключаются data-атрибутом и меняют фон, цвет текста и приглушённый оттенок описания разом. Значок нарисован обводкой currentColor, поэтому на любой заливке остаётся читаемым без второго цвета. Роль выбирается по тону: danger объявляется как alert, остальные — как status. В узкой колонке действие переносится под текст через @container.",
+      "meta": {
+        "tags": ["alert", "solid", "critical", "notification"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert002",
+          "usage": "<Alert002\n  tone=\"danger\"\n  title=\"Оплата не прошла\"\n  description=\"Банк отклонил списание.\"\n  action={<a href=\"/billing\">Обновить карту</a>}\n/>",
+          "summary": "Алерт, залитый цветом тона целиком: значок в обводке, заголовок, описание приглушённым оттенком того же тона и действие справа. Максимальный вес в наборе — для сообщений, которые нельзя пропустить. Четыре тона, перенос действия в узкой колонке. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-002-* и не подменять её токенами вашей темы (bg-destructive, text-destructive-foreground и подобными)",
+            "заливку целиком: в этом весь смысл варианта — если её ослабить, получится alert-001, который уже есть",
+            "значок обводкой currentColor: второй цвет на заливке читается как грязь",
+            "приглушённый оттенок описания из того же тона, а не серый: серый на цветной заливке выглядит выцветшим",
+            "выбор роли по тону: danger — role=\"alert\", остальные — role=\"status\"",
+            "@container-запрос, переносящий действие под текст в узкой колонке",
+            "блок <style> внутри компонента — в нём вся палитра, тона и раскладка"
+          ],
+          "adapt": [
+            "tone: info, success, warning, danger",
+            "тексты title и description",
+            "action — ReactNode: ссылка или ваша кнопка",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Такой алерт на экране должен быть один. Два залитых блока рядом отменяют друг друга и превращаются в фон.",
+            "Не используйте его для подсказок и советов: заливка обещает срочность, которой там нет.",
+            "Для спокойного сообщения в потоке страницы берите alert-001 — там тон живёт в полосе, а не в заливке.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "danger",
+            "options": ["info", "success", "warning", "danger"]
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Оплата не прошла",
+            "maxLength": 50
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Банк отклонил списание. Проект останется опубликованным ещё 5 дней, потом перейдёт в режим только для чтения.",
+            "maxLength": 140
+          },
+          {
+            "prop": "action",
+            "label": "Действие",
+            "type": "text",
+            "default": "Обновить карту",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tone-filled alert — the heaviest weight in the set. For the one case a message must not be missed: a failed payment, a service down, data about to be deleted.",
+            "ai": {
+              "summary": "An alert flooded with its tone: an outlined glyph, a title, a description in a muted shade of the same tone, and an action on the right. The heaviest weight in the set, for messages that cannot be missed. Four tones, with the action wrapping in a narrow column. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-002-* palette — do not swap it for your theme tokens (bg-destructive, text-destructive-foreground and the like)",
+                "the full fill: it is the whole point of this variant — weaken it and you get alert-001, which already exists",
+                "the glyph outlined in currentColor: a second colour on the fill reads as dirt",
+                "the muted description shade drawn from the same tone rather than grey: grey on a coloured fill looks washed out",
+                "picking the role from the tone: danger is role=\"alert\", the rest are role=\"status\"",
+                "the @container query that moves the action below the text in a narrow column",
+                "the <style> block inside the component — it holds the palette, the tones and the layout"
+              ],
+              "adapt": [
+                "tone: info, success, warning, danger",
+                "the title and description copy",
+                "action — a ReactNode: a link or your own button",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "Only one of these belongs on screen. Two filled blocks side by side cancel out and become background.",
+                "Do not use it for hints and tips: the fill promises an urgency that is not there.",
+                "For a calm message in the page flow use alert-001, where the tone lives in a bar rather than a fill.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert002\n  tone=\"danger\"\n  title=\"Payment failed\"\n  description=\"The bank declined the charge.\"\n  action={<a href=\"/billing\">Update card</a>}\n/>"
+            },
+            "controls": {
+              "tone": {
+                "label": "Tone"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Payment failed"
+              },
+              "description": {
+                "label": "Description",
+                "default": "The bank declined the charge. The project stays published for 5 more days, then goes read-only."
+              },
+              "action": {
+                "label": "Action",
+                "default": "Update card"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-003",
+      "type": "registry:component",
+      "title": "Field Alert",
+      "description": "Однострочное сообщение под полем формы: точка тона и фраза. Ни заголовка, ни описания — второй уровень текста в таком месте не читают.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-003/alert-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-003-*. Это <p> с точкой тона: высота строки совпадает с подписью поля, поэтому появление сообщения не сдвигает раскладку формы. Точка выровнена по первой строке текста, а не по центру блока — при переносе на две строки центрирование увело бы её вниз. В тоне danger текст окрашивается целиком: ошибка поля должна читаться без сравнения с соседями.",
+      "meta": {
+        "tags": ["alert", "form", "inline", "validation"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert003",
+          "usage": "<Alert003 tone=\"danger\" message=\"Адрес занят другим проектом.\" />",
+          "summary": "Однострочное сообщение для формы: цветная точка и фраза. Заголовка и описания нет намеренно — под полем ввода читают одну строку. Четыре тона, в danger текст краснеет целиком. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-003-* и не подменять её токенами вашей темы (text-destructive и подобными)",
+            "одну строку без заголовка: как только появляется второй уровень текста, это уже другой компонент",
+            "выравнивание точки по первой строке: при переносе центрированная точка уезжает вниз",
+            "role=\"alert\" у тона danger — сообщение об ошибке должно быть объявлено сразу",
+            "совпадение высоты строки с подписью поля: иначе появление сообщения дёргает форму",
+            "блок <style> внутри компонента — в нём вся палитра и раскладка"
+          ],
+          "adapt": [
+            "tone: info, success, warning, danger",
+            "message — сама фраза; держите её в одну строку",
+            "внешние отступы через className: обычно это margin-top под полем",
+            "связывание с полем: поставьте id и сошлитесь на него из aria-describedby у input"
+          ],
+          "notes": [
+            "Компонент не связывается с полем сам. Дайте ему id и укажите его в aria-describedby у input, иначе скринридер не свяжет сообщение с полем.",
+            "Не пишите сюда два предложения: место рассчитано на одну фразу, вторая уедет за границу поля.",
+            "Для сводки ошибок всей формы есть alert-010 — здесь одно поле, одно сообщение.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "danger",
+            "options": ["info", "success", "warning", "danger"]
+          },
+          {
+            "prop": "message",
+            "label": "Сообщение",
+            "type": "text",
+            "default": "Адрес занят другим проектом — попробуйте другой.",
+            "maxLength": 90
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A single-line message under a form field: a tone dot and a phrase. No title, no description — nobody reads a second level of text in that spot.",
+            "ai": {
+              "summary": "A one-line message for forms: a coloured dot and a phrase. There is deliberately no title or description — under an input people read one line. Four tones, and in danger the whole line turns red. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-alert-003-* palette — do not swap it for your theme tokens (text-destructive and the like)",
+                "the single line without a title: the moment a second level of text appears this is a different component",
+                "aligning the dot to the first line: on a two-line message a centred dot drifts downward",
+                "role=\"alert\" on the danger tone — an error has to be announced immediately",
+                "matching the line height of the field label: otherwise the message jolts the form when it appears",
+                "the <style> block inside the component — it holds the palette and the layout"
+              ],
+              "adapt": [
+                "tone: info, success, warning, danger",
+                "message — the phrase itself; keep it to one line",
+                "outer spacing through className: usually a margin-top under the field",
+                "wiring to the field: give it an id and point aria-describedby at it from the input"
+              ],
+              "notes": [
+                "The component does not wire itself to the field. Give it an id and reference it in the input's aria-describedby, or a screen reader will not connect the two.",
+                "Do not write two sentences here: the space is sized for one phrase, the second runs past the field.",
+                "For a whole-form error summary use alert-010 — this is one field, one message.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert003 tone=\"danger\" message=\"That address is taken.\" />"
+            },
+            "controls": {
+              "tone": {
+                "label": "Tone"
+              },
+              "message": {
+                "label": "Message",
+                "default": "That address belongs to another project — try a different one."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-004",
+      "type": "registry:component",
+      "title": "Decision Alert",
+      "description": "Алерт, который требует решения здесь и сейчас: две кнопки под текстом. В опасном режиме подтверждение краснеет, но не становится главной кнопкой.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-004/alert-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-004-*. Кнопки стоят под текстом, а не в строке заголовка: решение принимают, дочитав. Проп destructive перекрашивает значок, рамку и подтверждение в опасный тон и переводит роль в alertdialog. В узкой колонке кнопки растягиваются на всю ширину через @container.",
+      "meta": {
+        "tags": ["alert", "confirm", "actions", "decision"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert004",
+          "usage": "<Alert004\n  title=\"Опубликовать изменения?\"\n  description=\"На сайте появятся 4 изменённые страницы.\"\n  confirmLabel=\"Опубликовать\"\n  onConfirm={publish}\n/>",
+          "summary": "Алерт с решением внутри: значок, заголовок, объяснение и две кнопки под ним. Обычный режим для подтверждения действия, режим destructive — для опасного: значок, рамка и подтверждение краснеют, роль меняется на alertdialog. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-004-* и не подменять её токенами вашей темы (bg-destructive, bg-primary и подобными)",
+            "кнопки под текстом, а не в строке заголовка: решение принимают, дочитав объяснение",
+            "порядок кнопок: подтверждение первым, отмена второй — иначе на телефоне палец ложится не туда",
+            "role=\"alertdialog\" в режиме destructive и aria-label с заголовком",
+            "@container-запрос, растягивающий кнопки в узкой колонке: в столбик они должны быть во всю ширину",
+            "блок <style> внутри компонента — в нём вся палитра, кнопки и раскладка"
+          ],
+          "adapt": [
+            "тексты title, description, confirmLabel и cancelLabel",
+            "destructive — включает опасный режим",
+            "обработчики onConfirm и onCancel",
+            "акцент через проп accent — цвет подтверждения в обычном режиме",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Это не модальное окно: алерт остаётся в потоке страницы и ничего не блокирует. Если решение обязано остановить работу — берите dialog-001.",
+            "Не делайте отмену незаметной: в опасном режиме именно она должна быть простым выходом.",
+            "Компонент не закрывает себя после нажатия — состояние держит вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Опубликовать изменения?",
+            "maxLength": 50
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "На сайте появятся 4 изменённые страницы. Прошлая версия останется в истории публикаций — к ней можно вернуться.",
+            "maxLength": 160
+          },
+          {
+            "prop": "confirmLabel",
+            "label": "Подтверждение",
+            "type": "text",
+            "default": "Опубликовать",
+            "maxLength": 24
+          },
+          {
+            "prop": "destructive",
+            "label": "Опасное",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An alert that asks for a decision on the spot: two buttons under the text. In destructive mode the confirm button turns red without becoming the primary one.",
+            "ai": {
+              "summary": "An alert with the decision inside: a glyph, a heading, an explanation and two buttons beneath. The normal mode confirms an action; destructive mode turns the glyph, border and confirm button red and switches the role to alertdialog. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-004-* palette — do not swap it for your theme tokens (bg-destructive, bg-primary and the like)",
+                "the buttons under the text rather than in the heading row: the decision comes after reading",
+                "the button order: confirm first, cancel second — otherwise a thumb lands on the wrong one on mobile",
+                "role=\"alertdialog\" in destructive mode and the aria-label carrying the heading",
+                "the @container query that stretches the buttons in a narrow column: stacked, they must be full width",
+                "the <style> block inside the component — it holds the palette, the buttons and the layout"
+              ],
+              "adapt": [
+                "the title, description, confirmLabel and cancelLabel copy",
+                "destructive — turns on the dangerous mode",
+                "the onConfirm and onCancel handlers",
+                "the accent through the accent prop — the confirm colour in normal mode",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "This is not a modal: the alert stays in the page flow and blocks nothing. If the decision must stop the work, use dialog-001.",
+                "Do not make cancel quiet: in destructive mode it should be the easy way out.",
+                "The component does not dismiss itself after a click — the caller owns that state.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert004\n  title=\"Publish these changes?\"\n  description=\"Four edited pages will go live.\"\n  confirmLabel=\"Publish\"\n  onConfirm={publish}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Publish these changes?"
+              },
+              "description": {
+                "label": "Description",
+                "default": "Four edited pages will go live. The previous version stays in the publish history."
+              },
+              "confirmLabel": {
+                "label": "Confirm",
+                "default": "Publish"
+              },
+              "destructive": {
+                "label": "Destructive"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-005",
+      "type": "registry:component",
+      "title": "Dismissible Alert",
+      "description": "Закрываемое сообщение: крестик появляется только вместе с обработчиком, а «больше не показывать» стоит отдельной строкой — это разные решения.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-005/alert-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-005-*. Тон живёт в вертикальной полосе слева, которая тянется на высоту блока. Крестик спозиционирован в правом верхнем углу, а не стоит в потоке: в потоке он тянул бы на себя первую строку текста. Строка footnote под описанием предназначена для «больше не показывать» — отдельного решения, которое нельзя прятать в тот же крестик.",
+      "meta": {
+        "tags": ["alert", "dismiss", "notice", "tip"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert005",
+          "usage": "<Alert005\n  title=\"Черновик сохраняется автоматически\"\n  description=\"Изменения записываются каждые несколько секунд.\"\n  onDismiss={hide}\n/>",
+          "summary": "Закрываемое сообщение с полосой тона слева: заголовок, описание и строка-примечание под ними. Крестик рисуется только при переданном обработчике. Четыре тона. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-005-* и не подменять её токенами вашей темы (bg-muted, border-border и подобными)",
+            "появление крестика только вместе с onDismiss: кнопка, которая ничего не делает, обманывает",
+            "разделение «закрыть сейчас» и «больше не показывать»: второе — отдельная строка, а не тот же крестик",
+            "полосу тона на высоту блока, а не точку у заголовка",
+            "aria-label у крестика: иначе скринридер прочитает «×»",
+            "правый отступ блока под крестик — без него текст уезжает под кнопку",
+            "блок <style> внутри компонента — в нём вся палитра и раскладка"
+          ],
+          "adapt": [
+            "tone: info, success, warning, danger",
+            "тексты title и description",
+            "footnote — ReactNode: ссылка «больше не показывать» или подпись",
+            "onDismiss — обработчик закрытия",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Компонент не помнит, что его закрыли. Флаг хранит вызывающий код, иначе сообщение вернётся на следующей странице.",
+            "Не показывайте так критические сообщения: то, что можно закрыть крестиком, закрывают не читая.",
+            "Строку footnote оставляйте короткой — это подпись, а не второй абзац.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "info",
+            "options": ["info", "success", "warning", "danger"]
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Черновик сохраняется автоматически",
+            "maxLength": 60
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Изменения записываются каждые несколько секунд. Опубликовать их нужно отдельно — кнопкой в шапке проекта.",
+            "maxLength": 160
+          },
+          {
+            "prop": "footnote",
+            "label": "Примечание",
+            "type": "text",
+            "default": "Больше не показывать",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dismissible notice: the close button appears only with a handler, and \"don't show again\" gets its own line — they are different decisions.",
+            "ai": {
+              "summary": "A dismissible notice with a tone bar down the left: heading, description and a footnote line beneath. The close button is drawn only when a handler is provided. Four tones. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-005-* palette — do not swap it for your theme tokens (bg-muted, border-border and the like)",
+                "showing the close button only alongside onDismiss: a button that does nothing lies to the user",
+                "separating \"close now\" from \"never show again\": the second is its own line, not the same cross",
+                "the tone bar running the height of the block rather than a dot by the heading",
+                "the aria-label on the close button: otherwise a screen reader announces \"×\"",
+                "the right padding that reserves room for the button — without it the text slides underneath",
+                "the <style> block inside the component — it holds the palette and the layout"
+              ],
+              "adapt": [
+                "tone: info, success, warning, danger",
+                "the title and description copy",
+                "footnote — a ReactNode: a \"don't show again\" link or a caption",
+                "onDismiss — the close handler",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "The component does not remember being dismissed. The caller keeps that flag, or the notice returns on the next page.",
+                "Do not deliver critical messages this way: anything with a cross gets closed unread.",
+                "Keep the footnote short — it is a caption, not a second paragraph.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert005\n  title=\"Drafts save themselves\"\n  description=\"Changes are written every few seconds.\"\n  onDismiss={hide}\n/>"
+            },
+            "controls": {
+              "tone": {
+                "label": "Tone"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Drafts save themselves"
+              },
+              "description": {
+                "label": "Description",
+                "default": "Changes are written every few seconds. Publishing them is a separate step."
+              },
+              "footnote": {
+                "label": "Footnote",
+                "default": "Don't show again"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-006",
+      "type": "registry:component",
+      "title": "Feature Alert",
+      "description": "Рассказ о новой возможности, а не сообщение о проблеме: слева сцена из плиток вместо значка статуса, тон спокойный.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-006/alert-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-006-*. Слева не значок статуса, а маленькая сцена из трёх плиток — намёк на интерфейс, о котором идёт речь; она собрана позиционированными span'ами и не требует картинки. Подсветка угла — радиальный градиент в фоне. На узкой ширине действия переносятся под текст, на очень узкой сцена скрывается через @container.",
+      "meta": {
+        "tags": ["alert", "feature", "announcement", "product"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert006",
+          "usage": "<Alert006\n  badge=\"Новое\"\n  title=\"Панель кода прямо в каталоге\"\n  actionLabel=\"Посмотреть\"\n  actionHref=\"/components\"\n/>",
+          "summary": "Алерт о новой возможности: сцена из плиток слева, плашка «Новое», заголовок, объяснение, кнопка и тихая ссылка «Скрыть». Тон спокойный — продуктовая новость в цветах ошибки читается как авария. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-006-* и не подменять её токенами вашей темы (bg-accent, text-primary и подобными)",
+            "спокойный тон: это новость, а не проблема, и красный здесь ломает смысл",
+            "сцену из плиток вместо значка статуса — она отличает продуктовое сообщение от системного",
+            "aria-hidden у сцены: она декоративная",
+            "@container-запросы: сначала переносятся действия, потом скрывается сцена — заголовок сжимать нельзя",
+            "блок <style> внутри компонента — в нём вся палитра, сцена и раскладка"
+          ],
+          "adapt": [
+            "тексты badge, title и description",
+            "actionLabel и actionHref — куда ведёт кнопка",
+            "onDismiss и dismissLabel — тихое закрытие",
+            "акцент через проп accent — цвет плашки, кнопки и подсветки",
+            "содержимое сцены: три плитки можно заменить на свой <svg> того же размера"
+          ],
+          "notes": [
+            "Не показывайте такой алерт дольше одного-двух заходов: новость, которую видели трижды, становится шумом.",
+            "Не ставьте его над формой или списком, с которыми человек пришёл работать — место для него ниже, в спокойной части экрана.",
+            "Компонент не помнит закрытие: флаг «уже видел» хранит вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "badge",
+            "label": "Плашка",
+            "type": "text",
+            "default": "Новое",
+            "maxLength": 20
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Панель кода прямо в каталоге",
+            "maxLength": 60
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Команда установки и исходник открываются на карточке — переходить на страницу компонента больше не нужно.",
+            "maxLength": 160
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Посмотреть",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An announcement about a new capability rather than a problem: a small tile scene instead of a status glyph, and a calm tone.",
+            "ai": {
+              "summary": "A feature announcement: a tile scene on the left, a \"New\" pill, a heading, an explanation, a button and a quiet dismiss link. The tone is calm — product news dressed in error colours reads as an outage. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-006-* palette — do not swap it for your theme tokens (bg-accent, text-primary and the like)",
+                "the calm tone: this is news, not a problem, and red breaks the meaning",
+                "the tile scene instead of a status glyph — it is what separates a product message from a system one",
+                "aria-hidden on the scene: it is decorative",
+                "the @container queries: the actions wrap first and the scene hides second — the heading must never be squeezed",
+                "the <style> block inside the component — it holds the palette, the scene and the layout"
+              ],
+              "adapt": [
+                "the badge, title and description copy",
+                "actionLabel and actionHref — where the button leads",
+                "onDismiss and dismissLabel — the quiet dismissal",
+                "the accent through the accent prop — it colours the pill, the button and the glow",
+                "the scene content: the three tiles can be replaced by your own <svg> at the same size"
+              ],
+              "notes": [
+                "Do not keep this alert around for more than a visit or two: news seen three times becomes noise.",
+                "Do not put it above the form or list someone came to work with — its place is lower, in the calm part of the screen.",
+                "The component does not remember dismissal: the \"already seen\" flag belongs to the caller.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert006\n  badge=\"New\"\n  title=\"Code panel right in the catalog\"\n  actionLabel=\"Take a look\"\n  actionHref=\"/components\"\n/>"
+            },
+            "controls": {
+              "badge": {
+                "label": "Pill",
+                "default": "New"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Code panel right in the catalog"
+              },
+              "description": {
+                "label": "Description",
+                "default": "The install command and the source open on the card — no need to visit the component page."
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Take a look"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-007",
+      "type": "registry:component",
+      "title": "Message Alert",
+      "description": "Уведомление о сообщении от человека: инициалы с оттенком из имени, текст до трёх строк и ответ. Уведомление показывает начало разговора, а не сам разговор.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-007/alert-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-007-*. Оттенок аватара считается из имени детерминированной функцией и подставляется в --vibeui-alert-007-hue: тот же приём, что в avatar-001, поэтому один человек всегда одного цвета. Текст сообщения обрезается тремя строками через -webkit-line-clamp. Время прижимается вправо через margin-left:auto и переносится в узкой колонке.",
+      "meta": {
+        "tags": ["alert", "message", "notification", "avatar"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert007",
+          "usage": "<Alert007\n  name=\"Анна Ковалёва\"\n  role=\"Арт-директор\"\n  message=\"Блок с тарифами лучше поднять выше отзывов.\"\n  time=\"12 минут назад\"\n  onReply={openThread}\n/>",
+          "summary": "Уведомление о сообщении: инициалы на подложке, имя, роль, время, текст до трёх строк и действия «Ответить» и «Скрыть». Цвет аватара выводится из имени, поэтому автор узнаётся по цвету раньше, чем прочитано имя. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-007-* и не подменять её токенами вашей темы (bg-muted, text-primary и подобными)",
+            "вывод оттенка из имени: случайный цвет менялся бы при каждом рендере и перестал бы опознавать человека",
+            "обрезку текста тремя строками: уведомление показывает начало разговора, а не переписку",
+            "инициалы вместо фотографии: аватар не приходит вместе с уведомлением, а заглушка-силуэт хуже двух букв",
+            "время справа и его перенос в узкой колонке",
+            "«Ответить» акцентом, «Скрыть» приглушённым: это действия разного веса",
+            "блок <style> внутри компонента — в нём вся палитра и раскладка"
+          ],
+          "adapt": [
+            "name и role — автор сообщения; из имени же берётся цвет",
+            "message — текст; лишнее обрежется само",
+            "time — строка, форматирует вызывающий код",
+            "обработчики onReply и onDismiss",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Компонент не открывает переписку и не помечает прочитанным — это делает вызывающий код в onReply.",
+            "Не подставляйте в message разметку: обрезка строк работает по тексту, вложенные блоки её ломают.",
+            "Для системного сообщения без автора берите alert-001: аватар там будет пустой рамкой.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя",
+            "type": "text",
+            "default": "Анна Ковалёва",
+            "maxLength": 40
+          },
+          {
+            "prop": "role",
+            "label": "Роль",
+            "type": "text",
+            "default": "Арт-директор",
+            "maxLength": 30
+          },
+          {
+            "prop": "message",
+            "label": "Сообщение",
+            "type": "text",
+            "default": "Посмотрела главную — блок с тарифами лучше поднять выше отзывов. И на мобильном заголовок переносится некрасиво, гляньте.",
+            "maxLength": 180
+          },
+          {
+            "prop": "time",
+            "label": "Время",
+            "type": "text",
+            "default": "12 минут назад",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A notification about a message from a person: initials tinted from the name, up to three lines of text and a reply. It shows the start of a conversation, not the conversation.",
+            "ai": {
+              "summary": "A message notification: initials on a tinted circle, name, role, time, up to three lines of text and the Reply and Dismiss actions. The avatar hue is derived from the name, so the author is recognised by colour before the name is read. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-007-* palette — do not swap it for your theme tokens (bg-muted, text-primary and the like)",
+                "deriving the hue from the name: a random colour would change on every render and stop identifying the person",
+                "clamping the text to three lines: a notification shows the start of a conversation, not the thread",
+                "initials instead of a photo: an avatar rarely ships with the notification, and a silhouette placeholder is worse than two letters",
+                "the time on the right and its wrapping in a narrow column",
+                "Reply in the accent colour and Dismiss muted: they carry different weight",
+                "the <style> block inside the component — it holds the palette and the layout"
+              ],
+              "adapt": [
+                "name and role — the author; the colour comes from the name too",
+                "message — the text; the overflow clamps itself",
+                "time — a string formatted by the caller",
+                "the onReply and onDismiss handlers",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "The component neither opens the thread nor marks anything read — that is the caller's job in onReply.",
+                "Do not pass markup in message: the line clamp works on text and nested blocks break it.",
+                "For a system message with no author use alert-001, where an avatar would be an empty circle.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert007\n  name=\"Anna Kovalyova\"\n  role=\"Art director\"\n  message=\"Move the pricing block above the testimonials.\"\n  time=\"12 minutes ago\"\n  onReply={openThread}\n/>"
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Anna Kovalyova"
+              },
+              "role": {
+                "label": "Role",
+                "default": "Art director"
+              },
+              "message": {
+                "label": "Message",
+                "default": "Looked at the home page — the pricing block should sit above the testimonials. The heading also wraps badly on mobile."
+              },
+              "time": {
+                "label": "Time",
+                "default": "12 minutes ago"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-008",
+      "type": "registry:component",
+      "title": "Progress Alert",
+      "description": "Алерт выполняющейся операции: шаг, процент и полоса, встроенная в нижнюю кромку блока. Неизвестная длительность честно показывается бегущим отрезком.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-008/alert-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-008-*. Полоса прогресса — абсолютно спозиционированная кромка блока, а не строка в потоке: сообщение остаётся плотным. Ширина заполнения приходит переменной --vibeui-alert-008-value. value={null} включает состояние неизвестной длительности: отрезок ходит по кромке, aria-valuenow не выставляется. Спиннер нарисован рамкой с одним окрашенным краем.",
+      "meta": {
+        "tags": ["alert", "progress", "loading", "operation"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert008",
+          "usage": "<Alert008\n  title=\"Публикуем проект\"\n  step=\"Собираем страницы — 12 из 18\"\n  value={64}\n  onCancel={abort}\n/>",
+          "summary": "Алерт идущей операции: спиннер на CSS, заголовок, строка текущего шага, процент и кнопка отмены. Полоса прогресса вписана в нижнюю кромку блока. При value={null} длительность считается неизвестной: бежит отрезок, процент не показывается. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-008-* и не подменять её токенами вашей темы (bg-primary, bg-muted и подобными)",
+            "полосу в кромке блока, а не отдельной строкой: в сообщении о процессе каждая лишняя строка отодвигает суть",
+            "честное состояние неизвестной длительности: выдуманный процент хуже бегущего отрезка",
+            "разметку progressbar с aria-valuenow только при известном значении и aria-busy на корне",
+            "спиннер на CSS: иконочная библиотека ради одного кольца не нужна",
+            "обрезку строки шага многоточием — длинное имя файла не должно ломать высоту блока",
+            "правило prefers-reduced-motion, которое останавливает и спиннер, и бегущий отрезок",
+            "блок <style> внутри компонента — в нём вся палитра, полоса и анимации"
+          ],
+          "adapt": [
+            "title и step — что выполняется и что происходит сейчас",
+            "value — 0–100 или null, если длительность неизвестна",
+            "onCancel и cancelLabel — отмена операции",
+            "акцент через проп accent — цвет полосы, спиннера и процента",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Компонент ничего не выполняет и не отслеживает: значение и шаг приходят снаружи.",
+            "Не оставляйте его на экране после завершения — замените результатом, иначе спиннер крутится в пустоту.",
+            "Для операции длиннее минуты добавьте оценку времени в step: один процент без контекста не успокаивает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Публикуем проект",
+            "maxLength": 40
+          },
+          {
+            "prop": "step",
+            "label": "Шаг",
+            "type": "text",
+            "default": "Собираем страницы — 12 из 18",
+            "maxLength": 60
+          },
+          {
+            "prop": "value",
+            "label": "Процент",
+            "type": "number",
+            "default": 64,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An alert for work in progress: the step, the percentage and a bar built into the block's bottom edge. Unknown duration is shown honestly as a travelling segment.",
+            "ai": {
+              "summary": "An in-progress alert: a CSS spinner, a heading, the current step, a percentage and a cancel button. The progress bar is set into the bottom edge of the block. With value={null} the duration counts as unknown: a segment travels and no percentage is shown. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-008-* palette — do not swap it for your theme tokens (bg-primary, bg-muted and the like)",
+                "the bar in the block's edge rather than as a row: in a progress message every extra line pushes the point away",
+                "the honest unknown-duration state: an invented percentage is worse than a travelling segment",
+                "the progressbar semantics with aria-valuenow only when the value is known, and aria-busy on the root",
+                "the CSS spinner: an icon library for one ring is unnecessary",
+                "the ellipsis on the step line — a long file name must not change the block height",
+                "the prefers-reduced-motion rule that stops both the spinner and the segment",
+                "the <style> block inside the component — it holds the palette, the bar and the animations"
+              ],
+              "adapt": [
+                "title and step — what is running and what is happening now",
+                "value — 0–100, or null when the duration is unknown",
+                "onCancel and cancelLabel — aborting the operation",
+                "the accent through the accent prop — it colours the bar, the spinner and the percentage",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "The component runs and tracks nothing: the value and the step come from outside.",
+                "Do not leave it on screen after completion — replace it with the result, or the spinner turns into nothing.",
+                "For anything longer than a minute put an estimate in step: a bare percentage does not reassure.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert008\n  title=\"Publishing the project\"\n  step=\"Building pages — 12 of 18\"\n  value={64}\n  onCancel={abort}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Publishing the project"
+              },
+              "step": {
+                "label": "Step",
+                "default": "Building pages — 12 of 18"
+              },
+              "value": {
+                "label": "Percent"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-009",
+      "type": "registry:component",
+      "title": "Countdown Alert",
+      "description": "Срок, который заканчивается: остаток крупно, действие рядом, полоса под текстом сжимается к нулю. Три способа сказать одно и то же, потому что строку пропускают.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-009/alert-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-009-*. Отсчёт не считается внутри: строка остатка и доля прошедшего срока приходят пропами, потому что таймер в компоненте означал бы тикающий рендер на каждой странице. Полоса показывает остаток, а не пройденное — её ширина считается как 100 минус elapsed. Левая граница окрашена в тон, а не вся рамка.",
+      "meta": {
+        "tags": ["alert", "trial", "countdown", "deadline"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert009",
+          "usage": "<Alert009\n  remaining=\"3 дня\"\n  elapsed={78}\n  title=\"Пробный период заканчивается\"\n  actionLabel=\"Продлить\"\n/>",
+          "summary": "Алерт истекающего срока: крупная строка остатка слева, объяснение и убывающая полоса в середине, кнопка справа. Полоса показывает остаток, а не пройденное, поэтому сжимается к нулю. Отсчёт считает вызывающий код. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-009-* и не подменять её токенами вашей темы (bg-warning, text-primary и подобными)",
+            "полосу как остаток, а не как прогресс: заполняющаяся полоса читается как приближение к цели, а не к концу",
+            "крупный остаток моноширинными цифрами: число меняется каждый день, ширина строки — нет",
+            "три носителя одного смысла — число, текст и полоса: строку про «осталось 3 дня» пропускают",
+            "отсутствие таймера внутри: тикающий рендер на каждой странице стоит дороже, чем обновление раз в сутки снаружи",
+            "@container-запрос, переносящий текст на свою строку в узкой колонке",
+            "блок <style> внутри компонента — в нём вся палитра и раскладка"
+          ],
+          "adapt": [
+            "remaining — строка остатка: «3 дня», «до 14 марта», «2 часа»",
+            "elapsed — доля прошедшего срока в процентах",
+            "тексты title и description",
+            "actionLabel и actionHref — действие, снимающее проблему",
+            "акцент через проп accent — цвет остатка, полосы и кнопки"
+          ],
+          "notes": [
+            "remaining и elapsed должны быть согласованы: строка «3 дня» при elapsed 10 выглядит как ошибка данных.",
+            "Не показывайте алерт с первого дня периода: он теряет силу задолго до срока.",
+            "Компонент не считает даты. Разница между «сегодня» и «14 марта» — задача вызывающего кода.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "remaining",
+            "label": "Остаток",
+            "type": "text",
+            "default": "3 дня",
+            "maxLength": 20
+          },
+          {
+            "prop": "elapsed",
+            "label": "Прошло, %",
+            "type": "number",
+            "default": 78,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Пробный период заканчивается",
+            "maxLength": 50
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Продлить",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A deadline running out: the remainder large, the action beside it, and a bar under the text shrinking to zero. Three ways of saying one thing, because a line of text gets skipped.",
+            "ai": {
+              "summary": "An expiring-deadline alert: the remainder set large on the left, the explanation and a shrinking bar in the middle, the action on the right. The bar shows what is left rather than what has passed, so it contracts toward zero. The countdown is computed by the caller. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-009-* palette — do not swap it for your theme tokens (bg-warning, text-primary and the like)",
+                "the bar as remainder rather than progress: a filling bar reads as approaching a goal, not an ending",
+                "the large remainder in tabular figures: the number changes daily, the line width must not",
+                "the three carriers of one meaning — number, text and bar: a line saying \"3 days left\" gets skipped",
+                "the absence of an internal timer: a ticking render on every page costs more than a daily update from outside",
+                "the @container query that moves the text onto its own line in a narrow column",
+                "the <style> block inside the component — it holds the palette and the layout"
+              ],
+              "adapt": [
+                "remaining — the remainder string: \"3 days\", \"until 14 March\", \"2 hours\"",
+                "elapsed — the share of the period already gone, as a percentage",
+                "the title and description copy",
+                "actionLabel and actionHref — the action that resolves it",
+                "the accent through the accent prop — it colours the remainder, the bar and the button"
+              ],
+              "notes": [
+                "remaining and elapsed have to agree: \"3 days\" at elapsed 10 reads as a data bug.",
+                "Do not show the alert from day one of the period: it loses force long before the deadline.",
+                "The component does no date maths. The gap between today and 14 March is the caller's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert009\n  remaining=\"3 days\"\n  elapsed={78}\n  title=\"Your trial is ending\"\n  actionLabel=\"Extend\"\n/>"
+            },
+            "controls": {
+              "remaining": {
+                "label": "Remaining",
+                "default": "3 days"
+              },
+              "elapsed": {
+                "label": "Elapsed, %"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Your trial is ending"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Extend"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-010",
+      "type": "registry:component",
+      "title": "Form Errors Alert",
+      "description": "Сводка ошибок формы над кнопкой отправки: число в заголовке и строки-ссылки на поля. В длинной форме искать поле глазами дороже, чем щёлкнуть.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-010/alert-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-010-*. Заголовок собирается сам из числа ошибок, если не передан явно. Каждая строка — подпись поля жирным и текст ошибки обычным: сначала «где», потом «что». При переданном href строка становится ссылкой на якорь поля. Роль alert выставлена всегда: сводка появляется в ответ на отправку и должна быть объявлена сразу.",
+      "meta": {
+        "tags": ["alert", "form", "errors", "validation"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert010",
+          "usage": "<Alert010\n  issues={[{ field: \"Адрес проекта\", message: \"уже занят\", href: \"#slug\" }]}\n/>",
+          "summary": "Сводка ошибок формы: в заголовке количество, ниже список полей со ссылками на них. Подпись поля выделена жирным, текст ошибки идёт следом — сначала «где», потом «что». Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-010-* и не подменять её токенами вашей темы (bg-destructive, text-destructive и подобными)",
+            "число ошибок в заголовке: «исправьте ошибки» без количества не говорит, сколько работы впереди",
+            "строки-ссылки на поля: в длинной форме прокрутка глазами дороже щелчка",
+            "порядок «поле — ошибка», а не наоборот: сначала место, потом причина",
+            "role=\"alert\": сводка появляется в ответ на действие и должна быть прочитана сразу",
+            "блок <style> внутри компонента — в нём вся палитра и раскладка"
+          ],
+          "adapt": [
+            "массив issues: подпись поля, текст ошибки и якорь",
+            "title — если нужна своя формулировка вместо автоматической",
+            "ширину и внешние отступы через className: обычно блок ставится над кнопкой отправки"
+          ],
+          "notes": [
+            "Сводка не заменяет сообщений у полей: она ведёт к ним, а alert-003 объясняет ошибку на месте.",
+            "Якоря должны существовать. Ссылка на #email без поля с таким id никуда не приведёт.",
+            "Не выводите сюда больше пяти-шести пунктов: длинный список ошибок означает, что форму нужно разбить на шаги.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Не удалось сохранить: ошибок — 3",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A form error summary above the submit button: the count in the heading and rows linking to the fields. In a long form, hunting for the field costs more than a click.",
+            "ai": {
+              "summary": "A form error summary: the count in the heading, then a list of fields linking to them. The field label is bold and the error text follows — first where, then what. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-alert-010-* palette — do not swap it for your theme tokens (bg-destructive, text-destructive and the like)",
+                "the count in the heading: \"fix the errors\" without a number says nothing about how much work is left",
+                "the rows as links to the fields: in a long form scrolling by eye costs more than a click",
+                "the order \"field — error\" rather than the reverse: the place first, the reason second",
+                "role=\"alert\": the summary appears in response to an action and must be announced at once",
+                "the <style> block inside the component — it holds the palette and the layout"
+              ],
+              "adapt": [
+                "the issues array: field label, error text and anchor",
+                "title — when you need your own wording instead of the generated one",
+                "width and outer spacing through className: the block usually sits above the submit button"
+              ],
+              "notes": [
+                "The summary does not replace per-field messages: it leads to them, while alert-003 explains the error in place.",
+                "The anchors have to exist. A link to #email with no field of that id goes nowhere.",
+                "Do not list more than five or six items: a long error list means the form should be split into steps.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert010\n  issues={[{ field: \"Project address\", message: \"is taken\", href: \"#slug\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Could not save: 3 errors"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-011",
+      "type": "registry:component",
+      "title": "Technical Error Alert",
+      "description": "Ошибка, с которой пойдут в поддержку: человеческое объяснение сверху, технические подробности — в свёрнутом блоке под ним.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-011/alert-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-011-*. Подробности свёрнуты в нативный <details>, поэтому раскрытие не требует состояния и работает до гидратации. Сам текст лежит в тёмном моноширинном <pre> с горизонтальной прокруткой: его копируют целиком, а не читают. Идентификатор обращения показан моноширинным — по нему ищут в поддержке.",
+      "meta": {
+        "tags": ["alert", "error", "support", "details"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert011",
+          "usage": "<Alert011\n  title=\"Не удалось опубликовать проект\"\n  description=\"Сборка остановилась на странице «Услуги».\"\n  details={stackTrace}\n  reference=\"Обращение 8f2c-41ab\"\n/>",
+          "summary": "Ошибка в двух слоях: понятное объяснение и номер обращения сверху, технические подробности — в свёрнутом блоке с моноширинным текстом и кнопкой копирования. Раскрытие на нативном details, без состояния. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-011-* и не подменять её токенами вашей темы (bg-destructive, bg-muted и подобными)",
+            "два слоя: пользователю — объяснение, разработчику — подробности; смешать их значит потерять обоих",
+            "свёрнутый <details> вместо состояния: подробности открывают редко, и ради них не нужен клиентский код",
+            "тёмный моноширинный <pre> с прокруткой: трассировку копируют, а перенос строк в ней ломает смысл",
+            "идентификатор обращения на виду — по нему ищут в поддержке",
+            "role=\"alert\" у корня",
+            "блок <style> внутри компонента — в нём вся палитра и оба слоя"
+          ],
+          "adapt": [
+            "тексты title и description — человеческая часть",
+            "details — трассировка, ответ сервера, код ошибки",
+            "reference — идентификатор обращения",
+            "onCopy и copyLabel — копирование подробностей",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Не показывайте в details секреты: токены, ключи и заголовки авторизации там оказываются чаще, чем кажется.",
+            "Описание должно объяснять последствия, а не повторять код ошибки: «сайт продолжает работать» важнее, чем E_BUILD_FAILED.",
+            "Копирование компонент не выполняет — обработчик onCopy пишет вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Не удалось опубликовать проект",
+            "maxLength": 60
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Сборка остановилась на странице «Услуги». Прошлая версия сайта продолжает работать — посетители ничего не заметили.",
+            "maxLength": 160
+          },
+          {
+            "prop": "reference",
+            "label": "Обращение",
+            "type": "text",
+            "default": "Обращение 8f2c-41ab",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An error people will take to support: a human explanation on top, the technical detail folded away beneath it.",
+            "ai": {
+              "summary": "An error in two layers: a plain explanation and a reference number on top, the technical detail inside a collapsed block with monospaced text and a copy button. The disclosure is native details, with no state. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-011-* palette — do not swap it for your theme tokens (bg-destructive, bg-muted and the like)",
+                "the two layers: an explanation for the user, the detail for the developer; merging them loses both",
+                "the collapsed <details> instead of state: the detail is opened rarely and does not justify client code",
+                "the dark monospaced <pre> with horizontal scrolling: a trace is copied, and wrapping it destroys the meaning",
+                "the reference id in plain sight — support searches by it",
+                "role=\"alert\" on the root",
+                "the <style> block inside the component — it holds the palette and both layers"
+              ],
+              "adapt": [
+                "the title and description copy — the human half",
+                "details — a stack trace, a server response, an error code",
+                "reference — the support reference id",
+                "onCopy and copyLabel — copying the detail",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "Do not put secrets in details: tokens, keys and authorization headers end up there more often than you would think.",
+                "The description should explain consequences rather than repeat the error code: \"the site keeps working\" matters more than E_BUILD_FAILED.",
+                "The component does not copy anything — the onCopy handler is written by the caller.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert011\n  title=\"Could not publish the project\"\n  description=\"The build stopped on the Services page.\"\n  details={stackTrace}\n  reference=\"Case 8f2c-41ab\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Could not publish the project"
+              },
+              "description": {
+                "label": "Description",
+                "default": "The build stopped on the Services page. The previous version keeps serving visitors."
+              },
+              "reference": {
+                "label": "Reference",
+                "default": "Case 8f2c-41ab"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-012",
+      "type": "registry:component",
+      "title": "Update Alert",
+      "description": "Сообщение о доступном обновлении: номер версии в плашке, две-три строки изменений и кнопка. Без списка изменений кнопку жмут вслепую или не жмут вовсе.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-012/alert-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-012-*. Номер версии набран моноширинным в плашке: его сверяют символ за символом. Список изменений — обычный ul с точками на псевдоэлементах. Полный список уходит по ссылке, прижатой вправо через margin-left:auto; в узкой колонке она возвращается в поток.",
+      "meta": {
+        "tags": ["alert", "update", "release", "changelog"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert012",
+          "usage": "<Alert012\n  version=\"2.4.0\"\n  changes={[\"Панель кода в каталоге\", \"Исправлена установка на Windows\"]}\n  onUpdate={update}\n/>",
+          "summary": "Алерт доступного обновления: версия в моноширинной плашке, заголовок, две-три строки изменений, кнопка обновления, «Позже» и ссылка на полный список. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-012-* и не подменять её токенами вашей темы (bg-accent, text-primary и подобными)",
+            "список изменений в самом алерте: он отвечает на «зачем обновляться», без него кнопку жмут вслепую или не жмут",
+            "моноширинный номер версии в плашке: его сверяют, а не читают",
+            "ссылку на полный список отдельно от списка: три строки в алерте, остальное по ссылке",
+            "«Позже» тихой кнопкой рядом с обновлением — отказ должен быть доступен, но не равен по весу",
+            "блок <style> внутри компонента — в нём вся палитра и раскладка"
+          ],
+          "adapt": [
+            "version — номер версии",
+            "changes — две-три строки; длинный список сюда не помещается",
+            "тексты title, updateLabel, laterLabel и notesLabel",
+            "обработчики onUpdate и onLater",
+            "акцент через проп accent — цвет плашки, точек и кнопки"
+          ],
+          "notes": [
+            "Обновление компонент не выполняет: onUpdate — задача вызывающего кода.",
+            "Не пишите в changes технические строки коммитов: это сообщение для человека, а не журнал сборки.",
+            "Если обновление обязательное, «Позже» лучше убрать совсем, а не делать неактивным.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "version",
+            "label": "Версия",
+            "type": "text",
+            "default": "2.4.0",
+            "maxLength": 16
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Доступно обновление",
+            "maxLength": 40
+          },
+          {
+            "prop": "updateLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Обновить",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An available-update notice: the version in a pill, two or three lines of changes and a button. Without the changes the button is pressed blindly, or not at all.",
+            "ai": {
+              "summary": "An update alert: the version in a monospaced pill, a heading, two or three change lines, an update button, a quiet Later and a link to the full list. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-012-* palette — do not swap it for your theme tokens (bg-accent, text-primary and the like)",
+                "the change list inside the alert: it answers \"why update\", and without it the button is pressed blindly or ignored",
+                "the monospaced version in a pill: it gets compared character by character, not read",
+                "the link to the full list kept separate: three lines here, the rest behind the link",
+                "Later as a quiet button beside Update — refusal must be available without matching in weight",
+                "the <style> block inside the component — it holds the palette and the layout"
+              ],
+              "adapt": [
+                "version — the version number",
+                "changes — two or three lines; a long list does not fit here",
+                "the title, updateLabel, laterLabel and notesLabel copy",
+                "the onUpdate and onLater handlers",
+                "the accent through the accent prop — it colours the pill, the bullets and the button"
+              ],
+              "notes": [
+                "The component performs no update: onUpdate is the caller's job.",
+                "Do not put raw commit lines in changes: this is a message for a person, not a build log.",
+                "If the update is mandatory, drop Later entirely rather than disabling it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert012\n  version=\"2.4.0\"\n  changes={[\"Code panel in the catalog\", \"Fixed installs on Windows\"]}\n  onUpdate={update}\n/>"
+            },
+            "controls": {
+              "version": {
+                "label": "Version",
+                "default": "2.4.0"
+              },
+              "title": {
+                "label": "Title",
+                "default": "An update is available"
+              },
+              "updateLabel": {
+                "label": "Button",
+                "default": "Update"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-013",
+      "type": "registry:component",
+      "title": "Consent Alert",
+      "description": "Запрос согласия на cookie, где отказ равен согласию по весу. Это не вежливость: кнопка «Отклонить» не может быть серее и мельче «Принять».",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-013/alert-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-013-*. Кнопки согласия и отказа одного размера и одной высоты: разный вес здесь — тёмный приём, а не оформление. Настройка вынесена третьей тихой ссылкой, чтобы выбор из двух вариантов оставался очевидным. В узкой колонке блок складывается в столбик, кнопки растягиваются поровну через @container.",
+      "meta": {
+        "tags": ["alert", "cookie", "consent", "privacy"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert013",
+          "usage": "<Alert013\n  onAccept={acceptAll}\n  onReject={rejectOptional}\n  onSettings={openSettings}\n/>",
+          "summary": "Запрос согласия на cookie: объяснение со ссылкой на политику, кнопки «Только обязательные» и «Принять всё» одного веса, тихая ссылка «Настроить». В узкой колонке складывается в столбик. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "равный вес согласия и отказа: разный размер или цвет здесь — тёмный приём, а во многих юрисдикциях ещё и нарушение",
+            "локальную палитру --vibeui-alert-013-* и не подменять её токенами вашей темы",
+            "ссылку на политику внутри объяснения, а не отдельной кнопкой",
+            "«Настроить» третьим, тихим действием: выбор из двух вариантов должен оставаться очевидным",
+            "@container-запрос: в столбике кнопки растягиваются поровну, а не одна на всю ширину",
+            "блок <style> внутри компонента — в нём вся палитра и раскладка"
+          ],
+          "adapt": [
+            "тексты title и description",
+            "policyLabel и policyHref — ссылка на политику",
+            "подписи acceptLabel, rejectLabel и settingsLabel",
+            "обработчики onAccept, onReject и onSettings",
+            "акцент через проп accent — цвет кнопки согласия и ссылки"
+          ],
+          "notes": [
+            "Компонент не хранит выбор и не ставит cookie — это делает вызывающий код, и он же решает, показывать ли блок.",
+            "До получения согласия аналитика не должна работать. Показывать баннер и одновременно грузить счётчики бессмысленно.",
+            "Не прячьте отказ внутрь «Настроить»: отказаться нужно за один клик, как и согласиться.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Cookie и аналитика",
+            "maxLength": 40
+          },
+          {
+            "prop": "acceptLabel",
+            "label": "Согласие",
+            "type": "text",
+            "default": "Принять всё",
+            "maxLength": 24
+          },
+          {
+            "prop": "rejectLabel",
+            "label": "Отказ",
+            "type": "text",
+            "default": "Только обязательные",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A cookie consent request where refusal carries the same weight as agreement. Not politeness: the Reject button cannot be greyer and smaller than Accept.",
+            "ai": {
+              "summary": "A cookie consent request: an explanation with a link to the policy, \"Essential only\" and \"Accept all\" at equal weight, and a quiet Settings link. It folds into a column when narrow. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the equal weight of accept and reject: a size or colour difference here is a dark pattern and, in many jurisdictions, a violation",
+                "the local --vibeui-alert-013-* palette — do not swap it for your theme tokens",
+                "the policy link inside the explanation rather than as a separate button",
+                "Settings as the third, quiet action: the two-way choice must stay obvious",
+                "the @container query: stacked, the buttons share the width equally rather than one filling it",
+                "the <style> block inside the component — it holds the palette and the layout"
+              ],
+              "adapt": [
+                "the title and description copy",
+                "policyLabel and policyHref — the policy link",
+                "the acceptLabel, rejectLabel and settingsLabel wording",
+                "the onAccept, onReject and onSettings handlers",
+                "the accent through the accent prop — it colours the accept button and the link"
+              ],
+              "notes": [
+                "The component stores no choice and sets no cookies — the caller does that, and decides whether to show the block at all.",
+                "Analytics must not run before consent. Showing the banner while loading trackers defeats it.",
+                "Do not hide refusal inside Settings: rejecting has to take one click, like accepting.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert013\n  onAccept={acceptAll}\n  onReject={rejectOptional}\n  onSettings={openSettings}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Cookies and analytics"
+              },
+              "acceptLabel": {
+                "label": "Accept",
+                "default": "Accept all"
+              },
+              "rejectLabel": {
+                "label": "Reject",
+                "default": "Essential only"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-014",
+      "type": "registry:component",
+      "title": "Status Alert",
+      "description": "Сводка состояния сервиса: точка пульсирует только когда что-то не так, и обязательно указано время последнего обновления.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-014/alert-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-014.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-014-*. Четыре состояния переключаются data-атрибутом и меняют одну переменную цвета. Пульс — псевдоэлемент точки с анимацией масштаба, и он включён только для нештатных состояний: ровное не должно моргать часами. Роль alert выставляется только при полном отказе.",
+      "meta": {
+        "tags": ["alert", "status", "uptime", "incident"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert014",
+          "usage": "<Alert014\n  state=\"degraded\"\n  title=\"Публикация идёт медленнее обычного\"\n  updated=\"обновлено 2 минуты назад\"\n  statusHref=\"https://status.example.com\"\n/>",
+          "summary": "Сводка состояния сервиса: цветная точка, заголовок, объяснение, время обновления и ссылка на страницу статуса. Четыре состояния — работает, деградация, отказ, работы. Пульс включается только у нештатных. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-014-* и не подменять её токенами вашей темы (bg-success, bg-destructive и подобными)",
+            "пульс только у нештатных состояний: ровное состояние не должно моргать на экране часами",
+            "отметку времени: сводка без неё не отличается от зависшей страницы",
+            "role=\"alert\" только при полном отказе — деградация не должна прерывать чтение",
+            "ссылку на страницу статуса: подробности живут там, а не в алерте",
+            "@container-запрос, переносящий время на свою строку в узкой колонке",
+            "блок <style> внутри компонента — в нём вся палитра, состояния и пульс"
+          ],
+          "adapt": [
+            "state: operational, degraded, down, maintenance",
+            "тексты title и description",
+            "updated — когда сводка обновлялась",
+            "statusLabel и statusHref — ссылка на страницу статуса",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Компонент ничего не опрашивает: состояние и время приходят снаружи. Обновление раз в минуту — задача вызывающего кода.",
+            "Не показывайте состояние operational постоянно: сводка «всё работает» на каждой странице обесценивает предупреждения.",
+            "Описание должно говорить, что именно затронуто, а не «есть проблемы»: пользователю нужно понять, ждать ли ему.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "state",
+            "label": "Состояние",
+            "type": "select",
+            "default": "degraded",
+            "options": ["operational", "degraded", "down", "maintenance"]
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Публикация идёт медленнее обычного",
+            "maxLength": 60
+          },
+          {
+            "prop": "updated",
+            "label": "Обновлено",
+            "type": "text",
+            "default": "обновлено 2 минуты назад",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A service status summary: the dot pulses only when something is wrong, and the time of the last update is always shown.",
+            "ai": {
+              "summary": "A service status summary: a coloured dot, a heading, an explanation, the update time and a link to the status page. Four states — operational, degraded, down, maintenance. Only the abnormal ones pulse. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-014-* palette — do not swap it for your theme tokens (bg-success, bg-destructive and the like)",
+                "the pulse on abnormal states only: a steady state must not blink on screen for hours",
+                "the timestamp: without it a summary is indistinguishable from a stale page",
+                "role=\"alert\" only on a full outage — degradation should not interrupt reading",
+                "the link to the status page: the detail lives there, not in the alert",
+                "the @container query that moves the timestamp to its own line in a narrow column",
+                "the <style> block inside the component — it holds the palette, the states and the pulse"
+              ],
+              "adapt": [
+                "state: operational, degraded, down, maintenance",
+                "the title and description copy",
+                "updated — when the summary was refreshed",
+                "statusLabel and statusHref — the status page link",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "The component polls nothing: the state and the time come from outside. Refreshing every minute is the caller's job.",
+                "Do not show the operational state permanently: an \"all systems go\" banner on every page devalues the warnings.",
+                "The description should say what is affected rather than \"there are problems\": people need to know whether to wait.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert014\n  state=\"degraded\"\n  title=\"Publishing is slower than usual\"\n  updated=\"updated 2 minutes ago\"\n  statusHref=\"https://status.example.com\"\n/>"
+            },
+            "controls": {
+              "state": {
+                "label": "State"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Publishing is slower than usual"
+              },
+              "updated": {
+                "label": "Updated",
+                "default": "updated 2 minutes ago"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-015",
+      "type": "registry:component",
+      "title": "Quota Alert",
+      "description": "Лимит на исходе: полоса и счётчик считаются из одних данных, а цвет переключается сам на 80 и 100 процентах — исчерпанную квоту нельзя показать зелёной.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-015/alert-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-015-*. Доля считается из used и total, попадает в переменную --vibeui-alert-015-ratio и одновременно определяет уровень: до 80 процентов обычный тон, дальше предупреждающий, на 100 — опасный. Тона нет в пропах намеренно: он производная от данных, а не решение вызывающего кода.",
+      "meta": {
+        "tags": ["alert", "quota", "limit", "billing"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert015",
+          "usage": "<Alert015\n  title=\"Проекты на тарифе заканчиваются\"\n  used={8}\n  total={10}\n  unit=\"проектов\"\n  actionHref=\"/billing\"\n/>",
+          "summary": "Алерт исчерпания лимита: заголовок, счётчик «8 из 10», полоса заполнения, объяснение и кнопка перехода на другой тариф. Цвет выводится из доли: спокойный, предупреждающий на 80 процентах, опасный на 100. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-015-* и не подменять её токенами вашей темы (bg-warning, bg-destructive и подобными)",
+            "вывод тона из доли, а не из пропа: иначе исчерпанную квоту можно показать зелёной",
+            "общий источник для полосы и счётчика: разойтись они не должны",
+            "пороги 80 и 100 процентов — предупреждать заранее и отдельно отмечать исчерпание",
+            "разметку progressbar с aria-valuemax по total, а не по ста процентам",
+            "@container-запрос, складывающий блок в столбик в узкой колонке",
+            "блок <style> внутри компонента — в нём вся палитра, уровни и полоса"
+          ],
+          "adapt": [
+            "used, total и unit — сам лимит и единица измерения",
+            "тексты title и description",
+            "actionLabel и actionHref — куда ведёт кнопка",
+            "акцент через проп accent — цвет кнопки; цвет полосы задаётся уровнем",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Не показывайте алерт с нуля процентов: сообщение о лимите имеет смысл ближе к порогу.",
+            "unit пишите в родительном падеже — «проектов», «гигабайт»: он подставляется после числа.",
+            "Компонент не считает потребление и не запрещает действия — он только показывает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "used",
+            "label": "Использовано",
+            "type": "number",
+            "default": 8,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "total",
+            "label": "Всего",
+            "type": "number",
+            "default": 10,
+            "min": 1,
+            "max": 100
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "проектов",
+            "maxLength": 20
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Сменить тариф",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A limit running out: the bar and the counter come from the same data, and the colour switches itself at 80 and 100 per cent — an exhausted quota cannot be shown in green.",
+            "ai": {
+              "summary": "A quota alert: a heading, an \"8 of 10\" counter, a fill bar, an explanation and an upgrade button. The colour is derived from the ratio: calm, warning at 80 per cent, danger at 100. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-015-* palette — do not swap it for your theme tokens (bg-warning, bg-destructive and the like)",
+                "deriving the tone from the ratio rather than a prop: otherwise an exhausted quota can be shown green",
+                "one source for the bar and the counter: they must not drift apart",
+                "the 80 and 100 per cent thresholds — warn early and mark exhaustion separately",
+                "the progressbar semantics with aria-valuemax set to total rather than to a hundred",
+                "the @container query that stacks the block in a narrow column",
+                "the <style> block inside the component — it holds the palette, the levels and the bar"
+              ],
+              "adapt": [
+                "used, total and unit — the limit itself and its unit",
+                "the title and description copy",
+                "actionLabel and actionHref — where the button leads",
+                "the accent through the accent prop — the button colour; the bar colour comes from the level",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "Do not show the alert from zero per cent: a limit message means something near the threshold.",
+                "The unit is appended after the number, so write it in the form that reads correctly there.",
+                "The component does not measure usage or block actions — it only reports.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert015\n  title=\"You are running out of projects\"\n  used={8}\n  total={10}\n  unit=\"projects\"\n  actionHref=\"/billing\"\n/>"
+            },
+            "controls": {
+              "used": {
+                "label": "Used"
+              },
+              "total": {
+                "label": "Total"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": "projects"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Change plan"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-016",
+      "type": "registry:component",
+      "title": "Grouped Alerts",
+      "description": "Несколько сообщений в одной рамке вместо стопки отдельных: общий заголовок, одна кнопка «Очистить», хвост списка сворачивается в строку-счётчик.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-016/alert-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-016.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-016-*. Записи разделены линиями, а не отступами: общая рамка держит их как один объект. Тон каждой записи задаётся data-атрибутом и меняет только цвет точки. Хвост длиннее visible сворачивается в строку со счётчиком, поэтому блок не растёт бесконечно.",
+      "meta": {
+        "tags": ["alert", "notifications", "list", "inbox"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert016",
+          "usage": "<Alert016\n  title=\"Уведомления\"\n  entries={[{ tone: \"success\", title: \"Проект опубликован\", time: \"2 мин\" }]}\n  onClear={clearAll}\n/>",
+          "summary": "Группа сообщений в одной рамке: шапка с заголовком и счётчиком, записи с точками тона, временем и описанием, свёрнутый хвост. Пять отдельных алертов подряд — стена, которую пролистывают; здесь у них общая рамка и одна кнопка очистки. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-016-* и не подменять её токенами вашей темы (bg-muted, border-border и подобными)",
+            "общую рамку вместо стопки карточек: в этом весь смысл варианта",
+            "цвет только у точки: четыре цветных строки подряд превращают список в мусор",
+            "сворачивание хвоста в строку-счётчик: блок не должен расти бесконечно",
+            "одну кнопку очистки на группу, а не крестик у каждой записи",
+            "линии между записями вместо отступов — они держат список как единый объект",
+            "блок <style> внутри компонента — в нём вся палитра и раскладка"
+          ],
+          "adapt": [
+            "массив entries: тон, заголовок, описание и время",
+            "title — заголовок группы; число рядом считается само",
+            "visible — сколько записей показывать до сворачивания",
+            "onClear и clearLabel — очистка группы",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Это не центр уведомлений: здесь нет прочитанных, фильтров и постраничной навигации. Для них нужна отдельная страница.",
+            "Записи приходят готовым массивом — сортировка и дедупликация на стороне вызывающего кода.",
+            "Не ставьте visible больше пяти: дальше группа перестаёт читаться как одно сообщение.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Уведомления",
+            "maxLength": 30
+          },
+          {
+            "prop": "visible",
+            "label": "Показывать",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 6
+          },
+          {
+            "prop": "clearLabel",
+            "label": "Очистка",
+            "type": "text",
+            "default": "Очистить",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Several messages in one frame instead of a stack of separate ones: a shared heading, a single Clear button, and the tail folded into a counter row.",
+            "ai": {
+              "summary": "A group of messages in one frame: a header with a title and a count, entries with tone dots, time and description, and a folded tail. Five separate alerts in a row form a wall people scroll past; here they share a frame and one clear button. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-016-* palette — do not swap it for your theme tokens (bg-muted, border-border and the like)",
+                "the shared frame instead of a stack of cards: that is the whole variant",
+                "colour on the dot only: four coloured rows in a row turn the list into litter",
+                "folding the tail into a counter row: the block must not grow without end",
+                "one clear button for the group rather than a cross on every entry",
+                "rules between entries instead of gaps — they hold the list as a single object",
+                "the <style> block inside the component — it holds the palette and the layout"
+              ],
+              "adapt": [
+                "the entries array: tone, title, description and time",
+                "title — the group heading; the count beside it is computed",
+                "visible — how many entries show before folding",
+                "onClear and clearLabel — clearing the group",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "This is not a notification centre: there is no read state, no filters and no pagination. Those need their own page.",
+                "The entries arrive as a ready array — sorting and de-duplication belong to the caller.",
+                "Do not set visible above five: past that the group stops reading as one message.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert016\n  title=\"Notifications\"\n  entries={[{ tone: \"success\", title: \"Project published\", time: \"2m\" }]}\n  onClear={clearAll}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Notifications"
+              },
+              "visible": {
+                "label": "Visible"
+              },
+              "clearLabel": {
+                "label": "Clear",
+                "default": "Clear"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-017",
+      "type": "registry:component",
+      "title": "Maintenance Alert",
+      "description": "Предупреждение о плановых работах: окно времени отдельной плашкой и список того, что будет недоступно. Тон нейтральный — работы это не авария.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-017/alert-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-017.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-017-*. Значок-календарь нарисован рамкой и двумя штрихами на псевдоэлементах: иконочная библиотека не нужна. Время работ вынесено в моноширинную плашку — его переписывают в календарь, поэтому оно не должно теряться в абзаце. Затронутые сервисы перечислены плашками, а не строкой через запятую.",
+      "meta": {
+        "tags": ["alert", "maintenance", "schedule", "downtime"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert017",
+          "usage": "<Alert017\n  window=\"14 марта, 02:00–04:00 МСК\"\n  affected={[\"Публикация\", \"Экспорт\"]}\n/>",
+          "summary": "Предупреждение о плановых работах: значок-календарь на CSS, заголовок, окно времени в моноширинной плашке, объяснение, плашки затронутых сервисов и ссылка на подробности. Тон нейтральный, без красного. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-017-* и не подменять её токенами вашей темы (bg-warning, bg-destructive и подобными)",
+            "нейтральный тон: плановые работы в цветах аварии вызывают лишние обращения в поддержку",
+            "окно времени отдельной моноширинной плашкой — его переписывают в календарь",
+            "список затронутого плашками, а не строкой через запятую: перечисление читают по одному",
+            "значок-календарь на CSS вместо иконочной библиотеки",
+            "role=\"status\", а не alert: предупреждение заранее не должно прерывать чтение",
+            "блок <style> внутри компонента — в нём вся палитра и значок"
+          ],
+          "adapt": [
+            "window — дата и время работ вместе с часовым поясом",
+            "тексты title и description",
+            "affected — список того, что будет недоступно",
+            "detailsLabel и detailsHref — ссылка на подробности",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Часовой пояс в окне обязателен: «02:00–04:00» без пояса читается как местное время у каждого своё.",
+            "Пишите, что продолжит работать, а не только что отключится: иначе люди готовятся к худшему.",
+            "Компонент не следит за временем и не исчезает сам после окончания работ.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Плановые работы на выходных",
+            "maxLength": 50
+          },
+          {
+            "prop": "window",
+            "label": "Окно работ",
+            "type": "text",
+            "default": "14 марта, 02:00–04:00 МСК",
+            "maxLength": 40
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Обновляем хранилище. Опубликованные сайты продолжат работать — недоступной будет только панель управления.",
+            "maxLength": 160
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A scheduled maintenance notice: the time window in its own pill and a list of what will be unavailable. The tone is neutral — maintenance is not an outage.",
+            "ai": {
+              "summary": "A maintenance notice: a CSS calendar mark, a heading, the time window in a monospaced pill, an explanation, pills for the affected services and a details link. Neutral tone, no red. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-017-* palette — do not swap it for your theme tokens (bg-warning, bg-destructive and the like)",
+                "the neutral tone: planned work dressed in outage colours generates needless support tickets",
+                "the time window in its own monospaced pill — people copy it into a calendar",
+                "the affected list as pills rather than a comma-separated line: enumerations are read one by one",
+                "the CSS calendar mark instead of an icon library",
+                "role=\"status\" rather than alert: an advance notice should not interrupt reading",
+                "the <style> block inside the component — it holds the palette and the mark"
+              ],
+              "adapt": [
+                "window — the date and time with a timezone",
+                "the title and description copy",
+                "affected — what will be unavailable",
+                "detailsLabel and detailsHref — the details link",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "The timezone in the window is mandatory: \"02:00–04:00\" without one is read as local everywhere.",
+                "Say what keeps working, not only what stops: otherwise people assume the worst.",
+                "The component tracks no clock and does not disappear when the window ends.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert017\n  window=\"14 March, 02:00–04:00 UTC\"\n  affected={[\"Publishing\", \"Export\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Scheduled maintenance this weekend"
+              },
+              "window": {
+                "label": "Window",
+                "default": "14 March, 02:00–04:00 UTC"
+              },
+              "description": {
+                "label": "Description",
+                "default": "We are upgrading storage. Published sites keep serving — only the dashboard goes offline."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-018",
+      "type": "registry:component",
+      "title": "Offline Alert",
+      "description": "Полоса «нет соединения», которая следит за состоянием сама через события браузера. Сообщения «связь вернулась» здесь нет: о возврате говорит исчезновение полосы.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-018/alert-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-018.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-018-*. Состояние читается через useSyncExternalStore с подпиской на события online и offline: это штатный способ читать внешний источник, он не вызывает лишних рендеров и корректно ведёт себя при серверной отрисовке, где снимок всегда «связь есть». Пока связь есть, компонент возвращает null. Проп force показывает полосу принудительно — для витрины и отладки.",
+      "meta": {
+        "tags": ["alert", "offline", "network", "status"],
+        "preview": {
+          "props": {
+            "force": true
+          }
+        },
+        "ai": {
+          "export": "Alert018",
+          "usage": "<Alert018 onRetry={retryRequest} />",
+          "summary": "Плавающая полоса отсутствия связи: мигающая точка, заголовок, пояснение и кнопка повтора. Единственный компонент набора, который следит за состоянием сам — через подписку на события online и offline. При наличии связи не рендерится вовсе. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-018-* — полоса намеренно тёмная и не следует теме страницы",
+            "useSyncExternalStore вместо useState с эффектом: это штатный способ читать внешний источник без лишних рендеров",
+            "серверный снимок «связь есть»: иначе разметка разойдётся при гидратации",
+            "возврат null при наличии связи: полоса не должна занимать место в разметке",
+            "отсутствие сообщения «связь вернулась»: о возврате говорит исчезновение полосы, а уведомление об успехе пришлось бы прятать по таймеру",
+            "aria-live=\"polite\": появление полосы должно быть объявлено, но без прерывания",
+            "блок <style> внутри компонента — в нём вся палитра и мигание точки"
+          ],
+          "adapt": [
+            "тексты title и description",
+            "onRetry и retryLabel — повтор последнего запроса",
+            "force — показать полосу принудительно: витрина, скриншот, отладка",
+            "положение через className: обычно fixed внизу по центру"
+          ],
+          "notes": [
+            "navigator.onLine говорит только о наличии сети, а не о доступности вашего сервера. Для второго нужна собственная проверка запросом.",
+            "Компонент не ставит запросы в очередь и не повторяет их сам — onRetry пишет вызывающий код.",
+            "Позиционирование не входит в компонент: он остаётся inline-flex, а fixed задаёт страница.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Нет соединения",
+            "maxLength": 40
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Изменения сохранятся, когда сеть вернётся.",
+            "maxLength": 80
+          },
+          {
+            "prop": "force",
+            "label": "Показать",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An offline bar that watches the connection itself through browser events. There is no \"back online\" message: the bar disappearing says it.",
+            "ai": {
+              "summary": "A floating offline bar: a blinking dot, a heading, a note and a retry button. The only component in the set that watches state itself, through the online and offline events. While the connection is up it renders nothing at all. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-018-* palette — the bar is deliberately dark and does not follow the page theme",
+                "useSyncExternalStore instead of useState with an effect: it is the sanctioned way to read an external source without extra renders",
+                "the server snapshot of \"online\": otherwise the markup diverges at hydration",
+                "returning null while online: the bar must not occupy space in the document",
+                "the absence of a \"back online\" message: the bar disappearing says it, and a success toast would need hiding on a timer",
+                "aria-live=\"polite\": the appearance should be announced without interrupting",
+                "the <style> block inside the component — it holds the palette and the blinking dot"
+              ],
+              "adapt": [
+                "the title and description copy",
+                "onRetry and retryLabel — retrying the last request",
+                "force — show the bar regardless: showcase, screenshots, debugging",
+                "placement through className: usually fixed at the bottom centre"
+              ],
+              "notes": [
+                "navigator.onLine reports network presence, not that your server is reachable. For that you need your own probe request.",
+                "The component neither queues nor replays requests — onRetry is written by the caller.",
+                "Positioning is not part of the component: it stays inline-flex and the page decides where it sits.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert018 onRetry={retryRequest} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "No connection"
+              },
+              "description": {
+                "label": "Description",
+                "default": "Your changes will be saved once the network is back."
+              },
+              "force": {
+                "label": "Show"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-019",
+      "type": "registry:component",
+      "title": "Instruction Alert",
+      "description": "Алерт с инструкцией: пронумерованные шаги вместо абзаца. Обычное сообщение говорит, что не так; это — что сделать.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-019/alert-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-019.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-019-*. Номера шагов рисуются счётчиком CSS, а не текстом в разметке: список нельзя рассинхронизировать, добавив пункт в середину. Подпись справа в шапке (срок, ответственный) скрывается в узкой колонке через @container, чтобы заголовок не сжимался.",
+      "meta": {
+        "tags": ["alert", "instruction", "steps", "howto"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert019",
+          "usage": "<Alert019\n  title=\"Домен подключён не до конца\"\n  steps={[\"Откройте настройки у регистратора\", \"Добавьте A-запись\"]}\n  actionLabel=\"Проверить запись\"\n/>",
+          "summary": "Алерт с инструкцией: заголовок, подпись со сроком, объяснение и пронумерованные шаги, под ними — кнопка проверки. Номера рисуются счётчиком CSS, поэтому список не рассинхронизируется. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-019-* и не подменять её токенами вашей темы (bg-muted, text-primary и подобными)",
+            "шаги списком, а не абзацем: по номерам обращаются в поддержку — «я застрял на втором»",
+            "счётчик CSS вместо чисел в разметке: добавленный в середину пункт не должен ломать нумерацию",
+            "кнопку проверки после шагов: сначала инструкция, потом действие",
+            "@container-запрос, прячущий подпись справа в узкой колонке",
+            "блок <style> внутри компонента — в нём вся палитра, счётчик и раскладка"
+          ],
+          "adapt": [
+            "тексты title и description",
+            "steps — короткие шаги; каждый в одну строку",
+            "meta — срок, ответственный, номер заявки",
+            "actionLabel и actionHref — действие, завершающее инструкцию",
+            "акцент через проп accent — цвет номеров и кнопки"
+          ],
+          "notes": [
+            "Больше пяти шагов — это уже документация: оставьте три-четыре и уведите остальное по ссылке.",
+            "Шаг должен быть действием, а не состоянием: «добавьте A-запись», а не «A-запись отсутствует».",
+            "Компонент ничего не проверяет: onClick для кнопки задаётся снаружи через ссылку или свою обёртку.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Домен подключён не до конца",
+            "maxLength": 60
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "DNS-запись ещё не указывает на наш сервер, поэтому сайт открывается по временному адресу.",
+            "maxLength": 160
+          },
+          {
+            "prop": "meta",
+            "label": "Подпись",
+            "type": "text",
+            "default": "обычно 10–30 минут",
+            "maxLength": 30
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Проверить запись",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An alert with instructions: numbered steps instead of a paragraph. An ordinary alert says what is wrong; this one says what to do.",
+            "ai": {
+              "summary": "An instruction alert: a heading, a caption with the expected duration, an explanation and numbered steps, with a check button beneath. The numbers come from a CSS counter, so the list cannot fall out of sync. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-alert-019-* palette — do not swap it for your theme tokens (bg-muted, text-primary and the like)",
+                "the steps as a list rather than a paragraph: people quote the numbers to support — \"I'm stuck on step two\"",
+                "the CSS counter instead of numbers in the markup: inserting a step in the middle must not break the numbering",
+                "the check button after the steps: instructions first, action second",
+                "the @container query that hides the right-hand caption in a narrow column",
+                "the <style> block inside the component — it holds the palette, the counter and the layout"
+              ],
+              "adapt": [
+                "the title and description copy",
+                "steps — short steps, one line each",
+                "meta — a duration, an owner, a ticket number",
+                "actionLabel and actionHref — the action that closes the instruction",
+                "the accent through the accent prop — it colours the numbers and the button"
+              ],
+              "notes": [
+                "More than five steps is documentation: keep three or four and move the rest behind a link.",
+                "A step has to be an action, not a state: \"add an A record\", not \"the A record is missing\".",
+                "The component checks nothing: the button's behaviour comes from outside through the link or your own wrapper.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert019\n  title=\"The domain is only half connected\"\n  steps={[\"Open your registrar's DNS settings\", \"Add an A record\"]}\n  actionLabel=\"Check the record\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "The domain is only half connected"
+              },
+              "description": {
+                "label": "Description",
+                "default": "The DNS record does not point at our server yet, so the site is served from a temporary address."
+              },
+              "meta": {
+                "label": "Caption",
+                "default": "usually 10–30 minutes"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Check the record"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert-020",
+      "type": "registry:component",
+      "title": "Confirm Word Alert",
+      "description": "Подтверждение необратимого действия: перечень того, что исчезнет, и поле, куда нужно ввести название. Пауза, которая отделяет случайный клик от решения.",
+      "categories": ["alert"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-020/alert-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-020.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-020-*. Пока поле пустое, подтверждение недоступно — это делает правило `:has(input:placeholder-shown)`, то есть без единой строки JS. Точное совпадение проверяет атрибут pattern (значение экранируется) и, окончательно, вызывающий код на отправке формы: CSS сравнивать строки не умеет. Список потерь стоит выше поля намеренно — его должны прочитать до того, как начнут печатать.",
+      "meta": {
+        "tags": ["alert", "confirm", "destructive", "danger"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert020",
+          "usage": "<Alert020\n  title=\"Удалить проект «Сайт студии»?\"\n  confirmWord=\"Сайт студии\"\n  losses={[\"18 страниц\", \"домен и сертификат\"]}\n  onCancel={close}\n/>",
+          "summary": "Подтверждение необратимого действия: заголовок в опасном тоне, перечень того, что исчезнет, поле для ввода названия и две кнопки. Пока поле пустое, подтверждение выключено правилом CSS — без JS. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-020-* и не подменять её токенами вашей темы (bg-destructive и подобными)",
+            "ввод названия как паузу перед необратимым: она и отделяет случайный клик от решения",
+            "перечень потерь выше поля: список должны прочитать до того, как начнут печатать",
+            "пункты вместо строки «все данные»: конкретика — единственное, что заставляет остановиться",
+            "правило :has(input:placeholder-shown), выключающее подтверждение без JS, и пробел-плейсхолдер, на котором оно держится",
+            "role=\"alertdialog\" и aria-label с заголовком",
+            "блок <style> внутри компонента — в нём вся палитра и логика выключения"
+          ],
+          "adapt": [
+            "тексты title, description, inputLabel и подписи кнопок",
+            "confirmWord — что именно нужно ввести; обычно имя объекта",
+            "losses — перечень того, что исчезнет",
+            "onCancel — закрытие; подтверждение обрабатывайте на submit формы",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Точное совпадение проверяйте на сервере: pattern и CSS — это удобство, а не защита.",
+            "Компонент не оборачивает себя в <form>: обёртку и обработчик отправки добавляет вызывающий код.",
+            "Не просите вводить слово «УДАЛИТЬ»: имя объекта заставляет посмотреть, что именно удаляется, а заглавное слово набирают не глядя.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Удалить проект «Сайт студии»?",
+            "maxLength": 60
+          },
+          {
+            "prop": "confirmWord",
+            "label": "Слово-подтверждение",
+            "type": "text",
+            "default": "Сайт студии",
+            "maxLength": 40
+          },
+          {
+            "prop": "confirmLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Удалить навсегда",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Confirmation for an irreversible action: a list of what disappears and a field for typing the name back. The pause that separates a stray click from a decision.",
+            "ai": {
+              "summary": "An irreversible-action confirmation: a heading in the danger tone, a list of what will be lost, a field for typing the object's name and two buttons. While the field is empty the confirm button is disabled by a CSS rule — no JS involved. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-020-* palette — do not swap it for your theme tokens (bg-destructive and the like)",
+                "typing the name as the pause before something irreversible: that is what separates a stray click from a decision",
+                "the list of losses above the field: it has to be read before the typing starts",
+                "itemised losses rather than \"all data\": specifics are the only thing that makes people stop",
+                "the :has(input:placeholder-shown) rule that disables confirm without JS, and the space placeholder it rests on",
+                "role=\"alertdialog\" and the aria-label carrying the heading",
+                "the <style> block inside the component — it holds the palette and the disabling logic"
+              ],
+              "adapt": [
+                "the title, description, inputLabel and button copy",
+                "confirmWord — what has to be typed; usually the object's name",
+                "losses — what will disappear",
+                "onCancel — dismissal; handle confirmation on the form's submit",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "Verify the exact match on the server: pattern and CSS are convenience, not protection.",
+                "The component does not wrap itself in a <form>: the wrapper and the submit handler come from the caller.",
+                "Do not ask people to type \"DELETE\": the object's name forces a look at what is being deleted, while a fixed word is typed without reading.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert020\n  title=\"Delete the project “Studio site”?\"\n  confirmWord=\"Studio site\"\n  losses={[\"18 pages\", \"the domain and its certificate\"]}\n  onCancel={close}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Delete the project “Studio site”?"
+              },
+              "confirmWord": {
+                "label": "Confirm word",
+                "default": "Studio site"
+              },
+              "confirmLabel": {
+                "label": "Button",
+                "default": "Delete forever"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

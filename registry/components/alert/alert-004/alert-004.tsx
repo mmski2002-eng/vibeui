@@ -1,0 +1,144 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Alert004Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "title" | "children"
+> & {
+  title?: string
+  description?: string
+  confirmLabel?: string
+  cancelLabel?: string
+  /** Опасное решение: подтверждение краснеет, отмена становится главной. */
+  destructive?: boolean
+  onConfirm?: () => void
+  onCancel?: () => void
+  accent?: string
+}
+
+// Идея компонента: алерт, который требует решения прямо здесь. Кнопки стоят
+// под текстом, а не в строке заголовка: решение принимают после того, как
+// дочитали. В опасном режиме подтверждение краснеет, но остаётся вторым по
+// весу — уводить палец на «Удалить» по умолчанию нельзя.
+const STYLES = `
+:where([data-vibeui-block="alert-004"]){
+--vibeui-alert-004-fg:oklch(0.24 0.016 265);
+--vibeui-alert-004-muted:oklch(0.5 0.014 265);
+--vibeui-alert-004-bg:oklch(0.985 0.002 265);
+--vibeui-alert-004-border:oklch(0.9 0.006 265);
+--vibeui-alert-004-accent:oklch(0.55 0.2 262);
+--vibeui-alert-004-accent-fg:oklch(1 0 0);
+--vibeui-alert-004-danger:oklch(0.56 0.19 25);
+--vibeui-alert-004-radius:0.75rem;
+--vibeui-alert-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+container-type:inline-size;
+}
+[data-vibeui-block="alert-004"]{
+display:flex;align-items:flex-start;gap:0.875rem;
+width:100%;box-sizing:border-box;
+padding:1rem 1.125rem;
+border:1px solid var(--vibeui-alert-004-border);
+border-radius:var(--vibeui-alert-004-radius);
+background:var(--vibeui-alert-004-bg);color:var(--vibeui-alert-004-fg);
+font-family:var(--vibeui-alert-004-font);
+}
+[data-vibeui-block="alert-004"][data-destructive="true"]{
+border-color:color-mix(in oklab,var(--vibeui-alert-004-danger) 35%,var(--vibeui-alert-004-border));
+background:color-mix(in oklab,var(--vibeui-alert-004-danger) 4%,var(--vibeui-alert-004-bg));
+}
+[data-vibeui-block="alert-004"] [data-part="icon"]{
+display:flex;align-items:center;justify-content:center;flex:none;
+width:1.75rem;height:1.75rem;border-radius:0.5rem;
+background:color-mix(in oklab,var(--vibeui-alert-004-accent) 14%,transparent);
+color:var(--vibeui-alert-004-accent);
+font-size:0.8125rem;font-weight:800;line-height:1;
+}
+[data-vibeui-block="alert-004"][data-destructive="true"] [data-part="icon"]{
+background:color-mix(in oklab,var(--vibeui-alert-004-danger) 14%,transparent);
+color:var(--vibeui-alert-004-danger);
+}
+[data-vibeui-block="alert-004"] [data-part="text"]{display:flex;flex-direction:column;gap:0.25rem;flex:1 1 auto;min-width:0}
+[data-vibeui-block="alert-004"] [data-part="title"]{font-size:0.9375rem;font-weight:600;line-height:1.35}
+[data-vibeui-block="alert-004"] [data-part="description"]{font-size:0.875rem;line-height:1.55;color:var(--vibeui-alert-004-muted);max-width:60ch}
+/* Кнопки под текстом: решение принимают, дочитав, а не в строке заголовка. */
+[data-vibeui-block="alert-004"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.625rem}
+[data-vibeui-block="alert-004"] button{
+appearance:none;cursor:pointer;font:inherit;
+display:inline-flex;align-items:center;height:2rem;padding:0 0.875rem;
+border-radius:0.5rem;border:1px solid transparent;
+font-size:0.8125rem;font-weight:600;
+transition:background-color .16s ease,border-color .16s ease,color .16s ease;
+}
+[data-vibeui-block="alert-004"] [data-part="confirm"]{
+background:var(--vibeui-alert-004-accent);color:var(--vibeui-alert-004-accent-fg);
+}
+[data-vibeui-block="alert-004"][data-destructive="true"] [data-part="confirm"]{background:var(--vibeui-alert-004-danger)}
+[data-vibeui-block="alert-004"] [data-part="confirm"]:hover{filter:brightness(0.94)}
+[data-vibeui-block="alert-004"] [data-part="cancel"]{
+background:transparent;color:var(--vibeui-alert-004-fg);
+border-color:var(--vibeui-alert-004-border);
+}
+[data-vibeui-block="alert-004"] [data-part="cancel"]:hover{background:color-mix(in oklab,var(--vibeui-alert-004-border) 40%,transparent)}
+[data-vibeui-block="alert-004"] button:focus-visible{outline:2px solid var(--vibeui-alert-004-accent);outline-offset:2px}
+@container (max-width: 24rem){
+[data-vibeui-block="alert-004"] [data-part="actions"] button{flex:1 1 100%;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="alert-004"] *{animation:none!important;transition:none!important}}
+`
+
+/**
+ * Алерт с решением: текст и две кнопки под ним.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Alert004({
+  title = "Опубликовать изменения?",
+  description = "На сайте появятся 4 изменённые страницы. Прошлая версия останется в истории публикаций — к ней можно вернуться.",
+  confirmLabel = "Опубликовать",
+  cancelLabel = "Не сейчас",
+  destructive = false,
+  onConfirm,
+  onCancel,
+  accent,
+  className,
+  style,
+  ...props
+}: Alert004Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-alert-004-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-alert-004" precedence="medium">
+        {STYLES}
+      </style>
+      <div
+        {...props}
+        data-vibeui-block="alert-004"
+        data-destructive={destructive || undefined}
+        role={destructive ? "alertdialog" : "region"}
+        aria-label={title}
+        className={className}
+        style={palette}
+      >
+        <span data-part="icon" aria-hidden="true">
+          {destructive ? "!" : "?"}
+        </span>
+        <span data-part="text">
+          <span data-part="title">{title}</span>
+          {description ? (
+            <span data-part="description">{description}</span>
+          ) : null}
+          <span data-part="actions">
+            <button data-part="confirm" type="button" onClick={onConfirm}>
+              {confirmLabel}
+            </button>
+            <button data-part="cancel" type="button" onClick={onCancel}>
+              {cancelLabel}
+            </button>
+          </span>
+        </span>
+      </div>
+    </>
+  )
+}

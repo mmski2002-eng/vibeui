@@ -13,6 +13,7 @@
     "registry/blocks/footer/registry.json",
     "registry/components/buttons/registry.json",
     "registry/components/accordion/registry.json",
+    "registry/components/alert/registry.json",
     "registry/components/inputs/registry.json",
     "registry/components/display/registry.json",
     "registry/components/feedback/registry.json",

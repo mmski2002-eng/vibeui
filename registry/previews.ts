@@ -35,6 +35,26 @@ import { Accordion008 } from "@/registry/components/accordion/accordion-008/acco
 import { Accordion009 } from "@/registry/components/accordion/accordion-009/accordion-009"
 import { Accordion010 } from "@/registry/components/accordion/accordion-010/accordion-010"
 import { Accordion011 } from "@/registry/components/accordion/accordion-011/accordion-011"
+import { Alert001 } from "@/registry/components/alert/alert-001/alert-001"
+import { Alert002 } from "@/registry/components/alert/alert-002/alert-002"
+import { Alert003 } from "@/registry/components/alert/alert-003/alert-003"
+import { Alert004 } from "@/registry/components/alert/alert-004/alert-004"
+import { Alert005 } from "@/registry/components/alert/alert-005/alert-005"
+import { Alert006 } from "@/registry/components/alert/alert-006/alert-006"
+import { Alert007 } from "@/registry/components/alert/alert-007/alert-007"
+import { Alert008 } from "@/registry/components/alert/alert-008/alert-008"
+import { Alert009 } from "@/registry/components/alert/alert-009/alert-009"
+import { Alert010 } from "@/registry/components/alert/alert-010/alert-010"
+import { Alert011 } from "@/registry/components/alert/alert-011/alert-011"
+import { Alert012 } from "@/registry/components/alert/alert-012/alert-012"
+import { Alert013 } from "@/registry/components/alert/alert-013/alert-013"
+import { Alert014 } from "@/registry/components/alert/alert-014/alert-014"
+import { Alert015 } from "@/registry/components/alert/alert-015/alert-015"
+import { Alert016 } from "@/registry/components/alert/alert-016/alert-016"
+import { Alert017 } from "@/registry/components/alert/alert-017/alert-017"
+import { Alert018 } from "@/registry/components/alert/alert-018/alert-018"
+import { Alert019 } from "@/registry/components/alert/alert-019/alert-019"
+import { Alert020 } from "@/registry/components/alert/alert-020/alert-020"
 import { Input001 } from "@/registry/components/inputs/input-001/input-001"
 import { Input002 } from "@/registry/components/inputs/input-002/input-002"
 import { Textarea001 } from "@/registry/components/inputs/textarea-001/textarea-001"
@@ -46,7 +66,6 @@ import { Avatar001 } from "@/registry/components/display/avatar-001/avatar-001"
 import { Card001 } from "@/registry/components/display/card-001/card-001"
 import { Skeleton001 } from "@/registry/components/display/skeleton-001/skeleton-001"
 import { Progress001 } from "@/registry/components/display/progress-001/progress-001"
-import { Alert001 } from "@/registry/components/feedback/alert-001/alert-001"
 import { Dialog001 } from "@/registry/components/feedback/dialog-001/dialog-001"
 import { Toast001 } from "@/registry/components/feedback/toast-001/toast-001"
 import { Empty001 } from "@/registry/components/feedback/empty-001/empty-001"
@@ -105,6 +124,26 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "accordion-009": Accordion009,
   "accordion-010": Accordion010,
   "accordion-011": Accordion011,
+  "alert-001": Alert001,
+  "alert-002": Alert002,
+  "alert-003": Alert003,
+  "alert-004": Alert004,
+  "alert-005": Alert005,
+  "alert-006": Alert006,
+  "alert-007": Alert007,
+  "alert-008": Alert008,
+  "alert-009": Alert009,
+  "alert-010": Alert010,
+  "alert-011": Alert011,
+  "alert-012": Alert012,
+  "alert-013": Alert013,
+  "alert-014": Alert014,
+  "alert-015": Alert015,
+  "alert-016": Alert016,
+  "alert-017": Alert017,
+  "alert-018": Alert018,
+  "alert-019": Alert019,
+  "alert-020": Alert020,
   "input-001": Input001,
   "input-002": Input002,
   "textarea-001": Textarea001,
@@ -116,7 +155,6 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "card-001": Card001,
   "skeleton-001": Skeleton001,
   "progress-001": Progress001,
-  "alert-001": Alert001,
   "dialog-001": Dialog001,
   "toast-001": Toast001,
   "empty-001": Empty001,

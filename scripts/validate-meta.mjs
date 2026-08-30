@@ -274,6 +274,20 @@ function validateSource(where, directory, item) {
     }
   }
 
+  // Контейнерный запрос применяется к потомкам контейнера, но не к нему
+  // самому. Правило внутри @container, целящее в корень блока, молча не
+  // работает: раскладка на узкой ширине остаётся прежней, и это замечают
+  // только глазами. Проверяем, потому что ловушка уже срабатывала.
+  for (const query of source.matchAll(/@container[^{]*\{([\s\S]*?)\n\}/g)) {
+    const selfRule = query[1].match(/\[data-vibeui-block="[^"]+"\]\s*\{[^}]*\}/)
+
+    if (selfRule) {
+      errors.push(
+        `${where}: внутри @container есть правило для самого блока (${selfRule[0].slice(0, 60)}…) — контейнерный запрос действует только на потомков`,
+      )
+    }
+  }
+
   const animated = /@keyframes|transition:|animation:/.test(source)
 
   if (animated && !source.includes("prefers-reduced-motion")) {

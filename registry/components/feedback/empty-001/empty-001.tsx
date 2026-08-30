@@ -66,9 +66,11 @@ transition:background-color .16s ease;
 [data-vibeui-block="empty-001"] [data-part="action"]:hover{background:color-mix(in oklab,var(--vibeui-empty-001-accent) 88%,black)}
 [data-vibeui-block="empty-001"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-empty-001-accent);outline-offset:2px}
 [data-vibeui-block="empty-001"] [data-part="hint"]{margin-top:0.5rem;font-size:0.75rem;color:var(--vibeui-empty-001-muted)}
+/* Отступы корня заданы один раз: контейнерный запрос применяется к потомкам
+   контейнера, но не к нему самому, поэтому здесь адаптируется типографика. */
 @container (min-width: 30rem){
-[data-vibeui-block="empty-001"]{padding:3.25rem 2rem}
 [data-vibeui-block="empty-001"] [data-part="title"]{font-size:1.125rem}
+[data-vibeui-block="empty-001"] [data-part="description"]{font-size:0.9375rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="empty-001"] *{animation:none!important;transition:none!important}}
 `

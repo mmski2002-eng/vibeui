@@ -28,7 +28,10 @@ const STYLES = `
 container-type:inline-size;
 }
 [data-vibeui-block="alert-001"]{
-position:relative;display:flex;align-items:flex-start;gap:0.75rem;
+/* flex-wrap живёт здесь, а не в @container: контейнерный запрос применяется
+   к потомкам контейнера, но не к нему самому. На широкой раскладке перенос
+   ни на что не влияет — всё умещается в строку. */
+position:relative;display:flex;flex-wrap:wrap;align-items:flex-start;gap:0.75rem;
 width:100%;box-sizing:border-box;overflow:hidden;
 padding:0.875rem 1rem 0.875rem 1.125rem;
 border:1px solid var(--vibeui-alert-001-border);
@@ -61,7 +64,8 @@ font-size:0.8125rem;font-weight:500;color:var(--vibeui-alert-001-tone);
 [data-vibeui-block="alert-001"][data-tone="danger"]{--vibeui-alert-001-tone:oklch(0.56 0.19 25)}
 /* В узкой колонке действие уходит под текст, а не сжимает его. */
 @container (max-width: 26rem){
-[data-vibeui-block="alert-001"]{flex-wrap:wrap}
+/* Текст занимает строку целиком, иначе действие сжимает его до нуля. */
+[data-vibeui-block="alert-001"] [data-part="text"]{flex:1 1 100%}
 [data-vibeui-block="alert-001"] [data-part="action"]{width:100%;padding-left:2rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="alert-001"] *{animation:none!important;transition:none!important}}
