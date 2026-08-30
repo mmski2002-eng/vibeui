@@ -33,7 +33,7 @@
 | `display`    | avatar, badge, card, item, icon tile, icon stack, aspect ratio, separator, frame, code block, timeline, carousel, accordion, collapsible, scroll area, resizable, tree, skeleton, spinner, progress |  ~265 |     6 |
 | `feedback`   | alert, alert dialog, dialog, drawer, sheet, popover, tooltip, hover card, toast, empty state                                                                                                        |  ~130 |     6 |
 | `navigation` | breadcrumb, dropdown menu, context menu, menubar, navigation menu, tabs, stepper, command, scrollspy                                                                                                |   ~85 |     6 |
-| `tables`     | table, data grid, pagination                                                                                                                                                                        |   ~60 |     0 |
+| `tables`     | table, data grid, pagination                                                                                                                                                                        |   ~60 |     3 |
 | `charts`     | chart (line, bar, area, pie, radial), sparkline                                                                                                                                                     |   ~55 |     0 |
 | `calendar`   | calendar, event calendar, gantt, kanban, sortable, filters                                                                                                                                          |   ~70 |     0 |
 
@@ -84,7 +84,10 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
    `breadcrumb-001` (свёртка середины), `dropdown-001` (popover + якоря,
    без JS), `stepper-001`, `pagination-001` (ссылки, не кнопки),
    `sidebar-001`. Дальше: menubar, command, scrollspy, context menu.
-6. Блоки — только после того, как компонентная база закрывает их нужды.
+6. `tables` — первая волна закрыта: `table-001` (данные, липкая шапка),
+   `table-002` (сравнение, липкая первая колонка), `table-003` (счёт с
+   итогом из строк). Дальше: data grid с сортировкой.
+7. Блоки — компонентная база закрывает их нужды, можно начинать.
 
 Ритм — пачка на категорию: спека всех items категории сразу (иначе выходят
 вариации одного и того же), потом реализация по одному, потом отдельный

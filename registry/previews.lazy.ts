@@ -221,4 +221,19 @@ export const LAZY_PREVIEWS = {
       (module) => module.Sidebar001,
     ),
   ),
+  "table-001": dynamic(() =>
+    import("@/registry/components/tables/table-001/table-001").then(
+      (module) => module.Table001,
+    ),
+  ),
+  "table-002": dynamic(() =>
+    import("@/registry/components/tables/table-002/table-002").then(
+      (module) => module.Table002,
+    ),
+  ),
+  "table-003": dynamic(() =>
+    import("@/registry/components/tables/table-003/table-003").then(
+      (module) => module.Table003,
+    ),
+  ),
 } as unknown as Record<string, ComponentType<PreviewProps>>

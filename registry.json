@@ -10,6 +10,7 @@
     "registry/components/inputs/registry.json",
     "registry/components/display/registry.json",
     "registry/components/feedback/registry.json",
-    "registry/components/navigation/registry.json"
+    "registry/components/navigation/registry.json",
+    "registry/components/tables/registry.json"
   ]
 }

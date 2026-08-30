@@ -43,6 +43,9 @@ import { Dropdown001 } from "@/registry/components/navigation/dropdown-001/dropd
 import { Stepper001 } from "@/registry/components/navigation/stepper-001/stepper-001"
 import { Pagination001 } from "@/registry/components/navigation/pagination-001/pagination-001"
 import { Sidebar001 } from "@/registry/components/navigation/sidebar-001/sidebar-001"
+import { Table001 } from "@/registry/components/tables/table-001/table-001"
+import { Table002 } from "@/registry/components/tables/table-002/table-002"
+import { Table003 } from "@/registry/components/tables/table-003/table-003"
 
 /**
  * Карта slug -> React-компонент. Из неё рендерятся и миниатюра каталога,
@@ -92,4 +95,7 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "stepper-001": Stepper001,
   "pagination-001": Pagination001,
   "sidebar-001": Sidebar001,
+  "table-001": Table001,
+  "table-002": Table002,
+  "table-003": Table003,
 }

@@ -1,0 +1,356 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "table-001",
+      "type": "registry:component",
+      "title": "Data Table",
+      "description": "Таблица данных с липкой шапкой и прокруткой внутри рамки. Числовые колонки идут вправо моноширинными цифрами, поэтому разряды стоят под разрядами.",
+      "categories": ["tables"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "table-001/table-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/table-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-table-001-*. Прокрутка живёт в обёртке, а не на странице: таблица не ломает раскладку на узком экране. Шапка липнет к верху обёртки через position:sticky. Числовые колонки помечаются флагом numeric в описании колонок и получают выравнивание вправо и tabular-nums. Плотный режим меняет одну переменную отступа.",
+      "meta": {
+        "tags": ["table", "data", "sticky header", "numbers"],
+        "preview": {
+          "surface": "light",
+          "width": "full"
+        },
+        "ai": {
+          "export": "Table001",
+          "usage": "<Table001\n  caption=\"Страницы сайта за март\"\n  columns={[\n    { key: \"page\", label: \"Страница\" },\n    { key: \"views\", label: \"Просмотры\", numeric: true },\n  ]}\n  rows={rows}\n/>",
+          "summary": "Таблица данных: липкая шапка, прокрутка внутри рамки, подсветка строки под курсором, плотный режим. Числовые колонки объявляются флагом и выравниваются вправо моноширинными цифрами. Ячейки принимают ReactNode, поэтому в них можно положить плашку статуса или ссылку. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-table-001-* и не подменять её токенами вашей темы (bg-muted, border-border и подобными)",
+            "прокрутку в обёртке, а не на странице: без неё широкая таблица растягивает раскладку на телефоне",
+            "липкую шапку через position:sticky у th — при прокрутке длинного списка колонки теряются",
+            "выравнивание чисел вправо вместе с font-variant-numeric:tabular-nums: иначе разряды не совпадают между строками",
+            "семантику таблицы: thead, tbody, th со scope=\"col\" и caption — это данные, а не сетка из div'ов",
+            "border-collapse:separate вместе с border-bottom у ячеек: с collapse липкая шапка теряет границу",
+            "блок <style> внутри компонента — в нём вся палитра, отступы и липкая шапка"
+          ],
+          "adapt": [
+            "массивы columns и rows; ячейка принимает ReactNode — можно положить плашку или ссылку",
+            "caption — подпись над таблицей, она же заголовок для скринридера",
+            "dense — плотный режим для длинных списков",
+            "акцент через проп accent — цвет ссылок внутри таблицы",
+            "максимальную высоту и ширину через className"
+          ],
+          "notes": [
+            "Сортировки и фильтров здесь нет: это таблица, а не data grid. Сортировку добавляйте снаружи, меняя порядок rows.",
+            "Не превращайте таблицу в раскладку карточек на мобильном: горизонтальная прокрутка честнее и сохраняет сравнимость строк.",
+            "Ключи ячеек берутся из column.key. Если ключа нет в строке, ячейка останется пустой — это не ошибка компонента.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Страницы сайта за март",
+            "maxLength": 60
+          },
+          {
+            "prop": "dense",
+            "label": "Плотно",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A data table with a sticky header and scrolling inside its own frame. Numeric columns align right in tabular figures, so digits line up across rows.",
+            "ai": {
+              "summary": "A data table: sticky header, scrolling inside the frame, row hover and a dense mode. Numeric columns are declared by a flag and align right in tabular figures. Cells accept ReactNode, so a status badge or a link fits inside. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-table-001-* palette — do not swap it for your theme tokens (bg-muted, border-border and the like)",
+                "scrolling inside the wrapper rather than the page: without it a wide table stretches the layout on a phone",
+                "the sticky header through position:sticky on th — scrolling a long list otherwise loses the columns",
+                "right alignment together with font-variant-numeric:tabular-nums: otherwise digits do not line up between rows",
+                "the table semantics: thead, tbody, th with scope=\"col\" and a caption — this is data, not a grid of divs",
+                "border-collapse:separate together with per-cell borders: with collapse the sticky header loses its rule",
+                "the <style> block inside the component — it holds the palette, the spacing and the sticky header"
+              ],
+              "adapt": [
+                "the columns and rows arrays; a cell takes a ReactNode, so a badge or link fits",
+                "caption — the label above the table, and the heading a screen reader announces",
+                "dense — the compact mode for long lists",
+                "the accent through the accent prop — it colours links inside the table",
+                "max height and width through className"
+              ],
+              "notes": [
+                "There is no sorting or filtering here: this is a table, not a data grid. Sort outside and pass reordered rows.",
+                "Do not turn the table into cards on mobile: horizontal scrolling is more honest and keeps rows comparable.",
+                "Cell keys come from column.key. A key missing from a row leaves the cell empty — that is not a bug.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Table001\n  caption=\"Pages in March\"\n  columns={[\n    { key: \"page\", label: \"Page\" },\n    { key: \"views\", label: \"Views\", numeric: true },\n  ]}\n  rows={rows}\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Pages in March"
+              },
+              "dense": {
+                "label": "Dense"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "table-002",
+      "type": "registry:component",
+      "title": "Comparison Table",
+      "description": "Таблица сравнения вариантов: первая колонка липнет при прокрутке вправо, а выбранный вариант подсвечен целиком, а не только в заголовке.",
+      "categories": ["tables"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "table-002/table-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/table-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-table-002-*. Первая колонка держится на position:sticky с левым краем и тенью-границей. Значение ячейки — либо строка, либо булево: булево превращается в галочку или прочерк, рядом с которыми лежит слово для скринридера. Подсветка колонки ставится data-атрибутом на ячейки всех строк, а не только шапки.",
+      "meta": {
+        "tags": ["comparison", "table", "pricing", "features"],
+        "preview": {
+          "surface": "light",
+          "width": "full"
+        },
+        "ai": {
+          "export": "Table002",
+          "usage": "<Table002\n  options={[\"Старт\", \"Команда\", \"Студия\"]}\n  highlight={1}\n  rows={[{ label: \"Свой домен\", values: [false, true, true] }]}\n/>",
+          "summary": "Таблица сравнения: варианты в колонках, свойства в строках. Первая колонка липнет при горизонтальной прокрутке, поэтому строка не теряет подпись; рекомендованный вариант подсвечен во всех строках. Булево значение превращается в галочку или прочерк со скрытым словом для скринридера. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-table-002-* и не подменять её токенами вашей темы (bg-muted, text-primary и подобными)",
+            "липкую первую колонку с тенью-границей: при прокрутке вправо без неё непонятно, что за строка",
+            "подсветку колонки во всех строках, а не только в шапке — иначе взгляд теряет выбранный вариант на середине таблицы",
+            "скрытое слово рядом с галочкой и прочерком: «✓» и «—» скринридер читает как символы",
+            "th со scope=\"row\" у подписей строк и scope=\"col\" у вариантов — это то, что связывает ячейку с двумя заголовками",
+            "горизонтальную прокрутку в обёртке: сравнение из пяти колонок не помещается на телефоне",
+            "блок <style> внутри компонента — в нём вся палитра, липкая колонка и подсветка"
+          ],
+          "adapt": [
+            "options — названия вариантов, rows — свойства и значения",
+            "highlight — номер выделенной колонки; -1 убирает выделение",
+            "значения: строка показывается как есть, булево превращается в галочку или прочерк",
+            "акцент через проп accent — цвет подсветки выбранной колонки",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Не сравнивайте больше четырёх вариантов: колонки становятся уже читаемого минимума.",
+            "Строки должны быть про одно и то же у всех вариантов. Свойство, которого нет у остальных, выглядит как преимущество, а не как отличие.",
+            "Кнопки выбора тарифа здесь нет намеренно: сравнение отвечает на вопрос «чем отличаются», а покупку делает блок тарифов.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "highlight",
+            "label": "Выделить колонку",
+            "type": "number",
+            "default": 1,
+            "min": -1,
+            "max": 2
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A comparison table: the first column sticks while scrolling right, and the chosen option is highlighted through every row, not just the header.",
+            "ai": {
+              "summary": "A comparison table: options across, features down. The first column sticks during horizontal scrolling so a row never loses its label, and the recommended option is highlighted in every row. A boolean becomes a check or a dash with a hidden word for screen readers. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-table-002-* palette — do not swap it for your theme tokens (bg-muted, text-primary and the like)",
+                "the sticky first column with its shadow border: scrolling right without it leaves rows unlabelled",
+                "highlighting the column through every row rather than the header alone — otherwise the eye loses the chosen option mid-table",
+                "the hidden word beside the check and the dash: a screen reader reads \"✓\" and \"—\" as symbols",
+                "th with scope=\"row\" on the feature labels and scope=\"col\" on the options — that is what ties a cell to both headers",
+                "horizontal scrolling in the wrapper: a five-column comparison does not fit a phone",
+                "the <style> block inside the component — it holds the palette, the sticky column and the highlight"
+              ],
+              "adapt": [
+                "options — the names being compared, rows — the features and values",
+                "highlight — the index of the highlighted column; -1 removes it",
+                "the values: a string shows as-is, a boolean becomes a check or a dash",
+                "the accent through the accent prop — it colours the highlighted column",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "Do not compare more than four options: the columns fall below a readable width.",
+                "Every row must describe the same thing across options. A feature only one option has reads as a benefit rather than a difference.",
+                "There is deliberately no buy button: comparison answers \"how do they differ\", while the pricing block does the selling.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Table002\n  options={[\"Start\", \"Team\", \"Studio\"]}\n  highlight={1}\n  rows={[{ label: \"Custom domain\", values: [false, true, true] }]}\n/>"
+            },
+            "controls": {
+              "highlight": {
+                "label": "Highlight column"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "table-003",
+      "type": "registry:component",
+      "title": "Invoice Table",
+      "description": "Таблица позиций со счётом: итог считается из строк и липнет к низу, поэтому сумма видна и на середине длинного списка.",
+      "categories": ["tables"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "table-003/table-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/table-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-table-003-*. Итог и налог считаются из массива строк прямо в компоненте — отдельного пропа «сумма» нет, поэтому разойтись с позициями они не могут. Строка итога лежит в <tfoot> и липнет к низу обёртки. Суммы форматируются локальной функцией: пробел как разделитель тысяч, запятая в дробной части, символ валюты пропом — Intl не используется, чтобы не зависеть от локали проекта.",
+      "meta": {
+        "tags": ["invoice", "table", "total", "money"],
+        "preview": {
+          "surface": "light",
+          "width": "full"
+        },
+        "ai": {
+          "export": "Table003",
+          "usage": "<Table003\n  caption=\"Счёт на оплату\"\n  taxRate={20}\n  lines={[{ title: \"Тариф «Команда»\", quantity: 1, amount: 28800 }]}\n/>",
+          "summary": "Таблица позиций счёта: название с пояснением, количество, сумма. Подытог, налог и итог считаются из строк, поэтому цифры не расходятся с позициями. Итог стоит в tfoot и липнет к низу обёртки. Суммы выровнены по правому краю моноширинными цифрами. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-table-003-* и не подменять её токенами вашей темы (bg-muted, border-border и подобными)",
+            "подсчёт итога из строк, а не отдельным пропом: сумма и позиции обязаны быть одним источником",
+            "строку итога в <tfoot>: это семантика итога, а не просто последняя строка таблицы",
+            "липкий tfoot: в длинном счёте сумма должна быть видна без прокрутки до конца",
+            "выравнивание сумм вправо с tabular-nums — деньги читают по разрядам",
+            "формат суммы: пробел между тысячами и запятая в дробной части, символ валюты отдельно",
+            "блок <style> внутри компонента — в нём вся палитра, отступы и липкий итог"
+          ],
+          "adapt": [
+            "массив lines: название, пояснение, количество и сумма позиции",
+            "taxRate — ставка налога в процентах; 0 убирает строку налога",
+            "currency — символ валюты",
+            "caption — заголовок документа",
+            "ширину и максимальную высоту через className",
+            "акцент через проп accent — цвет итоговой суммы"
+          ],
+          "notes": [
+            "Суммы приходят числами в основных единицах. Если считаете в копейках, делите перед передачей — компонент арифметику не угадывает.",
+            "Формат намеренно русский и не зависит от локали проекта. Для другой страны поменяйте formatAmount в своей копии.",
+            "Скидки и предоплата не заложены: добавляйте их отдельными строками с отрицательной суммой.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Счёт на оплату",
+            "maxLength": 40
+          },
+          {
+            "prop": "taxRate",
+            "label": "НДС, %",
+            "type": "number",
+            "default": 20,
+            "min": 0,
+            "max": 30
+          },
+          {
+            "prop": "currency",
+            "label": "Валюта",
+            "type": "text",
+            "default": "₽",
+            "maxLength": 4
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An invoice table whose total is computed from the lines and sticks to the bottom, so the amount stays visible halfway down a long list.",
+            "ai": {
+              "summary": "An invoice table: line title with a note, quantity and amount. The subtotal, tax and total are computed from the lines, so the figures cannot drift from the items. The total sits in tfoot and sticks to the bottom of the frame. Amounts align right in tabular figures. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-table-003-* palette — do not swap it for your theme tokens (bg-muted, border-border and the like)",
+                "computing the total from the lines rather than taking it as a prop: the amount and the items must have one source",
+                "the total row in <tfoot>: that is the semantics of a total, not merely the last row",
+                "the sticky tfoot: in a long invoice the amount has to be visible without scrolling to the end",
+                "right-aligned amounts with tabular-nums — money is read by digit columns",
+                "the amount format: a space between thousands, a comma for the fraction, the currency symbol separate",
+                "the <style> block inside the component — it holds the palette, the spacing and the sticky total"
+              ],
+              "adapt": [
+                "the lines array: title, note, quantity and amount",
+                "taxRate — the tax percentage; 0 removes the tax row",
+                "currency — the currency symbol",
+                "caption — the document heading",
+                "width and max height through className",
+                "the accent through the accent prop — it colours the total amount"
+              ],
+              "notes": [
+                "Amounts arrive as numbers in major units. If you store cents, divide before passing them — the component does not guess the arithmetic.",
+                "The format is deliberately Russian and independent of the project locale. For another country change formatAmount in your copy.",
+                "Discounts and prepayments are not built in: add them as lines with a negative amount.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Table003\n  caption=\"Invoice\"\n  taxRate={20}\n  lines={[{ title: \"Team plan\", quantity: 1, amount: 28800 }]}\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Heading",
+                "default": "Invoice"
+              },
+              "taxRate": {
+                "label": "Tax, %"
+              },
+              "currency": {
+                "label": "Currency",
+                "default": "€"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
