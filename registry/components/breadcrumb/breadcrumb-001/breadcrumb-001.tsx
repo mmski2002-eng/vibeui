@@ -20,12 +20,19 @@ export type Breadcrumb001Props = Omit<
 // находимся; их и оставляем, а середину прячем за многоточием.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-001"]){
+--vibeui-breadcrumb-001-surface:oklch(1 0 0);
+--vibeui-breadcrumb-001-surface-border:oklch(0.91 0.006 265);
 --vibeui-breadcrumb-001-fg:oklch(0.28 0.016 265);
 --vibeui-breadcrumb-001-muted:oklch(0.55 0.014 265);
 --vibeui-breadcrumb-001-accent:oklch(0.55 0.2 262);
 --vibeui-breadcrumb-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Собственная подложка: крошки — это текст, и на тёмной странице
+   он обязан читаться без правки палитры проекта. */
 [data-vibeui-block="breadcrumb-001"]{
+box-sizing:border-box;padding:0.5rem 0.75rem;
+background:var(--vibeui-breadcrumb-001-surface);
+border:1px solid var(--vibeui-breadcrumb-001-surface-border);border-radius:0.625rem;
 font-family:var(--vibeui-breadcrumb-001-font);font-size:0.8125rem;line-height:1.4;
 }
 [data-vibeui-block="breadcrumb-001"] ol{

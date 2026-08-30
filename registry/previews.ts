@@ -113,6 +113,18 @@ import { Badge009 } from "@/registry/components/badge/badge-009/badge-009"
 import { Badge010 } from "@/registry/components/badge/badge-010/badge-010"
 import { Badge011 } from "@/registry/components/badge/badge-011/badge-011"
 import { Badge012 } from "@/registry/components/badge/badge-012/badge-012"
+import { Breadcrumb001 } from "@/registry/components/breadcrumb/breadcrumb-001/breadcrumb-001"
+import { Breadcrumb002 } from "@/registry/components/breadcrumb/breadcrumb-002/breadcrumb-002"
+import { Breadcrumb003 } from "@/registry/components/breadcrumb/breadcrumb-003/breadcrumb-003"
+import { Breadcrumb004 } from "@/registry/components/breadcrumb/breadcrumb-004/breadcrumb-004"
+import { Breadcrumb005 } from "@/registry/components/breadcrumb/breadcrumb-005/breadcrumb-005"
+import { Breadcrumb006 } from "@/registry/components/breadcrumb/breadcrumb-006/breadcrumb-006"
+import { Breadcrumb007 } from "@/registry/components/breadcrumb/breadcrumb-007/breadcrumb-007"
+import { Breadcrumb008 } from "@/registry/components/breadcrumb/breadcrumb-008/breadcrumb-008"
+import { Breadcrumb009 } from "@/registry/components/breadcrumb/breadcrumb-009/breadcrumb-009"
+import { Breadcrumb010 } from "@/registry/components/breadcrumb/breadcrumb-010/breadcrumb-010"
+import { Breadcrumb011 } from "@/registry/components/breadcrumb/breadcrumb-011/breadcrumb-011"
+import { Breadcrumb012 } from "@/registry/components/breadcrumb/breadcrumb-012/breadcrumb-012"
 import { Input001 } from "@/registry/components/inputs/input-001/input-001"
 import { Input002 } from "@/registry/components/inputs/input-002/input-002"
 import { Textarea001 } from "@/registry/components/inputs/textarea-001/textarea-001"
@@ -127,7 +139,6 @@ import { Empty001 } from "@/registry/components/feedback/empty-001/empty-001"
 import { Tooltip001 } from "@/registry/components/feedback/tooltip-001/tooltip-001"
 import { Banner001 } from "@/registry/components/feedback/banner-001/banner-001"
 import { Tabs001 } from "@/registry/components/navigation/tabs-001/tabs-001"
-import { Breadcrumb001 } from "@/registry/components/navigation/breadcrumb-001/breadcrumb-001"
 import { Dropdown001 } from "@/registry/components/navigation/dropdown-001/dropdown-001"
 import { Stepper001 } from "@/registry/components/navigation/stepper-001/stepper-001"
 import { Pagination001 } from "@/registry/components/navigation/pagination-001/pagination-001"
@@ -257,6 +268,18 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "badge-010": Badge010,
   "badge-011": Badge011,
   "badge-012": Badge012,
+  "breadcrumb-001": Breadcrumb001,
+  "breadcrumb-002": Breadcrumb002,
+  "breadcrumb-003": Breadcrumb003,
+  "breadcrumb-004": Breadcrumb004,
+  "breadcrumb-005": Breadcrumb005,
+  "breadcrumb-006": Breadcrumb006,
+  "breadcrumb-007": Breadcrumb007,
+  "breadcrumb-008": Breadcrumb008,
+  "breadcrumb-009": Breadcrumb009,
+  "breadcrumb-010": Breadcrumb010,
+  "breadcrumb-011": Breadcrumb011,
+  "breadcrumb-012": Breadcrumb012,
   "input-001": Input001,
   "input-002": Input002,
   "textarea-001": Textarea001,
@@ -271,7 +294,6 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "tooltip-001": Tooltip001,
   "banner-001": Banner001,
   "tabs-001": Tabs001,
-  "breadcrumb-001": Breadcrumb001,
   "dropdown-001": Dropdown001,
   "stepper-001": Stepper001,
   "pagination-001": Pagination001,

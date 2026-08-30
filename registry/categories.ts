@@ -49,6 +49,7 @@ export const CATEGORIES = [
   { slug: "autocomplete", label: "Autocomplete", group: "application" },
   { slug: "avatar", label: "Avatar", group: "application" },
   { slug: "badge", label: "Badge", group: "application" },
+  { slug: "breadcrumb", label: "Breadcrumb", group: "navigation" },
   { slug: "inputs", label: "Inputs", group: "application" },
   { slug: "display", label: "Display", group: "application" },
   { slug: "feedback", label: "Feedback", group: "application" },

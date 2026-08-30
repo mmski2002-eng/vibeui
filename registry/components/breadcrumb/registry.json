@@ -1,0 +1,1240 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "breadcrumb-001",
+      "type": "registry:component",
+      "title": "Collapsing Breadcrumb",
+      "description": "Хлебные крошки, которые при нехватке места сворачиваются посередине, а не обрезаются с конца: остаются корень и текущий уровень.",
+      "categories": ["breadcrumb"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "breadcrumb-001/breadcrumb-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/breadcrumb-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-001-*. Разметка семантическая: <nav> с подписью, внутри <ol> — порядок уровней имеет значение. Текущий уровень не ссылка и помечен aria-current=\"page\". Разделитель — грань квадрата, повёрнутая на 45°, поэтому шрифтовые символы и иконки не нужны. Свёртка считается по maxVisible: первый уровень, многоточие, затем последние.",
+      "meta": {
+        "tags": ["breadcrumb", "navigation", "path", "aria"],
+        "ai": {
+          "export": "Breadcrumb001",
+          "usage": "<Breadcrumb001\n  items={[\n    { label: \"Проекты\", href: \"/projects\" },\n    { label: \"Сайт студии\", href: \"/projects/studio\" },\n    { label: \"Главная\" },\n  ]}\n/>",
+          "summary": "Хлебные крошки со свёрткой середины: при длинном пути остаются корень, многоточие и последние уровни. Текущий уровень — не ссылка и помечен aria-current. Разделители нарисованы на CSS. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-breadcrumb-001-* и не подменять её токенами вашей темы (text-muted-foreground и подобными)",
+            "свёртку именно середины: обрезка с конца прячет текущий уровень — то единственное, что говорит, где пользователь находится",
+            "семантику <nav> + <ol> с подписью: это список уровней, а не набор ссылок",
+            "текущий уровень как текст с aria-current=\"page\", а не как ссылку на саму себя",
+            "разделители с aria-hidden: скринридер не должен читать «стрелка» между уровнями",
+            "многоточие как неинтерактивный знак: раскрывающееся меню — это уже другой компонент",
+            "блок <style> внутри компонента — в нём вся палитра, разделители и обрезка длинных подписей"
+          ],
+          "adapt": [
+            "массив items: подписи и адреса; у последнего элемента адрес не нужен",
+            "maxVisible — сколько уровней показывать до свёртки",
+            "акцент через проп accent — цвет кольца фокуса",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Крошки показывают положение в структуре сайта, а не историю переходов. Не собирайте их из истории браузера.",
+            "Не делайте крошки единственным способом вернуться назад на мобильном: там для этого есть кнопка «назад».",
+            "Свёртка считается по количеству уровней, а не по реальной ширине. Для очень длинных подписей уменьшайте maxVisible.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "maxVisible",
+            "label": "Уровней",
+            "type": "number",
+            "default": 3,
+            "min": 2,
+            "max": 6
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A breadcrumb that collapses in the middle rather than truncating at the end: the root and the current level always survive.",
+            "ai": {
+              "summary": "A breadcrumb that collapses its middle: on a long path the root, an ellipsis and the last levels remain. The current level is not a link and carries aria-current. The separators are drawn in CSS. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-breadcrumb-001-* palette — do not swap it for your theme tokens (text-muted-foreground and the like)",
+                "collapsing the middle specifically: truncating the end hides the current level, the one thing that says where the user is",
+                "the <nav> + <ol> semantics with a label: this is a list of levels, not a pile of links",
+                "the current level as text with aria-current=\"page\" rather than a link to itself",
+                "aria-hidden on the separators: a screen reader should not read \"arrow\" between levels",
+                "the ellipsis as a non-interactive mark: a menu that expands it is a different component",
+                "the <style> block inside the component — it holds the palette, the separators and the label truncation"
+              ],
+              "adapt": [
+                "the items array: labels and hrefs; the last item needs no href",
+                "maxVisible — how many levels show before collapsing",
+                "the accent through the accent prop — it colours the focus ring",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "A breadcrumb shows position in the site structure, not browsing history. Do not build it from the history stack.",
+                "Do not make it the only way back on mobile: the platform back gesture already covers that.",
+                "The collapse counts levels, not real width. For very long labels lower maxVisible.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Breadcrumb001\n  items={[\n    { label: \"Projects\", href: \"/projects\" },\n    { label: \"Studio site\", href: \"/projects/studio\" },\n    { label: \"Home\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "maxVisible": {
+                "label": "Levels"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "breadcrumb-002",
+      "type": "registry:component",
+      "title": "Slash Breadcrumb",
+      "description": "Минимальные крошки без рамок: разделитель нарисован в CSS, поэтому скринридер не читает «слэш» на каждом уровне.",
+      "categories": ["breadcrumb"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "breadcrumb-002/breadcrumb-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/breadcrumb-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-002-*. Серверный: хуков нет. Разметка — nav с aria-label и упорядоченный список: порядок уровней несёт смысл. Разделитель приходит через переменную и печатается псевдоэлементом li + li::before. Последний уровень рендерится span с aria-current=\"page\", а не ссылкой.",
+      "meta": {
+        "tags": ["breadcrumb", "navigation", "minimal", "a11y"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Breadcrumb002",
+          "usage": "<Breadcrumb002\n  items={[{ label: \"Главная\", href: \"/\" }, { label: \"Каталог\" }]}\n  separator=\"/\"\n/>",
+          "summary": "Простые хлебные крошки: список ссылок, разделитель из CSS и текущий уровень без ссылки. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-breadcrumb-002-* и не подменять её токенами вашей темы",
+            "разделитель псевдоэлементом: символ в разметке скринридер читает на каждом уровне",
+            "nav с aria-label и <ol> внутри — порядок уровней и есть смысл крошек",
+            "aria-current=\"page\" на последнем уровне вместо ссылки на текущую страницу",
+            "подчёркивание по наведению: цветом одним ссылку от текста не отличить",
+            "перенос на вторую строку вместо горизонтального обрезания"
+          ],
+          "adapt": [
+            "массив items",
+            "separator — символ между уровнями",
+            "акцент через проп accent — цвет фокусного кольца",
+            "кегль под свою типографику"
+          ],
+          "notes": [
+            "Длинный путь этот вариант не сворачивает: для него breadcrumb-001 или breadcrumb-004.",
+            "Разделитель — украшение, а не содержание: не кладите в него стрелки со смыслом «дальше».",
+            "Крошки показывают положение в структуре, а не историю переходов: не подменяйте их кнопкой «назад».",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "separator",
+            "label": "Разделитель",
+            "type": "text",
+            "default": "/",
+            "maxLength": 3
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Minimal crumbs with no chrome: the separator is drawn in CSS, so a screen reader never reads \"slash\" at every level.",
+            "ai": {
+              "summary": "Plain breadcrumbs: a list of links, a CSS separator and a current level that is not a link. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-breadcrumb-002-* palette — do not swap it for your theme tokens",
+                "the separator as a pseudo-element: a character in the markup is read at every level",
+                "nav with aria-label wrapping an <ol> — the order of levels is the whole point",
+                "aria-current=\"page\" on the last level instead of a link to the current page",
+                "the underline on hover: colour alone does not mark a link",
+                "wrapping to a second line rather than clipping horizontally"
+              ],
+              "adapt": [
+                "the items array",
+                "separator — the character between levels",
+                "the accent through the accent prop — the focus ring",
+                "the type size for your scale"
+              ],
+              "notes": [
+                "This variant does not collapse a long path: use breadcrumb-001 or breadcrumb-004 for that.",
+                "The separator is decoration, not content: do not put meaningful arrows in it.",
+                "Breadcrumbs show position in a structure, not history: they are not a back button.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Breadcrumb002\n  items={[{ label: \"Home\", href: \"/\" }, { label: \"Catalog\" }]}\n  separator=\"/\"\n/>"
+            },
+            "controls": {
+              "separator": {
+                "label": "Separator",
+                "default": "/"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "breadcrumb-003",
+      "type": "registry:component",
+      "title": "Home Trail",
+      "description": "Путь с домиком в начале и шевронами между уровнями: обе фигуры нарисованы бордюрами, иконочного пакета нет.",
+      "categories": ["breadcrumb"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "breadcrumb-003/breadcrumb-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/breadcrumb-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-003-*. Серверный: хуков нет. Домик собран из повёрнутого квадрата (крыша) и прямоугольника с обрезанной верхней гранью (стена); шеврон — два бордюра, повёрнутых на 45°. У ссылки-домика есть aria-label: иконка без имени в навигации бесполезна.",
+      "meta": {
+        "tags": ["breadcrumb", "icon", "home", "css-shapes"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Breadcrumb003",
+          "usage": "<Breadcrumb003 items={[{ label: \"Проекты\", href: \"/\" }, { label: \"Настройки\" }]} />",
+          "summary": "Крошки с домиком в начале и шевронами между уровнями: фигуры нарисованы бордюрами, у иконки есть текстовое имя. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-breadcrumb-003-* и не подменять её токенами вашей темы",
+            "aria-label у домика: иконка без имени — тупик для скринридера",
+            "фигуры на бордюрах вместо иконочного пакета ради двух значков",
+            "шеврон только как разделитель — он не должен выглядеть кнопкой",
+            "aria-current=\"page\" на последнем уровне",
+            "видимое фокусное кольцо на ссылках"
+          ],
+          "adapt": [
+            "массив items",
+            "homeLabel — как назвать корень",
+            "акцент через проп accent",
+            "размер фигур через кегль"
+          ],
+          "notes": [
+            "Домик заменяет слово «Главная»: если корень называется иначе, честнее написать словом.",
+            "Не превращайте шевроны в кликабельные элементы: разделитель ничего не делает.",
+            "Свёртки длинного пути здесь нет: возьмите breadcrumb-001 или breadcrumb-004.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "homeLabel",
+            "label": "Имя корня",
+            "type": "text",
+            "default": "На главную",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A trail with a home mark and chevrons between levels: both shapes drawn with borders, no icon package.",
+            "ai": {
+              "summary": "Breadcrumbs with a home mark and chevrons: the shapes are borders and the icon carries a text name. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-breadcrumb-003-* palette — do not swap it for your theme tokens",
+                "the aria-label on the home link: a nameless icon is a dead end for screen readers",
+                "border-drawn shapes instead of an icon package for two glyphs",
+                "the chevron as a separator only — it must not look clickable",
+                "aria-current=\"page\" on the last level",
+                "the visible focus ring on links"
+              ],
+              "adapt": [
+                "the items array",
+                "homeLabel — what the root is called",
+                "the accent through the accent prop",
+                "the glyph size through the type scale"
+              ],
+              "notes": [
+                "The home mark stands in for the word \"Home\": if your root is called something else, write it.",
+                "Do not make chevrons clickable: a separator does nothing.",
+                "There is no collapsing here: use breadcrumb-001 or breadcrumb-004.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Breadcrumb003 items={[{ label: \"Projects\", href: \"/\" }, { label: \"Settings\" }]} />"
+            },
+            "controls": {
+              "homeLabel": {
+                "label": "Root name",
+                "default": "Home"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "breadcrumb-004",
+      "type": "registry:component",
+      "title": "Expandable Crumbs",
+      "description": "Свёрнутая середина раскрывается списком на нативном details: скрытые уровни остаются достижимы, а не просто спрятаны.",
+      "categories": ["breadcrumb"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "breadcrumb-004/breadcrumb-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/breadcrumb-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-004-*. Серверный компонент: раскрытие держит нативный <details>, useId нужен только для имени группы. Многоточие — это <summary> с aria-label, называющим число скрытых уровней. Список скрытых крошек позиционируется абсолютно под многоточием.",
+      "meta": {
+        "tags": ["breadcrumb", "collapse", "details", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Breadcrumb004",
+          "usage": "<Breadcrumb004 items={items} visible={2} />",
+          "summary": "Крошки со свёрнутой серединой, которая раскрывается списком: нативный details, ноль клиентского кода, скрытые уровни кликабельны. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-breadcrumb-004-* и не подменять её токенами вашей темы",
+            "details/summary вместо кнопки с состоянием: раскрытие и клавиатура достаются даром",
+            "aria-label на многоточии с числом скрытых уровней",
+            "доступность скрытых уровней: троеточие без раскрытия — тупик",
+            "первый уровень и хвост видимыми: «откуда» и «где я» прятать нельзя",
+            "z-index у выпадающего списка — иначе он уедет под соседний контент"
+          ],
+          "adapt": [
+            "массив items и число visible",
+            "акцент через проп accent",
+            "ширину выпадающего списка",
+            "символ свёртки вместо многоточия"
+          ],
+          "notes": [
+            "Список раскрывается вниз и может выйти за край узкого контейнера: проверьте на телефоне.",
+            "Два уровня сворачивать незачем: свёртка нужна от четырёх и больше.",
+            "details закрывается кликом по summary, но не по внешнему клику: для этого нужен JS, и это осознанный размен.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "visible",
+            "label": "Хвост",
+            "type": "number",
+            "default": 2,
+            "min": 1,
+            "max": 3
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The collapsed middle opens as a list on a native details: hidden levels stay reachable instead of merely hidden.",
+            "ai": {
+              "summary": "Breadcrumbs with a collapsed middle that expands into a list: native details, zero client code, hidden levels clickable. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-breadcrumb-004-* palette — do not swap it for your theme tokens",
+                "details/summary instead of a stateful button: expansion and keyboard support come free",
+                "the aria-label on the ellipsis naming how many levels are hidden",
+                "keeping hidden levels reachable: an ellipsis with nothing behind it is a dead end",
+                "the first level and the tail visible: \"where from\" and \"where am I\" must not hide",
+                "the z-index on the popup list — otherwise it slides under neighbouring content"
+              ],
+              "adapt": [
+                "the items array and the visible count",
+                "the accent through the accent prop",
+                "the popup width",
+                "a different glyph in place of the ellipsis"
+              ],
+              "notes": [
+                "The list opens downward and can overflow a narrow container: check it on a phone.",
+                "Collapsing two levels is pointless: it pays off from four upward.",
+                "details closes on its summary but not on an outside click: that needs JS, and skipping it is a deliberate trade.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Breadcrumb004 items={items} visible={2} />"
+            },
+            "controls": {
+              "visible": {
+                "label": "Tail"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "breadcrumb-005",
+      "type": "registry:component",
+      "title": "Scrolling Trail",
+      "description": "Путь прокручивается вбок вместо переноса: текущий уровень прилипает к правому краю, а обрыв подтёрт маской.",
+      "categories": ["breadcrumb"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "breadcrumb-005/breadcrumb-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/breadcrumb-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-005-*. Серверный: хуков нет. Список прокручивается по горизонтали, правый край подтёрт mask-градиентом, а текущий уровень объявлен position: sticky у правого края, поэтому он виден при любой прокрутке. overscroll-behavior-x: contain не даёт прокрутке уйти на страницу.",
+      "meta": {
+        "tags": ["breadcrumb", "scroll", "mobile", "path"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Breadcrumb005",
+          "usage": "<Breadcrumb005 items={items} />",
+          "summary": "Крошки с прокруткой вбок: ни один уровень не сворачивается, текущий прилипает к правому краю, обрыв подтёрт маской. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-breadcrumb-005-* и не подменять её токенами вашей темы",
+            "маску у края: обрубленная строка иначе читается как поломка",
+            "sticky на текущем уровне — при прокрутке он обязан оставаться виден",
+            "overscroll-behavior-x: contain, иначе прокрутка уходит на страницу",
+            "запрет переноса: смысл варианта в том, что путь не сворачивается",
+            "видимую полосу прокрутки там, где система её показывает"
+          ],
+          "adapt": [
+            "массив items",
+            "ширину маски у края",
+            "акцент через проп accent",
+            "кегль под свою типографику"
+          ],
+          "notes": [
+            "На мышином десктопе горизонтальную прокрутку заметить трудно: там уместнее свёртка из breadcrumb-004.",
+            "Прокрутка начинается слева: если важнее конец пути, прокрутите контейнер в вызывающем коде.",
+            "Маска рисуется поверх всего содержимого: не кладите внутрь ничего интерактивного правее края.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The trail scrolls sideways instead of wrapping: the current level sticks to the right edge and the cut is softened by a mask.",
+            "ai": {
+              "summary": "Breadcrumbs that scroll horizontally: nothing collapses, the current level sticks to the right edge and the cut is masked. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-breadcrumb-005-* palette — do not swap it for your theme tokens",
+                "the edge mask: a hard cut reads as breakage",
+                "sticky on the current level — it must stay visible at any scroll offset",
+                "overscroll-behavior-x: contain, or the scroll escapes to the page",
+                "the no-wrap rule: the whole point is that the path never collapses",
+                "the visible scrollbar where the platform shows one"
+              ],
+              "adapt": [
+                "the items array",
+                "the mask width at the edge",
+                "the accent through the accent prop",
+                "the type size for your scale"
+              ],
+              "notes": [
+                "Horizontal scrolling is hard to notice with a mouse: on desktop prefer the collapse from breadcrumb-004.",
+                "Scrolling starts at the left: if the end matters more, scroll the container from the caller.",
+                "The mask paints over everything: keep interactive elements away from the right edge.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Breadcrumb005 items={items} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "breadcrumb-006",
+      "type": "registry:component",
+      "title": "Page Header Trail",
+      "description": "Шапка страницы: путь ведёт до родителя, а «где я» отвечает заголовок — дублировать название в крошках незачем.",
+      "categories": ["breadcrumb"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "breadcrumb-006/breadcrumb-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/breadcrumb-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-006-*. Серверный: хуков нет. Крошки лежат в nav с aria-label, заголовок — настоящий h1, поэтому структура страницы не подменяется стилями. Кегль заголовка задан clamp: на телефоне он не съедает первый экран.",
+      "meta": {
+        "tags": ["breadcrumb", "header", "heading", "layout"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Breadcrumb006",
+          "usage": "<Breadcrumb006\n  items={[{ label: \"Главная\", href: \"/\" }]}\n  title=\"Хлебные крошки\"\n  meta=\"12 компонентов\"\n/>",
+          "summary": "Шапка страницы из крошек, заголовка h1 и служебной строки: последний уровень не дублируется, потому что его называет заголовок. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-breadcrumb-006-* и не подменять её токенами вашей темы",
+            "отсутствие текущего уровня в крошках: заголовок уже отвечает «где я»",
+            "настоящий h1 вместо крупного span — иначе ломается структура страницы",
+            "nav с aria-label вокруг списка",
+            "clamp у кегля заголовка: на телефоне он не должен съедать первый экран",
+            "порядок сверху вниз: путь, заголовок, служебная строка"
+          ],
+          "adapt": [
+            "массив items, title и meta",
+            "акцент через проп accent",
+            "максимальную ширину блока",
+            "уровень заголовка, если на странице уже есть h1"
+          ],
+          "notes": [
+            "Если h1 на странице уже занят, замените тег и оставьте кегль: двух h1 быть не должно.",
+            "Служебная строка не место для действий: кнопки — в breadcrumb-007.",
+            "Длинный заголовок переносится, а не режется: обрезать имя страницы нельзя.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Хлебные крошки",
+            "maxLength": 40
+          },
+          {
+            "prop": "meta",
+            "label": "Служебная строка",
+            "type": "text",
+            "default": "12 компонентов · обновлено сегодня",
+            "maxLength": 50
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A page header: the trail leads to the parent and the heading answers \"where am I\" — repeating the name in the crumbs is waste.",
+            "ai": {
+              "summary": "A page header made of crumbs, an h1 and a meta line: the current level is not repeated because the heading names it. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-breadcrumb-006-* palette — do not swap it for your theme tokens",
+                "leaving the current level out of the crumbs: the heading already answers it",
+                "a real h1 instead of a large span — otherwise the page structure breaks",
+                "nav with aria-label around the list",
+                "the clamped heading size: on a phone it must not eat the first screen",
+                "the top-down order: trail, heading, meta line"
+              ],
+              "adapt": [
+                "the items array, title and meta",
+                "the accent through the accent prop",
+                "the block's max width",
+                "the heading level if the page already has an h1"
+              ],
+              "notes": [
+                "If h1 is taken, swap the tag and keep the size: two h1s must not coexist.",
+                "The meta line is not for actions: buttons live in breadcrumb-007.",
+                "A long heading wraps rather than truncates: a page's name must not be cut.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Breadcrumb006\n  items={[{ label: \"Home\", href: \"/\" }]}\n  title=\"Breadcrumbs\"\n  meta=\"12 components\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Breadcrumbs"
+              },
+              "meta": {
+                "label": "Meta line",
+                "default": "12 components · updated today"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "breadcrumb-007",
+      "type": "registry:component",
+      "title": "Trail With Actions",
+      "description": "Строка пути с кнопками справа: на узкой ширине они уходят под путь и остаются подписанными словами, а не сжимаются в иконки.",
+      "categories": ["breadcrumb"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "breadcrumb-007/breadcrumb-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/breadcrumb-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-007-*. Серверный: хуков нет. Корень объявлен контейнером, а раскладка живёт на внутренней панели: контейнерный запрос действует на потомков, но не на сам контейнер. От 26rem собственной ширины кнопки растягиваются на всю строку под путём. Текущий уровень режется многоточием.",
+      "meta": {
+        "tags": ["breadcrumb", "toolbar", "actions", "responsive"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Breadcrumb007",
+          "usage": "<Breadcrumb007 items={items} actionLabel=\"Опубликовать\" secondaryLabel=\"Настройки\" />",
+          "summary": "Панель с путём слева и действиями справа: в узкой колонке кнопки переезжают под путь и остаются со словами. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-breadcrumb-007-* и не подменять её токенами вашей темы",
+            "раскладку на внутренней панели: контейнерный запрос не применяется к самому контейнеру",
+            "подписи на кнопках в узкой ширине — иконка без слова угадывается неверно",
+            "одно главное действие: две одинаково заметные кнопки заставляют выбирать",
+            "обрезку текущего уровня многоточием, чтобы кнопки не уезжали",
+            "aria-label на nav — панель содержит не только крошки"
+          ],
+          "adapt": [
+            "массив items",
+            "actionLabel и secondaryLabel",
+            "акцент через проп accent — цвет главной кнопки",
+            "порог переноса в контейнерном запросе"
+          ],
+          "notes": [
+            "Кнопки ничего не делают: обработчики навешивает вызывающий код.",
+            "Больше двух действий в строку не ставьте: остальные — в меню.",
+            "Опасные действия (удалить, отозвать) в этой панели неуместны: их место — рядом с подтверждением.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "actionLabel",
+            "label": "Главное действие",
+            "type": "text",
+            "default": "Опубликовать",
+            "maxLength": 24
+          },
+          {
+            "prop": "secondaryLabel",
+            "label": "Второе действие",
+            "type": "text",
+            "default": "Настройки",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A trail bar with buttons on the right: in a narrow column they move below the path and keep their words instead of shrinking to icons.",
+            "ai": {
+              "summary": "A bar with the path on the left and actions on the right: in a narrow column the buttons drop below and keep their labels. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-breadcrumb-007-* palette — do not swap it for your theme tokens",
+                "the layout on the inner panel: a container query does not apply to the container itself",
+                "the button labels at narrow widths — a bare icon gets guessed wrong",
+                "one primary action: two equally loud buttons force a choice",
+                "truncating the current level so the buttons stay put",
+                "the aria-label on nav — the bar holds more than crumbs"
+              ],
+              "adapt": [
+                "the items array",
+                "actionLabel and secondaryLabel",
+                "the accent through the accent prop — the primary button",
+                "the wrap threshold in the container query"
+              ],
+              "notes": [
+                "The buttons do nothing: handlers belong to the caller.",
+                "Do not put more than two actions in the bar: the rest belong in a menu.",
+                "Destructive actions do not belong here: they belong next to their confirmation.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Breadcrumb007 items={items} actionLabel=\"Publish\" secondaryLabel=\"Settings\" />"
+            },
+            "controls": {
+              "actionLabel": {
+                "label": "Primary action",
+                "default": "Publish"
+              },
+              "secondaryLabel": {
+                "label": "Secondary action",
+                "default": "Settings"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "breadcrumb-008",
+      "type": "registry:component",
+      "title": "File Path",
+      "description": "Путь файловой системы: приходит одной строкой, разбирается на уровни и печатается моноширинным шрифтом.",
+      "categories": ["breadcrumb"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "breadcrumb-008/breadcrumb-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/breadcrumb-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-008-*. Серверный: хуков нет. На вход приходит строка пути, а не массив: путь так и хранится. Разделитель уходит в переменную и печатается псевдоэлементом, поэтому Windows-путь с обратным слэшем задаётся одним пропом. Имя файла — последний уровень с aria-current.",
+      "meta": {
+        "tags": ["breadcrumb", "path", "mono", "files"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Breadcrumb008",
+          "usage": "<Breadcrumb008 path=\"registry/components/breadcrumb/breadcrumb-008.tsx\" />",
+          "summary": "Крошки для файлового пути: строка разбирается на уровни, шрифт моноширинный, имя файла выделено. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-breadcrumb-008-* и не подменять её токенами вашей темы",
+            "строку на входе вместо массива: путь и хранится строкой",
+            "моноширинный шрифт: в путях важны точки, дефисы и регистр",
+            "разделитель через переменную — для Windows-пути меняется один проп",
+            "выделение имени файла: в длинном пути глаз ищет именно его",
+            "aria-label «Путь к файлу» на nav вместо общего «Хлебные крошки»"
+          ],
+          "adapt": [
+            "path и separator",
+            "адреса уровней в вызывающем коде",
+            "акцент через проп accent",
+            "фон и рамку под свой блок кода"
+          ],
+          "notes": [
+            "Ссылки заглушены: подставьте настоящие адреса уровней, иначе путь только показывает.",
+            "Пустые сегменты отбрасываются, поэтому ведущий слэш не даёт пустой крошки.",
+            "Очень длинный путь переносится на вторую строку: если это мешает, возьмите прокрутку из breadcrumb-005.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "path",
+            "label": "Путь",
+            "type": "text",
+            "default": "registry/components/breadcrumb/breadcrumb-008.tsx",
+            "maxLength": 80
+          },
+          {
+            "prop": "separator",
+            "label": "Разделитель",
+            "type": "text",
+            "default": "/",
+            "maxLength": 2
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A filesystem path: it arrives as one string, splits into levels and prints in a monospaced face.",
+            "ai": {
+              "summary": "Breadcrumbs for a file path: the string splits into levels, the face is monospaced and the filename stands out. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-breadcrumb-008-* palette — do not swap it for your theme tokens",
+                "the string input instead of an array: a path is stored as a string",
+                "the monospaced face: dots, dashes and case matter in paths",
+                "the separator as a variable — a Windows path is one prop away",
+                "the emphasis on the filename: that is what the eye hunts for",
+                "the \"file path\" aria-label on nav rather than a generic \"breadcrumbs\""
+              ],
+              "adapt": [
+                "path and separator",
+                "the level URLs in the caller",
+                "the accent through the accent prop",
+                "the background and border to match your code blocks"
+              ],
+              "notes": [
+                "The links are placeholders: pass real level URLs or the path only displays.",
+                "Empty segments are dropped, so a leading slash does not create an empty crumb.",
+                "A very long path wraps: if that hurts, take the scrolling variant breadcrumb-005.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Breadcrumb008 path=\"registry/components/breadcrumb/breadcrumb-008.tsx\" />"
+            },
+            "controls": {
+              "path": {
+                "label": "Path",
+                "default": "registry/components/breadcrumb/breadcrumb-008.tsx"
+              },
+              "separator": {
+                "label": "Separator",
+                "default": "/"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "breadcrumb-009",
+      "type": "registry:component",
+      "title": "Wizard Trail",
+      "description": "Путь мастера: пройденные шаги кликабельны и помечены галочкой, будущие — только номером, вперёд прыгать нельзя.",
+      "categories": ["breadcrumb"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "breadcrumb-009/breadcrumb-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/breadcrumb-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-009-*. Серверный: хуков нет. Состояние шага вычисляется из индекса и пропа current и выносится в data-state; ссылками становятся только пройденные шаги. Текущий шаг помечен aria-current=\"step\", а вся навигация — aria-label с номером шага и их общим числом.",
+      "meta": {
+        "tags": ["breadcrumb", "wizard", "steps", "checkout"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Breadcrumb009",
+          "usage": "<Breadcrumb009 steps={steps} current={2} />",
+          "summary": "Путь мастера: галочка у пройденного, номер у будущего, ссылка только назад. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-breadcrumb-009-* и не подменять её токенами вашей темы",
+            "запрет перехода вперёд: следующий шаг зависит от ответов на текущем",
+            "разницу форм: галочка у пройденного, номер у будущего — цвет не единственный признак",
+            "aria-current=\"step\" на текущем шаге и номер шага в aria-label навигации",
+            "линию между шагами как разделитель, а не как индикатор прогресса",
+            "перенос на вторую строку: шагов бывает пять и больше"
+          ],
+          "adapt": [
+            "массив steps и номер current",
+            "акцент через проп accent",
+            "цвет пройденного шага",
+            "подписи шагов"
+          ],
+          "notes": [
+            "Это навигация, а не индикатор: реальную защиту от прыжка вперёд делает маршрутизация.",
+            "Больше пяти шагов в строку не помещаются: длинные мастера лучше разбивать на этапы.",
+            "Если шаг можно пропустить, покажите это словом: галочка означает выполненный, а не пропущенный.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "current",
+            "label": "Текущий шаг",
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 3
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A wizard trail: completed steps are links with a tick, future ones carry only a number, and jumping ahead is impossible.",
+            "ai": {
+              "summary": "A wizard trail: a tick on completed steps, a number on future ones, links only backward. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-breadcrumb-009-* palette — do not swap it for your theme tokens",
+                "no forward jumps: the next step depends on answers given in this one",
+                "the shape difference: a tick for done, a number for pending — colour is not the only cue",
+                "aria-current=\"step\" on the active step and the step number in the nav's aria-label",
+                "the connector line as a separator, not a progress indicator",
+                "wrapping to a second line: five steps and more are common"
+              ],
+              "adapt": [
+                "the steps array and the current index",
+                "the accent through the accent prop",
+                "the completed-step colour",
+                "the step labels"
+              ],
+              "notes": [
+                "This is navigation, not enforcement: routing must actually block forward jumps.",
+                "More than five steps do not fit a line: split long wizards into stages.",
+                "If a step is skippable, say so in words: a tick means done, not skipped.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Breadcrumb009 steps={steps} current={2} />"
+            },
+            "controls": {
+              "current": {
+                "label": "Current step"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "breadcrumb-010",
+      "type": "registry:component",
+      "title": "Counted Trail",
+      "description": "Путь с числом записей на каждом уровне: раздел с тремя товарами и раздел с тысячей — разные решения.",
+      "categories": ["breadcrumb"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "breadcrumb-010/breadcrumb-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/breadcrumb-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-010-*. Серверный: хуков нет. Счётчик лежит внутри ссылки уровня, а не рядом с ней, поэтому не отрывается при переносе строки. Цифры табличные, у счётчика собственный aria-label со словами: голая цифра в потоке речи не читается.",
+      "meta": {
+        "tags": ["breadcrumb", "counts", "catalog", "navigation"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Breadcrumb010",
+          "usage": "<Breadcrumb010 items={[{ label: \"Каталог\", href: \"/\", count: 1280 }]} />",
+          "summary": "Крошки с числом записей на уровне: счётчик внутри ссылки, табличные цифры и словесная подпись для скринридера. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-breadcrumb-010-* и не подменять её токенами вашей темы",
+            "счётчик внутри ссылки: снаружи он отрывается от названия при переносе",
+            "aria-label со словами у счётчика — голая цифра вслух бессмысленна",
+            "табличные цифры, чтобы числа не дёргали строку",
+            "приглушённый вид счётчика: он уточняет уровень, а не спорит с ним",
+            "шеврон-разделитель на бордюрах"
+          ],
+          "adapt": [
+            "массив items с полем count",
+            "акцент через проп accent",
+            "формат числа в вызывающем коде",
+            "цвет и фон счётчика"
+          ],
+          "notes": [
+            "Число форматируйте заранее: компонент печатает то, что пришло, и разрядов не расставляет.",
+            "Считать записи на каждом уровне дорого: если счёт неточен, лучше его не показывать.",
+            "Счётчик текущего уровня полезен, а вот у корня он обычно шум: оставьте его пустым.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A trail carrying a record count per level: a section with three products and one with a thousand are different decisions.",
+            "ai": {
+              "summary": "Breadcrumbs with a per-level count: the counter sits inside the link, uses tabular figures and carries a worded label for screen readers. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-breadcrumb-010-* palette — do not swap it for your theme tokens",
+                "the counter inside the link: outside it separates from the label on wrap",
+                "the worded aria-label on the counter — a bare number means nothing aloud",
+                "tabular figures so numbers do not jitter the line",
+                "the muted counter: it qualifies the level, it does not compete with it",
+                "the border-drawn chevron separator"
+              ],
+              "adapt": [
+                "the items array with its count field",
+                "the accent through the accent prop",
+                "number formatting in the caller",
+                "the counter's colour and background"
+              ],
+              "notes": [
+                "Format numbers upstream: the component prints what it is given and adds no separators.",
+                "Counting every level is expensive: if the count is approximate, better not to show it.",
+                "A count on the current level helps; on the root it is usually noise — leave it out.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Breadcrumb010 items={[{ label: \"Catalog\", href: \"/\", count: 1280 }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "breadcrumb-011",
+      "type": "registry:component",
+      "title": "Sibling Switcher",
+      "description": "Последний уровень — нативный select с соседними разделами: переключиться можно на месте, не возвращаясь к родителю.",
+      "categories": ["breadcrumb"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "breadcrumb-011/breadcrumb-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/breadcrumb-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-011-*. Серверный компонент: useId нужен только для связи скрытой подписи с select. Список соседей — нативный <select>: клавиатура, поиск по первой букве и мобильный барабан достаются от браузера. Стрелка нарисована бордюрами, потому что штатную у select не стилизовать.",
+      "meta": {
+        "tags": ["breadcrumb", "select", "switch", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Breadcrumb011",
+          "usage": "<Breadcrumb011 rootLabel=\"Документы\" siblings={[\"Договоры\", \"Счета\"]} defaultValue=\"Счета\" />",
+          "summary": "Крошки, где последний уровень — select с соседними разделами: переключение на месте, без возврата к родителю и без клиентского кода. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-breadcrumb-011-* и не подменять её токенами вашей темы",
+            "нативный select: клавиатура, поиск по букве и мобильный барабан даром",
+            "скрытую подпись, связанную с select: поле без имени скринридер не назовёт",
+            "стрелку на бордюрах — штатную стрелку select стилизовать нельзя",
+            "высоту поля под палец",
+            "видимое фокусное кольцо"
+          ],
+          "adapt": [
+            "rootLabel, rootHref и массив siblings",
+            "defaultValue — текущий раздел",
+            "label — как называется поле",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Переход по выбору не происходит сам: навесьте onChange в вызывающем коде.",
+            "Соседей должно быть немного: длинный список в select читается плохо, там нужен поиск из категории autocomplete.",
+            "Переключатель уместен, когда разделы равноправны: иерархию им не заменить.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "rootLabel",
+            "label": "Родитель",
+            "type": "text",
+            "default": "Документы",
+            "maxLength": 24
+          },
+          {
+            "prop": "label",
+            "label": "Имя поля",
+            "type": "text",
+            "default": "Раздел",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The last level is a native select of sibling sections: switch in place without going back to the parent.",
+            "ai": {
+              "summary": "Breadcrumbs whose last level is a select of sibling sections: switching happens in place, with no parent detour and no client code. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-breadcrumb-011-* palette — do not swap it for your theme tokens",
+                "the native select: keyboard, type-ahead and the mobile wheel come free",
+                "the hidden label tied to the select: an unnamed field is unnamed to a screen reader",
+                "the border-drawn arrow — the built-in select arrow cannot be styled",
+                "the thumb-sized control height",
+                "the visible focus ring"
+              ],
+              "adapt": [
+                "rootLabel, rootHref and the siblings array",
+                "defaultValue — the current section",
+                "label — the field's name",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Selecting navigates nowhere by itself: wire an onChange in the caller.",
+                "Keep the sibling list short: a long select reads badly, and that case wants the autocomplete category.",
+                "A switcher fits equal siblings: it cannot stand in for a hierarchy.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Breadcrumb011 rootLabel=\"Documents\" siblings={[\"Contracts\", \"Invoices\"]} defaultValue=\"Invoices\" />"
+            },
+            "controls": {
+              "rootLabel": {
+                "label": "Parent",
+                "default": "Documents"
+              },
+              "label": {
+                "label": "Field name",
+                "default": "Section"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "breadcrumb-012",
+      "type": "registry:component",
+      "title": "Parent Link",
+      "description": "Крошки для телефона: одна названная ссылка на родителя и текущий уровень — полный путь на узком экране всё равно не читают.",
+      "categories": ["breadcrumb"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "breadcrumb-012/breadcrumb-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/breadcrumb-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-012-*. Серверный: хуков нет. Ссылка на родителя названа словом и имеет высоту 2rem — на телефоне это самая нажимаемая цель на странице. Текущий уровень режется многоточием и помечен aria-current. Стрелка нарисована бордюрами.",
+      "meta": {
+        "tags": ["breadcrumb", "mobile", "back", "compact"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Breadcrumb012",
+          "usage": "<Breadcrumb012 parentLabel=\"Компоненты\" currentLabel=\"Хлебные крошки\" />",
+          "summary": "Компактные крошки: стрелка и название родителя как ссылка, за ними текущий уровень с обрезкой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-breadcrumb-012-* и не подменять её токенами вашей темы",
+            "название родителя словом: «Назад» не отвечает, куда именно вернёт",
+            "высоту цели нажатия 2rem — на телефоне это самая частая ссылка",
+            "ссылку на родителя вместо history.back: назад и вверх — разные направления",
+            "обрезку текущего уровня многоточием",
+            "aria-current=\"page\" на текущем уровне"
+          ],
+          "adapt": [
+            "parentLabel и parentHref",
+            "currentLabel",
+            "акцент через проп accent",
+            "разделитель между родителем и текущим"
+          ],
+          "notes": [
+            "Это не кнопка «назад» браузера: ссылка ведёт на уровень выше, а не в предыдущую страницу истории.",
+            "На десктопе полезнее полный путь: показывайте этот вариант только на узкой ширине.",
+            "Если родителя нет (страница верхнего уровня), не рисуйте ссылку вовсе, а не ведите на главную.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "parentLabel",
+            "label": "Родитель",
+            "type": "text",
+            "default": "Компоненты",
+            "maxLength": 24
+          },
+          {
+            "prop": "currentLabel",
+            "label": "Текущий уровень",
+            "type": "text",
+            "default": "Хлебные крошки для телефона",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Breadcrumbs for a phone: one named parent link plus the current level — nobody reads a full path on a narrow screen anyway.",
+            "ai": {
+              "summary": "Compact breadcrumbs: an arrow and the parent's name as a link, followed by the truncated current level. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-breadcrumb-012-* palette — do not swap it for your theme tokens",
+                "naming the parent: \"Back\" does not say where it leads",
+                "the 2rem tap target — this is the most-tapped link on a phone",
+                "a link to the parent instead of history.back: back and up are different directions",
+                "truncating the current level with an ellipsis",
+                "aria-current=\"page\" on the current level"
+              ],
+              "adapt": [
+                "parentLabel and parentHref",
+                "currentLabel",
+                "the accent through the accent prop",
+                "the separator between parent and current"
+              ],
+              "notes": [
+                "This is not the browser back button: the link goes one level up, not one page back.",
+                "On desktop a full path serves better: show this variant only at narrow widths.",
+                "With no parent (a top-level page) render no link at all rather than pointing at home.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Breadcrumb012 parentLabel=\"Components\" currentLabel=\"Breadcrumbs\" />"
+            },
+            "controls": {
+              "parentLabel": {
+                "label": "Parent",
+                "default": "Components"
+              },
+              "currentLabel": {
+                "label": "Current level",
+                "default": "Breadcrumbs on a phone"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
