@@ -931,4 +931,39 @@ export const LAZY_PREVIEWS = {
       (module) => module.Sparkline001,
     ),
   ),
+  "chart-003": dynamic(() =>
+    import("@/registry/components/charts/chart-003/chart-003").then(
+      (module) => module.Chart003,
+    ),
+  ),
+  "chart-004": dynamic(() =>
+    import("@/registry/components/charts/chart-004/chart-004").then(
+      (module) => module.Chart004,
+    ),
+  ),
+  "chart-005": dynamic(() =>
+    import("@/registry/components/charts/chart-005/chart-005").then(
+      (module) => module.Chart005,
+    ),
+  ),
+  "chart-006": dynamic(() =>
+    import("@/registry/components/charts/chart-006/chart-006").then(
+      (module) => module.Chart006,
+    ),
+  ),
+  "chart-007": dynamic(() =>
+    import("@/registry/components/charts/chart-007/chart-007").then(
+      (module) => module.Chart007,
+    ),
+  ),
+  "chart-008": dynamic(() =>
+    import("@/registry/components/charts/chart-008/chart-008").then(
+      (module) => module.Chart008,
+    ),
+  ),
+  "chart-009": dynamic(() =>
+    import("@/registry/components/charts/chart-009/chart-009").then(
+      (module) => module.Chart009,
+    ),
+  ),
 } as unknown as Record<string, ComponentType<PreviewProps>>

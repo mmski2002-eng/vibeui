@@ -384,6 +384,785 @@
           }
         }
       }
+    },
+    {
+      "name": "chart-003",
+      "type": "registry:component",
+      "title": "Donut Chart",
+      "description": "Кольцевая диаграмма на conic-gradient: доли складываются в один градиент, дырка вырезается маской, легенда обязательна.",
+      "categories": ["charts"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-003/chart-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-003-*. Серверный: хуков нет. Кольцо строится одним conic-gradient: начало каждого сектора считается суммой предыдущих значений, поэтому во время отрисовки ничего не мутируется. Дырка вырезана radial-gradient-маской, само кольцо помечено aria-hidden — смысл несёт легенда с процентами.",
+      "meta": {
+        "tags": ["chart", "donut", "conic-gradient", "svg-free"],
+        "ai": {
+          "export": "Chart003",
+          "usage": "<Chart003 slices={[{ label: \"Поиск\", value: 28 }]} title=\"Источники\" />",
+          "summary": "Кольцевая диаграмма без SVG: секторы на conic-gradient, маска вместо дырки, легенда с процентами и общим итогом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-003-* и не подменять её токенами вашей темы",
+            "легенду с числами: по углу сектора долю не назвать",
+            "conic-gradient вместо SVG с расчётом дуг — меньше кода и разметки",
+            "aria-hidden на кольце: смысл несёт легенда, а не картинка",
+            "расчёт начала сектора суммой предыдущих, без изменяемого счётчика",
+            "маску для дырки вместо второго круга поверх"
+          ],
+          "adapt": [
+            "массив slices: подпись, значение и оттенок",
+            "title и unit",
+            "толщину кольца через переменную",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Больше шести долей кольцо не читает: остальное сводите в «прочее».",
+            "Проценты округляются до целых и в сумме могут дать 99 или 101 — это нормально для округления.",
+            "Кольцо не подходит для сравнения близких величин: для этого горизонтальные полосы chart-004.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Источники трафика",
+            "maxLength": 30
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "тысяч визитов",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A donut chart on conic-gradient: the slices form one gradient, a mask cuts the hole, and the legend is mandatory.",
+            "ai": {
+              "summary": "A donut chart without SVG: sectors from a conic-gradient, a mask for the hole, and a legend with percentages and a total. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chart-003-* palette — do not swap it for your theme tokens",
+                "the legend with numbers: a sector's angle never names its share",
+                "conic-gradient instead of SVG arc maths — less code and markup",
+                "aria-hidden on the ring: the legend carries the meaning, not the picture",
+                "computing each sector's start as the sum of the previous ones, with no mutable counter",
+                "the mask for the hole instead of a second circle on top"
+              ],
+              "adapt": [
+                "the slices array: label, value and hue",
+                "title and unit",
+                "the ring thickness through the variable",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Beyond six slices a donut stops reading: fold the rest into \"other\".",
+                "Percentages are rounded and may total 99 or 101 — that is normal rounding.",
+                "A donut is wrong for comparing close values: use the horizontal bars of chart-004.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Chart003 slices={[{ label: \"Search\", value: 28 }]} title=\"Sources\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Traffic sources"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": "thousand visits"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "chart-004",
+      "type": "registry:component",
+      "title": "Ranking Bars",
+      "description": "Рейтинг горизонтальными полосами: длину глаз сравнивает точнее угла, а числа справа отвечают «насколько».",
+      "categories": ["charts"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-004/chart-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-004-*. Серверный: хуков нет. Каждая строка — сетка из подписи, числа и полосы во всю ширину, поэтому числа стоят ровным столбцом. Ширина заливки — процент от максимума, у полосы есть role=\"img\" с подписью, лидер выделен насыщенностью.",
+      "meta": {
+        "tags": ["chart", "ranking", "bars", "top"],
+        "ai": {
+          "export": "Chart004",
+          "usage": "<Chart004 rows={[{ label: \"Каталог\", value: 4820 }]} unit=\"визитов\" />",
+          "summary": "Горизонтальный рейтинг: подпись, число и полоса в каждой строке, лидер выделен цветом, доли считаются от максимума. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-004-* и не подменять её токенами вашей темы",
+            "горизонтальные полосы: длину глаз сравнивает точнее высоты и угла",
+            "числа рядом с полосами — без них видно «кто больше», но не «насколько»",
+            "role=\"img\" с подписью на каждой полосе",
+            "выделение лидера насыщенностью, а не отдельным цветом",
+            "сетку строки: числа обязаны стоять ровным столбцом"
+          ],
+          "adapt": [
+            "массив rows и порядок строк",
+            "title и unit",
+            "акцент через проп accent",
+            "высоту полосы"
+          ],
+          "notes": [
+            "Строки не сортируются автоматически: порядок задаёт вызывающий код, и обычно он должен быть по убыванию.",
+            "Больше семи строк превращают рейтинг в список: остальное сворачивайте в «прочее».",
+            "Доли считаются от максимума, а не от суммы: это рейтинг, а не структура целого.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Просмотры за неделю",
+            "maxLength": 30
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "визитов",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A ranking in horizontal bars: length is easier to compare than angle, and the numbers on the right answer \"by how much\".",
+            "ai": {
+              "summary": "A horizontal ranking: label, number and bar per row, the leader highlighted, shares measured against the maximum. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chart-004-* palette — do not swap it for your theme tokens",
+                "horizontal bars: length compares better than height or angle",
+                "the numbers beside the bars — without them you see who leads, not by how much",
+                "role=\"img\" with a label on every bar",
+                "marking the leader by saturation rather than a separate colour",
+                "the row grid: numbers must line up in a column"
+              ],
+              "adapt": [
+                "the rows array and their order",
+                "title and unit",
+                "the accent through the accent prop",
+                "the bar height"
+              ],
+              "notes": [
+                "Rows are not sorted automatically: the caller sets the order, usually descending.",
+                "Beyond seven rows a ranking becomes a list: fold the rest into \"other\".",
+                "Shares are relative to the maximum, not the sum: this is a ranking, not a breakdown.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Chart004 rows={[{ label: \"Catalog\", value: 4820 }]} unit=\"visits\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Views this week"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": "visits"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "chart-005",
+      "type": "registry:component",
+      "title": "Stacked Bar",
+      "description": "Одна полоса, разложенная на доли: «из чего состоит целое» в одну строку там, где кольцо съело бы треть карточки.",
+      "categories": ["charts"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-005/chart-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-005-*. Серверный: хуков нет. Полоса — флекс, ширина каждой доли задаётся flex-basis в процентах. Доли уже восьми процентов не подписываются внутри: подпись в них не помещается, для них есть легенда. У каждой доли своё role=\"img\" с процентом.",
+      "meta": {
+        "tags": ["chart", "stacked", "share", "breakdown"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Chart005",
+          "usage": "<Chart005 parts={[{ label: \"Разработка\", value: 46 }]} total=\"1 240 000 ₽\" />",
+          "summary": "Полоса долей: проценты внутри широких частей, легенда со всеми значениями и общий итог справа от заголовка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-005-* и не подменять её токенами вашей темы",
+            "одну строку вместо кольца: структура целого не стоит трети карточки",
+            "скрытие подписи в узких долях — текст в них всё равно не помещается",
+            "легенду со всеми значениями: узкие доли иначе теряются",
+            "role=\"img\" с процентом на каждой доле",
+            "светлый разделитель между долями вместо зазора"
+          ],
+          "adapt": [
+            "массив parts: подпись, значение и оттенок",
+            "title и total",
+            "высоту полосы",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Порядок долей задаёт вызывающий код: обычно от большей к меньшей, «прочее» — в конец.",
+            "Больше шести долей полоса не читает: цвета перестают различаться.",
+            "Проценты округляются: сумма подписей может не совпасть со ста ровно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Расходы месяца",
+            "maxLength": 30
+          },
+          {
+            "prop": "total",
+            "label": "Итог",
+            "type": "text",
+            "default": "1 240 000 ₽",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "One bar split into shares: \"what the whole is made of\" in a single line, where a donut would eat a third of the card.",
+            "ai": {
+              "summary": "A stacked share bar: percentages inside the wide parts, a legend with every value and the total beside the heading. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chart-005-* palette — do not swap it for your theme tokens",
+                "one line instead of a donut: a breakdown is not worth a third of the card",
+                "hiding labels in narrow shares — the text does not fit anyway",
+                "the legend with every value: narrow shares are otherwise lost",
+                "role=\"img\" with the percentage on every share",
+                "the light divider between shares instead of a gap"
+              ],
+              "adapt": [
+                "the parts array: label, value and hue",
+                "title and total",
+                "the bar height",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The caller sets the order: usually largest first with \"other\" last.",
+                "Beyond six shares the bar stops reading: the colours blur together.",
+                "Percentages are rounded: the labels may not add up to exactly 100.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Chart005 parts={[{ label: \"Engineering\", value: 46 }]} total=\"$14,200\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Monthly spend"
+              },
+              "total": {
+                "label": "Total",
+                "default": "$14,200"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "chart-006",
+      "type": "registry:component",
+      "title": "Area Chart",
+      "description": "График с заливкой под линией на чистом SVG: заливка подчёркивает объём, но линия остаётся главной.",
+      "categories": ["charts"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-006/chart-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-006-*. Серверный: хуков нет. Путь линии и площадь считаются из массива точек в системе 300×110, толщина линии не масштабируется благодаря vector-effect. Сетка — три линии; последняя точка помечена кружком. У svg есть role=\"img\" с диапазоном значений.",
+      "meta": {
+        "tags": ["chart", "area", "svg", "trend"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Chart006",
+          "usage": "<Chart006 points={[18, 24, 21, 32]} labels={[\"Пн\", \"Вт\"]} />",
+          "summary": "График динамики: линия с заливкой на SVG, три линии сетки, точка на последнем значении и подписи краёв оси. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-006-* и не подменять её токенами вашей темы",
+            "линию поверх заливки: одна площадь без линии читается как клякса",
+            "vector-effect: non-scaling-stroke — иначе линия растягивается вместе с viewBox",
+            "три линии сетки: больше превращает график в тетрадь в клетку",
+            "role=\"img\" с диапазоном значений у svg",
+            "точку на последнем значении — глаз ищет, где сейчас"
+          ],
+          "adapt": [
+            "массив points и подписи labels",
+            "title и unit",
+            "акцент через проп accent",
+            "высоту графика через viewBox"
+          ],
+          "notes": [
+            "Точки должны быть равномерны по времени: пропуски дней компонент не заметит и нарисует ровную сетку.",
+            "Заливка идёт до низа графика, а не до нуля данных: для рядов с отрицательными значениями это неверно.",
+            "Ось подписана только по краям и середине: точные значения — задача таблицы рядом.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Установки компонентов",
+            "maxLength": 30
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "установок в день",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An area chart in plain SVG: the fill conveys volume, but the line stays in charge.",
+            "ai": {
+              "summary": "A trend chart: an SVG line with a fill, three grid lines, a dot on the last value and edge axis labels. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chart-006-* palette — do not swap it for your theme tokens",
+                "the line above the fill: an area alone reads as a blob",
+                "vector-effect: non-scaling-stroke — otherwise the stroke stretches with the viewBox",
+                "three grid lines: more turns the chart into graph paper",
+                "role=\"img\" with the value range on the svg",
+                "the dot on the last value — the eye looks for \"where are we now\""
+              ],
+              "adapt": [
+                "the points array and the labels",
+                "title and unit",
+                "the accent through the accent prop",
+                "the chart height through the viewBox"
+              ],
+              "notes": [
+                "Points must be evenly spaced in time: gaps go unnoticed and the grid stays even.",
+                "The fill reaches the bottom of the chart, not the data zero: that is wrong for series with negatives.",
+                "The axis is labelled only at the edges and middle: exact values belong in a table.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Chart006 points={[18, 24, 21, 32]} labels={[\"Mon\", \"Tue\"]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Component installs"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": "installs per day"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "chart-007",
+      "type": "registry:component",
+      "title": "Gauge",
+      "description": "Полукруглая шкала показателя с риской цели: пустая часть дуги показывает, сколько осталось до плана.",
+      "categories": ["charts"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-007/chart-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-007-*. Серверный: хуков нет. Дуга рисуется одним path и заполняется через stroke-dasharray от длины полуокружности. Риска цели строится тригонометрией из доли: точка на радиусе и точка чуть дальше. У svg есть role=\"img\" со значением и целью.",
+      "meta": {
+        "tags": ["chart", "gauge", "kpi", "target"],
+        "ai": {
+          "export": "Chart007",
+          "usage": "<Chart007 title=\"План продаж\" value={74} target={85} />",
+          "summary": "Полукруглая шкала: заполненная дуга, риска цели, крупное число и подпись единицы. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-007-* и не подменять её токенами вашей темы",
+            "полукруг вместо кольца там, где у значения есть предел: видно, сколько осталось",
+            "риску цели: «74%» без плана не отвечает, хорошо это или плохо",
+            "число рядом с дугой — по длине дуги процент не назвать",
+            "role=\"img\" со значением и целью у svg",
+            "stroke-dasharray от длины дуги вместо ручного расчёта координат"
+          ],
+          "adapt": [
+            "value, max и target",
+            "title и unit",
+            "толщину дуги",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Шкала для одного показателя: два значения на одной дуге не читаются.",
+            "Значение подрезается диапазоном 0–max: перевыполнение плана дуга не покажет, для этого нужен другой график.",
+            "Без цели компонент теряет половину смысла: если плана нет, хватит и обычного числа.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "value",
+            "label": "Значение",
+            "type": "number",
+            "default": 74,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "target",
+            "label": "Цель",
+            "type": "number",
+            "default": 85,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "План продаж",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A half-circle gauge with a target tick: the empty part of the arc shows how much is left to plan.",
+            "ai": {
+              "summary": "A half-circle gauge: a filled arc, a target tick, a large number and a unit line. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chart-007-* palette — do not swap it for your theme tokens",
+                "the half circle where the value has a ceiling: it shows what remains",
+                "the target tick: \"74%\" without a plan says nothing about good or bad",
+                "the number beside the arc — an arc's length never names a percentage",
+                "role=\"img\" with the value and target on the svg",
+                "stroke-dasharray from the arc length instead of hand-built coordinates"
+              ],
+              "adapt": [
+                "value, max and target",
+                "title and unit",
+                "the arc thickness",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "One metric per gauge: two values on one arc do not read.",
+                "The value is clamped to 0–max: overshooting the plan is invisible here, use another chart for that.",
+                "Without a target the component loses half its point: with no plan a plain number suffices.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Chart007 title=\"Sales plan\" value={74} target={85} />"
+            },
+            "controls": {
+              "value": {
+                "label": "Value"
+              },
+              "target": {
+                "label": "Target"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Sales plan"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "chart-008",
+      "type": "registry:component",
+      "title": "Funnel",
+      "description": "Воронка с процентами перехода: главное в ней не ширина полос, а сколько людей теряется между шагами.",
+      "categories": ["charts"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-008/chart-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-008-*. Серверный: хуков нет. Ширина шага — доля от первого, насыщенность заливки считается через color-mix от той же доли. Между шагами печатается процент потерь относительно предыдущего. У каждой полосы есть role=\"img\" с абсолютным значением.",
+      "meta": {
+        "tags": ["chart", "funnel", "conversion", "analytics"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Chart008",
+          "usage": "<Chart008 steps={[{ label: \"Открыли\", value: 4820 }]} unit=\"человек\" />",
+          "summary": "Воронка шагов: полоса на каждый шаг, доля от первого шага, абсолютное число и процент потерь между шагами. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-008-* и не подменять её токенами вашей темы",
+            "процент перехода между шагами: именно он показывает, где теряются люди",
+            "абсолютные числа рядом с долями — падение на 40% от двадцати человек ничего не значит",
+            "долю считать от первого шага, а не от предыдущего: иначе воронка врёт о масштабе",
+            "role=\"img\" с числом на каждой полосе",
+            "минимальную ширину полосы: нулевая ступень не должна исчезать"
+          ],
+          "adapt": [
+            "массив steps",
+            "title и unit",
+            "акцент через проп accent",
+            "высоту полос"
+          ],
+          "notes": [
+            "Шаги обязаны идти по убыванию: воронка с ростом посередине означает ошибку в данных, а не рост.",
+            "Компонент не считает конверсию за период: он показывает один срез.",
+            "Больше шести шагов воронка не читает: объединяйте близкие этапы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Путь до установки",
+            "maxLength": 30
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "человек за неделю",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A funnel with step-to-step rates: what matters is not the bar widths but how many people are lost between steps.",
+            "ai": {
+              "summary": "A step funnel: a bar per step, its share of the first step, the absolute number and the drop-off between steps. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chart-008-* palette — do not swap it for your theme tokens",
+                "the step-to-step rate: that is what shows where people are lost",
+                "absolute numbers beside the shares — a 40% drop from twenty people means nothing",
+                "measuring shares against the first step, not the previous one: otherwise the funnel lies about scale",
+                "role=\"img\" with the number on every bar",
+                "the minimum bar width: a near-zero step must not vanish"
+              ],
+              "adapt": [
+                "the steps array",
+                "title and unit",
+                "the accent through the accent prop",
+                "the bar height"
+              ],
+              "notes": [
+                "Steps must descend: a funnel that grows in the middle means broken data, not growth.",
+                "The component computes no period conversion: it shows one snapshot.",
+                "Beyond six steps a funnel stops reading: merge adjacent stages.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Chart008 steps={[{ label: \"Opened\", value: 4820 }]} unit=\"people\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Path to install"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": "people per week"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "chart-009",
+      "type": "registry:component",
+      "title": "Compare Bars",
+      "description": "Две серии столбиков рядом: пары стоят вплотную, а группы разделены зазором — сравнение идёт внутри пары.",
+      "categories": ["charts"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-009/chart-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-009-*. Серверный: хуков нет. Высота столбика — процент от общего максимума обеих серий, поэтому периоды сравнимы. Прошлый период выводится через color-mix от акцента, у каждой пары role=\"img\" с обоими значениями. Ось подписей повторяет раскладку графика зазорами.",
+      "meta": {
+        "tags": ["chart", "compare", "bars", "periods"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Chart009",
+          "usage": "<Chart009 groups={[{ label: \"Пн\", now: 42, before: 36 }]} />",
+          "summary": "Сравнение двух периодов: пары столбиков вплотную, зазор между группами, приглушённый прошлый период и легенда. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-009-* и не подменять её токенами вашей темы",
+            "пары вплотную и зазор между группами: так глаз сравнивает внутри пары",
+            "общий максимум для обеих серий — иначе периоды несравнимы",
+            "приглушённый прошлый период: он фон для нынешнего, а не равная величина",
+            "role=\"img\" с обоими значениями на паре",
+            "легенду с именами периодов, а не только с цветами"
+          ],
+          "adapt": [
+            "массив groups и подписи периодов",
+            "title",
+            "акцент через проп accent",
+            "высоту области графика"
+          ],
+          "notes": [
+            "Больше семи групп не помещается: недели сравнивают по дням, месяцы — по неделям.",
+            "Третью серию сюда добавлять нельзя: тройки столбиков перестают читаться, для этого нужна линия.",
+            "Значения не подписаны на столбиках намеренно: подписи на каждой паре превращают график в таблицу.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Установки по дням",
+            "maxLength": 30
+          },
+          {
+            "prop": "nowLabel",
+            "label": "Текущий период",
+            "type": "text",
+            "default": "Эта неделя",
+            "maxLength": 20
+          },
+          {
+            "prop": "beforeLabel",
+            "label": "Прошлый период",
+            "type": "text",
+            "default": "Прошлая",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Two series side by side: the pairs sit tight and the groups are spaced — the comparison happens inside a pair.",
+            "ai": {
+              "summary": "A two-period comparison: paired bars, gaps between groups, a muted previous period and a legend. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chart-009-* palette — do not swap it for your theme tokens",
+                "tight pairs with gaps between groups: that keeps comparison inside the pair",
+                "a shared maximum for both series — otherwise the periods are incomparable",
+                "the muted previous period: it is the backdrop, not an equal value",
+                "role=\"img\" with both values on the pair",
+                "a legend naming the periods, not just their colours"
+              ],
+              "adapt": [
+                "the groups array and the period labels",
+                "title",
+                "the accent through the accent prop",
+                "the plot height"
+              ],
+              "notes": [
+                "Beyond seven groups it stops fitting: compare weeks by day and months by week.",
+                "Do not add a third series: triples stop reading, that case wants lines.",
+                "Values are deliberately not printed on the bars: labels on every pair turn a chart into a table.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Chart009 groups={[{ label: \"Mon\", now: 42, before: 36 }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Installs by day"
+              },
+              "nowLabel": {
+                "label": "Current period",
+                "default": "This week"
+              },
+              "beforeLabel": {
+                "label": "Previous period",
+                "default": "Last week"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

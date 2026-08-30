@@ -19,6 +19,8 @@ export type Sparkline001Props = {
 // поэтому падение нельзя случайно покрасить в зелёный.
 const STYLES = `
 :where([data-vibeui-block="sparkline-001"]){
+--vibeui-sparkline-001-surface:oklch(1 0 0);
+--vibeui-sparkline-001-surface-border:oklch(0.91 0.006 265);
 --vibeui-sparkline-001-fg:oklch(0.24 0.016 265);
 --vibeui-sparkline-001-muted:oklch(0.55 0.014 265);
 --vibeui-sparkline-001-up:oklch(0.58 0.15 152);
@@ -26,7 +28,12 @@ const STYLES = `
 --vibeui-sparkline-001-accent:var(--vibeui-sparkline-001-up);
 --vibeui-sparkline-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Собственная подложка: строка показателя — это текст, и на тёмной
+   странице он обязан читаться без правки палитры проекта. */
 [data-vibeui-block="sparkline-001"]{
+box-sizing:border-box;padding:0.625rem 0.75rem;
+background:var(--vibeui-sparkline-001-surface);
+border:1px solid var(--vibeui-sparkline-001-surface-border);border-radius:0.75rem;
 display:inline-flex;align-items:center;gap:0.75rem;
 font-family:var(--vibeui-sparkline-001-font);color:var(--vibeui-sparkline-001-fg);
 }

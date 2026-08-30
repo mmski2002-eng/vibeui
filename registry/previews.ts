@@ -185,6 +185,13 @@ import { Table003 } from "@/registry/components/tables/table-003/table-003"
 import { Chart001 } from "@/registry/components/charts/chart-001/chart-001"
 import { Chart002 } from "@/registry/components/charts/chart-002/chart-002"
 import { Sparkline001 } from "@/registry/components/charts/sparkline-001/sparkline-001"
+import { Chart003 } from "@/registry/components/charts/chart-003/chart-003"
+import { Chart004 } from "@/registry/components/charts/chart-004/chart-004"
+import { Chart005 } from "@/registry/components/charts/chart-005/chart-005"
+import { Chart006 } from "@/registry/components/charts/chart-006/chart-006"
+import { Chart007 } from "@/registry/components/charts/chart-007/chart-007"
+import { Chart008 } from "@/registry/components/charts/chart-008/chart-008"
+import { Chart009 } from "@/registry/components/charts/chart-009/chart-009"
 
 /**
  * Карта slug -> React-компонент. Из неё рендерятся и миниатюра каталога,
@@ -376,4 +383,11 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "chart-001": Chart001,
   "chart-002": Chart002,
   "sparkline-001": Sparkline001,
+  "chart-003": Chart003,
+  "chart-004": Chart004,
+  "chart-005": Chart005,
+  "chart-006": Chart006,
+  "chart-007": Chart007,
+  "chart-008": Chart008,
+  "chart-009": Chart009,
 }
