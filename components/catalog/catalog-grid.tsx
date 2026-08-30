@@ -19,11 +19,13 @@ const FILTER_STYLES = [
 
 export function CatalogGrid({ items }: { items: CatalogItem[] }) {
   return (
-    <>
+    // Колонки считаются от ширины сетки, а не окна: рядом с sidebar окно
+    // шире доступного места, и viewport-брейкпоинты давали бы лишнюю колонку.
+    <div className="@container/grid">
       <style href="vibeui-catalog-filter" precedence="medium">
         {FILTER_STYLES}
       </style>
-      <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <ul className="grid grid-cols-1 items-stretch gap-6 @2xl/grid:grid-cols-2">
         {items.map((item) => (
           <li
             key={item.name}
@@ -34,6 +36,6 @@ export function CatalogGrid({ items }: { items: CatalogItem[] }) {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   )
 }

@@ -33,7 +33,7 @@ export function CatalogThumbnail({ slug }: { slug: string }) {
   // кликабельна карточка целиком, а не то, что внутри миниатюры.
   if (getItemKind(slug) === "component") {
     return (
-      <div className="bg-shell-surface flex aspect-[16/9] w-full items-center justify-center overflow-hidden p-6">
+      <div className="bg-preview-surface flex min-h-44 w-full flex-1 items-center justify-center overflow-hidden p-6 lg:px-8 lg:py-10">
         <div inert className="pointer-events-none">
           <Preview />
         </div>
@@ -42,14 +42,16 @@ export function CatalogThumbnail({ slug }: { slug: string }) {
   }
 
   return (
-    // Подложка — цвет панели карточки, а не серый: секция ниже 16/9 не должна
-    // читаться как обрезанная полоса. Сам блок не перекрашивается.
+    // Кадр 16/9 равен пропорции секции в 1280×720, поэтому блок заполняет его
+    // без полос и обрезки. Подложка следует переключателю темы на карточке.
     <div
-      className="bg-shell-panel @container relative aspect-[16/9] w-full overflow-hidden"
+      className="bg-preview-surface @container relative aspect-[16/9] w-full overflow-hidden"
       style={{ "--thumbnail-width": `${SECTION_WIDTH}px` } as CSSProperties}
     >
-      <div inert className="block-thumbnail-scale pointer-events-none">
-        <Preview />
+      <div inert className="block-thumbnail-frame pointer-events-none">
+        <div className="block-thumbnail-scale">
+          <Preview />
+        </div>
       </div>
     </div>
   )

@@ -1,70 +1,48 @@
-import Link from "next/link"
-
 import { CatalogThumbnail } from "@/components/catalog/catalog-thumbnail"
+import { PreviewTheme } from "@/components/catalog/preview-theme"
 import { CopyButton } from "@/components/copy-button"
-import { buildCopyForAiPrompt } from "@/lib/copy-for-ai"
-import { getInstallCommand, getRegistryItemUrl } from "@/lib/site"
-import { getCategoryLabel, getItemKind } from "@/registry/index"
+import { getItemDocUrl } from "@/lib/site"
 import type { CatalogItem } from "@/registry/meta"
 
+import Link from "next/link"
+
 /**
- * Карточка витрины. Действие ровно одно — Copy for AI: главный артефакт
- * продукта это промпт для агента, а не код и не registry URL. Оба остались
- * на странице item'а как вторичные developer-действия; на карточке они
- * конкурировали бы с главным сценарием (см. docs/DELIVERY.md).
+ * Карточка витрины: кадр превью в рамке и узкая строка действий под ним.
+ * Действие ровно одно — скопировать ссылку на инструкцию: пользователь
+ * вставляет её в собственную фразу агенту (см. docs/DELIVERY.md).
  */
 export function CatalogCard({ item }: { item: CatalogItem }) {
-  const category = item.categories?.[0]
-  // Карточка серверная: промпт собирается из metadata здесь, клиент получает
-  // готовую строку и не тянет registry в бандл.
-  const prompt = buildCopyForAiPrompt(item, {
-    installCommand: getInstallCommand(item.name),
-    registryUrl: getRegistryItemUrl(item.name),
-    kind: getItemKind(item.name) ?? "block",
-  })
+  const docUrl = getItemDocUrl(item.name)
 
   return (
-    // Ссылка не оборачивает миниатюру: внутри блока есть свои <a>, а вложенные
-    // ссылки — невалидный HTML. Кликабельность карточки даёт растянутый
+    // Ссылка не оборачивает карточку целиком: внутри блока есть свои <a>, а
+    // вложенные ссылки — невалидный HTML. Кликабельность даёт растянутый
     // псевдоэлемент заголовка; строка действий поднята над ним через z-10.
-    <article className="border-shell-border bg-shell-panel hover:border-shell-border-strong focus-within:ring-shell-ring relative flex h-full flex-col overflow-hidden rounded-xl border transition-colors focus-within:ring-2">
-      <CatalogThumbnail slug={item.name} />
+    <article className="bg-shell border-shell-border relative flex h-full flex-col overflow-hidden rounded-2xl border p-0.5 shadow-sm shadow-black/5">
+      <div className="border-shell-border relative flex min-h-44 min-w-0 flex-1 flex-col overflow-hidden rounded-xl border">
+        <PreviewTheme>
+          <CatalogThumbnail slug={item.name} />
+        </PreviewTheme>
+      </div>
 
-      <div className="border-shell-border flex flex-1 flex-col gap-1 border-t p-4">
-        <p className="text-shell-muted flex items-center gap-1.5 text-xs font-medium tracking-wide uppercase">
-          {category ? <span>{getCategoryLabel(category)}</span> : null}
-          {category ? <span aria-hidden="true">·</span> : null}
-          <span className="font-mono normal-case">{item.name}</span>
-        </p>
-
-        <h3 className="text-shell-fg text-base font-medium">
+      <div className="flex flex-row items-center gap-3 px-2 py-1.5">
+        <h3 className="text-shell-muted flex min-w-0 flex-1 items-center gap-1.5 truncate text-xs">
           <Link
             href={`/components/${item.name}`}
-            className="after:absolute after:inset-0 focus-visible:outline-none"
+            className="truncate after:absolute after:inset-0 focus-visible:outline-none"
+            title={item.title ?? item.name}
           >
             {item.title ?? item.name}
           </Link>
         </h3>
 
-        {item.description ? (
-          <p className="text-shell-muted line-clamp-2 text-sm text-pretty">
-            {item.description}
-          </p>
-        ) : null}
-
-        {/* Над растянутой ссылкой поднимается только кнопка: ей нужен свой
-            клик. «Подробнее» остаётся визуальным аффордансом — клик по нему
-            ловит та же растянутая ссылка заголовка, поэтому второй ссылки
-            на тот же адрес в разметке нет. */}
-        <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-2 pt-4">
+        <div className="relative z-10 flex items-center gap-1.5">
           <CopyButton
-            value={prompt}
+            value={docUrl}
             label="Copy for AI"
-            copiedLabel="Скопировано — вставьте агенту"
-            variant="primary"
-            className="relative z-10 h-8 px-3 text-xs"
+            copiedLabel="Ссылка скопирована"
+            className="h-7 px-3 text-xs"
           />
-          <span className="text-shell-muted ml-auto text-xs">Подробнее</span>
         </div>
       </div>
     </article>

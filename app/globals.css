@@ -14,6 +14,7 @@
   --color-shell-panel: var(--shell-panel);
   --color-shell-elevated: var(--shell-elevated);
   --color-shell-surface: var(--shell-surface);
+  --color-preview-surface: var(--preview-surface);
   --color-shell-border: var(--shell-border);
   --color-shell-border-strong: var(--shell-border-strong);
   --color-shell-fg: var(--shell-fg);
@@ -160,6 +161,22 @@
     --shell-accent: oklch(0.985 0 0);
     --shell-accent-fg: oklch(0.185 0 0);
     --shell-ring: oklch(0.708 0 0);
+    /* Дефолт кадра — тёмный, как и сама оболочка. Значение перекрывается
+       атрибутом data-preview-theme, который ставит переключатель карточки. */
+    --preview-surface: oklch(0.205 0 0);
+  }
+
+  /* Подложка превью на карточке. Переключателем меняется только она:
+     registry-компоненты theme-independent и несут собственные палитры —
+     оболочка их не перекрашивает (см. «Правило тёмной оболочки»). */
+  [data-preview-theme="light"] {
+    --preview-surface: oklch(0.97 0.002 265);
+    color-scheme: light;
+  }
+
+  [data-preview-theme="dark"] {
+    --preview-surface: oklch(0.205 0 0);
+    color-scheme: dark;
   }
 
   /* Миниатюра блока в каталоге: блок рендерится в свою «настоящую» ширину
@@ -168,38 +185,36 @@
      position:absolute убирает широкий слой из потока: даже если движок не
      применит transform, слой останется обрезанным карточкой и не сможет
      растянуть страницу по горизонтали. */
-  .block-thumbnail-scale {
+  .block-thumbnail-frame {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .block-thumbnail-scale {
+    flex: none;
     width: var(--thumbnail-width);
     /* Запасные фиксированные масштабы: Firefox не умеет делить длины в calc(),
        и без @supports сбрасывает transform в none вместе с этим значением.
        Значения посчитаны под ширину карточки на каждом шаге сетки каталога:
        контейнер max-w-[1440px], sidebar 14rem + gap 2rem от lg,
-       сетка 1 / 2 (sm) / 3 (xl) колонки с gap 1rem. */
+       сетка 1 / 2 колонки с gap 1.5rem. */
     transform: scale(0.27);
-    transform-origin: top left;
+    transform-origin: left center;
   }
 
-  /* 2 колонки от sm: карточка ~296px */
-  @media (min-width: 40rem) {
-    .block-thumbnail-scale {
-      transform: scale(0.23);
-    }
-  }
-
-  /* те же 2 колонки, но шире: карточка ~360px */
-  @media (min-width: 48rem) {
-    .block-thumbnail-scale {
-      transform: scale(0.28);
-    }
-  }
-
-  /* 3 колонки от xl рядом с sidebar: карточка 315–368px */
+  /* 2 колонки рядом с sidebar: карточка ~476px */
   @media (min-width: 80rem) {
     .block-thumbnail-scale {
-      transform: scale(0.26);
+      transform: scale(0.37);
+    }
+  }
+
+  /* контейнер упёрся в max-w-[1440px]: карточка ~556px */
+  @media (min-width: 90rem) {
+    .block-thumbnail-scale {
+      transform: scale(0.42);
     }
   }
 
