@@ -24,6 +24,7 @@ import calendarRegistry from "@/registry/components/calendar/registry.json"
 import cardRegistry from "@/registry/components/card/registry.json"
 import carouselRegistry from "@/registry/components/carousel/registry.json"
 import checkboxRegistry from "@/registry/components/checkbox/registry.json"
+import menuRegistry from "@/registry/components/menu/registry.json"
 import inputsRegistry from "@/registry/components/inputs/registry.json"
 import displayRegistry from "@/registry/components/display/registry.json"
 import feedbackRegistry from "@/registry/components/feedback/registry.json"
@@ -145,6 +146,11 @@ export const SOURCES = [
     directory: "registry/components/checkbox",
     kind: "component",
     items: checkboxRegistry.items,
+  },
+  {
+    directory: "registry/components/menu",
+    kind: "component",
+    items: menuRegistry.items,
   },
   {
     directory: "registry/components/inputs",

@@ -170,6 +170,14 @@ import { Checkbox005 } from "@/registry/components/checkbox/checkbox-005/checkbo
 import { Checkbox006 } from "@/registry/components/checkbox/checkbox-006/checkbox-006"
 import { Checkbox007 } from "@/registry/components/checkbox/checkbox-007/checkbox-007"
 import { Checkbox008 } from "@/registry/components/checkbox/checkbox-008/checkbox-008"
+import { Dropdown001 } from "@/registry/components/menu/dropdown-001/dropdown-001"
+import { Menu001 } from "@/registry/components/menu/menu-001/menu-001"
+import { Menu002 } from "@/registry/components/menu/menu-002/menu-002"
+import { Menu003 } from "@/registry/components/menu/menu-003/menu-003"
+import { Menu004 } from "@/registry/components/menu/menu-004/menu-004"
+import { Menu005 } from "@/registry/components/menu/menu-005/menu-005"
+import { Menu006 } from "@/registry/components/menu/menu-006/menu-006"
+import { Menu007 } from "@/registry/components/menu/menu-007/menu-007"
 import { Input001 } from "@/registry/components/inputs/input-001/input-001"
 import { Input002 } from "@/registry/components/inputs/input-002/input-002"
 import { Textarea001 } from "@/registry/components/inputs/textarea-001/textarea-001"
@@ -182,7 +190,6 @@ import { Empty001 } from "@/registry/components/feedback/empty-001/empty-001"
 import { Tooltip001 } from "@/registry/components/feedback/tooltip-001/tooltip-001"
 import { Banner001 } from "@/registry/components/feedback/banner-001/banner-001"
 import { Tabs001 } from "@/registry/components/navigation/tabs-001/tabs-001"
-import { Dropdown001 } from "@/registry/components/navigation/dropdown-001/dropdown-001"
 import { Stepper001 } from "@/registry/components/navigation/stepper-001/stepper-001"
 import { Pagination001 } from "@/registry/components/navigation/pagination-001/pagination-001"
 import { Sidebar001 } from "@/registry/components/navigation/sidebar-001/sidebar-001"
@@ -375,6 +382,14 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "checkbox-006": Checkbox006,
   "checkbox-007": Checkbox007,
   "checkbox-008": Checkbox008,
+  "dropdown-001": Dropdown001,
+  "menu-001": Menu001,
+  "menu-002": Menu002,
+  "menu-003": Menu003,
+  "menu-004": Menu004,
+  "menu-005": Menu005,
+  "menu-006": Menu006,
+  "menu-007": Menu007,
   "input-001": Input001,
   "input-002": Input002,
   "textarea-001": Textarea001,
@@ -387,7 +402,6 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "tooltip-001": Tooltip001,
   "banner-001": Banner001,
   "tabs-001": Tabs001,
-  "dropdown-001": Dropdown001,
   "stepper-001": Stepper001,
   "pagination-001": Pagination001,
   "sidebar-001": Sidebar001,

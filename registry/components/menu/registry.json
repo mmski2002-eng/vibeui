@@ -1,0 +1,834 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "dropdown-001",
+      "type": "registry:component",
+      "title": "Anchored Dropdown",
+      "description": "Выпадающее меню без JS: открытие держит HTML popover, а положение рядом с кнопкой — якорное позиционирование CSS.",
+      "categories": ["menu"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dropdown-001/dropdown-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dropdown-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dropdown-001-*. Открытие — атрибуты popover и popovertarget, положение — anchor-name у кнопки и position-anchor с position-area у меню, под @supports. Меню живёт в верхнем слое, поэтому стилизуется по атрибуту [data-vibeui-dropdown-001-menu] и получает палитру собственным style. Проп open переводит меню в поток страницы для витрины и скриншотов: popover в этом режиме не используется.",
+      "meta": {
+        "tags": ["dropdown", "menu", "popover", "no-js"],
+        "preview": {
+          "props": {
+            "open": true
+          }
+        },
+        "ai": {
+          "export": "Dropdown001",
+          "usage": "<Dropdown001\n  id=\"project-menu\"\n  trigger=\"Проект\"\n  items={[\n    { label: \"Настройки\", href: \"/settings\" },\n    { label: \"Удалить\", href: \"/delete\", separated: true, danger: true },\n  ]}\n/>",
+          "summary": "Меню из кнопки: открытие, закрытие по Esc и по клику мимо даёт HTML popover, положение рядом с кнопкой — якорное позиционирование CSS, включая переворот при нехватке места. Пункты — обычные ссылки, опасное действие отделяется линией. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-dropdown-001-* и не подменять её токенами вашей темы (bg-popover, border-border и подобными)",
+            "механику popover: popovertarget у кнопки и popover=\"auto\" у меню — это всё поведение целиком",
+            "пару anchor-name и position-anchor вместе с position-area: без них меню в верхнем слое встанет по центру экрана",
+            "блок @supports вокруг якорного позиционирования: там, где якорей нет, меню обязано остаться работающим, пусть и по центру",
+            "стилизацию меню по атрибуту и передачу палитры отдельным style: в верхнем слое меню перестаёт быть потомком корня",
+            "position-try-fallbacks: у нижнего края экрана меню должно переворачиваться, а не уезжать за границу",
+            "линию перед опасным пунктом и его отдельный цвет — «Удалить» не должно стоять вплотную к обычным пунктам",
+            "блок <style> внутри компонента — в нём вся палитра, позиционирование и анимация"
+          ],
+          "adapt": [
+            "массив items: подписи, адреса, флаги separated и danger",
+            "trigger — подпись кнопки",
+            "id — свой на каждое меню на странице",
+            "open — развернуть меню в потоке страницы: витрина, скриншот, отладка",
+            "акцент через проп accent — цвет кольца фокуса"
+          ],
+          "notes": [
+            "Клавиатурная навигация внутри меню ограничена Tab: стрелки по пунктам — это уже role=\"menu\" с обработчиком, то есть JS.",
+            "Два меню с одинаковым id на странице конфликтуют: кнопка откроет первое попавшееся.",
+            "Пункты — ссылки. Если пункт запускает действие, замените <a> на <button type=\"button\"> в своей копии.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "trigger",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Проект",
+            "maxLength": 24
+          },
+          {
+            "prop": "open",
+            "label": "Развернуто",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dropdown with no JS: the HTML popover attribute handles opening, and CSS anchor positioning keeps it next to its button.",
+            "ai": {
+              "summary": "A menu on a button: opening, Esc and click-outside come from the HTML popover attribute, and the placement beside the button — including flipping when there is no room — from CSS anchor positioning. The items are plain links and the destructive one is set apart by a rule. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-dropdown-001-* palette — do not swap it for your theme tokens (bg-popover, border-border and the like)",
+                "the popover mechanism: popovertarget on the button and popover=\"auto\" on the menu are the whole behaviour",
+                "the anchor-name / position-anchor pair together with position-area: without them a top-layer menu lands in the middle of the screen",
+                "the @supports block around anchor positioning: where anchors are missing the menu must still work, even if centred",
+                "styling the menu by attribute and passing the palette through its own style: in the top layer it is no longer a descendant of the root",
+                "position-try-fallbacks: near the bottom edge the menu has to flip rather than run off screen",
+                "the rule above the destructive item and its separate colour — Delete must not sit flush against ordinary items",
+                "the <style> block inside the component — it holds the palette, the positioning and the animation"
+              ],
+              "adapt": [
+                "the items array: labels, hrefs, the separated and danger flags",
+                "trigger — the button label",
+                "id — one per menu on the page",
+                "open — expand the menu in the page flow: showcase, screenshots, debugging",
+                "the accent through the accent prop — it colours the focus ring"
+              ],
+              "notes": [
+                "Keyboard navigation inside the menu is limited to Tab: arrow keys between items mean role=\"menu\" and a handler, which means JS.",
+                "Two menus sharing an id conflict: the button opens whichever it finds first.",
+                "The items are links. If an item runs an action, swap <a> for <button type=\"button\"> in your copy.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dropdown001\n  id=\"project-menu\"\n  trigger=\"Project\"\n  items={[\n    { label: \"Settings\", href: \"/settings\" },\n    { label: \"Delete\", href: \"/delete\", separated: true, danger: true },\n  ]}\n/>"
+            },
+            "controls": {
+              "trigger": {
+                "label": "Button",
+                "default": "Project"
+              },
+              "open": {
+                "label": "Expanded"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "menu-001",
+      "type": "registry:component",
+      "title": "Action Menu",
+      "description": "Меню с разделами и подсказками клавиш на HTML popover: слой, Escape и клик вне даёт браузер, а не наш код.",
+      "categories": ["menu"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "menu-001/menu-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/menu-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-001-*. Серверный компонент: useId нужен только для связи кнопки и слоя. Открытие держит атрибут popover и popovertarget, позиция — CSS anchor positioning с запасным правилом в @supports для браузеров без него. Разделы разделены чертой, опасное действие красится текстом.",
+      "meta": {
+        "tags": ["menu", "popover", "dropdown", "no-js"],
+        "ai": {
+          "export": "Menu001",
+          "usage": "<Menu001 label=\"Действия\" groups={[[{ label: \"Переименовать\", hint: \"F2\" }]]} />",
+          "summary": "Выпадающее меню на HTML popover: разделы, подсказки клавиш и опасное действие в отдельной группе. Открытие и закрытие — браузерные, клиентского кода нет. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-menu-001-* и не подменять её токенами вашей темы",
+            "popover вместо своего состояния: Escape, клик вне и верхний слой достаются даром",
+            "запасное правило в @supports: без anchor positioning меню должно остаться под кнопкой",
+            "разделение групп чертой — опасное действие не соседствует с обычными",
+            "цвет только на тексте опасного пункта, без заливки строки",
+            "role=\"menu\" с именем и role=\"menuitem\" на пунктах"
+          ],
+          "adapt": [
+            "массив groups и подписи пунктов",
+            "label — подпись кнопки",
+            "подсказки горячих клавиш",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Пункты ничего не делают: обработчики навешивает вызывающий код.",
+            "Стрелки по пунктам браузер не даёт: для полной клавиатурной модели меню нужен JS, и это осознанный размен.",
+            "Подсказка клавиши должна совпадать с реальной: несуществующее сочетание хуже его отсутствия.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Действия",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A menu with sections and shortcut hints on the HTML popover: the layer, Escape and outside click come from the browser, not our code.",
+            "ai": {
+              "summary": "A dropdown menu on the HTML popover: sections, shortcut hints and the destructive action in its own group. Opening and closing are native, with no client code. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-menu-001-* palette — do not swap it for your theme tokens",
+                "popover instead of custom state: Escape, outside click and the top layer come free",
+                "the @supports fallback: without anchor positioning the menu must still sit under the button",
+                "the divider between groups — the destructive action never neighbours ordinary ones",
+                "colour on the destructive item's text only, without filling the row",
+                "role=\"menu\" with a name and role=\"menuitem\" on the items"
+              ],
+              "adapt": [
+                "the groups array and item labels",
+                "label — the button's text",
+                "the shortcut hints",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The items do nothing: handlers belong to the caller.",
+                "The browser gives no arrow-key roving: a full menu keyboard model needs JS, and skipping it is a deliberate trade.",
+                "A shortcut hint must match reality: a fake combination is worse than none.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Menu001 label=\"Actions\" groups={[[{ label: \"Rename\", hint: \"F2\" }]]} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Button text",
+                "default": "Actions"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "menu-002",
+      "type": "registry:component",
+      "title": "Context Menu",
+      "description": "Меню по правой кнопке: появляется там, где нажали, и закрывается выбором, Escape или уходом курсора.",
+      "categories": ["menu"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "menu-002/menu-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/menu-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-002-*. Клиентский: \"use client\". Координаты берутся из события contextmenu, стандартное меню браузера отменяется preventDefault. Меню позиционируется fixed по точке нажатия. Область, на которой работает правая кнопка, обозначена пунктиром и подписью.",
+      "meta": {
+        "tags": ["menu", "context", "right-click", "desktop"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Menu002",
+          "usage": "<Menu002 items={[{ label: \"Открыть\" }, { label: \"Удалить\", danger: true }]} />",
+          "summary": "Контекстное меню по правой кнопке: появляется у курсора, закрывается выбором, Escape и уходом мыши, показывает выбранное действие. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-menu-002-* и не подменять её токенами вашей темы",
+            "координаты из события: у позиции курсора нет якоря, который дал бы CSS",
+            "видимую область, на которой работает правая кнопка — иначе меню находят случайно",
+            "закрытие по Escape и уходу курсора, а не только по выбору",
+            "цвет только на тексте опасного пункта",
+            "дубль тех же действий в обычном меню: на телефоне правой кнопки нет"
+          ],
+          "adapt": [
+            "массив items",
+            "hint — подпись области",
+            "обработчики выбора",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "На телефоне контекстного меню нет вовсе: те же действия обязаны быть доступны иначе.",
+            "Меню может вылезти за край окна: для точного попадания добавьте проверку границ.",
+            "Отменять браузерное меню стоит только там, где вы даёте замену: на тексте и ссылках это раздражает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "hint",
+            "label": "Подпись области",
+            "type": "text",
+            "default": "Нажмите правой кнопкой по области",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A right-click menu: it appears where you clicked and closes on selection, Escape or when the pointer leaves.",
+            "ai": {
+              "summary": "A context menu on right click: it opens at the cursor, closes on selection, Escape and mouse-out, and reports the chosen action. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-menu-002-* palette — do not swap it for your theme tokens",
+                "coordinates from the event: a cursor position has no anchor CSS could use",
+                "a visible zone where right-click works — otherwise the menu is found by accident",
+                "closing on Escape and mouse-out, not only on selection",
+                "colour on the destructive item's text only",
+                "the same actions duplicated in a normal menu: phones have no right click"
+              ],
+              "adapt": [
+                "the items array",
+                "hint — the zone's caption",
+                "the selection handlers",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Phones have no context menu at all: the same actions must be reachable another way.",
+                "The menu can overflow the window: add bounds checking for exact placement.",
+                "Only override the browser menu where you replace it: on text and links it is an annoyance.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Menu002 items={[{ label: \"Open\" }, { label: \"Delete\", danger: true }]} />"
+            },
+            "controls": {
+              "hint": {
+                "label": "Zone caption",
+                "default": "Right-click inside the area"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "menu-003",
+      "type": "registry:component",
+      "title": "Menubar",
+      "description": "Строка меню как в настольной программе: стрелки ходят между разделами, стрелка вниз открывает список.",
+      "categories": ["menu"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "menu-003/menu-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/menu-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-003-*. Клиентский: \"use client\". Ссылки на заголовки хранятся массивом ref, стрелки переносят фокус между ними, стрелка вниз открывает список, Escape закрывает и возвращает фокус. Открытое меню переключается наведением на соседний заголовок.",
+      "meta": {
+        "tags": ["menu", "menubar", "keyboard", "desktop"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Menu003",
+          "usage": "<Menu003 menus={[{ label: \"Файл\", items: [\"Создать\"] }]} />",
+          "summary": "Строка меню: разделы с клавиатурной навигацией, переключение открытого меню наведением и возврат фокуса по Escape. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-menu-003-* и не подменять её токенами вашей темы",
+            "стрелки между заголовками: это и отличает строку меню от ряда кнопок",
+            "переключение открытого меню наведением на соседний заголовок",
+            "возврат фокуса на заголовок после Escape",
+            "role=\"menubar\" с именем и aria-expanded на заголовках",
+            "верхний слой у списка: меню обязано перекрывать содержимое"
+          ],
+          "adapt": [
+            "массив menus и их пункты",
+            "обработчики выбора",
+            "акцент через проп accent",
+            "высоту заголовков"
+          ],
+          "notes": [
+            "Строка меню — настольный образец: на телефоне вместо неё нужен другой способ, обычно лист снизу.",
+            "Вложенные подменю здесь не поддержаны: для них нужна рекурсия и своя клавиатурная модель.",
+            "Пункты ничего не делают: обработчики навешивает вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A desktop-style menubar: arrows move between sections and the down arrow opens the list.",
+            "ai": {
+              "summary": "A menubar: sections with keyboard navigation, hover switching of the open menu and focus return on Escape. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-menu-003-* palette — do not swap it for your theme tokens",
+                "arrow keys between titles: that is what separates a menubar from a row of buttons",
+                "switching the open menu by hovering a neighbouring title",
+                "returning focus to the title after Escape",
+                "role=\"menubar\" with a name and aria-expanded on the titles",
+                "the top layer on the list: a menu must overlap content"
+              ],
+              "adapt": [
+                "the menus array and their items",
+                "the selection handlers",
+                "the accent through the accent prop",
+                "the title height"
+              ],
+              "notes": [
+                "A menubar is a desktop pattern: phones need something else, usually a bottom sheet.",
+                "Nested submenus are out of scope: they need recursion and their own keyboard model.",
+                "The items do nothing: handlers belong to the caller.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Menu003 menus={[{ label: \"File\", items: [\"New\"] }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "menu-004",
+      "type": "registry:component",
+      "title": "Profile Menu",
+      "description": "Меню профиля с шапкой: имя и почта внутри меню, а выход отделён чертой — это единственное необратимое действие.",
+      "categories": ["menu"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "menu-004/menu-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/menu-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-004-*. Серверный компонент: открытие держит popover, позиция — anchor positioning с правым выравниванием и запасным правилом в @supports. Оттенок аватара считается из имени FNV-1a по двенадцати ступеням круга.",
+      "meta": {
+        "tags": ["menu", "profile", "account", "popover"],
+        "ai": {
+          "export": "Menu004",
+          "usage": "<Menu004 name=\"Анна Петрова\" email=\"anna@example.com\" plan=\"Команда\" />",
+          "summary": "Меню профиля: кнопка с инициалами, шапка с именем, почтой и тарифом, пункты настроек и отделённый выход. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-menu-004-* и не подменять её токенами вашей темы",
+            "шапку с именем и почтой внутри меню: под кем вошёл, надо знать до выхода",
+            "выход отдельной группой и цветом текста",
+            "выравнивание слоя по правому краю кнопки — меню профиля стоит в правом углу шапки",
+            "запасное правило в @supports для браузеров без anchor positioning",
+            "aria-label у кнопки с именем: инициалы вслух бесполезны"
+          ],
+          "adapt": [
+            "name, email и plan",
+            "пункты меню",
+            "акцент через проп accent",
+            "форму кнопки"
+          ],
+          "notes": [
+            "Почта в шапке — персональные данные: на общем экране её лучше сокращать.",
+            "Пункты ничего не делают: обработчики навешивает вызывающий код.",
+            "Выход стоит подтверждать, если в приложении есть несохранённые черновики.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя",
+            "type": "text",
+            "default": "Анна Петрова",
+            "maxLength": 30
+          },
+          {
+            "prop": "email",
+            "label": "Почта",
+            "type": "text",
+            "default": "anna@example.com",
+            "maxLength": 40
+          },
+          {
+            "prop": "plan",
+            "label": "Тариф",
+            "type": "text",
+            "default": "Команда",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A profile menu with a header: name and email inside the menu, sign-out separated by a rule as the one irreversible action.",
+            "ai": {
+              "summary": "A profile menu: an initials button, a header with name, email and plan, settings items and a separated sign-out. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-menu-004-* palette — do not swap it for your theme tokens",
+                "the header with name and email inside the menu: you must know who you are before signing out",
+                "sign-out in its own group and coloured by text",
+                "aligning the layer to the button's right edge — a profile menu lives in the top-right corner",
+                "the @supports fallback for browsers without anchor positioning",
+                "the aria-label on the button carrying the name: initials say nothing aloud"
+              ],
+              "adapt": [
+                "name, email and plan",
+                "the menu items",
+                "the accent through the accent prop",
+                "the button shape"
+              ],
+              "notes": [
+                "The email is personal data: shorten it on shared screens.",
+                "The items do nothing: handlers belong to the caller.",
+                "Sign-out deserves a confirmation when unsaved drafts exist.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Menu004 name=\"Anna Petrova\" email=\"anna@example.com\" plan=\"Team\" />"
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Anna Petrova"
+              },
+              "email": {
+                "label": "Email",
+                "default": "anna@example.com"
+              },
+              "plan": {
+                "label": "Plan",
+                "default": "Team"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "menu-005",
+      "type": "registry:component",
+      "title": "Settings Menu",
+      "description": "Меню настроек с переключателями: оно не закрывается по нажатию, потому что настройки меняют пачкой.",
+      "categories": ["menu"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "menu-005/menu-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/menu-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-005-*. Клиентский: \"use client\". Внутри настоящие radio и checkbox со скрытым полем и ролями menuitemradio и menuitemcheckbox. Место под отметку занято всегда, поэтому строки не прыгают при переключении. Разделитель объявлен role=\"separator\".",
+      "meta": {
+        "tags": ["menu", "settings", "toggle", "view"],
+        "ai": {
+          "export": "Menu005",
+          "usage": "<Menu005 views={[\"Сетка\", \"Список\"]} toggles={[\"Только мои\"]} onChange={apply} />",
+          "summary": "Меню вида и настроек: выбор одного варианта, переключатели и разделитель между ними. Меню остаётся открытым после нажатия. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-menu-005-* и не подменять её токенами вашей темы",
+            "открытое меню после нажатия: настройки меняют пачкой, а не по одной",
+            "постоянное место под отметку — иначе строки прыгают при переключении",
+            "роли menuitemradio и menuitemcheckbox с aria-checked",
+            "настоящие radio и checkbox под подписями вместо кнопок",
+            "разделитель между выбором вида и переключателями"
+          ],
+          "adapt": [
+            "массивы views и toggles",
+            "label — заголовок раздела",
+            "обработчик onChange",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Настройки применяются сразу: если действие дорогое, добавьте кнопку «применить».",
+            "Компонент показывает само меню без кнопки-триггера: оберните его в popover из menu-001.",
+            "Больше семи строк — повод разделить меню на разделы с заголовками.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вид каталога",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A settings menu with toggles: it stays open on click, because settings are changed in batches.",
+            "ai": {
+              "summary": "A view and settings menu: a single-choice group, toggles and a separator between them. The menu stays open after a click. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-menu-005-* palette — do not swap it for your theme tokens",
+                "keeping the menu open: settings are changed in batches, not one at a time",
+                "the permanent slot for the check mark — otherwise rows jump on toggle",
+                "the menuitemradio and menuitemcheckbox roles with aria-checked",
+                "real radios and checkboxes under the labels instead of buttons",
+                "the separator between the view choice and the toggles"
+              ],
+              "adapt": [
+                "the views and toggles arrays",
+                "label — the section heading",
+                "the onChange handler",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Settings apply immediately: if the action is expensive, add an Apply button.",
+                "This is the menu body without a trigger: wrap it in the popover from menu-001.",
+                "Beyond seven rows, split the menu into labelled sections.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Menu005 views={[\"Grid\", \"List\"]} toggles={[\"Mine only\"]} onChange={apply} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Heading",
+                "default": "Catalog view"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "menu-006",
+      "type": "registry:component",
+      "title": "Mega Menu",
+      "description": "Широкое меню навигации на details: колонки с пояснениями к ссылкам — список из двадцати названий это карта сайта, а не навигация.",
+      "categories": ["menu"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "menu-006/menu-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/menu-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-006-*. Серверный компонент: раскрытие держит нативный details, useId нужен для имени группы. Корень объявлен контейнером, колонки живут на внутренней панели: контейнерный запрос действует только на потомков. От 26rem собственной ширины панель складывается в одну колонку.",
+      "meta": {
+        "tags": ["menu", "mega", "navigation", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Menu006",
+          "usage": "<Menu006 label=\"Продукт\" sections={sections} />",
+          "summary": "Широкое меню навигации: раскрытие на details, две колонки с заголовками разделов и пояснением к каждой ссылке. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-menu-006-* и не подменять её токенами вашей темы",
+            "пояснения к ссылкам: без них это карта сайта, а не навигация",
+            "details вместо своего состояния — клавиатура и роль достаются даром",
+            "раскладку на внутренней панели: контейнерный запрос не применяется к самому контейнеру",
+            "складывание в одну колонку на узкой ширине",
+            "верхний слой у панели: меню обязано перекрывать содержимое"
+          ],
+          "adapt": [
+            "массив sections и их ссылки",
+            "label — подпись раздела",
+            "акцент через проп accent",
+            "число колонок"
+          ],
+          "notes": [
+            "Details не закрывается по клику вне: для этого нужен JS, и это осознанный размен.",
+            "Больше трёх колонок читаются как таблица: разбивайте меню на разделы.",
+            "Пояснение должно объяснять, а не повторять название ссылки другими словами.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись раздела",
+            "type": "text",
+            "default": "Продукт",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A wide navigation menu on details: columns with a line of explanation per link — twenty bare names are a sitemap, not navigation.",
+            "ai": {
+              "summary": "A mega menu: disclosure on details, two columns with section headings and a hint under every link. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-menu-006-* palette — do not swap it for your theme tokens",
+                "the hints under links: without them it is a sitemap, not navigation",
+                "details instead of custom state — keyboard and role come free",
+                "the layout on the inner panel: a container query does not apply to the container itself",
+                "collapsing to one column at narrow widths",
+                "the top layer on the panel: a menu must overlap content"
+              ],
+              "adapt": [
+                "the sections array and their links",
+                "label — the trigger's text",
+                "the accent through the accent prop",
+                "the number of columns"
+              ],
+              "notes": [
+                "Details does not close on an outside click: that needs JS, and skipping it is a deliberate trade.",
+                "More than three columns read as a table: split the menu into sections.",
+                "A hint must explain, not restate the link's name in other words.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Menu006 label=\"Product\" sections={sections} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Trigger text",
+                "default": "Product"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "menu-007",
+      "type": "registry:component",
+      "title": "Action Sheet",
+      "description": "Лист действий снизу: крупные цели у нижнего края и отдельная кнопка отмены — закрыть должно быть так же легко, как открыть.",
+      "categories": ["menu"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "menu-007/menu-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/menu-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-007-*. Клиентский: \"use client\". Нижний отступ учитывает env(safe-area-inset-bottom), высота пункта 2.75rem — цель под большой палец. У пунктов есть пояснения второй строкой, опасное действие красится текстом, отмена вынесена отдельной кнопкой во всю ширину.",
+      "meta": {
+        "tags": ["menu", "sheet", "mobile", "actions"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Menu007",
+          "usage": "<Menu007 title=\"Проект «Каталог»\" actions={actions} />",
+          "summary": "Лист действий для телефона: заголовок с именем объекта, крупные пункты с пояснениями и отдельная отмена. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-menu-007-* и не подменять её токенами вашей темы",
+            "высоту пунктов 2.75rem: до нижнего края дотягивается только большой палец",
+            "отдельную крупную отмену — закрыть должно быть так же легко, как открыть",
+            "env(safe-area-inset-bottom): иначе лист уезжает под системную черту",
+            "имя объекта в заголовке: «удалить» без имени — источник ошибок",
+            "пояснение у опасного действия: что именно случится"
+          ],
+          "adapt": [
+            "массив actions и их пояснения",
+            "title — что за объект",
+            "cancelLabel",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Позиционирование не входит в компонент: прижимает лист к низу вызывающий код.",
+            "Больше пяти действий в листе не помещается: остальное — на отдельном экране.",
+            "Опасное действие в листе стоит подтверждать отдельно: одно нажатие пальцем слишком легко.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Объект",
+            "type": "text",
+            "default": "Проект «Каталог»",
+            "maxLength": 30
+          },
+          {
+            "prop": "cancelLabel",
+            "label": "Отмена",
+            "type": "text",
+            "default": "Отмена",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A bottom action sheet: large targets near the bottom edge and a separate cancel — closing must be as easy as opening.",
+            "ai": {
+              "summary": "A phone action sheet: a header naming the object, large items with explanations and a separate cancel button. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-menu-007-* palette — do not swap it for your theme tokens",
+                "the 2.75rem item height: only a thumb reaches the bottom edge",
+                "the separate large cancel — closing must be as easy as opening",
+                "env(safe-area-inset-bottom): otherwise the sheet slides under the home bar",
+                "the object's name in the header: \"delete\" without a name causes mistakes",
+                "the explanation on the destructive action: what exactly happens"
+              ],
+              "adapt": [
+                "the actions array and their explanations",
+                "title — what the object is",
+                "cancelLabel",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Positioning is not part of the component: pinning it to the bottom is the caller's job.",
+                "More than five actions do not fit: the rest belong on their own screen.",
+                "A destructive action here deserves its own confirmation: one thumb tap is too easy.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Menu007 title=\"The Catalog project\" actions={actions} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Object",
+                "default": "The Catalog project"
+              },
+              "cancelLabel": {
+                "label": "Cancel",
+                "default": "Cancel"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

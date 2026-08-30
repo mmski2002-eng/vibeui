@@ -856,6 +856,46 @@ export const LAZY_PREVIEWS = {
       (module) => module.Checkbox008,
     ),
   ),
+  "dropdown-001": dynamic(() =>
+    import("@/registry/components/menu/dropdown-001/dropdown-001").then(
+      (module) => module.Dropdown001,
+    ),
+  ),
+  "menu-001": dynamic(() =>
+    import("@/registry/components/menu/menu-001/menu-001").then(
+      (module) => module.Menu001,
+    ),
+  ),
+  "menu-002": dynamic(() =>
+    import("@/registry/components/menu/menu-002/menu-002").then(
+      (module) => module.Menu002,
+    ),
+  ),
+  "menu-003": dynamic(() =>
+    import("@/registry/components/menu/menu-003/menu-003").then(
+      (module) => module.Menu003,
+    ),
+  ),
+  "menu-004": dynamic(() =>
+    import("@/registry/components/menu/menu-004/menu-004").then(
+      (module) => module.Menu004,
+    ),
+  ),
+  "menu-005": dynamic(() =>
+    import("@/registry/components/menu/menu-005/menu-005").then(
+      (module) => module.Menu005,
+    ),
+  ),
+  "menu-006": dynamic(() =>
+    import("@/registry/components/menu/menu-006/menu-006").then(
+      (module) => module.Menu006,
+    ),
+  ),
+  "menu-007": dynamic(() =>
+    import("@/registry/components/menu/menu-007/menu-007").then(
+      (module) => module.Menu007,
+    ),
+  ),
   "input-001": dynamic(() =>
     import("@/registry/components/inputs/input-001/input-001").then(
       (module) => module.Input001,
@@ -914,11 +954,6 @@ export const LAZY_PREVIEWS = {
   "tabs-001": dynamic(() =>
     import("@/registry/components/navigation/tabs-001/tabs-001").then(
       (module) => module.Tabs001,
-    ),
-  ),
-  "dropdown-001": dynamic(() =>
-    import("@/registry/components/navigation/dropdown-001/dropdown-001").then(
-      (module) => module.Dropdown001,
     ),
   ),
   "stepper-001": dynamic(() =>

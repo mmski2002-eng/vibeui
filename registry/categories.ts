@@ -54,6 +54,7 @@ export const CATEGORIES = [
   { slug: "card", label: "Card", group: "application" },
   { slug: "carousel", label: "Carousel", group: "application" },
   { slug: "checkbox", label: "Checkbox", group: "application" },
+  { slug: "menu", label: "Menu", group: "navigation" },
   { slug: "inputs", label: "Inputs", group: "application" },
   { slug: "display", label: "Display", group: "application" },
   { slug: "feedback", label: "Feedback", group: "application" },
