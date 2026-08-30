@@ -511,6 +511,66 @@ export const LAZY_PREVIEWS = {
       (module) => module.Avatar012,
     ),
   ),
+  "badge-001": dynamic(() =>
+    import("@/registry/components/badge/badge-001/badge-001").then(
+      (module) => module.Badge001,
+    ),
+  ),
+  "badge-002": dynamic(() =>
+    import("@/registry/components/badge/badge-002/badge-002").then(
+      (module) => module.Badge002,
+    ),
+  ),
+  "badge-003": dynamic(() =>
+    import("@/registry/components/badge/badge-003/badge-003").then(
+      (module) => module.Badge003,
+    ),
+  ),
+  "badge-004": dynamic(() =>
+    import("@/registry/components/badge/badge-004/badge-004").then(
+      (module) => module.Badge004,
+    ),
+  ),
+  "badge-005": dynamic(() =>
+    import("@/registry/components/badge/badge-005/badge-005").then(
+      (module) => module.Badge005,
+    ),
+  ),
+  "badge-006": dynamic(() =>
+    import("@/registry/components/badge/badge-006/badge-006").then(
+      (module) => module.Badge006,
+    ),
+  ),
+  "badge-007": dynamic(() =>
+    import("@/registry/components/badge/badge-007/badge-007").then(
+      (module) => module.Badge007,
+    ),
+  ),
+  "badge-008": dynamic(() =>
+    import("@/registry/components/badge/badge-008/badge-008").then(
+      (module) => module.Badge008,
+    ),
+  ),
+  "badge-009": dynamic(() =>
+    import("@/registry/components/badge/badge-009/badge-009").then(
+      (module) => module.Badge009,
+    ),
+  ),
+  "badge-010": dynamic(() =>
+    import("@/registry/components/badge/badge-010/badge-010").then(
+      (module) => module.Badge010,
+    ),
+  ),
+  "badge-011": dynamic(() =>
+    import("@/registry/components/badge/badge-011/badge-011").then(
+      (module) => module.Badge011,
+    ),
+  ),
+  "badge-012": dynamic(() =>
+    import("@/registry/components/badge/badge-012/badge-012").then(
+      (module) => module.Badge012,
+    ),
+  ),
   "input-001": dynamic(() =>
     import("@/registry/components/inputs/input-001/input-001").then(
       (module) => module.Input001,
@@ -539,11 +599,6 @@ export const LAZY_PREVIEWS = {
   "switch-001": dynamic(() =>
     import("@/registry/components/inputs/switch-001/switch-001").then(
       (module) => module.Switch001,
-    ),
-  ),
-  "badge-001": dynamic(() =>
-    import("@/registry/components/display/badge-001/badge-001").then(
-      (module) => module.Badge001,
     ),
   ),
   "card-001": dynamic(() =>

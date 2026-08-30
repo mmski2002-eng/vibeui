@@ -101,13 +101,24 @@ import { Avatar009 } from "@/registry/components/avatar/avatar-009/avatar-009"
 import { Avatar010 } from "@/registry/components/avatar/avatar-010/avatar-010"
 import { Avatar011 } from "@/registry/components/avatar/avatar-011/avatar-011"
 import { Avatar012 } from "@/registry/components/avatar/avatar-012/avatar-012"
+import { Badge001 } from "@/registry/components/badge/badge-001/badge-001"
+import { Badge002 } from "@/registry/components/badge/badge-002/badge-002"
+import { Badge003 } from "@/registry/components/badge/badge-003/badge-003"
+import { Badge004 } from "@/registry/components/badge/badge-004/badge-004"
+import { Badge005 } from "@/registry/components/badge/badge-005/badge-005"
+import { Badge006 } from "@/registry/components/badge/badge-006/badge-006"
+import { Badge007 } from "@/registry/components/badge/badge-007/badge-007"
+import { Badge008 } from "@/registry/components/badge/badge-008/badge-008"
+import { Badge009 } from "@/registry/components/badge/badge-009/badge-009"
+import { Badge010 } from "@/registry/components/badge/badge-010/badge-010"
+import { Badge011 } from "@/registry/components/badge/badge-011/badge-011"
+import { Badge012 } from "@/registry/components/badge/badge-012/badge-012"
 import { Input001 } from "@/registry/components/inputs/input-001/input-001"
 import { Input002 } from "@/registry/components/inputs/input-002/input-002"
 import { Textarea001 } from "@/registry/components/inputs/textarea-001/textarea-001"
 import { Select001 } from "@/registry/components/inputs/select-001/select-001"
 import { Checkbox001 } from "@/registry/components/inputs/checkbox-001/checkbox-001"
 import { Switch001 } from "@/registry/components/inputs/switch-001/switch-001"
-import { Badge001 } from "@/registry/components/display/badge-001/badge-001"
 import { Card001 } from "@/registry/components/display/card-001/card-001"
 import { Skeleton001 } from "@/registry/components/display/skeleton-001/skeleton-001"
 import { Progress001 } from "@/registry/components/display/progress-001/progress-001"
@@ -234,13 +245,24 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "avatar-010": Avatar010,
   "avatar-011": Avatar011,
   "avatar-012": Avatar012,
+  "badge-001": Badge001,
+  "badge-002": Badge002,
+  "badge-003": Badge003,
+  "badge-004": Badge004,
+  "badge-005": Badge005,
+  "badge-006": Badge006,
+  "badge-007": Badge007,
+  "badge-008": Badge008,
+  "badge-009": Badge009,
+  "badge-010": Badge010,
+  "badge-011": Badge011,
+  "badge-012": Badge012,
   "input-001": Input001,
   "input-002": Input002,
   "textarea-001": Textarea001,
   "select-001": Select001,
   "checkbox-001": Checkbox001,
   "switch-001": Switch001,
-  "badge-001": Badge001,
   "card-001": Card001,
   "skeleton-001": Skeleton001,
   "progress-001": Progress001,
