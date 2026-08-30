@@ -1,11 +1,13 @@
+import Link from "next/link"
+
 import { CatalogGrid } from "@/components/catalog/catalog-grid"
 import { CatalogNav } from "@/components/catalog/catalog-nav"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
-import { getCatalogItems, getCatalogNavSections } from "@/registry/index"
+import { getCatalogNavSections, getItemsByKind } from "@/registry/index"
 
 export default function HomePage() {
-  const items = getCatalogItems()
-  const sections = getCatalogNavSections()
+  const items = getItemsByKind("component")
+  const sections = getCatalogNavSections("component")
   const categoryCount = sections.reduce(
     (total, section) => total + section.categories.length,
     0,
@@ -22,9 +24,13 @@ export default function HomePage() {
               Выбери дизайн. Отдай ИИ. Получи сайт.
             </h1>
             <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty sm:text-base">
-              Библиотека готовых секций для вайбкодинга. Открой блок, нажми Copy
-              for AI — агент поставит его из registry, а не пересоздаст похожий
-              по описанию.
+              Библиотека готовых компонентов для вайбкодинга. Открой компонент,
+              нажми Copy for AI — агент поставит его из registry, а не
+              пересоздаст похожий по описанию. Целые секции страницы — в{" "}
+              <Link href="/blocks" className="hover:text-shell-fg underline">
+                блоках
+              </Link>
+              .
             </p>
             <p className="text-shell-muted mt-4 text-xs">
               items: {items.length} · категорий: {categoryCount} · установка

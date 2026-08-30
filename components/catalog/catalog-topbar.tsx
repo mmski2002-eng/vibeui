@@ -21,7 +21,13 @@ export function CatalogTopbar({ itemCount }: { itemCount: number }) {
             href="/components"
             className="hover:text-shell-fg focus-visible:ring-shell-ring rounded-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
           >
-            Каталог
+            Компоненты
+          </Link>
+          <Link
+            href="/blocks"
+            className="hover:text-shell-fg focus-visible:ring-shell-ring rounded-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+          >
+            Блоки
           </Link>
         </nav>
       </div>

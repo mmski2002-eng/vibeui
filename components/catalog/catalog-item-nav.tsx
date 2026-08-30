@@ -1,15 +1,20 @@
 import Link from "next/link"
 
-import { getCatalogItems, getCatalogNavSections } from "@/registry/index"
+import {
+  getCatalogItems,
+  getCatalogNavSections,
+  getItemKind,
+} from "@/registry/index"
 
 /**
  * Sidebar страницы item'а: та же таксономия, что в каталоге, но раскрытая до
  * самих items — отсюда нужен переход к соседнему item'у, а не фильтр.
- * Заголовок типа показывается, только если типов в каталоге больше одного.
+ * Показывается только тип текущего item'а: блоки и компоненты разведены по
+ * разным маршрутам, соседями считаются items своего типа.
  */
 export function CatalogItemNav({ activeSlug }: { activeSlug: string }) {
   const items = getCatalogItems()
-  const sections = getCatalogNavSections()
+  const sections = getCatalogNavSections(getItemKind(activeSlug))
   const showKinds = sections.length > 1
 
   return (

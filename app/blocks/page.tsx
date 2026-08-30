@@ -4,14 +4,14 @@ import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { getCatalogNavSections, getItemsByKind } from "@/registry/index"
 
 export const metadata = {
-  title: "Компоненты",
+  title: "Блоки",
   description:
-    "Каталог AI-native UI-компонентов VibeUI: live preview, готовый код и инструкция для AI-агента.",
+    "Каталог AI-native UI-блоков VibeUI: live preview, готовый код и инструкция для AI-агента.",
 }
 
-export default function ComponentsPage() {
-  const items = getItemsByKind("component")
-  const sections = getCatalogNavSections("component")
+export default function BlocksPage() {
+  const items = getItemsByKind("block")
+  const sections = getCatalogNavSections("block")
 
   return (
     <CatalogShell>
@@ -21,12 +21,12 @@ export default function ComponentsPage() {
         heading={
           <div className="border-shell-border mb-6 border-b pb-6">
             <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
-              Компоненты
+              Блоки
             </h1>
             <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty sm:text-base">
-              Мелкие элементы интерфейса: кнопки, поля, индикаторы. Каждый
-              ставится одной командой, не зависит от темы вашего проекта и
-              приходит с инструкцией для AI-агента.
+              Готовые секции лендинга целиком. Каждая ставится одной командой,
+              не зависит от темы вашего проекта и приходит с инструкцией для
+              AI-агента.
             </p>
           </div>
         }

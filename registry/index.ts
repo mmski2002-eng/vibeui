@@ -147,13 +147,16 @@ export type CatalogNavSection = {
 /**
  * Разделы sidebar: типы, внутри них — категории с counts. Blocks и components
  * не смешиваются в одну кашу, потому что категории считаются внутри типа.
- * Пустые типы не показываются.
+ * Пустые типы не показываются. С аргументом — только один тип: каталог и
+ * страница блоков живут на разных маршрутах и показывают каждый своё.
  */
-export function getCatalogNavSections(): CatalogNavSection[] {
-  return KINDS.map((kind) => ({
-    kind: kind.slug,
-    label: kind.label,
-    count: getItemsByKind(kind.slug).length,
-    categories: getUsedCategories(kind.slug),
-  })).filter((section) => section.count > 0)
+export function getCatalogNavSections(kind?: ItemKind): CatalogNavSection[] {
+  return KINDS.filter((entry) => !kind || entry.slug === kind)
+    .map((entry) => ({
+      kind: entry.slug,
+      label: entry.label,
+      count: getItemsByKind(entry.slug).length,
+      categories: getUsedCategories(entry.slug),
+    }))
+    .filter((section) => section.count > 0)
 }
