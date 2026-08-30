@@ -1,14 +1,13 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
 
-import { BlockPreview } from "@/components/block-preview"
-import { ItemConfigurator } from "@/components/catalog/item-configurator"
 import { CatalogItemNav } from "@/components/catalog/catalog-item-nav"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { CatalogSidebar } from "@/components/catalog/catalog-sidebar"
+import { ItemWorkbench } from "@/components/catalog/item-workbench"
 import { CodeBlock } from "@/components/code-block"
 import { CopyButton } from "@/components/copy-button"
-import { getControls } from "@/lib/controls"
+import { resolveControlValues, resolvePreviewTheme } from "@/lib/controls"
 import { buildCopyForAiPrompt } from "@/lib/copy-for-ai"
 import {
   getInstallCommand,
@@ -49,8 +48,10 @@ export function generateStaticParams() {
 
 export default async function ComponentPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>
+  searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   const { slug } = await params
   const block = getCatalogItem(slug)
@@ -59,11 +60,21 @@ export default async function ComponentPage({
     notFound()
   }
 
+  // Настройка и подложка приезжают с витрины: переход по карточке не должен
+  // сбрасывать то, что человек уже выставил (см. docs/CONTROLS.md).
+  const query = await searchParams
+  const flat = new URLSearchParams(
+    Object.entries(query).flatMap(([key, value]) =>
+      typeof value === "string" ? [[key, value] as [string, string]] : [],
+    ),
+  )
+  const initialTheme = resolvePreviewTheme(flat.get("theme") ?? undefined)
+  const initialValues = resolveControlValues(block, flat)
+
   const source = await getBlockSource(slug)
   const installCommand = getInstallCommand(block.name)
   const registryUrl = getRegistryItemUrl(block.name)
   const docUrl = getItemDocUrl(block.name)
-  const controls = getControls(block)
   const kind = getItemKind(block.name) ?? "block"
   const aiPrompt = buildCopyForAiPrompt(block, {
     installCommand,
@@ -131,81 +142,14 @@ export default async function ComponentPage({
           ) : null}
         </header>
 
-        <section aria-labelledby="preview-heading" className="mb-12">
-          <h2
-            id="preview-heading"
-            className="text-shell-fg mb-4 text-lg font-medium"
-          >
-            Preview
-          </h2>
-          <BlockPreview slug={block.name} compact={kind === "component"} />
-        </section>
-
-        {/* Главный блок страницы: пользователь пришёл за инструкцией для
-            агента. Промпт — продукт, registry URL внутри него — транспорт,
-            исходник — доверие и правка руками. Поэтому текст инструкции
-            и код свёрнуты, а это действие открыто. См. docs/DELIVERY.md. */}
-        <section
-          aria-labelledby="use-heading"
-          className="bg-shell-panel border-shell-border-strong mb-10 rounded-xl border p-5 sm:p-6"
-        >
-          <h2 id="use-heading" className="text-shell-fg text-xl font-medium">
-            Использовать с AI
-          </h2>
-
-          <ol className="text-shell-muted mt-4 max-w-2xl space-y-1.5 text-sm">
-            <li>1. Скопируйте ссылку.</li>
-            <li>
-              2. Напишите агенту своими словами и вставьте её в предложение.
-            </li>
-            <li>3. Агент откроет ссылку и поставит компонент из registry.</li>
-          </ol>
-
-          {docUrl ? (
-            <p className="text-shell-muted bg-shell-elevated border-shell-border mt-4 max-w-2xl rounded-lg border px-3 py-2 font-mono text-xs">
-              размести такую кнопку в шапке: {docUrl}
-            </p>
-          ) : null}
-
-          {controls.length > 0 ? (
-            // Настройка меняет пропсы и ссылку, но не исходник: установленный
-            // файл обязан остаться тем же (см. docs/CONTROLS.md).
-            <div className="border-shell-border bg-shell mt-5 overflow-hidden rounded-xl border">
-              <ItemConfigurator item={block} docUrl={docUrl} />
-            </div>
-          ) : (
-            <div className="mt-5">
-              <CopyButton
-                value={docUrl}
-                label="Copy for AI"
-                copiedLabel="Ссылка скопирована"
-                variant="primary"
-                className="h-11 px-5"
-              />
-            </div>
-          )}
-
-          {/* Запасной путь: если агент не может открыть ссылку, инструкцию
-              копируют целиком. */}
-          <details
-            id="ai-prompt"
-            className="border-shell-border mt-6 scroll-mt-20 border-t pt-5"
-          >
-            <summary className="text-shell-muted hover:text-shell-fg cursor-pointer text-sm select-none marker:content-none [&::-webkit-details-marker]:hidden">
-              Показать полную инструкцию
-            </summary>
-            <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty">
-              То, что лежит по ссылке в развёрнутом виде. Нужна, если агент не
-              может открыть ссылку — тогда вставьте этот текст целиком.
-            </p>
-            <div className="mt-3">
-              <CopyButton value={aiPrompt} label="Copy полную инструкцию" />
-            </div>
-            <pre className="bg-shell-elevated border-shell-border text-shell-fg mt-3 max-h-96 overflow-auto rounded-lg border p-4 text-xs leading-relaxed whitespace-pre-wrap">
-              {aiPrompt}
-            </pre>
-          </details>
-        </section>
+        <ItemWorkbench
+          item={block}
+          docUrl={docUrl}
+          fullPrompt={aiPrompt}
+          compact={kind === "component"}
+          initialTheme={initialTheme}
+          initialValues={initialValues}
+        />
 
         {/* Вторичное: developer / inspection. Не путь установки. */}
         <section aria-labelledby="dev-heading" className="mb-12">

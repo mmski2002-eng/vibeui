@@ -6,8 +6,25 @@ const USAGE_LINE_LIMIT = 72
 
 export type ControlValues = Record<string, ControlValue>
 
+/** Подложка превью. Переносится между витриной и страницей item'а. */
+export type PreviewTheme = "dark" | "light"
+
 export function getControls(item: CatalogItem): ItemControl[] {
   return item.meta?.controls ?? []
+}
+
+export function defaultValues(item: CatalogItem): ControlValues {
+  const values: ControlValues = {}
+
+  for (const control of getControls(item)) {
+    values[control.prop] = control.default
+  }
+
+  return values
+}
+
+export function resolvePreviewTheme(raw: string | undefined): PreviewTheme {
+  return raw === "light" ? "light" : "dark"
 }
 
 /**

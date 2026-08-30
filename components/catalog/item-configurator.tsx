@@ -1,21 +1,10 @@
 "use client"
 
-import { useId, useState } from "react"
+import { useId } from "react"
 
-import { CopyButton } from "@/components/copy-button"
-import { getControls, toSearchParams, type ControlValues } from "@/lib/controls"
+import { getControls, type ControlValues } from "@/lib/controls"
 import type { CatalogItem, ItemControl } from "@/registry/meta"
 import { LAZY_PREVIEWS } from "@/registry/previews.lazy"
-
-function initialValues(item: CatalogItem): ControlValues {
-  const values: ControlValues = {}
-
-  for (const control of getControls(item)) {
-    values[control.prop] = control.default
-  }
-
-  return values
-}
 
 /**
  * Пустой цвет означает «не переопределять»: проп не передаётся вовсе, чтобы
@@ -131,68 +120,42 @@ function Control({
   )
 }
 
-/**
- * Настройка item'а перед выдачей агенту: превью слева, контролы справа,
- * ссылка снизу. Меняются только пропсы — исходник компонента остаётся тем
- * же файлом, который раздаёт реестр (см. docs/CONTROLS.md).
- */
-export function ItemConfigurator({
+/** Живое превью с выбранными значениями. Пропсы, не исходник. */
+export function ConfigurablePreview({
   item,
-  docUrl,
+  values,
 }: {
   item: CatalogItem
-  docUrl: string | null
+  values: ControlValues
 }) {
-  const [values, setValues] = useState<ControlValues>(() => initialValues(item))
-  const controls = getControls(item)
   const Preview = LAZY_PREVIEWS[item.name]
 
-  const params = toSearchParams(item, values).toString()
-  const link = docUrl ? (params ? `${docUrl}?${params}` : docUrl) : null
+  return Preview ? <Preview {...toProps(item, values)} /> : null
+}
 
+/**
+ * Панель контролов. Состояние держит вызывающий: одни и те же значения
+ * нужны и превью, и ссылке, и переносу на страницу item'а.
+ */
+export function ItemControls({
+  item,
+  values,
+  onChange,
+}: {
+  item: CatalogItem
+  values: ControlValues
+  onChange: (next: ControlValues) => void
+}) {
   return (
-    <div className="flex min-h-44 flex-1 flex-col">
-      <div className="bg-preview-surface flex min-h-32 flex-1 items-center justify-center overflow-hidden p-6">
-        {Preview ? <Preview {...toProps(item, values)} /> : null}
-      </div>
-
-      <div className="border-shell-border bg-shell-panel border-t p-3">
-        <div className="grid gap-3 sm:grid-cols-2">
-          {controls.map((control) => (
-            <Control
-              key={control.prop}
-              control={control}
-              value={values[control.prop]}
-              onChange={(next) =>
-                setValues((current) => ({ ...current, [control.prop]: next }))
-              }
-            />
-          ))}
-        </div>
-
-        <div className="mt-4 flex flex-wrap items-center gap-2">
-          <CopyButton
-            value={link}
-            label="Copy for AI"
-            copiedLabel="Ссылка скопирована"
-            variant="primary"
-            className="h-8 px-3 text-xs"
-          />
-          <button
-            type="button"
-            onClick={() => setValues(initialValues(item))}
-            className="text-shell-muted hover:text-shell-fg text-xs"
-          >
-            Сбросить всё
-          </button>
-        </div>
-
-        {link ? (
-          <p className="text-shell-muted mt-3 font-mono text-[11px] break-all">
-            {link}
-          </p>
-        ) : null}
-      </div>
+    <div className="grid gap-3 sm:grid-cols-2">
+      {getControls(item).map((control) => (
+        <Control
+          key={control.prop}
+          control={control}
+          value={values[control.prop]}
+          onChange={(next) => onChange({ ...values, [control.prop]: next })}
+        />
+      ))}
     </div>
   )
 }

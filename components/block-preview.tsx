@@ -23,16 +23,21 @@ const COMPONENT_FRAME_HEIGHT = 320
 // поэтому по умолчанию показываем Mobile.
 const NARROW_CONTAINER = 700
 
+// Тема хоста приходит снаружи: та же подложка выбрана на карточке каталога
+// и переносится сюда ссылкой, иначе переход сбрасывал бы выбор пользователя.
 export function BlockPreview({
   slug,
   compact = false,
+  theme,
+  onThemeChange,
 }: {
   slug: string
   compact?: boolean
+  theme: HostTheme
+  onThemeChange: (next: HostTheme) => void
 }) {
   const frameHeight = compact ? COMPONENT_FRAME_HEIGHT : SECTION_FRAME_HEIGHT
   const [viewport, setViewport] = useState<ViewportId>("desktop")
-  const [theme, setTheme] = useState<HostTheme>("light")
   const [containerWidth, setContainerWidth] = useState<number | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const viewportChosenRef = useRef(false)
@@ -101,7 +106,7 @@ export function BlockPreview({
           <span>Host theme</span>
           <button
             type="button"
-            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            onClick={() => onThemeChange(theme === "light" ? "dark" : "light")}
             className="focus-visible:ring-shell-ring hover:text-shell-fg border-shell-border hover:border-shell-border-strong rounded border px-2 py-1 transition-colors focus-visible:ring-2 focus-visible:outline-none"
           >
             {theme === "light" ? "Light" : "Dark"}
