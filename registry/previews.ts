@@ -162,11 +162,18 @@ import { Carousel005 } from "@/registry/components/carousel/carousel-005/carouse
 import { Carousel006 } from "@/registry/components/carousel/carousel-006/carousel-006"
 import { Carousel007 } from "@/registry/components/carousel/carousel-007/carousel-007"
 import { Carousel008 } from "@/registry/components/carousel/carousel-008/carousel-008"
+import { Checkbox001 } from "@/registry/components/checkbox/checkbox-001/checkbox-001"
+import { Checkbox002 } from "@/registry/components/checkbox/checkbox-002/checkbox-002"
+import { Checkbox003 } from "@/registry/components/checkbox/checkbox-003/checkbox-003"
+import { Checkbox004 } from "@/registry/components/checkbox/checkbox-004/checkbox-004"
+import { Checkbox005 } from "@/registry/components/checkbox/checkbox-005/checkbox-005"
+import { Checkbox006 } from "@/registry/components/checkbox/checkbox-006/checkbox-006"
+import { Checkbox007 } from "@/registry/components/checkbox/checkbox-007/checkbox-007"
+import { Checkbox008 } from "@/registry/components/checkbox/checkbox-008/checkbox-008"
 import { Input001 } from "@/registry/components/inputs/input-001/input-001"
 import { Input002 } from "@/registry/components/inputs/input-002/input-002"
 import { Textarea001 } from "@/registry/components/inputs/textarea-001/textarea-001"
 import { Select001 } from "@/registry/components/inputs/select-001/select-001"
-import { Checkbox001 } from "@/registry/components/inputs/checkbox-001/checkbox-001"
 import { Switch001 } from "@/registry/components/inputs/switch-001/switch-001"
 import { Skeleton001 } from "@/registry/components/display/skeleton-001/skeleton-001"
 import { Progress001 } from "@/registry/components/display/progress-001/progress-001"
@@ -360,11 +367,18 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "carousel-006": Carousel006,
   "carousel-007": Carousel007,
   "carousel-008": Carousel008,
+  "checkbox-001": Checkbox001,
+  "checkbox-002": Checkbox002,
+  "checkbox-003": Checkbox003,
+  "checkbox-004": Checkbox004,
+  "checkbox-005": Checkbox005,
+  "checkbox-006": Checkbox006,
+  "checkbox-007": Checkbox007,
+  "checkbox-008": Checkbox008,
   "input-001": Input001,
   "input-002": Input002,
   "textarea-001": Textarea001,
   "select-001": Select001,
-  "checkbox-001": Checkbox001,
   "switch-001": Switch001,
   "skeleton-001": Skeleton001,
   "progress-001": Progress001,

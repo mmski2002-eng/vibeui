@@ -15,6 +15,8 @@ export type Checkbox001Props = Omit<
 // иконочная библиотека не нужна, состояние держит нативный input.
 const STYLES = `
 :where([data-vibeui-block="checkbox-001"]){
+--vibeui-checkbox-001-surface:oklch(1 0 0);
+--vibeui-checkbox-001-surface-border:oklch(0.91 0.006 265);
 --vibeui-checkbox-001-fg:oklch(0.24 0.016 265);
 --vibeui-checkbox-001-muted:oklch(0.54 0.014 265);
 --vibeui-checkbox-001-bg:oklch(1 0 0);
@@ -25,7 +27,12 @@ const STYLES = `
 --vibeui-checkbox-001-radius:0.625rem;
 --vibeui-checkbox-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Собственная подложка: подпись и пояснение — это текст, и на тёмной
+   странице он обязан читаться без правки палитры проекта. */
 [data-vibeui-block="checkbox-001"]{
+box-sizing:border-box;padding:0.75rem 0.875rem;
+background:var(--vibeui-checkbox-001-surface);
+border:1px solid var(--vibeui-checkbox-001-surface-border);border-radius:0.875rem;
 display:flex;align-items:flex-start;gap:0.6875rem;
 padding:0.625rem 0.75rem;margin:-0.625rem -0.75rem;
 border-radius:var(--vibeui-checkbox-001-radius);cursor:pointer;

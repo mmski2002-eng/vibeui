@@ -816,6 +816,46 @@ export const LAZY_PREVIEWS = {
       (module) => module.Carousel008,
     ),
   ),
+  "checkbox-001": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-001/checkbox-001").then(
+      (module) => module.Checkbox001,
+    ),
+  ),
+  "checkbox-002": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-002/checkbox-002").then(
+      (module) => module.Checkbox002,
+    ),
+  ),
+  "checkbox-003": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-003/checkbox-003").then(
+      (module) => module.Checkbox003,
+    ),
+  ),
+  "checkbox-004": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-004/checkbox-004").then(
+      (module) => module.Checkbox004,
+    ),
+  ),
+  "checkbox-005": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-005/checkbox-005").then(
+      (module) => module.Checkbox005,
+    ),
+  ),
+  "checkbox-006": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-006/checkbox-006").then(
+      (module) => module.Checkbox006,
+    ),
+  ),
+  "checkbox-007": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-007/checkbox-007").then(
+      (module) => module.Checkbox007,
+    ),
+  ),
+  "checkbox-008": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-008/checkbox-008").then(
+      (module) => module.Checkbox008,
+    ),
+  ),
   "input-001": dynamic(() =>
     import("@/registry/components/inputs/input-001/input-001").then(
       (module) => module.Input001,
@@ -834,11 +874,6 @@ export const LAZY_PREVIEWS = {
   "select-001": dynamic(() =>
     import("@/registry/components/inputs/select-001/select-001").then(
       (module) => module.Select001,
-    ),
-  ),
-  "checkbox-001": dynamic(() =>
-    import("@/registry/components/inputs/checkbox-001/checkbox-001").then(
-      (module) => module.Checkbox001,
     ),
   ),
   "switch-001": dynamic(() =>

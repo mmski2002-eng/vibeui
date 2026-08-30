@@ -1,0 +1,163 @@
+"use client"
+
+import { useEffect, useId, useRef, useState } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Checkbox003Props = Omit<
+  ComponentPropsWithoutRef<"fieldset">,
+  "children" | "onChange"
+> & {
+  legend?: string
+  items?: string[]
+  defaultValue?: string[]
+  onChange?: (value: string[]) => void
+  accent?: string
+}
+
+// Идея компонента: родительский чекбокс с промежуточным состоянием. Когда
+// отмечена часть детей, родитель не «выключен» и не «включён» — он показывает
+// черту. Это состояние нельзя задать атрибутом в разметке: indeterminate
+// живёт только в DOM, поэтому его ставит эффект.
+const STYLES = `
+:where([data-vibeui-block="checkbox-003"]){
+--vibeui-checkbox-003-bg:oklch(1 0 0);
+--vibeui-checkbox-003-fg:oklch(0.22 0.014 265);
+--vibeui-checkbox-003-muted:oklch(0.56 0.014 265);
+--vibeui-checkbox-003-border:oklch(0.88 0.008 265);
+--vibeui-checkbox-003-accent:oklch(0.55 0.17 265);
+--vibeui-checkbox-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="checkbox-003"]{
+display:flex;flex-direction:column;gap:0.375rem;
+width:100%;max-width:18rem;box-sizing:border-box;
+margin:0;padding:0.875rem;
+border:1px solid var(--vibeui-checkbox-003-border);border-radius:0.875rem;
+background:var(--vibeui-checkbox-003-bg);
+font-family:var(--vibeui-checkbox-003-font);color:var(--vibeui-checkbox-003-fg);
+}
+/* legend у fieldset садится на рамку и обрезается — float возвращает
+   его в поток обычной строкой. */
+[data-vibeui-block="checkbox-003"] legend{float:left;width:100%;padding:0;margin-bottom:0.25rem;font-size:0.8125rem;font-weight:650}
+[data-vibeui-block="checkbox-003"] label{
+display:flex;align-items:center;gap:0.5rem;
+min-height:2rem;font-size:0.875rem;cursor:pointer;
+}
+/* Дети со сдвигом: иерархия видна отступом, а не только порядком. */
+[data-vibeui-block="checkbox-003"] [data-part="child"]{padding-left:1.625rem}
+[data-vibeui-block="checkbox-003"] input{
+appearance:none;flex:none;cursor:pointer;
+width:1.125rem;height:1.125rem;margin:0;box-sizing:border-box;
+border:1.5px solid var(--vibeui-checkbox-003-border);border-radius:0.3125rem;
+background:var(--vibeui-checkbox-003-bg);position:relative;
+}
+[data-vibeui-block="checkbox-003"] input:checked,
+[data-vibeui-block="checkbox-003"] input:indeterminate{
+border-color:transparent;background:var(--vibeui-checkbox-003-accent);
+}
+/* Галочка у отмеченного, черта у промежуточного — разные фигуры. */
+[data-vibeui-block="checkbox-003"] input:checked::after{
+content:"";position:absolute;left:50%;top:50%;
+width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;
+border-right:2px solid oklch(0.99 0.01 265);border-bottom:2px solid oklch(0.99 0.01 265);
+transform:rotate(45deg);
+}
+[data-vibeui-block="checkbox-003"] input:indeterminate::after{
+content:"";position:absolute;left:50%;top:50%;
+width:0.5rem;height:2px;margin:-1px 0 0 -0.25rem;
+background:oklch(0.99 0.01 265);border-radius:9999px;
+}
+[data-vibeui-block="checkbox-003"] input:focus-visible{outline:2px solid var(--vibeui-checkbox-003-accent);outline-offset:2px}
+[data-vibeui-block="checkbox-003"] [data-part="count"]{margin-top:0.25rem;font-size:0.75rem;color:var(--vibeui-checkbox-003-muted)}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="checkbox-003"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_ITEMS = [
+  "Каталог компонентов",
+  "Страница компонента",
+  "Инструкция для агента",
+  "Тёмная тема",
+]
+
+/**
+ * Родительский чекбокс с промежуточным состоянием и группой детей.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Checkbox003({
+  legend = "Что перенести в проект",
+  items = DEFAULT_ITEMS,
+  defaultValue = ["Каталог компонентов", "Тёмная тема"],
+  onChange,
+  accent,
+  className,
+  style,
+  ...props
+}: Checkbox003Props) {
+  const id = useId()
+  const [value, setValue] = useState<string[]>(defaultValue)
+  const parent = useRef<HTMLInputElement>(null)
+
+  const all = value.length === items.length
+  const some = value.length > 0 && !all
+
+  // indeterminate нельзя выставить атрибутом: это свойство DOM-узла.
+  useEffect(() => {
+    if (parent.current) parent.current.indeterminate = some
+  }, [some])
+
+  const palette = {
+    ...(accent ? { "--vibeui-checkbox-003-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  const update = (next: string[]) => {
+    setValue(next)
+    onChange?.(next)
+  }
+
+  return (
+    <>
+      <style href="vibeui-checkbox-003" precedence="medium">
+        {STYLES}
+      </style>
+      <fieldset
+        {...props}
+        data-vibeui-block="checkbox-003"
+        className={className}
+        style={palette}
+      >
+        <legend>{legend}</legend>
+        <label>
+          <input
+            ref={parent}
+            type="checkbox"
+            checked={all}
+            aria-controls={`${id}-group`}
+            onChange={() => update(all ? [] : [...items])}
+          />
+          Выбрать всё
+        </label>
+        <div id={`${id}-group`}>
+          {items.map((item) => (
+            <label key={item} data-part="child">
+              <input
+                type="checkbox"
+                checked={value.includes(item)}
+                onChange={() =>
+                  update(
+                    value.includes(item)
+                      ? value.filter((entry) => entry !== item)
+                      : [...value, item],
+                  )
+                }
+              />
+              {item}
+            </label>
+          ))}
+        </div>
+        <span data-part="count">
+          Отмечено {value.length} из {items.length}
+        </span>
+      </fieldset>
+    </>
+  )
+}

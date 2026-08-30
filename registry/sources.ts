@@ -23,6 +23,7 @@ import breadcrumbRegistry from "@/registry/components/breadcrumb/registry.json"
 import calendarRegistry from "@/registry/components/calendar/registry.json"
 import cardRegistry from "@/registry/components/card/registry.json"
 import carouselRegistry from "@/registry/components/carousel/registry.json"
+import checkboxRegistry from "@/registry/components/checkbox/registry.json"
 import inputsRegistry from "@/registry/components/inputs/registry.json"
 import displayRegistry from "@/registry/components/display/registry.json"
 import feedbackRegistry from "@/registry/components/feedback/registry.json"
@@ -139,6 +140,11 @@ export const SOURCES = [
     directory: "registry/components/carousel",
     kind: "component",
     items: carouselRegistry.items,
+  },
+  {
+    directory: "registry/components/checkbox",
+    kind: "component",
+    items: checkboxRegistry.items,
   },
   {
     directory: "registry/components/inputs",
