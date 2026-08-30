@@ -1,0 +1,81 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "cta-001",
+      "type": "registry:block",
+      "title": "Horizon CTA",
+      "description": "Финальная секция призыва: тёмное пятно в конце светлой страницы, одно главное действие и снимающая возражение строка под ним.",
+      "categories": ["cta"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-001/cta-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-001-*. Кегль заголовка считается в cqi от собственной ширины блока, поэтому секция одинаково верна в миниатюре каталога и на живой странице. Свечение — один радиальный градиент в отдельном слое с pointer-events:none, а не заливка фона. Второе действие намеренно сделано ссылкой, а не второй кнопкой.",
+      "meta": {
+        "tags": ["cta", "conversion", "landing", "dark"],
+        "ai": {
+          "export": "Cta001",
+          "usage": "<Cta001\n  title=\"Соберите первую страницу сегодня\"\n  primaryAction={{ label: \"Начать бесплатно\", href: \"/signup\" }}\n  note=\"Без карты. 14 дней полного доступа.\"\n/>",
+          "summary": "Финальная секция призыва: тёмный фон, свет из-за горизонта, надзаголовок-плашка, крупный заголовок, объяснение, одна кнопка и текстовая ссылка рядом. Под кнопками — мелкая строка, снимающая возражение перед кликом. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-cta-001-* — секция намеренно тёмная и не следует теме страницы",
+            "одну главную кнопку: второе действие остаётся ссылкой, иначе выбор раздваивается ровно там, где его быть не должно",
+            "строку note под кнопками: она снимает возражение в момент решения, а не в разделе с условиями",
+            "свечение отдельным слоем с pointer-events:none — фоновая заливка сожрала бы контраст текста",
+            "кегль заголовка в cqi от собственной ширины блока: медиазапросы дадут мобильный размер в узкой колонке",
+            "ограничение ширины заголовка и описания в ch — строка длиннее не читается",
+            "блок <style> внутри компонента — в нём вся палитра, свечение и раскладка"
+          ],
+          "adapt": [
+            "тексты eyebrow, title, description и note",
+            "primaryAction и secondaryAction — подписи и адреса",
+            "акцент через проп accent — цвет свечения, плашки и кнопки",
+            "внешние отступы через className: секция занимает всю ширину родителя"
+          ],
+          "notes": [
+            "Секция ставится в конце страницы. Две таких на одной странице обесценивают друг друга.",
+            "Не превращайте note в мелкий шрифт с условиями: это одна короткая фраза, а не сноска.",
+            "Не убирайте описание совсем — заголовок без объяснения работает только там, где продукт уже понятен.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "i18n": {
+          "en": {
+            "description": "A closing call to action: a dark block at the end of a light page, one primary action and a line beneath it that answers the last objection.",
+            "ai": {
+              "summary": "A closing call-to-action section: a dark ground, light rising from behind the horizon, an eyebrow pill, a large heading, an explanation, one button and a text link beside it. A small line under the buttons removes the last objection before the click. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-cta-001-* palette — the section is deliberately dark and does not follow the page theme",
+                "the single primary button: the second action stays a link, otherwise the choice splits exactly where it must not",
+                "the note line under the buttons: it answers the objection at the moment of decision rather than in a terms page",
+                "the glow as its own layer with pointer-events:none — a background fill would eat the text contrast",
+                "the heading size in cqi against the block's own width: media queries give a mobile size inside a narrow column",
+                "the ch-based width limits on heading and description — a longer line stops being read",
+                "the <style> block inside the component — it holds the palette, the glow and the layout"
+              ],
+              "adapt": [
+                "the eyebrow, title, description and note copy",
+                "primaryAction and secondaryAction — labels and destinations",
+                "the accent through the accent prop — it colours the glow, the pill and the button",
+                "outer spacing through className: the section spans its parent's width"
+              ],
+              "notes": [
+                "This belongs at the end of a page. Two of them on one page devalue each other.",
+                "Do not turn the note into fine print: it is one short phrase, not a footnote.",
+                "Do not drop the description entirely — a heading alone works only where the product is already understood.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Cta001\n  title=\"Build your first page today\"\n  primaryAction={{ label: \"Start free\", href: \"/signup\" }}\n  note=\"No card. 14 days of full access.\"\n/>"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

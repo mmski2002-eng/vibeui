@@ -44,11 +44,11 @@
 | `hero`         | hero-секции лендинга                                              |   ~24 |     3 |
 | `features`     | features, comparison, stats                                       |   ~35 |     1 |
 | `pricing`      | pricing, coupon, receipt                                          |   ~20 |     1 |
-| `navbar`       | шапки сайта и приложения                                          |   ~13 |     0 |
-| `cta`          | cta-секции                                                        |    ~6 |     0 |
-| `faq`          | faq-секции                                                        |    ~6 |     0 |
-| `testimonials` | отзывы, wall of love, review                                      |   ~12 |     0 |
-| `footer`       | подвалы                                                           |    ~8 |     0 |
+| `navbar`       | шапки сайта и приложения                                          |   ~13 |     1 |
+| `cta`          | cta-секции                                                        |    ~6 |     1 |
+| `faq`          | faq-секции                                                        |    ~6 |     1 |
+| `testimonials` | отзывы, wall of love, review                                      |   ~12 |     1 |
+| `footer`       | подвалы                                                           |    ~8 |     1 |
 | `dashboard`    | app shell, dashboard, settings, profile, filter sidebar, schedule |   ~80 |     0 |
 | `ai`           | чат, ассистент, агентные сценарии                                 |   ~20 |     0 |
 
@@ -87,7 +87,11 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
 6. `tables` — первая волна закрыта: `table-001` (данные, липкая шапка),
    `table-002` (сравнение, липкая первая колонка), `table-003` (счёт с
    итогом из строк). Дальше: data grid с сортировкой.
-7. Блоки — компонентная база закрывает их нужды, можно начинать.
+7. Блоки для лендинга — закрыты: `navbar-001`, `cta-001`, `faq-001`,
+   `testimonials-001`, `footer-001`. Вместе с hero, features и pricing
+   собирается целая страница.
+8. Дальше: `charts`, `dashboard`, `ai`, вторые варианты в закрытых
+   категориях.
 
 Ритм — пачка на категорию: спека всех items категории сразу (иначе выходят
 вариации одного и того же), потом реализация по одному, потом отдельный

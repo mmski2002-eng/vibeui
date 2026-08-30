@@ -1,0 +1,81 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "testimonials-001",
+      "type": "registry:block",
+      "title": "Featured Testimonials",
+      "description": "Секция отзывов с иерархией: один крупный отзыв засечным шрифтом на две колонки, остальные мелкие. Стена одинаковых карточек читается как шум.",
+      "categories": ["testimonials"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-001/testimonials-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-001-*. Число колонок и размер главной цитаты считаются от собственной ширины блока через container-запросы. Разметка семантическая: каждый отзыв — <figure> с <blockquote> и <figcaption>. Аватар — инициалы на подложке акцента: фотографии в отзывах чаще всего стоковые и портят доверие сильнее, чем их отсутствие.",
+      "meta": {
+        "tags": ["testimonials", "social proof", "reviews", "quotes"],
+        "ai": {
+          "export": "Testimonials001",
+          "usage": "<Testimonials001\n  title=\"Что говорят те, кто уже собрал сайт\"\n  items={[{ quote: \"...\", name: \"Анна Ковалёва\", role: \"Арт-директор\", featured: true }]}\n/>",
+          "summary": "Секция отзывов: главный отзыв набран засечным шрифтом и занимает две колонки, остальные идут мелкой сеткой. Каждый отзыв — figure с цитатой, инициалами вместо фото, именем и должностью. Сетка перестраивается от собственной ширины блока: одна колонка, две, три. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-testimonials-001-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "иерархию: один отзыв крупный, остальные мелкие — равные карточки превращают секцию в шум, который не читают",
+            "смену гарнитуры у главной цитаты: засечный шрифт отличает её сильнее, чем размер",
+            "семантику figure / blockquote / figcaption — это цитата с автором, а не карточка с текстом",
+            "инициалы вместо фотографий: стоковое лицо в отзыве заметно и вредит доверию",
+            "container-запросы на число колонок и на span главного отзыва",
+            "блок <style> внутри компонента — в нём вся палитра, сетка и типографика"
+          ],
+          "adapt": [
+            "массив items: цитата, имя, должность и флаг featured у главного",
+            "тексты eyebrow и title",
+            "акцент через проп accent — цвет надзаголовка, подложки инициалов и рамки главного отзыва",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Отзывы должны быть настоящими. Придуманная цитата с должностью — это ложь о продукте, а не оформление.",
+            "Главный отзыв ровно один: два «главных» отменяют иерархию.",
+            "Должность важнее компании: «арт-директор» объясняет, почему мнению стоит верить, а название студии — нет.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "i18n": {
+          "en": {
+            "description": "A testimonials section with hierarchy: one large quote set in a serif across two columns, the rest small. A wall of identical cards reads as noise.",
+            "ai": {
+              "summary": "A testimonials section: the featured quote is set in a serif and spans two columns while the rest form a small grid. Each testimonial is a figure with the quote, initials instead of a photo, a name and a role. The grid reflows on the block's own width: one column, two, three. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-testimonials-001-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the hierarchy: one large quote among small ones — equal cards turn the section into noise nobody reads",
+                "the typeface switch on the featured quote: a serif sets it apart more than size does",
+                "the figure / blockquote / figcaption semantics — this is a quotation with an author, not a card with text",
+                "initials instead of photographs: a stock face in a testimonial is noticed and costs trust",
+                "the container queries driving the column count and the featured quote's span",
+                "the <style> block inside the component — it holds the palette, the grid and the typography"
+              ],
+              "adapt": [
+                "the items array: quote, name, role and the featured flag on the main one",
+                "the eyebrow and title copy",
+                "the accent through the accent prop — it colours the eyebrow, the initials background and the featured border",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Testimonials have to be real. An invented quote with a job title is a lie about the product, not decoration.",
+                "Exactly one featured quote: two \"main\" ones cancel the hierarchy.",
+                "The role matters more than the company: \"art director\" explains why the opinion counts, the studio name does not.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Testimonials001\n  title=\"What people say after shipping\"\n  items={[{ quote: \"...\", name: \"Anna Kovalyova\", role: \"Art director\", featured: true }]}\n/>"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

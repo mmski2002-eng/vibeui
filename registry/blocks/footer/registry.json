@@ -1,0 +1,83 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "footer-001",
+      "type": "registry:block",
+      "title": "Light Footer",
+      "description": "Светлый подвал: подпись бренда, три колонки ссылок и нижняя строка с юридическим. Тёмная плита в конце спорила бы с финальной секцией призыва.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-001/footer-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-001-*. Раскладка считается от собственной ширины блока: две колонки ссылок, затем три, затем бренд уходит в отдельную колонку слева. Каждая группа ссылок — <nav> со своей подписью, поэтому скринридер перечисляет их отдельно, а не как одну кашу из двадцати ссылок.",
+      "meta": {
+        "tags": ["footer", "links", "site map", "legal"],
+        "ai": {
+          "export": "Footer001",
+          "usage": "<Footer001\n  brand=\"Полёт\"\n  columns={[{ title: \"Продукт\", links: [{ label: \"Тарифы\", href: \"/pricing\" }] }]}\n  legal=\"© 2026 Студия «Полёт»\"\n/>",
+          "summary": "Подвал сайта: слева знак, название и одна фраза о продукте, справа колонки ссылок, внизу копирайт и юридические ссылки. Светлый намеренно — тёмный подвал сразу после тёмной секции призыва даёт два тяжёлых пятна подряд. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-001-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
+            "светлую подложку: подвал не должен спорить с финальной секцией призыва",
+            "каждую группу ссылок как отдельный <nav> с подписью — иначе скринридер читает двадцать ссылок подряд без структуры",
+            "верхнюю границу блока: она отделяет подвал от последней секции страницы",
+            "нижнюю строку с копирайтом как отдельный ряд с собственной границей",
+            "container-запросы на число колонок: в узкой колонке подвал обязан сложиться сам",
+            "блок <style> внутри компонента — в нём вся палитра и раскладка"
+          ],
+          "adapt": [
+            "brand и tagline — название и фраза о продукте; знак можно заменить на свой <svg>",
+            "массив columns — заголовки групп и ссылки",
+            "legal и legalLinks — копирайт и юридические ссылки",
+            "акцент через проп accent — цвет знака и наведения на ссылки",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Подвал — не свалка ссылок: три группы по четыре пункта читаются, восемь групп — нет.",
+            "Юридические ссылки держите в нижней строке, а не среди продуктовых: их ищут отдельно.",
+            "Год в копирайте не подставляется автоматически намеренно: это статичный текст, а не Date. Обновляйте его вместе с остальным содержимым.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "i18n": {
+          "en": {
+            "description": "A light footer: brand line, three link columns and a legal row. A dark slab here would fight the closing call-to-action.",
+            "ai": {
+              "summary": "A site footer: the mark, name and a single line about the product on the left, link columns on the right, copyright and legal links along the bottom. Light on purpose — a dark footer right after a dark CTA gives two heavy blocks in a row. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-footer-001-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
+                "the light ground: the footer must not compete with the closing call to action",
+                "each link group as its own labelled <nav> — otherwise a screen reader reads twenty links with no structure",
+                "the top border of the block: it separates the footer from the last section",
+                "the bottom row with its own rule for the copyright and legal links",
+                "the container queries driving the column count: in a narrow column the footer has to fold on its own",
+                "the <style> block inside the component — it holds the palette and the layout"
+              ],
+              "adapt": [
+                "brand and tagline — the name and the one-line description; the mark can be your own <svg>",
+                "the columns array — group titles and links",
+                "legal and legalLinks — the copyright and legal links",
+                "the accent through the accent prop — it colours the mark and link hover",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "A footer is not a link dump: three groups of four are read, eight groups are not.",
+                "Keep legal links in the bottom row rather than among product links: people look for them separately.",
+                "The copyright year is deliberately static text rather than a Date call. Update it along with the rest of the copy.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Footer001\n  brand=\"Flight\"\n  columns={[{ title: \"Product\", links: [{ label: \"Pricing\", href: \"/pricing\" }] }]}\n  legal=\"© 2026 Flight Studio\"\n/>"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

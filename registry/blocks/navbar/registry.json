@@ -1,0 +1,87 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "navbar-001",
+      "type": "registry:block",
+      "title": "Glass Navbar",
+      "description": "Шапка сайта со стеклянной подложкой: логотип, меню, кнопка действия. Мобильное меню открывается через HTML popover — без единой строки JS.",
+      "categories": ["navbar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-001/navbar-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-001-*. Раскладка считается от собственной ширины блока через container-запросы, а не от ширины окна: до 52rem показывается кнопка меню, дальше — полная шапка со ссылками и кнопкой. Мобильная панель открывается атрибутами popover и popovertarget, живёт в верхнем слое и потому стилизуется по атрибуту [data-vibeui-navbar-001-menu] с собственной палитрой. Подложка полупрозрачная с backdrop-filter, поэтому шапку можно ставить sticky поверх содержимого.",
+      "meta": {
+        "tags": ["navbar", "header", "navigation", "sticky"],
+        "ai": {
+          "export": "Navbar001",
+          "usage": "<Navbar001\n  brand=\"Полёт\"\n  links={[{ label: \"Тарифы\", href: \"/pricing\" }]}\n  actionLabel=\"Начать бесплатно\"\n  actionHref=\"/signup\"\n/>",
+          "summary": "Шапка сайта: логотип со знаком, горизонтальное меню, кнопка главного действия и мобильная панель на HTML popover. Полупрозрачная подложка с размытием рассчитана на sticky-размещение поверх страницы. Раскладка переключается от собственной ширины блока, поэтому шапка одинаково верна и в узкой колонке, и во всю страницу. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navbar-001-* и не подменять её токенами вашей темы (bg-background, border-border и подобными)",
+            "container-запрос вместо медиазапроса: раскладка обязана считаться от ширины блока — иначе в узкой колонке шапка покажет десктопный вариант, а в миниатюре мобильный",
+            "механику popover у мобильной панели: popovertarget и popover=\"auto\" дают Esc и клик мимо без JS",
+            "стилизацию панели по атрибуту и передачу ей палитры отдельным style: в верхнем слое она перестаёт быть потомком шапки",
+            "полупрозрачный фон вместе с backdrop-filter — на них держится стеклянная подложка при прокрутке под шапкой",
+            "порядок в разметке: логотип, навигация, действие; кнопка меню последняя и скрыта на широкой раскладке",
+            "aria-label у навигации и у кнопки меню",
+            "блок <style> внутри компонента — в нём вся палитра, раскладка и панель"
+          ],
+          "adapt": [
+            "brand — название и содержимое логотипа; знак можно заменить на свой <svg>",
+            "массив links — пункты меню",
+            "actionLabel и actionHref — главное действие шапки",
+            "id — если на странице две шапки, у панелей должны быть разные идентификаторы",
+            "акцент через проп accent — цвет знака, кнопки и фокуса",
+            "position:sticky и top задавайте снаружи через className: блок не решает за страницу"
+          ],
+          "notes": [
+            "Блок не подсвечивает текущий раздел: он не знает о маршрутах. Добавьте aria-current у нужной ссылки в своей копии.",
+            "Больше шести пунктов в меню не помещается — уводите лишнее в подвал или в выпадающее меню.",
+            "Не делайте логотип единственной ссылкой на главную: на мобильной панели её тоже стоит продублировать.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "i18n": {
+          "en": {
+            "description": "A site header on a glass surface: logo, menu and a call to action. The mobile menu opens through the HTML popover attribute — no JS at all.",
+            "ai": {
+              "summary": "A site header: a logo with a mark, a horizontal menu, a primary action button and a mobile panel built on the HTML popover attribute. The translucent, blurred surface is made for sticky placement over the page. The layout switches on the block's own width, so it is correct both in a narrow column and full width. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-navbar-001-* palette — do not swap it for your theme tokens (bg-background, border-border and the like)",
+                "the container query instead of a media query: the layout has to measure the block, otherwise a narrow column gets the desktop header and the thumbnail gets the mobile one",
+                "the popover mechanism on the mobile panel: popovertarget and popover=\"auto\" give Esc and click-outside without JS",
+                "styling the panel by attribute and passing it the palette through its own style: in the top layer it is no longer a descendant of the header",
+                "the translucent background together with backdrop-filter — the glass surface depends on both when content scrolls underneath",
+                "the markup order: logo, navigation, action; the menu button comes last and hides on the wide layout",
+                "the aria-labels on the navigation and the menu button",
+                "the <style> block inside the component — it holds the palette, the layout and the panel"
+              ],
+              "adapt": [
+                "brand — the name and logo content; the mark can be replaced with your own <svg>",
+                "the links array — the menu items",
+                "actionLabel and actionHref — the header's primary action",
+                "id — two headers on a page need different panel ids",
+                "the accent through the accent prop — it colours the mark, the button and focus",
+                "position:sticky and top belong outside through className: the block does not decide for the page"
+              ],
+              "notes": [
+                "The block does not highlight the current section: it knows nothing about routes. Add aria-current to the right link in your copy.",
+                "More than six menu items do not fit — move the rest to the footer or a dropdown.",
+                "Do not let the logo be the only link home: repeat it inside the mobile panel too.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Navbar001\n  brand=\"Flight\"\n  links={[{ label: \"Pricing\", href: \"/pricing\" }]}\n  actionLabel=\"Start free\"\n  actionHref=\"/signup\"\n/>"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

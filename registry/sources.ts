@@ -4,8 +4,13 @@
 import type { ItemKind } from "@/registry/categories"
 
 import heroRegistry from "@/registry/blocks/hero/registry.json"
+import navbarRegistry from "@/registry/blocks/navbar/registry.json"
 import featuresRegistry from "@/registry/blocks/features/registry.json"
 import pricingRegistry from "@/registry/blocks/pricing/registry.json"
+import testimonialsRegistry from "@/registry/blocks/testimonials/registry.json"
+import faqRegistry from "@/registry/blocks/faq/registry.json"
+import ctaRegistry from "@/registry/blocks/cta/registry.json"
+import footerRegistry from "@/registry/blocks/footer/registry.json"
 import buttonsRegistry from "@/registry/components/buttons/registry.json"
 import inputsRegistry from "@/registry/components/inputs/registry.json"
 import displayRegistry from "@/registry/components/display/registry.json"
@@ -29,6 +34,11 @@ export const SOURCES = [
     items: heroRegistry.items,
   },
   {
+    directory: "registry/blocks/navbar",
+    kind: "block",
+    items: navbarRegistry.items,
+  },
+  {
     directory: "registry/blocks/features",
     kind: "block",
     items: featuresRegistry.items,
@@ -37,6 +47,26 @@ export const SOURCES = [
     directory: "registry/blocks/pricing",
     kind: "block",
     items: pricingRegistry.items,
+  },
+  {
+    directory: "registry/blocks/testimonials",
+    kind: "block",
+    items: testimonialsRegistry.items,
+  },
+  {
+    directory: "registry/blocks/faq",
+    kind: "block",
+    items: faqRegistry.items,
+  },
+  {
+    directory: "registry/blocks/cta",
+    kind: "block",
+    items: ctaRegistry.items,
+  },
+  {
+    directory: "registry/blocks/footer",
+    kind: "block",
+    items: footerRegistry.items,
   },
   {
     directory: "registry/components/buttons",

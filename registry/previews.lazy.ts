@@ -36,6 +36,11 @@ export const LAZY_PREVIEWS = {
       (module) => module.Hero003,
     ),
   ),
+  "navbar-001": dynamic(() =>
+    import("@/registry/blocks/navbar/navbar-001/navbar-001").then(
+      (module) => module.Navbar001,
+    ),
+  ),
   "features-001": dynamic(() =>
     import("@/registry/blocks/features/features-001/features-001").then(
       (module) => module.Features001,
@@ -44,6 +49,26 @@ export const LAZY_PREVIEWS = {
   "pricing-001": dynamic(() =>
     import("@/registry/blocks/pricing/pricing-001/pricing-001").then(
       (module) => module.Pricing001,
+    ),
+  ),
+  "testimonials-001": dynamic(() =>
+    import("@/registry/blocks/testimonials/testimonials-001/testimonials-001").then(
+      (module) => module.Testimonials001,
+    ),
+  ),
+  "faq-001": dynamic(() =>
+    import("@/registry/blocks/faq/faq-001/faq-001").then(
+      (module) => module.Faq001,
+    ),
+  ),
+  "cta-001": dynamic(() =>
+    import("@/registry/blocks/cta/cta-001/cta-001").then(
+      (module) => module.Cta001,
+    ),
+  ),
+  "footer-001": dynamic(() =>
+    import("@/registry/blocks/footer/footer-001/footer-001").then(
+      (module) => module.Footer001,
     ),
   ),
   "button-001": dynamic(() =>

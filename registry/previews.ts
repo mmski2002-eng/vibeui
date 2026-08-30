@@ -6,8 +6,13 @@ import type { ComponentType } from "react"
 import { Hero001 } from "@/registry/blocks/hero/hero-001/hero-001"
 import { Hero002 } from "@/registry/blocks/hero/hero-002/hero-002"
 import { Hero003 } from "@/registry/blocks/hero/hero-003/hero-003"
+import { Navbar001 } from "@/registry/blocks/navbar/navbar-001/navbar-001"
 import { Features001 } from "@/registry/blocks/features/features-001/features-001"
 import { Pricing001 } from "@/registry/blocks/pricing/pricing-001/pricing-001"
+import { Testimonials001 } from "@/registry/blocks/testimonials/testimonials-001/testimonials-001"
+import { Faq001 } from "@/registry/blocks/faq/faq-001/faq-001"
+import { Cta001 } from "@/registry/blocks/cta/cta-001/cta-001"
+import { Footer001 } from "@/registry/blocks/footer/footer-001/footer-001"
 import { Button001 } from "@/registry/components/buttons/button-001/button-001"
 import { Button002 } from "@/registry/components/buttons/button-002/button-002"
 import { Button003 } from "@/registry/components/buttons/button-003/button-003"
@@ -58,8 +63,13 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "hero-001": Hero001,
   "hero-002": Hero002,
   "hero-003": Hero003,
+  "navbar-001": Navbar001,
   "features-001": Features001,
   "pricing-001": Pricing001,
+  "testimonials-001": Testimonials001,
+  "faq-001": Faq001,
+  "cta-001": Cta001,
+  "footer-001": Footer001,
   "button-001": Button001,
   "button-002": Button002,
   "button-003": Button003,

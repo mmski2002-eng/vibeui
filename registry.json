@@ -4,8 +4,13 @@
   "homepage": "https://vibeui.ru",
   "include": [
     "registry/blocks/hero/registry.json",
+    "registry/blocks/navbar/registry.json",
     "registry/blocks/features/registry.json",
     "registry/blocks/pricing/registry.json",
+    "registry/blocks/testimonials/registry.json",
+    "registry/blocks/faq/registry.json",
+    "registry/blocks/cta/registry.json",
+    "registry/blocks/footer/registry.json",
     "registry/components/buttons/registry.json",
     "registry/components/inputs/registry.json",
     "registry/components/display/registry.json",
