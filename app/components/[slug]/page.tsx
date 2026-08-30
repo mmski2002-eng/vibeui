@@ -8,7 +8,11 @@ import { CatalogSidebar } from "@/components/catalog/catalog-sidebar"
 import { CodeBlock } from "@/components/code-block"
 import { CopyButton } from "@/components/copy-button"
 import { buildCopyForAiPrompt } from "@/lib/copy-for-ai"
-import { getInstallCommand, getRegistryItemUrl } from "@/lib/site"
+import {
+  getInstallCommand,
+  getItemDocUrl,
+  getRegistryItemUrl,
+} from "@/lib/site"
 import {
   getCatalogItem,
   getCatalogItems,
@@ -56,6 +60,7 @@ export default async function ComponentPage({
   const source = await getBlockSource(slug)
   const installCommand = getInstallCommand(block.name)
   const registryUrl = getRegistryItemUrl(block.name)
+  const docUrl = getItemDocUrl(block.name)
   const kind = getItemKind(block.name) ?? "block"
   const aiPrompt = buildCopyForAiPrompt(block, {
     installCommand,
@@ -75,8 +80,11 @@ export default async function ComponentPage({
         <nav aria-label="Breadcrumb" className="mb-6">
           <ol className="text-shell-muted flex flex-wrap items-center gap-2 text-sm">
             <li>
-              <Link href="/components" className="hover:text-shell-fg">
-                Components
+              <Link
+                href={kind === "block" ? "/blocks" : "/components"}
+                className="hover:text-shell-fg"
+              >
+                {kind === "block" ? "Блоки" : "Компоненты"}
               </Link>
             </li>
             {category ? (
@@ -143,35 +151,45 @@ export default async function ComponentPage({
           </h2>
 
           <ol className="text-shell-muted mt-4 max-w-2xl space-y-1.5 text-sm">
-            <li>1. Скопируйте инструкцию.</li>
-            <li>2. Вставьте её агенту — Claude Code, Cursor или другому.</li>
+            <li>1. Скопируйте ссылку.</li>
             <li>
-              3. Допишите своими словами, куда поставить: «размести на главной
-              над тарифами».
+              2. Напишите агенту своими словами и вставьте её в предложение.
             </li>
+            <li>3. Агент откроет ссылку и поставит компонент из registry.</li>
           </ol>
+
+          {docUrl ? (
+            <p className="text-shell-muted bg-shell-elevated border-shell-border mt-4 max-w-2xl rounded-lg border px-3 py-2 font-mono text-xs">
+              размести такую кнопку в шапке: {docUrl}
+            </p>
+          ) : null}
 
           <div className="mt-5">
             <CopyButton
-              value={aiPrompt}
+              value={docUrl}
               label="Copy for AI"
-              copiedLabel="Скопировано — вставьте агенту"
+              copiedLabel="Ссылка скопирована"
               variant="primary"
               className="h-11 px-5"
             />
           </div>
 
+          {/* Запасной путь: если агент не может открыть ссылку, инструкцию
+              копируют целиком. */}
           <details
             id="ai-prompt"
             className="border-shell-border mt-6 scroll-mt-20 border-t pt-5"
           >
             <summary className="text-shell-muted hover:text-shell-fg cursor-pointer text-sm select-none marker:content-none [&::-webkit-details-marker]:hidden">
-              Показать текст инструкции
+              Показать полную инструкцию
             </summary>
             <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty">
-              То, что попадёт агенту. Генерируется из metadata компонента,
-              вручную для каждого блока не пишется.
+              То, что лежит по ссылке в развёрнутом виде. Нужна, если агент не
+              может открыть ссылку — тогда вставьте этот текст целиком.
             </p>
+            <div className="mt-3">
+              <CopyButton value={aiPrompt} label="Copy полную инструкцию" />
+            </div>
             <pre className="bg-shell-elevated border-shell-border text-shell-fg mt-3 max-h-96 overflow-auto rounded-lg border p-4 text-xs leading-relaxed whitespace-pre-wrap">
               {aiPrompt}
             </pre>

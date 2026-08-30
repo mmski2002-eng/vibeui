@@ -88,8 +88,97 @@ function wherePlace(kind: ItemKind): string[] {
 }
 
 /**
- * Инструкция для агента. Собирается только из metadata item'а, вручную
- * ничего не дописывается. Структура — Product Delivery Model v1,
+ * Короткая инструкция, которую агент получает по ссылке `/c/<name>`.
+ *
+ * Исходника здесь нет намеренно: копировать нечего, поэтому единственный
+ * способ выполнить инструкцию это запустить install-команду. Фидельность
+ * держится отсутствием альтернативы, а не уговорами в тексте.
+ *
+ * Документ короткий ещё и потому, что проходит через фетч агента: чем меньше
+ * текста, тем меньше шансов, что он приедет пересказанным.
+ */
+export function buildAgentBrief(
+  item: CatalogItem,
+  context: CopyForAiContext & {
+    pageUrl: string | null
+    fileUrl: string | null
+  },
+): string {
+  const { installCommand, registryUrl, kind, pageUrl, fileUrl } = context
+  const ai = item.meta?.ai
+  const title = item.title ?? item.name
+  const target = installPath(item)
+  const noun = kind === "component" ? "компонент" : "блок"
+
+  const lines = [`VibeUI · ${item.name} · ${title}`]
+
+  if (item.description) {
+    lines.push(item.description)
+  }
+
+  lines.push(
+    "",
+    `Установи ${noun} командой. Не пиши код сам и не пересоздавай его по описанию:`,
+    installCommand ?? `Registry item: ${registryUrl ?? "не сконфигурирован"}`,
+  )
+
+  // Второй путь по убыванию точности: скачивание переносит файл побайтово
+  // так же, как установка. Чтение кода и перепечатывание — не переносит.
+  if (fileUrl && target) {
+    lines.push(
+      "",
+      "Если shadcn CLI в проекте нет — скачай файл, не переписывай его руками:",
+      `curl -o ${target} ${fileUrl}`,
+    )
+  }
+
+  lines.push("")
+
+  if (target) {
+    lines.push(`Файл: ${target}`)
+  }
+
+  if (ai?.export) {
+    lines.push(`Экспорт: ${ai.export}`)
+  }
+
+  lines.push(
+    item.dependencies?.length
+      ? `npm-зависимости: ${item.dependencies.join(", ")}`
+      : "npm-зависимости: нет",
+  )
+
+  if (ai?.usage) {
+    lines.push("", "Использование:", ai.usage)
+  }
+
+  // Три первых правила — самые важные; остальное агент прочитает в файле,
+  // который к этому моменту уже установлен.
+  const rules = (ai?.preserve ?? []).slice(0, 3)
+
+  if (rules.length > 0) {
+    lines.push("", "Сохрани как установлено:", ...bullets(rules))
+  }
+
+  lines.push(
+    "",
+    kind === "component"
+      ? "Это inline-компонент: поставь его туда, куда просил пользователь, внутрь существующей разметки."
+      : "Это полноширинная секция: поставь её прямым потомком разметки страницы, не внутрь карточки или сайдбара.",
+    "Полный список пропсов и правил — в установленном файле.",
+  )
+
+  if (pageUrl) {
+    lines.push("", `Страница компонента: ${pageUrl}`)
+  }
+
+  return lines.join("\n")
+}
+
+/**
+ * Полная инструкция для агента. Запасной путь: её копируют целиком, если
+ * ссылку агент открыть не может. Собирается только из metadata item'а,
+ * вручную ничего не дописывается. Структура — Product Delivery Model v1,
  * см. docs/DELIVERY.md: промпт должен ответить не только «как установить»,
  * но и «как использовать» и «куда поставить».
  */

@@ -28,3 +28,33 @@ export function getInstallCommand(name: string): string | null {
 
   return url ? `npx shadcn@latest add ${url}` : null
 }
+
+/** Origin сайта. Выводится из базового URL реестра: он и есть `<origin>/r`. */
+export function getSiteBaseUrl(): string | null {
+  const baseUrl = getRegistryBaseUrl()
+
+  return baseUrl ? baseUrl.replace(/\/r$/, "") : null
+}
+
+/**
+ * Короткая ссылка на инструкцию для агента. Это главный артефакт доставки:
+ * пользователь вставляет её в свою фразу, агент открывает и выполняет.
+ * Исходника по этой ссылке нет намеренно — единственный способ выполнить
+ * инструкцию это запустить install-команду.
+ */
+export function getItemDocUrl(name: string): string | null {
+  const baseUrl = getSiteBaseUrl()
+
+  return baseUrl ? `${baseUrl}/c/${name}` : null
+}
+
+/**
+ * Прямая ссылка на исходник. Нужна там, где shadcn CLI в проекте нет:
+ * скачивание файла так же побайтово, как установка, в отличие от чтения
+ * кода агентом и перепечатывания его руками.
+ */
+export function getItemFileUrl(name: string): string | null {
+  const baseUrl = getSiteBaseUrl()
+
+  return baseUrl ? `${baseUrl}/f/${name}.tsx` : null
+}
