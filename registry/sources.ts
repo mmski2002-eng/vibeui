@@ -22,6 +22,7 @@ import badgeRegistry from "@/registry/components/badge/registry.json"
 import breadcrumbRegistry from "@/registry/components/breadcrumb/registry.json"
 import calendarRegistry from "@/registry/components/calendar/registry.json"
 import cardRegistry from "@/registry/components/card/registry.json"
+import carouselRegistry from "@/registry/components/carousel/registry.json"
 import inputsRegistry from "@/registry/components/inputs/registry.json"
 import displayRegistry from "@/registry/components/display/registry.json"
 import feedbackRegistry from "@/registry/components/feedback/registry.json"
@@ -133,6 +134,11 @@ export const SOURCES = [
     directory: "registry/components/card",
     kind: "component",
     items: cardRegistry.items,
+  },
+  {
+    directory: "registry/components/carousel",
+    kind: "component",
+    items: carouselRegistry.items,
   },
   {
     directory: "registry/components/inputs",

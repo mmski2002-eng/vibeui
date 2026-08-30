@@ -52,6 +52,7 @@ export const CATEGORIES = [
   { slug: "breadcrumb", label: "Breadcrumb", group: "navigation" },
   { slug: "calendar", label: "Calendar", group: "application" },
   { slug: "card", label: "Card", group: "application" },
+  { slug: "carousel", label: "Carousel", group: "application" },
   { slug: "inputs", label: "Inputs", group: "application" },
   { slug: "display", label: "Display", group: "application" },
   { slug: "feedback", label: "Feedback", group: "application" },

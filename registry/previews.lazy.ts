@@ -776,6 +776,46 @@ export const LAZY_PREVIEWS = {
       (module) => module.Card010,
     ),
   ),
+  "carousel-001": dynamic(() =>
+    import("@/registry/components/carousel/carousel-001/carousel-001").then(
+      (module) => module.Carousel001,
+    ),
+  ),
+  "carousel-002": dynamic(() =>
+    import("@/registry/components/carousel/carousel-002/carousel-002").then(
+      (module) => module.Carousel002,
+    ),
+  ),
+  "carousel-003": dynamic(() =>
+    import("@/registry/components/carousel/carousel-003/carousel-003").then(
+      (module) => module.Carousel003,
+    ),
+  ),
+  "carousel-004": dynamic(() =>
+    import("@/registry/components/carousel/carousel-004/carousel-004").then(
+      (module) => module.Carousel004,
+    ),
+  ),
+  "carousel-005": dynamic(() =>
+    import("@/registry/components/carousel/carousel-005/carousel-005").then(
+      (module) => module.Carousel005,
+    ),
+  ),
+  "carousel-006": dynamic(() =>
+    import("@/registry/components/carousel/carousel-006/carousel-006").then(
+      (module) => module.Carousel006,
+    ),
+  ),
+  "carousel-007": dynamic(() =>
+    import("@/registry/components/carousel/carousel-007/carousel-007").then(
+      (module) => module.Carousel007,
+    ),
+  ),
+  "carousel-008": dynamic(() =>
+    import("@/registry/components/carousel/carousel-008/carousel-008").then(
+      (module) => module.Carousel008,
+    ),
+  ),
   "input-001": dynamic(() =>
     import("@/registry/components/inputs/input-001/input-001").then(
       (module) => module.Input001,

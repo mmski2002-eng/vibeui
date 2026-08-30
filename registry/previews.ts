@@ -154,6 +154,14 @@ import { Card007 } from "@/registry/components/card/card-007/card-007"
 import { Card008 } from "@/registry/components/card/card-008/card-008"
 import { Card009 } from "@/registry/components/card/card-009/card-009"
 import { Card010 } from "@/registry/components/card/card-010/card-010"
+import { Carousel001 } from "@/registry/components/carousel/carousel-001/carousel-001"
+import { Carousel002 } from "@/registry/components/carousel/carousel-002/carousel-002"
+import { Carousel003 } from "@/registry/components/carousel/carousel-003/carousel-003"
+import { Carousel004 } from "@/registry/components/carousel/carousel-004/carousel-004"
+import { Carousel005 } from "@/registry/components/carousel/carousel-005/carousel-005"
+import { Carousel006 } from "@/registry/components/carousel/carousel-006/carousel-006"
+import { Carousel007 } from "@/registry/components/carousel/carousel-007/carousel-007"
+import { Carousel008 } from "@/registry/components/carousel/carousel-008/carousel-008"
 import { Input001 } from "@/registry/components/inputs/input-001/input-001"
 import { Input002 } from "@/registry/components/inputs/input-002/input-002"
 import { Textarea001 } from "@/registry/components/inputs/textarea-001/textarea-001"
@@ -337,6 +345,14 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "card-008": Card008,
   "card-009": Card009,
   "card-010": Card010,
+  "carousel-001": Carousel001,
+  "carousel-002": Carousel002,
+  "carousel-003": Carousel003,
+  "carousel-004": Carousel004,
+  "carousel-005": Carousel005,
+  "carousel-006": Carousel006,
+  "carousel-007": Carousel007,
+  "carousel-008": Carousel008,
   "input-001": Input001,
   "input-002": Input002,
   "textarea-001": Textarea001,
