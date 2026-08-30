@@ -99,10 +99,18 @@ const DEFAULT_PEOPLE: Autocomplete011Person[] = [
   { name: "Ирина Ким", handle: "irina", role: "поддержка" },
 ]
 
+// Оттенок из имени: FNV-1a, разложенный по двенадцати ступеням круга.
+// Сумма кодов символов не годится — кириллические имена ложатся в один
+// розовый сектор; ступени в 30° дают заведомо различимые цвета.
 function hue(name: string) {
-  let sum = 0
-  for (const symbol of name) sum = (sum + symbol.codePointAt(0)!) % 360
-  return sum
+  let hash = 2166136261
+
+  for (const symbol of name) {
+    hash ^= symbol.codePointAt(0)!
+    hash = Math.imul(hash, 16777619)
+  }
+
+  return ((hash >>> 0) % 12) * 30
 }
 
 function initials(name: string) {

@@ -13,6 +13,12 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    // Компоненты registry переносимы: они не имеют права зависеть от
+    // next/image — их копируют в чужой проект, где Next может не быть.
+    files: ["registry/**/*.tsx"],
+    rules: { "@next/next/no-img-element": "off" },
+  },
 ])
 
 export default eslintConfig

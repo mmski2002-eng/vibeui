@@ -451,6 +451,66 @@ export const LAZY_PREVIEWS = {
       (module) => module.Autocomplete012,
     ),
   ),
+  "avatar-001": dynamic(() =>
+    import("@/registry/components/avatar/avatar-001/avatar-001").then(
+      (module) => module.Avatar001,
+    ),
+  ),
+  "avatar-002": dynamic(() =>
+    import("@/registry/components/avatar/avatar-002/avatar-002").then(
+      (module) => module.Avatar002,
+    ),
+  ),
+  "avatar-003": dynamic(() =>
+    import("@/registry/components/avatar/avatar-003/avatar-003").then(
+      (module) => module.Avatar003,
+    ),
+  ),
+  "avatar-004": dynamic(() =>
+    import("@/registry/components/avatar/avatar-004/avatar-004").then(
+      (module) => module.Avatar004,
+    ),
+  ),
+  "avatar-005": dynamic(() =>
+    import("@/registry/components/avatar/avatar-005/avatar-005").then(
+      (module) => module.Avatar005,
+    ),
+  ),
+  "avatar-006": dynamic(() =>
+    import("@/registry/components/avatar/avatar-006/avatar-006").then(
+      (module) => module.Avatar006,
+    ),
+  ),
+  "avatar-007": dynamic(() =>
+    import("@/registry/components/avatar/avatar-007/avatar-007").then(
+      (module) => module.Avatar007,
+    ),
+  ),
+  "avatar-008": dynamic(() =>
+    import("@/registry/components/avatar/avatar-008/avatar-008").then(
+      (module) => module.Avatar008,
+    ),
+  ),
+  "avatar-009": dynamic(() =>
+    import("@/registry/components/avatar/avatar-009/avatar-009").then(
+      (module) => module.Avatar009,
+    ),
+  ),
+  "avatar-010": dynamic(() =>
+    import("@/registry/components/avatar/avatar-010/avatar-010").then(
+      (module) => module.Avatar010,
+    ),
+  ),
+  "avatar-011": dynamic(() =>
+    import("@/registry/components/avatar/avatar-011/avatar-011").then(
+      (module) => module.Avatar011,
+    ),
+  ),
+  "avatar-012": dynamic(() =>
+    import("@/registry/components/avatar/avatar-012/avatar-012").then(
+      (module) => module.Avatar012,
+    ),
+  ),
   "input-001": dynamic(() =>
     import("@/registry/components/inputs/input-001/input-001").then(
       (module) => module.Input001,
@@ -484,11 +544,6 @@ export const LAZY_PREVIEWS = {
   "badge-001": dynamic(() =>
     import("@/registry/components/display/badge-001/badge-001").then(
       (module) => module.Badge001,
-    ),
-  ),
-  "avatar-001": dynamic(() =>
-    import("@/registry/components/display/avatar-001/avatar-001").then(
-      (module) => module.Avatar001,
     ),
   ),
   "card-001": dynamic(() =>

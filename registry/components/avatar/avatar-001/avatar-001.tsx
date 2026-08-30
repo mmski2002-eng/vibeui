@@ -72,17 +72,20 @@ function initialsOf(name: string): string {
 }
 
 /**
- * Оттенок из имени: сумма кодов символов по кругу цветов. Одно и то же имя
- * всегда даёт один и тот же цвет, поэтому список людей выглядит стабильно.
+ * Оттенок из имени: FNV-1a, разложенный по двенадцати ступеням круга. Одно и
+ * то же имя всегда даёт один и тот же цвет. Ступени вместо непрерывного круга
+ * нужны потому, что кириллические имена по сумме кодов ложатся в один сектор
+ * и весь список получается розовым.
  */
 function hueOf(name: string): number {
-  let sum = 0
+  let hash = 2166136261
 
-  for (let index = 0; index < name.length; index += 1) {
-    sum = (sum + name.charCodeAt(index) * (index + 1)) % 360
+  for (const symbol of name) {
+    hash ^= symbol.codePointAt(0)!
+    hash = Math.imul(hash, 16777619)
   }
 
-  return sum
+  return ((hash >>> 0) % 12) * 30
 }
 
 /**
@@ -118,7 +121,6 @@ export function Avatar001({
       >
         <span data-part="shape">
           {src ? (
-            // eslint-disable-next-line @next/next/no-img-element
             <img src={src} alt={name} />
           ) : (
             <span aria-hidden="true">{initialsOf(name)}</span>

@@ -89,6 +89,18 @@ import { Autocomplete009 } from "@/registry/components/autocomplete/autocomplete
 import { Autocomplete010 } from "@/registry/components/autocomplete/autocomplete-010/autocomplete-010"
 import { Autocomplete011 } from "@/registry/components/autocomplete/autocomplete-011/autocomplete-011"
 import { Autocomplete012 } from "@/registry/components/autocomplete/autocomplete-012/autocomplete-012"
+import { Avatar001 } from "@/registry/components/avatar/avatar-001/avatar-001"
+import { Avatar002 } from "@/registry/components/avatar/avatar-002/avatar-002"
+import { Avatar003 } from "@/registry/components/avatar/avatar-003/avatar-003"
+import { Avatar004 } from "@/registry/components/avatar/avatar-004/avatar-004"
+import { Avatar005 } from "@/registry/components/avatar/avatar-005/avatar-005"
+import { Avatar006 } from "@/registry/components/avatar/avatar-006/avatar-006"
+import { Avatar007 } from "@/registry/components/avatar/avatar-007/avatar-007"
+import { Avatar008 } from "@/registry/components/avatar/avatar-008/avatar-008"
+import { Avatar009 } from "@/registry/components/avatar/avatar-009/avatar-009"
+import { Avatar010 } from "@/registry/components/avatar/avatar-010/avatar-010"
+import { Avatar011 } from "@/registry/components/avatar/avatar-011/avatar-011"
+import { Avatar012 } from "@/registry/components/avatar/avatar-012/avatar-012"
 import { Input001 } from "@/registry/components/inputs/input-001/input-001"
 import { Input002 } from "@/registry/components/inputs/input-002/input-002"
 import { Textarea001 } from "@/registry/components/inputs/textarea-001/textarea-001"
@@ -96,7 +108,6 @@ import { Select001 } from "@/registry/components/inputs/select-001/select-001"
 import { Checkbox001 } from "@/registry/components/inputs/checkbox-001/checkbox-001"
 import { Switch001 } from "@/registry/components/inputs/switch-001/switch-001"
 import { Badge001 } from "@/registry/components/display/badge-001/badge-001"
-import { Avatar001 } from "@/registry/components/display/avatar-001/avatar-001"
 import { Card001 } from "@/registry/components/display/card-001/card-001"
 import { Skeleton001 } from "@/registry/components/display/skeleton-001/skeleton-001"
 import { Progress001 } from "@/registry/components/display/progress-001/progress-001"
@@ -211,6 +222,18 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "autocomplete-010": Autocomplete010,
   "autocomplete-011": Autocomplete011,
   "autocomplete-012": Autocomplete012,
+  "avatar-001": Avatar001,
+  "avatar-002": Avatar002,
+  "avatar-003": Avatar003,
+  "avatar-004": Avatar004,
+  "avatar-005": Avatar005,
+  "avatar-006": Avatar006,
+  "avatar-007": Avatar007,
+  "avatar-008": Avatar008,
+  "avatar-009": Avatar009,
+  "avatar-010": Avatar010,
+  "avatar-011": Avatar011,
+  "avatar-012": Avatar012,
   "input-001": Input001,
   "input-002": Input002,
   "textarea-001": Textarea001,
@@ -218,7 +241,6 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "checkbox-001": Checkbox001,
   "switch-001": Switch001,
   "badge-001": Badge001,
-  "avatar-001": Avatar001,
   "card-001": Card001,
   "skeleton-001": Skeleton001,
   "progress-001": Progress001,
