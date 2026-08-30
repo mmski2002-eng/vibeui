@@ -191,4 +191,34 @@ export const LAZY_PREVIEWS = {
       (module) => module.Banner001,
     ),
   ),
+  "tabs-001": dynamic(() =>
+    import("@/registry/components/navigation/tabs-001/tabs-001").then(
+      (module) => module.Tabs001,
+    ),
+  ),
+  "breadcrumb-001": dynamic(() =>
+    import("@/registry/components/navigation/breadcrumb-001/breadcrumb-001").then(
+      (module) => module.Breadcrumb001,
+    ),
+  ),
+  "dropdown-001": dynamic(() =>
+    import("@/registry/components/navigation/dropdown-001/dropdown-001").then(
+      (module) => module.Dropdown001,
+    ),
+  ),
+  "stepper-001": dynamic(() =>
+    import("@/registry/components/navigation/stepper-001/stepper-001").then(
+      (module) => module.Stepper001,
+    ),
+  ),
+  "pagination-001": dynamic(() =>
+    import("@/registry/components/navigation/pagination-001/pagination-001").then(
+      (module) => module.Pagination001,
+    ),
+  ),
+  "sidebar-001": dynamic(() =>
+    import("@/registry/components/navigation/sidebar-001/sidebar-001").then(
+      (module) => module.Sidebar001,
+    ),
+  ),
 } as unknown as Record<string, ComponentType<PreviewProps>>

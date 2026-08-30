@@ -1,0 +1,674 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "tabs-001",
+      "type": "registry:component",
+      "title": "Keyboard Tabs",
+      "description": "Вкладки, которые слушаются клавиатуры так же, как системные: стрелки переводят выбор, Home и End прыгают к краям. Полоска едет за активной вкладкой.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tabs-001/tabs-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tabs-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-001-*. Разметка следует паттерну tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby. В Tab-порядке живёт только активная вкладка (roving tabindex), остальные переключаются стрелками. Полоска под вкладкой — собственный ::after каждой вкладки, ширина берётся от текста, поэтому ничего не измеряется в JS.",
+      "meta": {
+        "tags": ["tabs", "navigation", "keyboard", "aria"],
+        "preview": {
+          "surface": "light",
+          "width": "full"
+        },
+        "ai": {
+          "export": "Tabs001",
+          "usage": "<Tabs001\n  items={[\n    { id: \"overview\", label: \"Обзор\", content: <Overview /> },\n    { id: \"pages\", label: \"Страницы\", content: <Pages /> },\n  ]}\n/>",
+          "summary": "Вкладки с полной клавиатурой: стрелки влево и вправо переводят выбор по кругу, Home и End прыгают к краям, в Tab-порядке остаётся только активная вкладка. Полоска под ней анимируется через transform. Список прокручивается по горизонтали, если вкладок много. Один клиентский компонент, ноль зависимостей, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-tabs-001-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
+            "разметку tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby",
+            "roving tabindex: tabIndex 0 только у активной вкладки, у остальных -1 — иначе Tab будет перебирать все вкладки подряд",
+            "обработку стрелок, Home и End вместе с переносом фокуса: без него выбор меняется, а фокус остаётся на месте",
+            "tabIndex={0} у панели: её содержимое может прокручиваться, и до него нужно доезжать с клавиатуры",
+            "полоску через ::after у каждой вкладки, а не один общий бегунок с расчётом позиции в JS",
+            "горизонтальную прокрутку списка со скрытой полосой прокрутки",
+            "блок <style> внутри компонента — в нём вся палитра, раскладка и анимация полоски"
+          ],
+          "adapt": [
+            "массив items: id, подпись и содержимое панели — content это ReactNode",
+            "defaultId — какая вкладка открыта изначально",
+            "акцент через проп accent — цвет полоски и кольца фокуса",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Компонент клиентский: \"use client\" нужен ради состояния и клавиатуры.",
+            "Не используйте вкладки для навигации между страницами: это переключение содержимого на одной. Для страниц нужны ссылки.",
+            "Не прячьте за вкладками то, что нужно сравнивать между собой: сравнение требует видеть оба варианта сразу.",
+            "Идентификаторы панелей строятся из id вкладки. Два экземпляра с одинаковыми id на странице дадут повторяющиеся id в разметке — задайте разные.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultId",
+            "label": "Открыта вкладка",
+            "type": "select",
+            "default": "overview",
+            "options": ["overview", "pages", "domains"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Tabs that answer the keyboard the way system tabs do: arrows move the selection, Home and End jump to the ends. The underline travels with the active tab.",
+            "ai": {
+              "summary": "Tabs with full keyboard support: left and right arrows move the selection in a loop, Home and End jump to the ends, and only the active tab stays in the Tab order. The underline animates with transform. The list scrolls horizontally when there are many tabs. One client component, zero dependencies, its own palette.",
+              "preserve": [
+                "the local --vibeui-tabs-001-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
+                "the WAI-ARIA tabs markup: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby",
+                "the roving tabindex: 0 on the active tab and -1 on the rest, otherwise Tab walks through every tab",
+                "the arrow, Home and End handling together with moving focus: without it the selection changes while focus stays behind",
+                "tabIndex={0} on the panel: its content can scroll and has to be reachable from the keyboard",
+                "the underline as each tab's own ::after rather than one shared slider positioned from JS",
+                "the horizontal scrolling of the list with its hidden scrollbar",
+                "the <style> block inside the component — it holds the palette, the layout and the underline animation"
+              ],
+              "adapt": [
+                "the items array: id, label and panel content — content is a ReactNode",
+                "defaultId — which tab starts open",
+                "the accent through the accent prop — it colours the underline and the focus ring",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "The component is a client one: \"use client\" is there for the state and the keyboard handling.",
+                "Do not use tabs to navigate between pages: they switch content within one. Pages need links.",
+                "Do not hide things that must be compared behind tabs: comparison requires seeing both at once.",
+                "Panel ids are built from the tab id. Two instances sharing ids produce duplicate ids in the document — give them different ones.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tabs001\n  items={[\n    { id: \"overview\", label: \"Overview\", content: <Overview /> },\n    { id: \"pages\", label: \"Pages\", content: <Pages /> },\n  ]}\n/>"
+            },
+            "controls": {
+              "defaultId": {
+                "label": "Open tab"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "breadcrumb-001",
+      "type": "registry:component",
+      "title": "Collapsing Breadcrumb",
+      "description": "Хлебные крошки, которые при нехватке места сворачиваются посередине, а не обрезаются с конца: остаются корень и текущий уровень.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "breadcrumb-001/breadcrumb-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/breadcrumb-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-001-*. Разметка семантическая: <nav> с подписью, внутри <ol> — порядок уровней имеет значение. Текущий уровень не ссылка и помечен aria-current=\"page\". Разделитель — грань квадрата, повёрнутая на 45°, поэтому шрифтовые символы и иконки не нужны. Свёртка считается по maxVisible: первый уровень, многоточие, затем последние.",
+      "meta": {
+        "tags": ["breadcrumb", "navigation", "path", "aria"],
+        "preview": {
+          "surface": "light"
+        },
+        "ai": {
+          "export": "Breadcrumb001",
+          "usage": "<Breadcrumb001\n  items={[\n    { label: \"Проекты\", href: \"/projects\" },\n    { label: \"Сайт студии\", href: \"/projects/studio\" },\n    { label: \"Главная\" },\n  ]}\n/>",
+          "summary": "Хлебные крошки со свёрткой середины: при длинном пути остаются корень, многоточие и последние уровни. Текущий уровень — не ссылка и помечен aria-current. Разделители нарисованы на CSS. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-breadcrumb-001-* и не подменять её токенами вашей темы (text-muted-foreground и подобными)",
+            "свёртку именно середины: обрезка с конца прячет текущий уровень — то единственное, что говорит, где пользователь находится",
+            "семантику <nav> + <ol> с подписью: это список уровней, а не набор ссылок",
+            "текущий уровень как текст с aria-current=\"page\", а не как ссылку на саму себя",
+            "разделители с aria-hidden: скринридер не должен читать «стрелка» между уровнями",
+            "многоточие как неинтерактивный знак: раскрывающееся меню — это уже другой компонент",
+            "блок <style> внутри компонента — в нём вся палитра, разделители и обрезка длинных подписей"
+          ],
+          "adapt": [
+            "массив items: подписи и адреса; у последнего элемента адрес не нужен",
+            "maxVisible — сколько уровней показывать до свёртки",
+            "акцент через проп accent — цвет кольца фокуса",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Крошки показывают положение в структуре сайта, а не историю переходов. Не собирайте их из истории браузера.",
+            "Не делайте крошки единственным способом вернуться назад на мобильном: там для этого есть кнопка «назад».",
+            "Свёртка считается по количеству уровней, а не по реальной ширине. Для очень длинных подписей уменьшайте maxVisible.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "maxVisible",
+            "label": "Уровней",
+            "type": "number",
+            "default": 3,
+            "min": 2,
+            "max": 6
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A breadcrumb that collapses in the middle rather than truncating at the end: the root and the current level always survive.",
+            "ai": {
+              "summary": "A breadcrumb that collapses its middle: on a long path the root, an ellipsis and the last levels remain. The current level is not a link and carries aria-current. The separators are drawn in CSS. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-breadcrumb-001-* palette — do not swap it for your theme tokens (text-muted-foreground and the like)",
+                "collapsing the middle specifically: truncating the end hides the current level, the one thing that says where the user is",
+                "the <nav> + <ol> semantics with a label: this is a list of levels, not a pile of links",
+                "the current level as text with aria-current=\"page\" rather than a link to itself",
+                "aria-hidden on the separators: a screen reader should not read \"arrow\" between levels",
+                "the ellipsis as a non-interactive mark: a menu that expands it is a different component",
+                "the <style> block inside the component — it holds the palette, the separators and the label truncation"
+              ],
+              "adapt": [
+                "the items array: labels and hrefs; the last item needs no href",
+                "maxVisible — how many levels show before collapsing",
+                "the accent through the accent prop — it colours the focus ring",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "A breadcrumb shows position in the site structure, not browsing history. Do not build it from the history stack.",
+                "Do not make it the only way back on mobile: the platform back gesture already covers that.",
+                "The collapse counts levels, not real width. For very long labels lower maxVisible.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Breadcrumb001\n  items={[\n    { label: \"Projects\", href: \"/projects\" },\n    { label: \"Studio site\", href: \"/projects/studio\" },\n    { label: \"Home\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "maxVisible": {
+                "label": "Levels"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dropdown-001",
+      "type": "registry:component",
+      "title": "Anchored Dropdown",
+      "description": "Выпадающее меню без JS: открытие держит HTML popover, а положение рядом с кнопкой — якорное позиционирование CSS.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dropdown-001/dropdown-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dropdown-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dropdown-001-*. Открытие — атрибуты popover и popovertarget, положение — anchor-name у кнопки и position-anchor с position-area у меню, под @supports. Меню живёт в верхнем слое, поэтому стилизуется по атрибуту [data-vibeui-dropdown-001-menu] и получает палитру собственным style. Проп open переводит меню в поток страницы для витрины и скриншотов: popover в этом режиме не используется.",
+      "meta": {
+        "tags": ["dropdown", "menu", "popover", "no-js"],
+        "preview": {
+          "surface": "light",
+          "props": {
+            "open": true
+          }
+        },
+        "ai": {
+          "export": "Dropdown001",
+          "usage": "<Dropdown001\n  id=\"project-menu\"\n  trigger=\"Проект\"\n  items={[\n    { label: \"Настройки\", href: \"/settings\" },\n    { label: \"Удалить\", href: \"/delete\", separated: true, danger: true },\n  ]}\n/>",
+          "summary": "Меню из кнопки: открытие, закрытие по Esc и по клику мимо даёт HTML popover, положение рядом с кнопкой — якорное позиционирование CSS, включая переворот при нехватке места. Пункты — обычные ссылки, опасное действие отделяется линией. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-dropdown-001-* и не подменять её токенами вашей темы (bg-popover, border-border и подобными)",
+            "механику popover: popovertarget у кнопки и popover=\"auto\" у меню — это всё поведение целиком",
+            "пару anchor-name и position-anchor вместе с position-area: без них меню в верхнем слое встанет по центру экрана",
+            "блок @supports вокруг якорного позиционирования: там, где якорей нет, меню обязано остаться работающим, пусть и по центру",
+            "стилизацию меню по атрибуту и передачу палитры отдельным style: в верхнем слое меню перестаёт быть потомком корня",
+            "position-try-fallbacks: у нижнего края экрана меню должно переворачиваться, а не уезжать за границу",
+            "линию перед опасным пунктом и его отдельный цвет — «Удалить» не должно стоять вплотную к обычным пунктам",
+            "блок <style> внутри компонента — в нём вся палитра, позиционирование и анимация"
+          ],
+          "adapt": [
+            "массив items: подписи, адреса, флаги separated и danger",
+            "trigger — подпись кнопки",
+            "id — свой на каждое меню на странице",
+            "open — развернуть меню в потоке страницы: витрина, скриншот, отладка",
+            "акцент через проп accent — цвет кольца фокуса"
+          ],
+          "notes": [
+            "Клавиатурная навигация внутри меню ограничена Tab: стрелки по пунктам — это уже role=\"menu\" с обработчиком, то есть JS.",
+            "Два меню с одинаковым id на странице конфликтуют: кнопка откроет первое попавшееся.",
+            "Пункты — ссылки. Если пункт запускает действие, замените <a> на <button type=\"button\"> в своей копии.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "trigger",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Проект",
+            "maxLength": 24
+          },
+          {
+            "prop": "open",
+            "label": "Развернуто",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dropdown with no JS: the HTML popover attribute handles opening, and CSS anchor positioning keeps it next to its button.",
+            "ai": {
+              "summary": "A menu on a button: opening, Esc and click-outside come from the HTML popover attribute, and the placement beside the button — including flipping when there is no room — from CSS anchor positioning. The items are plain links and the destructive one is set apart by a rule. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-dropdown-001-* palette — do not swap it for your theme tokens (bg-popover, border-border and the like)",
+                "the popover mechanism: popovertarget on the button and popover=\"auto\" on the menu are the whole behaviour",
+                "the anchor-name / position-anchor pair together with position-area: without them a top-layer menu lands in the middle of the screen",
+                "the @supports block around anchor positioning: where anchors are missing the menu must still work, even if centred",
+                "styling the menu by attribute and passing the palette through its own style: in the top layer it is no longer a descendant of the root",
+                "position-try-fallbacks: near the bottom edge the menu has to flip rather than run off screen",
+                "the rule above the destructive item and its separate colour — Delete must not sit flush against ordinary items",
+                "the <style> block inside the component — it holds the palette, the positioning and the animation"
+              ],
+              "adapt": [
+                "the items array: labels, hrefs, the separated and danger flags",
+                "trigger — the button label",
+                "id — one per menu on the page",
+                "open — expand the menu in the page flow: showcase, screenshots, debugging",
+                "the accent through the accent prop — it colours the focus ring"
+              ],
+              "notes": [
+                "Keyboard navigation inside the menu is limited to Tab: arrow keys between items mean role=\"menu\" and a handler, which means JS.",
+                "Two menus sharing an id conflict: the button opens whichever it finds first.",
+                "The items are links. If an item runs an action, swap <a> for <button type=\"button\"> in your copy.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dropdown001\n  id=\"project-menu\"\n  trigger=\"Project\"\n  items={[\n    { label: \"Settings\", href: \"/settings\" },\n    { label: \"Delete\", href: \"/delete\", separated: true, danger: true },\n  ]}\n/>"
+            },
+            "controls": {
+              "trigger": {
+                "label": "Button",
+                "default": "Project"
+              },
+              "open": {
+                "label": "Expanded"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stepper-001",
+      "type": "registry:component",
+      "title": "Process Stepper",
+      "description": "Индикатор шагов, где пройденное отмечено галочкой, а не только цветом. Линия заполнена до текущего шага, поэтому прогресс виден без чтения подписей.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stepper-001/stepper-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stepper-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-stepper-001-*. Состояние шага (done, current, todo) выводится из пропа current и попадает в data-атрибут, от которого зависят и кружок, и линия. Линия — ::before у каждого шага кроме первого, она тянется от центра предыдущего кружка. Текущий шаг помечен aria-current=\"step\". В узкой колонке подсказки скрываются через @container, остаются кружки и подписи.",
+      "meta": {
+        "tags": ["stepper", "progress", "wizard", "onboarding"],
+        "preview": {
+          "surface": "light",
+          "width": "full"
+        },
+        "ai": {
+          "export": "Stepper001",
+          "usage": "<Stepper001\n  current={2}\n  steps={[\n    { label: \"Проект\", hint: \"Название и адрес\" },\n    { label: \"Дизайн\" },\n    { label: \"Публикация\" },\n  ]}\n/>",
+          "summary": "Индикатор шагов процесса: кружки с номерами, галочка вместо номера у пройденных, подписи и необязательные подсказки. Линия между шагами заполнена до текущего. Состояние выводится из одного числа, поэтому рассинхронизировать шаги невозможно. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-stepper-001-* и не подменять её токенами вашей темы (bg-primary, border-border и подобными)",
+            "галочку у пройденных шагов: цвет — не единственный признак, иначе состояние не читается при дальтонизме и в печати",
+            "вывод состояния из одного числа current, а не отдельные флаги у каждого шага",
+            "линию через ::before, идущую от центра предыдущего кружка: отдельный элемент-линия сместится при переносе",
+            "aria-current=\"step\" у текущего шага — по нему скринридер находит место в процессе",
+            "@container-запрос, прячущий подсказки в узкой колонке: иначе подписи наезжают друг на друга",
+            "блок <style> внутри компонента — в нём вся палитра, кружки и линия"
+          ],
+          "adapt": [
+            "массив steps: подписи и подсказки под ними",
+            "current — номер текущего шага, считая с нуля",
+            "акцент через проп accent — цвет пройденных кружков и линии",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Это индикатор, а не навигация: шаги не кликаются. Если по шагам нужно возвращаться, оберните подписи в ссылки в своей копии.",
+            "Не делайте больше пяти шагов: длинный процесс лучше разбить на этапы, иначе подписи не помещаются.",
+            "Шаг «готово» в конце не нужен: последний шаг и есть завершение.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "current",
+            "label": "Текущий шаг",
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 3
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A step indicator where completed steps are marked with a check, not colour alone. The line fills up to the current step, so progress reads without reading the labels.",
+            "ai": {
+              "summary": "A process stepper: numbered circles, a check instead of the number on completed steps, labels and optional hints. The connecting line is filled up to the current step. Every state is derived from one number, so the steps cannot fall out of sync. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-stepper-001-* palette — do not swap it for your theme tokens (bg-primary, border-border and the like)",
+                "the check on completed steps: colour must not be the only signal, or the state disappears for colour-blind readers and in print",
+                "deriving every state from the single current number rather than per-step flags",
+                "the connecting line as ::before reaching back to the previous circle's centre: a separate line element drifts when the row wraps",
+                "aria-current=\"step\" on the current step — it is how a screen reader locates the position in the process",
+                "the @container query that hides the hints in a narrow column: otherwise the labels collide",
+                "the <style> block inside the component — it holds the palette, the circles and the line"
+              ],
+              "adapt": [
+                "the steps array: labels and the hints beneath them",
+                "current — the index of the active step, counting from zero",
+                "the accent through the accent prop — it colours completed circles and the line",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "This is an indicator, not navigation: the steps are not clickable. If people must go back, wrap the labels in links in your copy.",
+                "Do not go past five steps: a long process is better split into stages, or the labels stop fitting.",
+                "A final \"Done\" step is unnecessary: the last step is the completion.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Stepper001\n  current={2}\n  steps={[\n    { label: \"Project\", hint: \"Name and address\" },\n    { label: \"Design\" },\n    { label: \"Publish\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "current": {
+                "label": "Current step"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pagination-001",
+      "type": "registry:component",
+      "title": "Link Pagination",
+      "description": "Постраничная навигация обычными ссылками: страницу можно открыть в новой вкладке, скопировать и найти в истории. Окно номеров вокруг текущей.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pagination-001/pagination-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pagination-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-001-*. Номера — обычные <a>, адрес собирает функция hrefOf, по умолчанию `?page=N`. Окно вокруг текущей страницы считает windowOf: первая, последняя, соседи и разрывы между ними. Текущая страница помечена aria-current=\"page\". Края не исчезают на первой и последней странице, а гасятся через aria-disabled, поэтому ряд не прыгает.",
+      "meta": {
+        "tags": ["pagination", "navigation", "links", "list"],
+        "preview": {
+          "surface": "light"
+        },
+        "ai": {
+          "export": "Pagination001",
+          "usage": "<Pagination001\n  page={4}\n  total={12}\n  hrefOf={(page) => `/blog?page=${page}`}\n/>",
+          "summary": "Постраничная навигация ссылками: стрелки по краям, окно номеров вокруг текущей страницы и разрывы вместо длинного списка. Ширина ряда не скачет при переходе, потому что края остаются на месте. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-pagination-001-* и не подменять её токенами вашей темы (bg-primary, border-input и подобными)",
+            "номера как ссылки, а не кнопки: открыть в новой вкладке, скопировать адрес и вернуться из истории — всё это идёт бесплатно",
+            "aria-current=\"page\" у текущей страницы: без него активный номер отличается только цветом",
+            "края, которые гасятся, а не исчезают: пропадающая стрелка сдвигает весь ряд",
+            "tabular-nums у номеров — без них ширина кнопок пляшет от цифр",
+            "подписи aria-label у стрелок: «←» скринридер прочитает как символ",
+            "блок <style> внутри компонента — в нём вся палитра и раскладка"
+          ],
+          "adapt": [
+            "page и total — текущая страница и общее количество",
+            "siblings — сколько номеров показывать вокруг текущей",
+            "hrefOf — как собрать адрес страницы под ваш роутер",
+            "акцент через проп accent — цвет активного номера",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Для бесконечной ленты пагинация не нужна: это разные способы чтения списка.",
+            "Не заменяйте ссылки на onClick без адреса: тогда страницу нельзя открыть в новой вкладке и она пропадёт из истории.",
+            "Общее количество страниц должно быть известно. Если его нет, показывайте «дальше» без номеров.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "page",
+            "label": "Страница",
+            "type": "number",
+            "default": 4,
+            "min": 1,
+            "max": 12
+          },
+          {
+            "prop": "total",
+            "label": "Всего",
+            "type": "number",
+            "default": 12,
+            "min": 1,
+            "max": 99
+          },
+          {
+            "prop": "siblings",
+            "label": "Соседей",
+            "type": "number",
+            "default": 1,
+            "min": 0,
+            "max": 3
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Pagination made of ordinary links: a page can be opened in a new tab, copied and found in history. A window of numbers around the current page.",
+            "ai": {
+              "summary": "Link-based pagination: edge arrows, a window of numbers around the current page and gaps instead of a long list. The row does not jump between pages because the edges stay in place. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-pagination-001-* palette — do not swap it for your theme tokens (bg-primary, border-input and the like)",
+                "the numbers as links rather than buttons: opening in a new tab, copying the address and going back through history all come free",
+                "aria-current=\"page\" on the active number: without it the active page differs only by colour",
+                "edges that dim instead of disappearing: a vanishing arrow shifts the whole row",
+                "tabular-nums on the numbers — without them the buttons jitter as digits change",
+                "the aria-labels on the arrows: a screen reader would otherwise announce \"←\" as a symbol",
+                "the <style> block inside the component — it holds the palette and the layout"
+              ],
+              "adapt": [
+                "page and total — the current page and the count",
+                "siblings — how many numbers surround the current page",
+                "hrefOf — how to build a page address for your router",
+                "the accent through the accent prop — it colours the active number",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "An infinite feed needs no pagination: they are two different ways of reading a list.",
+                "Do not replace the links with onClick and no href: the page then cannot be opened in a new tab and vanishes from history.",
+                "The total has to be known. Without it, show a plain \"next\" without numbers.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Pagination001\n  page={4}\n  total={12}\n  hrefOf={(page) => `/blog?page=${page}`}\n/>"
+            },
+            "controls": {
+              "page": {
+                "label": "Page"
+              },
+              "total": {
+                "label": "Total"
+              },
+              "siblings": {
+                "label": "Siblings"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sidebar-001",
+      "type": "registry:component",
+      "title": "App Sidebar Nav",
+      "description": "Вертикальная навигация приложения: разделы, счётчики и текущий пункт, отмеченный полосой у края, а не только цветом текста.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sidebar-001/sidebar-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sidebar-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sidebar-001-*. Разметка семантическая: <nav> с подписью, внутри разделы с заголовками и списки <ul>. Активный пункт определяется сравнением подписи с activeLabel и получает aria-current=\"page\", плотный фон и полосу через ::before. Счётчик — необязательное число справа с tabular-nums.",
+      "meta": {
+        "tags": ["sidebar", "navigation", "app shell", "menu"],
+        "preview": {
+          "surface": "light"
+        },
+        "ai": {
+          "export": "Sidebar001",
+          "usage": "<Sidebar001\n  activeLabel=\"Страницы\"\n  sections={[\n    { title: \"Проект\", items: [{ label: \"Обзор\", href: \"/\" }, { label: \"Страницы\", href: \"/pages\", count: 12 }] },\n  ]}\n/>",
+          "summary": "Вертикальное меню приложения: разделы с заголовками, пункты-ссылки, счётчики справа и текущий пункт, отмеченный полосой у левого края и плотным фоном. В длинном списке текущее место находится сразу. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-sidebar-001-* и не подменять её токенами вашей темы (bg-sidebar, bg-accent и подобными)",
+            "двойную метку активного пункта: полоса у края плюс фон — по одному цвету текста активный раздел теряется",
+            "aria-current=\"page\" у текущего пункта: это то, по чему его находит скринридер",
+            "семантику <nav> + <ul>: меню — это список ссылок, а не набор div'ов",
+            "заголовки разделов как подписи, а не как ссылки — по ним не переходят",
+            "tabular-nums у счётчиков, иначе числа дёргают правый край",
+            "блок <style> внутри компонента — в нём вся палитра, раскладка и метка активного пункта"
+          ],
+          "adapt": [
+            "массив sections: заголовки разделов, пункты, адреса и счётчики",
+            "activeLabel — подпись текущего пункта; в реальном приложении подставляйте из роутера",
+            "акцент через проп accent — цвет полосы и кольца фокуса",
+            "максимальную ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Компонент не знает про маршруты. Активный пункт задаёт вызывающий код: сравните адрес роутера и передайте подпись.",
+            "Не делайте вложенность глубже одного уровня: для дерева нужен другой компонент.",
+            "Счётчик — это то, что требует внимания: непрочитанные, ошибки. Общее количество элементов там не нужно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "activeLabel",
+            "label": "Активный пункт",
+            "type": "select",
+            "default": "Страницы",
+            "options": [
+              "Обзор",
+              "Страницы",
+              "Медиа",
+              "Домены",
+              "История",
+              "Настройки"
+            ]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An app sidebar: sections, counts and a current item marked by a bar at the edge rather than text colour alone.",
+            "ai": {
+              "summary": "A vertical app menu: titled sections, link items, counts on the right and a current item marked by an edge bar and a solid background. In a long list the current place is found at a glance. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-sidebar-001-* palette — do not swap it for your theme tokens (bg-sidebar, bg-accent and the like)",
+                "the double marking of the active item: the edge bar plus the background — text colour alone loses the active section",
+                "aria-current=\"page\" on the current item: it is how a screen reader finds it",
+                "the <nav> + <ul> semantics: a menu is a list of links, not a pile of divs",
+                "the section titles as labels rather than links — nobody navigates to them",
+                "tabular-nums on the counts, otherwise the numbers jitter the right edge",
+                "the <style> block inside the component — it holds the palette, the layout and the active marking"
+              ],
+              "adapt": [
+                "the sections array: section titles, items, hrefs and counts",
+                "activeLabel — the current item's label; in a real app feed it from the router",
+                "the accent through the accent prop — it colours the bar and the focus ring",
+                "max width and outer spacing through className"
+              ],
+              "notes": [
+                "The component knows nothing about routes. The caller decides the active item: compare the router path and pass the label.",
+                "Do not nest deeper than one level: a tree needs a different component.",
+                "A count means something needing attention — unread, failing. The total number of items does not belong there.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sidebar001\n  activeLabel=\"Pages\"\n  sections={[\n    { title: \"Project\", items: [{ label: \"Overview\", href: \"/\" }, { label: \"Pages\", href: \"/pages\", count: 12 }] },\n  ]}\n/>"
+            },
+            "controls": {
+              "activeLabel": {
+                "label": "Active item"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

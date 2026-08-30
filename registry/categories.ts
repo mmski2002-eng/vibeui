@@ -45,6 +45,7 @@ export const CATEGORIES = [
   { slug: "inputs", label: "Inputs", group: "application" },
   { slug: "display", label: "Display", group: "application" },
   { slug: "feedback", label: "Feedback", group: "application" },
+  { slug: "navigation", label: "Navigation", group: "navigation" },
   { slug: "tables", label: "Tables", group: "data" },
 ] as const satisfies readonly {
   slug: string

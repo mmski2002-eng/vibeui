@@ -20,10 +20,9 @@
 
 ## Оси
 
-Таксономия — `registry/categories.ts`. Для полного ассортимента её надо
-расширить: категорий компонентов сейчас пять (`buttons`, `inputs`, `display`,
-`feedback`, `tables`), нужны ещё четыре — `navigation`, `overlays`, `charts`,
-`calendar`.
+Таксономия — `registry/categories.ts`. Категорий компонентов сейчас шесть
+(`buttons`, `inputs`, `display`, `feedback`, `navigation`, `tables`); для
+полного ассортимента нужны ещё три — `overlays`, `charts`, `calendar`.
 
 ## kind: component
 
@@ -33,7 +32,7 @@
 | `inputs`     | input, input group, select, combobox, autocomplete, checkbox, radio, switch, slider, textarea, number, otp, phone, label, field, file upload, date selector, cascader, rating                       |  ~300 |     6 |
 | `display`    | avatar, badge, card, item, icon tile, icon stack, aspect ratio, separator, frame, code block, timeline, carousel, accordion, collapsible, scroll area, resizable, tree, skeleton, spinner, progress |  ~265 |     6 |
 | `feedback`   | alert, alert dialog, dialog, drawer, sheet, popover, tooltip, hover card, toast, empty state                                                                                                        |  ~130 |     6 |
-| `navigation` | breadcrumb, dropdown menu, context menu, menubar, navigation menu, tabs, stepper, command, scrollspy                                                                                                |   ~85 |     0 |
+| `navigation` | breadcrumb, dropdown menu, context menu, menubar, navigation menu, tabs, stepper, command, scrollspy                                                                                                |   ~85 |     6 |
 | `tables`     | table, data grid, pagination                                                                                                                                                                        |   ~60 |     0 |
 | `charts`     | chart (line, bar, area, pie, radial), sparkline                                                                                                                                                     |   ~55 |     0 |
 | `calendar`   | calendar, event calendar, gantt, kanban, sortable, filters                                                                                                                                          |   ~70 |     0 |
@@ -81,7 +80,10 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
    (полоса оставшегося времени), `empty-001` (экран объясняет следующий шаг),
    `tooltip-001` (открывается и с клавиатуры), `banner-001`.
    Дальше: drawer, sheet, hover card, alert dialog.
-5. `navigation` — tabs, breadcrumb, dropdown, stepper.
+5. `navigation` — первая волна закрыта: `tabs-001` (полная клавиатура),
+   `breadcrumb-001` (свёртка середины), `dropdown-001` (popover + якоря,
+   без JS), `stepper-001`, `pagination-001` (ссылки, не кнопки),
+   `sidebar-001`. Дальше: menubar, command, scrollspy, context menu.
 6. Блоки — только после того, как компонентная база закрывает их нужды.
 
 Ритм — пачка на категорию: спека всех items категории сразу (иначе выходят
