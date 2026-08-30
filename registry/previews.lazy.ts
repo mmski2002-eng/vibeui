@@ -186,6 +186,31 @@ export const LAZY_PREVIEWS = {
       (module) => module.Accordion001,
     ),
   ),
+  "accordion-002": dynamic(() =>
+    import("@/registry/components/display/accordion-002/accordion-002").then(
+      (module) => module.Accordion002,
+    ),
+  ),
+  "accordion-003": dynamic(() =>
+    import("@/registry/components/display/accordion-003/accordion-003").then(
+      (module) => module.Accordion003,
+    ),
+  ),
+  "accordion-004": dynamic(() =>
+    import("@/registry/components/display/accordion-004/accordion-004").then(
+      (module) => module.Accordion004,
+    ),
+  ),
+  "accordion-005": dynamic(() =>
+    import("@/registry/components/display/accordion-005/accordion-005").then(
+      (module) => module.Accordion005,
+    ),
+  ),
+  "accordion-006": dynamic(() =>
+    import("@/registry/components/display/accordion-006/accordion-006").then(
+      (module) => module.Accordion006,
+    ),
+  ),
   "alert-001": dynamic(() =>
     import("@/registry/components/feedback/alert-001/alert-001").then(
       (module) => module.Alert001,

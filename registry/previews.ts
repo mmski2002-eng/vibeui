@@ -36,6 +36,11 @@ import { Card001 } from "@/registry/components/display/card-001/card-001"
 import { Skeleton001 } from "@/registry/components/display/skeleton-001/skeleton-001"
 import { Progress001 } from "@/registry/components/display/progress-001/progress-001"
 import { Accordion001 } from "@/registry/components/display/accordion-001/accordion-001"
+import { Accordion002 } from "@/registry/components/display/accordion-002/accordion-002"
+import { Accordion003 } from "@/registry/components/display/accordion-003/accordion-003"
+import { Accordion004 } from "@/registry/components/display/accordion-004/accordion-004"
+import { Accordion005 } from "@/registry/components/display/accordion-005/accordion-005"
+import { Accordion006 } from "@/registry/components/display/accordion-006/accordion-006"
 import { Alert001 } from "@/registry/components/feedback/alert-001/alert-001"
 import { Dialog001 } from "@/registry/components/feedback/dialog-001/dialog-001"
 import { Toast001 } from "@/registry/components/feedback/toast-001/toast-001"
@@ -96,6 +101,11 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "skeleton-001": Skeleton001,
   "progress-001": Progress001,
   "accordion-001": Accordion001,
+  "accordion-002": Accordion002,
+  "accordion-003": Accordion003,
+  "accordion-004": Accordion004,
+  "accordion-005": Accordion005,
+  "accordion-006": Accordion006,
   "alert-001": Alert001,
   "dialog-001": Dialog001,
   "toast-001": Toast001,
