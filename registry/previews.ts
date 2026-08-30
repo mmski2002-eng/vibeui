@@ -134,6 +134,16 @@ import { Breadcrumb009 } from "@/registry/components/breadcrumb/breadcrumb-009/b
 import { Breadcrumb010 } from "@/registry/components/breadcrumb/breadcrumb-010/breadcrumb-010"
 import { Breadcrumb011 } from "@/registry/components/breadcrumb/breadcrumb-011/breadcrumb-011"
 import { Breadcrumb012 } from "@/registry/components/breadcrumb/breadcrumb-012/breadcrumb-012"
+import { Calendar001 } from "@/registry/components/calendar/calendar-001/calendar-001"
+import { Calendar002 } from "@/registry/components/calendar/calendar-002/calendar-002"
+import { Calendar003 } from "@/registry/components/calendar/calendar-003/calendar-003"
+import { Calendar004 } from "@/registry/components/calendar/calendar-004/calendar-004"
+import { Calendar005 } from "@/registry/components/calendar/calendar-005/calendar-005"
+import { Calendar006 } from "@/registry/components/calendar/calendar-006/calendar-006"
+import { Calendar007 } from "@/registry/components/calendar/calendar-007/calendar-007"
+import { Calendar008 } from "@/registry/components/calendar/calendar-008/calendar-008"
+import { Calendar009 } from "@/registry/components/calendar/calendar-009/calendar-009"
+import { Calendar010 } from "@/registry/components/calendar/calendar-010/calendar-010"
 import { Input001 } from "@/registry/components/inputs/input-001/input-001"
 import { Input002 } from "@/registry/components/inputs/input-002/input-002"
 import { Textarea001 } from "@/registry/components/inputs/textarea-001/textarea-001"
@@ -298,6 +308,16 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "breadcrumb-010": Breadcrumb010,
   "breadcrumb-011": Breadcrumb011,
   "breadcrumb-012": Breadcrumb012,
+  "calendar-001": Calendar001,
+  "calendar-002": Calendar002,
+  "calendar-003": Calendar003,
+  "calendar-004": Calendar004,
+  "calendar-005": Calendar005,
+  "calendar-006": Calendar006,
+  "calendar-007": Calendar007,
+  "calendar-008": Calendar008,
+  "calendar-009": Calendar009,
+  "calendar-010": Calendar010,
   "input-001": Input001,
   "input-002": Input002,
   "textarea-001": Textarea001,

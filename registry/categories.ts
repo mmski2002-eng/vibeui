@@ -50,6 +50,7 @@ export const CATEGORIES = [
   { slug: "avatar", label: "Avatar", group: "application" },
   { slug: "badge", label: "Badge", group: "application" },
   { slug: "breadcrumb", label: "Breadcrumb", group: "navigation" },
+  { slug: "calendar", label: "Calendar", group: "application" },
   { slug: "inputs", label: "Inputs", group: "application" },
   { slug: "display", label: "Display", group: "application" },
   { slug: "feedback", label: "Feedback", group: "application" },

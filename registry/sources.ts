@@ -20,6 +20,7 @@ import autocompleteRegistry from "@/registry/components/autocomplete/registry.js
 import avatarRegistry from "@/registry/components/avatar/registry.json"
 import badgeRegistry from "@/registry/components/badge/registry.json"
 import breadcrumbRegistry from "@/registry/components/breadcrumb/registry.json"
+import calendarRegistry from "@/registry/components/calendar/registry.json"
 import inputsRegistry from "@/registry/components/inputs/registry.json"
 import displayRegistry from "@/registry/components/display/registry.json"
 import feedbackRegistry from "@/registry/components/feedback/registry.json"
@@ -121,6 +122,11 @@ export const SOURCES = [
     directory: "registry/components/breadcrumb",
     kind: "component",
     items: breadcrumbRegistry.items,
+  },
+  {
+    directory: "registry/components/calendar",
+    kind: "component",
+    items: calendarRegistry.items,
   },
   {
     directory: "registry/components/inputs",

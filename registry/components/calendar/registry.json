@@ -1,0 +1,1100 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "calendar-001",
+      "type": "registry:component",
+      "title": "Month Grid",
+      "description": "Месяц на сетке 7×6 с постоянной высотой: неделя с понедельника, дни соседних месяцев видны и кликабельны.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-001/calendar-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-001-*. Клиентский: \"use client\". Дата приходит и уходит строкой ISO — её проще передать с сервера, чем объект Date. Сетка всегда 42 клетки, неделя считается с понедельника через сдвиг (getDay() + 6) % 7. Названия месяцев и дней даёт Intl.DateTimeFormat, поэтому язык меняется одним пропом.",
+      "meta": {
+        "tags": ["calendar", "date picker", "month", "intl"],
+        "ai": {
+          "export": "Calendar001",
+          "usage": "<Calendar001 defaultValue=\"2026-03-14\" onChange={setDate} />",
+          "summary": "Календарь месяца: сетка 7×6 постоянной высоты, выбор дня, переключение месяцев, кнопка «Сегодня» и локаль через Intl. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-001-* и не подменять её токенами вашей темы",
+            "шесть строк всегда: месяц переменной высоты дёргает всё под собой",
+            "неделю с понедельника через сдвиг getDay(): по умолчанию JavaScript начинает с воскресенья",
+            "aria-label с полной датой на каждой кнопке — одно число вслух бессмысленно",
+            "кликабельные дни соседних месяцев: попасть на 1 число из последней строки — обычное дело",
+            "строку ISO на входе и выходе вместо объекта Date"
+          ],
+          "adapt": [
+            "defaultValue — стартовая дата",
+            "locale — язык подписей",
+            "обработчик onChange",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Праздники, выходные и заблокированные дни компонент не знает: добавьте свой признак в разметку кнопки.",
+            "Часовой пояс не учитывается: строка ISO трактуется как местная дата, и это осознанный выбор для выбора дня.",
+            "Для диапазона возьмите calendar-002, для двух месяцев — calendar-009.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultValue",
+            "label": "Дата",
+            "type": "text",
+            "default": "2026-03-14",
+            "maxLength": 10
+          },
+          {
+            "prop": "locale",
+            "label": "Локаль",
+            "type": "select",
+            "default": "ru-RU",
+            "options": ["ru-RU", "en-US", "de-DE"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A month on a fixed 7×6 grid: the week starts on Monday and adjacent-month days stay visible and clickable.",
+            "ai": {
+              "summary": "A month calendar: a 7×6 grid of constant height, day selection, month navigation, a \"Today\" button and Intl-driven locale. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-calendar-001-* palette — do not swap it for your theme tokens",
+                "six rows always: a month of varying height shoves everything below it",
+                "the Monday-first shift on getDay(): JavaScript starts the week on Sunday",
+                "the full-date aria-label on every button — a bare number means nothing aloud",
+                "clickable adjacent-month days: reaching the 1st from the last row is routine",
+                "ISO strings in and out rather than Date objects"
+              ],
+              "adapt": [
+                "defaultValue — the starting date",
+                "locale — the label language",
+                "the onChange handler",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Holidays, weekends and blocked days are unknown to the component: add your own flag to the day button.",
+                "Time zones are ignored: an ISO string is treated as a local date, which is the right trade for picking a day.",
+                "For a range use calendar-002; for two months, calendar-009.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Calendar001 defaultValue=\"2026-03-14\" onChange={setDate} />"
+            },
+            "controls": {
+              "defaultValue": {
+                "label": "Date",
+                "default": "2026-03-14"
+              },
+              "locale": {
+                "label": "Locale"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-002",
+      "type": "registry:component",
+      "title": "Range Picker",
+      "description": "Выбор диапазона в два клика: если вторая дата раньше первой, границы меняются местами вместо ошибки.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-002/calendar-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-002-*. Клиентский: \"use client\". Подсветка диапазона живёт на ячейке таблицы, а не на кнопке дня: только так полоса между границами получается сплошной. Порядок дат нормализуется сравнением строк ISO — они сравниваются лексикографически. Внизу считается число ночей.",
+      "meta": {
+        "tags": ["calendar", "range", "booking", "dates"],
+        "ai": {
+          "export": "Calendar002",
+          "usage": "<Calendar002 defaultFrom=\"2026-03-10\" defaultTo=\"2026-03-17\" onChange={setRange} />",
+          "summary": "Календарь выбора диапазона: первый клик ставит начало, второй конец, границы нормализуются, полоса между ними сплошная, ночи посчитаны. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-002-* и не подменять её токенами вашей темы",
+            "перестановку границ вместо ошибки: «с 17 по 10» — обычный ход мысли, а не ввод наугад",
+            "подсветку на ячейке, а не на кнопке — иначе полоса рвётся между днями",
+            "скруглённые края диапазона: без них полоса выглядит обрезанной",
+            "счёт ночей, а не дней: в брони считают ночи, и разница в один день здесь принципиальна",
+            "подсказку «выберите вторую дату» между кликами"
+          ],
+          "adapt": [
+            "defaultFrom и defaultTo",
+            "locale — язык подписей",
+            "обработчик onChange",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Минимальная и максимальная длина диапазона не проверяется: добавьте проверку в onChange.",
+            "Заблокированные даты внутри диапазона компонент не знает — для брони это придётся дописать.",
+            "Сравнение дат идёт по строкам ISO: формат обязан быть ГГГГ-ММ-ДД, иначе порядок сломается.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultFrom",
+            "label": "Начало",
+            "type": "text",
+            "default": "2026-03-10",
+            "maxLength": 10
+          },
+          {
+            "prop": "defaultTo",
+            "label": "Конец",
+            "type": "text",
+            "default": "2026-03-17",
+            "maxLength": 10
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A range in two clicks: if the second date lands before the first, the ends swap instead of raising an error.",
+            "ai": {
+              "summary": "A range calendar: the first click sets the start, the second the end, the ends normalise, the band between them is solid and nights are counted. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-calendar-002-* palette — do not swap it for your theme tokens",
+                "swapping the ends instead of erroring: \"from the 17th to the 10th\" is how people think",
+                "the highlight on the cell rather than the button — otherwise the band breaks between days",
+                "the rounded range ends: without them the band looks cut off",
+                "counting nights rather than days: bookings count nights, and the off-by-one matters",
+                "the \"pick the second date\" hint between clicks"
+              ],
+              "adapt": [
+                "defaultFrom and defaultTo",
+                "locale — the label language",
+                "the onChange handler",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Minimum and maximum range lengths are not enforced: add the check in onChange.",
+                "Blocked dates inside the range are unknown to the component — a booking flow needs that added.",
+                "Dates are compared as ISO strings: the format must be YYYY-MM-DD or the ordering breaks.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Calendar002 defaultFrom=\"2026-03-10\" defaultTo=\"2026-03-17\" onChange={setRange} />"
+            },
+            "controls": {
+              "defaultFrom": {
+                "label": "Start",
+                "default": "2026-03-10"
+              },
+              "defaultTo": {
+                "label": "End",
+                "default": "2026-03-17"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-003",
+      "type": "registry:component",
+      "title": "Week Strip",
+      "description": "Неделя полосой с прокруткой вбок: на телефоне месяц занимает пол-экрана, а выбирают почти всегда ближайшие дни.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-003/calendar-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-003-*. Клиентский: \"use client\". Полоса прокручивается по горизонтали с scroll-snap по центру, поэтому день не останавливается наполовину. Сегодняшнее число помечено точкой, выходные окрашены отдельно. Полные даты уходят в aria-label каждого дня.",
+      "meta": {
+        "tags": ["calendar", "week", "mobile", "scroll"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Calendar003",
+          "usage": "<Calendar003 defaultValue=\"2026-03-14\" days={14} onChange={setDate} />",
+          "summary": "Горизонтальная полоса дней: прокрутка с привязкой, точка у сегодняшнего числа, отдельный цвет выходных. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-003-* и не подменять её токенами вашей темы",
+            "scroll-snap по центру: без привязки день останавливается наполовину",
+            "точку у сегодняшнего числа — в ленте одинаковых клеток оно теряется",
+            "aria-label с полной датой: «14» вслух не даёт ни месяца, ни дня недели",
+            "overscroll-behavior-x, чтобы прокрутка не уходила на страницу",
+            "отдельный цвет выходных: в расписании это разные дни"
+          ],
+          "adapt": [
+            "defaultValue и days — сколько дней в полосе",
+            "locale — язык подписей",
+            "обработчик onChange",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Полоса строится вокруг стартовой даты: три дня до неё и остальные после.",
+            "На десктопе горизонтальную прокрутку заметить труднее: там уместнее месяц из calendar-001.",
+            "Свободные и занятые дни компонент не различает: добавьте свой признак в кнопку.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "days",
+            "label": "Дней",
+            "type": "number",
+            "default": 14,
+            "min": 5,
+            "max": 21
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A week as a scrolling strip: a month eats half a phone screen, yet people almost always pick a day close to today.",
+            "ai": {
+              "summary": "A horizontal day strip: snap scrolling, a dot on today and a separate colour for weekends. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-calendar-003-* palette — do not swap it for your theme tokens",
+                "centre scroll-snap: without it a day stops half-shown",
+                "the dot on today — it disappears among identical cells otherwise",
+                "the full-date aria-label: \"14\" gives neither month nor weekday aloud",
+                "overscroll-behavior-x so the scroll does not escape to the page",
+                "the separate weekend colour: in a schedule those are different days"
+              ],
+              "adapt": [
+                "defaultValue and days — how long the strip is",
+                "locale — the label language",
+                "the onChange handler",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The strip is built around the starting date: three days before it, the rest after.",
+                "Horizontal scrolling is less obvious on desktop: prefer the month from calendar-001 there.",
+                "Free and busy days are not distinguished: add your own flag to the button.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Calendar003 defaultValue=\"2026-03-14\" days={14} onChange={setDate} />"
+            },
+            "controls": {
+              "days": {
+                "label": "Days"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-004",
+      "type": "registry:component",
+      "title": "Time Slots",
+      "description": "Сетка слотов записи: занятые остаются на месте штриховкой, а часовой пояс подписан под сеткой.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-004/calendar-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-004-*. Клиентский: \"use client\". Слоты — настоящие radio в fieldset с legend, поэтому группа объявлена скринридеру целиком, а занятые слоты выключены атрибутом disabled. Корень объявлен контейнером, сетка живёт на внутреннем элементе: контейнерный запрос действует только на потомков.",
+      "meta": {
+        "tags": ["calendar", "booking", "time", "radio"],
+        "ai": {
+          "export": "Calendar004",
+          "usage": "<Calendar004 slots={[{ time: \"10:00\" }, { time: \"10:30\", taken: true }]} onChange={setTime} />",
+          "summary": "Сетка слотов записи на настоящих radio: занятые видны, но выключены, свободные считаются в подписи, часовой пояс подписан. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-004-* и не подменять её токенами вашей темы",
+            "занятые слоты на месте: исчезнувшие создают ложное ощущение свободного расписания",
+            "fieldset с legend — группа выбора обязана иметь имя",
+            "radio вместо кнопок: выбор одного слота и есть радиогруппа",
+            "штриховку у занятого слота — цвет один не отличает его от выбранного",
+            "подпись часового пояса: «14:00» без пояса регулярно стоит опоздания"
+          ],
+          "adapt": [
+            "массив slots с признаком taken",
+            "date — подпись дня",
+            "timezone — строка часового пояса",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Слоты приходят готовыми: разбивать день на интервалы должен сервер, он же знает занятость.",
+            "Занятость меняется: перед отправкой формы слот стоит проверить ещё раз, иначе двое запишутся на одно время.",
+            "Часовой пояс — строка, а не расчёт: показывайте пояс салона, а не пояс браузера.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "date",
+            "label": "День",
+            "type": "text",
+            "default": "Вторник, 17 марта",
+            "maxLength": 30
+          },
+          {
+            "prop": "timezone",
+            "label": "Часовой пояс",
+            "type": "text",
+            "default": "Время московское (UTC+3)",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid of booking slots: taken ones stay in place under hatching, and the time zone is spelled out below.",
+            "ai": {
+              "summary": "A booking-slot grid on real radios: taken slots stay visible but disabled, free ones are counted in the legend, and the time zone is stated. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-calendar-004-* palette — do not swap it for your theme tokens",
+                "keeping taken slots in place: removing them fakes a free schedule",
+                "the fieldset with a legend — a choice group must have a name",
+                "radios instead of buttons: picking one slot is exactly a radio group",
+                "the hatching on a taken slot — colour alone does not separate it from the selected one",
+                "the time-zone line: \"14:00\" without a zone regularly costs someone their appointment"
+              ],
+              "adapt": [
+                "the slots array with its taken flag",
+                "date — the day's label",
+                "timezone — the zone string",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Slots arrive ready: splitting the day into intervals is the server's job, and it knows what is taken.",
+                "Availability changes: re-check the slot before submitting, or two people book the same time.",
+                "The time zone is a string, not a computation: show the venue's zone, not the browser's.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Calendar004 slots={[{ time: \"10:00\" }, { time: \"10:30\", taken: true }]} onChange={setTime} />"
+            },
+            "controls": {
+              "date": {
+                "label": "Day",
+                "default": "Tuesday, 17 March"
+              },
+              "timezone": {
+                "label": "Time zone",
+                "default": "Moscow time (UTC+3)"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "calendar-005",
+      "type": "registry:component",
+      "title": "Native Date Field",
+      "description": "Поле даты на нативном input: календарь, формат и мобильный барабан приходят от системы, а границы объявлены словами.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-005/calendar-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-005-*. Серверный компонент: useId нужен только для связи подписи и поля. Внутри input type=\"date\" с min и max; ограничения продублированы текстом через aria-describedby. Стилизуется только штатный значок календаря — остальное у input date недоступно.",
+      "meta": {
+        "tags": ["calendar", "input", "native", "form"],
+        "ai": {
+          "export": "Calendar005",
+          "usage": "<Calendar005 label=\"Дата поездки\" min=\"2026-03-01\" max=\"2026-12-31\" />",
+          "summary": "Поле даты на нативном input type=\"date\": системный календарь, локальный формат, ограничения min и max и пояснение словами. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-005-* и не подменять её токенами вашей темы",
+            "нативный input: свой виджет пришлось бы переводить и чинить в каждом браузере",
+            "связку label и поля через useId",
+            "пояснение к min и max текстом: серый день в системном календаре не объясняет причину",
+            "aria-describedby, связывающий поле с пояснением",
+            "высоту поля под палец"
+          ],
+          "adapt": [
+            "label и defaultValue",
+            "min и max — границы диапазона",
+            "hint — пояснение к ограничениям",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Вид календаря задаёт браузер и операционная система: он будет разным на iOS, Android и в Firefox.",
+            "Значение приходит строкой ГГГГ-ММ-ДД независимо от того, как оно показано человеку.",
+            "min и max — подсказка, а не защита: проверяйте дату на сервере.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Дата поездки",
+            "maxLength": 30
+          },
+          {
+            "prop": "hint",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Можно выбрать с 1 марта по 31 декабря 2026 года",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A date field on the native input: the calendar, format and mobile wheel come from the system, and the limits are spelled out.",
+            "ai": {
+              "summary": "A date field on a native input type=\"date\": the system calendar, the local format, min and max limits and a worded explanation. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-calendar-005-* palette — do not swap it for your theme tokens",
+                "the native input: a custom widget would need translating and fixing per browser",
+                "the label tied to the field through useId",
+                "explaining min and max in words: a greyed day in the system picker gives no reason",
+                "the aria-describedby linking field and explanation",
+                "the thumb-sized field height"
+              ],
+              "adapt": [
+                "label and defaultValue",
+                "min and max — the allowed range",
+                "hint — the explanation of the limits",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The picker's look belongs to the browser and OS: it differs on iOS, Android and Firefox.",
+                "The value arrives as YYYY-MM-DD regardless of how it is displayed.",
+                "min and max are hints, not protection: validate the date on the server.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Calendar005 label=\"Travel date\" min=\"2026-03-01\" max=\"2026-12-31\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Travel date"
+              },
+              "hint": {
+                "label": "Explanation",
+                "default": "Any date from 1 March to 31 December 2026"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-006",
+      "type": "registry:component",
+      "title": "Day Agenda",
+      "description": "Расписание дня списком: события со временем и подписанные промежутки «свободно 40 минут» вместо пустых часов.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-006/calendar-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-006-*. Серверный: хуков нет. Промежутки считаются из времён соседних событий в минутах и печатаются словами. Строка события — grid в две колонки: время слева отдельной колонкой, чтобы взгляд шёл по одной линии. Тон события задаётся полосой слева, а не заливкой строки.",
+      "meta": {
+        "tags": ["calendar", "agenda", "schedule", "day"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Calendar006",
+          "usage": "<Calendar006 date=\"Вторник, 17 марта\" events={events} />",
+          "summary": "Расписание дня списком: время колонкой слева, название и место справа, между событиями подписаны свободные промежутки. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-006-* и не подменять её токенами вашей темы",
+            "список вместо сетки часов: сетка тратит высоту на пустое время",
+            "подписанные промежутки: пустое место в списке ничего не сообщает",
+            "время отдельной колонкой — так взгляд идёт по одной линии",
+            "полосу слева вместо заливки строки: цветной фон мешает читать название",
+            "порядок событий по времени — сортировать список должен вызывающий код"
+          ],
+          "adapt": [
+            "массив events: время, название, место и тон",
+            "date — подпись дня",
+            "freeLabel — слово для промежутка",
+            "ширину карточки"
+          ],
+          "notes": [
+            "События должны приходить отсортированными: компонент считает промежутки по соседям в массиве.",
+            "Пересекающиеся события список показать не умеет: для них нужна сетка с колонками.",
+            "Время — строки «ЧЧ:ММ» без даты и пояса: день задаёт заголовок.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "date",
+            "label": "День",
+            "type": "text",
+            "default": "Вторник, 17 марта",
+            "maxLength": 30
+          },
+          {
+            "prop": "freeLabel",
+            "label": "Слово промежутка",
+            "type": "text",
+            "default": "Свободно",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A day as a list: timed events with worded gaps like \"40 minutes free\" instead of empty hours.",
+            "ai": {
+              "summary": "A day agenda: time in the left column, title and place on the right, and free gaps spelled out between events. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-calendar-006-* palette — do not swap it for your theme tokens",
+                "a list instead of an hour grid: the grid spends height on empty time",
+                "the worded gaps: blank space in a list says nothing",
+                "time as its own column — the eye then travels one line",
+                "the left bar instead of a filled row: a coloured background fights the title",
+                "chronological order — sorting is the caller's job"
+              ],
+              "adapt": [
+                "the events array: times, title, place and tone",
+                "date — the day's label",
+                "freeLabel — the word for a gap",
+                "the card width"
+              ],
+              "notes": [
+                "Events must arrive sorted: gaps are computed between array neighbours.",
+                "Overlapping events cannot be shown as a list: those need a column grid.",
+                "Times are \"HH:MM\" strings without date or zone: the heading carries the day.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Calendar006 date=\"Tuesday, 17 March\" events={events} />"
+            },
+            "controls": {
+              "date": {
+                "label": "Day",
+                "default": "Tuesday, 17 March"
+              },
+              "freeLabel": {
+                "label": "Gap word",
+                "default": "Free"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-007",
+      "type": "registry:component",
+      "title": "Load Heatmap",
+      "description": "Месяц как карта загрузки: пять ступеней насыщенности и число внутри клетки — по цвету процент не назвать.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-007/calendar-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-007-*. Серверный: хуков нет. Загрузка приходит массивом чисел от 0 до 1 по дням месяца и округляется до пяти ступеней; цвет считается через color-mix от акцента. У каждой клетки есть aria-label с процентом, легенда подписана словами «свободно» и «занято».",
+      "meta": {
+        "tags": ["calendar", "heatmap", "load", "analytics"],
+        "ai": {
+          "export": "Calendar007",
+          "usage": "<Calendar007 year={2026} month={3} load={[0.1, 0.9, 0.4]} />",
+          "summary": "Месяц-карта загрузки: пять ступеней насыщенности, числа внутри клеток, проценты в aria-label и подписанная легенда. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-007-* и не подменять её токенами вашей темы",
+            "числа внутри клеток: по одному цвету день не назвать и не сравнить",
+            "пять ступеней вместо непрерывной шкалы — больше глаз не различает",
+            "проценты в aria-label: карта цвета для скринридера пуста",
+            "легенду со словами «свободно» и «занято»",
+            "цвет через color-mix от акцента: тогда карта перекрашивается одной переменной"
+          ],
+          "adapt": [
+            "year, month и массив load",
+            "locale — язык подписей",
+            "акцент через проп accent",
+            "число ступеней в округлении"
+          ],
+          "notes": [
+            "Массив load — по дням месяца, значения от 0 до 1: проценты считайте до передачи.",
+            "Дни соседних месяцев остаются пустыми: чужая загрузка в этой сетке путает.",
+            "Карта показывает распределение, а не точные числа: рядом полезна таблица с итогами.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "month",
+            "label": "Месяц",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 12
+          },
+          {
+            "prop": "year",
+            "label": "Год",
+            "type": "number",
+            "default": 2026,
+            "min": 2020,
+            "max": 2030
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A month as a load map: five saturation steps with the number inside each cell — colour alone never names a percentage.",
+            "ai": {
+              "summary": "A month heatmap: five saturation steps, numbers inside the cells, percentages in aria-label and a worded legend. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-calendar-007-* palette — do not swap it for your theme tokens",
+                "the numbers inside cells: colour alone cannot name or compare a day",
+                "five steps instead of a continuous scale — the eye sees no more",
+                "the percentages in aria-label: a colour map is empty to a screen reader",
+                "the legend with the words \"free\" and \"busy\"",
+                "colour via color-mix from the accent: the map then recolours from one variable"
+              ],
+              "adapt": [
+                "year, month and the load array",
+                "locale — the label language",
+                "the accent through the accent prop",
+                "the number of steps in the rounding"
+              ],
+              "notes": [
+                "The load array runs by day of month with values from 0 to 1: compute percentages upstream.",
+                "Adjacent-month days stay empty: foreign load in this grid confuses.",
+                "The map shows distribution, not exact figures: a totals table beside it helps.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Calendar007 year={2026} month={3} load={[0.1, 0.9, 0.4]} />"
+            },
+            "controls": {
+              "month": {
+                "label": "Month"
+              },
+              "year": {
+                "label": "Year"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-008",
+      "type": "registry:component",
+      "title": "Month Picker",
+      "description": "Выбор месяца без дней: отчёты и планы живут месяцами, и листать ради них сетку чисел — лишний шаг.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-008/calendar-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-008-*. Клиентский: \"use client\". Двенадцать месяцев разложены на три колонки — так они читаются кварталами. Год переключается стрелками рядом, текущий месяц обведён рамкой, выбранный залит акцентом. Названия месяцев берутся у Intl.DateTimeFormat.",
+      "meta": {
+        "tags": ["calendar", "month", "picker", "reports"],
+        "ai": {
+          "export": "Calendar008",
+          "usage": "<Calendar008 defaultYear={2026} defaultMonth={3} onChange={setPeriod} />",
+          "summary": "Выбор месяца: сетка 3×4, переключение года стрелками, обведённый текущий месяц и залитый выбранный. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-008-* и не подменять её токенами вашей темы",
+            "три колонки: месяцы читаются кварталами, а не сплошным списком",
+            "стрелки года рядом: между «март 2025» и «март 2026» ходят чаще, чем между произвольными годами",
+            "рамку у текущего месяца в дополнение к заливке выбранного",
+            "aria-label с месяцем и годом: сокращение «мар» вслух неоднозначно",
+            "названия месяцев из Intl вместо своего массива строк"
+          ],
+          "adapt": [
+            "defaultYear и defaultMonth",
+            "locale — язык названий",
+            "обработчик onChange",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Границы диапазона лет не заданы: ограничьте их в вызывающем коде, если нужно.",
+            "Для выбора квартала или полугодия нужна другая сетка — этот компонент про месяцы.",
+            "Выбранный месяц не сбрасывается при смене года: так видно, что выбор остался в другом году.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultYear",
+            "label": "Год",
+            "type": "number",
+            "default": 2026,
+            "min": 2020,
+            "max": 2030
+          },
+          {
+            "prop": "defaultMonth",
+            "label": "Месяц",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Picking a month without days: reports and plans live in months, and paging through a grid of dates is a wasted step.",
+            "ai": {
+              "summary": "A month picker: a 3×4 grid, arrow year navigation, an outlined current month and a filled selected one. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-calendar-008-* palette — do not swap it for your theme tokens",
+                "three columns: months then read as quarters rather than a flat list",
+                "the year arrows beside it: people move between March 2025 and March 2026 more often than to a random year",
+                "the outline on the current month in addition to the filled selection",
+                "the aria-label with month and year: an abbreviation is ambiguous aloud",
+                "month names from Intl rather than a hand-written array"
+              ],
+              "adapt": [
+                "defaultYear and defaultMonth",
+                "locale — the name language",
+                "the onChange handler",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Year bounds are not enforced: clamp them in the caller if you need to.",
+                "Quarters and halves need a different grid — this component is about months.",
+                "The selection survives a year change: that makes it visible the pick lives in another year.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Calendar008 defaultYear={2026} defaultMonth={3} onChange={setPeriod} />"
+            },
+            "controls": {
+              "defaultYear": {
+                "label": "Year"
+              },
+              "defaultMonth": {
+                "label": "Month"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-009",
+      "type": "registry:component",
+      "title": "Two Month Range",
+      "description": "Два месяца рядом для брони: диапазон почти всегда пересекает границу месяца, и в одном окне счёт ночей теряется.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-009/calendar-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-009-*. Серверный: хуков нет, диапазон приходит пропами. Корень объявлен контейнером, раскладка живёт на внутренней карточке: контейнерный запрос применяется к потомкам, но не к самому контейнеру. От 30rem собственной ширины месяцы становятся друг под другом.",
+      "meta": {
+        "tags": ["calendar", "range", "two months", "booking"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Calendar009",
+          "usage": "<Calendar009 from=\"2026-03-28\" to=\"2026-04-05\" />",
+          "summary": "Два месяца рядом с подсвеченным диапазоном и счётом ночей; в узкой колонке месяцы становятся друг под другом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-009-* и не подменять её токенами вашей темы",
+            "два месяца сразу: диапазон почти всегда пересекает границу месяца",
+            "раскладку на внутренней карточке: контейнерный запрос не применяется к самому контейнеру",
+            "перенос месяцев вниз вместо сжатия: календарь в 140 пикселей нечитаем",
+            "счёт ночей рядом с датами",
+            "подсветку на ячейке, чтобы полоса диапазона была сплошной"
+          ],
+          "adapt": [
+            "from и to — границы диапазона",
+            "locale — язык подписей",
+            "акцент через проп accent",
+            "максимальную ширину блока"
+          ],
+          "notes": [
+            "Компонент показывает диапазон, но не выбирает его: интерактивный выбор — calendar-002.",
+            "Второй месяц всегда следующий за первым: произвольную пару месяцев этот вариант не покажет.",
+            "Дни соседних месяцев приглушены и не подсвечиваются, чтобы диапазон не двоился на стыке.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "from",
+            "label": "Начало",
+            "type": "text",
+            "default": "2026-03-28",
+            "maxLength": 10
+          },
+          {
+            "prop": "to",
+            "label": "Конец",
+            "type": "text",
+            "default": "2026-04-05",
+            "maxLength": 10
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Two months side by side for bookings: a range nearly always crosses the month boundary, and one pane loses the night count.",
+            "ai": {
+              "summary": "Two months side by side with a highlighted range and a night count; in a narrow column they stack. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-calendar-009-* palette — do not swap it for your theme tokens",
+                "showing two months: a range nearly always crosses the boundary",
+                "the layout on the inner card: a container query does not apply to the container itself",
+                "stacking instead of squeezing: a 140-pixel calendar is unreadable",
+                "the night count next to the dates",
+                "the highlight on the cell so the range band stays solid"
+              ],
+              "adapt": [
+                "from and to — the range ends",
+                "locale — the label language",
+                "the accent through the accent prop",
+                "the block's max width"
+              ],
+              "notes": [
+                "This displays a range, it does not pick one: interactive selection is calendar-002.",
+                "The second month always follows the first: an arbitrary pair is out of scope.",
+                "Adjacent-month days are dimmed and unhighlighted so the range does not appear twice at the seam.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Calendar009 from=\"2026-03-28\" to=\"2026-04-05\" />"
+            },
+            "controls": {
+              "from": {
+                "label": "Start",
+                "default": "2026-03-28"
+              },
+              "to": {
+                "label": "End",
+                "default": "2026-04-05"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-010",
+      "type": "registry:component",
+      "title": "Event Card",
+      "description": "Карточка встречи с отрывным листком даты: в ленте событий глаз ищет число, а не строку «17 марта 2026».",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-010/calendar-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-010-*. Серверный: хуков нет. Дата разбирается из строки ISO и печатается тремя частями листка через Intl. Участники — инициалы на оттенке из имени (FNV-1a по двенадцати ступеням круга), полные имена уходят в aria-label стопки. Часы и метка нарисованы бордюрами.",
+      "meta": {
+        "tags": ["calendar", "event", "card", "meeting"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Calendar010",
+          "usage": "<Calendar010 title=\"Разбор каталога\" date=\"2026-03-17\" time=\"11:00 — 12:00\" />",
+          "summary": "Карточка события: отрывной листок с числом, название, время, место и стопка участников инициалами. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-010-* и не подменять её токенами вашей темы",
+            "листок с крупным числом: в ленте событий ищут именно его",
+            "полную дату в тексте рядом — листок без года и месяца неоднозначен",
+            "aria-label со списком участников: инициалы вслух бесполезны",
+            "значки часов и метки на бордюрах вместо иконочного пакета",
+            "оттенок аватара из имени: один человек всегда одного цвета"
+          ],
+          "adapt": [
+            "title, date, time и place",
+            "массив people",
+            "акцент через проп accent — цвет месяца на листке",
+            "ширину карточки"
+          ],
+          "notes": [
+            "Дата приходит строкой ISO и трактуется как местная: часовой пояс события подписывайте отдельно.",
+            "Время — строка: диапазон «11:00 — 12:00» компонент не разбирает и не проверяет.",
+            "Больше пяти участников в стопке не помещаются: сворачивайте хвост в счётчик, как в avatar-003.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Название",
+            "type": "text",
+            "default": "Разбор каталога с дизайнером",
+            "maxLength": 40
+          },
+          {
+            "prop": "time",
+            "label": "Время",
+            "type": "text",
+            "default": "11:00 — 12:00",
+            "maxLength": 20
+          },
+          {
+            "prop": "place",
+            "label": "Место",
+            "type": "text",
+            "default": "Переговорная «Полёт»",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A meeting card with a tear-off date sheet: in a feed of events the eye hunts for the number, not for \"17 March 2026\".",
+            "ai": {
+              "summary": "An event card: a tear-off sheet with the date, the title, time, place and a stack of attendee initials. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-calendar-010-* palette — do not swap it for your theme tokens",
+                "the sheet with a large number: that is what a feed reader looks for",
+                "the full date in the text beside it — a sheet without month and year is ambiguous",
+                "the aria-label listing attendees: initials are useless aloud",
+                "the border-drawn clock and pin instead of an icon package",
+                "the name-derived avatar hue: one person always keeps one colour"
+              ],
+              "adapt": [
+                "title, date, time and place",
+                "the people array",
+                "the accent through the accent prop — the month on the sheet",
+                "the card width"
+              ],
+              "notes": [
+                "The date arrives as an ISO string treated as local: state the event's time zone separately.",
+                "Time is a string: the component neither parses nor validates \"11:00 — 12:00\".",
+                "More than five attendees do not fit the stack: fold the tail into a counter as in avatar-003.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Calendar010 title=\"Catalog review\" date=\"2026-03-17\" time=\"11:00 — 12:00\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Catalog review with the designer"
+              },
+              "time": {
+                "label": "Time",
+                "default": "11:00 — 12:00"
+              },
+              "place": {
+                "label": "Place",
+                "default": "The Polyot room"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

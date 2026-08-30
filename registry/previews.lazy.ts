@@ -676,6 +676,56 @@ export const LAZY_PREVIEWS = {
       (module) => module.Breadcrumb012,
     ),
   ),
+  "calendar-001": dynamic(() =>
+    import("@/registry/components/calendar/calendar-001/calendar-001").then(
+      (module) => module.Calendar001,
+    ),
+  ),
+  "calendar-002": dynamic(() =>
+    import("@/registry/components/calendar/calendar-002/calendar-002").then(
+      (module) => module.Calendar002,
+    ),
+  ),
+  "calendar-003": dynamic(() =>
+    import("@/registry/components/calendar/calendar-003/calendar-003").then(
+      (module) => module.Calendar003,
+    ),
+  ),
+  "calendar-004": dynamic(() =>
+    import("@/registry/components/calendar/calendar-004/calendar-004").then(
+      (module) => module.Calendar004,
+    ),
+  ),
+  "calendar-005": dynamic(() =>
+    import("@/registry/components/calendar/calendar-005/calendar-005").then(
+      (module) => module.Calendar005,
+    ),
+  ),
+  "calendar-006": dynamic(() =>
+    import("@/registry/components/calendar/calendar-006/calendar-006").then(
+      (module) => module.Calendar006,
+    ),
+  ),
+  "calendar-007": dynamic(() =>
+    import("@/registry/components/calendar/calendar-007/calendar-007").then(
+      (module) => module.Calendar007,
+    ),
+  ),
+  "calendar-008": dynamic(() =>
+    import("@/registry/components/calendar/calendar-008/calendar-008").then(
+      (module) => module.Calendar008,
+    ),
+  ),
+  "calendar-009": dynamic(() =>
+    import("@/registry/components/calendar/calendar-009/calendar-009").then(
+      (module) => module.Calendar009,
+    ),
+  ),
+  "calendar-010": dynamic(() =>
+    import("@/registry/components/calendar/calendar-010/calendar-010").then(
+      (module) => module.Calendar010,
+    ),
+  ),
   "input-001": dynamic(() =>
     import("@/registry/components/inputs/input-001/input-001").then(
       (module) => module.Input001,
