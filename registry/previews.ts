@@ -183,6 +183,13 @@ import { Input002 } from "@/registry/components/inputs/input-002/input-002"
 import { Textarea001 } from "@/registry/components/inputs/textarea-001/textarea-001"
 import { Select001 } from "@/registry/components/inputs/select-001/select-001"
 import { Switch001 } from "@/registry/components/inputs/switch-001/switch-001"
+import { Input003 } from "@/registry/components/inputs/input-003/input-003"
+import { Input004 } from "@/registry/components/inputs/input-004/input-004"
+import { Input005 } from "@/registry/components/inputs/input-005/input-005"
+import { Otp001 } from "@/registry/components/inputs/otp-001/otp-001"
+import { File001 } from "@/registry/components/inputs/file-001/file-001"
+import { Currency001 } from "@/registry/components/inputs/currency-001/currency-001"
+import { Textarea002 } from "@/registry/components/inputs/textarea-002/textarea-002"
 import { Skeleton001 } from "@/registry/components/display/skeleton-001/skeleton-001"
 import { Progress001 } from "@/registry/components/display/progress-001/progress-001"
 import { Toast001 } from "@/registry/components/feedback/toast-001/toast-001"
@@ -395,6 +402,13 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "textarea-001": Textarea001,
   "select-001": Select001,
   "switch-001": Switch001,
+  "input-003": Input003,
+  "input-004": Input004,
+  "input-005": Input005,
+  "otp-001": Otp001,
+  "file-001": File001,
+  "currency-001": Currency001,
+  "textarea-002": Textarea002,
   "skeleton-001": Skeleton001,
   "progress-001": Progress001,
   "toast-001": Toast001,

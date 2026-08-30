@@ -1,0 +1,161 @@
+"use client"
+
+import { useId, useState } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties, DragEvent } from "react"
+
+export type File001Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children" | "onChange"
+> & {
+  label?: string
+  hint?: string
+  accept?: string
+  onChange?: (names: string[]) => void
+  accent?: string
+}
+
+// Идея компонента: зона перетаскивания, которая остаётся кнопкой. Перетащить
+// файл можно только мышью — поэтому внутри настоящий input с типом file и
+// подписью-label: с клавиатуры и с телефона всё работает так же. Список
+// выбранного показывается сразу: без него непонятно, что именно улетело.
+const STYLES = `
+:where([data-vibeui-block="file-001"]){
+--vibeui-file-001-bg:oklch(1 0 0);
+--vibeui-file-001-fg:oklch(0.22 0.014 265);
+--vibeui-file-001-muted:oklch(0.56 0.014 265);
+--vibeui-file-001-border:oklch(0.86 0.008 265);
+--vibeui-file-001-hover:oklch(0.97 0.003 265);
+--vibeui-file-001-accent:oklch(0.55 0.17 265);
+--vibeui-file-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="file-001"]{
+display:flex;flex-direction:column;gap:0.5rem;
+width:100%;max-width:22rem;box-sizing:border-box;
+font-family:var(--vibeui-file-001-font);color:var(--vibeui-file-001-fg);
+}
+/* Зона — это label: клавиатура и телефон получают тот же выбор файла. */
+[data-vibeui-block="file-001"] label{
+position:relative;display:flex;flex-direction:column;align-items:center;gap:0.25rem;
+padding:1.25rem 1rem;box-sizing:border-box;text-align:center;cursor:pointer;
+border:1.5px dashed var(--vibeui-file-001-border);border-radius:0.875rem;
+background:var(--vibeui-file-001-bg);
+transition:border-color .16s ease,background-color .16s ease;
+}
+[data-vibeui-block="file-001"] label:hover{background:var(--vibeui-file-001-hover)}
+[data-vibeui-block="file-001"][data-over="true"] label{
+border-color:var(--vibeui-file-001-accent);
+background:color-mix(in oklab,var(--vibeui-file-001-accent) 8%,oklch(1 0 0));
+}
+[data-vibeui-block="file-001"] label:has(input:focus-visible){outline:2px solid var(--vibeui-file-001-accent);outline-offset:2px}
+[data-vibeui-block="file-001"] input{position:absolute;width:1px;height:1px;opacity:0}
+[data-vibeui-block="file-001"] [data-part="arrow"]{
+position:relative;width:1.5rem;height:1.5rem;margin-bottom:0.125rem;
+}
+[data-vibeui-block="file-001"] [data-part="arrow"]::before{
+content:"";position:absolute;left:50%;top:0.125rem;width:2px;height:0.875rem;
+margin-left:-1px;background:var(--vibeui-file-001-muted);border-radius:9999px;
+}
+[data-vibeui-block="file-001"] [data-part="arrow"]::after{
+content:"";position:absolute;left:50%;top:0.1875rem;width:0.5rem;height:0.5rem;
+margin-left:-0.25rem;
+border-left:2px solid var(--vibeui-file-001-muted);
+border-top:2px solid var(--vibeui-file-001-muted);
+transform:rotate(45deg);
+}
+[data-vibeui-block="file-001"] [data-part="title"]{font-size:0.875rem;font-weight:650}
+[data-vibeui-block="file-001"] [data-part="hint"]{font-size:0.75rem;line-height:1.4;color:var(--vibeui-file-001-muted)}
+/* Список выбранного: без него непонятно, что именно улетело. */
+[data-vibeui-block="file-001"] ul{display:flex;flex-direction:column;gap:0.25rem;margin:0;padding:0;list-style:none}
+[data-vibeui-block="file-001"] li{
+display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
+padding:0.4375rem 0.625rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-file-001-border);
+font-size:0.8125rem;
+}
+[data-vibeui-block="file-001"] [data-part="size"]{color:var(--vibeui-file-001-muted);font-size:0.75rem;font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="file-001"] *{animation:none!important;transition:none!important}}
+`
+
+/**
+ * Зона перетаскивания на настоящем input type="file" с списком выбранного.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function File001({
+  label = "Перетащите файлы сюда",
+  hint = "PNG, JPG или PDF до 10 МБ. Можно выбрать несколько",
+  accept = "image/png,image/jpeg,application/pdf",
+  onChange,
+  accent,
+  className,
+  style,
+  ...props
+}: File001Props) {
+  const id = useId()
+  const [over, setOver] = useState(false)
+  const [files, setFiles] = useState<{ name: string; size: string }[]>([])
+
+  const palette = {
+    ...(accent ? { "--vibeui-file-001-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  const take = (list: FileList | null) => {
+    if (!list) return
+    const next = Array.from(list).map((file) => ({
+      name: file.name,
+      size: `${Math.max(1, Math.round(file.size / 1024))} КБ`,
+    }))
+    setFiles(next)
+    onChange?.(next.map((file) => file.name))
+  }
+
+  const onDrop = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault()
+    setOver(false)
+    take(event.dataTransfer.files)
+  }
+
+  return (
+    <>
+      <style href="vibeui-file-001" precedence="medium">
+        {STYLES}
+      </style>
+      <div
+        {...props}
+        data-vibeui-block="file-001"
+        data-over={over}
+        className={className}
+        style={palette}
+        onDragOver={(event) => {
+          event.preventDefault()
+          setOver(true)
+        }}
+        onDragLeave={() => setOver(false)}
+        onDrop={onDrop}
+      >
+        <label htmlFor={id}>
+          <span data-part="arrow" aria-hidden="true" />
+          <span data-part="title">{label}</span>
+          <span data-part="hint">{hint}</span>
+          <input
+            id={id}
+            type="file"
+            multiple
+            accept={accept}
+            onChange={(event) => take(event.target.files)}
+          />
+        </label>
+        {files.length ? (
+          <ul>
+            {files.map((file) => (
+              <li key={file.name}>
+                <span>{file.name}</span>
+                <span data-part="size">{file.size}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </div>
+    </>
+  )
+}

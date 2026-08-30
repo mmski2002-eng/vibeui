@@ -18,6 +18,8 @@ export type Switch001Props = Omit<
 // форма достаются даром.
 const STYLES = `
 :where([data-vibeui-block="switch-001"]){
+--vibeui-switch-001-surface:oklch(1 0 0);
+--vibeui-switch-001-surface-border:oklch(0.91 0.006 265);
 --vibeui-switch-001-fg:oklch(0.24 0.016 265);
 --vibeui-switch-001-muted:oklch(0.54 0.014 265);
 --vibeui-switch-001-track:oklch(0.88 0.008 265);
@@ -27,7 +29,12 @@ const STYLES = `
 --vibeui-switch-001-radius:0.625rem;
 --vibeui-switch-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Собственная подложка: подпись поля — это текст, и на тёмной странице
+   он обязан читаться без правки палитры проекта. */
 [data-vibeui-block="switch-001"]{
+box-sizing:border-box;padding:0.875rem;
+background:var(--vibeui-switch-001-surface);
+border:1px solid var(--vibeui-switch-001-surface-border);border-radius:0.875rem;
 display:flex;align-items:center;gap:1rem;width:100%;box-sizing:border-box;
 padding:0.625rem 0.75rem;margin:-0.625rem -0.75rem;
 border-radius:var(--vibeui-switch-001-radius);cursor:pointer;

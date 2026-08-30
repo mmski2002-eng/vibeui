@@ -921,6 +921,41 @@ export const LAZY_PREVIEWS = {
       (module) => module.Switch001,
     ),
   ),
+  "input-003": dynamic(() =>
+    import("@/registry/components/inputs/input-003/input-003").then(
+      (module) => module.Input003,
+    ),
+  ),
+  "input-004": dynamic(() =>
+    import("@/registry/components/inputs/input-004/input-004").then(
+      (module) => module.Input004,
+    ),
+  ),
+  "input-005": dynamic(() =>
+    import("@/registry/components/inputs/input-005/input-005").then(
+      (module) => module.Input005,
+    ),
+  ),
+  "otp-001": dynamic(() =>
+    import("@/registry/components/inputs/otp-001/otp-001").then(
+      (module) => module.Otp001,
+    ),
+  ),
+  "file-001": dynamic(() =>
+    import("@/registry/components/inputs/file-001/file-001").then(
+      (module) => module.File001,
+    ),
+  ),
+  "currency-001": dynamic(() =>
+    import("@/registry/components/inputs/currency-001/currency-001").then(
+      (module) => module.Currency001,
+    ),
+  ),
+  "textarea-002": dynamic(() =>
+    import("@/registry/components/inputs/textarea-002/textarea-002").then(
+      (module) => module.Textarea002,
+    ),
+  ),
   "skeleton-001": dynamic(() =>
     import("@/registry/components/display/skeleton-001/skeleton-001").then(
       (module) => module.Skeleton001,

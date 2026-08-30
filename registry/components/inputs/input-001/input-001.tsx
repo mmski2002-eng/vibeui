@@ -21,6 +21,8 @@ export type Input001Props = Omit<
 // Всё держится на :placeholder-shown, поэтому JS не нужен.
 const STYLES = `
 :where([data-vibeui-block="input-001"]){
+--vibeui-input-001-surface:oklch(1 0 0);
+--vibeui-input-001-surface-border:oklch(0.91 0.006 265);
 --vibeui-input-001-fg:oklch(0.24 0.016 265);
 --vibeui-input-001-muted:oklch(0.55 0.014 265);
 --vibeui-input-001-bg:oklch(1 0 0);
@@ -31,7 +33,12 @@ const STYLES = `
 --vibeui-input-001-height:3.5rem;
 --vibeui-input-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Собственная подложка: подпись поля — это текст, и на тёмной странице
+   он обязан читаться без правки палитры проекта. */
 [data-vibeui-block="input-001"]{
+box-sizing:border-box;padding:0.875rem;
+background:var(--vibeui-input-001-surface);
+border:1px solid var(--vibeui-input-001-surface-border);border-radius:0.875rem;
 display:flex;flex-direction:column;gap:0.375rem;
 font-family:var(--vibeui-input-001-font);color:var(--vibeui-input-001-fg);
 }
