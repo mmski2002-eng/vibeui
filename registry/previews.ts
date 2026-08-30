@@ -55,6 +55,20 @@ import { Alert017 } from "@/registry/components/alert/alert-017/alert-017"
 import { Alert018 } from "@/registry/components/alert/alert-018/alert-018"
 import { Alert019 } from "@/registry/components/alert/alert-019/alert-019"
 import { Alert020 } from "@/registry/components/alert/alert-020/alert-020"
+import { Dialog001 } from "@/registry/components/dialog/dialog-001/dialog-001"
+import { Dialog002 } from "@/registry/components/dialog/dialog-002/dialog-002"
+import { Dialog003 } from "@/registry/components/dialog/dialog-003/dialog-003"
+import { Dialog004 } from "@/registry/components/dialog/dialog-004/dialog-004"
+import { Dialog005 } from "@/registry/components/dialog/dialog-005/dialog-005"
+import { Dialog006 } from "@/registry/components/dialog/dialog-006/dialog-006"
+import { Dialog007 } from "@/registry/components/dialog/dialog-007/dialog-007"
+import { Dialog008 } from "@/registry/components/dialog/dialog-008/dialog-008"
+import { Dialog009 } from "@/registry/components/dialog/dialog-009/dialog-009"
+import { Dialog010 } from "@/registry/components/dialog/dialog-010/dialog-010"
+import { Dialog011 } from "@/registry/components/dialog/dialog-011/dialog-011"
+import { Dialog012 } from "@/registry/components/dialog/dialog-012/dialog-012"
+import { Dialog013 } from "@/registry/components/dialog/dialog-013/dialog-013"
+import { Dialog014 } from "@/registry/components/dialog/dialog-014/dialog-014"
 import { Input001 } from "@/registry/components/inputs/input-001/input-001"
 import { Input002 } from "@/registry/components/inputs/input-002/input-002"
 import { Textarea001 } from "@/registry/components/inputs/textarea-001/textarea-001"
@@ -66,7 +80,6 @@ import { Avatar001 } from "@/registry/components/display/avatar-001/avatar-001"
 import { Card001 } from "@/registry/components/display/card-001/card-001"
 import { Skeleton001 } from "@/registry/components/display/skeleton-001/skeleton-001"
 import { Progress001 } from "@/registry/components/display/progress-001/progress-001"
-import { Dialog001 } from "@/registry/components/feedback/dialog-001/dialog-001"
 import { Toast001 } from "@/registry/components/feedback/toast-001/toast-001"
 import { Empty001 } from "@/registry/components/feedback/empty-001/empty-001"
 import { Tooltip001 } from "@/registry/components/feedback/tooltip-001/tooltip-001"
@@ -144,6 +157,20 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "alert-018": Alert018,
   "alert-019": Alert019,
   "alert-020": Alert020,
+  "dialog-001": Dialog001,
+  "dialog-002": Dialog002,
+  "dialog-003": Dialog003,
+  "dialog-004": Dialog004,
+  "dialog-005": Dialog005,
+  "dialog-006": Dialog006,
+  "dialog-007": Dialog007,
+  "dialog-008": Dialog008,
+  "dialog-009": Dialog009,
+  "dialog-010": Dialog010,
+  "dialog-011": Dialog011,
+  "dialog-012": Dialog012,
+  "dialog-013": Dialog013,
+  "dialog-014": Dialog014,
   "input-001": Input001,
   "input-002": Input002,
   "textarea-001": Textarea001,
@@ -155,7 +182,6 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "card-001": Card001,
   "skeleton-001": Skeleton001,
   "progress-001": Progress001,
-  "dialog-001": Dialog001,
   "toast-001": Toast001,
   "empty-001": Empty001,
   "tooltip-001": Tooltip001,

@@ -1,0 +1,1610 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "dialog-001",
+      "type": "registry:component",
+      "title": "Popover Dialog",
+      "description": "Модальное окно на HTML popover: открытие, закрытие по Esc и по клику мимо, подложка и верхний слой — всё от браузера, без единой строки JS.",
+      "categories": ["dialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dialog-001/dialog-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dialog-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-001-*. Открытие держит HTML popover: кнопка объявляет цель атрибутом popovertarget, окно — popover=\"auto\". Отсюда бесплатно приходят закрытие по Esc и по клику мимо, подложка ::backdrop и верхний слой, в котором окно не зависит от overflow и z-index родителей. Анимация появления собрана на @starting-style и transition-behavior для display и overlay. Окно стилизуется по атрибуту [data-vibeui-dialog-001-window], а не по вложенности: в верхнем слое оно перестаёт быть потомком корня компонента.",
+      "meta": {
+        "tags": ["dialog", "modal", "popover", "no-js"],
+        "ai": {
+          "export": "Dialog001",
+          "usage": "<Dialog001\n  id=\"delete-project\"\n  trigger=\"Удалить проект\"\n  title=\"Удалить проект?\"\n  description=\"Отменить это будет нельзя.\"\n  confirmLabel=\"Удалить\"\n/>",
+          "summary": "Модальное окно подтверждения без JS. Кнопка связана с окном атрибутом popovertarget, браузер сам даёт Esc, клик мимо, затемнённую подложку и верхний слой. Появление анимировано через @starting-style. Заголовок, текст, кнопки отмены и подтверждения. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-dialog-001-* и не подменять её токенами вашей темы (bg-background, border-border и подобными)",
+            "механику popover: атрибуты popover=\"auto\" и popovertarget — это и есть всё поведение окна, состояние в React ему не нужно",
+            "стилизацию окна по атрибуту [data-vibeui-dialog-001-window]: в верхнем слое окно перестаёт быть потомком корня, и селекторы по вложенности перестают работать",
+            "передачу палитры окну отдельным style: по той же причине переменные с корня в него не наследуются",
+            "::backdrop и его затемнение — без подложки модальное окно не читается как модальное",
+            "aria-labelledby, связывающий окно с заголовком, и role=\"dialog\"",
+            "@starting-style вместе с transition-behavior для display и overlay: без них появление будет рывком",
+            "блок <style> внутри компонента — в нём вся палитра, кнопки и анимация"
+          ],
+          "adapt": [
+            "id — обязателен свой на каждое окно на странице: он связывает кнопку и окно",
+            "тексты trigger, title, description, confirmLabel и cancelLabel",
+            "children — своё содержимое вместо описания: форма, список, что угодно",
+            "акцент через проп accent — цвет кнопок и кольца фокуса",
+            "обработчик подтверждения: повесьте onClick на кнопку подтверждения в своей копии"
+          ],
+          "notes": [
+            "Два экземпляра с одинаковым id на одной странице конфликтуют: кнопка откроет первое попавшееся окно. Давайте каждому свой id.",
+            "popover=\"auto\" закрывается кликом мимо. Для окна, которое нельзя закрыть случайно, поставьте popover=\"manual\" и уберите кнопку отмены из списка закрывающих.",
+            "Это не <dialog>: у popover нет модальности в смысле inert для остальной страницы. Для формы платежа берите <dialog> с showModal и клиентским кодом.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "trigger",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Удалить проект",
+            "maxLength": 30
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Удалить проект?",
+            "maxLength": 50
+          },
+          {
+            "prop": "description",
+            "label": "Текст",
+            "type": "text",
+            "default": "Вместе с проектом удалятся страницы, домены и история публикаций. Отменить это будет нельзя.",
+            "maxLength": 140
+          },
+          {
+            "prop": "confirmLabel",
+            "label": "Подтверждение",
+            "type": "text",
+            "default": "Удалить",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A modal built on the HTML popover attribute: opening, Esc, click-outside, the backdrop and the top layer all come from the browser, with no JS at all.",
+            "ai": {
+              "summary": "A JS-free confirmation dialog. The button is wired to the window through popovertarget, and the browser supplies Esc, light dismiss, the dimmed backdrop and the top layer. The entrance is animated with @starting-style. Title, body, cancel and confirm buttons. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-dialog-001-* palette — do not swap it for your theme tokens (bg-background, border-border and the like)",
+                "the popover mechanism: popover=\"auto\" and popovertarget are the entire behaviour; it needs no React state",
+                "styling the window through the [data-vibeui-dialog-001-window] attribute: in the top layer the window is no longer a descendant of the root, so descendant selectors stop matching",
+                "passing the palette to the window through its own style attribute: for the same reason variables do not inherit into it",
+                "::backdrop and its dimming — without a backdrop a modal does not read as modal",
+                "aria-labelledby tying the window to its heading, and role=\"dialog\"",
+                "@starting-style together with transition-behavior for display and overlay: without them the entrance jumps",
+                "the <style> block inside the component — it holds the palette, the buttons and the animation"
+              ],
+              "adapt": [
+                "id — every dialog on a page needs its own: it is what links button and window",
+                "the trigger, title, description, confirmLabel and cancelLabel copy",
+                "children — your own content instead of the description: a form, a list, anything",
+                "the accent through the accent prop — it colours the buttons and the focus ring",
+                "the confirm handler: attach onClick to the confirm button in your copy"
+              ],
+              "notes": [
+                "Two instances sharing an id on one page conflict: the button opens whichever window it finds first. Give each its own id.",
+                "popover=\"auto\" closes on an outside click. For a window that must not be dismissed by accident use popover=\"manual\".",
+                "This is not <dialog>: popover has no modality in the sense of making the rest of the page inert. For a payment form use <dialog> with showModal and client code.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dialog001\n  id=\"delete-project\"\n  trigger=\"Delete project\"\n  title=\"Delete this project?\"\n  description=\"This cannot be undone.\"\n  confirmLabel=\"Delete\"\n/>"
+            },
+            "controls": {
+              "trigger": {
+                "label": "Button",
+                "default": "Delete project"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Delete this project?"
+              },
+              "description": {
+                "label": "Body",
+                "default": "The pages, domains and publish history go with it. This cannot be undone."
+              },
+              "confirmLabel": {
+                "label": "Confirm",
+                "default": "Delete"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dialog-002",
+      "type": "registry:component",
+      "title": "Destructive Dialog",
+      "description": "Окно необратимого удаления: перечень того, что исчезнет, вместо строки «все данные». Конкретика — единственное, что заставляет остановиться.",
+      "categories": ["dialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dialog-002/dialog-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dialog-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-002-*. Открытие держит HTML popover: Esc, клик мимо, ::backdrop и верхний слой достаются от браузера, клиентского кода нет. Окно живёт в верхнем слое и потому стилизуется по атрибуту [data-vibeui-dialog-002-window] и получает палитру собственным style — наследование по вложенности там не работает. Роль alertdialog.",
+      "meta": {
+        "tags": ["dialog", "confirm", "destructive", "no-js"],
+        "ai": {
+          "export": "Dialog002",
+          "usage": "<Dialog002\n  id=\"delete-project\"\n  title=\"Удалить проект?\"\n  losses={[\"18 страниц\", \"домен и сертификат\"]}\n/>",
+          "summary": "Модальное окно необратимого действия: круглый знак, заголовок, объяснение и перечень того, что исчезнет. Отмена стоит слева и остаётся простым выходом, подтверждение красное справа. Открытие и закрытие — HTML popover, без единой строки JS. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-dialog-002-* и не подменять её токенами вашей темы (bg-destructive, bg-background и подобными)",
+            "перечень потерь: строка «все данные будут удалены» не останавливает, а список из трёх пунктов — да",
+            "механику popover: атрибуты popovertarget и popover=\"auto\" дают Esc и клик мимо",
+            "стилизацию окна по атрибуту и передачу палитры отдельным style: в верхнем слое окно перестаёт быть потомком корня",
+            "role=\"alertdialog\" и aria-labelledby, связывающий окно с заголовком",
+            "порядок кнопок: отмена первой — при необратимом действии выход должен быть под рукой"
+          ],
+          "adapt": [
+            "id — свой на каждое окно на странице",
+            "тексты title, description и подписи кнопок",
+            "losses — перечень того, что исчезнет",
+            "обработчик подтверждения: повесьте onClick на кнопку подтверждения в своей копии",
+            "trigger — подпись кнопки, открывающей окно"
+          ],
+          "notes": [
+            "popover=\"auto\" закрывается кликом мимо. Для окна, которое нельзя закрыть случайно, берите dialog-006 с popover=\"manual\".",
+            "Это не <dialog>: остальная страница не становится inert. Для платежей и подписи документов нужен настоящий showModal.",
+            "Если удаляемое можно перепутать, добавьте ввод названия — как в alert-020.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "trigger",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Удалить проект",
+            "maxLength": 30
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Удалить проект «Сайт студии»?",
+            "maxLength": 60
+          },
+          {
+            "prop": "confirmLabel",
+            "label": "Подтверждение",
+            "type": "text",
+            "default": "Удалить навсегда",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dialog for irreversible deletion: a list of what disappears instead of the line \"all data\". Specifics are the only thing that makes people stop.",
+            "ai": {
+              "summary": "A modal for an irreversible action: a round mark, a heading, an explanation and a list of what will be lost. Cancel sits on the left as the easy way out, the red confirm on the right. Opening and closing come from the HTML popover attribute, with no JS at all. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-dialog-002-* palette — do not swap it for your theme tokens (bg-destructive, bg-background and the like)",
+                "the list of losses: \"all data will be deleted\" does not stop anyone, three concrete lines do",
+                "the popover mechanism: popovertarget and popover=\"auto\" supply Esc and click-outside",
+                "styling the window by attribute and passing the palette through its own style: in the top layer it is no longer a descendant of the root",
+                "role=\"alertdialog\" and the aria-labelledby tying the window to its heading",
+                "the button order: cancel first — with an irreversible action the exit must be within reach"
+              ],
+              "adapt": [
+                "id — one per dialog on the page",
+                "the title, description and button copy",
+                "losses — what will disappear",
+                "the confirm handler: attach onClick to the confirm button in your copy",
+                "trigger — the label of the button that opens the dialog"
+              ],
+              "notes": [
+                "popover=\"auto\" closes on an outside click. For a window that must not be dismissed by accident use dialog-006 with popover=\"manual\".",
+                "This is not <dialog>: the rest of the page does not become inert. Payments and signatures need a real showModal.",
+                "If the target can be confused with another, add a name-typing step as in alert-020.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dialog002\n  id=\"delete-project\"\n  title=\"Delete this project?\"\n  losses={[\"18 pages\", \"the domain and its certificate\"]}\n/>"
+            },
+            "controls": {
+              "trigger": {
+                "label": "Button",
+                "default": "Delete project"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Delete the project “Studio site”?"
+              },
+              "confirmLabel": {
+                "label": "Confirm",
+                "default": "Delete forever"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dialog-003",
+      "type": "registry:component",
+      "title": "Form Dialog",
+      "description": "Окно с одним полем — переименовать, задать адрес, добавить метку. Внутри настоящая form method=\"dialog\": Enter отправляет, фокус сам уходит в поле.",
+      "categories": ["dialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dialog-003/dialog-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dialog-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-003-*. Открытие держит HTML popover, отправку — <form method=\"dialog\">: Enter в поле срабатывает как отправка, отдельный обработчик не нужен. autoFocus у поля переводит на него фокус при открытии, поэтому печатать можно сразу.",
+      "meta": {
+        "tags": ["dialog", "form", "input", "no-js"],
+        "ai": {
+          "export": "Dialog003",
+          "usage": "<Dialog003\n  id=\"rename\"\n  title=\"Переименовать проект\"\n  label=\"Название\"\n  defaultValue=\"Сайт студии\"\n/>",
+          "summary": "Модальное окно с единственным полем: заголовок, поле с подписью, подсказка под ним и две кнопки. Enter отправляет, Esc закрывает, фокус при открытии сам уходит в поле. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-dialog-003-* и не подменять её токенами вашей темы (bg-background, border-input и подобными)",
+            "form method=\"dialog\": именно она даёт отправку по Enter без обработчика",
+            "autoFocus у поля — окно с полем, где надо ещё раз кликнуть, раздражает",
+            "одно поле: как только полей становится три, это уже страница настроек, а не окно",
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое",
+            "кольцо фокуса у поля: в модальном окне это единственный ориентир"
+          ],
+          "adapt": [
+            "тексты title, label, hint и подписи кнопок",
+            "defaultValue — начальное значение поля",
+            "акцент через проп accent — цвет фокуса и кнопки отправки",
+            "обработку значения: читайте поле по name в onSubmit своей копии"
+          ],
+          "notes": [
+            "Компонент не проверяет введённое: валидацию добавляйте атрибутами input (required, pattern, maxLength) или в обработчике.",
+            "Для двух и более полей это уже не то окно: разбейте на шаги, как в dialog-009.",
+            "id должен быть уникальным: два окна с одним id откроют одно и то же.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Переименовать проект",
+            "maxLength": 40
+          },
+          {
+            "prop": "label",
+            "label": "Подпись поля",
+            "type": "text",
+            "default": "Название",
+            "maxLength": 30
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Значение",
+            "type": "text",
+            "default": "Сайт студии",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dialog with one field — rename, set an address, add a label. Inside is a real form method=\"dialog\": Enter submits and focus lands in the field.",
+            "ai": {
+              "summary": "A modal with a single field: a heading, a labelled input, a hint beneath and two buttons. Enter submits, Esc closes, and focus moves into the field on open. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-dialog-003-* palette — do not swap it for your theme tokens (bg-background, border-input and the like)",
+                "form method=\"dialog\": that is what gives Enter-to-submit with no handler",
+                "autoFocus on the field — a dialog that needs another click before typing is a nuisance",
+                "the single field: at three fields this is a settings page, not a dialog",
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer",
+                "the focus ring on the field: inside a modal it is the only orientation point"
+              ],
+              "adapt": [
+                "the title, label, hint and button copy",
+                "defaultValue — the initial field value",
+                "the accent through the accent prop — the focus ring and submit colour",
+                "handling the value: read the field by name in your copy's onSubmit"
+              ],
+              "notes": [
+                "The component validates nothing: add constraints through input attributes (required, pattern, maxLength) or in your handler.",
+                "Two or more fields make this the wrong dialog: split them into steps as in dialog-009.",
+                "The id has to be unique: two dialogs sharing one id open the same window.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dialog003\n  id=\"rename\"\n  title=\"Rename project\"\n  label=\"Name\"\n  defaultValue=\"Studio site\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Rename project"
+              },
+              "label": {
+                "label": "Field label",
+                "default": "Name"
+              },
+              "defaultValue": {
+                "label": "Value",
+                "default": "Studio site"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dialog-004",
+      "type": "registry:component",
+      "title": "Choice Dialog",
+      "description": "Окно выбора одного варианта: карточки с нативными radio, подсветка выбранного правилом :has — без состояния и без JS.",
+      "categories": ["dialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dialog-004/dialog-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dialog-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-004-*. Варианты — нативные radio внутри подписей-карточек: выбранная подсвечивается правилом :has(input:checked), поэтому подсветка не требует состояния, а стрелки клавиатуры работают как в родном списке. Точка внутри radio нарисована inset-тенью, а не отдельным элементом.",
+      "meta": {
+        "tags": ["dialog", "choice", "radio", "no-js"],
+        "ai": {
+          "export": "Dialog004",
+          "usage": "<Dialog004\n  id=\"publish-mode\"\n  title=\"Что сделать с изменениями?\"\n  options={[{ value: \"draft\", label: \"Сохранить как черновик\" }]}\n/>",
+          "summary": "Модальное окно выбора: список карточек с нативными radio, у каждой подпись и пояснение. Выбранная карточка подсвечивается через :has, клавиатура работает как в родном списке. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-dialog-004-* и не подменять её токенами вашей темы (bg-accent, border-input и подобными)",
+            "нативные radio: они дают перебор стрелками, выбор с клавиатуры и отправку в форме",
+            "подсветку через :has(input:checked), а не через состояние в React",
+            "пояснение под каждым вариантом: выбор из трёх голых подписей заставляет угадывать",
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое",
+            "кольцо фокуса у radio: выбор часто делают с клавиатуры"
+          ],
+          "adapt": [
+            "массив options: значение, подпись и пояснение",
+            "defaultValue — что выбрано изначально",
+            "тексты title и подписи кнопок",
+            "акцент через проп accent — цвет выбранной карточки и кнопки"
+          ],
+          "notes": [
+            "Больше пяти вариантов — это уже список, а не окно выбора: возьмите отдельную страницу или select.",
+            "Имя radio строится из id окна: два окна с одинаковым id объединят свои варианты в одну группу.",
+            "Компонент не сообщает выбор наружу: читайте значение по name в обработчике отправки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что сделать с изменениями?",
+            "maxLength": 50
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Выбрано",
+            "type": "select",
+            "default": "publish",
+            "options": ["draft", "publish", "schedule"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dialog for picking one option: cards with native radios, the selected one highlighted by a :has rule — no state, no JS.",
+            "ai": {
+              "summary": "A choice modal: a list of cards with native radios, each with a label and an explanation. The selected card is highlighted through :has, and the keyboard behaves as in a native radio group. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-dialog-004-* palette — do not swap it for your theme tokens (bg-accent, border-input and the like)",
+                "the native radios: they bring arrow-key cycling, keyboard selection and form submission",
+                "the highlight through :has(input:checked) rather than React state",
+                "the explanation under each option: choosing between three bare labels means guessing",
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer",
+                "the focus ring on the radios: the choice is often made from the keyboard"
+              ],
+              "adapt": [
+                "the options array: value, label and description",
+                "defaultValue — what starts selected",
+                "the title and button copy",
+                "the accent through the accent prop — the selected card and the submit button"
+              ],
+              "notes": [
+                "More than five options is a list, not a choice dialog: use a page or a select.",
+                "The radio name is built from the dialog id: two dialogs sharing an id merge their options into one group.",
+                "The component does not report the choice: read the value by name in your submit handler.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dialog004\n  id=\"publish-mode\"\n  title=\"What should happen to the changes?\"\n  options={[{ value: \"draft\", label: \"Save as a draft\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What should happen to the changes?"
+              },
+              "defaultValue": {
+                "label": "Selected"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dialog-005",
+      "type": "registry:component",
+      "title": "Result Dialog",
+      "description": "Окно результата операции: крупный знак сверху отвечает «получилось или нет» раньше, чем прочитан заголовок.",
+      "categories": ["dialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dialog-005/dialog-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dialog-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-005-*. Два тона (успех и ошибка) переключаются data-атрибутом на корне и меняют одну переменную — цвет знака и главной кнопки. Содержимое выровнено по центру: у окна результата один смысловой центр, и колонка читается быстрее строки.",
+      "meta": {
+        "tags": ["dialog", "result", "success", "error"],
+        "ai": {
+          "export": "Dialog005",
+          "usage": "<Dialog005\n  id=\"publish-result\"\n  tone=\"success\"\n  title=\"Проект опубликован\"\n  detail=\"studio-polet.ru\"\n  primaryHref=\"https://studio-polet.ru\"\n/>",
+          "summary": "Окно результата: крупный знак в круге, заголовок, объяснение, строка-итог в плашке и путь дальше. Два тона — успех и ошибка. Кнопка ведёт к результату, закрытие остаётся тихим. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-dialog-005-* и не подменять её токенами вашей темы (bg-success, bg-destructive и подобными)",
+            "крупный знак сверху: он отвечает на главный вопрос раньше, чем прочитан заголовок",
+            "центрированную колонку — у окна результата один смысловой центр",
+            "строку-итог в плашке: адрес или номер обращения ищут глазами, а не читают в абзаце",
+            "тихую кнопку закрытия: окно результата не требует решения",
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое"
+          ],
+          "adapt": [
+            "tone: success или danger",
+            "тексты title, description и detail",
+            "primaryLabel и primaryHref — куда ведёт результат",
+            "closeLabel — подпись тихого закрытия"
+          ],
+          "notes": [
+            "Не показывайте окно результата после каждой мелочи: успех, о котором и так видно по интерфейсу, лучше сообщать тостом.",
+            "В тоне danger описание должно объяснять, что делать дальше, а не повторять «произошла ошибка».",
+            "Компонент не открывает себя: показ после операции — задача вызывающего кода.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "success",
+            "options": ["success", "danger"]
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Проект опубликован",
+            "maxLength": 40
+          },
+          {
+            "prop": "detail",
+            "label": "Итог",
+            "type": "text",
+            "default": "studio-polet.ru",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A result dialog: the large mark at the top answers \"did it work\" before the heading is read.",
+            "ai": {
+              "summary": "A result window: a large mark in a circle, a heading, an explanation, a summary chip and the way forward. Two tones — success and failure. The button leads to the result, dismissal stays quiet. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-dialog-005-* palette — do not swap it for your theme tokens (bg-success, bg-destructive and the like)",
+                "the large mark on top: it answers the main question before the heading is read",
+                "the centred column — a result dialog has a single focal point",
+                "the summary chip: an address or a case number is scanned, not read in a paragraph",
+                "the quiet close button: a result dialog asks for no decision",
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer"
+              ],
+              "adapt": [
+                "tone: success or danger",
+                "the title, description and detail copy",
+                "primaryLabel and primaryHref — where the result leads",
+                "closeLabel — the quiet dismissal"
+              ],
+              "notes": [
+                "Do not show a result dialog after every small thing: a success already visible in the UI belongs in a toast.",
+                "In the danger tone the description must say what to do next rather than repeat \"an error occurred\".",
+                "The component does not open itself: showing it after the operation is the caller's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dialog005\n  id=\"publish-result\"\n  tone=\"success\"\n  title=\"Project published\"\n  detail=\"studio-polet.ru\"\n  primaryHref=\"https://studio-polet.ru\"\n/>"
+            },
+            "controls": {
+              "tone": {
+                "label": "Tone"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Project published"
+              },
+              "detail": {
+                "label": "Summary",
+                "default": "studio-polet.ru"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dialog-006",
+      "type": "registry:component",
+      "title": "Blocking Progress Dialog",
+      "description": "Окно операции, которое не закрывается кликом мимо: popover=\"manual\". Перенос домена не должен исчезать с экрана от случайного нажатия.",
+      "categories": ["dialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dialog-006/dialog-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dialog-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-006-*. Здесь popover=\"manual\", а не \"auto\": Esc и клик по подложке окно не закрывают, единственный выход — кнопка отмены. Полоса прогресса берёт ширину из переменной --vibeui-dialog-006-value; value={null} включает бегущий отрезок и снимает aria-valuenow. Спиннер нарисован рамкой с одним окрашенным краем.",
+      "meta": {
+        "tags": ["dialog", "progress", "blocking", "operation"],
+        "ai": {
+          "export": "Dialog006",
+          "usage": "<Dialog006\n  id=\"domain-transfer\"\n  title=\"Переносим домен\"\n  step=\"Проверяем DNS — 2 из 5\"\n  value={40}\n/>",
+          "summary": "Модальное окно идущей операции: спиннер, заголовок, строка шага, полоса прогресса и предупреждение. Не закрывается ни по Esc, ни кликом мимо — только кнопкой отмены. При value={null} длительность считается неизвестной. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-dialog-006-* и не подменять её токенами вашей темы (bg-primary, bg-muted и подобными)",
+            "popover=\"manual\": именно он отличает это окно от остальных — операцию нельзя закрыть случайным кликом",
+            "кнопку отмены как единственный выход: окно без выхода запирает человека",
+            "честное состояние неизвестной длительности вместо выдуманного процента",
+            "aria-busy и разметку progressbar с aria-valuenow только при известном значении",
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое"
+          ],
+          "adapt": [
+            "тексты title, step и note",
+            "value — 0–100 или null",
+            "cancelLabel — подпись прерывания",
+            "акцент через проп accent — цвет полосы и спиннера"
+          ],
+          "notes": [
+            "Окно не закрывает себя по завершении: закрытие и показ результата — задача вызывающего кода.",
+            "Не блокируйте так короткие операции: до трёх секунд достаточно спиннера на кнопке.",
+            "Отмена должна действительно прерывать операцию, а не только прятать окно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Переносим домен",
+            "maxLength": 40
+          },
+          {
+            "prop": "step",
+            "label": "Шаг",
+            "type": "text",
+            "default": "Проверяем DNS-записи — 2 из 5",
+            "maxLength": 60
+          },
+          {
+            "prop": "value",
+            "label": "Процент",
+            "type": "number",
+            "default": 40,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dialog that does not close on an outside click: popover=\"manual\". A domain transfer should not vanish from the screen on a stray tap.",
+            "ai": {
+              "summary": "A modal for work in progress: spinner, heading, current step, progress bar and a warning. Neither Esc nor a click outside closes it — only the cancel button. With value={null} the duration counts as unknown. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-dialog-006-* palette — do not swap it for your theme tokens (bg-primary, bg-muted and the like)",
+                "popover=\"manual\": it is what sets this dialog apart — the operation cannot be dismissed by a stray click",
+                "the cancel button as the only exit: a window with no way out traps people",
+                "the honest unknown-duration state instead of an invented percentage",
+                "aria-busy and progressbar semantics with aria-valuenow only when the value is known",
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer"
+              ],
+              "adapt": [
+                "the title, step and note copy",
+                "value — 0–100 or null",
+                "cancelLabel — the abort wording",
+                "the accent through the accent prop — the bar and spinner colour"
+              ],
+              "notes": [
+                "The dialog does not close itself when the work finishes: closing and showing the result belong to the caller.",
+                "Do not block for short operations: under three seconds a spinner on the button is enough.",
+                "Cancel must actually abort the operation, not merely hide the window.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dialog006\n  id=\"domain-transfer\"\n  title=\"Transferring the domain\"\n  step=\"Checking DNS — 2 of 5\"\n  value={40}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Transferring the domain"
+              },
+              "step": {
+                "label": "Step",
+                "default": "Checking DNS records — 2 of 5"
+              },
+              "value": {
+                "label": "Percent"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dialog-007",
+      "type": "registry:component",
+      "title": "Action Sheet",
+      "description": "Лист действий, выезжающий снизу на телефоне и превращающийся в обычное окно на широком экране: одна разметка, две раскладки.",
+      "categories": ["dialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dialog-007/dialog-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dialog-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-007-*. По умолчанию лист прижат к нижнему краю экрана и выезжает через translate; от 40rem ширины окна медиазапрос превращает его в обычное окно по центру. Медиазапрос здесь по ширине окна, а не блока: лист позиционируется относительно экрана, а не родителя, поэтому container-запрос был бы неверен.",
+      "meta": {
+        "tags": ["dialog", "sheet", "mobile", "actions"],
+        "ai": {
+          "export": "Dialog007",
+          "usage": "<Dialog007\n  id=\"project-actions\"\n  title=\"Сайт студии\"\n  actions={[{ label: \"Дублировать\", href: \"#\" }, { label: \"Удалить\", href: \"#\", danger: true }]}\n/>",
+          "summary": "Лист действий: на телефоне выезжает снизу с полоской-ручкой, на широком экране становится обычным окном по центру. Пункты — ссылки, опасное действие выделено цветом, отмена внизу отдельной кнопкой. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-dialog-007-* и не подменять её токенами вашей темы (bg-popover, bg-muted и подобными)",
+            "нижнее положение на телефоне: до верха экрана большой палец не достаёт",
+            "полоску-ручку в мобильной раскладке — она сообщает, откуда лист пришёл",
+            "медиазапрос по ширине окна, а не контейнерный: лист позиционируется относительно экрана",
+            "крупные строки действий (не меньше 2.75rem высотой) — по ним попадают пальцем",
+            "отдельную кнопку отмены внизу: на телефоне закрыть кликом мимо труднее, чем кажется"
+          ],
+          "adapt": [
+            "массив actions: подписи, адреса и флаг danger",
+            "children — собственное содержимое вместо списка",
+            "тексты title, description и cancelLabel",
+            "порог 40rem, если у вас другая граница мобильной раскладки"
+          ],
+          "notes": [
+            "Больше шести действий в листе не помещается: остальное уводите на страницу.",
+            "Опасное действие ставьте последним и выделяйте цветом — но не делайте его единственным заметным.",
+            "Пункты — ссылки. Если пункт запускает действие, замените <a> на <button type=\"button\"> в своей копии.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Сайт студии",
+            "maxLength": 40
+          },
+          {
+            "prop": "description",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Опубликован 12 марта",
+            "maxLength": 40
+          },
+          {
+            "prop": "cancelLabel",
+            "label": "Отмена",
+            "type": "text",
+            "default": "Отмена",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An action sheet that slides up from the bottom on a phone and becomes an ordinary centred dialog on a wide screen: one markup, two layouts.",
+            "ai": {
+              "summary": "An action sheet: on a phone it slides up from the bottom with a grip, on a wide screen it turns into a centred dialog. The items are links, the destructive one is coloured, and cancel sits at the bottom as its own button. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-dialog-007-* palette — do not swap it for your theme tokens (bg-popover, bg-muted and the like)",
+                "the bottom placement on phones: a thumb does not reach the top of the screen",
+                "the grip in the mobile layout — it says where the sheet came from",
+                "the media query on the viewport rather than a container query: the sheet is positioned against the screen",
+                "the tall action rows (no less than 2.75rem) — they are hit with a thumb",
+                "the separate cancel button: dismissing by tapping outside is harder on a phone than it looks"
+              ],
+              "adapt": [
+                "the actions array: labels, hrefs and the danger flag",
+                "children — your own content instead of the list",
+                "the title, description and cancelLabel copy",
+                "the 40rem breakpoint if your mobile boundary differs"
+              ],
+              "notes": [
+                "More than six actions do not fit: move the rest to a page.",
+                "Put the destructive action last and colour it — but do not make it the only thing that stands out.",
+                "The items are links. If one runs an action, swap <a> for <button type=\"button\"> in your copy.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dialog007\n  id=\"project-actions\"\n  title=\"Studio site\"\n  actions={[{ label: \"Duplicate\", href: \"#\" }, { label: \"Delete\", href: \"#\", danger: true }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Studio site"
+              },
+              "description": {
+                "label": "Caption",
+                "default": "Published 12 March"
+              },
+              "cancelLabel": {
+                "label": "Cancel",
+                "default": "Cancel"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dialog-008",
+      "type": "registry:component",
+      "title": "Share Dialog",
+      "description": "Окно «поделиться»: ссылка в поле только для чтения, кнопка копирования и список тех, у кого доступ уже есть.",
+      "categories": ["dialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dialog-008/dialog-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dialog-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-008-*. Ссылка лежит в readOnly-поле моноширинным: её видно целиком и можно выделить. Цвет инициалов в списке доступа выводится из имени детерминированной функцией — тот же приём, что в avatar-001, поэтому один участник всегда одного цвета. Компонент серверный: копирование вешает вызывающий код.",
+      "meta": {
+        "tags": ["dialog", "share", "link", "access"],
+        "ai": {
+          "export": "Dialog008",
+          "usage": "<Dialog008\n  id=\"share\"\n  link=\"https://vibeui.ru/p/studio\"\n  people={[{ name: \"Анна Ковалёва\", role: \"Редактор\" }]}\n/>",
+          "summary": "Окно доступа: ссылка в поле только для чтения с кнопкой копирования, под ней список участников с инициалами и ролями. Цвет инициалов выводится из имени. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-dialog-008-* и не подменять её токенами вашей темы (bg-muted, bg-primary и подобными)",
+            "ссылку в readOnly-поле, а не текстом: её выделяют и копируют целиком",
+            "моноширинный шрифт у ссылки — в ней различают дефисы и единицы",
+            "список тех, у кого доступ уже есть: прежде чем звать нового, человек смотрит, кто там",
+            "вывод цвета инициалов из имени, а не случайный",
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое"
+          ],
+          "adapt": [
+            "link — сама ссылка",
+            "массив people: имя и роль",
+            "тексты title, accessLabel и подписи кнопок",
+            "обработчик копирования: повесьте onClick на кнопку в своей копии",
+            "акцент через проп accent — цвет кнопки копирования и фокуса"
+          ],
+          "notes": [
+            "Компонент не копирует в буфер: navigator.clipboard требует клиентского кода, и он остаётся за вами.",
+            "Не показывайте здесь больше пяти участников: остальных уводите на страницу доступа.",
+            "Роль — это то, что человек может делать, а не должность: «Редактор», а не «Дизайнер».",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Доступ к проекту",
+            "maxLength": 40
+          },
+          {
+            "prop": "link",
+            "label": "Ссылка",
+            "type": "text",
+            "default": "https://vibeui.ru/p/studio-polet",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A share dialog: the link in a read-only field, a copy button, and the list of people who already have access.",
+            "ai": {
+              "summary": "An access dialog: the link in a read-only field with a copy button, and beneath it the members with their initials and roles. The initials colour is derived from the name. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-dialog-008-* palette — do not swap it for your theme tokens (bg-muted, bg-primary and the like)",
+                "the link in a read-only field rather than as text: it gets selected and copied whole",
+                "the monospaced link — hyphens and ones have to be distinguishable",
+                "the list of existing members: before inviting someone new, people check who is already there",
+                "deriving the initials colour from the name rather than at random",
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer"
+              ],
+              "adapt": [
+                "link — the address itself",
+                "the people array: name and role",
+                "the title, accessLabel and button copy",
+                "the copy handler: attach onClick to the button in your copy",
+                "the accent through the accent prop — the copy button and focus ring"
+              ],
+              "notes": [
+                "The component does not write to the clipboard: navigator.clipboard needs client code and stays yours.",
+                "Do not list more than five members here: move the rest to an access page.",
+                "The role is what a person may do, not their job title: \"Editor\", not \"Designer\".",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dialog008\n  id=\"share\"\n  link=\"https://vibeui.ru/p/studio\"\n  people={[{ name: \"Anna Kovalyova\", role: \"Editor\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Project access"
+              },
+              "link": {
+                "label": "Link",
+                "default": "https://vibeui.ru/p/studio-polet"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dialog-009",
+      "type": "registry:component",
+      "title": "Two-Step Dialog",
+      "description": "Мастер из двух шагов без состояния: текущий шаг держат скрытые radio, а экраны переключает правило :has — «Далее» и «Назад» это подписи, а не обработчики.",
+      "categories": ["dialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dialog-009/dialog-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dialog-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-009-*. Шаг хранят два скрытых radio, а видимость экранов переключает :has([data-part=\"state\"][value=…]:checked) на окне. Кнопки «Далее» и «Назад» — это <label for>, поэтому переход между шагами не требует ни состояния, ни обработчиков. Точки прогресса подсвечиваются тем же правилом.",
+      "meta": {
+        "tags": ["dialog", "wizard", "steps", "no-js"],
+        "ai": {
+          "export": "Dialog009",
+          "usage": "<Dialog009\n  id=\"create-project\"\n  steps={[{ title: \"Название\", description: \"…\", fieldLabel: \"Название\" }, { title: \"Адрес\", description: \"…\", fieldLabel: \"Адрес\" }]}\n/>",
+          "summary": "Модальный мастер на два шага: точки прогресса сверху, экран с полем, кнопки «Далее» и «Назад». Шаг держат скрытые radio, переключение — правило :has, поэтому клиентского кода нет вовсе. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-dialog-009-* и не подменять её токенами вашей темы",
+            "скрытые radio как хранилище шага: именно они заменяют состояние",
+            "переключение экранов через :has(...:checked) на окне, а не display у соседей",
+            "точки прогресса: мастер без индикатора ощущается бесконечным",
+            "aria-hidden и tabIndex={-1} у служебных radio — в Tab-порядке им делать нечего",
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое"
+          ],
+          "adapt": [
+            "steps — ровно два шага: заголовок, объяснение и подпись поля",
+            "тексты nextLabel, backLabel и submitLabel",
+            "акцент через проп accent — цвет точек и кнопок",
+            "поля внутри шагов: замените input на свои в собственной копии",
+            "trigger — подпись кнопки, открывающей мастер"
+          ],
+          "notes": [
+            "Шага ровно два. Для трёх и больше приём с :has разрастается — там уже нужен обычный мастер с состоянием.",
+            "Значения полей между шагами не сохраняются компонентом: они остаются в DOM, читайте их при отправке.",
+            "Кнопки перехода — это <label>, поэтому они не участвуют в отправке формы. Это намеренно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "trigger",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Создать проект",
+            "maxLength": 30
+          },
+          {
+            "prop": "nextLabel",
+            "label": "Далее",
+            "type": "text",
+            "default": "Далее",
+            "maxLength": 20
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Готово",
+            "type": "text",
+            "default": "Создать",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A two-step wizard with no state: hidden radios hold the step and a :has rule swaps the screens — Next and Back are labels, not handlers.",
+            "ai": {
+              "summary": "A modal two-step wizard: progress dots on top, a screen with a field, Next and Back. The step lives in hidden radios and the swap is a :has rule, so there is no client code at all. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-dialog-009-* palette — do not swap it for your theme tokens",
+                "the hidden radios as the step store: they are what replaces state",
+                "swapping screens through :has(...:checked) on the window rather than sibling display rules",
+                "the progress dots: a wizard without an indicator feels endless",
+                "aria-hidden and tabIndex={-1} on the utility radios — they have no business in the Tab order",
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer"
+              ],
+              "adapt": [
+                "steps — exactly two: heading, explanation and field label",
+                "the nextLabel, backLabel and submitLabel copy",
+                "the accent through the accent prop — the dots and buttons",
+                "the fields inside the steps: replace the inputs in your own copy",
+                "trigger — the label of the button that opens the wizard"
+              ],
+              "notes": [
+                "There are exactly two steps. Three or more makes the :has trick unwieldy — that needs a stateful wizard.",
+                "Field values are not carried between steps by the component: they stay in the DOM, read them on submit.",
+                "The navigation buttons are <label>s, so they take no part in form submission. That is deliberate.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dialog009\n  id=\"create-project\"\n  steps={[{ title: \"Name\", description: \"…\", fieldLabel: \"Name\" }, { title: \"Address\", description: \"…\", fieldLabel: \"Address\" }]}\n/>"
+            },
+            "controls": {
+              "trigger": {
+                "label": "Button",
+                "default": "Create project"
+              },
+              "nextLabel": {
+                "label": "Next",
+                "default": "Next"
+              },
+              "submitLabel": {
+                "label": "Finish",
+                "default": "Create"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dialog-010",
+      "type": "registry:component",
+      "title": "Shortcuts Dialog",
+      "description": "Справка по горячим клавишам: клавиши набраны kbd и выглядят клавишами, а список разбит на группы — плоские тридцать строк не запоминаются.",
+      "categories": ["dialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dialog-010/dialog-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dialog-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-010-*. Клавиши — семантические <kbd> с утолщённой нижней гранью: символ превращается в объект, который ищут глазами. Список сочетаний размечен как <dl> с парами dt/dd. Окно прокручивается внутри себя: справка обычно длиннее экрана.",
+      "meta": {
+        "tags": ["dialog", "shortcuts", "keyboard", "help"],
+        "ai": {
+          "export": "Dialog010",
+          "usage": "<Dialog010\n  id=\"shortcuts\"\n  groups={[{ title: \"Проект\", shortcuts: [{ keys: [\"Ctrl\", \"S\"], action: \"Сохранить\" }] }]}\n/>",
+          "summary": "Окно горячих клавиш: группы по смыслу, в каждой пары «действие — клавиши». Клавиши набраны <kbd> с нижней гранью, поэтому читаются как физические. Окно прокручивается внутри себя. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-dialog-010-* и не подменять её токенами вашей темы (bg-muted, border-border и подобными)",
+            "семантику <kbd> и утолщённую нижнюю грань: клавиша должна выглядеть клавишей",
+            "разбиение на группы: тридцать строк подряд не запоминаются",
+            "разметку <dl> с dt/dd — это словарь действий, а не таблица",
+            "внутреннюю прокрутку окна с ограничением по высоте экрана",
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое"
+          ],
+          "adapt": [
+            "массив groups: заголовок группы и список сочетаний",
+            "клавиши в keys: пишите их так, как они подписаны на клавиатуре пользователя",
+            "тексты title и closeLabel",
+            "порядок групп: самые частые действия сверху",
+            "trigger — подпись кнопки, открывающей справку"
+          ],
+          "notes": [
+            "Сами сочетания компонент не вешает: обработчики клавиш остаются в вашем коде.",
+            "Не смешивайте раскладки: если у вас Mac-подписи (⌘), не показывайте их пользователям Windows.",
+            "Открывать это окно принято по «?» — не забудьте повесить такой обработчик снаружи.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "trigger",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Горячие клавиши",
+            "maxLength": 30
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Горячие клавиши",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A keyboard shortcuts reference: the keys are set in kbd and look like keys, and the list is grouped — thirty flat rows are not memorable.",
+            "ai": {
+              "summary": "A shortcuts window: groups by meaning, each holding action-and-keys pairs. The keys are <kbd> with a thicker bottom edge, so they read as physical. The window scrolls inside itself. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-dialog-010-* palette — do not swap it for your theme tokens (bg-muted, border-border and the like)",
+                "the <kbd> semantics and the thicker bottom edge: a key has to look like a key",
+                "the grouping: thirty rows in a row are not memorable",
+                "the <dl> markup with dt/dd — this is a dictionary of actions, not a table",
+                "the internal scrolling with a max height against the viewport",
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer"
+              ],
+              "adapt": [
+                "the groups array: group title and its shortcuts",
+                "the key names: write them as they are printed on the user's keyboard",
+                "the title and closeLabel copy",
+                "the group order: the most used actions first",
+                "trigger — the label of the button that opens the reference"
+              ],
+              "notes": [
+                "The component binds no shortcuts: the key handlers stay in your code.",
+                "Do not mix platforms: Mac glyphs (⌘) should not be shown to Windows users.",
+                "This window is conventionally opened with \"?\" — remember to bind that outside.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dialog010\n  id=\"shortcuts\"\n  groups={[{ title: \"Project\", shortcuts: [{ keys: [\"Ctrl\", \"S\"], action: \"Save\" }] }]}\n/>"
+            },
+            "controls": {
+              "trigger": {
+                "label": "Button",
+                "default": "Keyboard shortcuts"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Keyboard shortcuts"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dialog-011",
+      "type": "registry:component",
+      "title": "Preview Dialog",
+      "description": "Окно с обложкой во всю ширину: картинка упирается в края, содержимое получает свой отступ. Обложка нарисована градиентами — внешних файлов у компонента быть не может.",
+      "categories": ["dialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dialog-011/dialog-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dialog-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-011-*. У окна нулевой padding и overflow:hidden, поэтому обложка упирается в скруглённые края; отступы живут во внутреннем [data-part=\"body\"]. Обложка держит пропорцию 16/9 и собрана из двух градиентов с затемнением снизу — заменить её на <img> можно, не трогая раскладку.",
+      "meta": {
+        "tags": ["dialog", "preview", "media", "cover"],
+        "ai": {
+          "export": "Dialog011",
+          "usage": "<Dialog011\n  id=\"page-preview\"\n  title=\"Главная страница\"\n  meta=\"1440 × 900 · 320 КБ\"\n  primaryLabel=\"Опубликовать\"\n/>",
+          "summary": "Окно превью: обложка 16/9 во всю ширину, под ней заголовок, описание, строка характеристик и две кнопки. Обложка нарисована градиентами, поэтому компонент не тянет за собой файлы. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-dialog-011-* и не подменять её токенами вашей темы (bg-card, bg-muted и подобными)",
+            "нулевой padding окна вместе с overflow:hidden: только так обложка упирается в скруглённые края",
+            "пропорцию 16/9 у обложки — при замене на <img> сохраните её, иначе окно будет прыгать при загрузке",
+            "затемнение снизу обложки: без него светлая картинка сливается с телом окна",
+            "строку характеристик моноширинными цифрами",
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое"
+          ],
+          "adapt": [
+            "тексты title, description и meta",
+            "primaryLabel и primaryHref — главное действие",
+            "обложку: замените [data-part=\"cover\"] на <img> с тем же aspect-ratio",
+            "акцент через проп accent — цвет обложки и главной кнопки"
+          ],
+          "notes": [
+            "Не растягивайте окно под большую картинку: превью должно оставаться превью, а не просмотрщиком.",
+            "У <img> в обложке обязателен alt — иначе скринридер прочитает пустоту вместо описания.",
+            "Компонент не загружает изображения и не показывает состояние загрузки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Главная страница",
+            "maxLength": 40
+          },
+          {
+            "prop": "meta",
+            "label": "Характеристики",
+            "type": "text",
+            "default": "1440 × 900 · 320 КБ · 12 марта, 14:08",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dialog with a full-bleed cover: the image meets the edges while the content keeps its padding. The cover is drawn with gradients — the component ships no files.",
+            "ai": {
+              "summary": "A preview dialog: a 16/9 cover across the full width, then the heading, description, a specs line and two buttons. The cover is gradients, so the component drags no assets along. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-dialog-011-* palette — do not swap it for your theme tokens (bg-card, bg-muted and the like)",
+                "the window's zero padding together with overflow:hidden: only then does the cover meet the rounded edges",
+                "the 16/9 ratio on the cover — keep it when swapping in an <img>, or the window jumps as it loads",
+                "the darkening at the bottom of the cover: without it a light image merges into the body",
+                "the specs line in tabular figures",
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer"
+              ],
+              "adapt": [
+                "the title, description and meta copy",
+                "primaryLabel and primaryHref — the main action",
+                "the cover: replace [data-part=\"cover\"] with an <img> at the same aspect-ratio",
+                "the accent through the accent prop — the cover tint and the main button"
+              ],
+              "notes": [
+                "Do not stretch the window for a large image: a preview should stay a preview, not become a viewer.",
+                "An <img> cover needs an alt — otherwise a screen reader announces emptiness instead of the description.",
+                "The component loads no images and shows no loading state.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dialog011\n  id=\"page-preview\"\n  title=\"Home page\"\n  meta=\"1440 × 900 · 320 KB\"\n  primaryLabel=\"Publish\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Home page"
+              },
+              "meta": {
+                "label": "Specs",
+                "default": "1440 × 900 · 320 KB · 12 March, 14:08"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dialog-012",
+      "type": "registry:component",
+      "title": "Secret Dialog",
+      "description": "Окно с ключом, который показывают один раз: моноширинный текст переносится по символам, а предупреждение стоит под ним — его читают, увидев ключ.",
+      "categories": ["dialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dialog-012/dialog-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dialog-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-012-*. Ключ лежит в тёмном <code> с word-break:break-all: обрезанный многоточием секрет бесполезен, поэтому он переносится по символам. Предупреждение оформлено плашкой с восклицательным знаком на псевдоэлементе и стоит после ключа. Кнопка «Я сохранил» тихая, копирование — акцентное.",
+      "meta": {
+        "tags": ["dialog", "secret", "api key", "copy"],
+        "ai": {
+          "export": "Dialog012",
+          "usage": "<Dialog012\n  id=\"api-key\"\n  value={apiKey}\n  warning=\"Мы показываем ключ один раз.\"\n/>",
+          "summary": "Окно секрета: заголовок, объяснение, сам ключ моноширинным на тёмной подложке, предупреждение о единственном показе и две кнопки. Ключ переносится по символам и виден целиком. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-dialog-012-* и не подменять её токенами вашей темы",
+            "word-break:break-all у ключа: обрезанный многоточием секрет бесполезен",
+            "тёмную подложку под ключом — она отделяет данные от текста и намекает на «скопировать целиком»",
+            "предупреждение после ключа, а не до: его читают, уже увидев, что нужно сохранить",
+            "тихую кнопку «я сохранил» рядом с акцентным копированием",
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое"
+          ],
+          "adapt": [
+            "value — сам ключ или токен",
+            "тексты title, description и warning",
+            "подписи copyLabel и doneLabel",
+            "обработчик копирования: повесьте onClick на кнопку в своей копии"
+          ],
+          "notes": [
+            "Ключ приходит готовым: компонент ничего не генерирует и никуда не отправляет.",
+            "Не логируйте значение и не кладите его в адресную строку — оно должно жить только в этом окне.",
+            "Если ключ можно показать повторно, уберите предупреждение: обещание «только один раз» должно быть правдой.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ключ доступа к API",
+            "maxLength": 40
+          },
+          {
+            "prop": "copyLabel",
+            "label": "Копирование",
+            "type": "text",
+            "default": "Копировать ключ",
+            "maxLength": 30
+          },
+          {
+            "prop": "doneLabel",
+            "label": "Закрытие",
+            "type": "text",
+            "default": "Я сохранил",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dialog for a secret shown once: the monospaced value wraps by character, and the warning sits below it — read after the key is seen.",
+            "ai": {
+              "summary": "A secret dialog: heading, explanation, the key itself monospaced on a dark ground, a warning that it is shown once, and two buttons. The key wraps by character and stays fully visible. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-dialog-012-* palette — do not swap it for your theme tokens",
+                "word-break:break-all on the key: a secret truncated with an ellipsis is useless",
+                "the dark ground under the key — it separates data from prose and suggests copying it whole",
+                "the warning after the key rather than before: it is read once people see what to save",
+                "the quiet \"I saved it\" button beside the accented copy button",
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer"
+              ],
+              "adapt": [
+                "value — the key or token itself",
+                "the title, description and warning copy",
+                "the copyLabel and doneLabel wording",
+                "the copy handler: attach onClick to the button in your copy"
+              ],
+              "notes": [
+                "The key arrives ready: the component generates nothing and sends nothing anywhere.",
+                "Do not log the value or put it in the URL — it should live only inside this window.",
+                "If the key can be shown again, drop the warning: \"only once\" has to be true.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dialog012\n  id=\"api-key\"\n  value={apiKey}\n  warning=\"We show this key once.\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "API access key"
+              },
+              "copyLabel": {
+                "label": "Copy",
+                "default": "Copy the key"
+              },
+              "doneLabel": {
+                "label": "Dismiss",
+                "default": "I saved it"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dialog-013",
+      "type": "registry:component",
+      "title": "Feedback Dialog",
+      "description": "Окно отзыва: оценка словами, а не звёздами — «тройка» без подписи ничего не значит ни для отвечающего, ни для того, кто читает ответы.",
+      "categories": ["dialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dialog-013/dialog-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dialog-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-013-*. Оценка — ряд нативных radio в подписях, выбранная подсвечивается через :has(input:checked); сами radio визуально скрыты, но остаются в потоке и доступны с клавиатуры. Поле комментария необязательное и стоит после оценки: сначала одно нажатие, потом слова.",
+      "meta": {
+        "tags": ["dialog", "feedback", "survey", "rating"],
+        "ai": {
+          "export": "Dialog013",
+          "usage": "<Dialog013\n  id=\"feedback\"\n  title=\"Как прошла сборка страницы?\"\n  scale={[\"Мешало\", \"Терпимо\", \"Нормально\", \"Удобно\", \"Отлично\"]}\n/>",
+          "summary": "Окно отзыва: заголовок, объяснение, ряд оценок словами и необязательное поле комментария. Оценка выбирается нативными radio с подсветкой через :has, поэтому состояния нет. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-dialog-013-* и не подменять её токенами вашей темы",
+            "оценку словами вместо звёзд: числовая шкала без подписей одинаково непонятна отвечающему и читающему",
+            "необязательность комментария и его место после оценки: сначала одно нажатие, потом слова",
+            "подсветку выбранного через :has(input:checked), а не через состояние",
+            "role=\"group\" с подписью у ряда оценок",
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое"
+          ],
+          "adapt": [
+            "scale — подписи оценок от худшей к лучшей; их может быть три или пять",
+            "тексты title, description, fieldLabel и placeholder",
+            "подписи submitLabel и skipLabel",
+            "акцент через проп accent — цвет выбранной оценки и кнопки"
+          ],
+          "notes": [
+            "Не спрашивайте отзыв в середине работы: окно посреди задачи закрывают не читая.",
+            "Пять делений — потолок. Семь и больше отвечающие всё равно сводят к трём.",
+            "Компонент ничего не отправляет: значения читайте по name в обработчике отправки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Как прошла сборка страницы?",
+            "maxLength": 50
+          },
+          {
+            "prop": "fieldLabel",
+            "label": "Подпись поля",
+            "type": "text",
+            "default": "Что можно улучшить? Необязательно",
+            "maxLength": 50
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Отправка",
+            "type": "text",
+            "default": "Отправить",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A feedback dialog: the rating is words rather than stars — a bare \"three\" means nothing to the person answering or to the one reading the answers.",
+            "ai": {
+              "summary": "A feedback window: heading, explanation, a row of worded ratings and an optional comment field. The rating uses native radios highlighted through :has, so there is no state. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-dialog-013-* palette — do not swap it for your theme tokens",
+                "worded ratings instead of stars: a numeric scale without labels is equally unclear to both sides",
+                "the comment staying optional and placed after the rating: one tap first, words second",
+                "the highlight through :has(input:checked) rather than state",
+                "role=\"group\" with a label on the rating row",
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer"
+              ],
+              "adapt": [
+                "scale — the rating labels from worst to best; three or five of them",
+                "the title, description, fieldLabel and placeholder copy",
+                "the submitLabel and skipLabel wording",
+                "the accent through the accent prop — the selected rating and the button"
+              ],
+              "notes": [
+                "Do not ask for feedback mid-task: a dialog in the middle of work gets dismissed unread.",
+                "Five steps is the ceiling. With seven or more people collapse the scale to three anyway.",
+                "The component sends nothing: read the values by name in your submit handler.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dialog013\n  id=\"feedback\"\n  title=\"How did building the page go?\"\n  scale={[\"Painful\", \"Tolerable\", \"Fine\", \"Smooth\", \"Great\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "How did building the page go?"
+              },
+              "fieldLabel": {
+                "label": "Field label",
+                "default": "What could be better? Optional"
+              },
+              "submitLabel": {
+                "label": "Submit",
+                "default": "Send"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dialog-014",
+      "type": "registry:component",
+      "title": "Session Dialog",
+      "description": "Окно истекающей сессии: полоса убывает CSS-анимацией ровно столько секунд, сколько названо в тексте, — таймер не тикает в React.",
+      "categories": ["dialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dialog-014/dialog-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dialog-014.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-014-*. Полоса времени — CSS-анимация scaleX, длительность приходит переменной --vibeui-dialog-014-seconds из пропа seconds: отсчёт не считается в JS и не перерисовывает страницу каждую секунду. Кнопка «остаться» акцентная и стоит справа: выход по бездействию должен требовать бездействия, а не клика.",
+      "meta": {
+        "tags": ["dialog", "session", "timeout", "security"],
+        "ai": {
+          "export": "Dialog014",
+          "usage": "<Dialog014\n  id=\"session\"\n  seconds={60}\n  title=\"Сессия скоро закончится\"\n/>",
+          "summary": "Окно истекающей сессии: знак предупреждения, заголовок, объяснение, убывающая полоса времени и две кнопки. Полоса анимируется CSS ровно столько секунд, сколько названо в тексте. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-dialog-014-* и не подменять её токенами вашей темы",
+            "полосу как CSS-анимацию с длительностью из переменной: таймер в состоянии перерисовывал бы страницу каждую секунду",
+            "совпадение seconds и реального времени выхода: разошлись — окно начинает врать",
+            "акцент на кнопке «остаться»: выход по бездействию должен требовать бездействия",
+            "role=\"alertdialog\": сообщение прерывает работу и должно быть объявлено",
+            "правило prefers-reduced-motion, оставляющее полосу неподвижной"
+          ],
+          "adapt": [
+            "seconds — сколько секунд осталось",
+            "тексты title и description",
+            "подписи stayLabel и leaveLabel",
+            "обработчики: продление сессии и выход вешает вызывающий код"
+          ],
+          "notes": [
+            "Компонент не продлевает сессию и не выходит из аккаунта: он только предупреждает.",
+            "Показывайте окно не позже чем за минуту до конца — за десять секунд человек не успеет среагировать.",
+            "Если сессия продлевается автоматически при активности, окно должно закрываться само: следите за этим снаружи.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Сессия скоро закончится",
+            "maxLength": 40
+          },
+          {
+            "prop": "seconds",
+            "label": "Секунд",
+            "type": "number",
+            "default": 60,
+            "min": 10,
+            "max": 300
+          },
+          {
+            "prop": "stayLabel",
+            "label": "Остаться",
+            "type": "text",
+            "default": "Остаться",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A session-expiry dialog: the bar drains by CSS animation for exactly as many seconds as the text names — no timer ticking in React.",
+            "ai": {
+              "summary": "A session dialog: a warning mark, heading, explanation, a draining time bar and two buttons. The bar animates in CSS for exactly the number of seconds stated. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-dialog-014-* palette — do not swap it for your theme tokens",
+                "the bar as a CSS animation driven by a variable: a stateful timer would re-render the page every second",
+                "keeping seconds in sync with the real logout time: once they diverge the dialog lies",
+                "the accent on the stay button: logging out through inaction should require inaction",
+                "role=\"alertdialog\": the message interrupts work and has to be announced",
+                "the prefers-reduced-motion rule that leaves the bar still"
+              ],
+              "adapt": [
+                "seconds — how long is left",
+                "the title and description copy",
+                "the stayLabel and leaveLabel wording",
+                "the handlers: extending the session and signing out belong to the caller"
+              ],
+              "notes": [
+                "The component neither extends the session nor signs anyone out: it only warns.",
+                "Show it at least a minute before the end — ten seconds is not enough time to react.",
+                "If activity extends the session automatically, the dialog must close itself: handle that outside.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dialog014\n  id=\"session\"\n  seconds={60}\n  title=\"Your session is about to end\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Your session is about to end"
+              },
+              "seconds": {
+                "label": "Seconds"
+              },
+              "stayLabel": {
+                "label": "Stay",
+                "default": "Stay signed in"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

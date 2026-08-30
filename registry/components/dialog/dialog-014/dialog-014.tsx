@@ -1,0 +1,156 @@
+import type { CSSProperties } from "react"
+
+export type Dialog014Props = {
+  id?: string
+  trigger?: string
+  title?: string
+  description?: string
+  /** Сколько секунд осталось. Полоса убывает ровно столько же. */
+  seconds?: number
+  stayLabel?: string
+  leaveLabel?: string
+  className?: string
+  style?: CSSProperties
+}
+
+// Идея компонента: окно истекающей сессии. Полоса времени убывает CSS-анимацией
+// за то же число секунд, что стоит в тексте, — таймер не тикает в React и не
+// перерисовывает страницу каждую секунду. Кнопка «остаться» стоит справа и
+// выделена: выход по бездействию должен требовать бездействия, а не клика.
+const STYLES = `
+:where([data-vibeui-block="dialog-014"]){
+--vibeui-dialog-014-fg:oklch(0.22 0.016 265);
+--vibeui-dialog-014-muted:oklch(0.5 0.014 265);
+--vibeui-dialog-014-bg:oklch(1 0 0);
+--vibeui-dialog-014-track:oklch(0.93 0.006 265);
+--vibeui-dialog-014-border:oklch(0.89 0.006 265);
+--vibeui-dialog-014-warn:oklch(0.68 0.15 70);
+--vibeui-dialog-014-accent:oklch(0.55 0.2 262);
+--vibeui-dialog-014-radius:1rem;
+--vibeui-dialog-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="dialog-014"]{display:inline-flex;font-family:var(--vibeui-dialog-014-font)}
+[data-vibeui-block="dialog-014"] [data-part="trigger"]{
+appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:500;
+display:inline-flex;align-items:center;height:2.25rem;padding:0 0.9375rem;
+border:1px solid var(--vibeui-dialog-014-border);border-radius:0.5rem;
+background:var(--vibeui-dialog-014-bg);color:var(--vibeui-dialog-014-fg);
+}
+[data-vibeui-block="dialog-014"] [data-part="trigger"]:hover{background:color-mix(in oklab,var(--vibeui-dialog-014-border) 30%,transparent)}
+[data-vibeui-block="dialog-014"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-dialog-014-accent);outline-offset:2px}
+[data-vibeui-dialog-014-window]{
+position:fixed;inset:0;margin:auto;height:fit-content;
+width:min(25rem,calc(100vw - 2rem));box-sizing:border-box;padding:1.375rem;overflow:hidden;
+border:1px solid var(--vibeui-dialog-014-border,oklch(0.89 0.006 265));
+border-radius:var(--vibeui-dialog-014-radius,1rem);
+background:var(--vibeui-dialog-014-bg,oklch(1 0 0));
+color:var(--vibeui-dialog-014-fg,oklch(0.22 0.016 265));
+font-family:var(--vibeui-dialog-014-font,ui-sans-serif,system-ui,sans-serif);
+box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 45%);
+opacity:0;transform:scale(0.97);
+transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,overlay .18s allow-discrete;
+}
+[data-vibeui-dialog-014-window]:popover-open{opacity:1;transform:none}
+@starting-style{[data-vibeui-dialog-014-window]:popover-open{opacity:0;transform:scale(0.97)}}
+[data-vibeui-dialog-014-window]::backdrop{background:oklch(0.18 0.02 265 / 50%)}
+[data-vibeui-dialog-014-window] [data-part="head"]{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem}
+[data-vibeui-dialog-014-window] [data-part="mark"]{
+display:flex;align-items:center;justify-content:center;flex:none;
+width:2rem;height:2rem;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-dialog-014-warn,oklch(0.68 0.15 70)) 16%,transparent);
+color:color-mix(in oklab,var(--vibeui-dialog-014-warn,oklch(0.68 0.15 70)) 75%,black);
+font-size:0.875rem;font-weight:800;line-height:1;
+}
+[data-vibeui-dialog-014-window] [data-part="title"]{margin:0;font-size:1rem;font-weight:620;line-height:1.35}
+[data-vibeui-dialog-014-window] [data-part="description"]{margin:0;font-size:0.875rem;line-height:1.55;color:var(--vibeui-dialog-014-muted,oklch(0.5 0.014 265))}
+[data-vibeui-dialog-014-window] [data-part="track"]{
+margin-top:1rem;height:0.25rem;border-radius:9999px;overflow:hidden;
+background:var(--vibeui-dialog-014-track,oklch(0.93 0.006 265));
+}
+/* Полоса убывает ровно столько секунд, сколько названо в тексте. */
+[data-vibeui-dialog-014-window] [data-part="bar"]{
+display:block;height:100%;border-radius:inherit;transform-origin:left center;
+background:var(--vibeui-dialog-014-warn,oklch(0.68 0.15 70));
+animation:vibeui-dialog-014-drain linear forwards;
+animation-duration:calc(var(--vibeui-dialog-014-seconds,60) * 1s);
+}
+@keyframes vibeui-dialog-014-drain{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+[data-vibeui-dialog-014-window] [data-part="actions"]{display:flex;justify-content:flex-end;gap:0.5rem;margin-top:1.25rem}
+[data-vibeui-dialog-014-window] button{
+appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:600;
+display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;
+border-radius:0.5rem;border:1px solid transparent;
+}
+[data-vibeui-dialog-014-window] [data-part="leave"]{background:transparent;color:inherit;border-color:var(--vibeui-dialog-014-border,oklch(0.89 0.006 265))}
+[data-vibeui-dialog-014-window] [data-part="stay"]{background:var(--vibeui-dialog-014-accent,oklch(0.55 0.2 262));color:oklch(1 0 0)}
+[data-vibeui-dialog-014-window] [data-part="stay"]:hover{filter:brightness(0.94)}
+[data-vibeui-dialog-014-window] :focus-visible{outline:2px solid var(--vibeui-dialog-014-accent,oklch(0.55 0.2 262));outline-offset:2px}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="dialog-014"] *{animation:none!important;transition:none!important}
+[data-vibeui-dialog-014-window]{transition:none!important;opacity:1;transform:none}
+[data-vibeui-dialog-014-window] [data-part="bar"]{transform:scaleX(1)}
+}
+`
+
+/**
+ * Окно истекающей сессии: полоса убывает столько же, сколько названо в тексте.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Dialog014({
+  id = "vibeui-dialog-014",
+  trigger = "Показать окно сессии",
+  title = "Сессия скоро закончится",
+  description = "Мы выйдем из аккаунта через минуту бездействия. Несохранённые изменения останутся в черновике.",
+  seconds = 60,
+  stayLabel = "Остаться",
+  leaveLabel = "Выйти",
+  className,
+  style,
+}: Dialog014Props) {
+  const palette = {
+    "--vibeui-dialog-014-seconds": seconds,
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-dialog-014" precedence="medium">
+        {STYLES}
+      </style>
+      <div data-vibeui-block="dialog-014" className={className} style={palette}>
+        <button data-part="trigger" type="button" popoverTarget={id}>
+          {trigger}
+        </button>
+        <div
+          id={id}
+          popover="auto"
+          data-vibeui-dialog-014-window=""
+          role="alertdialog"
+          aria-labelledby={`${id}-title`}
+          style={palette}
+        >
+          <div data-part="head">
+            <span data-part="mark" aria-hidden="true">
+              !
+            </span>
+            <h2 data-part="title" id={`${id}-title`}>
+              {title}
+            </h2>
+          </div>
+          <p data-part="description">{description}</p>
+          <div data-part="track" aria-hidden="true">
+            <span data-part="bar" />
+          </div>
+          <div data-part="actions">
+            <button data-part="leave" type="button" popoverTarget={id}>
+              {leaveLabel}
+            </button>
+            <button data-part="stay" type="button" popoverTarget={id}>
+              {stayLabel}
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}

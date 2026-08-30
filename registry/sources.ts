@@ -14,6 +14,7 @@ import footerRegistry from "@/registry/blocks/footer/registry.json"
 import buttonsRegistry from "@/registry/components/buttons/registry.json"
 import accordionRegistry from "@/registry/components/accordion/registry.json"
 import alertRegistry from "@/registry/components/alert/registry.json"
+import dialogRegistry from "@/registry/components/dialog/registry.json"
 import inputsRegistry from "@/registry/components/inputs/registry.json"
 import displayRegistry from "@/registry/components/display/registry.json"
 import feedbackRegistry from "@/registry/components/feedback/registry.json"
@@ -85,6 +86,11 @@ export const SOURCES = [
     directory: "registry/components/alert",
     kind: "component",
     items: alertRegistry.items,
+  },
+  {
+    directory: "registry/components/dialog",
+    kind: "component",
+    items: dialogRegistry.items,
   },
   {
     directory: "registry/components/inputs",

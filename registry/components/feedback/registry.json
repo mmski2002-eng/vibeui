@@ -2,148 +2,13 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "items": [
     {
-      "name": "dialog-001",
-      "type": "registry:component",
-      "title": "Popover Dialog",
-      "description": "Модальное окно на HTML popover: открытие, закрытие по Esc и по клику мимо, подложка и верхний слой — всё от браузера, без единой строки JS.",
-      "categories": ["feedback"],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "dialog-001/dialog-001.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/dialog-001.tsx"
-        }
-      ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-001-*. Открытие держит HTML popover: кнопка объявляет цель атрибутом popovertarget, окно — popover=\"auto\". Отсюда бесплатно приходят закрытие по Esc и по клику мимо, подложка ::backdrop и верхний слой, в котором окно не зависит от overflow и z-index родителей. Анимация появления собрана на @starting-style и transition-behavior для display и overlay. Окно стилизуется по атрибуту [data-vibeui-dialog-001-window], а не по вложенности: в верхнем слое оно перестаёт быть потомком корня компонента.",
-      "meta": {
-        "tags": ["dialog", "modal", "popover", "no-js"],
-        "ai": {
-          "export": "Dialog001",
-          "usage": "<Dialog001\n  id=\"delete-project\"\n  trigger=\"Удалить проект\"\n  title=\"Удалить проект?\"\n  description=\"Отменить это будет нельзя.\"\n  confirmLabel=\"Удалить\"\n/>",
-          "summary": "Модальное окно подтверждения без JS. Кнопка связана с окном атрибутом popovertarget, браузер сам даёт Esc, клик мимо, затемнённую подложку и верхний слой. Появление анимировано через @starting-style. Заголовок, текст, кнопки отмены и подтверждения. Ноль зависимостей, один файл, своя палитра.",
-          "preserve": [
-            "локальную палитру --vibeui-dialog-001-* и не подменять её токенами вашей темы (bg-background, border-border и подобными)",
-            "механику popover: атрибуты popover=\"auto\" и popovertarget — это и есть всё поведение окна, состояние в React ему не нужно",
-            "стилизацию окна по атрибуту [data-vibeui-dialog-001-window]: в верхнем слое окно перестаёт быть потомком корня, и селекторы по вложенности перестают работать",
-            "передачу палитры окну отдельным style: по той же причине переменные с корня в него не наследуются",
-            "::backdrop и его затемнение — без подложки модальное окно не читается как модальное",
-            "aria-labelledby, связывающий окно с заголовком, и role=\"dialog\"",
-            "@starting-style вместе с transition-behavior для display и overlay: без них появление будет рывком",
-            "блок <style> внутри компонента — в нём вся палитра, кнопки и анимация"
-          ],
-          "adapt": [
-            "id — обязателен свой на каждое окно на странице: он связывает кнопку и окно",
-            "тексты trigger, title, description, confirmLabel и cancelLabel",
-            "children — своё содержимое вместо описания: форма, список, что угодно",
-            "акцент через проп accent — цвет кнопок и кольца фокуса",
-            "обработчик подтверждения: повесьте onClick на кнопку подтверждения в своей копии"
-          ],
-          "notes": [
-            "Два экземпляра с одинаковым id на одной странице конфликтуют: кнопка откроет первое попавшееся окно. Давайте каждому свой id.",
-            "popover=\"auto\" закрывается кликом мимо. Для окна, которое нельзя закрыть случайно, поставьте popover=\"manual\" и уберите кнопку отмены из списка закрывающих.",
-            "Это не <dialog>: у popover нет модальности в смысле inert для остальной страницы. Для формы платежа берите <dialog> с showModal и клиентским кодом.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "trigger",
-            "label": "Кнопка",
-            "type": "text",
-            "default": "Удалить проект",
-            "maxLength": 30
-          },
-          {
-            "prop": "title",
-            "label": "Заголовок",
-            "type": "text",
-            "default": "Удалить проект?",
-            "maxLength": 50
-          },
-          {
-            "prop": "description",
-            "label": "Текст",
-            "type": "text",
-            "default": "Вместе с проектом удалятся страницы, домены и история публикаций. Отменить это будет нельзя.",
-            "maxLength": 140
-          },
-          {
-            "prop": "confirmLabel",
-            "label": "Подтверждение",
-            "type": "text",
-            "default": "Удалить",
-            "maxLength": 24
-          },
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "i18n": {
-          "en": {
-            "description": "A modal built on the HTML popover attribute: opening, Esc, click-outside, the backdrop and the top layer all come from the browser, with no JS at all.",
-            "ai": {
-              "summary": "A JS-free confirmation dialog. The button is wired to the window through popovertarget, and the browser supplies Esc, light dismiss, the dimmed backdrop and the top layer. The entrance is animated with @starting-style. Title, body, cancel and confirm buttons. Zero dependencies, one file, its own palette.",
-              "preserve": [
-                "the local --vibeui-dialog-001-* palette — do not swap it for your theme tokens (bg-background, border-border and the like)",
-                "the popover mechanism: popover=\"auto\" and popovertarget are the entire behaviour; it needs no React state",
-                "styling the window through the [data-vibeui-dialog-001-window] attribute: in the top layer the window is no longer a descendant of the root, so descendant selectors stop matching",
-                "passing the palette to the window through its own style attribute: for the same reason variables do not inherit into it",
-                "::backdrop and its dimming — without a backdrop a modal does not read as modal",
-                "aria-labelledby tying the window to its heading, and role=\"dialog\"",
-                "@starting-style together with transition-behavior for display and overlay: without them the entrance jumps",
-                "the <style> block inside the component — it holds the palette, the buttons and the animation"
-              ],
-              "adapt": [
-                "id — every dialog on a page needs its own: it is what links button and window",
-                "the trigger, title, description, confirmLabel and cancelLabel copy",
-                "children — your own content instead of the description: a form, a list, anything",
-                "the accent through the accent prop — it colours the buttons and the focus ring",
-                "the confirm handler: attach onClick to the confirm button in your copy"
-              ],
-              "notes": [
-                "Two instances sharing an id on one page conflict: the button opens whichever window it finds first. Give each its own id.",
-                "popover=\"auto\" closes on an outside click. For a window that must not be dismissed by accident use popover=\"manual\".",
-                "This is not <dialog>: popover has no modality in the sense of making the rest of the page inert. For a payment form use <dialog> with showModal and client code.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
-              ],
-              "usage": "<Dialog001\n  id=\"delete-project\"\n  trigger=\"Delete project\"\n  title=\"Delete this project?\"\n  description=\"This cannot be undone.\"\n  confirmLabel=\"Delete\"\n/>"
-            },
-            "controls": {
-              "trigger": {
-                "label": "Button",
-                "default": "Delete project"
-              },
-              "title": {
-                "label": "Title",
-                "default": "Delete this project?"
-              },
-              "description": {
-                "label": "Body",
-                "default": "The pages, domains and publish history go with it. This cannot be undone."
-              },
-              "confirmLabel": {
-                "label": "Confirm",
-                "default": "Delete"
-              },
-              "accent": {
-                "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "name": "toast-001",
       "type": "registry:component",
       "title": "Timed Toast",
       "description": "Всплывающее уведомление с полосой оставшегося времени и действием «Отменить»: видно, сколько секунд осталось, чтобы передумать.",
-      "categories": ["feedback"],
+      "categories": [
+        "feedback"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -155,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-001-*. Полоса времени — CSS-анимация scaleX, длительность приходит переменной --vibeui-toast-001-duration из пропа duration: таймер не считается в JS и не вызывает перерисовок. Сам компонент только показывает уведомление: появлением, очередью и удалением управляет вызывающий код через onClose. Роль выбирается по тону: danger — alert, остальные — status.",
       "meta": {
-        "tags": ["toast", "notification", "undo", "timer"],
+        "tags": [
+          "toast",
+          "notification",
+          "undo",
+          "timer"
+        ],
         "preview": {
           "width": "full"
         },
@@ -193,7 +63,11 @@
             "label": "Тон",
             "type": "select",
             "default": "success",
-            "options": ["neutral", "success", "danger"]
+            "options": [
+              "neutral",
+              "success",
+              "danger"
+            ]
           },
           {
             "prop": "title",
@@ -284,7 +158,9 @@
       "type": "registry:component",
       "title": "Empty State",
       "description": "Пустой экран, который объясняет следующий шаг, а не сообщает об отсутствии данных. Рисунок собран на CSS и намекает на будущий список.",
-      "categories": ["feedback"],
+      "categories": [
+        "feedback"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -296,7 +172,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-001-*. Рисунок — три плитки на CSS с поворотом и разной прозрачностью: он намекает на список, который здесь появится, и не требует иллюстрации из библиотеки. Пунктирная рамка отделяет пустое состояние от заполненного экрана. Отступы и кегль заголовка считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["empty state", "onboarding", "placeholder", "cta"],
+        "tags": [
+          "empty state",
+          "onboarding",
+          "placeholder",
+          "cta"
+        ],
         "preview": {
           "width": "full"
         },
@@ -422,7 +303,9 @@
       "type": "registry:component",
       "title": "Keyboard Tooltip",
       "description": "Подсказка, которая открывается и по наведению, и по фокусу с клавиатуры. Второе обычно забывают, и подсказка остаётся недоступной половине пользователей.",
-      "categories": ["feedback"],
+      "categories": [
+        "feedback"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -434,7 +317,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-001-*. Появление держат :hover и :focus-within у обёртки, поэтому JS не нужен и компонент остаётся серверным. Хвостик — повёрнутый квадрат того же цвета. Подсказка помечена role=\"tooltip\" и имеет id: свяжите с ним триггер через aria-describedby. Без переданного children рисуется кнопка-заглушка — она нужна только для превью.",
       "meta": {
-        "tags": ["tooltip", "hint", "accessibility", "no-js"],
+        "tags": [
+          "tooltip",
+          "hint",
+          "accessibility",
+          "no-js"
+        ],
         "preview": {
           "props": {
             "open": true
@@ -481,7 +369,10 @@
             "label": "Сторона",
             "type": "select",
             "default": "top",
-            "options": ["top", "bottom"]
+            "options": [
+              "top",
+              "bottom"
+            ]
           }
         ],
         "i18n": {
@@ -532,7 +423,9 @@
       "type": "registry:component",
       "title": "Announcement Banner",
       "description": "Полоса-объявление во всю ширину: метка, текст, ссылка и закрытие. Тёмная и спокойная — не притворяется уведомлением об ошибке.",
-      "categories": ["feedback"],
+      "categories": [
+        "feedback"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -544,7 +437,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-001-*. Подсветка слева — радиальный градиент от акцента, а не отдельный элемент. Кнопка закрытия появляется только когда передан onDismiss: полосе, которую нечем закрыть, крестик не нужен. На узкой ширине текст уходит на отдельную строку через @container, а метка и действие остаются в одну линию.",
       "meta": {
-        "tags": ["banner", "announcement", "top bar", "marketing"],
+        "tags": [
+          "banner",
+          "announcement",
+          "top bar",
+          "marketing"
+        ],
         "preview": {
           "width": "full"
         },
