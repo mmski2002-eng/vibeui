@@ -15,6 +15,7 @@ import {
   type ControlValues,
   type PreviewTheme,
 } from "@/lib/controls"
+import { getDictionary, type Locale } from "@/lib/i18n"
 import type { CatalogItem } from "@/registry/meta"
 
 /**
@@ -24,6 +25,7 @@ import type { CatalogItem } from "@/registry/meta"
  */
 export function ItemWorkbench({
   item,
+  locale,
   docUrl,
   fullPrompt,
   compact,
@@ -31,17 +33,24 @@ export function ItemWorkbench({
   initialValues,
 }: {
   item: CatalogItem
+  locale: Locale
   docUrl: string | null
   fullPrompt: string
   compact: boolean
   initialTheme: PreviewTheme
   initialValues: ControlValues
 }) {
+  const t = getDictionary(locale)
   const [theme, setTheme] = useState<PreviewTheme>(initialTheme)
   const [values, setValues] = useState<ControlValues>(initialValues)
   const controls = getControls(item)
 
   const params = toSearchParams(item, values)
+
+  if (locale !== "ru") {
+    params.set("lang", locale)
+  }
+
   const link = docUrl
     ? params.toString()
       ? `${docUrl}?${params}`
@@ -55,7 +64,7 @@ export function ItemWorkbench({
           id="preview-heading"
           className="text-shell-fg mb-4 text-lg font-medium"
         >
-          Preview
+          {t.item.preview}
         </h2>
         <BlockPreview
           slug={item.name}
@@ -71,20 +80,20 @@ export function ItemWorkbench({
         className="bg-shell-panel border-shell-border-strong mb-10 rounded-xl border p-5 sm:p-6"
       >
         <h2 id="use-heading" className="text-shell-fg text-xl font-medium">
-          Использовать с AI
+          {t.item.use}
         </h2>
 
         <ol className="text-shell-muted mt-4 max-w-2xl space-y-1.5 text-sm">
-          <li>1. Скопируйте ссылку.</li>
-          <li>
-            2. Напишите агенту своими словами и вставьте её в предложение.
-          </li>
-          <li>3. Агент откроет ссылку и поставит компонент из registry.</li>
+          {t.item.steps.map((step, index) => (
+            <li key={step}>
+              {index + 1}. {step}
+            </li>
+          ))}
         </ol>
 
         {link ? (
           <p className="text-shell-muted bg-shell-elevated border-shell-border mt-4 max-w-2xl rounded-lg border px-3 py-2 font-mono text-xs break-all">
-            размести это в шапке: {link}
+            {t.item.example} {link}
           </p>
         ) : null}
 
@@ -96,13 +105,18 @@ export function ItemWorkbench({
               <ConfigurablePreview item={item} values={values} />
             </div>
             <div className="border-shell-border border-t p-4">
-              <ItemControls item={item} values={values} onChange={setValues} />
+              <ItemControls
+                item={item}
+                values={values}
+                onChange={setValues}
+                locale={locale}
+              />
               <button
                 type="button"
                 onClick={() => setValues(defaultValues(item))}
                 className="text-shell-muted hover:text-shell-fg mt-3 text-xs"
               >
-                Сбросить настройки
+                {t.card.reset}
               </button>
             </div>
           </div>
@@ -111,8 +125,8 @@ export function ItemWorkbench({
         <div className="mt-5">
           <CopyButton
             value={link}
-            label="Copy for AI"
-            copiedLabel="Ссылка скопирована"
+            label={t.card.copy}
+            copiedLabel={t.card.copied}
             variant="primary"
             className="h-11 px-5"
           />
@@ -125,14 +139,13 @@ export function ItemWorkbench({
           className="border-shell-border mt-6 scroll-mt-20 border-t pt-5"
         >
           <summary className="text-shell-muted hover:text-shell-fg cursor-pointer text-sm select-none marker:content-none [&::-webkit-details-marker]:hidden">
-            Показать полную инструкцию
+            {t.item.showFull}
           </summary>
           <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty">
-            То, что лежит по ссылке в развёрнутом виде. Нужна, если агент не
-            может открыть ссылку — тогда вставьте этот текст целиком.
+            {t.item.fullNote}
           </p>
           <div className="mt-3">
-            <CopyButton value={fullPrompt} label="Copy полную инструкцию" />
+            <CopyButton value={fullPrompt} label={t.item.copyFull} />
           </div>
           <pre className="bg-shell-elevated border-shell-border text-shell-fg mt-3 max-h-96 overflow-auto rounded-lg border p-4 text-xs leading-relaxed whitespace-pre-wrap">
             {fullPrompt}

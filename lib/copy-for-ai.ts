@@ -1,4 +1,6 @@
 import { buildUsage, getControls, type ControlValues } from "@/lib/controls"
+import type { Locale } from "@/lib/i18n"
+import { PROMPT_COPY } from "@/lib/i18n-prompt"
 import type { ItemKind } from "@/registry/categories"
 import type { CatalogItem } from "@/registry/meta"
 
@@ -6,6 +8,7 @@ export type CopyForAiContext = {
   installCommand: string | null
   registryUrl: string | null
   kind: ItemKind
+  locale: Locale
 }
 
 /**
@@ -33,61 +36,6 @@ function section(heading: string, body: string[]): string[] {
   return body.length > 0 ? [heading, ...body, ""] : []
 }
 
-/** Секция 3 отличает выдачу мелкого компонента от выдачи секции. */
-function howToUse(item: CatalogItem, kind: ItemKind): string[] {
-  const ai = item.meta?.ai
-  const from = importPath(item)
-  const lines: string[] = []
-
-  if (ai?.export && from) {
-    lines.push(`import { ${ai.export} } from "${from}"`, "")
-  }
-
-  if (ai?.usage) {
-    lines.push(ai.usage, "")
-    lines.push("Read the installed file for the full prop list.")
-  } else if (kind === "block") {
-    lines.push(
-      "This is a whole page section. Render it as one piece — do not copy",
-      "fragments out of it and do not rebuild it from smaller components.",
-      "Read the installed file for the export name and its props.",
-    )
-  } else {
-    lines.push(
-      "Read the installed file for the export name, its props and how to",
-      "render it. Do not guess the API.",
-    )
-  }
-
-  return lines
-}
-
-/** Секция 4 — прямой ответ на «размести вот это тут». */
-function wherePlace(kind: ItemKind): string[] {
-  if (kind === "component") {
-    return [
-      "This is a small inline component. Put it exactly where the user asked,",
-      "inside the existing markup. Do not create a new page, section or",
-      "wrapper for it. If a similar control already sits in that spot,",
-      "replace it instead of adding a second one.",
-    ]
-  }
-
-  if (kind === "template") {
-    return [
-      "This is a whole page. Use it as the content root of the page the user",
-      "named. Do not nest it inside another page's layout.",
-    ]
-  }
-
-  return [
-    "This is a full-width page section. Place it as a direct child of the",
-    "page layout, in the section order the user asked for. Do not nest it",
-    "inside a card, sidebar, modal or any narrow inline container: the",
-    "section measures its own width and will lay out wrong there.",
-  ]
-}
-
 /**
  * Короткая инструкция, которую агент получает по ссылке `/c/<name>`.
  *
@@ -97,6 +45,9 @@ function wherePlace(kind: ItemKind): string[] {
  *
  * Документ короткий ещё и потому, что проходит через фетч агента: чем меньше
  * текста, тем меньше шансов, что он приедет пересказанным.
+ *
+ * `item` приходит уже локализованным (см. `lib/localize.ts`), поэтому здесь
+ * язык влияет только на обвязку.
  */
 export function buildAgentBrief(
   item: CatalogItem,
@@ -106,12 +57,19 @@ export function buildAgentBrief(
     values: ControlValues
   },
 ): string {
-  const { installCommand, registryUrl, kind, pageUrl, fileUrl, values } =
-    context
+  const {
+    installCommand,
+    registryUrl,
+    kind,
+    pageUrl,
+    fileUrl,
+    values,
+    locale,
+  } = context
+  const copy = PROMPT_COPY[locale].brief
   const ai = item.meta?.ai
   const title = item.title ?? item.name
   const target = installPath(item)
-  const noun = kind === "component" ? "компонент" : "блок"
 
   const lines = [`VibeUI · ${item.name} · ${title}`]
 
@@ -121,34 +79,31 @@ export function buildAgentBrief(
 
   lines.push(
     "",
-    `Установи ${noun} командой. Не пиши код сам и не пересоздавай его по описанию:`,
-    installCommand ?? `Registry item: ${registryUrl ?? "не сконфигурирован"}`,
+    copy.install(copy.noun[kind]),
+    installCommand ??
+      (registryUrl ? `${copy.registryItem} ${registryUrl}` : copy.noCommand),
   )
 
   // Второй путь по убыванию точности: скачивание переносит файл побайтово
   // так же, как установка. Чтение кода и перепечатывание — не переносит.
   if (fileUrl && target) {
-    lines.push(
-      "",
-      "Если shadcn CLI в проекте нет — скачай файл, не переписывай его руками:",
-      `curl -o ${target} ${fileUrl}`,
-    )
+    lines.push("", copy.curl, `curl -o ${target} ${fileUrl}`)
   }
 
   lines.push("")
 
   if (target) {
-    lines.push(`Файл: ${target}`)
+    lines.push(`${copy.file} ${target}`)
   }
 
   if (ai?.export) {
-    lines.push(`Экспорт: ${ai.export}`)
+    lines.push(`${copy.export} ${ai.export}`)
   }
 
   lines.push(
     item.dependencies?.length
-      ? `npm-зависимости: ${item.dependencies.join(", ")}`
-      : "npm-зависимости: нет",
+      ? `${copy.npmDeps} ${item.dependencies.join(", ")}`
+      : copy.npmNone,
   )
 
   // Сниппет собирается из значений, которые пользователь выставил на витрине.
@@ -156,7 +111,7 @@ export function buildAgentBrief(
   const usage = buildUsage(item, values)
 
   if (usage) {
-    lines.push("", "Использование:", usage)
+    lines.push("", copy.usage, usage)
   }
 
   const configured = getControls(item).some(
@@ -164,10 +119,7 @@ export function buildAgentBrief(
   )
 
   if (configured) {
-    lines.push(
-      "",
-      "Пропсы в сниппете выбрал пользователь — вставляй компонент именно с ними.",
-    )
+    lines.push("", copy.configured)
   }
 
   // Три первых правила — самые важные; остальное агент прочитает в файле,
@@ -175,22 +127,41 @@ export function buildAgentBrief(
   const rules = (ai?.preserve ?? []).slice(0, 3)
 
   if (rules.length > 0) {
-    lines.push("", "Сохрани как установлено:", ...bullets(rules))
+    lines.push("", copy.preserve, ...bullets(rules))
   }
 
-  lines.push(
-    "",
-    kind === "component"
-      ? "Это inline-компонент: поставь его туда, куда просил пользователь, внутрь существующей разметки."
-      : "Это полноширинная секция: поставь её прямым потомком разметки страницы, не внутрь карточки или сайдбара.",
-    "Полный список пропсов и правил — в установленном файле.",
-  )
+  lines.push("", copy.placement[kind], copy.readFile)
 
   if (pageUrl) {
-    lines.push("", `Страница компонента: ${pageUrl}`)
+    lines.push("", `${copy.page} ${pageUrl}`)
   }
 
   return lines.join("\n")
+}
+
+/** Секция 3 отличает выдачу мелкого компонента от выдачи секции. */
+function howToUse(
+  item: CatalogItem,
+  kind: ItemKind,
+  copy: (typeof PROMPT_COPY)[Locale]["full"],
+): string[] {
+  const ai = item.meta?.ai
+  const from = importPath(item)
+  const lines: string[] = []
+
+  if (ai?.export && from) {
+    lines.push(`import { ${ai.export} } from "${from}"`, "")
+  }
+
+  if (ai?.usage) {
+    lines.push(ai.usage, "", copy.readForProps)
+  } else if (kind === "block") {
+    lines.push(...copy.blockHow)
+  } else {
+    lines.push(...copy.componentHow)
+  }
+
+  return lines
 }
 
 /**
@@ -204,61 +175,47 @@ export function buildCopyForAiPrompt(
   item: CatalogItem,
   context: CopyForAiContext,
 ): string {
-  const { installCommand, registryUrl, kind } = context
+  const { installCommand, registryUrl, kind, locale } = context
+  const copy = PROMPT_COPY[locale].full
   const ai = item.meta?.ai
   const title = item.title ?? item.name
   const target = installPath(item)
 
   const lines: string[] = [
-    `# Install and place "${item.name}" (${title}) from VibeUI`,
+    copy.heading(item.name, title),
     "",
-    "## 1. Install first — do not skip, do not recreate",
+    copy.installHeading,
   ]
 
   if (installCommand) {
-    lines.push(
-      "Run this exact command before writing any code:",
-      installCommand,
-      "",
-    )
+    lines.push(copy.runExact, installCommand, "")
   } else {
-    lines.push(
-      "Install command is unavailable: the VibeUI registry URL is not configured.",
-      "",
-    )
+    lines.push(copy.unavailable, "")
   }
 
   if (registryUrl) {
-    lines.push(`Registry item: ${registryUrl}`)
+    lines.push(`${copy.registryItem} ${registryUrl}`)
   }
 
   if (target) {
-    lines.push(
-      `Installs to: ${target} (the exact path follows this project's components.json aliases).`,
-    )
+    lines.push(copy.installsTo(target))
   }
 
   lines.push(
     item.dependencies?.length
-      ? `npm dependencies: ${item.dependencies.join(", ")}`
-      : "npm dependencies: none.",
+      ? `${copy.npmDeps} ${item.dependencies.join(", ")}`
+      : copy.npmNone,
   )
 
   lines.push(
     item.registryDependencies?.length
-      ? `Registry dependencies: ${item.registryDependencies.join(", ")}`
-      : "Registry dependencies: none.",
+      ? `${copy.registryDeps} ${item.registryDependencies.join(", ")}`
+      : copy.registryNone,
   )
 
-  lines.push(
-    "",
-    "Install it from the registry. Do not recreate it from the description,",
-    "do not substitute a similar component from another library, and do not",
-    "rewrite it to match the project's existing style.",
-    "",
-  )
+  lines.push("", ...copy.doNotRecreate, "")
 
-  lines.push("## 2. What it is")
+  lines.push(copy.whatHeading)
 
   if (item.description) {
     lines.push(item.description, "")
@@ -269,30 +226,23 @@ export function buildCopyForAiPrompt(
   }
 
   lines.push(
-    "## 3. How to use it",
-    ...howToUse(item, kind),
+    copy.howHeading,
+    ...howToUse(item, kind, copy),
     "",
-    "## 4. Where to place it",
-    ...wherePlace(kind),
+    copy.whereHeading,
+    ...copy.where[kind],
     "",
-    "Placement: ___",
-    "(The user fills this line in. If it is still blank, ask where to put it",
-    "instead of guessing.)",
+    ...copy.placementSlot,
     "",
   )
 
   lines.push(
-    ...section("## 5. Keep exactly as installed", bullets(ai?.preserve ?? [])),
-    ...section("## 6. You may change", bullets(ai?.adapt ?? [])),
-    ...section("## 7. Rules", bullets(ai?.notes ?? [])),
+    ...section(copy.keepHeading, bullets(ai?.preserve ?? [])),
+    ...section(copy.changeHeading, bullets(ai?.adapt ?? [])),
+    ...section(copy.rulesHeading, bullets(ai?.notes ?? [])),
   )
 
-  lines.push(
-    "## 8. Verify",
-    "- it renders with no console errors;",
-    "- it looks like the preview on the VibeUI page you copied this from;",
-    "- if it does not, you changed something listed in section 5 — put it back.",
-  )
+  lines.push(copy.verifyHeading, ...copy.verify)
 
   return lines.join("\n")
 }

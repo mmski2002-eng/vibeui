@@ -1,4 +1,5 @@
 import { CatalogCard } from "@/components/catalog/catalog-card"
+import type { Locale } from "@/lib/i18n"
 import { CATEGORIES, KINDS } from "@/registry/categories"
 import { getItemKind } from "@/registry/index"
 import type { CatalogItem } from "@/registry/meta"
@@ -17,7 +18,13 @@ const FILTER_STYLES = [
   ),
 ].join("")
 
-export function CatalogGrid({ items }: { items: CatalogItem[] }) {
+export function CatalogGrid({
+  items,
+  locale,
+}: {
+  items: CatalogItem[]
+  locale: Locale
+}) {
   return (
     // Колонки считаются от ширины сетки, а не окна: рядом с sidebar окно
     // шире доступного места, и viewport-брейкпоинты давали бы лишнюю колонку.
@@ -32,7 +39,7 @@ export function CatalogGrid({ items }: { items: CatalogItem[] }) {
             data-kind={getItemKind(item.name)}
             data-category={item.categories?.[0]}
           >
-            <CatalogCard item={item} />
+            <CatalogCard item={item} locale={locale} />
           </li>
         ))}
       </ul>

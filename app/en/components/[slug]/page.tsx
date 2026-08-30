@@ -16,7 +16,7 @@ export async function generateMetadata({
     return {}
   }
 
-  const block = localizeItem(found, "ru")
+  const block = localizeItem(found, "en")
 
   return {
     title: block.title ?? block.name,
@@ -28,7 +28,7 @@ export function generateStaticParams() {
   return getCatalogItems().map((item) => ({ slug: item.name }))
 }
 
-export default async function ComponentDetailPage({
+export default async function EnComponentDetailPage({
   params,
   searchParams,
 }: {
@@ -37,5 +37,5 @@ export default async function ComponentDetailPage({
 }) {
   const { slug } = await params
 
-  return <ItemPage locale="ru" slug={slug} query={await searchParams} />
+  return <ItemPage locale="en" slug={slug} query={await searchParams} />
 }

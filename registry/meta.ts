@@ -34,6 +34,29 @@ export type ItemControl = {
 
 export type ControlValue = string | number | boolean
 
+/** Переопределения контрола на другом языке. Тип контрола не меняется. */
+export type LocalizedControl = {
+  label?: string
+  default?: ControlValue
+}
+
+/**
+ * Что у item'а отличается на другом языке. Всё опционально: непереведённое
+ * поле берётся из русского оригинала.
+ */
+export type LocalizedMeta = {
+  title?: string
+  description?: string
+  ai?: {
+    summary?: string
+    preserve?: string[]
+    adapt?: string[]
+    notes?: string[]
+    usage?: string
+  }
+  controls?: Record<string, LocalizedControl>
+}
+
 export type CatalogMeta = {
   tags: string[]
   ai: {
@@ -64,6 +87,17 @@ export type CatalogMeta = {
    * использования. Обязательны по соглашению для `kind: component`.
    */
   controls?: ItemControl[]
+  /**
+   * Переводы. Русский — базовый и лежит в обычных полях; здесь только то,
+   * что отличается. Незаполненное поле откатывается к русскому: лучше
+   * честно показать оригинал, чем машинный перевод.
+   *
+   * Подписи по умолчанию у компонента остаются русскими — они в исходнике,
+   * который пользователь устанавливает, и менять его нельзя. Английская
+   * витрина задаёт их через `controls.<prop>.default`: значение уезжает в
+   * сниппет явным пропом, файл не трогается (см. docs/CONTROLS.md).
+   */
+  i18n?: Partial<Record<"en", LocalizedMeta>>
   kind?: ItemKind
   group?: ItemGroup
   internal?: boolean

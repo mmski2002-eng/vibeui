@@ -1,6 +1,8 @@
 import { CardInteractive } from "@/components/catalog/card-interactive"
 import { CatalogThumbnail } from "@/components/catalog/catalog-thumbnail"
 import { getControls } from "@/lib/controls"
+import { localePath, type Locale } from "@/lib/i18n"
+import { localizeItem } from "@/lib/localize"
 import { getItemDocUrl } from "@/lib/site"
 import { getCategoryLabel } from "@/registry/index"
 import type { CatalogItem } from "@/registry/meta"
@@ -12,8 +14,15 @@ import type { CatalogItem } from "@/registry/meta"
  * держит состояние — подложка, настройка и ссылка, которая это состояние
  * переносит на страницу item'а (см. docs/CONTROLS.md).
  */
-export function CatalogCard({ item }: { item: CatalogItem }) {
-  const category = item.categories?.[0]
+export function CatalogCard({
+  item,
+  locale,
+}: {
+  item: CatalogItem
+  locale: Locale
+}) {
+  const localized = localizeItem(item, locale)
+  const category = localized.categories?.[0]
 
   return (
     // Ссылка не оборачивает карточку целиком: внутри блока есть свои <a>, а
@@ -21,14 +30,15 @@ export function CatalogCard({ item }: { item: CatalogItem }) {
     // псевдоэлемент заголовка.
     <article className="bg-shell border-shell-border relative flex h-full flex-col overflow-hidden rounded-2xl border p-0.5 shadow-sm shadow-black/5">
       <CardInteractive
-        item={item}
-        docUrl={getItemDocUrl(item.name)}
-        itemUrl={`/components/${item.name}`}
-        title={item.title ?? item.name}
+        item={localized}
+        locale={locale}
+        docUrl={getItemDocUrl(localized.name)}
+        itemUrl={localePath(locale, `/components/${localized.name}`)}
+        title={localized.title ?? localized.name}
         categoryLabel={category ? getCategoryLabel(category) : null}
-        configurable={getControls(item).length > 0}
+        configurable={getControls(localized).length > 0}
       >
-        <CatalogThumbnail slug={item.name} />
+        <CatalogThumbnail slug={localized.name} />
       </CardInteractive>
     </article>
   )

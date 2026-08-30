@@ -12,6 +12,7 @@ import {
   type ControlValues,
   type PreviewTheme,
 } from "@/lib/controls"
+import { getDictionary, type Locale } from "@/lib/i18n"
 import type { CatalogItem } from "@/registry/meta"
 
 // Код компонента и панель контролов грузятся только по первому клику: пока
@@ -40,6 +41,7 @@ const TOGGLE =
  */
 export function CardInteractive({
   item,
+  locale,
   docUrl,
   itemUrl,
   title,
@@ -48,6 +50,7 @@ export function CardInteractive({
   children,
 }: {
   item: CatalogItem
+  locale: Locale
   docUrl: string | null
   itemUrl: string
   title: string
@@ -55,6 +58,7 @@ export function CardInteractive({
   configurable: boolean
   children: ReactNode
 }) {
+  const t = getDictionary(locale)
   const [theme, setTheme] = useState<PreviewTheme>("dark")
   const [values, setValues] = useState<ControlValues>(() => defaultValues(item))
   const [open, setOpen] = useState(false)
@@ -62,9 +66,17 @@ export function CardInteractive({
   const isDark = theme === "dark"
   const params = toSearchParams(item, values)
 
+  // Язык уезжает в ссылку вместе с настройкой: агент должен получить
+  // инструкцию на том языке, на котором человек смотрел витрину.
+  const docParams = new URLSearchParams(params)
+
+  if (locale !== "ru") {
+    docParams.set("lang", locale)
+  }
+
   const docLink = docUrl
-    ? params.toString()
-      ? `${docUrl}?${params}`
+    ? docParams.toString()
+      ? `${docUrl}?${docParams}`
       : docUrl
     : null
 
@@ -87,13 +99,18 @@ export function CardInteractive({
               <ConfigurablePreview item={item} values={values} />
             </div>
             <div className="border-shell-border border-t p-3">
-              <ItemControls item={item} values={values} onChange={setValues} />
+              <ItemControls
+                item={item}
+                values={values}
+                onChange={setValues}
+                locale={locale}
+              />
               <button
                 type="button"
                 onClick={() => setValues(defaultValues(item))}
                 className="text-shell-muted hover:text-shell-fg mt-3 text-xs"
               >
-                Сбросить настройки
+                {t.card.reset}
               </button>
             </div>
           </>
@@ -113,7 +130,7 @@ export function CardInteractive({
             <Moon className="size-3.5" aria-hidden="true" />
           )}
           <span className="sr-only">
-            {isDark ? "Светлая подложка превью" : "Тёмная подложка превью"}
+            {isDark ? t.card.toLight : t.card.toDark}
           </span>
         </button>
 
@@ -130,7 +147,7 @@ export function CardInteractive({
               <SlidersHorizontal className="size-3.5" aria-hidden="true" />
             )}
             <span className="sr-only">
-              {open ? "Закрыть настройку" : "Настроить компонент"}
+              {open ? t.card.closeConfigure : t.card.configure}
             </span>
           </button>
         ) : null}
@@ -155,8 +172,8 @@ export function CardInteractive({
           ) : null}
           <CopyButton
             value={docLink}
-            label="Copy for AI"
-            copiedLabel="Ссылка скопирована"
+            label={t.card.copy}
+            copiedLabel={t.card.copied}
             className="h-7 px-3 text-xs"
           />
         </div>

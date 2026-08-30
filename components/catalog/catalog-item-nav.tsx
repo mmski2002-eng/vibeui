@@ -1,5 +1,7 @@
 import Link from "next/link"
 
+import { localePath, type Locale } from "@/lib/i18n"
+import { localizeItem } from "@/lib/localize"
 import {
   getCatalogItems,
   getCatalogNavSections,
@@ -12,8 +14,14 @@ import {
  * Показывается только тип текущего item'а: блоки и компоненты разведены по
  * разным маршрутам, соседями считаются items своего типа.
  */
-export function CatalogItemNav({ activeSlug }: { activeSlug: string }) {
-  const items = getCatalogItems()
+export function CatalogItemNav({
+  activeSlug,
+  locale,
+}: {
+  activeSlug: string
+  locale: Locale
+}) {
+  const items = getCatalogItems().map((item) => localizeItem(item, locale))
   const sections = getCatalogNavSections(getItemKind(activeSlug))
   const showKinds = sections.length > 1
 
@@ -38,7 +46,7 @@ export function CatalogItemNav({ activeSlug }: { activeSlug: string }) {
                   .map((item) => (
                     <li key={item.name}>
                       <Link
-                        href={`/components/${item.name}`}
+                        href={localePath(locale, `/components/${item.name}`)}
                         aria-current={
                           item.name === activeSlug ? "page" : undefined
                         }

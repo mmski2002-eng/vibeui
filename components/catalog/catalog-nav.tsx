@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from "react"
 
 import { CatalogSidebar } from "@/components/catalog/catalog-sidebar"
+import { getDictionary, type Locale } from "@/lib/i18n"
 import type { CatalogNavSection } from "@/registry/index"
 
 type Tab = {
@@ -20,9 +21,13 @@ const IDLE_ITEM = "text-shell-muted hover:text-shell-fg hover:bg-shell-panel "
  * живут на одной оси: активен всегда ровно один фильтр. Если тип в каталоге
  * один, строка типа не показывается — она дублировала бы «Всё».
  */
-function buildTabs(sections: CatalogNavSection[], total: number): Tab[] {
+function buildTabs(
+  sections: CatalogNavSection[],
+  total: number,
+  allLabel: string,
+): Tab[] {
   const showKinds = sections.length > 1
-  const tabs: Tab[] = [{ value: "all", label: "Всё", count: total }]
+  const tabs: Tab[] = [{ value: "all", label: allLabel, count: total }]
 
   for (const section of sections) {
     if (showKinds) {
@@ -55,26 +60,29 @@ function buildTabs(sections: CatalogNavSection[], total: number): Tab[] {
  * над сеткой. URL-состояния в v1 нет: обе страницы каталога статические.
  */
 export function CatalogNav({
+  locale,
   sections,
   total,
   heading,
   children,
 }: {
+  locale: Locale
   sections: CatalogNavSection[]
   total: number
   heading: ReactNode
   children: ReactNode
 }) {
+  const t = getDictionary(locale)
   const [active, setActive] = useState("all")
-  const tabs = buildTabs(sections, total)
+  const tabs = buildTabs(sections, total, t.nav.all)
 
   return (
     <>
       <CatalogSidebar>
         <p className="text-shell-muted mb-3 px-3 text-xs font-medium tracking-wide uppercase">
-          Каталог
+          {t.nav.heading}
         </p>
-        <ul role="group" aria-label="Фильтр каталога" className="space-y-1">
+        <ul role="group" aria-label={t.nav.filter} className="space-y-1">
           {tabs.map((tab) => (
             <li key={tab.value}>
               <button
@@ -107,7 +115,7 @@ export function CatalogNav({
             кнопка совпадала по левому краю с сеткой. */}
         <div
           role="group"
-          aria-label="Фильтр каталога"
+          aria-label={t.nav.filter}
           className="-mx-4 mb-6 flex [scrollbar-width:none] gap-2 overflow-x-auto px-4 pb-1 [-ms-overflow-style:none] lg:hidden [&::-webkit-scrollbar]:hidden"
         >
           {tabs.map((tab) => (

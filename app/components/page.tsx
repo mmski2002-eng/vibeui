@@ -1,38 +1,11 @@
-import { CatalogGrid } from "@/components/catalog/catalog-grid"
-import { CatalogNav } from "@/components/catalog/catalog-nav"
-import { CatalogShell } from "@/components/catalog/catalog-shell"
-import { getCatalogNavSections, getItemsByKind } from "@/registry/index"
+import { CatalogPage } from "@/components/pages/catalog-page"
+import { getDictionary } from "@/lib/i18n"
 
 export const metadata = {
-  title: "Компоненты",
-  description:
-    "Каталог AI-native UI-компонентов VibeUI: live preview, готовый код и инструкция для AI-агента.",
+  title: getDictionary("ru").components.metaTitle,
+  description: getDictionary("ru").components.description,
 }
 
 export default function ComponentsPage() {
-  const items = getItemsByKind("component")
-  const sections = getCatalogNavSections("component")
-
-  return (
-    <CatalogShell>
-      <CatalogNav
-        sections={sections}
-        total={items.length}
-        heading={
-          <div className="border-shell-border mb-6 border-b pb-6">
-            <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
-              Компоненты
-            </h1>
-            <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty sm:text-base">
-              Мелкие элементы интерфейса: кнопки, поля, индикаторы. Каждый
-              ставится одной командой, не зависит от темы вашего проекта и
-              приходит с инструкцией для AI-агента.
-            </p>
-          </div>
-        }
-      >
-        <CatalogGrid items={items} />
-      </CatalogNav>
-    </CatalogShell>
-  )
+  return <CatalogPage locale="ru" variant="components" />
 }

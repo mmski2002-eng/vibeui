@@ -3,6 +3,7 @@
 import { useId } from "react"
 
 import { getControls, type ControlValues } from "@/lib/controls"
+import { getDictionary, type Locale } from "@/lib/i18n"
 import type { CatalogItem, ItemControl } from "@/registry/meta"
 import { LAZY_PREVIEWS } from "@/registry/previews.lazy"
 
@@ -36,12 +37,15 @@ function Control({
   control,
   value,
   onChange,
+  locale,
 }: {
   control: ItemControl
   value: ControlValues[string]
   onChange: (next: ControlValues[string]) => void
+  locale: Locale
 }) {
   const id = useId()
+  const t = getDictionary(locale)
 
   return (
     <div className="flex flex-col gap-1.5">
@@ -112,7 +116,7 @@ function Control({
             disabled={value === ""}
             className="text-shell-muted hover:text-shell-fg text-xs disabled:opacity-40"
           >
-            {value === "" ? "по умолчанию" : "сбросить"}
+            {value === "" ? t.control.unset : t.control.clear}
           </button>
         </div>
       ) : null}
@@ -141,10 +145,12 @@ export function ItemControls({
   item,
   values,
   onChange,
+  locale,
 }: {
   item: CatalogItem
   values: ControlValues
   onChange: (next: ControlValues) => void
+  locale: Locale
 }) {
   return (
     <div className="grid gap-3 sm:grid-cols-2">
@@ -154,6 +160,7 @@ export function ItemControls({
           control={control}
           value={values[control.prop]}
           onChange={(next) => onChange({ ...values, [control.prop]: next })}
+          locale={locale}
         />
       ))}
     </div>
