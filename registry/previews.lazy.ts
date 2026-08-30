@@ -261,4 +261,19 @@ export const LAZY_PREVIEWS = {
       (module) => module.Table003,
     ),
   ),
+  "chart-001": dynamic(() =>
+    import("@/registry/components/charts/chart-001/chart-001").then(
+      (module) => module.Chart001,
+    ),
+  ),
+  "chart-002": dynamic(() =>
+    import("@/registry/components/charts/chart-002/chart-002").then(
+      (module) => module.Chart002,
+    ),
+  ),
+  "sparkline-001": dynamic(() =>
+    import("@/registry/components/charts/sparkline-001/sparkline-001").then(
+      (module) => module.Sparkline001,
+    ),
+  ),
 } as unknown as Record<string, ComponentType<PreviewProps>>

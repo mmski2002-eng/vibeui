@@ -1,0 +1,394 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "chart-001",
+      "type": "registry:component",
+      "title": "Line Chart",
+      "description": "Линейный график на чистом SVG: путь считается из массива точек на сервере. Ни библиотеки графиков, ни клиентского JS — картинка видна до гидратации и печатается.",
+      "categories": ["charts"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-001/chart-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-001-*. Путь линии и заливки собирается из точек прямо в разметке: значения нормируются к области 320×120, нижняя граница опускается на четверть размаха ниже минимума, чтобы линия не лежала на оси. Толщина линии не искажается при растяжении благодаря vector-effect:non-scaling-stroke. Весь график — figure с figcaption и aria-label у svg.",
+      "meta": {
+        "tags": ["chart", "line", "svg", "analytics"],
+        "preview": {
+          "surface": "light",
+          "width": "full"
+        },
+        "ai": {
+          "export": "Chart001",
+          "usage": "<Chart001\n  title=\"Посетители за неделю\"\n  points={[{ label: \"Пн\", value: 1240 }, { label: \"Вт\", value: 1580 }]}\n/>",
+          "summary": "Линейный график: сетка из трёх линий, кривая с заливкой под ней, отметка максимума и подписи по оси. Путь SVG считается из массива точек — библиотека графиков не нужна, клиентского JS нет, график виден до гидратации и корректно печатается. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-001-* и не подменять её токенами вашей темы (bg-card, --chart-1 и подобными)",
+            "нормировку значений с опущенной нижней границей: линия, лежащая на оси, читается как ноль",
+            "vector-effect:non-scaling-stroke — без него растянутый по ширине график даёт неровную толщину линии",
+            "preserveAspectRatio=\"none\" вместе с viewBox: график обязан занимать всю ширину контейнера",
+            "заливку под линией с низкой непрозрачностью: она удерживает взгляд на области значений",
+            "aria-label у svg с диапазоном значений — иначе для скринридера это пустая картинка",
+            "разметку figure / figcaption: подпись принадлежит графику, а не соседнему тексту",
+            "блок <style> внутри компонента — в нём вся палитра и геометрия"
+          ],
+          "adapt": [
+            "массив points: подпись и значение каждой точки",
+            "title — заголовок графика",
+            "unit — единица у крупного значения справа",
+            "markPeak — отмечать ли максимум",
+            "акцент через проп accent — цвет линии, заливки и значения",
+            "высоту графика и внешние отступы через className"
+          ],
+          "notes": [
+            "Наведения и подсказок нет: это статичный график. Интерактивность требует клиентского кода и другого компонента.",
+            "Точек больше двадцати линия не выдержит — агрегируйте данные до отрисовки.",
+            "Не показывайте одним графиком два ряда: для сравнения нужны две линии и легенда, а это другой компонент.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Посетители за неделю",
+            "maxLength": 50
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "",
+            "maxLength": 6
+          },
+          {
+            "prop": "markPeak",
+            "label": "Отметить пик",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A line chart in plain SVG: the path is computed from an array of points on the server. No charting library and no client JS — it renders before hydration and prints correctly.",
+            "ai": {
+              "summary": "A line chart: three grid lines, a curve with a fill beneath it, a peak marker and axis labels. The SVG path is computed from the points array — no charting library, no client JS, visible before hydration and correct in print. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-chart-001-* palette — do not swap it for your theme tokens (bg-card, --chart-1 and the like)",
+                "the normalisation with a lowered floor: a line resting on the axis reads as zero",
+                "vector-effect:non-scaling-stroke — without it a chart stretched across the width gets an uneven stroke",
+                "preserveAspectRatio=\"none\" together with the viewBox: the chart has to fill the container width",
+                "the low-opacity fill under the line: it holds the eye on the value area",
+                "the aria-label on the svg carrying the range — otherwise it is an empty image to a screen reader",
+                "the figure / figcaption markup: the caption belongs to the chart, not to neighbouring text",
+                "the <style> block inside the component — it holds the palette and the geometry"
+              ],
+              "adapt": [
+                "the points array: a label and a value per point",
+                "title — the chart heading",
+                "unit — the unit beside the large current value",
+                "markPeak — whether to mark the maximum",
+                "the accent through the accent prop — it colours the line, the fill and the value",
+                "chart height and outer spacing through className"
+              ],
+              "notes": [
+                "There is no hover or tooltip: this is a static chart. Interactivity needs client code and a different component.",
+                "Beyond twenty points the line stops holding up — aggregate before rendering.",
+                "Do not put two series in one chart: comparison needs two lines and a legend, which is a different component.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Chart001\n  title=\"Visitors this week\"\n  points={[{ label: \"Mon\", value: 1240 }, { label: \"Tue\", value: 1580 }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Visitors this week"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": ""
+              },
+              "markPeak": {
+                "label": "Mark peak"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "chart-002",
+      "type": "registry:component",
+      "title": "Bar Chart",
+      "description": "Столбчатая диаграмма на разметке: высота столбца — процент в CSS-переменной, а не SVG. График остаётся текстом, поэтому масштабируется и печатается.",
+      "categories": ["charts"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-002/chart-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-002-*. Столбцы — обычные элементы во flex-раскладке; высота каждого приходит переменной --vibeui-chart-002-bar-height в процентах от максимума. Сетка нарисована повторяющимся градиентом фона области, а не отдельными элементами. Подписи оси помечены aria-hidden, потому что каждое значение уже прочитано скрытым текстом внутри столбца.",
+      "meta": {
+        "tags": ["chart", "bar", "analytics", "no-svg"],
+        "preview": {
+          "surface": "light",
+          "width": "full"
+        },
+        "ai": {
+          "export": "Chart002",
+          "usage": "<Chart002\n  title=\"Установок по месяцам\"\n  bars={[{ label: \"Фев\", value: 86 }, { label: \"Мар\", value: 118, highlight: true }]}\n/>",
+          "summary": "Столбчатая диаграмма из разметки: значения над столбцами, выделенный столбец акцентом, подсветка под курсором и подписи по оси. Высота задаётся процентом в CSS-переменной, поэтому ни SVG, ни библиотека графиков не нужны. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-002-* и не подменять её токенами вашей темы (bg-primary, --chart-1 и подобными)",
+            "высоту столбца через переменную в процентах: пересчёт в пиксели ломается при изменении высоты области",
+            "min-height у столбца — иначе нулевое значение исчезает и данных как будто нет",
+            "сетку фоном области, а не элементами: так она не мешает раскладке столбцов",
+            "скрытый текст с подписью и значением внутри каждого столбца и aria-hidden у оси — иначе скринридер прочитает подписи дважды",
+            "выделение столбца data-атрибутом, а не отдельным цветом в данных",
+            "блок <style> внутри компонента — в нём вся палитра, сетка и столбцы"
+          ],
+          "adapt": [
+            "массив bars: подпись, значение и флаг highlight",
+            "title — заголовок диаграммы",
+            "unit — единица у значений",
+            "showValues — показывать ли числа над столбцами",
+            "акцент через проп accent — цвет выделенного столбца",
+            "высоту области через переменную --vibeui-chart-002-height и внешние отступы через className"
+          ],
+          "notes": [
+            "Больше двенадцати столбцов не помещается: подписи начинают наезжать друг на друга.",
+            "Ось всегда начинается с нуля — так и должно быть. Обрезанная снизу шкала преувеличивает разницу.",
+            "Для сравнения двух рядов нужен другой компонент: сгруппированные столбцы требуют легенды.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Установок компонентов по месяцам",
+            "maxLength": 60
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "",
+            "maxLength": 6
+          },
+          {
+            "prop": "showValues",
+            "label": "Значения",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A bar chart made of markup: each bar's height is a percentage in a CSS variable rather than SVG. The chart stays text, so it scales and prints.",
+            "ai": {
+              "summary": "A bar chart built from markup: values above the bars, one bar highlighted in the accent, hover shading and axis labels. The height comes from a percentage in a CSS variable, so neither SVG nor a charting library is needed. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-chart-002-* palette — do not swap it for your theme tokens (bg-primary, --chart-1 and the like)",
+                "the percentage-driven bar height: converting to pixels breaks whenever the plot height changes",
+                "the min-height on a bar — otherwise a zero value disappears and the data looks missing",
+                "the grid as a background of the plot area rather than elements: it then stays out of the bars' layout",
+                "the hidden label and value inside each bar together with aria-hidden on the axis — otherwise a screen reader reads the labels twice",
+                "highlighting a bar through a data attribute rather than a colour in the data",
+                "the <style> block inside the component — it holds the palette, the grid and the bars"
+              ],
+              "adapt": [
+                "the bars array: label, value and the highlight flag",
+                "title — the chart heading",
+                "unit — the unit beside the values",
+                "showValues — whether numbers appear above the bars",
+                "the accent through the accent prop — it colours the highlighted bar",
+                "the plot height through --vibeui-chart-002-height and outer spacing through className"
+              ],
+              "notes": [
+                "More than twelve bars will not fit: the labels start colliding.",
+                "The axis always starts at zero, as it should. A truncated scale exaggerates the difference.",
+                "Comparing two series needs a different component: grouped bars require a legend.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Chart002\n  title=\"Installs by month\"\n  bars={[{ label: \"Feb\", value: 86 }, { label: \"Mar\", value: 118, highlight: true }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Component installs by month"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": ""
+              },
+              "showValues": {
+                "label": "Values"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sparkline-001",
+      "type": "registry:component",
+      "title": "Metric Sparkline",
+      "description": "Мини-график размером со строку: число отвечает «сколько», кривая — «куда идёт». Цвет считается из знака изменения, поэтому падение нельзя покрасить в зелёный.",
+      "categories": ["charts"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sparkline-001/sparkline-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sparkline-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sparkline-001-*. Кривая — SVG-путь, посчитанный из массива значений на сервере: клиентского JS нет. Направление выводится из пропа delta и попадает в data-trend, от которого зависят и цвет линии, и поворот стрелки: цвет нельзя задать вручную вразрез со знаком. Компонент inline-flex, поэтому встаёт в ячейку таблицы и в строку карточки.",
+      "meta": {
+        "tags": ["sparkline", "metric", "kpi", "trend"],
+        "preview": {
+          "surface": "light"
+        },
+        "ai": {
+          "export": "Sparkline001",
+          "usage": "<Sparkline001\n  label=\"Установок за месяц\"\n  value=\"1 284\"\n  delta={12.4}\n  values={[12, 15, 13, 19, 24, 31, 41]}\n/>",
+          "summary": "Показатель со встроенным мини-графиком: подпись, крупное значение, кривая за период и изменение со стрелкой. Направление выводится из знака delta и красит и линию, и стрелку — рассинхронизировать цвет и смысл нельзя. Компонент inline, поэтому помещается в ячейку таблицы. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-sparkline-001-* и не подменять её токенами вашей темы (text-green-500, --chart-1 и подобными)",
+            "вывод цвета из знака delta через data-trend: цвет, заданный отдельно от значения, рано или поздно соврёт",
+            "порог «без изменений» в полпроцента: колебание в 0,1 % не должно окрашиваться как рост",
+            "число рядом с кривой: спарклайн отвечает на «куда идёт», а не на «сколько» — без числа он бесполезен",
+            "vector-effect:non-scaling-stroke и preserveAspectRatio=\"none\" — иначе при растяжении линия становится неровной",
+            "aria-label у svg со значением и изменением",
+            "inline-flex у корня: показатель обязан вставать в строку, а не разрывать её",
+            "блок <style> внутри компонента — в нём вся палитра и геометрия"
+          ],
+          "adapt": [
+            "values — ряд значений для кривой",
+            "label и value — подпись и текущее значение; value это строка, поэтому формат остаётся за вами",
+            "delta и unit — изменение за период и его единица",
+            "акцент через проп accent, если нужен один цвет вместо зелёного и красного",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "У кривой нет осей и подписей: это намеренно. Спарклайн показывает форму, а не значения точек.",
+            "Не используйте его как единственный график на дашборде — за формой не видно масштаба.",
+            "value — строка, а не число: форматирование остаётся за вызывающим кодом, компонент не угадывает разряды и валюту.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Установок за месяц",
+            "maxLength": 40
+          },
+          {
+            "prop": "value",
+            "label": "Значение",
+            "type": "text",
+            "default": "1 284",
+            "maxLength": 16
+          },
+          {
+            "prop": "delta",
+            "label": "Изменение",
+            "type": "number",
+            "default": 12.4,
+            "min": -99,
+            "max": 99
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "%",
+            "maxLength": 6
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A line-sized chart: the number says how much, the curve says where it is going. The colour is derived from the sign of the change, so a decline cannot be painted green.",
+            "ai": {
+              "summary": "A metric with an inline sparkline: label, large value, the period's curve and the change with an arrow. The direction is derived from the sign of delta and colours both line and arrow — colour and meaning cannot drift apart. The component is inline, so it fits a table cell. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-sparkline-001-* palette — do not swap it for your theme tokens (text-green-500, --chart-1 and the like)",
+                "deriving the colour from the sign of delta through data-trend: a colour set independently of the value eventually lies",
+                "the half-percent flat threshold: a 0.1 % wobble must not be coloured as growth",
+                "the number beside the curve: a sparkline answers \"where is it going\", not \"how much\" — without the number it is useless",
+                "vector-effect:non-scaling-stroke and preserveAspectRatio=\"none\" — otherwise stretching makes the stroke uneven",
+                "the aria-label on the svg carrying the value and the change",
+                "inline-flex on the root: the metric has to sit in a line rather than break it",
+                "the <style> block inside the component — it holds the palette and the geometry"
+              ],
+              "adapt": [
+                "values — the series behind the curve",
+                "label and value — the caption and the current figure; value is a string, so the format stays yours",
+                "delta and unit — the change over the period and its unit",
+                "the accent through the accent prop when one colour is wanted instead of green and red",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "The curve has no axes or labels, deliberately. A sparkline shows shape, not point values.",
+                "Do not make it the only chart on a dashboard — shape hides scale.",
+                "value is a string rather than a number: formatting belongs to the caller, the component does not guess digit grouping or currency.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sparkline001\n  label=\"Installs this month\"\n  value=\"1,284\"\n  delta={12.4}\n  values={[12, 15, 13, 19, 24, 31, 41]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Installs this month"
+              },
+              "value": {
+                "label": "Value",
+                "default": "1,284"
+              },
+              "delta": {
+                "label": "Change"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": "%"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

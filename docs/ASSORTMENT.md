@@ -20,9 +20,9 @@
 
 ## Оси
 
-Таксономия — `registry/categories.ts`. Категорий компонентов сейчас шесть
-(`buttons`, `inputs`, `display`, `feedback`, `navigation`, `tables`); для
-полного ассортимента нужны ещё три — `overlays`, `charts`, `calendar`.
+Таксономия — `registry/categories.ts`. Категорий компонентов сейчас семь
+(`buttons`, `inputs`, `display`, `feedback`, `navigation`, `tables`,
+`charts`); для полного ассортимента нужны ещё две — `overlays` и `calendar`.
 
 ## kind: component
 
@@ -34,7 +34,7 @@
 | `feedback`   | alert, alert dialog, dialog, drawer, sheet, popover, tooltip, hover card, toast, empty state                                                                                                        |  ~130 |     6 |
 | `navigation` | breadcrumb, dropdown menu, context menu, menubar, navigation menu, tabs, stepper, command, scrollspy                                                                                                |   ~85 |     6 |
 | `tables`     | table, data grid, pagination                                                                                                                                                                        |   ~60 |     3 |
-| `charts`     | chart (line, bar, area, pie, radial), sparkline                                                                                                                                                     |   ~55 |     0 |
+| `charts`     | chart (line, bar, area, pie, radial), sparkline                                                                                                                                                     |   ~55 |     3 |
 | `calendar`   | calendar, event calendar, gantt, kanban, sortable, filters                                                                                                                                          |   ~70 |     0 |
 
 ## kind: block
@@ -90,8 +90,11 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
 7. Блоки для лендинга — закрыты: `navbar-001`, `cta-001`, `faq-001`,
    `testimonials-001`, `footer-001`. Вместе с hero, features и pricing
    собирается целая страница.
-8. Дальше: `charts`, `dashboard`, `ai`, вторые варианты в закрытых
-   категориях.
+8. `charts` — первая волна закрыта: `chart-001` (линия на SVG),
+   `chart-002` (столбцы на разметке), `sparkline-001` (показатель со
+   встроенной кривой). Дальше: area, pie, radial.
+9. Дальше: блоки `dashboard` и `ai`, категории `overlays` и `calendar`,
+   вторые варианты в уже закрытых категориях.
 
 Ритм — пачка на категорию: спека всех items категории сразу (иначе выходят
 вариации одного и того же), потом реализация по одному, потом отдельный

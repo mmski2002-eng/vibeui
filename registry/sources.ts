@@ -17,6 +17,7 @@ import displayRegistry from "@/registry/components/display/registry.json"
 import feedbackRegistry from "@/registry/components/feedback/registry.json"
 import navigationRegistry from "@/registry/components/navigation/registry.json"
 import tablesRegistry from "@/registry/components/tables/registry.json"
+import chartsRegistry from "@/registry/components/charts/registry.json"
 
 /**
  * Реестры, попадающие на сайт. Это и есть файловая база каталога: другого
@@ -97,6 +98,11 @@ export const SOURCES = [
     directory: "registry/components/tables",
     kind: "component",
     items: tablesRegistry.items,
+  },
+  {
+    directory: "registry/components/charts",
+    kind: "component",
+    items: chartsRegistry.items,
   },
 ] as const satisfies readonly {
   directory: string

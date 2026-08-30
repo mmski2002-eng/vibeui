@@ -51,6 +51,9 @@ import { Sidebar001 } from "@/registry/components/navigation/sidebar-001/sidebar
 import { Table001 } from "@/registry/components/tables/table-001/table-001"
 import { Table002 } from "@/registry/components/tables/table-002/table-002"
 import { Table003 } from "@/registry/components/tables/table-003/table-003"
+import { Chart001 } from "@/registry/components/charts/chart-001/chart-001"
+import { Chart002 } from "@/registry/components/charts/chart-002/chart-002"
+import { Sparkline001 } from "@/registry/components/charts/sparkline-001/sparkline-001"
 
 /**
  * Карта slug -> React-компонент. Из неё рендерятся и миниатюра каталога,
@@ -108,4 +111,7 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "table-001": Table001,
   "table-002": Table002,
   "table-003": Table003,
+  "chart-001": Chart001,
+  "chart-002": Chart002,
+  "sparkline-001": Sparkline001,
 }
