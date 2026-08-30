@@ -16,6 +16,7 @@ import accordionRegistry from "@/registry/components/accordion/registry.json"
 import alertRegistry from "@/registry/components/alert/registry.json"
 import dialogRegistry from "@/registry/components/dialog/registry.json"
 import aspectRegistry from "@/registry/components/aspect/registry.json"
+import autocompleteRegistry from "@/registry/components/autocomplete/registry.json"
 import inputsRegistry from "@/registry/components/inputs/registry.json"
 import displayRegistry from "@/registry/components/display/registry.json"
 import feedbackRegistry from "@/registry/components/feedback/registry.json"
@@ -97,6 +98,11 @@ export const SOURCES = [
     directory: "registry/components/aspect",
     kind: "component",
     items: aspectRegistry.items,
+  },
+  {
+    directory: "registry/components/autocomplete",
+    kind: "component",
+    items: autocompleteRegistry.items,
   },
   {
     directory: "registry/components/inputs",
