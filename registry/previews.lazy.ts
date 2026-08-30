@@ -986,6 +986,41 @@ export const LAZY_PREVIEWS = {
       (module) => module.Banner001,
     ),
   ),
+  "toast-002": dynamic(() =>
+    import("@/registry/components/feedback/toast-002/toast-002").then(
+      (module) => module.Toast002,
+    ),
+  ),
+  "toast-003": dynamic(() =>
+    import("@/registry/components/feedback/toast-003/toast-003").then(
+      (module) => module.Toast003,
+    ),
+  ),
+  "popover-001": dynamic(() =>
+    import("@/registry/components/feedback/popover-001/popover-001").then(
+      (module) => module.Popover001,
+    ),
+  ),
+  "drawer-001": dynamic(() =>
+    import("@/registry/components/feedback/drawer-001/drawer-001").then(
+      (module) => module.Drawer001,
+    ),
+  ),
+  "sheet-001": dynamic(() =>
+    import("@/registry/components/feedback/sheet-001/sheet-001").then(
+      (module) => module.Sheet001,
+    ),
+  ),
+  "hovercard-001": dynamic(() =>
+    import("@/registry/components/feedback/hovercard-001/hovercard-001").then(
+      (module) => module.Hovercard001,
+    ),
+  ),
+  "empty-002": dynamic(() =>
+    import("@/registry/components/feedback/empty-002/empty-002").then(
+      (module) => module.Empty002,
+    ),
+  ),
   "tabs-001": dynamic(() =>
     import("@/registry/components/navigation/tabs-001/tabs-001").then(
       (module) => module.Tabs001,

@@ -196,6 +196,13 @@ import { Toast001 } from "@/registry/components/feedback/toast-001/toast-001"
 import { Empty001 } from "@/registry/components/feedback/empty-001/empty-001"
 import { Tooltip001 } from "@/registry/components/feedback/tooltip-001/tooltip-001"
 import { Banner001 } from "@/registry/components/feedback/banner-001/banner-001"
+import { Toast002 } from "@/registry/components/feedback/toast-002/toast-002"
+import { Toast003 } from "@/registry/components/feedback/toast-003/toast-003"
+import { Popover001 } from "@/registry/components/feedback/popover-001/popover-001"
+import { Drawer001 } from "@/registry/components/feedback/drawer-001/drawer-001"
+import { Sheet001 } from "@/registry/components/feedback/sheet-001/sheet-001"
+import { Hovercard001 } from "@/registry/components/feedback/hovercard-001/hovercard-001"
+import { Empty002 } from "@/registry/components/feedback/empty-002/empty-002"
 import { Tabs001 } from "@/registry/components/navigation/tabs-001/tabs-001"
 import { Stepper001 } from "@/registry/components/navigation/stepper-001/stepper-001"
 import { Pagination001 } from "@/registry/components/navigation/pagination-001/pagination-001"
@@ -415,6 +422,13 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "empty-001": Empty001,
   "tooltip-001": Tooltip001,
   "banner-001": Banner001,
+  "toast-002": Toast002,
+  "toast-003": Toast003,
+  "popover-001": Popover001,
+  "drawer-001": Drawer001,
+  "sheet-001": Sheet001,
+  "hovercard-001": Hovercard001,
+  "empty-002": Empty002,
   "tabs-001": Tabs001,
   "stepper-001": Stepper001,
   "pagination-001": Pagination001,

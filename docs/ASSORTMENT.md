@@ -144,7 +144,7 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
     `skeleton-001` (метрика будущего текста), `progress-001` (честное
     неизвестное), `accordion-001` (details/summary без JS).
     Дальше: separator, timeline, code block, carousel, tree.
-17. `feedback` — первая волна закрыта: `alert-001` (тон в полосе, не в
+17. `feedback` — 11 items в двух волнах. Первая: `alert-001` (тон в полосе, не в
     заливке), `dialog-001` (модалка на HTML popover без JS), `toast-001`
     (полоса оставшегося времени), `empty-001` (экран объясняет следующий шаг),
     `tooltip-001` (открывается и с клавиатуры), `banner-001`.

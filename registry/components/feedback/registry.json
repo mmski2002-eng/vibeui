@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Timed Toast",
       "description": "Всплывающее уведомление с полосой оставшегося времени и действием «Отменить»: видно, сколько секунд осталось, чтобы передумать.",
-      "categories": [
-        "feedback"
-      ],
+      "categories": ["feedback"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-001-*. Полоса времени — CSS-анимация scaleX, длительность приходит переменной --vibeui-toast-001-duration из пропа duration: таймер не считается в JS и не вызывает перерисовок. Сам компонент только показывает уведомление: появлением, очередью и удалением управляет вызывающий код через onClose. Роль выбирается по тону: danger — alert, остальные — status.",
       "meta": {
-        "tags": [
-          "toast",
-          "notification",
-          "undo",
-          "timer"
-        ],
+        "tags": ["toast", "notification", "undo", "timer"],
         "preview": {
           "width": "full"
         },
@@ -63,11 +56,7 @@
             "label": "Тон",
             "type": "select",
             "default": "success",
-            "options": [
-              "neutral",
-              "success",
-              "danger"
-            ]
+            "options": ["neutral", "success", "danger"]
           },
           {
             "prop": "title",
@@ -158,9 +147,7 @@
       "type": "registry:component",
       "title": "Empty State",
       "description": "Пустой экран, который объясняет следующий шаг, а не сообщает об отсутствии данных. Рисунок собран на CSS и намекает на будущий список.",
-      "categories": [
-        "feedback"
-      ],
+      "categories": ["feedback"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -172,12 +159,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-001-*. Рисунок — три плитки на CSS с поворотом и разной прозрачностью: он намекает на список, который здесь появится, и не требует иллюстрации из библиотеки. Пунктирная рамка отделяет пустое состояние от заполненного экрана. Отступы и кегль заголовка считаются от собственной ширины через @container.",
       "meta": {
-        "tags": [
-          "empty state",
-          "onboarding",
-          "placeholder",
-          "cta"
-        ],
+        "tags": ["empty state", "onboarding", "placeholder", "cta"],
         "preview": {
           "width": "full"
         },
@@ -303,9 +285,7 @@
       "type": "registry:component",
       "title": "Keyboard Tooltip",
       "description": "Подсказка, которая открывается и по наведению, и по фокусу с клавиатуры. Второе обычно забывают, и подсказка остаётся недоступной половине пользователей.",
-      "categories": [
-        "feedback"
-      ],
+      "categories": ["feedback"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -317,12 +297,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-001-*. Появление держат :hover и :focus-within у обёртки, поэтому JS не нужен и компонент остаётся серверным. Хвостик — повёрнутый квадрат того же цвета. Подсказка помечена role=\"tooltip\" и имеет id: свяжите с ним триггер через aria-describedby. Без переданного children рисуется кнопка-заглушка — она нужна только для превью.",
       "meta": {
-        "tags": [
-          "tooltip",
-          "hint",
-          "accessibility",
-          "no-js"
-        ],
+        "tags": ["tooltip", "hint", "accessibility", "no-js"],
         "preview": {
           "props": {
             "open": true
@@ -369,10 +344,7 @@
             "label": "Сторона",
             "type": "select",
             "default": "top",
-            "options": [
-              "top",
-              "bottom"
-            ]
+            "options": ["top", "bottom"]
           }
         ],
         "i18n": {
@@ -423,9 +395,7 @@
       "type": "registry:component",
       "title": "Announcement Banner",
       "description": "Полоса-объявление во всю ширину: метка, текст, ссылка и закрытие. Тёмная и спокойная — не притворяется уведомлением об ошибке.",
-      "categories": [
-        "feedback"
-      ],
+      "categories": ["feedback"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -437,12 +407,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-001-*. Подсветка слева — радиальный градиент от акцента, а не отдельный элемент. Кнопка закрытия появляется только когда передан onDismiss: полосе, которую нечем закрыть, крестик не нужен. На узкой ширине текст уходит на отдельную строку через @container, а метка и действие остаются в одну линию.",
       "meta": {
-        "tags": [
-          "banner",
-          "announcement",
-          "top bar",
-          "marketing"
-        ],
+        "tags": ["banner", "announcement", "top bar", "marketing"],
         "preview": {
           "width": "full"
         },
@@ -548,6 +513,776 @@
               },
               "accent": {
                 "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-002",
+      "type": "registry:component",
+      "title": "Undo Toast",
+      "description": "Сообщение с отменой вместо подтверждения: «точно удалить?» останавливает всех ради ошибки одного.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-002/toast-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-002-*. Клиентский: \"use client\". Оставшееся время хранится в миллисекундах и уменьшается интервалом в 100 мс; пауза живёт в ref, поэтому наведение не вызывает перерисовку. Сообщение объявлено role=\"status\" с aria-live=\"polite\".",
+      "meta": {
+        "tags": ["toast", "undo", "feedback", "timer"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast002",
+          "usage": "<Toast002 message=\"Проект в архиве\" seconds={8} onUndo={restore} />",
+          "summary": "Сообщение об уже выполненном действии с кнопкой отмены, обратным отсчётом и полосой оставшегося времени. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-002-* и не подменять её токенами вашей темы",
+            "отмену вместо подтверждения: диалог останавливает всех ради ошибки одного",
+            "полосу и число секунд — без них непонятно, сколько ещё можно передумать",
+            "паузу по наведению и фокусу: иначе отмену не успевают нажать",
+            "role=\"status\" с aria-live: сообщение должно быть услышано",
+            "отчёт после отмены вместо мгновенного исчезновения"
+          ],
+          "adapt": [
+            "message и undoLabel",
+            "seconds — сколько можно передумать",
+            "обработчик onUndo",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Отмена должна быть настоящей: если действие необратимо, нужен диалог, а не это сообщение.",
+            "Восемь секунд — компромисс: меньше не успеть прочитать и нажать, больше сообщение мешает.",
+            "Позиционирование не входит в компонент: угол экрана задаёт вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "message",
+            "label": "Сообщение",
+            "type": "text",
+            "default": "Проект перемещён в архив",
+            "maxLength": 40
+          },
+          {
+            "prop": "undoLabel",
+            "label": "Отмена",
+            "type": "text",
+            "default": "Отменить",
+            "maxLength": 20
+          },
+          {
+            "prop": "seconds",
+            "label": "Секунд",
+            "type": "number",
+            "default": 8,
+            "min": 3,
+            "max": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A toast with undo instead of a confirmation: \"are you sure?\" stops everyone for the sake of one person's mistake.",
+            "ai": {
+              "summary": "A toast about an action already taken, with an undo button, a countdown and a time bar. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-toast-002-* palette — do not swap it for your theme tokens",
+                "undo instead of confirmation: a dialog taxes everyone for one person's slip",
+                "the bar and the seconds — otherwise nothing says how long the option lasts",
+                "the pause on hover and focus: otherwise undo cannot be reached in time",
+                "role=\"status\" with aria-live: the message has to be heard",
+                "the report after undo rather than instant disappearance"
+              ],
+              "adapt": [
+                "message and undoLabel",
+                "seconds — how long the option lasts",
+                "the onUndo handler",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Undo must be real: if the action is irreversible, use a dialog instead.",
+                "Eight seconds is the compromise: less is unreadable, more gets in the way.",
+                "Positioning is not part of the component: the caller picks the corner.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast002 message=\"Project archived\" seconds={8} onUndo={restore} />"
+            },
+            "controls": {
+              "message": {
+                "label": "Message",
+                "default": "Project moved to archive"
+              },
+              "undoLabel": {
+                "label": "Undo",
+                "default": "Undo"
+              },
+              "seconds": {
+                "label": "Seconds"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-003",
+      "type": "registry:component",
+      "title": "Toast Stack",
+      "description": "Стопка сообщений с пределом: больше трёх карточек подряд никто не читает, остальные сворачиваются в строку.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-003/toast-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-003-*. Клиентский: \"use client\". Контейнер объявлен role=\"log\" с aria-live=\"polite\": так читаются потоки сообщений. Тон задаётся полоской слева через data-tone, у каждой карточки есть кнопка скрытия с именем сообщения.",
+      "meta": {
+        "tags": ["toast", "stack", "notifications", "limit"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast003",
+          "usage": "<Toast003 items={items} max={3} />",
+          "summary": "Стопка сообщений: до трёх карточек, свёрнутый хвост со счётчиком, тон полоской слева и закрытие каждой. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-003-* и не подменять её токенами вашей темы",
+            "предел в три карточки: остальное сворачивается, иначе стопка закрывает экран",
+            "role=\"log\" с aria-live: поток сообщений читается иначе, чем одно",
+            "тон полоской, а не заливкой: сообщение должно оставаться читаемым",
+            "имя сообщения в подписи кнопки закрытия",
+            "новые сообщения сверху — читают сверху вниз"
+          ],
+          "adapt": [
+            "массив items и их тон",
+            "max — сколько показывать сразу",
+            "поведение кнопки закрытия",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Автоскрытия здесь нет: для одиночного сообщения с таймером есть toast-001.",
+            "Ошибки не должны исчезать сами: их закрывает человек, и в стопке они стоят рядом с обычными.",
+            "Позиционирование стопки — задача вызывающего кода.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "max",
+            "label": "Показывать",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A capped toast stack: nobody reads more than three cards in a row, so the tail folds into one line.",
+            "ai": {
+              "summary": "A toast stack: up to three cards, a folded tail with a counter, tone as a left bar and per-card dismissal. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-toast-003-* palette — do not swap it for your theme tokens",
+                "the three-card cap: the rest folds, otherwise the stack covers the screen",
+                "role=\"log\" with aria-live: a stream of messages reads differently from one",
+                "tone as a bar rather than a fill: the message must stay readable",
+                "the message name in the dismiss button's label",
+                "new messages on top — people read downward"
+              ],
+              "adapt": [
+                "the items array and their tone",
+                "max — how many show at once",
+                "what dismissal does",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "There is no auto-dismiss here: for a single timed message use toast-001.",
+                "Errors must not vanish on their own: a person dismisses them, and here they sit among the rest.",
+                "Positioning the stack is the caller's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast003 items={items} max={3} />"
+            },
+            "controls": {
+              "max": {
+                "label": "Show at once"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "popover-001",
+      "type": "registry:component",
+      "title": "Info Popover",
+      "description": "Всплывающая карточка на HTML popover: в неё можно попасть мышью и Tab, поэтому она не закрывается по уходу курсора.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "popover-001/popover-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/popover-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-001-*. Серверный компонент: открытие и закрытие держит HTML popover, позиция — anchor positioning с запасным правилом в @supports. Внутри карточки живут заголовок, текст и кнопка, поэтому нужен именно popover, а не подсказка.",
+      "meta": {
+        "tags": ["popover", "explain", "no-js", "anchor"],
+        "ai": {
+          "export": "Popover001",
+          "usage": "<Popover001 label=\"Что это значит\" title=\"Как считается охват\" />",
+          "summary": "Карточка-пояснение по нажатию: заголовок, текст и действие внутри, закрытие по Escape и клику вне. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-popover-001-* и не подменять её токенами вашей темы",
+            "открытие по нажатию, а не по наведению: в карточку с кнопкой надо попасть курсором",
+            "popover вместо своего состояния: Escape, клик вне и верхний слой достаются даром",
+            "запасное правило в @supports для браузеров без anchor positioning",
+            "ограничение ширины: пояснение шире 18rem читается тяжело",
+            "aria-label на карточке — у неё есть имя, а не только текст"
+          ],
+          "adapt": [
+            "label, title и text",
+            "actionLabel — действие внутри карточки",
+            "акцент через проп accent",
+            "ширину карточки"
+          ],
+          "notes": [
+            "Для короткой подписи к иконке нужна подсказка (tooltip-001), а не эта карточка.",
+            "Не кладите внутрь форму: попап с полями лучше делать диалогом.",
+            "Карточка не переворачивается у края экрана: при необходимости добавьте position-try.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Что это значит",
+            "maxLength": 24
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Как считается охват",
+            "maxLength": 30
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Открыть методику",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A popover card on the HTML popover: you can reach it with the mouse and Tab, so it never closes on mouse-out.",
+            "ai": {
+              "summary": "A click-opened explanation card: heading, text and an action inside, closing on Escape and outside click. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-popover-001-* palette — do not swap it for your theme tokens",
+                "opening on click rather than hover: a card with a button must be reachable",
+                "popover instead of custom state: Escape, outside click and the top layer come free",
+                "the @supports fallback for browsers without anchor positioning",
+                "the width cap: an explanation wider than 18rem reads badly",
+                "the aria-label on the card — it has a name, not just text"
+              ],
+              "adapt": [
+                "label, title and text",
+                "actionLabel — the action inside",
+                "the accent through the accent prop",
+                "the card width"
+              ],
+              "notes": [
+                "For a short icon caption use a tooltip (tooltip-001), not this card.",
+                "Do not put a form inside: a popup with fields belongs in a dialog.",
+                "The card does not flip near the viewport edge: add position-try if you need that.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Popover001 label=\"What this means\" title=\"How reach is measured\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Button",
+                "default": "What this means"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "How reach is measured"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Open the method"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "drawer-001",
+      "type": "registry:component",
+      "title": "Side Drawer",
+      "description": "Панель, выезжающая сбоку, на нативном dialog: ловушка фокуса, затемнение и Escape достаются без единой строки логики.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "drawer-001/drawer-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/drawer-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-001-*. Клиентский: \"use client\" — нужен только ref для showModal и close. Выезд сделан переходом translate с transition-behavior для overlay и display, стартовое положение задано в @starting-style. Действия прижаты к низу панели через margin-top: auto.",
+      "meta": {
+        "tags": ["drawer", "dialog", "panel", "modal"],
+        "ai": {
+          "export": "Drawer001",
+          "usage": "<Drawer001 triggerLabel=\"Открыть панель\" title=\"Настройки\" />",
+          "summary": "Боковая панель: нативный модальный dialog, выезд справа, заголовок с крестиком и действия у нижнего края. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-drawer-001-* и не подменять её токенами вашей темы",
+            "нативный dialog: ловушка фокуса, затемнение и Escape стоят сотен строк вручную",
+            "@starting-style: без него панель появляется рывком без выезда",
+            "действия у нижнего края — до них дотягиваются, не прокручивая панель",
+            "ширину в 28rem: панель перекрывает часть страницы, а не всю",
+            "правило prefers-reduced-motion, снимающее выезд"
+          ],
+          "adapt": [
+            "triggerLabel, title и text",
+            "primaryLabel — главное действие",
+            "ширину панели",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Панель модальная: страница под ней недоступна. Если нужно работать с обеими, это не drawer, а колонка.",
+            "Содержимое панели прокручивается само: длинные формы не растягивают её выше экрана.",
+            "Закрытие по клику на затемнение не включено: добавьте обработчик, если оно нужно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "triggerLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Открыть панель",
+            "maxLength": 24
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Настройки каталога",
+            "maxLength": 30
+          },
+          {
+            "prop": "primaryLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Сохранить",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A side panel on the native dialog: focus trapping, the backdrop and Escape come without a line of logic.",
+            "ai": {
+              "summary": "A side drawer: a native modal dialog, sliding in from the right, a heading with a close button and actions pinned to the bottom. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-drawer-001-* palette — do not swap it for your theme tokens",
+                "the native dialog: focus trapping, backdrop and Escape cost hundreds of lines by hand",
+                "@starting-style: without it the panel appears abruptly instead of sliding",
+                "the actions at the bottom edge — reachable without scrolling the panel",
+                "the 28rem width: a drawer covers part of the page, not all of it",
+                "the prefers-reduced-motion rule that drops the slide"
+              ],
+              "adapt": [
+                "triggerLabel, title and text",
+                "primaryLabel — the main action",
+                "the panel width",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The drawer is modal: the page behind is unreachable. If both must work, it is a column, not a drawer.",
+                "The content scrolls on its own: long forms do not stretch it past the viewport.",
+                "Closing on backdrop click is not wired: add a handler if you want it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Drawer001 triggerLabel=\"Open panel\" title=\"Settings\" />"
+            },
+            "controls": {
+              "triggerLabel": {
+                "label": "Button",
+                "default": "Open panel"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Catalog settings"
+              },
+              "primaryLabel": {
+                "label": "Action",
+                "default": "Save"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sheet-001",
+      "type": "registry:component",
+      "title": "Bottom Sheet",
+      "description": "Лист снизу на нативном dialog: за верхним краем видно страницу — это и отличает лист от полноэкранного окна.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sheet-001/sheet-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sheet-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-001-*. Клиентский: \"use client\" — нужен ref для showModal и close. Высота ограничена min(28rem, 85dvh), нижний отступ учитывает env(safe-area-inset-bottom). Выезд снизу сделан переходом translate с @starting-style. Сводка выложена словарём dl.",
+      "meta": {
+        "tags": ["sheet", "mobile", "dialog", "checkout"],
+        "ai": {
+          "export": "Sheet001",
+          "usage": "<Sheet001 triggerLabel=\"Показать заказ\" rows={rows} primaryLabel=\"Оформить\" />",
+          "summary": "Лист снизу: ручка, заголовок, сводка пар «подпись — значение» и две крупные кнопки. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sheet-001-* и не подменять её токенами вашей темы",
+            "ограничение высоты: за верхним краем должна быть видна страница",
+            "ручку сверху — она обещает, что лист можно закрыть жестом",
+            "env(safe-area-inset-bottom) в нижнем отступе",
+            "кнопки высотой 2.75rem: лист живёт под большим пальцем",
+            "@starting-style, иначе лист появляется рывком"
+          ],
+          "adapt": [
+            "triggerLabel, title и rows",
+            "primaryLabel — главное действие",
+            "максимальную высоту листа",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Жест перетаскивания не реализован: ручка обещает его, добавьте обработчик, если нужно закрытие свайпом.",
+            "На десктопе лист снизу неуместен: там уместнее диалог или боковая панель.",
+            "Сводка — не место для длинных списков: прокрутка внутри листа неудобна.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "triggerLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Показать заказ",
+            "maxLength": 24
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ваш заказ",
+            "maxLength": 24
+          },
+          {
+            "prop": "primaryLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Оформить",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A bottom sheet on the native dialog: the page stays visible above its top edge — that is what separates a sheet from a full-screen modal.",
+            "ai": {
+              "summary": "A bottom sheet: a grabber, a heading, a label–value summary and two large buttons. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sheet-001-* palette — do not swap it for your theme tokens",
+                "the height cap: the page must remain visible above the sheet",
+                "the grabber — it promises the sheet can be dismissed by gesture",
+                "env(safe-area-inset-bottom) in the bottom padding",
+                "2.75rem buttons: a sheet lives under the thumb",
+                "@starting-style, or the sheet appears abruptly"
+              ],
+              "adapt": [
+                "triggerLabel, title and rows",
+                "primaryLabel — the main action",
+                "the sheet's max height",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Drag-to-dismiss is not implemented: the grabber promises it, add a handler if you need it.",
+                "A bottom sheet is wrong on desktop: use a dialog or a side panel there.",
+                "The summary is not for long lists: scrolling inside a sheet is awkward.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sheet001 triggerLabel=\"Show order\" rows={rows} primaryLabel=\"Checkout\" />"
+            },
+            "controls": {
+              "triggerLabel": {
+                "label": "Button",
+                "default": "Show order"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Your order"
+              },
+              "primaryLabel": {
+                "label": "Action",
+                "default": "Checkout"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hovercard-001",
+      "type": "registry:component",
+      "title": "Hover Card",
+      "description": "Карточка человека у упоминания: раскрывается по наведению и по фокусу, внутри только текст — до кнопок курсор не довести.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hovercard-001/hovercard-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hovercard-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-001-*. Серверный: хуков нет, кроме useId для связи через aria-describedby. Раскрытие идёт на :hover и :focus-within, поэтому клавиатура видит карточку. Внутри нет интерактивных элементов: карточка объявлена role=\"tooltip\".",
+      "meta": {
+        "tags": ["hover card", "mention", "profile", "no-js"],
+        "ai": {
+          "export": "Hovercard001",
+          "usage": "<Hovercard001 name=\"Мария Гурова\" handle=\"@masha\" />",
+          "summary": "Карточка профиля у упоминания: инициалы, имя, описание и пара цифр. Раскрывается по наведению и по фокусу, без клиентского кода. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-hovercard-001-* и не подменять её токенами вашей темы",
+            "раскрытие по :focus-within: с клавиатуры карточку иначе не увидеть",
+            "отсутствие кнопок внутри — довести курсор через зазор невозможно без ловли мыши",
+            "aria-describedby, связывающий упоминание и карточку",
+            "оттенок аватара из имени: один человек всегда одного цвета",
+            "видимость через visibility, а не display: иначе перехода не будет"
+          ],
+          "adapt": [
+            "name, handle и about",
+            "массив stats",
+            "акцент через проп accent",
+            "ширину карточки"
+          ],
+          "notes": [
+            "На телефоне наведения нет: карточка появится только при фокусе, поэтому дублируйте данные на странице профиля.",
+            "Задержки перед показом нет: при плотном тексте карточка будет мигать, добавьте её при необходимости.",
+            "Карточка не переворачивается у края экрана: рядом с правой границей она может обрезаться.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя",
+            "type": "text",
+            "default": "Мария Гурова",
+            "maxLength": 30
+          },
+          {
+            "prop": "handle",
+            "label": "Логин",
+            "type": "text",
+            "default": "@masha",
+            "maxLength": 20
+          },
+          {
+            "prop": "about",
+            "label": "Описание",
+            "type": "text",
+            "default": "Ведёт каталог и дизайн-систему, собирает интерфейсы без лишних слов.",
+            "maxLength": 80
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A profile card beside a mention: it opens on hover and focus, and holds text only — a cursor cannot reach buttons across the gap.",
+            "ai": {
+              "summary": "A profile hover card: initials, name, a short bio and a couple of figures. Opens on hover and focus, with no client code. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-hovercard-001-* palette — do not swap it for your theme tokens",
+                "opening on :focus-within: otherwise keyboard users never see the card",
+                "no buttons inside — a cursor cannot cross the gap without hover-intent tricks",
+                "aria-describedby linking the mention to the card",
+                "the name-derived avatar hue: one person keeps one colour",
+                "toggling with visibility rather than display: otherwise the transition never runs"
+              ],
+              "adapt": [
+                "name, handle and about",
+                "the stats array",
+                "the accent through the accent prop",
+                "the card width"
+              ],
+              "notes": [
+                "Phones have no hover: the card shows only on focus, so repeat the data on the profile page.",
+                "There is no open delay: in dense text the card will flicker — add one if needed.",
+                "The card does not flip at the viewport edge: near the right border it may clip.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Hovercard001 name=\"Maria Gurova\" handle=\"@masha\" />"
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Maria Gurova"
+              },
+              "handle": {
+                "label": "Handle",
+                "default": "@masha"
+              },
+              "about": {
+                "label": "Bio",
+                "default": "Runs the catalog and the design system, builds interfaces that explain themselves."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-002",
+      "type": "registry:component",
+      "title": "No Results",
+      "description": "Пустая выдача поиска: сам запрос, причина и готовые ходы вместо совета «попробуйте другой запрос».",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-002/empty-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-002-*. Серверный: хуков нет. Блок объявлен role=\"status\": исчезновение результатов должно быть услышано. Знак нарисован кругом и чертой псевдоэлементами. Подсказки — кнопки, а не текст, поэтому по ним можно нажать.",
+      "meta": {
+        "tags": ["empty", "search", "no results", "recovery"],
+        "ai": {
+          "export": "Empty002",
+          "usage": "<Empty002 query=\"карточка товара\" suggestions={[\"кнопка\"]} />",
+          "summary": "Экран пустой выдачи: знак поиска, сам запрос в тексте, готовые варианты запросов и сброс фильтров. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-002-* и не подменять её токенами вашей темы",
+            "сам запрос в тексте: без него непонятно, что именно не нашлось",
+            "готовые ходы кнопками вместо совета «попробуйте другой запрос»",
+            "сброс фильтров отдельным действием — чаще всего мешают именно они",
+            "role=\"status\": пропажа результатов должна быть услышана",
+            "отличие от пустого раздела: здесь данные есть, но не подошли"
+          ],
+          "adapt": [
+            "title, text и query",
+            "массив suggestions",
+            "resetLabel — подпись сброса",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Подсказки должны что-то находить: предлагать заведомо пустой запрос хуже, чем не предлагать ничего.",
+            "Если фильтров нет, уберите кнопку сброса — она обещает несуществующее действие.",
+            "Для пустого раздела без запроса возьмите empty-001: там нужен первый шаг, а не спасение поиска.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "query",
+            "label": "Запрос",
+            "type": "text",
+            "default": "карточкa товара",
+            "maxLength": 30
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ничего не нашлось",
+            "maxLength": 30
+          },
+          {
+            "prop": "resetLabel",
+            "label": "Сброс",
+            "type": "text",
+            "default": "Сбросить фильтры",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An empty search result: the query itself, the likely cause and ready moves instead of \"try another search\".",
+            "ai": {
+              "summary": "A no-results screen: a search mark, the query quoted in the text, ready-made queries as buttons and a filter reset. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-empty-002-* palette — do not swap it for your theme tokens",
+                "quoting the query: without it nothing says what failed",
+                "ready moves as buttons instead of advising \"try another query\"",
+                "the filter reset as its own action — filters are the usual culprit",
+                "role=\"status\": losing the results has to be heard",
+                "the distinction from an empty section: here data exists, it just did not match"
+              ],
+              "adapt": [
+                "title, text and query",
+                "the suggestions array",
+                "resetLabel — the reset wording",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The suggestions must find something: offering a knowingly empty query is worse than offering none.",
+                "With no filters, drop the reset button — it promises an action that does not exist.",
+                "For an empty section without a query use empty-001: that needs a first step, not search recovery.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty002 query=\"product card\" suggestions={[\"button\"]} />"
+            },
+            "controls": {
+              "query": {
+                "label": "Query",
+                "default": "product card"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Nothing found"
+              },
+              "resetLabel": {
+                "label": "Reset",
+                "default": "Clear filters"
               }
             }
           }
