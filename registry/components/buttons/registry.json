@@ -1257,6 +1257,1003 @@
           }
         }
       }
+    },
+    {
+      "name": "button-012",
+      "type": "registry:component",
+      "title": "Icon Button",
+      "description": "Кнопка без подписи, у которой имя всё равно есть: оно уходит в aria-label и title, а значки нарисованы бордюрами.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-012/button-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-012-*. Серверный: хуков нет. Размер задан одной переменной, форма и тон — атрибутами data-shape и data-tone. Четыре значка (плюс, крестик, многоточие, лупа) собраны из бордюров и псевдоэлементов, поэтому иконочный пакет не подключается. Имя действия обязательно и дублируется в title.",
+      "meta": {
+        "tags": ["button", "icon", "compact", "a11y"],
+        "ai": {
+          "export": "Button012",
+          "usage": "<Button012 label=\"Добавить\" icon=\"plus\" tone=\"accent\" />",
+          "summary": "Квадратная или круглая кнопка со значком: четыре готовых значка из бордюров, три размера, два тона и обязательное имя действия. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-button-012-* и не подменять её токенами вашей темы",
+            "aria-label и title: кнопка без подписи обязана называть действие",
+            "размер одной переменной — иконочные кнопки в ряду должны совпадать",
+            "значки на бордюрах вместо пакета иконок ради четырёх фигур",
+            "видимое фокусное кольцо: у маленькой цели оно важнее всего",
+            "минимальный размер 1.875rem — в меньшую цель не попасть пальцем"
+          ],
+          "adapt": [
+            "label — что делает кнопка",
+            "icon — plus, close, more или search",
+            "shape и size",
+            "tone — neutral или accent"
+          ],
+          "notes": [
+            "Иконка без подписи уместна только для общеизвестных действий: закрыть, добавить, искать. Всё остальное подписывайте словом.",
+            "Свой значок кладите внутрь как дочерний элемент, заменив спан со значком в копии компонента.",
+            "title показывается только на мыши: он дополняет aria-label, но не заменяет его.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Действие",
+            "type": "text",
+            "default": "Добавить",
+            "maxLength": 24
+          },
+          {
+            "prop": "icon",
+            "label": "Значок",
+            "type": "select",
+            "default": "plus",
+            "options": ["plus", "close", "more", "search"]
+          },
+          {
+            "prop": "shape",
+            "label": "Форма",
+            "type": "select",
+            "default": "square",
+            "options": ["square", "circle"]
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "neutral",
+            "options": ["neutral", "accent"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A button with no label that still has a name: it goes into aria-label and title, and the glyphs are drawn with borders.",
+            "ai": {
+              "summary": "A square or round icon button: four border-drawn glyphs, three sizes, two tones and a mandatory action name. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-button-012-* palette — do not swap it for your theme tokens",
+                "aria-label and title: a button without text must name its action",
+                "the single size variable — icon buttons in a row have to match",
+                "border-drawn glyphs instead of an icon package for four shapes",
+                "the visible focus ring: on a small target it matters most",
+                "the 1.875rem minimum — a smaller target cannot be tapped"
+              ],
+              "adapt": [
+                "label — what the button does",
+                "icon — plus, close, more or search",
+                "shape and size",
+                "tone — neutral or accent"
+              ],
+              "notes": [
+                "An unlabelled icon suits only universal actions: close, add, search. Label everything else.",
+                "For your own glyph, replace the glyph span inside your copy of the component.",
+                "title only shows on hover: it supplements aria-label, it does not replace it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button012 label=\"Add\" icon=\"plus\" tone=\"accent\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Action",
+                "default": "Add"
+              },
+              "icon": {
+                "label": "Glyph"
+              },
+              "shape": {
+                "label": "Shape"
+              },
+              "tone": {
+                "label": "Tone"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-013",
+      "type": "registry:component",
+      "title": "Segmented Control",
+      "description": "Сегментированный переключатель на настоящих radio: стрелки, Home/End и объявление позиции достаются от браузера.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-013/button-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-013-*. Клиентский: \"use client\". Внутри настоящие input type=\"radio\" с общим именем из useId; они прозрачны и растянуты на подпись, поэтому клавиатурная модель радиогруппы работает без единой строки обработчиков. Выбранный сегмент стилизуется через :has(input:checked).",
+      "meta": {
+        "tags": ["button", "segmented", "radio", "keyboard"],
+        "ai": {
+          "export": "Button013",
+          "usage": "<Button013 options={[\"День\", \"Неделя\"]} defaultValue=\"Неделя\" onChange={setRange} />",
+          "summary": "Переключатель из двух-четырёх сегментов на настоящих radio: клавиатура и объявление позиции от браузера, выбранный сегмент на белой подложке. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-button-013-* и не подменять её токенами вашей темы",
+            "radio внутри вместо кнопок: стрелки, Home/End и «2 из 3» браузер даёт сам",
+            "role=\"radiogroup\" с именем на обёртке",
+            "стилизацию через :has(input:checked) — состояние и вид не разъезжаются",
+            "фокусное кольцо на подписи, а не на скрытом поле",
+            "высоту сегмента под палец"
+          ],
+          "adapt": [
+            "массив options и defaultValue",
+            "label — название группы",
+            "обработчик onChange",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Сегментов должно быть от двух до четырёх: дальше нужен select или вкладки.",
+            "Подписи держите короткими: сегменты одной ширины читаются как шкала.",
+            "Это выбор одного значения, а не фильтры: для множественного возьмите badge-011.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Название группы",
+            "type": "text",
+            "default": "Период",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A segmented control built on real radios: arrows, Home/End and position announcements come from the browser.",
+            "ai": {
+              "summary": "A two-to-four segment switch on real radios: keyboard and position announcements for free, the selected segment on a white pad. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-button-013-* palette — do not swap it for your theme tokens",
+                "radios inside instead of buttons: arrows, Home/End and \"2 of 3\" come free",
+                "role=\"radiogroup\" with a name on the wrapper",
+                "styling through :has(input:checked) — state and appearance cannot drift",
+                "the focus ring on the label rather than the hidden input",
+                "a thumb-sized segment height"
+              ],
+              "adapt": [
+                "the options array and defaultValue",
+                "label — the group's name",
+                "the onChange handler",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Two to four segments is the range: beyond it use a select or tabs.",
+                "Keep labels short: equal-width segments read as a scale.",
+                "This picks one value, not filters: for multi-select use badge-011.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button013 options={[\"Day\", \"Week\"]} defaultValue=\"Week\" onChange={setRange} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Group name",
+                "default": "Range"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-014",
+      "type": "registry:component",
+      "title": "Expanding FAB",
+      "description": "Круглая кнопка главного действия: подпись раскрывается по ширине при наведении и при фокусе, а не всплывает поверх соседей.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-014/button-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-014.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-014-*. Серверный: хуков нет. Подпись всегда в разметке, но её max-width равен нулю и растёт до 12rem на hover и focus-visible — так кнопка расширяется в потоке, а не накрывает соседей. Имя действия продублировано в aria-label. Плюс нарисован двумя полосками.",
+      "meta": {
+        "tags": ["button", "fab", "hover", "action"],
+        "ai": {
+          "export": "Button014",
+          "usage": "<Button014 label=\"Новая задача\" accent=\"oklch(0.55 0.17 265)\" />",
+          "summary": "Круглая кнопка главного действия, которая раскрывается в пилюлю с подписью при наведении и фокусе. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-button-014-* и не подменять её токенами вашей темы",
+            "раскрытие и по фокусу, а не только по наведению — с клавиатуры подпись тоже нужна",
+            "aria-label: кнопка в свёрнутом виде состоит из одного плюса",
+            "рост по ширине вместо всплывающей подсказки поверх соседей",
+            "тень, привязанную к акценту через color-mix",
+            "правило prefers-reduced-motion, снимающее анимацию ширины"
+          ],
+          "adapt": [
+            "label — главное действие экрана",
+            "hint — текст всплывающей подсказки браузера",
+            "акцент через проп accent",
+            "размер через переменную"
+          ],
+          "notes": [
+            "Позиционирование не входит в компонент: position: fixed и отступы задаёт вызывающий код.",
+            "Главное действие на экране одно: две такие кнопки рядом отменяют смысл.",
+            "На телефоне наведения нет — там подпись видна только при фокусе, поэтому имя действия обязано быть понятным и без неё.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Действие",
+            "type": "text",
+            "default": "Новая задача",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A round primary-action button whose label unrolls on hover and focus instead of floating over its neighbours.",
+            "ai": {
+              "summary": "A round primary action button that expands into a labelled pill on hover and focus. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-button-014-* palette — do not swap it for your theme tokens",
+                "expanding on focus as well as hover — keyboard users need the label too",
+                "the aria-label: collapsed, the button is just a plus",
+                "growing in width instead of a tooltip covering neighbours",
+                "the shadow tied to the accent through color-mix",
+                "the prefers-reduced-motion rule that drops the width animation"
+              ],
+              "adapt": [
+                "label — the screen's primary action",
+                "hint — the browser tooltip text",
+                "the accent through the accent prop",
+                "the size through the variable"
+              ],
+              "notes": [
+                "Positioning is not part of the component: fixed placement belongs to the caller.",
+                "A screen has one primary action: two of these side by side defeat the idea.",
+                "Phones have no hover — the label shows only on focus there, so the action name must read well without it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button014 label=\"New task\" accent=\"oklch(0.55 0.17 265)\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Action",
+                "default": "New task"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-015",
+      "type": "registry:component",
+      "title": "Copy Button",
+      "description": "Кнопка копирования отчитывается в себе: подпись меняется на «Скопировано» и возвращается через пару секунд.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-015/button-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-015-*. Клиентский: \"use client\". Запись в буфер идёт через navigator.clipboard в try/catch: при отказе состояние не меняется, потому что ложное «скопировано» хуже молчания. Таймер возврата снимается при размонтировании. Подпись объявлена aria-live=\"polite\".",
+      "meta": {
+        "tags": ["button", "copy", "clipboard", "feedback"],
+        "ai": {
+          "export": "Button015",
+          "usage": "<Button015 value=\"npm i vibeui\" label=\"Скопировать\" />",
+          "summary": "Кнопка копирования: пишет строку в буфер и на две секунды меняет подпись и значок на галочку. При отказе буфера состояние не меняется. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-button-015-* и не подменять её токенами вашей темы",
+            "try/catch вокруг clipboard: ложное «скопировано» хуже отсутствия отклика",
+            "отчёт в самой кнопке, а не всплывающим сообщением в другом углу экрана",
+            "aria-live=\"polite\" на подписи — смену состояния надо услышать",
+            "снятие таймера при размонтировании",
+            "возврат в исходное состояние: иначе непонятно, копировалось ли снова"
+          ],
+          "adapt": [
+            "value — что копируем",
+            "label и doneLabel",
+            "hold — сколько держать отчёт",
+            "цвет успешного состояния"
+          ],
+          "notes": [
+            "navigator.clipboard работает только в защищённом контексте (https или localhost): по http кнопка промолчит.",
+            "Копирование чужих данных без разрешения — плохая идея: копируйте то, что человек видит.",
+            "Две секунды — компромисс: меньше не успеть прочитать, больше выглядит зависшим состоянием.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Скопировать",
+            "maxLength": 24
+          },
+          {
+            "prop": "doneLabel",
+            "label": "После копирования",
+            "type": "text",
+            "default": "Скопировано",
+            "maxLength": 24
+          },
+          {
+            "prop": "hold",
+            "label": "Держать, мс",
+            "type": "number",
+            "default": 2000,
+            "min": 500,
+            "max": 5000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The copy button reports inside itself: the label turns into \"Copied\" and returns a couple of seconds later.",
+            "ai": {
+              "summary": "A copy button: it writes a string to the clipboard and swaps its label and glyph for two seconds. If the clipboard refuses, nothing changes. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-button-015-* palette — do not swap it for your theme tokens",
+                "the try/catch around clipboard: a false \"copied\" is worse than silence",
+                "the report inside the button rather than a toast in another corner",
+                "aria-live=\"polite\" on the label — the change has to be heard",
+                "clearing the timer on unmount",
+                "returning to the idle state: otherwise a second copy is invisible"
+              ],
+              "adapt": [
+                "value — what gets copied",
+                "label and doneLabel",
+                "hold — how long the report stays",
+                "the success colour"
+              ],
+              "notes": [
+                "navigator.clipboard only works in a secure context (https or localhost): over http the button stays silent.",
+                "Copying data the person cannot see is a bad idea: copy what is on screen.",
+                "Two seconds is the compromise: less is unreadable, more looks stuck.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button015 value=\"npm i vibeui\" label=\"Copy\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Copy"
+              },
+              "doneLabel": {
+                "label": "After copying",
+                "default": "Copied"
+              },
+              "hold": {
+                "label": "Hold, ms"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-016",
+      "type": "registry:component",
+      "title": "Link Button",
+      "description": "Ссылка в виде кнопки: адрес можно скопировать и открыть в новой вкладке — с button onClick всё это теряется.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-016/button-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-016.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-016-*. Серверный: хуков нет. Это <a>, а не <button>: сохраняются контекстное меню, средний клик и статусная строка. Для внешней ссылки проставляются target=\"_blank\" и rel=\"noopener noreferrer\", рисуется значок и добавляется скрытая строка «откроется в новой вкладке».",
+      "meta": {
+        "tags": ["button", "link", "external", "a11y"],
+        "ai": {
+          "export": "Button016",
+          "usage": "<Button016 label=\"Открыть документацию\" href=\"https://example.com\" external />",
+          "summary": "Ссылка, оформленная кнопкой: значок внешнего перехода, rel=\"noopener noreferrer\" и предупреждение о новой вкладке для скринридера. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-button-016-* и не подменять её токенами вашей темы",
+            "тег <a>: с кнопкой и router.push теряются средний клик, копирование адреса и статусная строка",
+            "rel=\"noopener noreferrer\" при target=\"_blank\" — иначе чужая вкладка получает доступ к вашей",
+            "скрытую строку про новую вкладку: значок скринридер не читает",
+            "значок внешнего перехода на бордюрах",
+            "видимое фокусное кольцо"
+          ],
+          "adapt": [
+            "label и href",
+            "external — открывать ли в новой вкладке",
+            "tone — neutral или accent",
+            "высоту и радиус под соседние кнопки"
+          ],
+          "notes": [
+            "Новая вкладка — не всегда услуга: открывайте так только внешние адреса, а внутренние оставляйте в текущей.",
+            "Если ссылка ведёт на скачивание, скажите об этом словом и укажите формат и вес.",
+            "Внутри Next.js оберните компонент в <Link> или замените тег на Link в своей копии.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Открыть документацию",
+            "maxLength": 30
+          },
+          {
+            "prop": "external",
+            "label": "Внешняя ссылка",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "neutral",
+            "options": ["neutral", "accent"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A link dressed as a button: the URL can be copied and opened in a new tab — a button with onClick loses all of that.",
+            "ai": {
+              "summary": "A link styled as a button: an external-link glyph, rel=\"noopener noreferrer\" and a screen-reader note about the new tab. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-button-016-* palette — do not swap it for your theme tokens",
+                "the <a> tag: a button with router.push loses middle-click, URL copying and the status bar",
+                "rel=\"noopener noreferrer\" with target=\"_blank\" — otherwise the new tab can reach yours",
+                "the hidden new-tab note: the glyph is not read aloud",
+                "the border-drawn external glyph",
+                "the visible focus ring"
+              ],
+              "adapt": [
+                "label and href",
+                "external — whether to open a new tab",
+                "tone — neutral or accent",
+                "height and radius to match neighbouring buttons"
+              ],
+              "notes": [
+                "A new tab is not always a favour: use it for external URLs and keep internal ones in place.",
+                "If the link downloads a file, say so and name the format and size.",
+                "Inside Next.js wrap it in <Link> or swap the tag in your copy.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button016 label=\"Open the docs\" href=\"https://example.com\" external />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Open the docs"
+              },
+              "external": {
+                "label": "External link"
+              },
+              "tone": {
+                "label": "Tone"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-017",
+      "type": "registry:component",
+      "title": "Submit Once",
+      "description": "Кнопка отправки, которую нельзя нажать дважды: она блокируется на время работы и держит ширину при смене подписи.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-017/button-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-017.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-017-*. Клиентский: \"use client\". Состояние — idle, pending или done; в pending кнопка disabled и aria-busy, повторный вызов отсекается ранним возвратом. Минимальная ширина задана по самой длинной подписи, поэтому смена текста не дёргает раскладку. Таймер возврата снимается при размонтировании.",
+      "meta": {
+        "tags": ["button", "submit", "async", "loading"],
+        "ai": {
+          "export": "Button017",
+          "usage": "<Button017 label=\"Отправить заявку\" action={() => api.send(form)} />",
+          "summary": "Кнопка отправки с тремя состояниями: покой, работа с кольцом и блокировкой, результат с галочкой. Повторный клик невозможен. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-button-017-* и не подменять её токенами вашей темы",
+            "блокировку на время работы: повторный клик — самая частая причина дублей в базе",
+            "aria-busy и aria-live: ход дела должен быть слышен, а не только виден",
+            "минимальную ширину по самой длинной подписи — иначе кнопка прыгает",
+            "ранний возврат в обработчике: disabled не спасает от программного вызова",
+            "правило prefers-reduced-motion для кольца"
+          ],
+          "adapt": [
+            "label, pendingLabel и doneLabel",
+            "action — что делаем по нажатию",
+            "акцент через проп accent",
+            "длительность показа результата"
+          ],
+          "notes": [
+            "Дефолтный action — задержка для витрины: в проекте передайте настоящий запрос.",
+            "Ошибку компонент не показывает: заворачивайте свой action в try/catch и решайте, что выводить.",
+            "Блокировка на клиенте не заменяет защиту от дублей на сервере: ключ идемпотентности всё равно нужен.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Отправить заявку",
+            "maxLength": 30
+          },
+          {
+            "prop": "pendingLabel",
+            "label": "Во время работы",
+            "type": "text",
+            "default": "Отправляем…",
+            "maxLength": 24
+          },
+          {
+            "prop": "doneLabel",
+            "label": "После успеха",
+            "type": "text",
+            "default": "Отправлено",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A submit button that cannot be double-clicked: it locks while working and keeps its width as the label changes.",
+            "ai": {
+              "summary": "A submit button with three states: idle, working with a ring and a lock, and done with a tick. A second click is impossible. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-button-017-* palette — do not swap it for your theme tokens",
+                "the lock while working: a double click is the most common cause of duplicate records",
+                "aria-busy and aria-live: progress has to be heard, not only seen",
+                "the min-width set by the longest label — otherwise the button jumps",
+                "the early return in the handler: disabled does not stop a programmatic call",
+                "the prefers-reduced-motion rule for the ring"
+              ],
+              "adapt": [
+                "label, pendingLabel and doneLabel",
+                "action — what happens on click",
+                "the accent through the accent prop",
+                "how long the result stays"
+              ],
+              "notes": [
+                "The default action is a showcase delay: pass a real request in a project.",
+                "Errors are not rendered: wrap your action in try/catch and decide what to show.",
+                "A client-side lock does not replace server-side deduplication: you still need an idempotency key.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button017 label=\"Send request\" action={() => api.send(form)} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Send request"
+              },
+              "pendingLabel": {
+                "label": "While working",
+                "default": "Sending…"
+              },
+              "doneLabel": {
+                "label": "After success",
+                "default": "Sent"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-018",
+      "type": "registry:component",
+      "title": "Quantity Stepper",
+      "description": "Счётчик количества: две кнопки вокруг настоящего поля — набрать «12» быстрее, чем нажать плюс двенадцать раз.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-018/button-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-018.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-018-*. Клиентский: \"use client\". Значение живёт в input type=\"number\" со скрытой подписью через useId; стрелки браузера убраны, потому что рядом стоят собственные кнопки. На границах диапазона кнопки disabled, а их aria-label содержит будущее значение.",
+      "meta": {
+        "tags": ["button", "stepper", "quantity", "form"],
+        "ai": {
+          "export": "Button018",
+          "usage": "<Button018 defaultValue={2} min={1} max={20} onChange={setQty} />",
+          "summary": "Счётчик количества: минус, поле ввода и плюс, с блокировкой на границах и единицей измерения. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-button-018-* и не подменять её токенами вашей темы",
+            "настоящее поле ввода в середине: двадцать нажатий плюса — не сценарий",
+            "блокировку кнопок на границах вместо молчаливого бездействия",
+            "aria-label с будущим значением: «минус» без числа скринридеру бесполезен",
+            "табличные цифры, чтобы поле не дёргалось",
+            "скрытие штатных стрелок number: рядом уже стоят свои кнопки"
+          ],
+          "adapt": [
+            "defaultValue, min, max и step",
+            "label — название поля",
+            "unit — единица измерения",
+            "обработчик onChange"
+          ],
+          "notes": [
+            "Значение подрезается по диапазону при любом вводе: пустое поле превращается в минимум.",
+            "Для больших чисел степпер неудобен: с сотнями работает обычное поле.",
+            "Удаление товара из корзины — не «минус до нуля»: заведите отдельное действие.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultValue",
+            "label": "Значение",
+            "type": "number",
+            "default": 2,
+            "min": 1,
+            "max": 20
+          },
+          {
+            "prop": "max",
+            "label": "Максимум",
+            "type": "number",
+            "default": 20,
+            "min": 2,
+            "max": 99
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "шт",
+            "maxLength": 8
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A quantity stepper: two buttons around a real input — typing \"12\" beats pressing plus twelve times.",
+            "ai": {
+              "summary": "A quantity stepper: minus, a number input and plus, with the buttons disabled at the range edges and a unit label. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-button-018-* palette — do not swap it for your theme tokens",
+                "the real input in the middle: twenty plus presses is not a workflow",
+                "disabling the buttons at the edges instead of silently doing nothing",
+                "the aria-label carrying the next value: a bare \"minus\" tells a screen reader nothing",
+                "tabular figures so the field does not jitter",
+                "hiding the native number spinners: custom buttons already sit beside them"
+              ],
+              "adapt": [
+                "defaultValue, min, max and step",
+                "label — the field's name",
+                "unit — the measurement unit",
+                "the onChange handler"
+              ],
+              "notes": [
+                "The value is clamped on every input: an empty field becomes the minimum.",
+                "A stepper is wrong for large numbers: hundreds want a plain field.",
+                "Removing an item from a cart is not \"minus to zero\": give it its own action.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button018 defaultValue={2} min={1} max={20} onChange={setQty} />"
+            },
+            "controls": {
+              "defaultValue": {
+                "label": "Value"
+              },
+              "max": {
+                "label": "Maximum"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": "pcs"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-019",
+      "type": "registry:component",
+      "title": "Reaction Button",
+      "description": "Кнопка-реакция со счётчиком: состояние объявлено через aria-pressed, а не сменой подписи на «Не нравится».",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-019/button-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-019.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-019-*. Клиентский: \"use client\". Нажатое состояние — aria-pressed, и по нему же идёт стилизация. Счётчик пересчитывается на клиенте сразу, поэтому отклик мгновенный. Сердце собрано из двух повёрнутых фигур и заливается в нажатом состоянии — цвет не единственный признак.",
+      "meta": {
+        "tags": ["button", "reaction", "toggle", "counter"],
+        "ai": {
+          "export": "Button019",
+          "usage": "<Button019 label=\"Нравится\" count={128} onChange={send} />",
+          "summary": "Кнопка реакции: сердце, подпись и счётчик, состояние в aria-pressed, число меняется мгновенно. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-button-019-* и не подменять её токенами вашей темы",
+            "aria-pressed вместо смены подписи: «Не нравится» звучит как другое действие",
+            "разницу в плотности и размере сердца: цвет не единственный признак состояния",
+            "мгновенный пересчёт счётчика: реакция дешёвая, ждать сервер незачем",
+            "aria-label с числом отметок: голая цифра в потоке речи теряется",
+            "табличные цифры у счётчика"
+          ],
+          "adapt": [
+            "label и стартовый count",
+            "defaultPressed — состояние при загрузке",
+            "обработчик onChange",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Число обновляется на клиенте: расхождение с сервером надо разрешать при следующей загрузке.",
+            "Если сервер отклонил реакцию, состояние нужно вернуть — компонент об этом не знает.",
+            "Реакции без счётчика читаются спокойнее: число превращает их в соревнование.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Нравится",
+            "maxLength": 20
+          },
+          {
+            "prop": "count",
+            "label": "Счётчик",
+            "type": "number",
+            "default": 128,
+            "min": 0,
+            "max": 9999
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A reaction button with a counter: state lives in aria-pressed, not in a label that flips to \"Unlike\".",
+            "ai": {
+              "summary": "A reaction button: heart, label and counter, state in aria-pressed, the number updating instantly. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-button-019-* palette — do not swap it for your theme tokens",
+                "aria-pressed instead of flipping the label: \"Unlike\" reads as a different action",
+                "the heart growing denser and larger when pressed — colour is not the only cue",
+                "the instant counter update: a reaction is cheap, waiting on the server is not worth it",
+                "the aria-label carrying the count: a bare number is lost in speech",
+                "tabular figures on the counter"
+              ],
+              "adapt": [
+                "label and the starting count",
+                "defaultPressed — the state on load",
+                "the onChange handler",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The number updates client-side: reconcile with the server on the next load.",
+                "If the server rejects the reaction, the state must be rolled back — the component does not know.",
+                "Reactions without a counter read calmer: a number turns them into a contest.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button019 label=\"Like\" count={128} onChange={send} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Like"
+              },
+              "count": {
+                "label": "Counter"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-020",
+      "type": "registry:component",
+      "title": "Mobile Checkout Bar",
+      "description": "Кнопка нижней панели телефона: во всю ширину, с ценой внутри и отступом на домашнюю полоску через safe-area.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-020/button-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-020.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-020-*. Серверный: хуков нет. Нижний отступ считается как базовый плюс env(safe-area-inset-bottom): без него на iPhone край кнопки уходит под системную черту. Высота кнопки 3rem, цена выровнена по правому краю табличными цифрами.",
+      "meta": {
+        "tags": ["button", "mobile", "checkout", "safe-area"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Button020",
+          "usage": "<Button020 label=\"Оформить заказ\" price=\"4 900 ₽\" hint=\"Доставка завтра\" />",
+          "summary": "Нижняя панель телефона: кнопка во всю ширину с ценой внутри, пояснение под ней и отступ на домашнюю полоску. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-button-020-* и не подменять её токенами вашей темы",
+            "env(safe-area-inset-bottom): без него кнопка уезжает под системную черту iPhone",
+            "цену внутри кнопки: на этом шаге решают по сумме, а не по глаголу",
+            "высоту 3rem — нижняя кнопка нажимается большим пальцем",
+            "верхнюю границу панели: она отделяет её от прокручиваемого содержимого",
+            "пояснение под кнопкой вместо мелкого текста внутри неё"
+          ],
+          "adapt": [
+            "label, price и hint",
+            "акцент через проп accent",
+            "радиус кнопки под свой стиль",
+            "ширину панели в вызывающем коде"
+          ],
+          "notes": [
+            "Позиционирование не входит в компонент: position: fixed и нижний край задаёт вызывающий код.",
+            "Цена должна совпадать с итогом заказа: расхождение на этом шаге читается как обман.",
+            "Не прячьте в панель второе действие: место занимает главное.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Действие",
+            "type": "text",
+            "default": "Оформить заказ",
+            "maxLength": 24
+          },
+          {
+            "prop": "price",
+            "label": "Сумма",
+            "type": "text",
+            "default": "4 900 ₽",
+            "maxLength": 16
+          },
+          {
+            "prop": "hint",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Доставка завтра, оплата при получении",
+            "maxLength": 50
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A phone's bottom bar button: full width, the price inside and safe-area padding for the home indicator.",
+            "ai": {
+              "summary": "A phone bottom bar: a full-width button with the price inside, a note below and padding for the home indicator. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-button-020-* palette — do not swap it for your theme tokens",
+                "env(safe-area-inset-bottom): without it the button slides under the iPhone home bar",
+                "the price inside the button: at this step the sum drives the decision",
+                "the 3rem height — the bottom button is pressed with a thumb",
+                "the bar's top border separating it from scrolling content",
+                "the note under the button rather than small print inside it"
+              ],
+              "adapt": [
+                "label, price and hint",
+                "the accent through the accent prop",
+                "the button radius for your style",
+                "the bar width in the caller"
+              ],
+              "notes": [
+                "Positioning is not part of the component: fixed placement belongs to the caller.",
+                "The price must match the order total: a mismatch here reads as a trick.",
+                "Do not squeeze a second action into the bar: the space belongs to the main one.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button020 label=\"Place order\" price=\"$59\" hint=\"Delivered tomorrow\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Action",
+                "default": "Place order"
+              },
+              "price": {
+                "label": "Amount",
+                "default": "$59"
+              },
+              "hint": {
+                "label": "Note",
+                "default": "Delivered tomorrow, pay on arrival"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

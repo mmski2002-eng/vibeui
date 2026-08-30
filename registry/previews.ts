@@ -24,6 +24,15 @@ import { Button008 } from "@/registry/components/buttons/button-008/button-008"
 import { Button009 } from "@/registry/components/buttons/button-009/button-009"
 import { Button010 } from "@/registry/components/buttons/button-010/button-010"
 import { Button011 } from "@/registry/components/buttons/button-011/button-011"
+import { Button012 } from "@/registry/components/buttons/button-012/button-012"
+import { Button013 } from "@/registry/components/buttons/button-013/button-013"
+import { Button014 } from "@/registry/components/buttons/button-014/button-014"
+import { Button015 } from "@/registry/components/buttons/button-015/button-015"
+import { Button016 } from "@/registry/components/buttons/button-016/button-016"
+import { Button017 } from "@/registry/components/buttons/button-017/button-017"
+import { Button018 } from "@/registry/components/buttons/button-018/button-018"
+import { Button019 } from "@/registry/components/buttons/button-019/button-019"
+import { Button020 } from "@/registry/components/buttons/button-020/button-020"
 import { Accordion001 } from "@/registry/components/accordion/accordion-001/accordion-001"
 import { Accordion002 } from "@/registry/components/accordion/accordion-002/accordion-002"
 import { Accordion003 } from "@/registry/components/accordion/accordion-003/accordion-003"
@@ -179,6 +188,15 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "button-009": Button009,
   "button-010": Button010,
   "button-011": Button011,
+  "button-012": Button012,
+  "button-013": Button013,
+  "button-014": Button014,
+  "button-015": Button015,
+  "button-016": Button016,
+  "button-017": Button017,
+  "button-018": Button018,
+  "button-019": Button019,
+  "button-020": Button020,
   "accordion-001": Accordion001,
   "accordion-002": Accordion002,
   "accordion-003": Accordion003,

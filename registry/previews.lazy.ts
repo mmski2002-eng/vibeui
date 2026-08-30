@@ -126,6 +126,51 @@ export const LAZY_PREVIEWS = {
       (module) => module.Button011,
     ),
   ),
+  "button-012": dynamic(() =>
+    import("@/registry/components/buttons/button-012/button-012").then(
+      (module) => module.Button012,
+    ),
+  ),
+  "button-013": dynamic(() =>
+    import("@/registry/components/buttons/button-013/button-013").then(
+      (module) => module.Button013,
+    ),
+  ),
+  "button-014": dynamic(() =>
+    import("@/registry/components/buttons/button-014/button-014").then(
+      (module) => module.Button014,
+    ),
+  ),
+  "button-015": dynamic(() =>
+    import("@/registry/components/buttons/button-015/button-015").then(
+      (module) => module.Button015,
+    ),
+  ),
+  "button-016": dynamic(() =>
+    import("@/registry/components/buttons/button-016/button-016").then(
+      (module) => module.Button016,
+    ),
+  ),
+  "button-017": dynamic(() =>
+    import("@/registry/components/buttons/button-017/button-017").then(
+      (module) => module.Button017,
+    ),
+  ),
+  "button-018": dynamic(() =>
+    import("@/registry/components/buttons/button-018/button-018").then(
+      (module) => module.Button018,
+    ),
+  ),
+  "button-019": dynamic(() =>
+    import("@/registry/components/buttons/button-019/button-019").then(
+      (module) => module.Button019,
+    ),
+  ),
+  "button-020": dynamic(() =>
+    import("@/registry/components/buttons/button-020/button-020").then(
+      (module) => module.Button020,
+    ),
+  ),
   "accordion-001": dynamic(() =>
     import("@/registry/components/accordion/accordion-001/accordion-001").then(
       (module) => module.Accordion001,
