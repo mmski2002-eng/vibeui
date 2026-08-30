@@ -9,6 +9,7 @@ import pricingRegistry from "@/registry/blocks/pricing/registry.json"
 import buttonsRegistry from "@/registry/components/buttons/registry.json"
 import inputsRegistry from "@/registry/components/inputs/registry.json"
 import displayRegistry from "@/registry/components/display/registry.json"
+import feedbackRegistry from "@/registry/components/feedback/registry.json"
 
 /**
  * Реестры, попадающие на сайт. Это и есть файловая база каталога: другого
@@ -49,6 +50,11 @@ export const SOURCES = [
     directory: "registry/components/display",
     kind: "component",
     items: displayRegistry.items,
+  },
+  {
+    directory: "registry/components/feedback",
+    kind: "component",
+    items: feedbackRegistry.items,
   },
 ] as const satisfies readonly {
   directory: string

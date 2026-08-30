@@ -1,0 +1,794 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "alert-001",
+      "type": "registry:component",
+      "title": "Inline Alert",
+      "description": "Встроенное уведомление, где тон несёт полоса слева и значок, а не заливка во всю ширину. Три сообщения подряд не превращают экран в светофор.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alert-001/alert-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alert-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-001-*. Четыре тона переключаются data-атрибутом и меняют одну переменную: цвет полосы слева и значка. Роль выбирается по тону: danger объявляется как alert (скринридер прерывает чтение), остальные — как status. В узкой колонке действие уходит под текст через @container, а не сжимает его.",
+      "meta": {
+        "tags": ["alert", "notification", "inline", "status"],
+        "preview": {
+          "surface": "light",
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alert001",
+          "usage": "<Alert001\n  tone=\"warning\"\n  title=\"Домен ещё не подключён\"\n  description=\"Сайт открывается по временному адресу.\"\n  action={<a href=\"/domains\">Подключить</a>}\n/>",
+          "summary": "Встроенное уведомление: полоса тона слева, круглый значок, заголовок, описание и действие справа. Цвет живёт в полосе и значке, фон остаётся нейтральным, поэтому несколько уведомлений подряд читаются спокойно. Четыре тона, роль status или alert в зависимости от тона, перенос действия в узкой колонке. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-alert-001-* и не подменять её токенами вашей темы (bg-destructive, text-destructive-foreground и подобными)",
+            "главное решение: тон меняет полосу и значок, а не заливает всё уведомление цветом",
+            "выбор роли по тону: danger — role=\"alert\", остальные — role=\"status\"; постоянный alert заставляет скринридер прерывать чтение на каждую мелочь",
+            "полосу через ::before вместе с overflow:hidden — иначе она вылезет за скруглённый угол",
+            "значок как отдельный элемент с aria-hidden: смысл несёт текст",
+            "@container-запрос, переносящий действие под текст: в узкой колонке иначе схлопывается заголовок",
+            "блок <style> внутри компонента — в нём вся палитра, тона и раскладка"
+          ],
+          "adapt": [
+            "tone: info, success, warning, danger",
+            "тексты title и description",
+            "action — это ReactNode: положите туда ссылку или свою кнопку",
+            "ширину и внешние отступы через className: по умолчанию уведомление занимает всю ширину родителя"
+          ],
+          "notes": [
+            "Не используйте это как всплывающее уведомление: компонент встраивается в поток страницы. Для всплывающего нужен toast.",
+            "Не показывайте больше двух уведомлений подряд: третье перестают читать.",
+            "Не полагайтесь на цвет как на единственный признак — заголовок обязан объяснять, что произошло.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "warning",
+            "options": ["info", "success", "warning", "danger"]
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Домен ещё не подключён",
+            "maxLength": 60
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Сайт открывается по временному адресу. Подключите домен, чтобы им можно было делиться.",
+            "maxLength": 120
+          },
+          {
+            "prop": "action",
+            "label": "Действие",
+            "type": "text",
+            "default": "Подключить",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An inline alert where the tone lives in the left bar and the icon rather than a full-width fill. Three of them in a row do not turn the screen into traffic lights.",
+            "ai": {
+              "summary": "An inline alert: a tone bar on the left, a round glyph, a title, a description and an action on the right. The colour stays in the bar and the glyph while the background stays neutral, so several alerts read calmly. Four tones, role status or alert depending on the tone, and the action wraps in a narrow column. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-alert-001-* palette — do not swap it for your theme tokens (bg-destructive, text-destructive-foreground and the like)",
+                "the core decision: the tone colours the bar and the glyph, it does not flood the alert",
+                "picking the role from the tone: danger is role=\"alert\", the rest are role=\"status\"; a permanent alert makes a screen reader interrupt for every trifle",
+                "the bar through ::before together with overflow:hidden — otherwise it escapes the rounded corner",
+                "the glyph as a separate aria-hidden element: the text carries the meaning",
+                "the @container query that moves the action below the text: in a narrow column the title collapses otherwise",
+                "the <style> block inside the component — it holds the palette, the tones and the layout"
+              ],
+              "adapt": [
+                "tone: info, success, warning, danger",
+                "the title and description copy",
+                "action is a ReactNode: put a link or your own button in it",
+                "width and outer spacing through className: by default the alert fills its parent"
+              ],
+              "notes": [
+                "Do not use this as a floating notification: it belongs in the page flow. Floating needs a toast.",
+                "Do not stack more than two alerts: the third one stops being read.",
+                "Never rely on colour alone — the title has to say what happened.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alert001\n  tone=\"warning\"\n  title=\"No domain connected yet\"\n  description=\"The site is served from a temporary address.\"\n  action={<a href=\"/domains\">Connect</a>}\n/>"
+            },
+            "controls": {
+              "tone": {
+                "label": "Tone"
+              },
+              "title": {
+                "label": "Title",
+                "default": "No domain connected yet"
+              },
+              "description": {
+                "label": "Description",
+                "default": "The site is served from a temporary address. Connect a domain so you can share it."
+              },
+              "action": {
+                "label": "Action",
+                "default": "Connect"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dialog-001",
+      "type": "registry:component",
+      "title": "Popover Dialog",
+      "description": "Модальное окно на HTML popover: открытие, закрытие по Esc и по клику мимо, подложка и верхний слой — всё от браузера, без единой строки JS.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dialog-001/dialog-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dialog-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-001-*. Открытие держит HTML popover: кнопка объявляет цель атрибутом popovertarget, окно — popover=\"auto\". Отсюда бесплатно приходят закрытие по Esc и по клику мимо, подложка ::backdrop и верхний слой, в котором окно не зависит от overflow и z-index родителей. Анимация появления собрана на @starting-style и transition-behavior для display и overlay. Окно стилизуется по атрибуту [data-vibeui-dialog-001-window], а не по вложенности: в верхнем слое оно перестаёт быть потомком корня компонента.",
+      "meta": {
+        "tags": ["dialog", "modal", "popover", "no-js"],
+        "preview": {
+          "surface": "light"
+        },
+        "ai": {
+          "export": "Dialog001",
+          "usage": "<Dialog001\n  id=\"delete-project\"\n  trigger=\"Удалить проект\"\n  title=\"Удалить проект?\"\n  description=\"Отменить это будет нельзя.\"\n  confirmLabel=\"Удалить\"\n/>",
+          "summary": "Модальное окно подтверждения без JS. Кнопка связана с окном атрибутом popovertarget, браузер сам даёт Esc, клик мимо, затемнённую подложку и верхний слой. Появление анимировано через @starting-style. Заголовок, текст, кнопки отмены и подтверждения. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-dialog-001-* и не подменять её токенами вашей темы (bg-background, border-border и подобными)",
+            "механику popover: атрибуты popover=\"auto\" и popovertarget — это и есть всё поведение окна, состояние в React ему не нужно",
+            "стилизацию окна по атрибуту [data-vibeui-dialog-001-window]: в верхнем слое окно перестаёт быть потомком корня, и селекторы по вложенности перестают работать",
+            "передачу палитры окну отдельным style: по той же причине переменные с корня в него не наследуются",
+            "::backdrop и его затемнение — без подложки модальное окно не читается как модальное",
+            "aria-labelledby, связывающий окно с заголовком, и role=\"dialog\"",
+            "@starting-style вместе с transition-behavior для display и overlay: без них появление будет рывком",
+            "блок <style> внутри компонента — в нём вся палитра, кнопки и анимация"
+          ],
+          "adapt": [
+            "id — обязателен свой на каждое окно на странице: он связывает кнопку и окно",
+            "тексты trigger, title, description, confirmLabel и cancelLabel",
+            "children — своё содержимое вместо описания: форма, список, что угодно",
+            "акцент через проп accent — цвет кнопок и кольца фокуса",
+            "обработчик подтверждения: повесьте onClick на кнопку подтверждения в своей копии"
+          ],
+          "notes": [
+            "Два экземпляра с одинаковым id на одной странице конфликтуют: кнопка откроет первое попавшееся окно. Давайте каждому свой id.",
+            "popover=\"auto\" закрывается кликом мимо. Для окна, которое нельзя закрыть случайно, поставьте popover=\"manual\" и уберите кнопку отмены из списка закрывающих.",
+            "Это не <dialog>: у popover нет модальности в смысле inert для остальной страницы. Для формы платежа берите <dialog> с showModal и клиентским кодом.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "trigger",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Удалить проект",
+            "maxLength": 30
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Удалить проект?",
+            "maxLength": 50
+          },
+          {
+            "prop": "description",
+            "label": "Текст",
+            "type": "text",
+            "default": "Вместе с проектом удалятся страницы, домены и история публикаций. Отменить это будет нельзя.",
+            "maxLength": 140
+          },
+          {
+            "prop": "confirmLabel",
+            "label": "Подтверждение",
+            "type": "text",
+            "default": "Удалить",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A modal built on the HTML popover attribute: opening, Esc, click-outside, the backdrop and the top layer all come from the browser, with no JS at all.",
+            "ai": {
+              "summary": "A JS-free confirmation dialog. The button is wired to the window through popovertarget, and the browser supplies Esc, light dismiss, the dimmed backdrop and the top layer. The entrance is animated with @starting-style. Title, body, cancel and confirm buttons. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-dialog-001-* palette — do not swap it for your theme tokens (bg-background, border-border and the like)",
+                "the popover mechanism: popover=\"auto\" and popovertarget are the entire behaviour; it needs no React state",
+                "styling the window through the [data-vibeui-dialog-001-window] attribute: in the top layer the window is no longer a descendant of the root, so descendant selectors stop matching",
+                "passing the palette to the window through its own style attribute: for the same reason variables do not inherit into it",
+                "::backdrop and its dimming — without a backdrop a modal does not read as modal",
+                "aria-labelledby tying the window to its heading, and role=\"dialog\"",
+                "@starting-style together with transition-behavior for display and overlay: without them the entrance jumps",
+                "the <style> block inside the component — it holds the palette, the buttons and the animation"
+              ],
+              "adapt": [
+                "id — every dialog on a page needs its own: it is what links button and window",
+                "the trigger, title, description, confirmLabel and cancelLabel copy",
+                "children — your own content instead of the description: a form, a list, anything",
+                "the accent through the accent prop — it colours the buttons and the focus ring",
+                "the confirm handler: attach onClick to the confirm button in your copy"
+              ],
+              "notes": [
+                "Two instances sharing an id on one page conflict: the button opens whichever window it finds first. Give each its own id.",
+                "popover=\"auto\" closes on an outside click. For a window that must not be dismissed by accident use popover=\"manual\".",
+                "This is not <dialog>: popover has no modality in the sense of making the rest of the page inert. For a payment form use <dialog> with showModal and client code.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dialog001\n  id=\"delete-project\"\n  trigger=\"Delete project\"\n  title=\"Delete this project?\"\n  description=\"This cannot be undone.\"\n  confirmLabel=\"Delete\"\n/>"
+            },
+            "controls": {
+              "trigger": {
+                "label": "Button",
+                "default": "Delete project"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Delete this project?"
+              },
+              "description": {
+                "label": "Body",
+                "default": "The pages, domains and publish history go with it. This cannot be undone."
+              },
+              "confirmLabel": {
+                "label": "Confirm",
+                "default": "Delete"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-001",
+      "type": "registry:component",
+      "title": "Timed Toast",
+      "description": "Всплывающее уведомление с полосой оставшегося времени и действием «Отменить»: видно, сколько секунд осталось, чтобы передумать.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-001/toast-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-001-*. Полоса времени — CSS-анимация scaleX, длительность приходит переменной --vibeui-toast-001-duration из пропа duration: таймер не считается в JS и не вызывает перерисовок. Сам компонент только показывает уведомление: появлением, очередью и удалением управляет вызывающий код через onClose. Роль выбирается по тону: danger — alert, остальные — status.",
+      "meta": {
+        "tags": ["toast", "notification", "undo", "timer"],
+        "preview": {
+          "surface": "light",
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast001",
+          "usage": "<Toast001\n  tone=\"success\"\n  title=\"Страница опубликована\"\n  description=\"Изменения уже видны по адресу проекта.\"\n  duration={5}\n  onUndo={handleUndo}\n  onClose={dismiss}\n/>",
+          "summary": "Тёмное всплывающее уведомление: точка тона, заголовок, описание, кнопка отмены и крестик. Внизу убывает полоса времени — она показывает, сколько осталось до исчезновения, поэтому пропажа не выглядит внезапной, а «Отменить» видно, пока действие ещё можно отменить. Три тона, длительность пропом. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-001-* и не подменять её токенами вашей темы: уведомление намеренно тёмное и не зависит от темы страницы",
+            "полосу времени как CSS-анимацию scaleX с длительностью из переменной — таймер на setInterval перерисовывал бы компонент десятки раз",
+            "совпадение duration и того, через сколько вызывающий код действительно убирает уведомление: разошлись — полоса начинает врать",
+            "действие «Отменить» рядом с текстом, а не под ним: тост живёт секунды, действие должно попадаться на глаза сразу",
+            "выбор роли по тону: danger — role=\"alert\", остальные — role=\"status\"",
+            "aria-label у крестика: иначе скринридер прочитает «×»",
+            "правило prefers-reduced-motion, которое убирает полосу вместо того, чтобы её анимировать",
+            "блок <style> внутри компонента — в нём вся палитра, тона и анимация"
+          ],
+          "adapt": [
+            "тексты title и description, подпись undoLabel",
+            "tone: success, danger или neutral",
+            "duration — сколько секунд живёт уведомление; 0 убирает полосу",
+            "обработчики onUndo и onClose — они и есть логика: компонент сам себя не удаляет",
+            "ширину и положение через className: контейнер тостов делает вызывающий код"
+          ],
+          "notes": [
+            "Компонент не показывает и не прячет себя. Очередь, стек и таймер удаления — задача вызывающего кода.",
+            "Не ставьте duration меньше четырёх секунд, если есть «Отменить»: прочитать и нажать не успевают.",
+            "Не сообщайте тостом об ошибке, требующей действия: он исчезнет вместе с ней. Для этого есть alert в потоке страницы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "success",
+            "options": ["neutral", "success", "danger"]
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Страница опубликована",
+            "maxLength": 50
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Изменения уже видны по адресу проекта.",
+            "maxLength": 90
+          },
+          {
+            "prop": "undoLabel",
+            "label": "Отмена",
+            "type": "text",
+            "default": "Отменить",
+            "maxLength": 20
+          },
+          {
+            "prop": "duration",
+            "label": "Секунд",
+            "type": "number",
+            "default": 5,
+            "min": 0,
+            "max": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A toast with a draining time bar and an Undo action: you can see how many seconds are left to change your mind.",
+            "ai": {
+              "summary": "A dark toast: a tone dot, a title, a description, an Undo button and a close cross. A bar drains along the bottom, showing how long is left before it disappears, so the toast does not vanish out of nowhere and Undo stays visible while undoing is still possible. Three tones, duration as a prop. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-toast-001-* palette — the toast is deliberately dark and independent of the page theme",
+                "the time bar as a CSS scaleX animation driven by a variable — a setInterval timer would re-render the component dozens of times",
+                "keeping duration in sync with when the caller actually removes the toast: once they diverge, the bar starts lying",
+                "the Undo action beside the text rather than below it: a toast lives for seconds and the action has to be seen at once",
+                "picking the role from the tone: danger is role=\"alert\", the rest are role=\"status\"",
+                "the aria-label on the close button: otherwise a screen reader announces \"×\"",
+                "the prefers-reduced-motion rule that removes the bar instead of animating it",
+                "the <style> block inside the component — it holds the palette, the tones and the animation"
+              ],
+              "adapt": [
+                "the title and description copy and the undoLabel",
+                "tone: success, danger or neutral",
+                "duration — how many seconds the toast lives; 0 removes the bar",
+                "the onUndo and onClose handlers — they are the logic: the component does not remove itself",
+                "width and placement through className: the toast container is the caller's job"
+              ],
+              "notes": [
+                "The component neither shows nor hides itself. The queue, the stack and the removal timer belong to the calling code.",
+                "Do not set duration below four seconds when Undo is present: nobody can read and click in time.",
+                "Do not report an error that needs action in a toast — it leaves with the toast. Use an inline alert instead.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast001\n  tone=\"success\"\n  title=\"Page published\"\n  description=\"The changes are live at your project address.\"\n  duration={5}\n  onUndo={handleUndo}\n  onClose={dismiss}\n/>"
+            },
+            "controls": {
+              "tone": {
+                "label": "Tone"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Page published"
+              },
+              "description": {
+                "label": "Description",
+                "default": "The changes are live at your project address."
+              },
+              "undoLabel": {
+                "label": "Undo",
+                "default": "Undo"
+              },
+              "duration": {
+                "label": "Seconds"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-001",
+      "type": "registry:component",
+      "title": "Empty State",
+      "description": "Пустой экран, который объясняет следующий шаг, а не сообщает об отсутствии данных. Рисунок собран на CSS и намекает на будущий список.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-001/empty-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-001-*. Рисунок — три плитки на CSS с поворотом и разной прозрачностью: он намекает на список, который здесь появится, и не требует иллюстрации из библиотеки. Пунктирная рамка отделяет пустое состояние от заполненного экрана. Отступы и кегль заголовка считаются от собственной ширины через @container.",
+      "meta": {
+        "tags": ["empty state", "onboarding", "placeholder", "cta"],
+        "preview": {
+          "surface": "light",
+          "width": "full"
+        },
+        "ai": {
+          "export": "Empty001",
+          "usage": "<Empty001\n  title=\"Здесь пока пусто\"\n  description=\"Создайте первый проект — он появится в этом списке.\"\n  actionLabel=\"Создать проект\"\n  onAction={createProject}\n/>",
+          "summary": "Пустое состояние с рисунком из трёх плиток, заголовком, объяснением, главным действием и подсказкой под ним. Главное здесь — действие: экран говорит, что сделать, а не констатирует отсутствие данных. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-001-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
+            "порядок: заголовок, объяснение, действие — действие обязано быть последним и самым заметным",
+            "рисунок на CSS с aria-hidden: он декоративный и не должен читаться скринридером",
+            "пунктирную рамку: она отличает пустое состояние от обычной карточки",
+            "ограничение ширины описания в ch: длинная строка по центру читается плохо",
+            "@container-запрос вместо медиазапроса: пустое состояние живёт и в узкой панели, и на всю страницу",
+            "блок <style> внутри компонента — в нём вся палитра, рисунок и раскладка"
+          ],
+          "adapt": [
+            "тексты title, description и actionLabel",
+            "hint — вторая подсказка под кнопкой: горячая клавиша, ссылка на импорт; это ReactNode",
+            "onAction — обработчик главного действия",
+            "акцент через проп accent — цвет кнопки и нижней плитки рисунка",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Не пишите в заголовке «Нет данных»: это констатация, а не помощь. Заголовок должен подводить к действию.",
+            "Не показывайте пустое состояние вместо ошибки загрузки: пользователь решит, что данных нет, и уйдёт.",
+            "Не ставьте больше одного главного действия: второе делает выбор, а не помогает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Здесь пока пусто",
+            "maxLength": 50
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Создайте первый проект — он появится в этом списке вместе с адресом и историей публикаций.",
+            "maxLength": 140
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Создать проект",
+            "maxLength": 30
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Или перетащите сюда папку с готовым сайтом",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An empty state that explains the next step instead of reporting missing data. The illustration is CSS and hints at the list to come.",
+            "ai": {
+              "summary": "An empty state with a three-tile illustration, a heading, an explanation, a primary action and a hint beneath it. The action is the point: the screen says what to do rather than noting that nothing is there. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-empty-001-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
+                "the order: heading, explanation, action — the action has to come last and read strongest",
+                "the CSS illustration with aria-hidden: it is decorative and must not be announced",
+                "the dashed border: it is what separates an empty state from an ordinary card",
+                "the ch-based width limit on the description: a long centred line reads poorly",
+                "the @container query instead of a media query: an empty state lives both in a narrow panel and full page",
+                "the <style> block inside the component — it holds the palette, the illustration and the layout"
+              ],
+              "adapt": [
+                "the title, description and actionLabel copy",
+                "hint — the secondary line under the button: a shortcut, an import link; it is a ReactNode",
+                "onAction — the primary action handler",
+                "the accent through the accent prop — it colours the button and the bottom tile",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "Do not write \"No data\" as the heading: that is a statement, not help. The heading should lead to the action.",
+                "Do not show an empty state in place of a load error: people conclude there is nothing there and leave.",
+                "Do not offer more than one primary action: the second one creates a decision instead of helping.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty001\n  title=\"Nothing here yet\"\n  description=\"Create your first project and it shows up in this list.\"\n  actionLabel=\"Create project\"\n  onAction={createProject}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Nothing here yet"
+              },
+              "description": {
+                "label": "Description",
+                "default": "Create your first project — it will appear in this list with its address and publish history."
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Create project"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "Or drop a folder with an existing site here"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tooltip-001",
+      "type": "registry:component",
+      "title": "Keyboard Tooltip",
+      "description": "Подсказка, которая открывается и по наведению, и по фокусу с клавиатуры. Второе обычно забывают, и подсказка остаётся недоступной половине пользователей.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tooltip-001/tooltip-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tooltip-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-001-*. Появление держат :hover и :focus-within у обёртки, поэтому JS не нужен и компонент остаётся серверным. Хвостик — повёрнутый квадрат того же цвета. Подсказка помечена role=\"tooltip\" и имеет id: свяжите с ним триггер через aria-describedby. Без переданного children рисуется кнопка-заглушка — она нужна только для превью.",
+      "meta": {
+        "tags": ["tooltip", "hint", "accessibility", "no-js"],
+        "preview": {
+          "surface": "light",
+          "props": {
+            "open": true
+          }
+        },
+        "ai": {
+          "export": "Tooltip001",
+          "usage": "<Tooltip001 id=\"copy-tip\" tip=\"Скопировать ссылку на проект\">\n  <button type=\"button\" aria-describedby=\"copy-tip\">Скопировать</button>\n</Tooltip001>",
+          "summary": "Подсказка вокруг любого триггера: появляется по наведению и по фокусу с клавиатуры, две стороны (сверху и снизу), хвостик на CSS. Держится на :hover и :focus-within, поэтому клиентского JS нет вовсе. Подсказка объявлена как role=\"tooltip\" и связывается с триггером через aria-describedby. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-tooltip-001-* и не подменять её токенами вашей темы (bg-popover, text-popover-foreground и подобными)",
+            "равноправие :hover и :focus-within — подсказка обязана открываться с клавиатуры, иначе она недоступна",
+            "pointer-events:none у самой подсказки: иначе она перехватывает курсор у триггера",
+            "role=\"tooltip\" и id, по которому триггер ссылается через aria-describedby",
+            "хвостик из повёрнутого квадрата с background:inherit — он берёт цвет подсказки и не расходится с ней",
+            "смещение через transform вместо изменения позиции: так подсказка не дёргается при появлении",
+            "блок <style> внутри компонента — в нём вся палитра, стороны и хвостик"
+          ],
+          "adapt": [
+            "tip — текст подсказки: одна короткая фраза",
+            "children — ваш триггер: кнопка, иконка, слово в тексте",
+            "side: top или bottom, в зависимости от того, где есть место",
+            "open — принудительный показ: онбординг, отладка, витрина; в обычном интерфейсе оставляйте false",
+            "id — свой на каждую подсказку, если их на странице несколько",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Не кладите в подсказку то, без чего интерфейс непонятен: подсказка не видна на телефоне, где нет наведения.",
+            "Не помещайте внутрь подсказки ссылки и кнопки: до них нельзя доехать курсором, она исчезает.",
+            "Триггер должен быть фокусируемым — кнопка или ссылка. У <span> подсказка не откроется с клавиатуры.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tip",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Скопировать ссылку на проект",
+            "maxLength": 60
+          },
+          {
+            "prop": "side",
+            "label": "Сторона",
+            "type": "select",
+            "default": "top",
+            "options": ["top", "bottom"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tooltip that opens on hover and on keyboard focus alike. The second half is usually forgotten, which leaves the hint unavailable to half the users.",
+            "ai": {
+              "summary": "A tooltip wrapped around any trigger: it opens on hover and on keyboard focus, sits above or below, and draws its tail in CSS. It rests on :hover and :focus-within, so there is no client JS at all. The bubble is role=\"tooltip\" and links to the trigger through aria-describedby. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-tooltip-001-* palette — do not swap it for your theme tokens (bg-popover, text-popover-foreground and the like)",
+                "treating :hover and :focus-within as equals — a tooltip that does not open from the keyboard is unavailable",
+                "pointer-events:none on the bubble: otherwise it steals the cursor from the trigger",
+                "role=\"tooltip\" and the id the trigger points at through aria-describedby",
+                "the tail as a rotated square with background:inherit — it takes the bubble's colour and never drifts from it",
+                "the transform-based offset rather than moving the position: that is what keeps the entrance from jumping",
+                "the <style> block inside the component — it holds the palette, the sides and the tail"
+              ],
+              "adapt": [
+                "tip — the hint text: one short phrase",
+                "children — your trigger: a button, an icon, a word in a sentence",
+                "side: top or bottom, depending on where there is room",
+                "open — force the bubble visible: onboarding, debugging, a showcase; leave it false in a normal interface",
+                "id — one per tooltip when a page has several",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not hide anything essential in a tooltip: it never appears on a phone, where there is no hover.",
+                "Do not put links or buttons inside: the pointer cannot reach them, the bubble disappears on the way.",
+                "The trigger has to be focusable — a button or a link. On a <span> the tooltip will not open from the keyboard.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tooltip001 id=\"copy-tip\" tip=\"Copy the project link\">\n  <button type=\"button\" aria-describedby=\"copy-tip\">Copy</button>\n</Tooltip001>"
+            },
+            "controls": {
+              "tip": {
+                "label": "Hint",
+                "default": "Copy the project link"
+              },
+              "side": {
+                "label": "Side"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "banner-001",
+      "type": "registry:component",
+      "title": "Announcement Banner",
+      "description": "Полоса-объявление во всю ширину: метка, текст, ссылка и закрытие. Тёмная и спокойная — не притворяется уведомлением об ошибке.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "banner-001/banner-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/banner-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-001-*. Подсветка слева — радиальный градиент от акцента, а не отдельный элемент. Кнопка закрытия появляется только когда передан onDismiss: полосе, которую нечем закрыть, крестик не нужен. На узкой ширине текст уходит на отдельную строку через @container, а метка и действие остаются в одну линию.",
+      "meta": {
+        "tags": ["banner", "announcement", "top bar", "marketing"],
+        "preview": {
+          "surface": "light",
+          "width": "full"
+        },
+        "ai": {
+          "export": "Banner001",
+          "usage": "<Banner001\n  tag=\"Новое\"\n  message=\"Каталог пополнился компонентами форм.\"\n  actionLabel=\"Посмотреть\"\n  actionHref=\"/components\"\n  onDismiss={hideBanner}\n/>",
+          "summary": "Тёмная полоса объявления во всю ширину страницы: метка вроде «Новое», текст, ссылка-действие и крестик. Подсветка слева нарисована градиентом. На узкой ширине текст переносится на свою строку, а не сжимается в столбик. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-banner-001-* — полоса намеренно тёмная и не следует теме страницы",
+            "спокойный тон: объявление не должно выглядеть как ошибка, для ошибок есть alert",
+            "@container-запрос с переносом текста на свою строку: без него на узком экране слова сжимаются в колонку по одному",
+            "появление крестика только при переданном onDismiss — крестик, который ничего не делает, хуже его отсутствия",
+            "role=\"region\" с подписью: полосу должно быть можно найти и пропустить с клавиатуры",
+            "подчёркивание ссылки на наведении через border-bottom, а не text-decoration: так линия не прыгает",
+            "блок <style> внутри компонента — в нём вся палитра, градиент и раскладка"
+          ],
+          "adapt": [
+            "tag — короткая метка слева: «Новое», «Бета», дата",
+            "message и children — текст объявления",
+            "actionLabel и actionHref — подпись и адрес действия",
+            "onDismiss — обработчик закрытия; без него крестика не будет",
+            "акцент через проп accent — цвет метки, ссылки и подсветки",
+            "положение через className: sticky сверху делает вызывающий код"
+          ],
+          "notes": [
+            "Полоса не запоминает закрытие. Флаг «уже видел» хранит вызывающий код, иначе объявление вернётся на следующей странице.",
+            "Не держите на экране две полосы одновременно: вторую перестают замечать.",
+            "Не размещайте в полосе важное сообщение о состоянии системы: её закрывают не читая. Для этого есть alert в потоке.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tag",
+            "label": "Метка",
+            "type": "text",
+            "default": "Новое",
+            "maxLength": 20
+          },
+          {
+            "prop": "message",
+            "label": "Текст",
+            "type": "text",
+            "default": "Каталог пополнился компонентами форм — поля, списки и переключатели.",
+            "maxLength": 120
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Посмотреть",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A full-width announcement bar: tag, message, link and dismiss. Dark and calm — it does not pretend to be an error.",
+            "ai": {
+              "summary": "A dark full-width announcement bar: a tag such as \"New\", a message, a link action and a close button. The glow on the left is a gradient. In a narrow column the message moves to its own line instead of collapsing word by word. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-banner-001-* palette — the bar is deliberately dark and does not follow the page theme",
+                "the calm tone: an announcement must not look like an error, errors have the alert component",
+                "the @container query that moves the message to its own line: without it a narrow screen squeezes the words into a column",
+                "showing the close button only when onDismiss is provided — a cross that does nothing is worse than no cross",
+                "role=\"region\" with a label: the bar has to be findable and skippable from the keyboard",
+                "underlining the link on hover through border-bottom rather than text-decoration: that keeps the line from jumping",
+                "the <style> block inside the component — it holds the palette, the gradient and the layout"
+              ],
+              "adapt": [
+                "tag — the short label on the left: \"New\", \"Beta\", a date",
+                "message and children — the announcement copy",
+                "actionLabel and actionHref — the action's label and destination",
+                "onDismiss — the close handler; without it there is no close button",
+                "the accent through the accent prop — it colours the tag, the link and the glow",
+                "placement through className: sticking it to the top is the caller's job"
+              ],
+              "notes": [
+                "The bar does not remember being dismissed. The \"already seen\" flag belongs to the calling code, otherwise the announcement returns on the next page.",
+                "Do not keep two bars on screen at once: the second one stops being noticed.",
+                "Do not put an important system status message here — people dismiss the bar without reading. Use an inline alert.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Banner001\n  tag=\"New\"\n  message=\"The catalog now has form components.\"\n  actionLabel=\"Take a look\"\n  actionHref=\"/components\"\n  onDismiss={hideBanner}\n/>"
+            },
+            "controls": {
+              "tag": {
+                "label": "Tag",
+                "default": "New"
+              },
+              "message": {
+                "label": "Message",
+                "default": "The catalog now has form components — fields, selects and switches."
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Take a look"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

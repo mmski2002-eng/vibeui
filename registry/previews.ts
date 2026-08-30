@@ -31,6 +31,12 @@ import { Card001 } from "@/registry/components/display/card-001/card-001"
 import { Skeleton001 } from "@/registry/components/display/skeleton-001/skeleton-001"
 import { Progress001 } from "@/registry/components/display/progress-001/progress-001"
 import { Accordion001 } from "@/registry/components/display/accordion-001/accordion-001"
+import { Alert001 } from "@/registry/components/feedback/alert-001/alert-001"
+import { Dialog001 } from "@/registry/components/feedback/dialog-001/dialog-001"
+import { Toast001 } from "@/registry/components/feedback/toast-001/toast-001"
+import { Empty001 } from "@/registry/components/feedback/empty-001/empty-001"
+import { Tooltip001 } from "@/registry/components/feedback/tooltip-001/tooltip-001"
+import { Banner001 } from "@/registry/components/feedback/banner-001/banner-001"
 
 /**
  * Карта slug -> React-компонент. Из неё рендерятся и миниатюра каталога,
@@ -68,4 +74,10 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "skeleton-001": Skeleton001,
   "progress-001": Progress001,
   "accordion-001": Accordion001,
+  "alert-001": Alert001,
+  "dialog-001": Dialog001,
+  "toast-001": Toast001,
+  "empty-001": Empty001,
+  "tooltip-001": Tooltip001,
+  "banner-001": Banner001,
 }

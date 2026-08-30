@@ -32,7 +32,7 @@
 | `buttons`    | button, button group, toggle, toggle group, kbd                                                                                                                                                     |  ~155 |    11 |
 | `inputs`     | input, input group, select, combobox, autocomplete, checkbox, radio, switch, slider, textarea, number, otp, phone, label, field, file upload, date selector, cascader, rating                       |  ~300 |     6 |
 | `display`    | avatar, badge, card, item, icon tile, icon stack, aspect ratio, separator, frame, code block, timeline, carousel, accordion, collapsible, scroll area, resizable, tree, skeleton, spinner, progress |  ~265 |     6 |
-| `feedback`   | alert, alert dialog, dialog, drawer, sheet, popover, tooltip, hover card, toast, empty state                                                                                                        |  ~130 |     0 |
+| `feedback`   | alert, alert dialog, dialog, drawer, sheet, popover, tooltip, hover card, toast, empty state                                                                                                        |  ~130 |     6 |
 | `navigation` | breadcrumb, dropdown menu, context menu, menubar, navigation menu, tabs, stepper, command, scrollspy                                                                                                |   ~85 |     0 |
 | `tables`     | table, data grid, pagination                                                                                                                                                                        |   ~60 |     0 |
 | `charts`     | chart (line, bar, area, pie, radial), sparkline                                                                                                                                                     |   ~55 |     0 |
@@ -76,7 +76,11 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
    `skeleton-001` (метрика будущего текста), `progress-001` (честное
    неизвестное), `accordion-001` (details/summary без JS).
    Дальше: separator, timeline, code block, carousel, tree.
-4. `feedback` — alert, dialog, toast, empty state.
+4. `feedback` — первая волна закрыта: `alert-001` (тон в полосе, не в
+   заливке), `dialog-001` (модалка на HTML popover без JS), `toast-001`
+   (полоса оставшегося времени), `empty-001` (экран объясняет следующий шаг),
+   `tooltip-001` (открывается и с клавиатуры), `banner-001`.
+   Дальше: drawer, sheet, hover card, alert dialog.
 5. `navigation` — tabs, breadcrumb, dropdown, stepper.
 6. Блоки — только после того, как компонентная база закрывает их нужды.
 

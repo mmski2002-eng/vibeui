@@ -8,6 +8,7 @@
     "registry/blocks/pricing/registry.json",
     "registry/components/buttons/registry.json",
     "registry/components/inputs/registry.json",
-    "registry/components/display/registry.json"
+    "registry/components/display/registry.json",
+    "registry/components/feedback/registry.json"
   ]
 }
