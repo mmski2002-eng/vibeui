@@ -131,4 +131,34 @@ export const LAZY_PREVIEWS = {
       (module) => module.Switch001,
     ),
   ),
+  "badge-001": dynamic(() =>
+    import("@/registry/components/display/badge-001/badge-001").then(
+      (module) => module.Badge001,
+    ),
+  ),
+  "avatar-001": dynamic(() =>
+    import("@/registry/components/display/avatar-001/avatar-001").then(
+      (module) => module.Avatar001,
+    ),
+  ),
+  "card-001": dynamic(() =>
+    import("@/registry/components/display/card-001/card-001").then(
+      (module) => module.Card001,
+    ),
+  ),
+  "skeleton-001": dynamic(() =>
+    import("@/registry/components/display/skeleton-001/skeleton-001").then(
+      (module) => module.Skeleton001,
+    ),
+  ),
+  "progress-001": dynamic(() =>
+    import("@/registry/components/display/progress-001/progress-001").then(
+      (module) => module.Progress001,
+    ),
+  ),
+  "accordion-001": dynamic(() =>
+    import("@/registry/components/display/accordion-001/accordion-001").then(
+      (module) => module.Accordion001,
+    ),
+  ),
 } as unknown as Record<string, ComponentType<PreviewProps>>

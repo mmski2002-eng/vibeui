@@ -31,7 +31,7 @@
 | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----: | ----: |
 | `buttons`    | button, button group, toggle, toggle group, kbd                                                                                                                                                     |  ~155 |    11 |
 | `inputs`     | input, input group, select, combobox, autocomplete, checkbox, radio, switch, slider, textarea, number, otp, phone, label, field, file upload, date selector, cascader, rating                       |  ~300 |     6 |
-| `display`    | avatar, badge, card, item, icon tile, icon stack, aspect ratio, separator, frame, code block, timeline, carousel, accordion, collapsible, scroll area, resizable, tree, skeleton, spinner, progress |  ~265 |     0 |
+| `display`    | avatar, badge, card, item, icon tile, icon stack, aspect ratio, separator, frame, code block, timeline, carousel, accordion, collapsible, scroll area, resizable, tree, skeleton, spinner, progress |  ~265 |     6 |
 | `feedback`   | alert, alert dialog, dialog, drawer, sheet, popover, tooltip, hover card, toast, empty state                                                                                                        |  ~130 |     0 |
 | `navigation` | breadcrumb, dropdown menu, context menu, menubar, navigation menu, tabs, stepper, command, scrollspy                                                                                                |   ~85 |     0 |
 | `tables`     | table, data grid, pagination                                                                                                                                                                        |   ~60 |     0 |
@@ -71,8 +71,11 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
    `input-002` (приставка и окончание), `textarea-001` (рост под текст),
    `select-001` (нативный список), `checkbox-001`, `switch-001`.
    Дальше по спросу: radio, slider, otp, file upload, combobox.
-3. `display` — badge, avatar, card, skeleton, spinner: то, из чего собираются
-   остальные блоки.
+3. `display` — первая волна закрыта: `badge-001` (цвет только у точки),
+   `avatar-001` (оттенок из имени), `card-001` (одна ссылка на всю площадь),
+   `skeleton-001` (метрика будущего текста), `progress-001` (честное
+   неизвестное), `accordion-001` (details/summary без JS).
+   Дальше: separator, timeline, code block, carousel, tree.
 4. `feedback` — alert, dialog, toast, empty state.
 5. `navigation` — tabs, breadcrumb, dropdown, stepper.
 6. Блоки — только после того, как компонентная база закрывает их нужды.

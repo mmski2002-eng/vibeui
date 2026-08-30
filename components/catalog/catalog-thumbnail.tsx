@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react"
 
-import { getItemKind } from "@/registry/index"
+import { getCatalogItem, getItemKind } from "@/registry/index"
 import { CATALOG_PREVIEWS } from "@/registry/previews"
 
 const SECTION_WIDTH = 1280
@@ -32,9 +32,18 @@ export function CatalogThumbnail({ slug }: { slug: string }) {
   // inert убирает интерактивные узлы превью из Tab-порядка каталога:
   // кликабельна карточка целиком, а не то, что внутри миниатюры.
   if (getItemKind(slug) === "component") {
+    // Компоненту, которому нужна настоящая ширина строки, её надо дать:
+    // во flex-кадре он иначе схлопывается по содержимому и врёт про дизайн.
+    const full = getCatalogItem(slug)?.meta?.preview?.width === "full"
+
     return (
       <div className="bg-preview-surface flex min-h-44 w-full flex-1 items-center justify-center overflow-hidden p-6 lg:px-8 lg:py-10">
-        <div inert className="pointer-events-none">
+        <div
+          inert
+          className={
+            "pointer-events-none" + (full ? " w-full max-w-[30rem]" : "")
+          }
+        >
           <Preview />
         </div>
       </div>

@@ -1,0 +1,749 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "badge-001",
+      "type": "registry:component",
+      "title": "Status Badge",
+      "description": "Плашка статуса, в которой цвет несёт только точка. В таблице из двадцати строк статусы остаются заметными, но не превращают её в светофор.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "badge-001/badge-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/badge-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-001-*. Пять тонов переключаются data-атрибутом и меняют только переменную точки — фон и рамка остаются нейтральными во всех состояниях. Это inline-элемент: он встаёт в строку рядом с текстом и в ячейку таблицы.",
+      "meta": {
+        "tags": ["badge", "status", "label", "table"],
+        "preview": {
+          "surface": "light"
+        },
+        "ai": {
+          "export": "Badge001",
+          "usage": "<Badge001 tone=\"success\">Опубликовано</Badge001>",
+          "summary": "Статусная плашка: нейтральный фон, цветная точка, текст. Пять тонов (neutral, success, warning, danger, info) переключают только цвет точки, поэтому список из многих строк остаётся спокойным. Два размера. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-badge-001-* и не подменять её токенами вашей темы (bg-secondary, text-muted-foreground и подобными)",
+            "главное решение: тон меняет цвет точки, а не заливку плашки — заливка по тону превращает таблицу в светофор",
+            "точку как отдельный элемент с aria-hidden: смысл несёт текст, точка только помогает его найти",
+            "нейтральные фон и рамку во всех тонах",
+            "inline-flex и vertical-align:middle — плашка обязана стоять в строке текста, не ломая её",
+            "белое пространство: white-space:nowrap, иначе статус из двух слов переносится посреди плашки",
+            "блок <style> внутри компонента — в нём вся палитра и размеры"
+          ],
+          "adapt": [
+            "текст статуса через children",
+            "tone: neutral, success, warning, danger, info",
+            "size: md в тексте и карточках, sm в плотной таблице",
+            "dot: выключите точку, если плашка используется как ярлык, а не как статус",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Не кладите внутрь ссылку или кнопку: это подпись, а не элемент управления.",
+            "Не полагайтесь на цвет точки как на единственный признак — текст обязателен, иначе статус не прочитают ни дальтоник, ни скринридер.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Текст",
+            "type": "text",
+            "default": "Опубликовано",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "success",
+            "options": ["neutral", "success", "warning", "danger", "info"]
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": ["sm", "md"]
+          },
+          {
+            "prop": "dot",
+            "label": "Точка",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A status badge where only the dot carries colour. Across twenty table rows the statuses stay findable without turning the table into a set of traffic lights.",
+            "ai": {
+              "summary": "A status badge: neutral background, a coloured dot, a label. Five tones (neutral, success, warning, danger, info) change the dot alone, so a long list stays calm. Two sizes. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-badge-001-* palette — do not swap it for your theme tokens (bg-secondary, text-muted-foreground and the like)",
+                "the core decision: the tone colours the dot, not the fill — filled tones turn a table into traffic lights",
+                "the dot as a separate aria-hidden element: the text carries the meaning, the dot only helps find it",
+                "the neutral background and border across every tone",
+                "inline-flex and vertical-align:middle — the badge has to sit in a line of text without breaking it",
+                "white-space:nowrap, otherwise a two-word status wraps inside the pill",
+                "the <style> block inside the component — it holds the palette and the sizes"
+              ],
+              "adapt": [
+                "the status text through children",
+                "tone: neutral, success, warning, danger, info",
+                "size: md in text and cards, sm in a dense table",
+                "dot: turn it off when the badge is a tag rather than a status",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not put a link or a button inside: this is a label, not a control.",
+                "Never rely on the dot colour alone — the text is required, or neither a colour-blind reader nor a screen reader gets the status.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Badge001 tone=\"success\">Published</Badge001>"
+            },
+            "controls": {
+              "children": {
+                "label": "Text",
+                "default": "Published"
+              },
+              "tone": {
+                "label": "Tone"
+              },
+              "size": {
+                "label": "Size"
+              },
+              "dot": {
+                "label": "Dot"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "avatar-001",
+      "type": "registry:component",
+      "title": "Initials Avatar",
+      "description": "Аватар, цвет которого выводится из имени. Список людей без фотографий остаётся различимым, и один человек всегда одного цвета.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "avatar-001/avatar-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/avatar-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-001-*. Оттенок считается из имени детерминированной функцией hueOf и подставляется в переменную --vibeui-avatar-001-hue: фон и цвет инициалов выводятся из неё через oklch, поэтому контраст держится на любом оттенке. Фото подставляется пропом src обычным <img>: компонент переносим и не зависит от next/image. Полное имя лежит скрытым текстом для скринридера, инициалы помечены aria-hidden.",
+      "meta": {
+        "tags": ["avatar", "initials", "user", "list"],
+        "preview": {
+          "surface": "light"
+        },
+        "ai": {
+          "export": "Avatar001",
+          "usage": "<Avatar001 name=\"Анна Ковалёва\" status=\"online\" />",
+          "summary": "Аватар с инициалами и точкой присутствия. Оттенок фона считается из имени, поэтому в списке из сорока человек без фотографий аватары различимы, а один и тот же человек всегда одного цвета — на любой странице и после перезагрузки. Три размера, четыре состояния присутствия, необязательное фото. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-avatar-001-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
+            "вывод оттенка из имени: hueOf детерминирована, случайный цвет менялся бы при каждом рендере",
+            "связку фона и текста через один --vibeui-avatar-001-hue в oklch — так контраст держится на любом оттенке",
+            "скрытое полное имя [data-part=\"name\"] и aria-hidden у инициалов: скринридер должен читать имя, а не две буквы",
+            "кольцо box-shadow вокруг точки присутствия: без него точка сливается с фото",
+            "размеры, заданные одной переменной --vibeui-avatar-001-size, от которой считаются шрифт и точка",
+            "обычный <img> вместо next/image: компонент обязан работать в любом React-проекте",
+            "блок <style> внутри компонента — в нём вся палитра и геометрия"
+          ],
+          "adapt": [
+            "name — имя человека, из него же берутся инициалы и цвет",
+            "src — ссылка на фото; без неё показываются инициалы",
+            "size: sm в списках и таблицах, md по умолчанию, lg в профиле",
+            "status: online, away, busy или none, если присутствие не показывается",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Не заменяйте hueOf на случайный цвет или Math.random: человек должен быть одного цвета всегда.",
+            "Не выводите цвет из id или email, если в интерфейсе показано имя: пользователь связывает цвет с тем, что видит.",
+            "Стопка аватаров (avatar group) — это отдельный компонент; здесь только одна фигура.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя",
+            "type": "text",
+            "default": "Анна Ковалёва",
+            "maxLength": 40
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": ["sm", "md", "lg"]
+          },
+          {
+            "prop": "status",
+            "label": "Присутствие",
+            "type": "select",
+            "default": "online",
+            "options": ["none", "online", "away", "busy"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An avatar whose colour is derived from the name. A list of people with no photos stays readable, and the same person is always the same colour.",
+            "ai": {
+              "summary": "An avatar with initials and a presence dot. The background hue is derived from the name, so a list of forty photo-less people stays distinguishable and one person keeps their colour across pages and reloads. Three sizes, four presence states, an optional photo. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-avatar-001-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
+                "deriving the hue from the name: hueOf is deterministic, while a random colour would change on every render",
+                "tying background and text to a single --vibeui-avatar-001-hue through oklch — that is what keeps contrast at any hue",
+                "the visually hidden full name in [data-part=\"name\"] and aria-hidden on the initials: a screen reader must read the name, not two letters",
+                "the box-shadow ring around the presence dot: without it the dot disappears against a photo",
+                "the sizes driven by the single --vibeui-avatar-001-size variable that the font and dot are calculated from",
+                "the plain <img> instead of next/image: the component has to work in any React project",
+                "the <style> block inside the component — it holds the palette and the geometry"
+              ],
+              "adapt": [
+                "name — the person's name; the initials and the colour both come from it",
+                "src — a photo URL; without it the initials show",
+                "size: sm in lists and tables, md by default, lg on a profile",
+                "status: online, away, busy, or none when presence is not shown",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not replace hueOf with a random colour or Math.random: a person must always be the same colour.",
+                "Do not derive the colour from an id or email when the UI shows a name: people connect the colour to what they see.",
+                "An avatar stack is a separate component; this one is a single shape.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Avatar001 name=\"Anna Kovalyova\" status=\"online\" />"
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Anna Kovalyova"
+              },
+              "size": {
+                "label": "Size"
+              },
+              "status": {
+                "label": "Presence"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-001",
+      "type": "registry:component",
+      "title": "Content Card",
+      "description": "Карточка материала: обложка, надзаголовок, заголовок и подвал. Кликается вся площадь, но ссылка внутри остаётся одна.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-001/card-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-001-*. Приём с ::after у ссылки заголовка растягивает её область на всю карточку: клик работает по любому месту, а в дереве доступности остаётся одна ссылка. Обложка нарисована градиентами и не требует картинки. Внутренние отступы и кегль заголовка считаются от собственной ширины карточки через @container, поэтому карточка одинаково выглядит в узкой колонке и в широкой сетке.",
+      "meta": {
+        "tags": ["card", "content", "link", "grid"],
+        "preview": {
+          "surface": "light",
+          "width": "full"
+        },
+        "ai": {
+          "export": "Card001",
+          "usage": "<Card001\n  eyebrow=\"Практика\"\n  title=\"Как собрать лендинг за вечер\"\n  description=\"Разбираем сборку страницы из готовых блоков.\"\n  href=\"/blog/landing\"\n  footer=\"8 минут чтения\"\n/>",
+          "summary": "Карточка материала для сетки: обложка на градиентах, надзаголовок, заголовок-ссылка, описание и подвал. Вся площадь кликабельна за счёт ::after у единственной ссылки, поэтому в списке из двадцати карточек не появляется шестидесяти ссылок. Раскладка считается от ширины самой карточки. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-card-001-* и не подменять её токенами вашей темы (bg-card, border-border, text-muted-foreground и подобными)",
+            "приём с одной ссылкой: position:relative у карточки и ::after у ссылки заголовка — из-за нескольких ссылок карточка станет неудобной для скринридера",
+            "focus-within у карточки: фокус приходит на ссылку внутри, а рамку должна показывать вся карточка",
+            "@container-запрос вместо медиазапроса: карточка живёт в сетке и обязана считать раскладку от своей ширины, а не от ширины окна",
+            "подъём на hover вместе с отменой transform в prefers-reduced-motion",
+            "структуру заголовков: заголовок карточки — h3, а не div с крупным шрифтом",
+            "блок <style> внутри компонента — в нём вся палитра, обложка и раскладка"
+          ],
+          "adapt": [
+            "тексты title, description, eyebrow и содержимое footer — в подвал можно положить свой элемент",
+            "href — адрес материала; уберите его, и карточка перестанет быть ссылкой",
+            "акцент через проп accent — цвет надзаголовка, обложки и рамки при наведении",
+            "обложку: замените градиент в [data-part=\"media\"] на <img> с тем же aspect-ratio",
+            "максимальную ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Не добавляйте в карточку вторую ссылку или кнопку поверх ::after: они окажутся под невидимым слоем. Если нужна кнопка — поднимите её через position:relative и z-index.",
+            "Не заменяйте заголовок на div: в сетке карточек заголовки формируют структуру страницы.",
+            "Не растягивайте карточку на всю ширину экрана: max-width задан намеренно, длинная строка описания читается плохо.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Практика",
+            "maxLength": 24
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Как собрать лендинг за вечер",
+            "maxLength": 60
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Разбираем сборку страницы из готовых блоков: что отдать агенту, а что править руками.",
+            "maxLength": 120
+          },
+          {
+            "prop": "footer",
+            "label": "Подвал",
+            "type": "text",
+            "default": "8 минут чтения",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A content card: cover, eyebrow, title and footer. The whole surface is clickable while it still contains a single link.",
+            "ai": {
+              "summary": "A content card for a grid: a gradient cover, an eyebrow, a title link, a description and a footer. The entire surface is clickable through ::after on the one link, so twenty cards do not become sixty links. The layout is measured against the card's own width. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-card-001-* palette — do not swap it for your theme tokens (bg-card, border-border, text-muted-foreground and the like)",
+                "the single-link technique: position:relative on the card and ::after on the title link — several links make the card tedious in a screen reader",
+                "focus-within on the card: focus lands on the inner link, but the whole card has to show the ring",
+                "the @container query instead of a media query: the card lives in a grid and must measure against its own width, not the window's",
+                "the hover lift together with the transform reset under prefers-reduced-motion",
+                "the heading structure: the card title is an h3, not a div with a big font",
+                "the <style> block inside the component — it holds the palette, the cover and the layout"
+              ],
+              "adapt": [
+                "the title, description and eyebrow copy and the footer content — the footer accepts your own element",
+                "href — the destination; drop it and the card stops being a link",
+                "the accent through the accent prop — it colours the eyebrow, the cover and the hover border",
+                "the cover: replace the gradient in [data-part=\"media\"] with an <img> at the same aspect-ratio",
+                "max width and outer spacing through className"
+              ],
+              "notes": [
+                "Do not add a second link or a button on top of ::after — they end up under the invisible layer. If you need a button, lift it with position:relative and z-index.",
+                "Do not swap the heading for a div: in a card grid the titles are the page structure.",
+                "Do not stretch the card to full screen width: the max-width is deliberate, a long description line reads poorly.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card001\n  eyebrow=\"Guide\"\n  title=\"Build a landing page in an evening\"\n  description=\"Assembling a page out of ready-made blocks.\"\n  href=\"/blog/landing\"\n  footer=\"8 min read\"\n/>"
+            },
+            "controls": {
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Guide"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Build a landing page in an evening"
+              },
+              "description": {
+                "label": "Description",
+                "default": "Assembling a page out of ready-made blocks: what to hand the agent and what to write yourself."
+              },
+              "footer": {
+                "label": "Footer",
+                "default": "8 min read"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "skeleton-001",
+      "type": "registry:component",
+      "title": "Content Skeleton",
+      "description": "Заглушка загрузки, повторяющая метрику будущего содержимого: те же высоты строк и промежутки, поэтому при появлении данных страница не прыгает.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "skeleton-001/skeleton-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/skeleton-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-001-*. Блик — движение background-position у градиента шириной 200%, а не отдельный слой: перерисовывается только фон. Три формы (text, avatar, block) переключаются data-атрибутом. Контейнер объявлен как role=\"status\" с aria-busy и подписью, поэтому скринридер сообщает о загрузке, а не молчит.",
+      "meta": {
+        "tags": ["skeleton", "loading", "placeholder", "shimmer"],
+        "preview": {
+          "surface": "light",
+          "width": "full"
+        },
+        "ai": {
+          "export": "Skeleton001",
+          "usage": "<Skeleton001 shape=\"text\" lines={3} label=\"Загружается статья\" />",
+          "summary": "Заглушка загрузки трёх форм: абзац текста, строка со аватаром и блок под изображение. Высоты и промежутки повторяют метрику будущего содержимого, последняя строка короче — заглушка читается как текст. Блик идёт по градиенту и полностью гаснет при prefers-reduced-motion. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-skeleton-001-* и не подменять её токенами вашей темы (bg-muted, animate-pulse и подобными)",
+            "совпадение метрики с будущим содержимым: высота строки и промежутки — это и есть смысл компонента, иначе страница прыгнет при загрузке",
+            "укороченную последнюю строку: без неё абзац-заглушка выглядит как таблица",
+            "блик через background-position у градиента 200% — отдельный движущийся слой заставляет браузер перерисовывать больше",
+            "role=\"status\", aria-busy и подпись: без них загрузка для скринридера просто не существует",
+            "правило prefers-reduced-motion, которое гасит блик и оставляет ровную заливку",
+            "блок <style> внутри компонента — в нём вся палитра, формы и анимация"
+          ],
+          "adapt": [
+            "shape: text для абзаца, avatar для строки списка, block под изображение или карту",
+            "lines — сколько строк рисует форма text",
+            "label — что именно грузится; текст читает скринридер",
+            "ширину и внешние отступы через className: по умолчанию заглушка занимает всю ширину родителя"
+          ],
+          "notes": [
+            "Не показывайте заглушку дольше пары секунд как единственный ответ: для долгих операций нужен прогресс или объяснение.",
+            "Не мигайте заглушкой на быстрых запросах — вспышка на 100 мс раздражает сильнее пустоты.",
+            "Число строк должно примерно совпадать с реальным содержимым: заглушка на восемь строк перед двухстрочным абзацем выглядит как ошибка.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "shape",
+            "label": "Форма",
+            "type": "select",
+            "default": "text",
+            "options": ["text", "avatar", "block"]
+          },
+          {
+            "prop": "lines",
+            "label": "Строк",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 8
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Загружается",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A loading placeholder that mirrors the metrics of the content to come — same line heights, same gaps — so the page does not jump when the data arrives.",
+            "ai": {
+              "summary": "A loading placeholder in three shapes: a paragraph, an avatar row and a block for an image. Heights and gaps mirror the content that will replace it, and the last line is shorter so the placeholder reads as text. The shimmer rides a gradient and goes away entirely under prefers-reduced-motion. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-skeleton-001-* palette — do not swap it for your theme tokens (bg-muted, animate-pulse and the like)",
+                "matching the metrics of the real content: the line height and gaps are the whole point, otherwise the page jumps on load",
+                "the shortened last line: without it the paragraph placeholder looks like a table",
+                "the shimmer through background-position on a 200% gradient — a separate moving layer makes the browser repaint more",
+                "role=\"status\", aria-busy and the label: without them the loading state does not exist for a screen reader",
+                "the prefers-reduced-motion rule that kills the shimmer and leaves a flat fill",
+                "the <style> block inside the component — it holds the palette, the shapes and the animation"
+              ],
+              "adapt": [
+                "shape: text for a paragraph, avatar for a list row, block for an image or a map",
+                "lines — how many rows the text shape draws",
+                "label — what is loading; a screen reader announces this text",
+                "width and outer spacing through className: by default it fills its parent"
+              ],
+              "notes": [
+                "Do not leave a skeleton as the only answer for more than a couple of seconds: long operations need progress or an explanation.",
+                "Do not flash a skeleton on fast requests — a 100 ms flicker is worse than empty space.",
+                "Keep the row count close to the real content: eight rows in front of a two-line paragraph reads as a bug.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Skeleton001 shape=\"text\" lines={3} label=\"Loading the article\" />"
+            },
+            "controls": {
+              "shape": {
+                "label": "Shape"
+              },
+              "lines": {
+                "label": "Rows"
+              },
+              "label": {
+                "label": "Label",
+                "default": "Loading"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "progress-001",
+      "type": "registry:component",
+      "title": "Labelled Progress",
+      "description": "Индикатор выполнения с подписью и честным состоянием неизвестной длительности: если процент неизвестен, компонент его не выдумывает.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "progress-001/progress-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/progress-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-001-*. Заполнение считается из переменной --vibeui-progress-001-value, поэтому ширина полосы задаётся числом, а не строкой со знаком процента. value={null} включает состояние неизвестной длительности: отрезок ходит по дорожке анимацией, aria-valuenow не выставляется. Значение зажимается в диапазон 0–100.",
+      "meta": {
+        "tags": ["progress", "loading", "indicator", "status"],
+        "preview": {
+          "surface": "light",
+          "width": "full"
+        },
+        "ai": {
+          "export": "Progress001",
+          "usage": "<Progress001 value={64} label=\"Сборка проекта\" />",
+          "summary": "Полоса выполнения с подписью слева и значением справа. Два честных состояния: известный прогресс показывает долю и процент, неизвестный — ходит отрезком по дорожке и не выставляет aria-valuenow. Два размера, зажим значения в 0–100, полная разметка progressbar. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-progress-001-* и не подменять её токенами вашей темы (bg-primary, bg-secondary и подобными)",
+            "два состояния как разные: неизвестную длительность нельзя показывать выдуманным процентом",
+            "разметку доступности: role=\"progressbar\", aria-valuemin, aria-valuemax и aria-valuenow только когда значение известно",
+            "зажим значения в диапазон 0–100: полоса шире дорожки выглядит как поломка",
+            "ширину заполнения через переменную --vibeui-progress-001-value, а не через строку в style",
+            "tabular-nums у значения: без них проценты дёргают подпись при каждом обновлении",
+            "правило prefers-reduced-motion, которое останавливает бегущий отрезок",
+            "блок <style> внутри компонента — в нём вся палитра, размеры и анимация"
+          ],
+          "adapt": [
+            "value — число 0–100 или null, если длительность неизвестна",
+            "label — что именно выполняется",
+            "hint — правая подпись, если проценты неуместны: «3 из 8», «12 МБ»",
+            "size: md отдельно на экране, sm внутри строки списка",
+            "акцент через проп accent — цвет заполнения",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Не используйте компонент как ползунок: это индикатор, у него нет ввода.",
+            "Не анимируйте значение вручную таймером ради красоты — прогресс должен отражать настоящее состояние.",
+            "Если операция длится дольше десяти секунд, добавьте рядом текст о том, что происходит: одной полосы мало.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "value",
+            "label": "Значение",
+            "type": "number",
+            "default": 64,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Сборка проекта",
+            "maxLength": 40
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": ["sm", "md"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A progress bar with a label and an honest unknown-duration state: when the percentage is not known, the component does not invent one.",
+            "ai": {
+              "summary": "A progress bar with a label on the left and a value on the right. Two honest states: known progress shows the fill and the percentage, unknown progress runs a segment along the track and leaves aria-valuenow unset. Two sizes, value clamped to 0–100, full progressbar semantics. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-progress-001-* palette — do not swap it for your theme tokens (bg-primary, bg-secondary and the like)",
+                "the two states as genuinely different: an unknown duration must not be shown as an invented percentage",
+                "the accessibility markup: role=\"progressbar\", aria-valuemin, aria-valuemax and aria-valuenow only when the value is known",
+                "clamping the value to 0–100: a bar wider than its track reads as a bug",
+                "driving the fill width through the --vibeui-progress-001-value variable rather than a string in style",
+                "tabular-nums on the value: without them the percentage jitters the label on every update",
+                "the prefers-reduced-motion rule that stops the travelling segment",
+                "the <style> block inside the component — it holds the palette, the sizes and the animation"
+              ],
+              "adapt": [
+                "value — a number from 0 to 100, or null when the duration is unknown",
+                "label — what is being done",
+                "hint — the right-hand caption when a percentage is wrong: \"3 of 8\", \"12 MB\"",
+                "size: md on its own, sm inside a list row",
+                "the accent through the accent prop — it colours the fill",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "Do not use this as a slider: it is an indicator with no input.",
+                "Do not animate the value on a timer for looks — progress has to reflect the real state.",
+                "If the operation runs longer than ten seconds, add text about what is happening: a bar alone is not enough.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Progress001 value={64} label=\"Building the project\" />"
+            },
+            "controls": {
+              "value": {
+                "label": "Value"
+              },
+              "label": {
+                "label": "Label",
+                "default": "Building the project"
+              },
+              "size": {
+                "label": "Size"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-001",
+      "type": "registry:component",
+      "title": "Native Accordion",
+      "description": "Аккордеон на нативных details и summary: раскрытие без единой строки JS, взаимное исключение разделов — атрибутом name.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-001/accordion-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-001-*. Раскрытие держат нативные <details>/<summary>, поэтому состояние работает до гидратации и не требует React. Взаимное исключение включается атрибутом name у details: у разделов с одним именем открытым остаётся только один. Значок — две грани квадрата, поворот привязан к details[open]. Внутренние отступы и кегль считаются от собственной ширины через @container.",
+      "meta": {
+        "tags": ["accordion", "faq", "details", "no-js"],
+        "preview": {
+          "surface": "light",
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion001",
+          "usage": "<Accordion001\n  items={[\n    { question: \"Что я получаю после установки?\", answer: \"Один файл компонента в вашем проекте.\" },\n  ]}\n/>",
+          "summary": "Аккордеон без JS: раскрытие держат нативные details и summary, а взаимное исключение — атрибут name на details. Отсюда бесплатно работают клавиатура, поиск по странице (браузер раскрывает найденный раздел) и состояние до гидратации. Значок и раскладка на CSS, отступы считаются от собственной ширины. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-accordion-001-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "нативные details/summary: замена на кнопки с useState забирает поиск по странице, клавиатуру и работу до гидратации",
+            "атрибут name у details — это и есть взаимное исключение разделов, отдельное состояние для него не нужно",
+            "скрытый системный маркер (list-style:none и ::-webkit-details-marker) вместе со своим значком",
+            "outline focus-visible у summary с отрицательным offset: заголовки перебирают с клавиатуры",
+            "поворот значка, привязанный к details[open], и правило prefers-reduced-motion",
+            "@container-запрос вместо медиазапроса: аккордеон живёт и в узкой колонке, и на всю ширину",
+            "блок <style> внутри компонента — в нём вся палитра, раскладка и значок"
+          ],
+          "adapt": [
+            "массив items: вопросы и ответы",
+            "exclusive — оставлять ли открытым только один раздел",
+            "defaultOpen — номер раздела, открытого сразу; -1 закрывает все",
+            "акцент через проп accent — цвет наведения, фокуса и значка",
+            "максимальную ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Не кладите в ответ ссылку, ведущую в другой раздел того же аккордеона: при exclusive он закроет текущий.",
+            "Атрибут name у details поддерживают современные браузеры; в старых разделы просто останутся независимыми — это не ломает компонент.",
+            "Не анимируйте высоту раскрытия вручную: у нативных details её нет, а имитация вернёт JS, ради отсутствия которого компонент и сделан.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "exclusive",
+            "label": "Один раздел",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт раздел",
+            "type": "number",
+            "default": 0,
+            "min": -1,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An accordion built on native details and summary: it opens without a line of JS, and the name attribute keeps only one section open.",
+            "ai": {
+              "summary": "A JS-free accordion: native details and summary handle opening, and the name attribute on details makes the sections exclusive. Keyboard support, find-on-page (the browser opens the matching section) and pre-hydration behaviour all come for free. The chevron and layout are CSS, and spacing is measured against the component's own width. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-accordion-001-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the native details/summary: replacing them with buttons and useState gives up find-on-page, keyboard behaviour and pre-hydration state",
+                "the name attribute on details — that is the exclusivity, no separate state is needed for it",
+                "hiding the system marker (list-style:none and ::-webkit-details-marker) alongside the custom chevron",
+                "the focus-visible outline on summary with its negative offset: headings are tabbed through",
+                "the chevron rotation tied to details[open] and the prefers-reduced-motion rule",
+                "the @container query instead of a media query: the accordion lives both in a narrow column and full width",
+                "the <style> block inside the component — it holds the palette, the layout and the chevron"
+              ],
+              "adapt": [
+                "the items array: questions and answers",
+                "exclusive — whether only one section stays open",
+                "defaultOpen — which section starts open; -1 closes them all",
+                "the accent through the accent prop — it colours hover, focus and the chevron",
+                "max width and outer spacing through className"
+              ],
+              "notes": [
+                "Do not put a link to another section of the same accordion in an answer: with exclusive on, it closes the current one.",
+                "The name attribute on details is supported by current browsers; older ones simply leave the sections independent, which does not break the component.",
+                "Do not animate the open height by hand: native details has no such animation, and faking it brings back the JS this component exists to avoid.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Accordion001\n  items={[\n    { question: \"What do I get after installing?\", answer: \"One component file in your project.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "exclusive": {
+                "label": "One at a time"
+              },
+              "defaultOpen": {
+                "label": "Open section"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

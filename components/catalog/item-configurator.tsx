@@ -134,7 +134,18 @@ export function ConfigurablePreview({
 }) {
   const Preview = LAZY_PREVIEWS[item.name]
 
-  return Preview ? <Preview {...toProps(item, values)} /> : null
+  if (!Preview) {
+    return null
+  }
+
+  // Та же оговорка, что и в миниатюре: ширину объявляет сам item.
+  const full = item.meta?.preview?.width === "full"
+
+  return (
+    <div className={full ? "w-full max-w-[30rem]" : undefined}>
+      <Preview {...toProps(item, values)} />
+    </div>
+  )
 }
 
 /**
