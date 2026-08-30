@@ -48,10 +48,12 @@ npm ci
 
 ## 2. Сборка
 
-**`REGISTRY_BASE_URL` нужен именно на сборке.** Страницы компонентов
-статические, install-команда вшивается в HTML во время build. Без переменной
-сайт честно напишет, что команда недоступна; после её изменения нужна
-пересборка, перезапуск не поможет.
+**`REGISTRY_BASE_URL` нужен и на сборке, и в окружении процесса.** Значение
+читается в `lib/site.ts` через `process.env`, а страницы item'ов и маршрут
+`/c/<name>` рендерятся на каждый запрос — то есть берут переменную из
+окружения работающего сервера, а не из сборки. Забыть её в юните — значит
+получить на живом сайте «Команда установки не сконфигурирована» вместо
+install-команды.
 
 ```bash
 cd /srv/vibeui
@@ -93,6 +95,7 @@ WorkingDirectory=/srv/vibeui/.next/standalone
 Environment=NODE_ENV=production
 Environment=PORT=3003
 Environment=HOSTNAME=127.0.0.1
+Environment=REGISTRY_BASE_URL=https://<domain>/r
 ExecStart=/usr/bin/node server.js
 Restart=on-failure
 RestartSec=5
@@ -107,7 +110,8 @@ sudo systemctl enable --now vibeui
 sudo systemctl status vibeui
 ```
 
-`REGISTRY_BASE_URL` в юните не нужен: значение уже вшито на сборке.
+`REGISTRY_BASE_URL` в юните обязателен: страницы item'ов динамические и
+читают переменную из окружения процесса при каждом запросе.
 
 ## 4. nginx
 
@@ -193,13 +197,21 @@ cp -r .next/static .next/standalone/.next/static
 sudo systemctl restart vibeui
 ```
 
+После обновления проверять не только код ответа, но и install-команду:
+
+```bash
+curl -s https://<domain>/c/hero-001 | grep "npx shadcn"
+```
+
 ## Что важно помнить
 
 - `public/r/` — артефакт сборки, в git его нет; он создаётся `npm run build`.
   Сборка очищает каталог перед генерацией, поэтому item, убранный из
   корневого `registry.json`, перестаёт раздаваться после ближайшего деплоя —
   вручную удалять старые JSON на сервере не нужно;
-- смена `REGISTRY_BASE_URL` требует пересборки, не только рестарта;
+- `REGISTRY_BASE_URL` задаётся дважды: на сборке (для того, что рендерится
+  статически) и в юните (для страниц item'ов и `/c/<name>`, которые
+  рендерятся на запрос). После смены значения нужны и пересборка, и рестарт;
 - порт приложения наружу не открывать: оно слушает только localhost;
 - `nginx -t` проверять **до** `systemctl reload nginx`, и не прятать код
   возврата за пайпом (`nginx -t | tail` всегда возвращает 0);
