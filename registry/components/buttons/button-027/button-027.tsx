@@ -1,0 +1,127 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Button027Props = Omit<
+  ComponentPropsWithoutRef<"button">,
+  "children" | "onClick"
+> & {
+  label?: string
+  /** Подпись во время ожидания: время подставляется после неё. */
+  waitingLabel?: string
+  /** Пауза до разблокировки, секунды. */
+  seconds?: number
+  onResend?: () => void
+  accent?: string
+}
+
+// Идея компонента: кнопка, которую нельзя нажать прямо сейчас. Повторная
+// отправка кода упирается в паузу на стороне сервера, и вместо ошибки после
+// клика кнопка честно показывает остаток: кольцо убывает, время идёт
+// моноширинными цифрами. По нулю кнопка сама разблокируется, а следующее
+// нажатие запускает отсчёт заново.
+const STYLES = `
+:where([data-vibeui-block="button-027"]){
+--vibeui-button-027-bg:oklch(1 0 0);
+--vibeui-button-027-fg:oklch(0.26 0.016 265);
+--vibeui-button-027-muted:oklch(0.56 0.014 265);
+--vibeui-button-027-border:oklch(0.9 0.006 265);
+--vibeui-button-027-accent:oklch(0.55 0.17 265);
+--vibeui-button-027-left:1;
+--vibeui-button-027-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="button-027"]{
+appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
+min-width:14rem;height:2.5rem;padding:0 1rem;box-sizing:border-box;
+border:1px solid var(--vibeui-button-027-border);border-radius:0.625rem;
+background:var(--vibeui-button-027-bg);color:var(--vibeui-button-027-accent);
+font-family:var(--vibeui-button-027-font);font-size:0.875rem;font-weight:650;line-height:1;
+transition:border-color .16s ease,color .16s ease;
+}
+[data-vibeui-block="button-027"]:hover:not(:disabled){border-color:var(--vibeui-button-027-accent)}
+[data-vibeui-block="button-027"]:focus-visible{outline:2px solid var(--vibeui-button-027-accent);outline-offset:2px}
+[data-vibeui-block="button-027"]:disabled{cursor:not-allowed;color:var(--vibeui-button-027-muted)}
+/* Кольцо остатка: доля времени видна раньше, чем прочитаны цифры. */
+[data-vibeui-block="button-027"] [data-part="ring"]{
+flex:none;width:1rem;height:1rem;border-radius:9999px;
+background:conic-gradient(currentColor calc(var(--vibeui-button-027-left) * 360deg),color-mix(in oklab,currentColor 18%,transparent) 0);
+-webkit-mask:radial-gradient(closest-side,transparent 58%,#000 60%);
+mask:radial-gradient(closest-side,transparent 58%,#000 60%);
+}
+[data-vibeui-block="button-027"] [data-part="time"]{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="button-027"] *{animation:none!important;transition:none!important}}
+`
+
+function clock(total: number) {
+  const minutes = Math.floor(total / 60)
+  const rest = total % 60
+
+  return `${minutes}:${String(rest).padStart(2, "0")}`
+}
+
+/**
+ * Кнопка повторной отправки с обратным отсчётом до разблокировки.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Button027({
+  label = "Отправить код ещё раз",
+  waitingLabel = "Повторно через",
+  seconds = 30,
+  onResend,
+  accent,
+  type = "button",
+  className,
+  style,
+  ...props
+}: Button027Props) {
+  const [left, setLeft] = useState(seconds)
+
+  useEffect(() => {
+    if (left <= 0) return
+
+    const id = setTimeout(() => setLeft(left - 1), 1000)
+
+    return () => clearTimeout(id)
+  }, [left])
+
+  const locked = left > 0
+
+  const palette = {
+    "--vibeui-button-027-left": String(seconds > 0 ? left / seconds : 0),
+    ...(accent ? { "--vibeui-button-027-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-button-027" precedence="medium">
+        {STYLES}
+      </style>
+      <button
+        {...props}
+        type={type}
+        data-vibeui-block="button-027"
+        className={className}
+        style={palette}
+        disabled={locked}
+        onClick={() => {
+          onResend?.()
+          setLeft(seconds)
+        }}
+      >
+        {locked ? <span data-part="ring" aria-hidden="true" /> : null}
+        {/* Пока идёт отсчёт, живой области нет: секунды не стоит зачитывать
+            каждую секунду. Объявляется только момент разблокировки. */}
+        {locked ? (
+          <span>
+            {waitingLabel} <span data-part="time">{clock(left)}</span>
+          </span>
+        ) : (
+          <span aria-live="polite">{label}</span>
+        )}
+      </button>
+    </>
+  )
+}

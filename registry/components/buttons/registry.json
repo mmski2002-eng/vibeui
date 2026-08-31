@@ -2254,6 +2254,1240 @@
           }
         }
       }
+    },
+    {
+      "name": "button-021",
+      "type": "registry:component",
+      "title": "Retry Action Button",
+      "description": "Длинное действие с тремя исходами: пока запрос идёт, кнопка становится «Отмена», после сбоя предлагает повтор и считает попытки. Ширина не прыгает при смене подписи.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-021/button-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-021.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-021-*. Клиентский: состояния idle/pending/error/done внутренние. Работа передаётся пропом action, который получает AbortSignal внутреннего AbortController, поэтому клик во время работы отменяет запрос. Четыре подписи лежат друг на друге в одной ячейке grid, неактивные скрыты visibility:hidden — ширина считается по самой длинной. Дефолтный action — витринная заглушка, которая падает на первой попытке.",
+      "meta": {
+        "tags": ["button", "async", "retry", "cancel"],
+        "ai": {
+          "export": "Button021",
+          "usage": "<Button021\n  label=\"Синхронизировать\"\n  action={(signal) => syncProject(signal)}\n/>",
+          "summary": "Кнопка длинного действия с тремя исходами. Пока идёт запрос, подпись меняется на «Отмена», и клик действительно прекращает работу через AbortSignal. Успех показывается галочкой и сам сбрасывается, сбой переводит кнопку в красное «Повторить» со счётчиком попыток. Подписи стоят друг на друге в одной ячейке grid, поэтому ширина кнопки постоянна.",
+          "preserve": [
+            "стопку подписей в одной ячейке grid — ширина берётся по самой длинной и не прыгает при смене состояния, min-width такой гарантии не даёт",
+            "visibility:hidden у неактивных подписей: место они занимают, а в скринридер не попадают",
+            "состояние error как отдельный исход: без него после сбоя кнопка молча вернулась бы в покой",
+            "отмену через AbortController — во время работы кнопка не блокируется, а прекращает запрос",
+            "счётчик попыток рядом с подписью повтора: он объясняет, что заход уже не первый",
+            "значки спиннера, восклицания и галочки вместе с aria-busy: состояние не должно держаться на одном цвете"
+          ],
+          "adapt": [
+            "подписи label, pendingLabel, errorLabel и doneLabel",
+            "саму работу — проп action: он получает AbortSignal и обязан на него реагировать",
+            "акцентный цвет — проп accent",
+            "внешние отступы и ширину через className",
+            "паузу перед возвратом из состояния done — она задана одним setTimeout в коде"
+          ],
+          "notes": [
+            "Компонент не знает про сеть: внутри только витринная заглушка, которая падает на первой попытке. В приложении передавай свой action.",
+            "Не блокируй кнопку снаружи на время работы — пропадёт отмена, ради которой она и сделана.",
+            "Если подписи станут заметно длиннее, кнопка вырастет по самой длинной из них: это ожидаемое поведение стопки, а не сбой раскладки.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Синхронизировать",
+            "maxLength": 40
+          },
+          {
+            "prop": "pendingLabel",
+            "label": "Подпись во время работы",
+            "type": "text",
+            "default": "Отмена",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A long action with three outcomes: while the request runs the button turns into Cancel, after a failure it offers a retry and counts the attempts. The width never jumps as the label changes.",
+            "ai": {
+              "summary": "A long-running action button with three outcomes. While the request is in flight the label turns into Cancel, and the click really does stop the work through an AbortSignal. Success shows a checkmark and clears itself, a failure moves the button into a red Retry with an attempt counter. The labels sit stacked in one grid cell, so the button's width stays constant.",
+              "preserve": [
+                "the labels stacked in a single grid cell — the width is taken from the longest one and never jumps between states, which min-width cannot guarantee",
+                "visibility:hidden on the inactive labels: they hold their space but stay out of the screen reader",
+                "the error state as a separate outcome: without it the button would silently slide back to rest after a failure",
+                "the cancellation through AbortController — while working the button does not lock, it aborts the request",
+                "the attempt counter next to the retry label: it explains that this is no longer the first go",
+                "the spinner, bang and check glyphs together with aria-busy: the state must not rest on colour alone"
+              ],
+              "adapt": [
+                "the label, pendingLabel, errorLabel and doneLabel captions",
+                "the work itself through the action prop: it receives an AbortSignal and is expected to honour it",
+                "the accent colour through the accent prop",
+                "outer spacing and width through className",
+                "the pause before leaving the done state — it is a single setTimeout in the code"
+              ],
+              "notes": [
+                "The component knows nothing about the network: inside there is only a showcase stub that fails on the first attempt. Pass your own action in the app.",
+                "Do not lock the button from outside while it works — that removes the cancellation it exists for.",
+                "If the labels get noticeably longer the button grows to the longest one: that is how the stack works, not a layout bug.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button021\n  label=\"Sync project\"\n  action={(signal) => syncProject(signal)}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Sync project"
+              },
+              "pendingLabel": {
+                "label": "Working label",
+                "default": "Cancel"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-022",
+      "type": "registry:component",
+      "title": "Hold To Confirm",
+      "description": "Подтверждение удержанием: кнопку нужно продержать нажатой, заливка ползёт слева направо, и только в конце срабатывает действие. Отпустил раньше — откат.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-022/button-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-022.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-022-*. Клиентский: удержание отслеживается pointer-событиями и дублируется клавиатурой (keydown/keyup на пробеле и Enter, повтор автоповтора отсекается по event.repeat). Длительность приходит пропом hold и уходит в CSS-переменную --vibeui-button-022-hold, по которой заливка едет ровно столько же. Действие вызывается один раз в конце и приходит в onConfirm.",
+      "meta": {
+        "tags": ["button", "confirm", "hold", "destructive"],
+        "ai": {
+          "export": "Button022",
+          "usage": "<Button022 hold={1200} onConfirm={deleteAccount}>\n  Держите, чтобы удалить\n</Button022>",
+          "summary": "Кнопка, которая подтверждает удержанием, а не вторым кликом. Пока кнопка зажата, заливка ползёт слева направо ровно hold миллисекунд; дойдя до края, она вызывает onConfirm и показывает результат. Отпустил раньше — заливка откатывается, ничего не произошло. Работает и мышью, и пальцем, и с клавиатуры: пробел или Enter удержанием.",
+          "preserve": [
+            "удержание как единственный способ подтвердить: случайный клик по такой кнопке физически не срабатывает",
+            "совпадение времени заливки и таймера — CSS-переменная и setTimeout берут одно значение hold, иначе полоса врёт",
+            "клавиатурное удержание пробела и Enter с отсечкой event.repeat: без него автоповтор перезапускал бы отсчёт",
+            "откат по pointerup, pointerleave и pointercancel — уход пальца за край кнопки обязан отменять действие",
+            "touch-action:none и user-select:none: иначе на телефоне удержание превращается в скролл и выделение текста",
+            "правило prefers-reduced-motion: заливка перестаёт ползти, но время удержания сохраняется"
+          ],
+          "adapt": [
+            "подписи label, holdingLabel и doneLabel",
+            "длительность удержания — проп hold",
+            "действие — проп onConfirm",
+            "цвет опасности — проп danger",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Не ставь hold меньше 600 мс: заливку не успевают заметить, и кнопка снова превращается в обычный клик.",
+            "Не передавай onClick: компонент управляет нажатием сам, действие приходит через onConfirm.",
+            "Держи min-width: подписи трёх состояний разной длины, без него кнопка меняет размер на глазах.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Держите, чтобы удалить",
+            "maxLength": 40
+          },
+          {
+            "prop": "hold",
+            "label": "Удержание, мс",
+            "type": "number",
+            "default": 1200,
+            "min": 400,
+            "max": 4000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Confirmation by holding: the button has to be kept pressed, the fill crawls from left to right and the action fires only at the end. Release early and it rolls back.",
+            "ai": {
+              "summary": "A button that confirms by being held rather than clicked twice. While it is pressed the fill crawls left to right for exactly hold milliseconds; on reaching the edge it calls onConfirm and reports the result. Release early and the fill rolls back with nothing done. It works with a mouse, a finger and the keyboard: hold Space or Enter.",
+              "preserve": [
+                "the hold as the only way to confirm: a stray click on this button physically cannot fire it",
+                "the fill duration matching the timer — the CSS variable and setTimeout share the same hold value, otherwise the bar lies",
+                "the keyboard hold on Space and Enter with the event.repeat guard: without it auto-repeat would restart the countdown",
+                "the rollback on pointerup, pointerleave and pointercancel — a finger sliding off the button has to cancel the action",
+                "touch-action:none and user-select:none: without them a hold on a phone turns into scrolling and text selection",
+                "the prefers-reduced-motion rule: the fill stops crawling but the hold duration stays"
+              ],
+              "adapt": [
+                "the label, holdingLabel and doneLabel captions",
+                "the hold duration through the hold prop",
+                "the action through the onConfirm prop",
+                "the danger hue through the danger prop",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not set hold below 600 ms: the fill goes unnoticed and the button becomes an ordinary click again.",
+                "Do not pass onClick: the component owns the press, and your action arrives through onConfirm.",
+                "Keep the min-width: the three state labels differ in length and without it the button visibly resizes.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button022 hold={1200} onConfirm={deleteAccount}>\n  Hold to delete\n</Button022>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Hold to delete"
+              },
+              "hold": {
+                "label": "Hold, ms"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-023",
+      "type": "registry:component",
+      "title": "Secret Copy Field",
+      "description": "Копируется не подпись, а значение, которое видно на месте: ключ лежит в моноширинном поле, кнопкой служит всё поле, длинная строка усечена — но в буфер уходит целиком.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-023/button-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-023.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-023-*. Клиентский: подпись «Скопировано» держится hold миллисекунд и откатывается по таймеру, таймер чистится при размонтировании. Значение усечено визуально через text-overflow, в navigator.clipboard.writeText уходит полный value. Отказ буфера ловится try/catch и состояние не меняется — кнопка не отчитывается о том, чего не сделала.",
+      "meta": {
+        "tags": ["button", "copy", "clipboard", "token"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Button023",
+          "usage": "<Button023 value={apiKey} hold={2000} />",
+          "summary": "Поле-кнопка для ключа или ссылки. Значение видно на месте моноширинным шрифтом и усечено многоточием, кнопкой служит вся плашка целиком, а в буфер уходит полная строка. После клика правый угол меняется на галочку и «Скопировано» и сам возвращается назад через hold миллисекунд.",
+          "preserve": [
+            "видимое значение внутри кнопки: копируется именно то, что человек видит, — это отличает поле от кнопки «Скопировать» без контекста",
+            "полный value в буфере при визуально усечённой строке — многоточие ставит CSS, а не JS",
+            "одну строку без переноса: разорванный ключ читается как два разных значения",
+            "откат подписи по таймеру и очистку таймера при размонтировании, иначе состояние повиснет навсегда",
+            "try/catch вокруг clipboard: без прав на буфер кнопка не должна показывать «Скопировано»",
+            "aria-label с полным значением: усечённую строку скринридер иначе прочитает не до конца"
+          ],
+          "adapt": [
+            "значение — проп value, он же попадает в буфер",
+            "подписи label и doneLabel",
+            "время, на которое остаётся подтверждение, — проп hold",
+            "акцентный цвет — проп accent",
+            "ширину поля через className, максимум задан в 22rem"
+          ],
+          "notes": [
+            "navigator.clipboard работает только по https и по пользовательскому жесту — на http-стенде кнопка честно ничего не покажет.",
+            "Не подставляй сюда секрет, который нельзя показывать на экране: поле рассчитано на публичные ключи, ссылки и id.",
+            "Не заменяй усечение на перенос строки — плашка перестанет быть кнопкой одной высоты.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "value",
+            "label": "Значение",
+            "type": "text",
+            "default": "vb_live_7f3c9a21e845b06d4c9f",
+            "maxLength": 60
+          },
+          {
+            "prop": "hold",
+            "label": "Подтверждение, мс",
+            "type": "number",
+            "default": 2000,
+            "min": 500,
+            "max": 8000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "What gets copied is the value, not the caption: the key sits in a monospace field, the whole field is the button, and a long string is truncated on screen but copied in full.",
+            "ai": {
+              "summary": "A field-shaped button for a key or a link. The value is visible in monospace and truncated with an ellipsis, the entire plate acts as the button, and the full string goes to the clipboard. After a click the right corner turns into a checkmark and Copied, then returns on its own after hold milliseconds.",
+              "preserve": [
+                "the visible value inside the button: what is copied is what the person sees — that is what separates this from a bare Copy button",
+                "the full value in the clipboard while the string is visually truncated — the ellipsis is CSS, not JS",
+                "the single line with no wrapping: a broken key reads as two different values",
+                "the label rollback on a timer and the cleanup on unmount, otherwise the state hangs forever",
+                "the try/catch around the clipboard call: without permission the button must not claim Copied",
+                "the aria-label carrying the full value: a truncated string would otherwise be read incompletely"
+              ],
+              "adapt": [
+                "the value prop — it is both what is shown and what is copied",
+                "the label and doneLabel captions",
+                "how long the confirmation stays, through the hold prop",
+                "the accent colour through the accent prop",
+                "the field width through className, the built-in maximum is 22rem"
+              ],
+              "notes": [
+                "navigator.clipboard needs https and a user gesture — on an http staging box the button honestly shows nothing.",
+                "Do not put a secret that must not appear on screen in here: the field is built for public keys, links and ids.",
+                "Do not swap truncation for wrapping — the plate would stop being a button of one fixed height.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button023 value={apiKey} hold={2000} />"
+            },
+            "controls": {
+              "value": {
+                "label": "Value",
+                "default": "vb_live_7f3c9a21e845b06d4c9f"
+              },
+              "hold": {
+                "label": "Confirmation, ms"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-024",
+      "type": "registry:component",
+      "title": "Tri-State Select",
+      "description": "Переключатель с третьим состоянием: кроме «всё» и «ничего» у списка есть «выбрано 3 из 8», и оно объявлено через aria-pressed=\"mixed\", а не спрятано в цвет.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-024/button-024.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-024.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-024-*. Клиентский: число выбранного хранится внутри и отдаётся наружу через onSelectedChange. Значение aria-pressed считается из счётчика: 0 — false, total — true, между ними — mixed. Значок в квадрате переключается между галочкой и тире, счётчик набран tabular-nums.",
+      "meta": {
+        "tags": ["button", "toggle", "mixed", "selection"],
+        "ai": {
+          "export": "Button024",
+          "usage": "<Button024 total={8} defaultSelected={3} onSelectedChange={setChecked} />",
+          "summary": "Кнопка «выбрать все» для списка, часть которого уже отмечена. Состояние берётся из счётчика: ничего, всё или частично — и последнее объявлено значением aria-pressed=\"mixed\", которое булев переключатель выразить не может. В квадрате при этом стоит тире, а не галочка, рядом видно «3 / 8».",
+          "preserve": [
+            "три состояния aria-pressed: false, true и mixed — именно ради последнего компонент и сделан",
+            "тире вместо галочки в промежуточном состоянии: частичный выбор обязан отличаться от полного без опоры на цвет",
+            "видимый счётчик «выбрано из всего» рядом с подписью — он объясняет, откуда взялось промежуточное состояние",
+            "правило перехода: из частичного и пустого клик выбирает всё, из полного — снимает всё",
+            "tabular-nums у счётчика, иначе кнопка дёргается при смене числа",
+            "светлую подложку с рамкой: кнопка рассчитана на панель над списком, а не на тёмный герой"
+          ],
+          "adapt": [
+            "подпись — проп label",
+            "размер списка — проп total и стартовое число отмеченных defaultSelected",
+            "реакцию на переключение — проп onSelectedChange",
+            "акцентный цвет — проп accent",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Компонент хранит только число, а не сам список: настоящие галочки строк переключает приложение по onSelectedChange.",
+            "Не подменяй aria-pressed=\"mixed\" на indeterminate у checkbox — это другая роль и другая разметка.",
+            "Не оставляй defaultSelected больше total: значение обрезается, но лучше не приводить их в противоречие.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Выбрать все",
+            "maxLength": 40
+          },
+          {
+            "prop": "total",
+            "label": "Всего элементов",
+            "type": "number",
+            "default": 8,
+            "min": 2,
+            "max": 99
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A toggle with a third state: besides all and nothing a list can be 3 of 8, and that is announced through aria-pressed=\"mixed\" instead of being hidden in a colour.",
+            "ai": {
+              "summary": "A select-all button for a list that is already partly checked. The state comes from the counter: none, all, or partial — and the last one is announced as aria-pressed=\"mixed\", something a boolean toggle cannot express. The box then holds a dash rather than a check, with 3 / 8 beside it.",
+              "preserve": [
+                "the three aria-pressed states: false, true and mixed — the last one is the reason this component exists",
+                "the dash instead of a check in the partial state: a partial selection has to differ from a full one without relying on colour",
+                "the visible selected-of-total counter next to the label — it explains where the partial state comes from",
+                "the transition rule: from partial and empty a click selects everything, from full it clears everything",
+                "tabular-nums on the counter, otherwise the button twitches as the number changes",
+                "the light plate with a border: this button belongs on a toolbar above a list, not in a dark hero"
+              ],
+              "adapt": [
+                "the caption through the label prop",
+                "the list size through total and the starting number of checked rows through defaultSelected",
+                "the reaction to toggling through the onSelectedChange prop",
+                "the accent colour through the accent prop",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "The component holds a number, not the list: the real row checkboxes are switched by your app from onSelectedChange.",
+                "Do not swap aria-pressed=\"mixed\" for a checkbox with indeterminate — that is a different role and different markup.",
+                "Do not leave defaultSelected above total: the value is clamped, but the two should not contradict each other.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button024 total={8} defaultSelected={3} onSelectedChange={setChecked} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Select all"
+              },
+              "total": {
+                "label": "Items total"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-025",
+      "type": "registry:component",
+      "title": "Hotkey Bound Button",
+      "description": "Кнопка сама держит своё сочетание клавиш: вешает слушатель, показывает ⌘ на macOS и Ctrl на остальных и подсвечивается, когда сочетание сработало.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-025/button-025.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-025.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-025-*. Клиентский: слушатель keydown висит на window, combo вида «mod+s» разбирается на модификаторы и основную клавишу. Платформа читается через useSyncExternalStore: серверный снимок всегда false, поэтому разметка сервера и клиента совпадает, а после гидратации клавиши перерисовываются под систему. Пока фокус в поле ввода или contenteditable, сочетание не перехватывается. Обработчик держится в ref, чтобы слушатель не переподписывался на каждый рендер.",
+      "meta": {
+        "tags": ["button", "hotkey", "keyboard", "shortcut"],
+        "ai": {
+          "export": "Button025",
+          "usage": "<Button025 combo=\"mod+s\" onAction={saveDraft} label=\"Сохранить черновик\" />",
+          "summary": "Кнопка команды, которая сама слушает своё сочетание клавиш. Она разбирает combo вида «mod+s», подставляет ⌘ на macOS и Ctrl на остальных системах, рисует клавиши тегом kbd и при срабатывании даёт короткую вспышку — видно, что нажатие ушло именно сюда. Пока фокус в поле ввода, сочетание не перехватывается.",
+          "preserve": [
+            "слушатель на window вместе с видимой подсказкой: подпись и реальное поведение задаются одним пропом combo и не могут разойтись",
+            "подстановку ⌘ на macOS и Ctrl на остальных: подсказка с чужим модификатором хуже, чем никакой",
+            "чтение платформы через useSyncExternalStore с серверным снимком false — при вычислении прямо в рендере сервер и клиент нарисуют разные клавиши и гидратация упадёт",
+            "пропуск события, когда фокус в input, textarea, select или contenteditable: иначе сочетание крадёт ввод",
+            "вспышку при срабатывании — без неё непонятно, сработало ли нажатие",
+            "обработчик в ref: слушатель подписывается один раз, а не на каждый рендер"
+          ],
+          "adapt": [
+            "подпись — проп label",
+            "сочетание — проп combo: «mod» это Cmd на macOS и Ctrl на остальных",
+            "действие — проп onAction, оно же вызывается обычным кликом",
+            "акцентный цвет — проп accent",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Не вешай то же сочетание где-то ещё: два слушателя на одном combo сработают оба.",
+            "Проверь, что combo не перекрывает системное сочетание браузера — mod+w или mod+t перехватить не выйдет.",
+            "Кнопка вызывает onAction, а не onClick: обычный onClick тоже сработает, но действие лучше держать в одном месте.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Сохранить черновик",
+            "maxLength": 40
+          },
+          {
+            "prop": "combo",
+            "label": "Сочетание",
+            "type": "text",
+            "default": "mod+s",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The button owns its shortcut: it binds the listener, prints ⌘ on macOS and Ctrl elsewhere, and flashes when the combination actually fires.",
+            "ai": {
+              "summary": "A command button that listens for its own shortcut. It parses a combo like mod+s, prints ⌘ on macOS and Ctrl elsewhere, draws the keys as kbd elements and flashes briefly when it fires, so you can see the keystroke landed here. While the focus is inside a text field the shortcut is not intercepted.",
+              "preserve": [
+                "the window listener together with the visible hint: the caption and the real behaviour come from the one combo prop and cannot drift apart",
+                "the ⌘ on macOS and Ctrl elsewhere substitution: a hint with the wrong modifier is worse than no hint",
+                "reading the platform through useSyncExternalStore with a false server snapshot — computing it during render would make server and client draw different keys and break hydration",
+                "skipping the event while the focus is in an input, textarea, select or contenteditable: otherwise the shortcut steals typing",
+                "the flash on firing — without it there is no way to tell the keystroke worked",
+                "the handler kept in a ref: the listener subscribes once instead of on every render"
+              ],
+              "adapt": [
+                "the caption through the label prop",
+                "the shortcut through the combo prop: mod means Cmd on macOS and Ctrl elsewhere",
+                "the action through the onAction prop, which a plain click fires as well",
+                "the accent colour through the accent prop",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not bind the same combination elsewhere: two listeners on one combo both fire.",
+                "Check that the combo does not clash with a browser shortcut — mod+w or mod+t cannot be intercepted.",
+                "The button calls onAction rather than onClick: a plain onClick still works, but the action is better kept in one place.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button025 combo=\"mod+s\" onAction={saveDraft} label=\"Save draft\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Save draft"
+              },
+              "combo": {
+                "label": "Shortcut",
+                "default": "mod+s"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-026",
+      "type": "registry:component",
+      "title": "File Download Link",
+      "description": "Ссылка скачивания, которая называет вес и формат до клика: плашка расширения, имя файла и размер рядом. Это настоящий <a download>, а не кнопка.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-026/button-026.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-026.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-026-*. Серверный: хуков нет. Корень — тег <a> с атрибутом download, поэтому работают средняя кнопка мыши, «сохранить как» и копирование адреса. Формат вычисляется из расширения fileName и уходит в data-format, который перекрашивает плашку. Размер приходит строкой: считать вес файла — работа сервера.",
+      "meta": {
+        "tags": ["button", "download", "link", "file"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Button026",
+          "usage": "<Button026\n  href=\"/files/report-march.pdf\"\n  fileName=\"report-march.pdf\"\n  label=\"Отчёт за март\"\n  size=\"2,4 МБ\"\n/>",
+          "summary": "Ссылка-кнопка скачивания с описанием файла. Слева плашка расширения, которая перекрашивается под формат, в середине имя, под ним формат и вес — по этой паре решают, качать сейчас или позже. Стрелка на наведении опускается на пару пикселей. Это настоящая ссылка с download, а не button с обработчиком.",
+          "preserve": [
+            "тег <a> с атрибутом download вместо button: иначе теряются средняя кнопка мыши, «сохранить как» и копирование адреса",
+            "вес и формат рядом с именем — это и есть причина, по которой компонент существует",
+            "плашку расширения и её перекраску по data-format: формат опознаётся раньше, чем прочитано имя",
+            "усечение длинного имени многоточием в одну строку — карточка обязана держать одну высоту",
+            "aria-label с именем, форматом и весом: строка meta помечена aria-hidden и не дублируется в озвучке",
+            "tabular-nums у веса, иначе цифры пляшут при смене значения"
+          ],
+          "adapt": [
+            "подпись — проп label",
+            "адрес — проп href и имя файла fileName, из которого берётся плашка формата",
+            "вес — проп size: его считает сервер, компонент только показывает строку",
+            "акцентный цвет — проп accent",
+            "ширину карточки через className, максимум задан в 20rem"
+          ],
+          "notes": [
+            "Атрибут download игнорируется для файлов с другого домена: браузер просто откроет их. Для внешних ссылок отдавай файл через свой домен.",
+            "Не подставляй в size «неизвестно»: если веса нет, лучше убрать строку целиком, чем врать о ней.",
+            "Не превращай ссылку в button с programmatic download — потеряется всё, ради чего взят тег <a>.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Название файла",
+            "type": "text",
+            "default": "Отчёт за март",
+            "maxLength": 40
+          },
+          {
+            "prop": "size",
+            "label": "Вес файла",
+            "type": "text",
+            "default": "2,4 МБ",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A download link that names the weight and the format before the click: an extension chip, the file name and the size beside it. A real <a download>, not a button.",
+            "ai": {
+              "summary": "A download link shaped like a button, with the file described on it. On the left an extension chip recoloured per format, in the middle the name, under it the format and the weight — the pair people use to decide between now and later. The arrow dips a couple of pixels on hover. This is a real link with download, not a button with a handler.",
+              "preserve": [
+                "the <a> tag with the download attribute instead of a button: otherwise middle-click, save-as and copying the address are all lost",
+                "the weight and the format next to the name — that is the reason this component exists",
+                "the extension chip and its recolouring through data-format: the format registers before the name is read",
+                "the single-line ellipsis on a long name — the card has to keep one height",
+                "the aria-label carrying name, format and weight: the meta line is aria-hidden so nothing is announced twice",
+                "tabular-nums on the weight, otherwise the digits dance as the value changes"
+              ],
+              "adapt": [
+                "the caption through the label prop",
+                "the address through href and the file name through fileName, which drives the format chip",
+                "the weight through the size prop: the server computes it, the component only prints the string",
+                "the accent colour through the accent prop",
+                "the card width through className, the built-in maximum is 20rem"
+              ],
+              "notes": [
+                "The download attribute is ignored for cross-origin files: the browser simply opens them. Serve external files through your own domain.",
+                "Do not put unknown into size: with no weight it is better to drop the line than to lie about it.",
+                "Do not turn the link into a button with a programmatic download — that throws away everything the <a> tag was taken for.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button026\n  href=\"/files/report-march.pdf\"\n  fileName=\"report-march.pdf\"\n  label=\"March report\"\n  size=\"2.4 MB\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "File name",
+                "default": "March report"
+              },
+              "size": {
+                "label": "File size",
+                "default": "2.4 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-027",
+      "type": "registry:component",
+      "title": "Resend Countdown",
+      "description": "Повторная отправка кода с паузой: кнопка заблокирована, кольцо убывает, время идёт моноширинными цифрами, по нулю она сама разблокируется.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-027/button-027.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-027.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-027-*. Клиентский: остаток секунд хранится в состоянии и уменьшается setTimeout'ом раз в секунду, начальное значение совпадает на сервере и клиенте. Доля остатка уходит в CSS-переменную --vibeui-button-027-left, по которой conic-gradient рисует кольцо. Живая область объявляет только момент разблокировки: секунды не зачитываются каждую секунду.",
+      "meta": {
+        "tags": ["button", "countdown", "resend", "otp"],
+        "ai": {
+          "export": "Button027",
+          "usage": "<Button027 seconds={30} onResend={sendCodeAgain} />",
+          "summary": "Кнопка повторной отправки кода, которая честно показывает паузу. Пока идёт отсчёт, кнопка заблокирована: слева убывает кольцо остатка, справа тикают моноширинные цифры. На нуле кнопка разблокируется и объявляет это скринридеру, а следующее нажатие запускает отсчёт заново.",
+          "preserve": [
+            "блокировку на время паузы: она заменяет ошибку «слишком часто» после клика",
+            "кольцо и цифры вместе — доля времени видна раньше, чем прочитаны секунды",
+            "tabular-nums и min-width: иначе кнопка дёргается на каждой секунде",
+            "живую область только на разблокировке: аria-live на тикающих секундах превращает кнопку в болтуна",
+            "перезапуск отсчёта после нажатия — пауза на сервере начинается заново",
+            "формат «минуты:секунды»: на паузах длиннее минуты голые секунды перестают читаться"
+          ],
+          "adapt": [
+            "подписи label и waitingLabel",
+            "длительность паузы — проп seconds",
+            "отправку — проп onResend",
+            "акцентный цвет — проп accent",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Отсчёт живёт в браузере: перезагрузка страницы его обнулит. Настоящую паузу всё равно держит сервер.",
+            "Не ставь seconds меньше настоящего лимита на бэкенде — иначе кнопка разблокируется раньше, чем сервер согласится принять запрос.",
+            "Не показывай отсчёт разблокированной кнопкой: заблокированное состояние и есть объяснение, почему нажать нельзя.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Отправить код ещё раз",
+            "maxLength": 40
+          },
+          {
+            "prop": "seconds",
+            "label": "Пауза, секунды",
+            "type": "number",
+            "default": 30,
+            "min": 5,
+            "max": 300
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A resend button with a cool-down: it stays locked, the ring drains, the time ticks in tabular figures, and at zero it unlocks itself.",
+            "ai": {
+              "summary": "A resend-code button that shows the cool-down honestly. While the countdown runs the button is disabled: a draining ring on the left, ticking tabular figures on the right. At zero it unlocks and announces that to a screen reader; the next press starts the countdown again.",
+              "preserve": [
+                "the lock during the pause: it replaces the too-many-requests error that would otherwise follow the click",
+                "the ring and the digits together — the fraction of time registers before the seconds are read",
+                "tabular-nums and the min-width: without them the button twitches every second",
+                "the live region only on unlocking: aria-live on ticking seconds turns the button into a chatterbox",
+                "the countdown restarting after a press — the server-side pause begins again too",
+                "the minutes:seconds format: past a minute bare seconds stop being readable"
+              ],
+              "adapt": [
+                "the label and waitingLabel captions",
+                "the pause length through the seconds prop",
+                "the sending through the onResend prop",
+                "the accent colour through the accent prop",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "The countdown lives in the browser: a page reload resets it. The real pause is still held by the server.",
+                "Do not set seconds below the real backend limit — the button would unlock before the server agrees to accept the request.",
+                "Do not show the countdown on an enabled button: the disabled state is the explanation for why it cannot be pressed.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button027 seconds={30} onResend={sendCodeAgain} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Send the code again"
+              },
+              "seconds": {
+                "label": "Pause, seconds"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-028",
+      "type": "registry:component",
+      "title": "Tooltip Icon Button",
+      "description": "Кнопка со значком, у которой подпись всё-таки есть: одна строка уходит и в aria-label, и в подсказку, поэтому имя действия не может разойтись.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-028/button-028.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-028.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-028-*. Серверный: хуков нет, подсказка целиком на CSS. Показ идёт по соседнему селектору button:hover + [data-part=\"tip\"] и button:focus-visible + [data-part=\"tip\"]: по мыши с задержкой 0.35s, по клавиатуре сразу. Сторона задаётся data-side на корне. Значки info, trash и edit собраны из бордюров и псевдоэлементов.",
+      "meta": {
+        "tags": ["button", "icon", "tooltip", "a11y"],
+        "ai": {
+          "export": "Button028",
+          "usage": "<Button028 label=\"Удалить черновик\" icon=\"trash\" side=\"top\" />",
+          "summary": "Иконочная кнопка с подсказкой на CSS. Один проп label уходит сразу в aria-label и в видимый пузырёк, поэтому имя действия физически одно и то же для скринридера и для глаза. По наведению подсказка появляется с задержкой, по клавиатуре — мгновенно. Значки нарисованы бордюрами, иконочный пакет не нужен.",
+          "preserve": [
+            "единственный источник имени: label попадает и в aria-label, и в подсказку — разъехаться им негде",
+            "aria-hidden на пузырьке: иначе скринридер прочитает имя действия дважды",
+            "показ подсказки на focus-visible, а не только на hover: с клавиатуры значок иначе безымянный",
+            "задержку 0.35s для мыши и нулевую для клавиатуры — без задержки подсказки вспыхивают при проходе курсора над рядом кнопок",
+            "pointer-events:none у пузырька: подсказка не должна перехватывать клик по кнопке",
+            "размер кнопки не меньше 2.25rem и видимое фокусное кольцо: у маленькой цели они важнее всего"
+          ],
+          "adapt": [
+            "имя действия — проп label",
+            "значок — проп icon: info, trash или edit",
+            "сторону подсказки — проп side",
+            "акцентный цвет — проп accent",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Подсказка не заменяет подпись в интерфейсе, который смотрят с телефона: на тач-экране наведения нет, поэтому важное действие лучше подписать словами.",
+            "Держи label коротким: пузырёк не переносится по строкам и на длинной фразе вылезет за края узкой панели.",
+            "Пузырёк рисуется внутри потока: если у родителя стоит overflow:hidden, подсказку срежет — тогда меняй side или убирай обрезку.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Имя действия",
+            "type": "text",
+            "default": "Удалить черновик",
+            "maxLength": 40
+          },
+          {
+            "prop": "icon",
+            "label": "Значок",
+            "type": "select",
+            "default": "trash",
+            "options": ["info", "trash", "edit"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An icon button that still has a caption: one string feeds both the aria-label and the tooltip, so the name of the action cannot drift apart.",
+            "ai": {
+              "summary": "An icon button with a CSS-only tooltip. A single label prop feeds both the aria-label and the visible bubble, so the screen reader and the eye get literally the same name. On hover the tooltip waits, on keyboard focus it appears at once. The glyphs are drawn with borders — no icon package needed.",
+              "preserve": [
+                "the single source of the name: label lands in both the aria-label and the tooltip, with nowhere to drift",
+                "aria-hidden on the bubble: otherwise the screen reader announces the action name twice",
+                "the tooltip on focus-visible, not only on hover: from the keyboard the glyph would otherwise be nameless",
+                "the 0.35s delay for the mouse and none for the keyboard — without it tooltips flash as the cursor crosses a row of buttons",
+                "pointer-events:none on the bubble: a tooltip must not intercept the click meant for the button",
+                "the button no smaller than 2.25rem and the visible focus ring: on a small target they matter most"
+              ],
+              "adapt": [
+                "the action name through the label prop",
+                "the glyph through the icon prop: info, trash or edit",
+                "the tooltip side through the side prop",
+                "the accent colour through the accent prop",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "A tooltip does not replace a caption in an interface used on a phone: there is no hover on a touch screen, so an important action deserves words.",
+                "Keep label short: the bubble does not wrap and a long phrase escapes the edges of a narrow toolbar.",
+                "The bubble is drawn in flow: a parent with overflow:hidden will clip it — change side or drop the clipping.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button028 label=\"Delete draft\" icon=\"trash\" side=\"top\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Action name",
+                "default": "Delete draft"
+              },
+              "icon": {
+                "label": "Glyph"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-029",
+      "type": "registry:component",
+      "title": "Form Footer Actions",
+      "description": "Концовка формы целиком: на узкой колонке обе кнопки во всю ширину друг под другом, от 26rem собственной ширины они перестраиваются в ряд.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-029/button-029.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-029.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-029-*. Серверный: хуков нет. Раскладка считается от собственной ширины блока через container-type:inline-size, а правила @container висят на внутреннем [data-part=\"shell\"] — контейнерный запрос не действует на сам контейнер. Основная кнопка объявлена type=\"submit\", вторая — type=\"button\", чтобы она не отправляла форму.",
+      "meta": {
+        "tags": ["button", "form", "mobile", "container-query"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Button029",
+          "usage": "<Button029\n  label=\"Отправить заявку\"\n  secondaryLabel=\"Сохранить черновик\"\n  note=\"Отвечаем в течение одного рабочего дня\"\n/>",
+          "summary": "Не одна кнопка, а концовка формы. На узкой колонке основное действие растянуто во всю ширину, вторичное стоит под ним и тоже во всю ширину — палец попадает в любую точку строки. От 26rem собственной ширины пара перестраивается в ряд, вторичная кнопка уходит влево и ужимается по содержимому, а мелкая строка под ними прижимается вправо.",
+          "preserve": [
+            "порядок на узкой ширине: основное действие сверху, вторичное под ним — на телефоне первым нажимают верхнее",
+            "перестановку через order в ряду: визуально вторичная кнопка уходит влево, а в разметке основная остаётся первой",
+            "container-type на корне и правила @container на внутреннем shell: контейнерный запрос не применяется к самому контейнеру",
+            "высоту кнопок 2.75rem: это нижняя граница удобной цели для пальца",
+            "type=\"submit\" у основной и type=\"button\" у вторичной — иначе вторая кнопка молча отправит форму",
+            "мелкую строку note отдельным абзацем под кнопками, а не подписью внутри кнопки"
+          ],
+          "adapt": [
+            "подписи label и secondaryLabel",
+            "мелкую строку — проп note, пустая строка убирает её целиком",
+            "акцентный цвет — проп accent",
+            "ширину блока через className, максимум задан в 32rem",
+            "порог перестроения — он задан одним @container в стилях"
+          ],
+          "notes": [
+            "Блок рассчитан на место внутри <form>: основная кнопка отправляет форму сама, обработчик вешается на форму.",
+            "Не заменяй @container на @media: в узкой колонке десктопа раскладка обязана остаться вертикальной.",
+            "Не убирай вторичную кнопку ради экономии места — тогда проще взять обычную кнопку, а не этот блок.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Основное действие",
+            "type": "text",
+            "default": "Отправить заявку",
+            "maxLength": 40
+          },
+          {
+            "prop": "note",
+            "label": "Мелкая строка",
+            "type": "text",
+            "default": "Отвечаем в течение одного рабочего дня",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The whole end of a form: in a narrow column both buttons run full width one under the other, and from 26rem of its own width they line up in a row.",
+            "ai": {
+              "summary": "Not one button but the end of a form. In a narrow column the primary action runs full width with the secondary one below it, also full width — a thumb lands anywhere on the row. From 26rem of its own width the pair becomes a row, the secondary button moves left and shrinks to its content, and the fine print underneath aligns right.",
+              "preserve": [
+                "the stacked order: the primary action on top, the secondary below — on a phone the top one gets pressed first",
+                "the swap through order in the row: visually the secondary button moves left while the primary stays first in the markup",
+                "container-type on the root and the @container rules on the inner shell: a container query never applies to its own container",
+                "the 2.75rem button height: that is the lower bound of a comfortable thumb target",
+                "type=\"submit\" on the primary and type=\"button\" on the secondary — otherwise the second button silently submits the form",
+                "the fine print as its own paragraph below the buttons rather than a caption inside one"
+              ],
+              "adapt": [
+                "the label and secondaryLabel captions",
+                "the fine print through the note prop, an empty string removes it entirely",
+                "the accent colour through the accent prop",
+                "the block width through className, the built-in maximum is 32rem",
+                "the breakpoint of the reflow — it is a single @container rule in the styles"
+              ],
+              "notes": [
+                "The block is meant to live inside a <form>: the primary button submits it, and the handler belongs on the form.",
+                "Do not swap @container for @media: in a narrow desktop column the layout has to stay vertical.",
+                "Do not drop the secondary button to save space — a plain button would then be the simpler choice than this block.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button029\n  label=\"Send request\"\n  secondaryLabel=\"Save draft\"\n  note=\"We answer within one business day\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Primary action",
+                "default": "Send request"
+              },
+              "note": {
+                "label": "Fine print",
+                "default": "We answer within one business day"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-030",
+      "type": "registry:component",
+      "title": "Notification Badge",
+      "description": "Счётчик поверх угла кнопки: число попадает и в бейдж, и в aria-label, большие значения схлопываются в «99+», а ноль убирает бейдж целиком.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-030/button-030.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-030.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-030-*. Серверный: число приходит пропом count, компонент ничего не считает сам. Бейдж обведён кольцом цвета подложки через box-shadow, поэтому не сливается с колокольчиком. Порог схлопывания задаётся пропом cap. Ореол — CSS-анимация, которая полностью выключается при prefers-reduced-motion.",
+      "meta": {
+        "tags": ["button", "badge", "counter", "notifications"],
+        "ai": {
+          "export": "Button030",
+          "usage": "<Button030 label=\"Уведомления\" count={12} onClick={openInbox} />",
+          "summary": "Иконочная кнопка со счётчиком непрочитанного в углу. Число видно в бейдже и слышно в aria-label, поэтому «12 непрочитанных» не остаётся только картинкой. Значения выше порога схлопываются в «99+», ноль убирает бейдж вместе с ореолом, а кольцо цвета подложки отделяет цифру от колокольчика.",
+          "preserve": [
+            "число одновременно в бейдже и в aria-label: счётчик, который не читается вслух, для скринридера не существует",
+            "кольцо цвета подложки вокруг бейджа — без него цифра сливается со значком под ней",
+            "схлопывание больших значений в «99+»: иначе бейдж растягивает кнопку и ломает ряд",
+            "исчезновение бейджа при нуле, а не показ нуля — пустой счётчик это отсутствие счётчика",
+            "tabular-nums у цифры, чтобы бейдж не менял ширину на каждом значении",
+            "правило prefers-reduced-motion, которое полностью убирает пульсирующий ореол"
+          ],
+          "adapt": [
+            "имя кнопки — проп label, оно уходит в aria-label вместе с числом",
+            "значение — проп count, его считает приложение",
+            "порог схлопывания — проп cap",
+            "цвет бейджа — проп badge",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Компонент ничего не опрашивает: count приходит снаружи, внутри нет ни таймера, ни запроса.",
+            "Не оставляй пульсацию на счётчике, который висит постоянно: она рассчитана на действительно новое, а не на фон.",
+            "Фраза в aria-label написана по-русски в коде — переводи её вместе с интерфейсом.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Имя кнопки",
+            "type": "text",
+            "default": "Уведомления",
+            "maxLength": 40
+          },
+          {
+            "prop": "count",
+            "label": "Счётчик",
+            "type": "number",
+            "default": 12,
+            "min": 0,
+            "max": 999
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A counter over the corner of the button: the number lands in both the badge and the aria-label, large values collapse into 99+, and zero removes the badge entirely.",
+            "ai": {
+              "summary": "An icon button with an unread counter in its corner. The number is visible in the badge and audible in the aria-label, so 12 unread is not only a picture. Values above the cap collapse into 99+, zero removes the badge along with its halo, and a ring in the surface colour keeps the digit off the bell beneath it.",
+              "preserve": [
+                "the number in both the badge and the aria-label: a counter that is never spoken does not exist for a screen reader",
+                "the ring in the surface colour around the badge — without it the digit melts into the glyph below",
+                "collapsing large values into 99+: otherwise the badge stretches the button and breaks the row",
+                "the badge disappearing at zero rather than showing a zero — an empty counter is no counter",
+                "tabular-nums on the digits so the badge keeps its width across values",
+                "the prefers-reduced-motion rule, which removes the pulsing halo completely"
+              ],
+              "adapt": [
+                "the button name through the label prop, which goes into the aria-label with the number",
+                "the value through the count prop, computed by your app",
+                "the collapse threshold through the cap prop",
+                "the badge colour through the badge prop",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "The component polls nothing: count arrives from outside, there is no timer and no request inside.",
+                "Do not leave the pulse on a counter that is always present: it is meant for something genuinely new, not for background.",
+                "The aria-label phrase is written in Russian in the code — translate it along with the rest of the interface.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button030 label=\"Notifications\" count={12} onClick={openInbox} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Button name",
+                "default": "Notifications"
+              },
+              "count": {
+                "label": "Counter"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-031",
+      "type": "registry:component",
+      "title": "File Picker Button",
+      "description": "Выбор файла поверх настоящего input[type=file]: клик, Tab и Enter работают сами, а JS добавлен только ради имени файла, веса и перетаскивания.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-031/button-031.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-031.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-031-*. Клиентский: имя и вес выбранного файла держатся в состоянии, файл отдаётся наружу через onFileChange. Скрытый input лежит внутри label, поэтому диалог открывает браузер без обработчиков; фокусное кольцо рисуется на плашке через :has(input:focus-visible). При перетаскивании файл кладётся в сам input через ref, чтобы форма отправилась обычным способом.",
+      "meta": {
+        "tags": ["button", "upload", "file", "drag-drop"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Button031",
+          "usage": "<Button031\n  accept=\".pdf,.png\"\n  hint=\"PDF или PNG, до 10 МБ\"\n  onFileChange={setAttachment}\n/>",
+          "summary": "Кнопка выбора файла, под которой лежит настоящий input[type=file]. Диалог открывает браузер, клавиатура работает без обработчиков, а JS добавлен только там, где без него нельзя: показать имя и вес выбранного файла, принять перетаскивание и очистить выбор. Плашка с пунктирной рамкой подсвечивается, когда файл тащат сверху.",
+          "preserve": [
+            "настоящий input[type=file] внутри label: диалог, Tab и Enter достаются от браузера, а форма отправляется обычным способом",
+            "скрытие input через clip-path, а не display:none — скрытый через display элемент теряет фокус и перестаёт быть частью формы",
+            "фокусное кольцо на плашке через :has(input:focus-visible): сам input не видно, и без этого фокус пропадает",
+            "запись перетащенного файла в input.files, а не только в состояние: иначе форма уйдёт без файла",
+            "имя и вес выбранного файла на месте подписи — подтверждение выбора должно быть в самой плашке",
+            "кнопку сброса, которая чистит и состояние, и value самого input"
+          ],
+          "adapt": [
+            "подпись — проп label и строку ограничений hint",
+            "разрешённые форматы — проп accept",
+            "подпись сброса — проп resetLabel",
+            "реакцию на выбор — проп onFileChange",
+            "акцентный цвет — проп accent"
+          ],
+          "notes": [
+            "Компонент ничего не загружает: он только выбирает файл. Отправку делает форма или ваш код по onFileChange.",
+            "Атрибут accept — подсказка диалогу, а не проверка. Формат и вес всё равно проверяет сервер.",
+            "Множественный выбор не поддержан намеренно: плашка показывает один файл, для нескольких нужен список.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Выберите файл или перетащите",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Ограничения",
+            "type": "text",
+            "default": "PDF или PNG, до 10 МБ",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A file picker over a real input[type=file]: click, Tab and Enter work on their own, and JS is added only for the file name, its weight and drag and drop.",
+            "ai": {
+              "summary": "A file-picking button with a real input[type=file] underneath. The browser opens the dialog, the keyboard works with no handlers, and JS is added only where it must be: showing the chosen file's name and weight, accepting a drop and clearing the choice. The dashed plate lights up while a file is dragged over it.",
+              "preserve": [
+                "the real input[type=file] inside the label: the dialog, Tab and Enter come from the browser and the form submits the ordinary way",
+                "hiding the input with clip-path rather than display:none — a display-hidden control loses focus and leaves the form",
+                "the focus ring drawn on the plate through :has(input:focus-visible): the input itself is invisible, so without it focus disappears",
+                "writing the dropped file into input.files rather than into state alone: otherwise the form submits without the file",
+                "the chosen file's name and weight in place of the caption — the confirmation belongs on the plate itself",
+                "the reset button clearing both the state and the input's own value"
+              ],
+              "adapt": [
+                "the caption through the label prop and the constraints line through hint",
+                "the allowed formats through the accept prop",
+                "the reset caption through the resetLabel prop",
+                "the reaction to a choice through the onFileChange prop",
+                "the accent colour through the accent prop"
+              ],
+              "notes": [
+                "The component uploads nothing: it only picks a file. Sending it is the form's job, or yours from onFileChange.",
+                "The accept attribute is a hint to the dialog, not a check. Format and size are still verified on the server.",
+                "Multiple selection is deliberately unsupported: the plate shows one file, several would need a list.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button031\n  accept=\".pdf,.png\"\n  hint=\"PDF or PNG, up to 10 MB\"\n  onFileChange={setAttachment}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Choose a file or drop it here"
+              },
+              "hint": {
+                "label": "Constraints",
+                "default": "PDF or PNG, up to 10 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-032",
+      "type": "registry:component",
+      "title": "Overflow Menu Button",
+      "description": "Кнопка «ещё» с меню на нативном popover: Esc и клик мимо закрывают слой силами браузера, а под кнопку он встаёт через CSS anchor positioning.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-032/button-032.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-032.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-032-*. Серверный: хуков нет, JS нет вовсе. Слой открывается атрибутом popover и парой popovertarget, пункты закрывают его через popovertargetaction=\"hide\". Позиционирование под кнопкой включается внутри @supports (anchor-name: --a); где anchor не поддержан, popover остаётся по центру экрана. Появление сделано на @starting-style с transition-behavior для display и overlay. Роль menu не выставлена намеренно: она требует навигации стрелками, которой без JS не будет.",
+      "meta": {
+        "tags": ["button", "menu", "popover", "anchor"],
+        "ai": {
+          "export": "Button032",
+          "usage": "<Button032\n  label=\"Ещё действия\"\n  items={[\"Переименовать\", \"Дублировать\"]}\n  dangerLabel=\"Удалить\"\n/>",
+          "summary": "Кнопка с тремя точками и меню, у которого нет ни строчки JS. Слой открывается нативным popover, закрывается по Esc и по клику мимо силами браузера, встаёт под кнопкой через CSS anchor positioning и появляется плавно на @starting-style. Последний пункт опасный: он отделён линией и покрашен в красный.",
+          "preserve": [
+            "нативный popover вместо самодельного слоя: Esc, клик мимо и верхний слой достаются от браузера бесплатно",
+            "закрытие пунктов через popovertargetaction=\"hide\" — обработчики для этого не нужны",
+            "запасной вариант без anchor positioning: там слой остаётся по центру экрана, и это рабочее поведение, а не поломка",
+            "@starting-style вместе с transition-behavior для display и overlay: без них popover появляется рывком",
+            "отсутствие role=\"menu\": эта роль требует навигации стрелками, а её без JS не сделать, и заявленная роль без поведения хуже её отсутствия",
+            "aria-label на кнопке: у неё нет подписи, только три точки"
+          ],
+          "adapt": [
+            "имя кнопки — проп label и список пунктов items",
+            "опасный пункт — проп dangerLabel, пустая строка убирает его",
+            "сторону выравнивания — проп align",
+            "id слоя — проп menuId, он обязан быть уникальным на странице",
+            "акцентный цвет — проп accent"
+          ],
+          "notes": [
+            "Пункты пока ничего не делают: повесь на них свои обработчики, закрытие слоя уже настроено атрибутами.",
+            "Две таких кнопки на одной странице требуют разных menuId — одинаковый id сломает связь кнопки и слоя.",
+            "Слой рисуется в верхнем слое браузера, поэтому overflow:hidden у родителя его не срежет — в отличие от подсказок на absolute.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Имя кнопки",
+            "type": "text",
+            "default": "Ещё действия",
+            "maxLength": 40
+          },
+          {
+            "prop": "align",
+            "label": "Выравнивание",
+            "type": "select",
+            "default": "end",
+            "options": ["start", "end"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A more button whose menu runs on the native popover: Esc and an outside click close it through the browser, and CSS anchor positioning parks it under the button.",
+            "ai": {
+              "summary": "A three-dot button with a menu that carries no JS at all. The layer opens through the native popover, closes on Esc and on an outside click by the browser itself, sits under the button through CSS anchor positioning and fades in with @starting-style. The last item is destructive: separated by a rule and painted red.",
+              "preserve": [
+                "the native popover instead of a hand-rolled layer: Esc, outside clicks and the top layer come free from the browser",
+                "items closing the layer through popovertargetaction=\"hide\" — no handlers needed for that",
+                "the fallback without anchor positioning: there the layer stays centred on screen, which is working behaviour rather than a bug",
+                "@starting-style together with transition-behavior for display and overlay: without them the popover snaps into place",
+                "the absence of role=\"menu\": that role demands arrow-key navigation, which is impossible without JS, and a claimed role without the behaviour is worse than none",
+                "the aria-label on the button: it has no caption, only three dots"
+              ],
+              "adapt": [
+                "the button name through the label prop and the entries through items",
+                "the destructive entry through the dangerLabel prop, an empty string removes it",
+                "the alignment side through the align prop",
+                "the layer id through the menuId prop, which must be unique on the page",
+                "the accent colour through the accent prop"
+              ],
+              "notes": [
+                "The entries do nothing yet: attach your handlers to them, the closing is already wired through attributes.",
+                "Two of these buttons on one page need different menuId values — a shared id breaks the link between button and layer.",
+                "The layer is painted in the browser's top layer, so a parent with overflow:hidden will not clip it, unlike absolutely positioned tooltips.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button032\n  label=\"More actions\"\n  items={[\"Rename\", \"Duplicate\"]}\n  dangerLabel=\"Delete\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Button name",
+                "default": "More actions"
+              },
+              "align": {
+                "label": "Alignment"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
