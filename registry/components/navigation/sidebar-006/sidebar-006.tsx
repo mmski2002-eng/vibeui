@@ -1,0 +1,182 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Sidebar006Item = {
+  label: string
+  href?: string
+}
+
+export type Sidebar006Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children"
+> & {
+  items?: Sidebar006Item[]
+  activeLabel?: string
+  userName?: string
+  userMeta?: string
+  menu?: Sidebar006Item[]
+  accent?: string
+}
+
+// Идея компонента: профиль стоит внизу колонки и раскрывается вверх. Это
+// не украшение: выход из аккаунта и настройки живут рядом с именем, а не в
+// общем списке разделов, поэтому их невозможно нажать по ошибке при выборе
+// раздела. Меню профиля собрано на <details> — состояние держит браузер,
+// клиентского JS в компоненте нет вообще.
+const STYLES = `
+:where([data-vibeui-block="sidebar-006"]){
+--vibeui-sidebar-006-bg:oklch(1 0 0);
+--vibeui-sidebar-006-fg:oklch(0.25 0.016 265);
+--vibeui-sidebar-006-muted:oklch(0.55 0.014 265);
+--vibeui-sidebar-006-border:oklch(0.91 0.006 265);
+--vibeui-sidebar-006-accent:oklch(0.55 0.16 200);
+--vibeui-sidebar-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="sidebar-006"]{
+display:flex;flex-direction:column;gap:0.75rem;
+width:100%;max-width:15rem;min-height:17rem;box-sizing:border-box;padding:0.625rem;
+background:var(--vibeui-sidebar-006-bg);color:var(--vibeui-sidebar-006-fg);
+border:1px solid var(--vibeui-sidebar-006-border);border-radius:0.875rem;
+font-family:var(--vibeui-sidebar-006-font);
+}
+[data-vibeui-block="sidebar-006"] [data-part="nav"] ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.125rem}
+[data-vibeui-block="sidebar-006"] [data-part="nav"] a{
+display:block;padding:0.4375rem 0.5rem;border-radius:0.5rem;
+color:var(--vibeui-sidebar-006-muted);text-decoration:none;font-size:0.875rem;line-height:1.3;
+}
+[data-vibeui-block="sidebar-006"] [data-part="nav"] a:hover{background:oklch(0.55 0.02 265 / 7%);color:var(--vibeui-sidebar-006-fg)}
+[data-vibeui-block="sidebar-006"] [data-part="nav"] a:focus-visible{outline:2px solid var(--vibeui-sidebar-006-accent);outline-offset:-2px}
+[data-vibeui-block="sidebar-006"] [data-part="nav"] a[aria-current="page"]{
+background:color-mix(in oklab,var(--vibeui-sidebar-006-accent) 14%,transparent);
+color:var(--vibeui-sidebar-006-fg);font-weight:600;
+}
+/* Профиль прижат к низу распоркой, а не отступом: высота колонки бывает разной. */
+[data-vibeui-block="sidebar-006"] [data-part="spacer"]{flex:1}
+[data-vibeui-block="sidebar-006"] [data-part="profile"]{position:relative;border-top:1px solid var(--vibeui-sidebar-006-border);padding-top:0.5rem}
+[data-vibeui-block="sidebar-006"] summary{
+display:flex;align-items:center;gap:0.5rem;cursor:pointer;list-style:none;
+padding:0.375rem 0.5rem;border-radius:0.5rem;
+}
+[data-vibeui-block="sidebar-006"] summary::-webkit-details-marker{display:none}
+[data-vibeui-block="sidebar-006"] summary:hover{background:oklch(0.55 0.02 265 / 7%)}
+[data-vibeui-block="sidebar-006"] summary:focus-visible{outline:2px solid var(--vibeui-sidebar-006-accent);outline-offset:-2px}
+[data-vibeui-block="sidebar-006"] [data-part="avatar"]{
+display:flex;align-items:center;justify-content:center;flex:none;
+width:1.75rem;height:1.75rem;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-sidebar-006-accent) 18%,transparent);
+color:var(--vibeui-sidebar-006-fg);font-size:0.6875rem;font-weight:700;
+}
+[data-vibeui-block="sidebar-006"] [data-part="who"]{display:flex;flex-direction:column;min-width:0}
+[data-vibeui-block="sidebar-006"] [data-part="name"]{font-size:0.8125rem;font-weight:650;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+[data-vibeui-block="sidebar-006"] [data-part="meta"]{font-size:0.6875rem;color:var(--vibeui-sidebar-006-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+[data-vibeui-block="sidebar-006"] [data-part="dots"]{
+margin-left:auto;flex:none;color:var(--vibeui-sidebar-006-muted);font-size:0.875rem;line-height:1;
+}
+/* Меню раскрывается вверх: внизу колонки места нет, а обрезанное меню бесполезно. */
+[data-vibeui-block="sidebar-006"] [data-part="menu"]{
+position:absolute;left:0;right:0;bottom:calc(100% - 0.25rem);z-index:2;
+margin:0;padding:0.25rem;list-style:none;
+background:var(--vibeui-sidebar-006-bg);
+border:1px solid var(--vibeui-sidebar-006-border);border-radius:0.625rem;
+box-shadow:0 8px 24px oklch(0.2 0.02 265 / 14%);
+}
+[data-vibeui-block="sidebar-006"] [data-part="menu"] a{
+display:block;padding:0.375rem 0.5rem;border-radius:0.375rem;
+color:var(--vibeui-sidebar-006-fg);text-decoration:none;font-size:0.8125rem;
+}
+[data-vibeui-block="sidebar-006"] [data-part="menu"] a:hover{background:oklch(0.55 0.02 265 / 8%)}
+[data-vibeui-block="sidebar-006"] [data-part="menu"] a:focus-visible{outline:2px solid var(--vibeui-sidebar-006-accent);outline-offset:-2px}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="sidebar-006"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_ITEMS: Sidebar006Item[] = [
+  { label: "Лента", href: "#" },
+  { label: "Проекты", href: "#" },
+  { label: "Задачи", href: "#" },
+  { label: "Файлы", href: "#" },
+]
+
+const DEFAULT_MENU: Sidebar006Item[] = [
+  { label: "Настройки профиля", href: "#" },
+  { label: "Сменить тему", href: "#" },
+  { label: "Выйти", href: "#" },
+]
+
+/**
+ * Меню с карточкой профиля внизу и меню аккаунта, раскрывающимся вверх.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Sidebar006({
+  items = DEFAULT_ITEMS,
+  activeLabel = "Проекты",
+  userName = "Ольга Дорн",
+  userMeta = "olga@studio.ru",
+  menu = DEFAULT_MENU,
+  accent,
+  className,
+  style,
+  ...props
+}: Sidebar006Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-sidebar-006-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  const short = userName
+    .split(" ")
+    .slice(0, 2)
+    .map((part) => part.charAt(0).toUpperCase())
+    .join("")
+
+  return (
+    <>
+      <style href="vibeui-sidebar-006" precedence="medium">
+        {STYLES}
+      </style>
+      <div
+        {...props}
+        data-vibeui-block="sidebar-006"
+        className={className}
+        style={palette}
+      >
+        <nav data-part="nav" aria-label="Разделы">
+          <ul>
+            {items.map((item) => (
+              <li key={item.label}>
+                <a
+                  href={item.href}
+                  aria-current={item.label === activeLabel ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div data-part="spacer" />
+        <div data-part="profile">
+          <details>
+            <summary aria-label={`Меню профиля: ${userName}`}>
+              <span data-part="avatar" aria-hidden="true">
+                {short}
+              </span>
+              <span data-part="who">
+                <span data-part="name">{userName}</span>
+                <span data-part="meta">{userMeta}</span>
+              </span>
+              <span data-part="dots" aria-hidden="true">
+                •••
+              </span>
+            </summary>
+            <ul data-part="menu">
+              {menu.map((entry) => (
+                <li key={entry.label}>
+                  <a href={entry.href}>{entry.label}</a>
+                </li>
+              ))}
+            </ul>
+          </details>
+        </div>
+      </div>
+    </>
+  )
+}

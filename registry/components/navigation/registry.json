@@ -6655,6 +6655,1313 @@
           }
         }
       }
+    },
+    {
+      "name": "scrollspy-002",
+      "type": "registry:component",
+      "title": "Article Outline",
+      "description": "Оглавление статьи стоит не сбоку, а над текстом: пункты пронумерованы, у активного номер заливается, а ряд прокручивается пальцем.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollspy-002/scrollspy-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollspy-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-002-*. Клиентский (\"use client\") — нужен IntersectionObserver. Наблюдатель следит за разделами внутри собственной области прокрутки: root — сам блок текста, rootMargin обрезает нижние 65%, поэтому активным становится раздел у верхней кромки, а не любой видимый. Ссылки — обычные якоря без preventDefault: без JS они по-прежнему доводят до раздела, наблюдатель добавляет только подсветку. Активный пункт помечен aria-current и залитым кружком номера: в горизонтальном ряду цвета текста мало.",
+      "meta": {
+        "tags": ["scrollspy", "toc", "article", "navigation"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Scrollspy002",
+          "usage": "<Scrollspy002\n  title=\"Содержание\"\n  sections={[\n    { id: \"why\", title: \"Зачем\", text: \"Почему оглавление нужно длинной странице\" },\n    { id: \"how\", title: \"Как устроено\", text: \"Якоря плюс наблюдатель пересечений\" },\n  ]}\n/>",
+          "summary": "Оглавление статьи в строку: якорные ссылки работают без JS, подсветку текущего раздела добавляет IntersectionObserver. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollspy-002-* и не подменять её токенами вашей темы",
+            "обычные якоря без preventDefault: без JS оглавление обязано остаться рабочим",
+            "IntersectionObserver вместо обработчика scroll — иначе браузер считает раскладку на каждый пиксель",
+            "rootMargin с отрицательным низом: без него активным становится раздел, уже ушедший вверх",
+            "aria-current на активной ссылке: залитый номер скринридеру недоступен",
+            "запас снизу у последнего раздела — иначе он не долистывается и никогда не подсвечивается"
+          ],
+          "adapt": [
+            "заголовок оглавления через title",
+            "разделы через sections: идентификатор, заголовок и текст",
+            "цвет акцента через accent",
+            "высоту области чтения в правиле height у [data-part=\"body\"]"
+          ],
+          "notes": [
+            "Идентификаторы разделов должны быть уникальны на странице: два блока с одинаковыми id перебьют якоря.",
+            "Оглавление в строку рассчитано на пять-шесть пунктов: длинный список превращается в бесконечную прокрутку.",
+            "Область чтения здесь своя; для оглавления по всей странице уберите root у наблюдателя.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Содержание",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An article outline placed above the text rather than beside it: the items are numbered, the active one gets a filled number, and the row scrolls by touch.",
+            "ai": {
+              "summary": "A single-row article outline: the anchor links work without JS and an IntersectionObserver adds the current-section highlight. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-scrollspy-002-* palette — do not swap it for your theme tokens",
+                "plain anchors without preventDefault: the outline must keep working without JS",
+                "the IntersectionObserver instead of a scroll handler — otherwise the browser recomputes layout on every pixel",
+                "the negative bottom rootMargin: without it a section that already scrolled past becomes active",
+                "aria-current on the active link: a filled number is invisible to a screen reader",
+                "the bottom padding on the last section — without it it never scrolls up and never lights up"
+              ],
+              "adapt": [
+                "the outline heading through title",
+                "the sections through sections: id, title and text",
+                "the accent colour through accent",
+                "the reading area height in the height rule of [data-part=\"body\"]"
+              ],
+              "notes": [
+                "Section ids must be unique on the page: two blocks with the same ids break the anchors.",
+                "A single-row outline suits five or six items: a long list turns into endless scrolling.",
+                "The reading area is local here; for a whole-page outline drop the observer's root.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollspy002\n  title=\"Contents\"\n  sections={[\n    { id: \"why\", title: \"Why\", text: \"Why a long page needs an outline\" },\n    { id: \"how\", title: \"How it works\", text: \"Anchors plus an intersection observer\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Contents"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollspy-003",
+      "type": "registry:component",
+      "title": "Nested Contents",
+      "description": "Двухуровневое оглавление, которое не вываливает сразу все подпункты: раскрыта только глава, внутри которой читатель сейчас находится.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollspy-003/scrollspy-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollspy-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-003-*. Клиентский (\"use client\") — нужен IntersectionObserver. Наблюдатель следит за разделами обоих уровней сразу, поэтому активным может стать и глава, и её подпункт. Раскрытие второго уровня не хранится состоянием: список показывается правилом li[data-open=\"true\"] > [data-part=\"sub\"], где data-open вычисляется из того, активна ли глава или любой её потомок. Ссылки — обычные якоря, подсветка идёт через aria-current на обоих уровнях.",
+      "meta": {
+        "tags": ["scrollspy", "toc", "nested", "docs"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Scrollspy003",
+          "usage": "<Scrollspy003\n  title=\"Разделы\"\n  chapters={[\n    { id: \"start\", title: \"Начало\", text: \"Что понадобится до установки\", children: [{ id: \"start-install\", title: \"Установка\", text: \"Одна команда\" }] },\n  ]}\n/>",
+          "summary": "Оглавление на два уровня: подпункты видны только у текущей главы, подсветка идёт по обоим уровням. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollspy-003-* и не подменять её токенами вашей темы",
+            "раскрытие только текущей главы: развёрнутое дерево оказывается длиннее самого текста",
+            "наблюдение за обоими уровнями сразу — иначе подпункт никогда не станет активным",
+            "обычные якоря без preventDefault: без JS оглавление обязано остаться рабочим",
+            "aria-current на ссылке текущего раздела, а не только жирное начертание",
+            "вычисление data-open из активного раздела вместо отдельного состояния раскрытия"
+          ],
+          "adapt": [
+            "заголовок оглавления через title",
+            "главы и подпункты через chapters и вложенный children",
+            "цвет акцента через accent",
+            "ширину колонки оглавления в grid-template-columns"
+          ],
+          "notes": [
+            "Третий уровень вложенности компонент не рисует: для него нужна другая раскладка.",
+            "Идентификаторы глав и подпунктов должны быть уникальны на всей странице.",
+            "Глава без children ведёт себя как обычный пункт — это нормально и специально.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Разделы",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A two-level outline that does not dump every sub-item at once: only the chapter the reader is currently inside stays expanded.",
+            "ai": {
+              "summary": "A two-level outline: sub-items show only for the current chapter and the highlight covers both levels. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-scrollspy-003-* palette — do not swap it for your theme tokens",
+                "expanding only the current chapter: a fully expanded tree ends up longer than the text",
+                "observing both levels at once — otherwise a sub-item never becomes active",
+                "plain anchors without preventDefault: the outline must keep working without JS",
+                "aria-current on the current link, not just a bolder weight",
+                "deriving data-open from the active section instead of keeping separate open state"
+              ],
+              "adapt": [
+                "the outline heading through title",
+                "the chapters and sub-items through chapters and the nested children",
+                "the accent colour through accent",
+                "the outline column width in grid-template-columns"
+              ],
+              "notes": [
+                "The component does not draw a third nesting level: that needs a different layout.",
+                "Chapter and sub-item ids must be unique across the whole page.",
+                "A chapter without children behaves like a plain item — that is intentional.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollspy003\n  title=\"Sections\"\n  chapters={[\n    { id: \"start\", title: \"Getting started\", text: \"What you need first\", children: [{ id: \"start-install\", title: \"Install\", text: \"A single command\" }] },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Sections"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollspy-004",
+      "type": "registry:component",
+      "title": "Reading Progress",
+      "description": "Боковое оглавление документации отвечает на два вопроса сразу: подсветка говорит «где я», а вертикальная полоса — сколько текста осталось.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollspy-004/scrollspy-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollspy-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-004-*. Клиентский (\"use client\") — нужны IntersectionObserver и обработчик прокрутки. Активный раздел ищет наблюдатель, а процент прочитанного считается от scrollTop и scrollHeight области чтения и уезжает в CSS переменной --vibeui-scrollspy-004-progress: доля текста и номер раздела — разные величины, потому что разделы разной длины. Полоса помечена role=\"progressbar\" с aria-valuenow, ссылки остаются обычными якорями.",
+      "meta": {
+        "tags": ["scrollspy", "docs", "progress", "sidebar"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Scrollspy004",
+          "usage": "<Scrollspy004\n  title=\"Документация\"\n  sections={[\n    { id: \"install\", title: \"Установка\", text: \"Компонент копируется в проект одной командой\" },\n    { id: \"theming\", title: \"Тема\", text: \"Цвета живут в локальных переменных\" },\n  ]}\n/>",
+          "summary": "Оглавление документации с процентом прочитанного: прогресс считается от прокрутки, а не от номера раздела. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollspy-004-* и не подменять её токенами вашей темы",
+            "расчёт прогресса от прокрутки: «третий из шести» не равен половине текста",
+            "role=\"progressbar\" с aria-valuenow — полоса без роли скринридеру ничего не сообщает",
+            "процент числом рядом с полосой: одна полоса не даёт точности",
+            "обычные якоря без preventDefault: без JS оглавление обязано остаться рабочим",
+            "aria-current на активной ссылке, а не только заливку фона"
+          ],
+          "adapt": [
+            "заголовок колонки через title",
+            "разделы через sections: идентификатор, заголовок и текст",
+            "цвет акцента через accent",
+            "высоту области чтения в правиле height у [data-part=\"body\"]"
+          ],
+          "notes": [
+            "Процент считается по своей области прокрутки: для всей страницы обработчик придётся повесить на window.",
+            "Сто процентов достигаются только в самом низу — короткий текст сразу покажет 100%.",
+            "Идентификаторы разделов должны быть уникальны на странице.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Документация",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A documentation sidebar that answers two questions at once: the highlight says where you are, the vertical bar says how much text is left.",
+            "ai": {
+              "summary": "A documentation outline with a read percentage: progress comes from scrolling, not from the section number. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-scrollspy-004-* palette — do not swap it for your theme tokens",
+                "computing progress from scrolling: \"third of six\" is not half of the text",
+                "role=\"progressbar\" with aria-valuenow — a bar without a role tells a screen reader nothing",
+                "the percentage in figures next to the bar: the bar alone is not precise",
+                "plain anchors without preventDefault: the outline must keep working without JS",
+                "aria-current on the active link, not just the background fill"
+              ],
+              "adapt": [
+                "the column heading through title",
+                "the sections through sections: id, title and text",
+                "the accent colour through accent",
+                "the reading area height in the height rule of [data-part=\"body\"]"
+              ],
+              "notes": [
+                "The percentage is measured inside this scroll area: for the whole page the handler must move to window.",
+                "A hundred percent is only reached at the very bottom — a short text shows 100% immediately.",
+                "Section ids must be unique on the page.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollspy004\n  title=\"Documentation\"\n  sections={[\n    { id: \"install\", title: \"Install\", text: \"One command copies the component into the project\" },\n    { id: \"theming\", title: \"Theming\", text: \"Colours live in local variables\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Documentation"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollspy-005",
+      "type": "registry:component",
+      "title": "Sticky Section Bar",
+      "description": "Горизонтальная панель разделов, прилипшая к верху длинной страницы: активный пункт сам доезжает до центра панели, когда уходит за край.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollspy-005/scrollspy-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollspy-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-005-*. Клиентский (\"use client\") — нужны IntersectionObserver и scrollIntoView. Панель липнет к верху области чтения: sticky стоит на обёртке nav, а прокручивается внутренний ul, потому что липнуть может только элемент, у родителя которого есть запас высоты. Активный пункт доводится до центра вызовом scrollIntoView({block:\"nearest\",inline:\"center\"}) — block:\"nearest\" обязателен, иначе браузер подтянет к центру всю страницу. Подсветка — подчёркивание псевдоэлементом плюс aria-current.",
+      "meta": {
+        "tags": ["scrollspy", "sticky", "tabs", "navigation"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Scrollspy005",
+          "usage": "<Scrollspy005\n  label=\"Разделы страницы\"\n  sections={[\n    { id: \"menu\", title: \"Меню\", text: \"Кофе, чай и выпечка\" },\n    { id: \"prices\", title: \"Цены\", text: \"Час работы за общим столом\" },\n  ]}\n/>",
+          "summary": "Липкая панель разделов с автоцентрированием активного пункта и подчёркиванием текущего. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollspy-005-* и не подменять её токенами вашей темы",
+            "sticky на обёртке панели, а не на самом списке: у списка нет запаса высоты, и он уедет сразу",
+            "block:\"nearest\" в scrollIntoView — иначе к центру подтянется вся страница",
+            "непрозрачный фон панели: текст под ней не должен просвечивать сквозь подписи",
+            "обычные якоря без preventDefault: без JS панель обязана остаться рабочей",
+            "aria-current на активном пункте: подчёркивание скринридеру недоступно"
+          ],
+          "adapt": [
+            "подпись панели для скринридера через label",
+            "разделы через sections: идентификатор, заголовок и текст",
+            "цвет акцента через accent",
+            "высоту области чтения в правиле height у [data-part=\"body\"]"
+          ],
+          "notes": [
+            "scroll-margin-top у разделов должен быть не меньше высоты панели, иначе якорь спрячет заголовок под ней.",
+            "Автоцентрирование срабатывает на каждую смену раздела: при очень быстрой прокрутке панель заметно ездит.",
+            "Идентификаторы разделов должны быть уникальны на странице.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись панели",
+            "type": "text",
+            "default": "Разделы страницы",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A horizontal section bar stuck to the top of a long page: the active item scrolls itself to the centre of the bar when it drifts off the edge.",
+            "ai": {
+              "summary": "A sticky section bar that auto-centres the active item and underlines the current one. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-scrollspy-005-* palette — do not swap it for your theme tokens",
+                "sticky on the bar wrapper rather than the list: the list has no spare height and would scroll away at once",
+                "block:\"nearest\" in scrollIntoView — otherwise the whole page is pulled to centre",
+                "the bar's opaque background: the text below must not show through the labels",
+                "plain anchors without preventDefault: the bar must keep working without JS",
+                "aria-current on the active item: the underline is invisible to a screen reader"
+              ],
+              "adapt": [
+                "the bar's screen-reader label through label",
+                "the sections through sections: id, title and text",
+                "the accent colour through accent",
+                "the reading area height in the height rule of [data-part=\"body\"]"
+              ],
+              "notes": [
+                "The sections' scroll-margin-top must be at least the bar height, or the anchor hides the heading behind it.",
+                "Auto-centring fires on every section change: during very fast scrolling the bar visibly shifts.",
+                "Section ids must be unique on the page.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollspy005\n  label=\"Page sections\"\n  sections={[\n    { id: \"menu\", title: \"Menu\", text: \"Coffee, tea and pastry\" },\n    { id: \"prices\", title: \"Prices\", text: \"An hour at the shared table\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Bar label",
+                "default": "Page sections"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollspy-006",
+      "type": "registry:component",
+      "title": "Back To Top",
+      "description": "Оглавление с возвратом к началу: кнопка «наверх» — обычная якорная ссылка, которая прячется, пока начало текста и так на экране.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollspy-006/scrollspy-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollspy-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-006-*. Клиентский (\"use client\") — нужен IntersectionObserver. Наблюдателей два: первый подсвечивает активный раздел, второй следит за меткой-сентинелом в самом верху текста и прячет ссылку возврата, пока начало видно. Начальное состояние — ссылка показана, поэтому при отключённом JS она остаётся на месте и работает как обычный якорь. Прячется она атрибутом hidden, а не прозрачностью: невидимая ссылка не должна ловить фокус табом.",
+      "meta": {
+        "tags": ["scrollspy", "toc", "back-to-top", "anchor"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Scrollspy006",
+          "usage": "<Scrollspy006\n  title=\"Содержание\"\n  topLabel=\"Наверх\"\n  sections={[\n    { id: \"intro\", title: \"Введение\", text: \"Зачем длинной странице возврат к началу\" },\n    { id: \"usage\", title: \"Использование\", text: \"Ссылки остаются ссылками\" },\n  ]}\n/>",
+          "summary": "Оглавление и кнопка возврата: якорь на первый раздел, скрываемый наблюдателем, пока начало видно. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollspy-006-* и не подменять её токенами вашей темы",
+            "возврат обычной якорной ссылкой: кнопка со скриптом без JS не работает вовсе",
+            "начальное состояние «показана»: при отключённом JS ссылка обязана остаться на месте",
+            "сокрытие атрибутом hidden, а не прозрачностью — иначе таб уходит в невидимую ссылку",
+            "отдельный наблюдатель на сентинел: ссылка не должна предлагать то, что уже сделано",
+            "ссылку поверх области чтения, а не в потоке: появление не должно двигать текст"
+          ],
+          "adapt": [
+            "заголовок оглавления через title и подпись возврата через topLabel",
+            "разделы через sections: идентификатор, заголовок и текст",
+            "цвет акцента через accent",
+            "положение кнопки возврата в правилах right и bottom"
+          ],
+          "notes": [
+            "Сентинел высотой в один пиксель: нулевая высота в некоторых браузерах не даёт пересечения.",
+            "Возврат ведёт на первый раздел из sections — пустой массив оставит ссылку без цели.",
+            "Идентификаторы разделов должны быть уникальны на странице.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "topLabel",
+            "label": "Подпись возврата",
+            "type": "text",
+            "default": "Наверх",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An outline with a return to the top: the \"back to top\" button is a plain anchor link that hides itself while the start of the text is still on screen.",
+            "ai": {
+              "summary": "An outline plus a return control: an anchor to the first section, hidden by an observer while the start is visible. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-scrollspy-006-* palette — do not swap it for your theme tokens",
+                "the return as a plain anchor link: a script-only button does nothing without JS",
+                "the initial \"visible\" state: with JS disabled the link must stay in place",
+                "hiding with the hidden attribute rather than opacity — otherwise Tab lands on an invisible link",
+                "the separate observer on the sentinel: the link must not offer what is already done",
+                "the link floating above the reading area, not in the flow: appearing must not move the text"
+              ],
+              "adapt": [
+                "the outline heading through title and the return caption through topLabel",
+                "the sections through sections: id, title and text",
+                "the accent colour through accent",
+                "the position of the return button in its right and bottom rules"
+              ],
+              "notes": [
+                "The sentinel is one pixel tall: zero height gives no intersection in some browsers.",
+                "The return points at the first item of sections — an empty array leaves the link without a target.",
+                "Section ids must be unique on the page.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollspy006\n  title=\"Contents\"\n  topLabel=\"Back to top\"\n  sections={[\n    { id: \"intro\", title: \"Intro\", text: \"Why a long page needs a way back\" },\n    { id: \"usage\", title: \"Usage\", text: \"Links stay links\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "topLabel": {
+                "label": "Return caption",
+                "default": "Back to top"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollspy-007",
+      "type": "registry:component",
+      "title": "Compact Contents",
+      "description": "Одно оглавление в двух видах: широкий блок держит его колонкой слева, узкий сворачивает в раскрывающийся список с названием текущего раздела в заголовке.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollspy-007/scrollspy-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollspy-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-007-*. Клиентский (\"use client\") — нужны IntersectionObserver и ResizeObserver. Порог сворачивания считается от ширины самого блока, а не от ширины окна: тот же компонент может стоять в узкой колонке на большом экране. В компактном виде список живёт внутри <details>, а в заголовке summary стоит текущий раздел — свёрнутое оглавление обязано отвечать «где я». Ссылки остаются обычными якорями и закрывают список после выбора.",
+      "meta": {
+        "tags": ["scrollspy", "toc", "responsive", "details"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Scrollspy007",
+          "usage": "<Scrollspy007\n  title=\"Содержание\"\n  compactAt={420}\n  sections={[\n    { id: \"payment\", title: \"Оплата\", text: \"Платёж проходит на стороне банка\" },\n    { id: \"refund\", title: \"Возврат\", text: \"Четырнадцать дней на возврат\" },\n  ]}\n/>",
+          "summary": "Оглавление, сворачивающееся по ширине блока: в компактном виде текущий раздел написан в заголовке списка. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollspy-007-* и не подменять её токенами вашей темы",
+            "порог по ширине блока (ResizeObserver), а не по ширине окна: блок бывает в узкой колонке",
+            "название текущего раздела в заголовке свёрнутого списка — иначе он бесполезен",
+            "обычные якоря без preventDefault: без JS оглавление обязано остаться рабочим",
+            "серверный вид по умолчанию развёрнутый: при отключённом JS список должен быть виден",
+            "aria-current на активной ссылке: заливка фона скринридеру недоступна"
+          ],
+          "adapt": [
+            "заголовок оглавления через title",
+            "порог сворачивания через compactAt в пикселях",
+            "разделы через sections: идентификатор, заголовок и текст",
+            "цвет акцента через accent"
+          ],
+          "notes": [
+            "До первого измерения блок считается широким: на сервере рисуется развёрнутый вид.",
+            "Порог задан в пикселях, а не в rem: при крупном системном шрифте его стоит поднять.",
+            "Идентификаторы разделов должны быть уникальны на странице.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "compactAt",
+            "label": "Порог сворачивания",
+            "type": "number",
+            "default": 420,
+            "min": 240,
+            "max": 900
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "One outline in two shapes: a wide block keeps it as a left column, a narrow one folds it into a disclosure whose summary names the current section.",
+            "ai": {
+              "summary": "An outline that collapses by block width: in compact mode the summary names the current section. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-scrollspy-007-* palette — do not swap it for your theme tokens",
+                "the threshold on the block width (ResizeObserver), not the window width: the block may sit in a narrow column",
+                "the current section's name in the collapsed summary — without it the collapsed outline is useless",
+                "plain anchors without preventDefault: the outline must keep working without JS",
+                "the expanded server-rendered default: with JS disabled the list must be visible",
+                "aria-current on the active link: the background fill is invisible to a screen reader"
+              ],
+              "adapt": [
+                "the outline heading through title",
+                "the collapse threshold through compactAt, in pixels",
+                "the sections through sections: id, title and text",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "Before the first measurement the block counts as wide: the server renders the expanded shape.",
+                "The threshold is in pixels, not rem: with a large system font it is worth raising.",
+                "Section ids must be unique on the page.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollspy007\n  title=\"Contents\"\n  compactAt={420}\n  sections={[\n    { id: \"payment\", title: \"Payment\", text: \"The payment runs on the bank side\" },\n    { id: \"refund\", title: \"Refund\", text: \"Fourteen days to return\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "compactAt": {
+                "label": "Collapse width",
+                "default": 420
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sidebar-003",
+      "type": "registry:component",
+      "title": "Icon Rail Sidebar",
+      "description": "Меню сворачивается в полосу иконок, а не исчезает: подписи схлопываются по ширине, оставаясь в разметке для скринридера и поиска по странице.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sidebar-003/sidebar-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sidebar-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-003-*. Клиентский (\"use client\") — состояние сворачивания держит useState. Ширина колонки задана одной переменной --vibeui-sidebar-003-width, которую переопределяет правило на [data-collapsed=\"true\"]: всё остальное подстраивается само. Подписи не удаляются из DOM, а сжимаются max-width и opacity, поэтому доступное имя ссылки не теряется. Иконки — инлайновые пути SVG из props, иконочная библиотека не нужна. В свёрнутом виде у ссылок появляется title, а у кнопки — aria-expanded.",
+      "meta": {
+        "tags": ["sidebar", "collapse", "icons", "navigation"],
+        "ai": {
+          "export": "Sidebar003",
+          "usage": "<Sidebar003\n  activeLabel=\"Задачи\"\n  items={[\n    { label: \"Обзор\", href: \"/\", icon: \"M2 8.5 8 3l6 5.5M4 8v5h8V8\" },\n    { label: \"Задачи\", href: \"/tasks\", icon: \"M3 4h10M3 8h10M3 12h6\" },\n  ]}\n/>",
+          "summary": "Боковое меню с переключателем в полосу иконок: ширину меняет одна переменная, подписи остаются в разметке. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sidebar-003-* и не подменять её токенами вашей темы",
+            "подписи в разметке при сворачивании: удалённое имя ссылки лишает её доступного названия",
+            "ширину колонки одной переменной — иначе состояние приходится дублировать в каждом правиле",
+            "title у ссылок в свёрнутом виде: иконка без подписи опознаётся не всеми и не сразу",
+            "aria-expanded на кнопке сворачивания, иначе состояние меню скринридеру неизвестно",
+            "видимую обводку фокуса на ссылках: в узкой полосе иконок она единственный ориентир"
+          ],
+          "adapt": [
+            "пункты через items: подпись, адрес и путь иконки",
+            "текущий пункт через activeLabel",
+            "подпись кнопки сворачивания через collapsedLabel",
+            "цвет акцента через accent и ширину колонки в переменной --vibeui-sidebar-003-width"
+          ],
+          "notes": [
+            "Иконка задаётся путём в системе координат 16×16: чужой viewBox приедет обрезанным.",
+            "Активный пункт ищется по тексту подписи, а не по адресу: одинаковые подписи подсветятся обе.",
+            "В свёрнутом виде подсказка — нативный title: она появляется с задержкой браузера.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "activeLabel",
+            "label": "Текущий пункт",
+            "type": "text",
+            "default": "Задачи",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A menu that collapses into an icon rail instead of disappearing: the labels shrink to zero width but stay in the markup for screen readers and in-page search.",
+            "ai": {
+              "summary": "A sidebar with an icon-rail toggle: one variable changes the width and the labels stay in the markup. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sidebar-003-* palette — do not swap it for your theme tokens",
+                "the labels staying in the markup while collapsed: a removed name leaves the link without an accessible name",
+                "the column width in a single variable — otherwise the state is duplicated in every rule",
+                "the title attribute on collapsed links: an icon alone is not recognised by everyone",
+                "aria-expanded on the toggle, otherwise the menu state is unknown to a screen reader",
+                "the visible focus ring on the links: in a narrow icon rail it is the only landmark"
+              ],
+              "adapt": [
+                "the items through items: label, href and the icon path",
+                "the current item through activeLabel",
+                "the toggle caption through collapsedLabel",
+                "the accent colour through accent and the column width in --vibeui-sidebar-003-width"
+              ],
+              "notes": [
+                "The icon is a path in a 16×16 coordinate system: a foreign viewBox arrives cropped.",
+                "The active item is matched by label text, not by href: identical labels both light up.",
+                "While collapsed the hint is the native title: it appears with the browser's own delay.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sidebar003\n  activeLabel=\"Tasks\"\n  items={[\n    { label: \"Overview\", href: \"/\", icon: \"M2 8.5 8 3l6 5.5M4 8v5h8V8\" },\n    { label: \"Tasks\", href: \"/tasks\", icon: \"M3 4h10M3 8h10M3 12h6\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "activeLabel": {
+                "label": "Current item",
+                "default": "Tasks"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sidebar-004",
+      "type": "registry:component",
+      "title": "Grouped Nav",
+      "description": "Меню с разделами и подпунктами без единой строки JS: группы собраны на <details>, а группа с текущим пунктом открыта заранее.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sidebar-004/sidebar-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sidebar-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-004-*. Серверный: хуков нет, состояние раскрытия держит браузер через <details>. Атрибут open вычисляется на рендере из того, лежит ли активный пункт внутри группы: меню не должно требовать клика, чтобы показать, где пользователь находится. Свёрнутая группа с активным потомком помечена точкой в summary — после закрытия раздела текущее место иначе пропадает из виду. Галка нарисована бордюрами псевдоэлемента, маркер details скрыт.",
+      "meta": {
+        "tags": ["sidebar", "groups", "details", "navigation"],
+        "ai": {
+          "export": "Sidebar004",
+          "usage": "<Sidebar004\n  activeLabel=\"Возвраты\"\n  groups={[\n    { label: \"Каталог\", children: [{ label: \"Товары\", href: \"/goods\" }] },\n    { label: \"Продажи\", children: [{ label: \"Возвраты\", href: \"/returns\" }] },\n  ]}\n/>",
+          "summary": "Раскрывающиеся разделы меню на <details>: текущая группа открыта, свёрнутая с активным пунктом помечена точкой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-sidebar-004-* и не подменять её токенами вашей темы",
+            "<details> вместо самодельного раскрытия: клавиатура и поиск по странице работают сами",
+            "открытую группу с текущим пунктом: меню не должно требовать клика, чтобы показать место",
+            "точку у свёрнутой группы с активным потомком — иначе «где я» теряется при закрытии",
+            "aria-current=\"page\" на активной ссылке, а не только заливку",
+            "видимую обводку фокуса на summary и ссылках"
+          ],
+          "adapt": [
+            "разделы и подпункты через groups и вложенный children",
+            "текущий пункт через activeLabel",
+            "цвет акцента через accent",
+            "ширину колонки через max-width корневого элемента"
+          ],
+          "notes": [
+            "Раскрытие не запоминается между переходами: это цена отказа от клиентского состояния.",
+            "Открытыми могут быть сразу несколько групп — аккордеона здесь намеренно нет.",
+            "Активный пункт ищется по тексту подписи: одинаковые подписи в разных группах подсветятся обе.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "activeLabel",
+            "label": "Текущий пункт",
+            "type": "text",
+            "default": "Возвраты",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A menu with groups and sub-items and no JS at all: the groups are <details> elements and the group holding the current item is open from the start.",
+            "ai": {
+              "summary": "Collapsible menu groups built on <details>: the current group is open and a collapsed one holding the active item is dotted. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-sidebar-004-* palette — do not swap it for your theme tokens",
+                "<details> instead of hand-rolled disclosure: keyboard and in-page search work for free",
+                "the group with the current item opened: the menu must not need a click to show where you are",
+                "the dot on a collapsed group holding the active child — otherwise \"where am I\" is lost on collapse",
+                "aria-current=\"page\" on the active link, not just the fill",
+                "the visible focus ring on the summary and the links"
+              ],
+              "adapt": [
+                "the groups and sub-items through groups and the nested children",
+                "the current item through activeLabel",
+                "the accent colour through accent",
+                "the column width through the root element's max-width"
+              ],
+              "notes": [
+                "The open state is not remembered across navigations: that is the price of having no client state.",
+                "Several groups can be open at once — there is deliberately no accordion behaviour.",
+                "The active item is matched by label text: identical labels in different groups both light up.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sidebar004\n  activeLabel=\"Returns\"\n  groups={[\n    { label: \"Catalogue\", children: [{ label: \"Products\", href: \"/goods\" }] },\n    { label: \"Sales\", children: [{ label: \"Returns\", href: \"/returns\" }] },\n  ]}\n/>"
+            },
+            "controls": {
+              "activeLabel": {
+                "label": "Current item",
+                "default": "Returns"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sidebar-005",
+      "type": "registry:component",
+      "title": "Filterable Menu",
+      "description": "Меню с поиском по собственным пунктам: совпавшая часть подписи подсвечена, число найденного объявляется через aria-live, Escape очищает запрос.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sidebar-005/sidebar-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sidebar-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-005-*. Клиентский (\"use client\") — запрос держит useState, группировка результатов считается в useMemo. Фильтр простой: подстрока без учёта регистра; совпадение оборачивается в <mark>, потому что иначе непонятно, почему пункт остался в списке. Пустая выдача даёт текстовое объяснение, а не пустоту. Число найденного лежит в визуально скрытом абзаце с role=\"status\": «список стал короче» — событие, невидимое для скринридера.",
+      "meta": {
+        "tags": ["sidebar", "search", "filter", "navigation"],
+        "ai": {
+          "export": "Sidebar005",
+          "usage": "<Sidebar005\n  placeholder=\"Поиск по меню\"\n  activeLabel=\"Ключи API\"\n  items={[\n    { label: \"Профиль\", href: \"/profile\", group: \"Аккаунт\" },\n    { label: \"Ключи API\", href: \"/keys\", group: \"Разработка\" },\n  ]}\n/>",
+          "summary": "Меню с поиском по пунктам: подсветка совпадения, группировка результатов и объявление их числа. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sidebar-005-* и не подменять её токенами вашей темы",
+            "подсветку совпадения через <mark>: без неё непонятно, за что пункт попал в выдачу",
+            "объявление числа найденного через role=\"status\": сокращение списка иначе остаётся немым",
+            "объяснение при пустой выдаче — пустая колонка выглядит как поломка",
+            "сохранение группировки в результатах: без заголовков одинаковые подписи путаются",
+            "type=\"search\" и aria-label на поле: поле без имени бесполезно для скринридера"
+          ],
+          "adapt": [
+            "пункты и их группы через items",
+            "подсказку поля через placeholder",
+            "текущий пункт через activeLabel",
+            "цвет акцента через accent"
+          ],
+          "notes": [
+            "Поиск ищет подстроку без учёта регистра: опечатки и синонимы он не прощает.",
+            "Список фильтруется целиком, включая активный пункт — он может исчезнуть из выдачи.",
+            "Для сотен пунктов простой фильтр придётся заменить индексом: это не задача компонента.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "placeholder",
+            "label": "Подсказка поиска",
+            "type": "text",
+            "default": "Поиск по меню",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A menu with search over its own items: the matching part of the label is highlighted, the number of results is announced via aria-live, and Escape clears the query.",
+            "ai": {
+              "summary": "A menu with item search: match highlighting, grouped results and an announcement of their count. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sidebar-005-* palette — do not swap it for your theme tokens",
+                "the <mark> match highlight: without it there is no telling why an item is in the result",
+                "announcing the result count through role=\"status\": a shrinking list is otherwise silent",
+                "the explanation for an empty result — a blank column looks like a breakage",
+                "keeping the grouping in the results: without headings identical labels get confused",
+                "type=\"search\" and aria-label on the field: an unnamed field is useless to a screen reader"
+              ],
+              "adapt": [
+                "the items and their groups through items",
+                "the field hint through placeholder",
+                "the current item through activeLabel",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "The search matches a case-insensitive substring: it forgives neither typos nor synonyms.",
+                "The whole list is filtered, the active item included — it can drop out of the results.",
+                "For hundreds of items the naive filter needs an index: that is not this component's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sidebar005\n  placeholder=\"Search the menu\"\n  activeLabel=\"API keys\"\n  items={[\n    { label: \"Profile\", href: \"/profile\", group: \"Account\" },\n    { label: \"API keys\", href: \"/keys\", group: \"Development\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "placeholder": {
+                "label": "Search hint",
+                "default": "Search the menu"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sidebar-006",
+      "type": "registry:component",
+      "title": "Profile Footer Nav",
+      "description": "Меню с карточкой профиля внизу колонки: настройки и выход раскрываются вверх и не стоят в общем списке разделов.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sidebar-006/sidebar-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sidebar-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-006-*. Серверный: хуков нет, меню профиля собрано на <details>, состояние держит браузер. Профиль прижат к низу распоркой flex:1, а не отступом: высота колонки бывает разной. Список меню позиционирован абсолютно и раскрывается вверх — внизу колонки места нет, а обрезанное меню бесполезно. Инициалы считаются из имени на рендере. Выход и настройки живут рядом с именем, поэтому их невозможно нажать по ошибке при выборе раздела.",
+      "meta": {
+        "tags": ["sidebar", "profile", "account", "footer"],
+        "ai": {
+          "export": "Sidebar006",
+          "usage": "<Sidebar006\n  userName=\"Ольга Дорн\"\n  userMeta=\"olga@studio.ru\"\n  activeLabel=\"Проекты\"\n  items={[{ label: \"Лента\", href: \"/\" }, { label: \"Проекты\", href: \"/projects\" }]}\n/>",
+          "summary": "Боковое меню с профилем внизу и меню аккаунта, раскрывающимся вверх на <details>. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-sidebar-006-* и не подменять её токенами вашей темы",
+            "распорку flex:1 вместо отступа: профиль обязан прижиматься к низу при любой высоте",
+            "раскрытие меню вверх — вниз оно упрётся в край колонки и обрежется",
+            "выход и настройки в меню профиля, а не в списке разделов: их нельзя нажать по ошибке",
+            "<details> вместо самодельного раскрытия: клавиатура работает без единой строки JS",
+            "обрезку длинных имени и почты многоточием — колонка узкая, перенос ломает карточку"
+          ],
+          "adapt": [
+            "разделы через items и текущий через activeLabel",
+            "имя через userName и вторую строку через userMeta",
+            "пункты меню аккаунта через menu",
+            "цвет акцента через accent"
+          ],
+          "notes": [
+            "Аватар — инициалы из имени: для фотографии замените блок на <img> с alt.",
+            "Меню профиля не закрывается по клику вне его: это плата за отсутствие клиентского JS.",
+            "Минимальная высота колонки задана в CSS: без неё распорка не сработает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "userName",
+            "label": "Имя",
+            "type": "text",
+            "default": "Ольга Дорн",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A menu with a profile card pinned to the bottom: settings and sign-out open upwards instead of sitting in the list of sections.",
+            "ai": {
+              "summary": "A sidebar with a profile at the bottom and an account menu opening upwards on <details>. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-sidebar-006-* palette — do not swap it for your theme tokens",
+                "the flex:1 spacer instead of a margin: the profile must sit at the bottom at any height",
+                "the menu opening upwards — downwards it hits the column edge and gets clipped",
+                "sign-out and settings inside the profile menu, not in the section list: they cannot be hit by accident",
+                "<details> instead of hand-rolled disclosure: the keyboard works without a line of JS",
+                "the ellipsis on long names and e-mails — the column is narrow and wrapping breaks the card"
+              ],
+              "adapt": [
+                "the sections through items and the current one through activeLabel",
+                "the name through userName and the second line through userMeta",
+                "the account menu entries through menu",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "The avatar is initials from the name: for a photo replace the block with an <img> and an alt.",
+                "The profile menu does not close on an outside click: that is the price of having no client JS.",
+                "The column's minimum height is set in CSS: without it the spacer does nothing.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sidebar006\n  userName=\"Olga Dorn\"\n  userMeta=\"olga@studio.ru\"\n  activeLabel=\"Projects\"\n  items={[{ label: \"Feed\", href: \"/\" }, { label: \"Projects\", href: \"/projects\" }]}\n/>"
+            },
+            "controls": {
+              "userName": {
+                "label": "Name",
+                "default": "Olga Dorn"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sidebar-007",
+      "type": "registry:component",
+      "title": "Badge Counters",
+      "description": "Счётчики в меню разного веса: серая цифра для обычного числа, залитая плашка для срочного и точка для «есть новое» без числа.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sidebar-007/sidebar-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sidebar-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-007-*. Серверный: хуков нет. Вес бейджа задаётся атрибутом data-tone на строке списка: один одинаковый бейдж на всё превращает меню в рябь из цифр, и срочное в ней теряется. Большие числа обрезаются до «99+» по пропу cap — точное значение всё равно не читают, а ширина колонки от него уезжает. Смысл числа продублирован визуально скрытым словом: «7» без пояснения скринридеру ничего не говорит.",
+      "meta": {
+        "tags": ["sidebar", "badge", "counter", "navigation"],
+        "ai": {
+          "export": "Sidebar007",
+          "usage": "<Sidebar007\n  cap={99}\n  activeLabel=\"Требуют ответа\"\n  items={[\n    { label: \"Входящие\", href: \"/inbox\", count: 128, tone: \"muted\" },\n    { label: \"Требуют ответа\", href: \"/todo\", count: 7, tone: \"alert\" },\n    { label: \"Обновления\", href: \"/news\", tone: \"new\" },\n  ]}\n/>",
+          "summary": "Меню со счётчиками трёх весов и обрезкой больших чисел до «99+». Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-sidebar-007-* и не подменять её токенами вашей темы",
+            "три веса бейджа: одинаковый бейдж на всё превращает меню в рябь из цифр",
+            "обрезку больших чисел: точное значение не читают, а ширина колонки от него уезжает",
+            "скрытую подпись у числа — «7» без пояснения скринридеру ничего не сообщает",
+            "точку вместо числа для «есть новое»: наличие обновлений — это не количество",
+            "табличные цифры и прижатие бейджа к правому краю: иначе числа перестают выравниваться"
+          ],
+          "adapt": [
+            "пункты через items: подпись, адрес, count и тон бейджа",
+            "порог обрезки числа через cap",
+            "текущий пункт через activeLabel",
+            "цвет акцента через accent"
+          ],
+          "notes": [
+            "Тон alert стоит оставлять одному-двум пунктам: три красные плашки перестают быть срочными.",
+            "Ноль в count тоже нарисуется: скрывать пустые счётчики должно приложение.",
+            "Точка появляется только у пункта без count с тоном new — это разные сигналы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "cap",
+            "label": "Предел счётчика",
+            "type": "number",
+            "default": 99,
+            "min": 9,
+            "max": 999
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Menu counters of three weights: a grey number for the ordinary count, a filled pill for the urgent one and a dot for \"something new\" without a number.",
+            "ai": {
+              "summary": "A menu with counters of three weights and large numbers capped at \"99+\". Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-sidebar-007-* palette — do not swap it for your theme tokens",
+                "the three badge weights: one badge for everything turns the menu into a ripple of digits",
+                "the cap on large numbers: the exact value is not read and the column width drifts",
+                "the hidden label beside the number — \"7\" alone tells a screen reader nothing",
+                "the dot instead of a number for \"something new\": having updates is not a count",
+                "tabular numerals and the right-aligned badge: otherwise the numbers stop lining up"
+              ],
+              "adapt": [
+                "the items through items: label, href, count and badge tone",
+                "the cap of the displayed number through cap",
+                "the current item through activeLabel",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "Keep the alert tone to one or two items: three red pills stop being urgent.",
+                "A zero count is rendered too: hiding empty counters is the application's job.",
+                "The dot appears only on an item without a count and with the new tone — these are different signals.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sidebar007\n  cap={99}\n  activeLabel=\"Needs reply\"\n  items={[\n    { label: \"Inbox\", href: \"/inbox\", count: 128, tone: \"muted\" },\n    { label: \"Needs reply\", href: \"/todo\", count: 7, tone: \"alert\" },\n    { label: \"Updates\", href: \"/news\", tone: \"new\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "cap": {
+                "label": "Counter cap",
+                "default": 99
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sidebar-008",
+      "type": "registry:component",
+      "title": "Workspace Switcher",
+      "description": "Переключатель рабочего пространства над меню: он всегда показывает, где вы работаете, а текущее пространство в списке помечено галочкой.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sidebar-008/sidebar-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sidebar-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-008-*. Серверный: хуков нет, раскрытие держит <details>. Список пространств позиционирован абсолютно и лежит поверх меню: раскрытие не должно двигать разделы. Текущее пространство помечено галочкой из бордюров, а не только заливкой строки — заливку путают с наведением. Переключатель стоит над разделами, потому что одинаковые разделы в двух пространствах выглядят одинаково, и без подписи сверху правку легко внести не туда.",
+      "meta": {
+        "tags": ["sidebar", "workspace", "switcher", "details"],
+        "ai": {
+          "export": "Sidebar008",
+          "usage": "<Sidebar008\n  current=\"Студия Восход\"\n  spaces={[\n    { name: \"Студия Восход\", plan: \"Команда · 8 человек\", href: \"/w/voskhod\" },\n    { name: \"Личное\", plan: \"Бесплатный\", href: \"/w/personal\" },\n  ]}\n  activeLabel=\"Проекты\"\n/>",
+          "summary": "Меню с переключателем пространства сверху: список поверх разделов, текущее помечено галочкой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-sidebar-008-* и не подменять её токенами вашей темы",
+            "переключатель над разделами: без подписи сверху правку легко внести не в то пространство",
+            "галочку у текущего пространства — заливку строки путают с наведением",
+            "список поверх меню, а не в потоке: раскрытие не должно двигать разделы",
+            "<details> вместо самодельного раскрытия: клавиатура работает без клиентского JS",
+            "обрезку длинного названия многоточием: колонка узкая, перенос ломает шапку"
+          ],
+          "adapt": [
+            "список пространств через spaces и текущее через current",
+            "разделы через items и текущий раздел через activeLabel",
+            "цвет акцента через accent",
+            "подпись действия «создать пространство» в разметке"
+          ],
+          "notes": [
+            "Список не закрывается по клику вне его: это плата за отсутствие клиентского JS.",
+            "Плитка пространства — первая буква названия: для логотипа замените её на <img> с alt.",
+            "Если current не найден в spaces, берётся первое пространство из списка.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "current",
+            "label": "Текущее пространство",
+            "type": "text",
+            "default": "Студия Восход",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A workspace switcher above the menu: it always shows where you are working, and the current workspace is check-marked in the list.",
+            "ai": {
+              "summary": "A menu with a workspace switcher on top: the list floats over the sections and the current one is check-marked. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-sidebar-008-* palette — do not swap it for your theme tokens",
+                "the switcher above the sections: without a label on top an edit easily lands in the wrong workspace",
+                "the check mark on the current workspace — a filled row is mistaken for hover",
+                "the list floating over the menu rather than in the flow: opening must not move the sections",
+                "<details> instead of hand-rolled disclosure: the keyboard works with no client JS",
+                "the ellipsis on a long name: the column is narrow and wrapping breaks the header"
+              ],
+              "adapt": [
+                "the workspace list through spaces and the active one through current",
+                "the sections through items and the current section through activeLabel",
+                "the accent colour through accent",
+                "the caption of the \"create workspace\" action in the markup"
+              ],
+              "notes": [
+                "The list does not close on an outside click: that is the price of having no client JS.",
+                "The workspace tile is the first letter of the name: for a logo replace it with an <img> and an alt.",
+                "If current is not found in spaces, the first workspace in the list is used.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sidebar008\n  current=\"Sunrise Studio\"\n  spaces={[\n    { name: \"Sunrise Studio\", plan: \"Team · 8 people\", href: \"/w/sunrise\" },\n    { name: \"Personal\", plan: \"Free\", href: \"/w/personal\" },\n  ]}\n  activeLabel=\"Projects\"\n/>"
+            },
+            "controls": {
+              "current": {
+                "label": "Current workspace",
+                "default": "Sunrise Studio"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sidebar-009",
+      "type": "registry:component",
+      "title": "Drawer Nav",
+      "description": "Мобильное меню-ящик: выезжает слева, затемняет содержимое и закрывается нажатием по затемнению, Escape или крестиком.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sidebar-009/sidebar-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sidebar-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-009-*. Клиентский (\"use client\") — состояние ящика держит useState. Затемнение это кнопка с aria-hidden и tabIndex −1: оно ловит нажатие мимо панели, но не попадает в порядок обхода. Закрытый ящик помечен inert, поэтому таб не проваливается в невидимые ссылки; при открытии фокус уезжает на крестик, а при закрытии возвращается на кнопку-бургер. Escape ловится на корне блока. Ящик позиционирован внутри блока, а не относительно окна: демонстрация не захватывает страницу.",
+      "meta": {
+        "tags": ["sidebar", "drawer", "mobile", "overlay"],
+        "ai": {
+          "export": "Sidebar009",
+          "usage": "<Sidebar009\n  title=\"Меню\"\n  activeLabel=\"Заказы\"\n  items={[{ label: \"Каталог\", href: \"/catalog\" }, { label: \"Заказы\", href: \"/orders\" }]}\n/>",
+          "summary": "Меню-ящик с затемнением: закрытая панель помечена inert, фокус переезжает на крестик и возвращается на бургер. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sidebar-009-* и не подменять её токенами вашей темы",
+            "inert на закрытой панели: иначе таб проваливается в невидимые ссылки",
+            "затемнение как цель нажатия — на телефоне это главный способ закрыть ящик",
+            "возврат фокуса на бургер при закрытии: иначе фокус остаётся в пустоте",
+            "закрытие по Escape — без него ящик становится ловушкой для клавиатуры",
+            "aria-expanded на бургере и подпись у крестика: состояние обязано быть слышно"
+          ],
+          "adapt": [
+            "пункты через items и текущий через activeLabel",
+            "заголовок ящика через title и подпись бургера через openLabel",
+            "цвет акцента через accent и плотность затемнения в переменной --vibeui-sidebar-009-scrim",
+            "ширину панели в правиле width у [data-part=\"drawer\"]"
+          ],
+          "notes": [
+            "Ящик живёт внутри блока: для настоящего мобильного меню замените absolute на fixed и добавьте блокировку прокрутки страницы.",
+            "Фокус внутри панели не зациклен: полноценная ловушка фокуса потребует своего обработчика Tab.",
+            "Затемнение не закрывает ящик по свайпу: жесты компонент не обрабатывает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок ящика",
+            "type": "text",
+            "default": "Меню",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A mobile drawer menu: it slides in from the left, dims the content, and closes on a tap outside, on Escape or via the close button.",
+            "ai": {
+              "summary": "A drawer menu with a scrim: the closed panel is inert, focus moves to the close button and returns to the burger. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sidebar-009-* palette — do not swap it for your theme tokens",
+                "inert on the closed panel: otherwise Tab falls into invisible links",
+                "the scrim as a tap target — on a phone it is the main way to close the drawer",
+                "returning focus to the burger on close: otherwise focus is left nowhere",
+                "closing on Escape — without it the drawer becomes a keyboard trap",
+                "aria-expanded on the burger and a label on the close button: the state must be audible"
+              ],
+              "adapt": [
+                "the items through items and the current one through activeLabel",
+                "the drawer heading through title and the burger label through openLabel",
+                "the accent colour through accent and the scrim density in --vibeui-sidebar-009-scrim",
+                "the panel width in the width rule of [data-part=\"drawer\"]"
+              ],
+              "notes": [
+                "The drawer lives inside the block: for a real mobile menu switch absolute to fixed and add page scroll locking.",
+                "Focus is not cycled inside the panel: a full focus trap needs its own Tab handler.",
+                "The scrim does not close the drawer on swipe: the component handles no gestures.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sidebar009\n  title=\"Menu\"\n  activeLabel=\"Orders\"\n  items={[{ label: \"Catalogue\", href: \"/catalog\" }, { label: \"Orders\", href: \"/orders\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Drawer heading",
+                "default": "Menu"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

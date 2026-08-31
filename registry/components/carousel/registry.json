@@ -822,6 +822,826 @@
           }
         }
       }
+    },
+    {
+      "name": "carousel-009",
+      "type": "registry:component",
+      "title": "Dot Pager",
+      "description": "Карусель, где точки — настоящие кнопки с подписью «Слайд N из M»: по ряду ходят стрелки клавиатуры, а лента едет трансформацией, а не прокруткой.",
+      "categories": ["carousel"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "carousel-009/carousel-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/carousel-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-009-*. Клиентский (\"use client\") — позицию держит useState. Лента сдвигается translateX от переменной --vibeui-carousel-009-index: позиция задаётся числом и не зависит от того, куда докрутили пальцем, поэтому точка и кадр не расходятся. Стрелки, Home и End обрабатываются на контейнере точек и переносят фокус на выбранную точку. Невидимые слайды помечены inert и aria-hidden — иначе Tab уходит за край кадра к недоступному содержимому.",
+      "meta": {
+        "tags": ["carousel", "dots", "keyboard", "slider"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Carousel009",
+          "usage": "<Carousel009\n  label=\"Маршруты\"\n  slides={[\n    { title: \"Северный маршрут\", text: \"Четыре дня вдоль побережья\", hue: 220 },\n    { title: \"Горная петля\", text: \"Подъём на рассвете\", hue: 150 },\n  ]}\n/>",
+          "summary": "Карусель с точками-кнопками, стрелками клавиатуры и лентой на transform. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-carousel-009-* и не подменять её токенами вашей темы",
+            "точки как настоящие кнопки с подписью «Слайд N из M»: у div'а нет ни роли, ни имени",
+            "inert и aria-hidden на невидимых слайдах — иначе Tab уходит к скрытому содержимому",
+            "позицию числом в переменной --vibeui-carousel-009-index: прокрутка расходится с точками",
+            "перенос фокуса на выбранную точку при стрелках, иначе клавиатура теряет место",
+            "aria-current на активной точке: её ширина и цвет скринридеру недоступны"
+          ],
+          "adapt": [
+            "слайды через slides: заголовок, текст и оттенок",
+            "подпись карусели через label",
+            "цвет акцента через accent",
+            "длительность переезда в правиле transition у [data-part=\"track\"]"
+          ],
+          "notes": [
+            "Точек больше восьми уже не читаются как позиция: для длинных лент нужен счётчик.",
+            "Свайпа пальцем здесь нет: лента движется трансформацией, а не прокруткой.",
+            "Автопрокрутки нет намеренно — она требует паузы по наведению и фокусу.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Маршруты",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A carousel whose dots are real buttons labelled \"Slide N of M\": arrow keys walk the row and the track moves by transform rather than scrolling.",
+            "ai": {
+              "summary": "A carousel with real dot buttons, arrow-key navigation and a transform-driven track. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-carousel-009-* palette — do not swap it for your theme tokens",
+                "the dots as real buttons labelled \"Slide N of M\": a div has neither role nor name",
+                "inert and aria-hidden on the off-screen slides — otherwise Tab reaches hidden content",
+                "the position as a number in --vibeui-carousel-009-index: scrolling drifts away from the dots",
+                "moving focus to the chosen dot on arrow keys, otherwise the keyboard loses its place",
+                "aria-current on the active dot: its width and colour mean nothing to a screen reader"
+              ],
+              "adapt": [
+                "the slides through slides: title, text and hue",
+                "the carousel label through label",
+                "the accent colour through accent",
+                "the travel duration in the transition rule of [data-part=\"track\"]"
+              ],
+              "notes": [
+                "More than eight dots stop reading as a position: long decks need a counter instead.",
+                "There is no touch swipe: the track moves by transform, not by scrolling.",
+                "There is deliberately no autoplay — it would require pausing on hover and focus.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Carousel009\n  label=\"Routes\"\n  slides={[\n    { title: \"Northern route\", text: \"Four days along the coast\", hue: 220 },\n    { title: \"Mountain loop\", text: \"A sunrise climb\", hue: 150 },\n  ]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Routes"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "carousel-010",
+      "type": "registry:component",
+      "title": "Shop Rail",
+      "description": "Витрина товаров, где следующая карточка выглядывает за краем, а стрелки гаснут на концах ленты: отключённая стрелка отвечает «дальше пусто» до нажатия.",
+      "categories": ["carousel"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "carousel-010/carousel-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/carousel-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-010-*. Клиентский (\"use client\") — состояние краёв считается на прокрутке. Лента остаётся нативной прокруткой со scroll-snap: палец и колесо работают сами. Шаг стрелки равен ширине карточки с зазором, поэтому лента останавливается ровно на карточке, а не в середине. Позиция краёв пересчитывается в обработчике onScroll и один раз после монтирования: кнопки отключаются атрибутом disabled, а не стилем, чтобы они выпадали из порядка обхода.",
+      "meta": {
+        "tags": ["carousel", "products", "peek", "shop"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Carousel010",
+          "usage": "<Carousel010\n  title=\"Часто покупают\"\n  products={[\n    { title: \"Кофемолка ручная\", price: \"4 290 ₽\", oldPrice: \"5 900 ₽\", rating: 4.8, hue: 40 },\n    { title: \"Чайник на 1,2 л\", price: \"3 150 ₽\", rating: 4.6, hue: 200 },\n  ]}\n/>",
+          "summary": "Лента товаров с выглядывающей карточкой, шагом ровно в карточку и стрелками, гаснущими на краях. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-carousel-010-* и не подменять её токенами вашей темы",
+            "выглядывающую карточку: обрезанный край — единственный честный сигнал, что список продолжается",
+            "отключение стрелок атрибутом disabled, а не стилем: серая, но нажимаемая кнопка врёт",
+            "шаг ровно в ширину карточки — иначе лента замирает на половине товара",
+            "нативную прокрутку со scroll-snap: палец, колесо и клавиатура работают без обработчиков",
+            "собственную светлую подложку: цены и названия — тёмный текст"
+          ],
+          "adapt": [
+            "товары через products: название, цена, старая цена, рейтинг и оттенок",
+            "заголовок витрины через title",
+            "цвет акцента через accent",
+            "долю ширины карточки в правиле flex:0 0 44%"
+          ],
+          "notes": [
+            "Цена — строка: форматирование и валюту подставляет приложение.",
+            "Карточка не ссылка: оборачивать её в <a> и держать доступное имя придётся вам.",
+            "Состояние краёв пересчитывается на прокрутке — при программном изменении списка вызовите его сами.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Часто покупают",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A product rail where the next card peeks past the edge and the arrows go dim at the ends: a disabled arrow answers \"nothing further\" before the click.",
+            "ai": {
+              "summary": "A product rail with a peeking card, a step of exactly one card and arrows that dim at the ends. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-carousel-010-* palette — do not swap it for your theme tokens",
+                "the peeking card: a cropped edge is the only honest signal that the list continues",
+                "disabling the arrows with the disabled attribute rather than a style: a grey but clickable button lies",
+                "the step of exactly one card width — otherwise the rail stops halfway through a product",
+                "the native scroll-snap scrolling: touch, wheel and keyboard work without handlers",
+                "the block's own light surface: prices and names are dark text"
+              ],
+              "adapt": [
+                "the products through products: name, price, old price, rating and hue",
+                "the rail heading through title",
+                "the accent colour through accent",
+                "the card width share in the flex:0 0 44% rule"
+              ],
+              "notes": [
+                "The price is a string: formatting and currency are supplied by the application.",
+                "The card is not a link: wrapping it in an <a> with an accessible name is up to you.",
+                "The edge state is recomputed on scroll — after changing the list programmatically call it yourself.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Carousel010\n  title=\"Frequently bought\"\n  products={[\n    { title: \"Hand grinder\", price: \"$48\", oldPrice: \"$65\", rating: 4.8, hue: 40 },\n    { title: \"1.2 l kettle\", price: \"$35\", rating: 4.6, hue: 200 },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Frequently bought"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "carousel-011",
+      "type": "registry:component",
+      "title": "Auto Reviews",
+      "description": "Отзывы листаются сами, но замирают от любого намёка на интерес: наведения, фокуса внутри блока и нажатия на паузу, а при prefers-reduced-motion не запускаются вовсе.",
+      "categories": ["carousel"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "carousel-011/carousel-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/carousel-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-011-*. Клиентский (\"use client\") — таймер живёт в useEffect и пересоздаётся на каждой смене отзыва. Пауза складывается из трёх источников: наведение и фокус ставят held, кнопка переключает playing. prefers-reduced-motion проверяется через matchMedia на монтировании и просто выключает показ: движение здесь действие, а не украшение, поэтому отменять его надо целиком. Высота цитаты зафиксирована min-height, чтобы страница не прыгала на смене.",
+      "meta": {
+        "tags": ["carousel", "reviews", "autoplay", "pause"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Carousel011",
+          "usage": "<Carousel011\n  interval={6}\n  reviews={[\n    { text: \"Поставили за вечер, на следующий день собрали первый экран.\", author: \"Дмитрий Л.\", role: \"фронтенд-разработчик\" },\n    { text: \"Компоненты не тянут за собой чужую тему.\", author: \"Марина К.\", role: \"дизайнер\" },\n  ]}\n/>",
+          "summary": "Автопрокрутка отзывов с паузой по наведению, фокусу и кнопке, полосками прогресса и отключением при prefers-reduced-motion. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-carousel-011-* и не подменять её токенами вашей темы",
+            "паузу по наведению и по фокусу: без неё длинный отзыв дочитать невозможно",
+            "кнопку паузы с меняющейся подписью — наведение недоступно с клавиатуры и на телефоне",
+            "полный отказ от таймера при prefers-reduced-motion: гасить одну анимацию здесь мало",
+            "зафиксированную min-height цитаты, иначе страница прыгает на каждой смене",
+            "aria-live=\"polite\" на остановленной карусели и \"off\" на идущей: иначе скринридер читает без остановки"
+          ],
+          "adapt": [
+            "отзывы через reviews: текст, автор и роль",
+            "паузу между отзывами через interval в секундах",
+            "цвет акцента через accent",
+            "высоту цитаты в правиле min-height у [data-part=\"quote\"]"
+          ],
+          "notes": [
+            "Интервал меньше четырёх секунд нечитаем: отзыв не успевают дочитать до конца.",
+            "Полоски показывают прогресс только текущего отзыва и обнуляются при паузе браузером.",
+            "После остановки кнопкой показ сам не возобновляется — это осознанный выбор.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "interval",
+            "label": "Секунд на отзыв",
+            "type": "number",
+            "default": 6,
+            "min": 3,
+            "max": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Reviews advance on their own but freeze at any sign of interest: hover, focus inside the block, or the pause button — and with prefers-reduced-motion they never start.",
+            "ai": {
+              "summary": "Auto-advancing reviews with pause on hover, focus and a button, progress bars, and a full stop under prefers-reduced-motion. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-carousel-011-* palette — do not swap it for your theme tokens",
+                "the pause on hover and on focus: without it a long review cannot be finished",
+                "the pause button with a changing label — hover is unavailable from a keyboard and on a phone",
+                "dropping the timer entirely under prefers-reduced-motion: muting one animation is not enough",
+                "the fixed min-height of the quote, otherwise the page jumps on every change",
+                "aria-live=\"polite\" while paused and \"off\" while running: otherwise the screen reader never stops"
+              ],
+              "adapt": [
+                "the reviews through reviews: text, author and role",
+                "the delay between reviews through interval, in seconds",
+                "the accent colour through accent",
+                "the quote height in the min-height rule of [data-part=\"quote\"]"
+              ],
+              "notes": [
+                "An interval under four seconds is unreadable: the review cannot be finished in time.",
+                "The bars track only the current review and are frozen by the browser while paused.",
+                "After a manual stop the show does not resume by itself — that is deliberate.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Carousel011\n  interval={6}\n  reviews={[\n    { text: \"Installed in an evening, shipped the first screen the next day.\", author: \"Dmitry L.\", role: \"front-end developer\" },\n    { text: \"The components drag in no foreign theme.\", author: \"Marina K.\", role: \"designer\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "interval": {
+                "label": "Seconds per review",
+                "default": 6
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "carousel-012",
+      "type": "registry:component",
+      "title": "Counter Belts",
+      "description": "Две встречные ленты логотипов с растворёнными краями: встречное движение читается как «список большой», а не как «карусель едет».",
+      "categories": ["carousel"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "carousel-012/carousel-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/carousel-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-012-*. Серверный: хуков нет, движение целиком на CSS-анимации. Каждая лента продублирована в разметке и сдвигается ровно на половину ширины с учётом зазора, поэтому шва между повторами не видно; копия помечена aria-hidden, чтобы список не прочитался дважды. Края растворены mask-image. Анимация замирает и при наведении, и при фокусе внутри блока, а при prefers-reduced-motion ленты останавливаются и превращаются в обычную горизонтальную прокрутку.",
+      "meta": {
+        "tags": ["carousel", "marquee", "logos", "infinite"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Carousel012",
+          "usage": "<Carousel012\n  title=\"Нам доверяют\"\n  duration={34}\n  topRow={[\"Северсталь\", \"Ozon\", \"Кофеин\"]}\n  bottomRow={[\"Тинькофф\", \"Авито\", \"Самокат\"]}\n/>",
+          "summary": "Две встречные бегущие ленты логотипов на чистом CSS с паузой по наведению и фокусу. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-carousel-012-* и не подменять её токенами вашей темы",
+            "дублирование списка и сдвиг ровно на половину: иначе на стыке видно шов",
+            "aria-hidden на копии — список не должен читаться скринридеру дважды",
+            "паузу и по наведению, и по :focus-within: с клавиатуры лента тоже обязана замереть",
+            "остановку при prefers-reduced-motion с переходом в обычную прокрутку",
+            "маску на краях: лента должна выезжать из ничего, а не обрываться"
+          ],
+          "adapt": [
+            "содержимое лент через topRow и bottomRow",
+            "заголовок через title",
+            "скорость через duration в секундах на полный проход",
+            "цвет плашек в переменной --vibeui-carousel-012-chip"
+          ],
+          "notes": [
+            "Логотипы здесь текстовые: с картинками задайте им фиксированную высоту, иначе лента задёргается.",
+            "Меньше двадцати секунд на проход — рябит в глазах и мешает читать соседний текст.",
+            "Списки в лентах должны быть достаточно длинными, чтобы заполнить ширину: короткий даст разрыв.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Нам доверяют",
+            "maxLength": 24
+          },
+          {
+            "prop": "duration",
+            "label": "Секунд на проход",
+            "type": "number",
+            "default": 34,
+            "min": 12,
+            "max": 90
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Two logo belts running in opposite directions with dissolved edges: counter-motion reads as \"the list is long\" rather than \"a carousel is moving\".",
+            "ai": {
+              "summary": "Two counter-running logo belts in pure CSS, pausing on hover and on focus. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-carousel-012-* palette — do not swap it for your theme tokens",
+                "duplicating the list and shifting by exactly half: otherwise the seam is visible",
+                "aria-hidden on the copy — the list must not be read twice by a screen reader",
+                "pausing on hover and on :focus-within: from a keyboard the belt must freeze too",
+                "the full stop under prefers-reduced-motion with a fallback to ordinary scrolling",
+                "the edge mask: the belt has to emerge from nothing rather than break off"
+              ],
+              "adapt": [
+                "the belt contents through topRow and bottomRow",
+                "the heading through title",
+                "the speed through duration, in seconds per full pass",
+                "the chip colour in the --vibeui-carousel-012-chip variable"
+              ],
+              "notes": [
+                "The logos are text here: with images give them a fixed height or the belt will judder.",
+                "Under twenty seconds per pass it flickers and disturbs the text next to it.",
+                "The lists must be long enough to fill the width: a short one leaves a gap.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Carousel012\n  title=\"Trusted by\"\n  duration={34}\n  topRow={[\"Northwind\", \"Ozon\", \"Caffeine\"]}\n  bottomRow={[\"Tinkoff\", \"Avito\", \"Samokat\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Trusted by"
+              },
+              "duration": {
+                "label": "Seconds per pass",
+                "default": 34
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "carousel-013",
+      "type": "registry:component",
+      "title": "Centering Thumbs",
+      "description": "Галерея с полосой миниатюр, где выбранная сама доезжает до центра полосы, а по кадрам ходят стрелки клавиатуры.",
+      "categories": ["carousel"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "carousel-013/carousel-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/carousel-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-013-*. Клиентский (\"use client\") — позицию держит useState. Миниатюр обычно больше, чем влезает в ширину, поэтому выбранная доводится до центра вызовом scrollIntoView({block:\"nearest\",inline:\"center\"}): block:\"nearest\" не даёт браузеру дёрнуть всю страницу. Миниатюры — настоящие кнопки с подписью «Кадр N», выбранная помечена aria-current и рамкой, а не только яркостью: приглушение соседей на маленьком экране почти незаметно.",
+      "meta": {
+        "tags": ["carousel", "gallery", "thumbnails", "keyboard"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Carousel013",
+          "usage": "<Carousel013\n  label=\"Галерея\"\n  shots={[\n    { title: \"Утро в порту\", place: \"Мурманск\", hue: 220 },\n    { title: \"Дорога на перевал\", place: \"Алтай\", hue: 150 },\n  ]}\n/>",
+          "summary": "Галерея с миниатюрами: выбранная центрируется сама, кадры переключаются стрелками. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-carousel-013-* и не подменять её токенами вашей темы",
+            "block:\"nearest\" в scrollIntoView — иначе к центру подтянется вся страница",
+            "рамку у выбранной миниатюры: приглушение соседей на телефоне почти не видно",
+            "миниатюры как кнопки с подписью «Кадр N»: у div'а нет ни роли, ни имени",
+            "перенос фокуса на выбранную миниатюру при стрелках, иначе клавиатура теряет место",
+            "aria-current на выбранной миниатюре, а не только визуальную рамку"
+          ],
+          "adapt": [
+            "кадры через shots: заголовок, место и оттенок",
+            "подпись галереи через label",
+            "цвет акцента через accent",
+            "размер миниатюры в правиле width у [data-part=\"thumb\"]"
+          ],
+          "notes": [
+            "Кадры здесь градиентные: с фотографиями замените подложку на <img> с alt.",
+            "Миниатюр больше двадцати превращают полосу в отдельную задачу навигации.",
+            "Свайпа по большому кадру нет: переключение идёт миниатюрами и стрелками.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Галерея",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A gallery with a thumbnail strip where the chosen thumb scrolls itself to the centre and arrow keys walk the frames.",
+            "ai": {
+              "summary": "A gallery with thumbnails: the selected one centres itself and arrow keys switch frames. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-carousel-013-* palette — do not swap it for your theme tokens",
+                "block:\"nearest\" in scrollIntoView — otherwise the whole page is pulled to centre",
+                "the border on the selected thumb: dimming the neighbours is barely visible on a phone",
+                "the thumbs as buttons labelled \"Frame N\": a div has neither role nor name",
+                "moving focus to the selected thumb on arrow keys, otherwise the keyboard loses its place",
+                "aria-current on the selected thumb, not just the visual border"
+              ],
+              "adapt": [
+                "the frames through shots: title, place and hue",
+                "the gallery label through label",
+                "the accent colour through accent",
+                "the thumbnail size in the width rule of [data-part=\"thumb\"]"
+              ],
+              "notes": [
+                "The frames are gradients here: with photos replace the surface with an <img> and an alt.",
+                "More than twenty thumbs turn the strip into a navigation problem of its own.",
+                "There is no swipe on the main frame: switching happens through thumbs and arrow keys.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Carousel013\n  label=\"Gallery\"\n  shots={[\n    { title: \"Morning at the port\", place: \"Murmansk\", hue: 220 },\n    { title: \"Road to the pass\", place: \"Altai\", hue: 150 },\n  ]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Gallery"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "carousel-014",
+      "type": "registry:component",
+      "title": "Anchor Deck",
+      "description": "Карусель без единой строки JS, но со стрелками: пара стрелок лежит внутри каждого слайда и ведёт на соседний якорь, поэтому текущая позиция компоненту не нужна.",
+      "categories": ["carousel"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "carousel-014/carousel-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/carousel-014.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-014-*. Серверный: хуков нет вообще. Прокрутку и остановку держит scroll-snap-type:x mandatory со scroll-snap-stop:always, поэтому лента не проскакивает через слайд. Стрелки — обычные ссылки на идентификаторы соседних слайдов: браузер сам доезжает до нужного, а «предыдущий» и «следующий» известны на рендере. Идентификаторы собираются из пропа idPrefix, чтобы два блока на одной странице не перебили якоря друг друга.",
+      "meta": {
+        "tags": ["carousel", "scroll-snap", "no-js", "anchors"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Carousel014",
+          "usage": "<Carousel014\n  label=\"Принципы\"\n  idPrefix=\"principles\"\n  cards={[\n    { title: \"Сначала данные\", text: \"Компонент рисует то, что получил\", hue: 250 },\n    { title: \"Потом раскладка\", text: \"Ширина считается от контейнера\", hue: 160 },\n  ]}\n/>",
+          "summary": "Карусель на scroll-snap без JS: стрелки внутри слайдов — якорные ссылки на соседей. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-carousel-014-* и не подменять её токенами вашей темы",
+            "стрелки внутри слайдов: только так «предыдущий» и «следующий» известны без знания позиции",
+            "scroll-snap-stop:always — иначе быстрый свайп проскакивает через два слайда",
+            "идентификаторы из idPrefix: два блока на странице с одинаковыми якорями сломают переходы",
+            "подписи стрелок с названием соседнего слайда: «вперёд» без цели ничего не сообщает",
+            "нативную прокрутку: палец, колесо, Tab и клавиши работают без обработчиков"
+          ],
+          "adapt": [
+            "слайды через cards: заголовок, текст и оттенок",
+            "подпись карусели через label",
+            "основу идентификаторов через idPrefix",
+            "пропорции кадра в правиле aspect-ratio у [data-part=\"slide\"]"
+          ],
+          "notes": [
+            "Переход по якорю добавляет запись в историю браузера: кнопка «назад» вернёт на прошлый слайд.",
+            "Активный слайд компонент не знает, поэтому точек-индикаторов здесь нет и быть не может.",
+            "Лента зациклена по ссылкам: последняя стрелка ведёт на первый слайд.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Принципы",
+            "maxLength": 20
+          },
+          {
+            "prop": "idPrefix",
+            "label": "Основа якорей",
+            "type": "text",
+            "default": "vibeui-carousel-014",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A carousel with arrows and no JS at all: each slide carries its own pair of arrows pointing at the neighbouring anchors, so the component never needs to know the current position.",
+            "ai": {
+              "summary": "A scroll-snap carousel with no JS: the in-slide arrows are anchor links to the neighbours. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-carousel-014-* palette — do not swap it for your theme tokens",
+                "the arrows inside the slides: only that way are \"previous\" and \"next\" known without a position",
+                "scroll-snap-stop:always — otherwise a fast swipe skips two slides at once",
+                "the ids built from idPrefix: two blocks with the same anchors break each other's links",
+                "arrow labels naming the neighbouring slide: a bare \"next\" says nothing",
+                "the native scrolling: touch, wheel, Tab and keys work without handlers"
+              ],
+              "adapt": [
+                "the slides through cards: title, text and hue",
+                "the carousel label through label",
+                "the id base through idPrefix",
+                "the frame proportions in the aspect-ratio rule of [data-part=\"slide\"]"
+              ],
+              "notes": [
+                "An anchor jump adds a history entry: the back button returns to the previous slide.",
+                "The component does not know the active slide, so dot indicators are impossible here.",
+                "The deck loops through the links: the last arrow points back at the first slide.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Carousel014\n  label=\"Principles\"\n  idPrefix=\"principles\"\n  cards={[\n    { title: \"Data first\", text: \"The component draws what it receives\", hue: 250 },\n    { title: \"Layout next\", text: \"Width comes from the container\", hue: 160 },\n  ]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Principles"
+              },
+              "idPrefix": {
+                "label": "Anchor prefix",
+                "default": "vibeui-carousel-014"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "carousel-015",
+      "type": "registry:component",
+      "title": "Captioned Frames",
+      "description": "Карусель, где подпись равноправна кадру: figure с figcaption под снимком, а место под текст зарезервировано, чтобы блок не прыгал.",
+      "categories": ["carousel"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "carousel-015/carousel-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/carousel-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-015-*. Клиентский (\"use client\") — позицию держит useState. Разметка построена на figure/figcaption, поэтому подпись остаётся подписью и для скринридера, и для поисковика. Текст стоит под кадром на светлой подложке: поверх снимка он читается только на тёмной картинке. Высота подписи зафиксирована min-height по самой длинной — иначе кнопки под ней подпрыгивают на каждом переключении. Кадр помечен role=\"img\" с подписью.",
+      "meta": {
+        "tags": ["carousel", "caption", "figure", "gallery"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Carousel015",
+          "usage": "<Carousel015\n  label=\"Репортаж\"\n  slides={[\n    { caption: \"Цех перед сменой\", detail: \"Станки прогреваются час\", credit: \"Фото: архив завода\", hue: 220 },\n    { caption: \"Литейная форма\", detail: \"Форма выдерживает двести отливок\", hue: 30 },\n  ]}\n/>",
+          "summary": "Карусель с подписями под кадром на figure/figcaption и зарезервированной высотой текста. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-carousel-015-* и не подменять её токенами вашей темы",
+            "разметку figure/figcaption: подпись обязана оставаться подписью, а не просто текстом рядом",
+            "подпись под кадром, а не поверх: на светлом снимке текст поверх не читается",
+            "зарезервированную высоту подписи, иначе кнопки подпрыгивают на каждом кадре",
+            "role=\"img\" с подписью на градиентном кадре: без него кадр для скринридера пуст",
+            "подписи у стрелок: «предыдущий» и «следующий» кадр обязаны быть названы"
+          ],
+          "adapt": [
+            "кадры через slides: подпись, пояснение, автор снимка и оттенок",
+            "подпись карусели через label",
+            "цвет акцента через accent",
+            "зарезервированную высоту подписи в правиле min-height у figcaption"
+          ],
+          "notes": [
+            "Подписи разной длины: если они длиннее трёх строк, поднимите min-height, иначе прыжок вернётся.",
+            "Кадр градиентный: с фотографией замените блок на <img> с alt и уберите role=\"img\".",
+            "Смена кадра не объявляется скринридеру: для этого добавьте aria-live на подпись.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Репортаж",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A carousel where the caption is equal to the frame: a figure with a figcaption below the shot and reserved space so the block never jumps.",
+            "ai": {
+              "summary": "A carousel with captions under the frame using figure/figcaption and reserved text height. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-carousel-015-* palette — do not swap it for your theme tokens",
+                "the figure/figcaption markup: a caption must stay a caption, not just nearby text",
+                "the caption below the frame rather than over it: over a light shot the text is unreadable",
+                "the reserved caption height, otherwise the buttons jump on every frame",
+                "role=\"img\" with a label on the gradient frame: without it the frame is empty to a screen reader",
+                "the labels on the arrows: previous and next frame must be named"
+              ],
+              "adapt": [
+                "the frames through slides: caption, detail, credit and hue",
+                "the carousel label through label",
+                "the accent colour through accent",
+                "the reserved caption height in the figcaption min-height rule"
+              ],
+              "notes": [
+                "Captions vary in length: if they run over three lines raise min-height or the jump returns.",
+                "The frame is a gradient: with a photo replace the block with an <img> and an alt and drop role=\"img\".",
+                "A frame change is not announced: add aria-live on the caption if you need that.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Carousel015\n  label=\"Photo story\"\n  slides={[\n    { caption: \"The floor before the shift\", detail: \"The machines warm up for an hour\", credit: \"Photo: plant archive\", hue: 220 },\n    { caption: \"A casting mould\", detail: \"A mould survives two hundred casts\", hue: 30 },\n  ]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Photo story"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "carousel-016",
+      "type": "registry:component",
+      "title": "Slide Counter",
+      "description": "Карусель со счётчиком вместо точек: «3 из 8» и полоса заполнения отвечают точнее ряда кружков, а стрелки гаснут на краях незацикленной ленты.",
+      "categories": ["carousel"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "carousel-016/carousel-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/carousel-016.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-016-*. Клиентский (\"use client\") — позицию держит useState. Кадры лежат стопкой и меняются проявлением: ленте некуда ехать, потому что позиция передаётся счётчиком. Невидимые кадры помечены inert и aria-hidden, а видимость гасится не только opacity, но и visibility — иначе они остаются целями нажатия. Счётчик объявляется через role=\"status\", доля пройденного уезжает в CSS переменной --vibeui-carousel-016-progress.",
+      "meta": {
+        "tags": ["carousel", "counter", "progress", "slider"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Carousel016",
+          "usage": "<Carousel016\n  label=\"Квартира\"\n  ofWord=\"из\"\n  slides={[\n    { title: \"Гостиная\", meta: \"22 м², окна на юг\", hue: 200 },\n    { title: \"Кухня\", meta: \"11 м², техника остаётся\", hue: 150 },\n  ]}\n/>",
+          "summary": "Карусель со счётчиком «N из M», полосой заполнения и стрелками, гаснущими на краях. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-carousel-016-* и не подменять её токенами вашей темы",
+            "счётчик вместо точек: ряд из восьми кружков перестаёт читаться как позиция",
+            "role=\"status\" на счётчике — смена кадра иначе остаётся немой",
+            "отключение стрелок на краях: незацикленная лента обязана показывать, что список конечен",
+            "visibility рядом с opacity на скрытых кадрах, иначе они остаются целями нажатия",
+            "inert и aria-hidden на невидимых кадрах — Tab не должен уходить в скрытое содержимое"
+          ],
+          "adapt": [
+            "кадры через slides: заголовок, пояснение и оттенок",
+            "подпись карусели через label и слово-разделитель счётчика через ofWord",
+            "цвет акцента через accent",
+            "длительность проявления в правиле transition у [data-part=\"slide\"]"
+          ],
+          "notes": [
+            "Лента не зациклена намеренно: на краю стрелка выключается, а не переносит в начало.",
+            "Свайпа пальцем нет: кадры лежат стопкой, а не в прокручиваемой ленте.",
+            "role=\"status\" объявляет счётчик, но не содержимое кадра — заголовок скринридер прочитает отдельно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "ofWord",
+            "label": "Слово счётчика",
+            "type": "text",
+            "default": "из",
+            "maxLength": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A carousel with a counter instead of dots: \"3 of 8\" plus a progress bar answers more precisely than a row of circles, and the arrows dim at the ends of a non-looping deck.",
+            "ai": {
+              "summary": "A carousel with an \"N of M\" counter, a progress bar and arrows that dim at the ends. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-carousel-016-* palette — do not swap it for your theme tokens",
+                "the counter instead of dots: a row of eight circles stops reading as a position",
+                "role=\"status\" on the counter — otherwise a frame change is silent",
+                "disabling the arrows at the ends: a non-looping deck must show that the list is finite",
+                "visibility alongside opacity on hidden frames, otherwise they stay click targets",
+                "inert and aria-hidden on the hidden frames — Tab must not reach hidden content"
+              ],
+              "adapt": [
+                "the frames through slides: title, note and hue",
+                "the carousel label through label and the counter's joining word through ofWord",
+                "the accent colour through accent",
+                "the cross-fade duration in the transition rule of [data-part=\"slide\"]"
+              ],
+              "notes": [
+                "The deck deliberately does not loop: at the end the arrow switches off instead of wrapping.",
+                "There is no touch swipe: the frames are stacked, not in a scrollable rail.",
+                "role=\"status\" announces the counter, not the frame content — the title is read separately.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Carousel016\n  label=\"Apartment\"\n  ofWord=\"of\"\n  slides={[\n    { title: \"Living room\", meta: \"22 m², south-facing\", hue: 200 },\n    { title: \"Kitchen\", meta: \"11 m², appliances included\", hue: 150 },\n  ]}\n/>"
+            },
+            "controls": {
+              "ofWord": {
+                "label": "Counter word",
+                "default": "of"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

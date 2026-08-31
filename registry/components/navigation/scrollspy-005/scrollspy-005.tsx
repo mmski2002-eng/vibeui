@@ -1,0 +1,212 @@
+"use client"
+
+import { useEffect, useRef, useState } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Scrollspy005Section = {
+  id: string
+  title: string
+  text?: string
+}
+
+export type Scrollspy005Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children"
+> & {
+  sections?: Scrollspy005Section[]
+  label?: string
+  accent?: string
+}
+
+// Идея компонента: горизонтальная панель разделов, прилипшая к верху длинной
+// страницы. Когда разделов больше, чем влезает в строку, подсветки мало:
+// активный пункт может оказаться за краем. Поэтому он доезжает до центра
+// панели сам — scrollIntoView с inline:"center" и block:"nearest", чтобы
+// прокрутить именно панель и не дёрнуть при этом всю страницу.
+const STYLES = `
+:where([data-vibeui-block="scrollspy-005"]){
+--vibeui-scrollspy-005-bg:oklch(1 0 0);
+--vibeui-scrollspy-005-fg:oklch(0.23 0.014 265);
+--vibeui-scrollspy-005-muted:oklch(0.56 0.014 265);
+--vibeui-scrollspy-005-border:oklch(0.91 0.006 265);
+--vibeui-scrollspy-005-accent:oklch(0.58 0.2 25);
+--vibeui-scrollspy-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="scrollspy-005"]{
+display:flex;flex-direction:column;
+width:100%;max-width:30rem;box-sizing:border-box;
+background:var(--vibeui-scrollspy-005-bg);
+border:1px solid var(--vibeui-scrollspy-005-border);border-radius:0.875rem;
+font-family:var(--vibeui-scrollspy-005-font);color:var(--vibeui-scrollspy-005-fg);
+overflow:hidden;
+}
+[data-vibeui-block="scrollspy-005"] [data-part="body"]{
+position:relative;height:15rem;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth;
+}
+[data-vibeui-block="scrollspy-005"] [data-part="body"]:focus-visible{outline:2px solid var(--vibeui-scrollspy-005-accent);outline-offset:-2px}
+/* Панель липнет к верху области чтения и остаётся непрозрачной: текст под ней
+   не должен просвечивать сквозь подписи разделов. */
+[data-vibeui-block="scrollspy-005"] [data-part="barwrap"]{
+position:sticky;top:0;z-index:1;
+background:var(--vibeui-scrollspy-005-bg);
+border-bottom:1px solid var(--vibeui-scrollspy-005-border);
+}
+[data-vibeui-block="scrollspy-005"] [data-part="bar"]{
+display:flex;gap:0.125rem;margin:0;padding:0 0.5rem;list-style:none;
+overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;
+}
+[data-vibeui-block="scrollspy-005"] [data-part="bar"]::-webkit-scrollbar{display:none}
+[data-vibeui-block="scrollspy-005"] [data-part="link"]{
+position:relative;display:block;flex:none;
+padding:0.5rem 0.5rem 0.4375rem;
+color:var(--vibeui-scrollspy-005-muted);text-decoration:none;
+font-size:0.8125rem;line-height:1.2;white-space:nowrap;
+}
+[data-vibeui-block="scrollspy-005"] [data-part="link"]:hover{color:var(--vibeui-scrollspy-005-fg)}
+[data-vibeui-block="scrollspy-005"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-scrollspy-005-accent);outline-offset:-2px;border-radius:0.25rem}
+[data-vibeui-block="scrollspy-005"] [data-part="link"][aria-current="true"]{color:var(--vibeui-scrollspy-005-fg);font-weight:650}
+/* Подчёркивание вместо заливки: панель остаётся тонкой, а метка — заметной. */
+[data-vibeui-block="scrollspy-005"] [data-part="link"][aria-current="true"]::after{
+content:"";position:absolute;left:0.5rem;right:0.5rem;bottom:-1px;height:2px;
+border-radius:2px 2px 0 0;background:var(--vibeui-scrollspy-005-accent);
+}
+[data-vibeui-block="scrollspy-005"] [data-part="content"]{padding:0.75rem 0.9375rem 0}
+[data-vibeui-block="scrollspy-005"] [data-part="section"]{scroll-margin-top:2.5rem}
+[data-vibeui-block="scrollspy-005"] [data-part="section"] h4{margin:0 0 0.25rem;font-size:0.875rem;font-weight:650}
+[data-vibeui-block="scrollspy-005"] [data-part="section"] p{margin:0 0 1.25rem;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-scrollspy-005-muted)}
+[data-vibeui-block="scrollspy-005"] [data-part="section"]:last-child p{margin-bottom:10rem}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="scrollspy-005"] [data-part="body"]{scroll-behavior:auto}
+[data-vibeui-block="scrollspy-005"] *{animation:none!important;transition:none!important}
+}
+`
+
+const DEFAULT_SECTIONS: Scrollspy005Section[] = [
+  {
+    id: "about",
+    title: "О месте",
+    text: "Небольшая мастерская в центре города: шесть столов, общая печь и полка с инструментом.",
+  },
+  {
+    id: "menu",
+    title: "Меню",
+    text: "Кофе, чай и выпечка, которую пекут здесь же утром. Список меняется каждую неделю.",
+  },
+  {
+    id: "prices",
+    title: "Цены",
+    text: "Час работы за общим столом стоит меньше чашки кофе в соседнем кафе, абонемент на месяц выгоднее вчетверо.",
+  },
+  {
+    id: "schedule",
+    title: "Расписание",
+    text: "Будни с восьми утра до десяти вечера, суббота до шести, воскресенье — только для резидентов.",
+  },
+  {
+    id: "rules",
+    title: "Правила",
+    text: "Громкие звонки — в телефонной будке, инструмент возвращается на полку, посуда моется сразу.",
+  },
+  {
+    id: "contacts",
+    title: "Контакты",
+    text: "Второй этаж, вход со двора. Пишите заранее, если нужен стол на компанию больше четырёх человек.",
+  },
+]
+
+/**
+ * Липкая панель разделов: активный пункт сам доезжает до центра панели.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Scrollspy005({
+  sections = DEFAULT_SECTIONS,
+  label = "Разделы страницы",
+  accent,
+  className,
+  style,
+  ...props
+}: Scrollspy005Props) {
+  const body = useRef<HTMLDivElement>(null)
+  const bar = useRef<HTMLUListElement>(null)
+  const [active, setActive] = useState(sections[0]?.id)
+
+  useEffect(() => {
+    const root = body.current
+    if (!root) return
+
+    const watcher = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (a, b) => a.boundingClientRect.top - b.boundingClientRect.top,
+          )[0]
+        if (visible) setActive(visible.target.id)
+      },
+      { root, rootMargin: "-2.5rem 0px -65% 0px", threshold: 0 },
+    )
+
+    root
+      .querySelectorAll("[data-part='section']")
+      .forEach((section) => watcher.observe(section))
+    return () => watcher.disconnect()
+  }, [sections])
+
+  useEffect(() => {
+    // block:"nearest" обязателен: иначе браузер подтянет к центру всю страницу.
+    bar.current
+      ?.querySelector(`[data-part="link"][aria-current="true"]`)
+      ?.scrollIntoView({ block: "nearest", inline: "center" })
+  }, [active])
+
+  const palette = {
+    ...(accent ? { "--vibeui-scrollspy-005-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-scrollspy-005" precedence="medium">
+        {STYLES}
+      </style>
+      <div
+        {...props}
+        data-vibeui-block="scrollspy-005"
+        className={className}
+        style={palette}
+      >
+        <div
+          data-part="body"
+          ref={body}
+          tabIndex={0}
+          role="group"
+          aria-label="Текст страницы"
+        >
+          <nav data-part="barwrap" aria-label={label}>
+            <ul data-part="bar" ref={bar}>
+              {sections.map((section) => (
+                <li key={section.id}>
+                  <a
+                    data-part="link"
+                    href={`#${section.id}`}
+                    aria-current={section.id === active}
+                  >
+                    {section.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div data-part="content">
+            {sections.map((section) => (
+              <section key={section.id} id={section.id} data-part="section">
+                <h4>{section.title}</h4>
+                <p>{section.text}</p>
+              </section>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
