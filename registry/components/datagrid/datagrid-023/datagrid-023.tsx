@@ -1,0 +1,275 @@
+"use client"
+
+import { useId, useState } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Datagrid023Row = {
+  id: string
+  sku: string
+  title: string
+  quantity: number
+}
+
+export type Datagrid023Props = Omit<
+  ComponentPropsWithoutRef<"section">,
+  "children"
+> & {
+  rows?: Datagrid023Row[]
+  caption?: string
+  separatorHint?: string
+  accent?: string
+}
+
+// Идея компонента: строки добавляются пачкой из буфера обмена, а не по
+// одной руками. Между вставкой и таблицей стоит разбор: каждая строка
+// текста превращается в предварительную запись, битые строки помечаются
+// с номером и причиной, и добавляются только целые. Так вставка из
+// таблицы или письма не разъезжается молча.
+const STYLES = `
+:where([data-vibeui-block="datagrid-023"]){
+--vibeui-datagrid-023-bg:oklch(1 0 0);
+--vibeui-datagrid-023-fg:oklch(0.23 0.014 285);
+--vibeui-datagrid-023-muted:oklch(0.55 0.014 285);
+--vibeui-datagrid-023-border:oklch(0.92 0.006 285);
+--vibeui-datagrid-023-head:oklch(0.975 0.003 285);
+--vibeui-datagrid-023-accent:oklch(0.5 0.14 145);
+--vibeui-datagrid-023-bad:oklch(0.53 0.19 27);
+--vibeui-datagrid-023-badbg:oklch(0.97 0.03 27);
+--vibeui-datagrid-023-new:oklch(0.96 0.04 145);
+--vibeui-datagrid-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="datagrid-023"]{
+box-sizing:border-box;width:100%;max-width:50rem;margin:0 auto;
+background:var(--vibeui-datagrid-023-bg);color:var(--vibeui-datagrid-023-fg);
+border:1px solid var(--vibeui-datagrid-023-border);border-radius:0.875rem;
+font-family:var(--vibeui-datagrid-023-font);overflow:hidden;
+}
+[data-vibeui-block="datagrid-023"] *{box-sizing:border-box}
+[data-vibeui-block="datagrid-023"] [data-part="paste"]{
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-023-border);
+background:oklch(0.985 0.004 285);
+}
+[data-vibeui-block="datagrid-023"] [data-part="paste"] label{
+display:block;margin-bottom:0.375rem;font-size:0.75rem;font-weight:600;
+}
+[data-vibeui-block="datagrid-023"] [data-part="hint"]{
+margin:0 0 0.5rem;font-size:0.6875rem;color:var(--vibeui-datagrid-023-muted);
+font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+[data-vibeui-block="datagrid-023"] textarea{
+display:block;width:100%;min-height:4.5rem;resize:vertical;
+font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:0.75rem;line-height:1.5;color:inherit;
+padding:0.5rem 0.625rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-datagrid-023-border);background:var(--vibeui-datagrid-023-bg);
+}
+[data-vibeui-block="datagrid-023"] textarea:focus-visible{outline:2px solid var(--vibeui-datagrid-023-accent);outline-offset:1px}
+[data-vibeui-block="datagrid-023"] [data-part="actions"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin-top:0.5rem}
+[data-vibeui-block="datagrid-023"] button{
+appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:600;
+padding:0.375rem 0.75rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-datagrid-023-border);
+background:var(--vibeui-datagrid-023-bg);color:var(--vibeui-datagrid-023-fg);
+}
+[data-vibeui-block="datagrid-023"] [data-part="commit"]{border-color:transparent;background:var(--vibeui-datagrid-023-accent);color:oklch(1 0 0)}
+[data-vibeui-block="datagrid-023"] button:disabled{opacity:.4;cursor:not-allowed}
+[data-vibeui-block="datagrid-023"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-023-accent);outline-offset:2px}
+[data-vibeui-block="datagrid-023"] [data-part="report"]{margin:0;margin-inline-start:auto;font-size:0.75rem;color:var(--vibeui-datagrid-023-muted)}
+[data-vibeui-block="datagrid-023"] [data-part="report"][data-bad="true"]{color:var(--vibeui-datagrid-023-bad);font-weight:600}
+[data-vibeui-block="datagrid-023"] [data-part="scroll"]{overflow-x:auto}
+[data-vibeui-block="datagrid-023"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-023-accent);outline-offset:-2px}
+[data-vibeui-block="datagrid-023"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
+[data-vibeui-block="datagrid-023"] caption{
+padding:0.625rem 0.875rem;text-align:left;font-size:0.75rem;color:var(--vibeui-datagrid-023-muted);caption-side:top;
+}
+[data-vibeui-block="datagrid-023"] th,
+[data-vibeui-block="datagrid-023"] td{
+padding:0.4375rem 0.875rem;text-align:left;white-space:nowrap;
+border-top:1px solid var(--vibeui-datagrid-023-border);
+}
+[data-vibeui-block="datagrid-023"] thead th{background:var(--vibeui-datagrid-023-head);font-weight:600}
+[data-vibeui-block="datagrid-023"] [data-align="end"]{text-align:right;font-variant-numeric:tabular-nums}
+[data-vibeui-block="datagrid-023"] [data-part="sku"]{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:0.75rem}
+[data-vibeui-block="datagrid-023"] tbody tr[data-origin="pasted"] td,
+[data-vibeui-block="datagrid-023"] tbody tr[data-origin="pasted"] th{background:var(--vibeui-datagrid-023-new)}
+[data-vibeui-block="datagrid-023"] tbody tr[data-origin="bad"] td,
+[data-vibeui-block="datagrid-023"] tbody tr[data-origin="bad"] th{background:var(--vibeui-datagrid-023-badbg);color:var(--vibeui-datagrid-023-bad)}
+[data-vibeui-block="datagrid-023"] [data-part="why"]{font-size:0.6875rem;white-space:normal}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-023"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_ROWS: Datagrid023Row[] = [
+  { id: "b1", sku: "MTR-100", title: "Мотор редукторный", quantity: 12 },
+  { id: "b2", sku: "BLT-220", title: "Ремень приводной", quantity: 40 },
+]
+
+const SAMPLE = [
+  "PMP-310\tНасос циркуляционный\t6",
+  "VLV-455\tКлапан обратный\t18",
+  "SNS-021\tДатчик давления",
+  "FLT-777\tФильтр грубой очистки\t25",
+].join("\n")
+
+type Parsed = {
+  line: number
+  sku: string
+  title: string
+  quantity: number
+  problem: string
+}
+
+function parse(text: string): Parsed[] {
+  return text
+    .split(/\r?\n/)
+    .map((raw, index) => ({ raw: raw.trim(), index }))
+    .filter((item) => item.raw !== "")
+    .map(({ raw, index }) => {
+      const parts = raw.split(/\t|;|\s{2,}/).map((part) => part.trim())
+      const [sku = "", title = "", quantity = ""] = parts
+      const number = Number(quantity)
+
+      let problem = ""
+
+      if (parts.length < 3) {
+        problem = "Ожидались три поля: артикул, название, количество"
+      } else if (quantity === "" || Number.isNaN(number) || number <= 0) {
+        problem = "Количество должно быть положительным числом"
+      }
+
+      return { line: index + 1, sku, title, quantity: number, problem }
+    })
+}
+
+/**
+ * Сетка со вставкой нескольких строк из буфера: разбор с пометкой битых
+ * строк перед добавлением в таблицу. Один файл, ноль зависимостей.
+ */
+export function Datagrid023({
+  rows = DEFAULT_ROWS,
+  caption = "Вставленные строки помечены заливкой до следующей вставки",
+  separatorHint = "артикул ⇥ название ⇥ количество",
+  accent,
+  className,
+  style,
+  ...props
+}: Datagrid023Props) {
+  const [table, setTable] = useState(rows)
+  const [pasted, setPasted] = useState<string[]>([])
+  const [text, setText] = useState(SAMPLE)
+  const areaId = useId()
+
+  const parsed = parse(text)
+  const good = parsed.filter((item) => item.problem === "")
+  const bad = parsed.filter((item) => item.problem !== "")
+
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-023-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-datagrid-023" precedence="medium">
+        {STYLES}
+      </style>
+      <section
+        {...props}
+        data-vibeui-block="datagrid-023"
+        className={className}
+        style={palette}
+      >
+        <div data-part="paste">
+          <label htmlFor={areaId}>Вставьте строки из таблицы или письма</label>
+          <p data-part="hint">{separatorHint}</p>
+          <textarea
+            id={areaId}
+            value={text}
+            spellCheck={false}
+            onChange={(event) => setText(event.target.value)}
+          />
+          <div data-part="actions">
+            <button
+              type="button"
+              data-part="commit"
+              disabled={good.length === 0}
+              onClick={() => {
+                const stamp = Date.now()
+
+                setTable((current) => [
+                  ...current,
+                  ...good.map((item, index) => ({
+                    id: `p${stamp}-${index}`,
+                    sku: item.sku,
+                    title: item.title,
+                    quantity: item.quantity,
+                  })),
+                ])
+                setPasted(good.map((_, index) => `p${stamp}-${index}`))
+                setText("")
+              }}
+            >
+              Добавить {good.length} стр.
+            </button>
+            <button type="button" onClick={() => setText("")}>
+              Очистить поле
+            </button>
+            <p
+              data-part="report"
+              data-bad={bad.length > 0 ? "true" : undefined}
+              role="status"
+              aria-live="polite"
+            >
+              {parsed.length === 0
+                ? "Поле пустое"
+                : bad.length === 0
+                  ? `Разобрано строк: ${good.length}, ошибок нет`
+                  : `Готово ${good.length}, с ошибками ${bad.length}`}
+            </p>
+          </div>
+        </div>
+        <div
+          data-part="scroll"
+          role="region"
+          aria-label="Таблица номенклатуры, прокручивается вбок"
+          tabIndex={0}
+        >
+          <table>
+            <caption>{caption}</caption>
+            <thead>
+              <tr>
+                <th scope="col">Артикул</th>
+                <th scope="col">Наименование</th>
+                <th scope="col" data-align="end">
+                  Количество
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {table.map((row) => (
+                <tr
+                  key={row.id}
+                  data-origin={pasted.includes(row.id) ? "pasted" : undefined}
+                >
+                  <th scope="row" data-part="sku">
+                    {row.sku}
+                  </th>
+                  <td>{row.title}</td>
+                  <td data-align="end">{row.quantity}</td>
+                </tr>
+              ))}
+              {bad.map((item) => (
+                <tr key={`bad-${item.line}`} data-origin="bad">
+                  <th scope="row" data-part="sku">
+                    строка {item.line}
+                  </th>
+                  <td colSpan={2} data-part="why">
+                    {item.problem}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </>
+  )
+}

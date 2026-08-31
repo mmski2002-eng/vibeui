@@ -1,0 +1,318 @@
+"use client"
+
+import { useRef, useState } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Datagrid017Row = {
+  id: string
+  contract: string
+  counterparty: string
+  signed: string
+  amount: number
+}
+
+export type Datagrid017Props = Omit<
+  ComponentPropsWithoutRef<"section">,
+  "children"
+> & {
+  rows?: Datagrid017Row[]
+  caption?: string
+  exportLabel?: string
+  accent?: string
+}
+
+// Идея компонента: выгрузка отмеченных строк не запускается кнопкой сразу —
+// между кликом и действием стоит подтверждение, которое называет число
+// строк, формат и оценочный размер. Диалог нативный: showModal сам
+// ловит фокус, закрывает по Escape и рисует ::backdrop. Ему обязательно
+// нужен margin:auto — иначе он липнет к левому верхнему углу.
+const STYLES = `
+:where([data-vibeui-block="datagrid-017"]){
+--vibeui-datagrid-017-bg:oklch(1 0 0);
+--vibeui-datagrid-017-fg:oklch(0.23 0.014 285);
+--vibeui-datagrid-017-muted:oklch(0.55 0.014 285);
+--vibeui-datagrid-017-border:oklch(0.92 0.006 285);
+--vibeui-datagrid-017-head:oklch(0.975 0.003 285);
+--vibeui-datagrid-017-accent:oklch(0.5 0.16 255);
+--vibeui-datagrid-017-pick:oklch(0.97 0.025 255);
+--vibeui-datagrid-017-shadow:oklch(0.23 0.014 285 / 24%);
+--vibeui-datagrid-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="datagrid-017"]{
+box-sizing:border-box;width:100%;max-width:52rem;margin:0 auto;
+background:var(--vibeui-datagrid-017-bg);color:var(--vibeui-datagrid-017-fg);
+border:1px solid var(--vibeui-datagrid-017-border);border-radius:0.875rem;
+font-family:var(--vibeui-datagrid-017-font);overflow:hidden;
+}
+[data-vibeui-block="datagrid-017"] *{box-sizing:border-box}
+[data-vibeui-block="datagrid-017"] [data-part="bar"]{
+display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-017-border);
+}
+[data-vibeui-block="datagrid-017"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-017"] [data-part="status"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-017-muted)}
+[data-vibeui-block="datagrid-017"] [data-part="go"]{
+appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:600;
+padding:0.375rem 0.75rem;border-radius:0.5rem;border:1px solid transparent;
+background:var(--vibeui-datagrid-017-accent);color:oklch(1 0 0);
+}
+[data-vibeui-block="datagrid-017"] [data-part="go"]:disabled{opacity:.4;cursor:not-allowed}
+[data-vibeui-block="datagrid-017"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-datagrid-017-accent);outline-offset:2px}
+[data-vibeui-block="datagrid-017"] [data-part="scroll"]{overflow-x:auto}
+[data-vibeui-block="datagrid-017"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-017-accent);outline-offset:-2px}
+[data-vibeui-block="datagrid-017"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
+[data-vibeui-block="datagrid-017"] caption{
+padding:0.625rem 0.875rem;text-align:left;font-size:0.75rem;color:var(--vibeui-datagrid-017-muted);caption-side:top;
+}
+[data-vibeui-block="datagrid-017"] th,
+[data-vibeui-block="datagrid-017"] td{
+padding:0.5rem 0.875rem;text-align:left;white-space:nowrap;
+border-top:1px solid var(--vibeui-datagrid-017-border);
+}
+[data-vibeui-block="datagrid-017"] thead th{background:var(--vibeui-datagrid-017-head);font-weight:600}
+[data-vibeui-block="datagrid-017"] [data-part="check"]{width:2.5rem;padding-inline:0.75rem}
+[data-vibeui-block="datagrid-017"] input[type="checkbox"]{
+width:0.9375rem;height:0.9375rem;margin:0;accent-color:var(--vibeui-datagrid-017-accent);cursor:pointer;
+}
+[data-vibeui-block="datagrid-017"] input[type="checkbox"]:focus-visible{outline:2px solid var(--vibeui-datagrid-017-accent);outline-offset:2px}
+[data-vibeui-block="datagrid-017"] [data-align="end"]{text-align:right;font-variant-numeric:tabular-nums}
+[data-vibeui-block="datagrid-017"] tbody tr[data-picked="true"] td,
+[data-vibeui-block="datagrid-017"] tbody tr[data-picked="true"] th{background:var(--vibeui-datagrid-017-pick)}
+[data-vibeui-block="datagrid-017"] [data-part="code"]{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:0.75rem}
+/* Нативный dialog без margin:auto липнет к левому верхнему углу. */
+[data-vibeui-block="datagrid-017"] dialog{
+margin:auto;width:min(24rem,calc(100vw - 2rem));padding:1rem 1.125rem 1.125rem;
+border:1px solid var(--vibeui-datagrid-017-border);border-radius:0.875rem;
+background:var(--vibeui-datagrid-017-bg);color:var(--vibeui-datagrid-017-fg);
+font-family:var(--vibeui-datagrid-017-font);box-shadow:0 24px 60px var(--vibeui-datagrid-017-shadow);
+}
+[data-vibeui-block="datagrid-017"] dialog::backdrop{background:oklch(0.23 0.014 285 / 45%)}
+[data-vibeui-block="datagrid-017"] [data-part="dialog-title"]{margin:0 0 0.375rem;font-size:0.9375rem;font-weight:650}
+[data-vibeui-block="datagrid-017"] [data-part="dialog-text"]{margin:0 0 0.75rem;font-size:0.8125rem;color:var(--vibeui-datagrid-017-muted);line-height:1.45}
+[data-vibeui-block="datagrid-017"] [data-part="formats"]{border:0;margin:0 0 0.875rem;padding:0;display:flex;gap:0.5rem;flex-wrap:wrap}
+[data-vibeui-block="datagrid-017"] [data-part="formats"] legend{padding:0;margin-bottom:0.375rem;font-size:0.6875rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--vibeui-datagrid-017-muted);float:left;width:100%}
+/* legend с float:left заставляет соседей обтекать — сбрасываем поток. */
+[data-vibeui-block="datagrid-017"] [data-part="formats"] label{clear:both;display:inline-flex;align-items:center;gap:0.375rem;font-size:0.8125rem;cursor:pointer}
+[data-vibeui-block="datagrid-017"] [data-part="formats"] input{accent-color:var(--vibeui-datagrid-017-accent);margin:0}
+[data-vibeui-block="datagrid-017"] [data-part="formats"] input:focus-visible{outline:2px solid var(--vibeui-datagrid-017-accent);outline-offset:2px}
+[data-vibeui-block="datagrid-017"] [data-part="actions"]{display:flex;gap:0.5rem;justify-content:flex-end}
+[data-vibeui-block="datagrid-017"] [data-part="cancel"],
+[data-vibeui-block="datagrid-017"] [data-part="confirm"]{
+appearance:none;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:600;
+padding:0.4375rem 0.875rem;border-radius:0.5rem;border:1px solid var(--vibeui-datagrid-017-border);
+background:var(--vibeui-datagrid-017-bg);color:var(--vibeui-datagrid-017-fg);
+}
+[data-vibeui-block="datagrid-017"] [data-part="confirm"]{
+border-color:transparent;background:var(--vibeui-datagrid-017-accent);color:oklch(1 0 0);
+}
+[data-vibeui-block="datagrid-017"] [data-part="cancel"]:focus-visible,
+[data-vibeui-block="datagrid-017"] [data-part="confirm"]:focus-visible{outline:2px solid var(--vibeui-datagrid-017-accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-017"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_ROWS: Datagrid017Row[] = [
+  {
+    id: "d1",
+    contract: "ДГ-1104",
+    counterparty: "Артель «Кама»",
+    signed: "04.02.2026",
+    amount: 1240000,
+  },
+  {
+    id: "d2",
+    contract: "ДГ-1105",
+    counterparty: "Ювенко Логистика",
+    signed: "11.02.2026",
+    amount: 386000,
+  },
+  {
+    id: "d3",
+    contract: "ДГ-1106",
+    counterparty: "Северный Порт",
+    signed: "19.02.2026",
+    amount: 2015000,
+  },
+  {
+    id: "d4",
+    contract: "ДГ-1107",
+    counterparty: "Гранд-Сервис",
+    signed: "27.02.2026",
+    amount: 94000,
+  },
+  {
+    id: "d5",
+    contract: "ДГ-1108",
+    counterparty: "Мостовик",
+    signed: "03.03.2026",
+    amount: 771000,
+  },
+]
+
+const FORMATS = [
+  { value: "csv", label: "CSV", bytes: 140 },
+  { value: "json", label: "JSON", bytes: 320 },
+  { value: "xlsx", label: "XLSX", bytes: 620 },
+]
+
+/**
+ * Сетка с выгрузкой отмеченных строк через подтверждение в нативном
+ * диалоге: число строк, формат и размер названы заранее. Один файл.
+ */
+export function Datagrid017({
+  rows = DEFAULT_ROWS,
+  caption = "Отметьте договоры и нажмите «Экспортировать»",
+  exportLabel = "Экспортировать",
+  accent,
+  className,
+  style,
+  ...props
+}: Datagrid017Props) {
+  const [picked, setPicked] = useState<string[]>(["d1", "d3"])
+  const [format, setFormat] = useState("csv")
+  const [done, setDone] = useState("")
+  const dialogRef = useRef<HTMLDialogElement>(null)
+
+  const selected = rows.filter((row) => picked.includes(row.id))
+  const size = FORMATS.find((item) => item.value === format)?.bytes ?? 0
+
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-017-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-datagrid-017" precedence="medium">
+        {STYLES}
+      </style>
+      <section
+        {...props}
+        data-vibeui-block="datagrid-017"
+        className={className}
+        style={palette}
+      >
+        <div data-part="bar">
+          <h3 data-part="title">Договоры</h3>
+          <p data-part="status" role="status" aria-live="polite">
+            {done || `Отмечено: ${selected.length} из ${rows.length}`}
+          </p>
+          <button
+            type="button"
+            data-part="go"
+            disabled={selected.length === 0}
+            onClick={() => {
+              setDone("")
+              dialogRef.current?.showModal()
+            }}
+          >
+            {exportLabel}
+          </button>
+        </div>
+        <div
+          data-part="scroll"
+          role="region"
+          aria-label="Таблица договоров, прокручивается вбок"
+          tabIndex={0}
+        >
+          <table>
+            <caption>{caption}</caption>
+            <thead>
+              <tr>
+                <th scope="col" data-part="check">
+                  <span hidden>Выбор</span>
+                </th>
+                <th scope="col">Договор</th>
+                <th scope="col">Контрагент</th>
+                <th scope="col">Подписан</th>
+                <th scope="col" data-align="end">
+                  Сумма, ₽
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row) => {
+                const on = picked.includes(row.id)
+
+                return (
+                  <tr key={row.id} data-picked={on ? "true" : undefined}>
+                    <td data-part="check">
+                      <input
+                        type="checkbox"
+                        checked={on}
+                        aria-label={`Включить договор ${row.contract} в выгрузку`}
+                        onChange={() =>
+                          setPicked((current) =>
+                            current.includes(row.id)
+                              ? current.filter((id) => id !== row.id)
+                              : [...current, row.id],
+                          )
+                        }
+                      />
+                    </td>
+                    <th scope="row" data-part="code">
+                      {row.contract}
+                    </th>
+                    <td>{row.counterparty}</td>
+                    <td>{row.signed}</td>
+                    <td data-align="end">
+                      {row.amount.toLocaleString("ru-RU")}
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+        <dialog ref={dialogRef} aria-labelledby="vibeui-datagrid-017-heading">
+          <h4 data-part="dialog-title" id="vibeui-datagrid-017-heading">
+            Выгрузить {selected.length} стр.?
+          </h4>
+          <p data-part="dialog-text">
+            В файл попадут только отмеченные договоры на сумму{" "}
+            {selected
+              .reduce((total, row) => total + row.amount, 0)
+              .toLocaleString("ru-RU")}{" "}
+            ₽. Ориентировочный размер — около{" "}
+            {Math.max(1, Math.round((selected.length * size) / 100) / 10)} КБ.
+          </p>
+          <fieldset data-part="formats">
+            <legend>Формат файла</legend>
+            {FORMATS.map((item) => (
+              <label key={item.value}>
+                <input
+                  type="radio"
+                  name="vibeui-datagrid-017-format"
+                  value={item.value}
+                  checked={format === item.value}
+                  onChange={() => setFormat(item.value)}
+                />
+                {item.label}
+              </label>
+            ))}
+          </fieldset>
+          <div data-part="actions">
+            <button
+              type="button"
+              data-part="cancel"
+              onClick={() => dialogRef.current?.close()}
+            >
+              Отмена
+            </button>
+            <button
+              type="button"
+              data-part="confirm"
+              onClick={() => {
+                setDone(
+                  `Выгружено ${selected.length} стр. в формате ${format.toUpperCase()}`,
+                )
+                dialogRef.current?.close()
+              }}
+            >
+              Выгрузить
+            </button>
+          </div>
+        </dialog>
+      </section>
+    </>
+  )
+}
