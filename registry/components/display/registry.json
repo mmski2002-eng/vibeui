@@ -7629,6 +7629,2739 @@
           }
         }
       }
+    },
+    {
+      "name": "progress-002",
+      "type": "registry:component",
+      "title": "Segmented Steps Bar",
+      "description": "Прогресс конвейера этапами: дорожка разрезана на сегменты с зазорами, поэтому видно не «примерно шестьдесят процентов», а сколько этапов закрыто и какой идёт сейчас.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "progress-002/progress-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/progress-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-002-*. Серверный: хуков нет, состояние приходит пропсами. Дорожка — flex из равных сегментов с зазором 0.25rem: граница этапа задана разрывом, а не другим цветом, поэтому она видна и в монохроме. Текущий сегмент залит анимированным двухцветным градиентом через background-position — движение не трогает раскладку. Подписи этапов лежат вторым flex-рядом с теми же долями, поэтому колонки подписей совпадают с сегментами. role=\"progressbar\" объявлен на дорожке со шкалой в этапах, а не в процентах, и aria-valuetext называет текущий этап словами.",
+      "meta": {
+        "tags": ["progress", "steps", "pipeline", "display"],
+        "ai": {
+          "export": "Progress002",
+          "usage": "<Progress002\n  label=\"Пайплайн релиза\"\n  steps={[\"Очередь\", \"Сборка\", \"Тесты\", \"Ревью\", \"Выкладка\"]}\n  current={2}\n/>",
+          "summary": "Прогресс по этапам: сегментированная дорожка, подписи под сегментами и aria-valuetext, называющий текущий этап словами. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-progress-002-* и не подменять её токенами вашей темы",
+            "зазоры между сегментами: без них дорожка снова читается как сплошная доля",
+            "шкалу aria-valuemin/valuemax в этапах, а не в процентах — иначе озвучка разойдётся с картинкой",
+            "aria-valuetext с именем текущего этапа: «три из пяти» само по себе не говорит, что происходит",
+            "равные доли flex у сегментов и подписей: разные доли разведут колонки",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "список этапов через steps и их число",
+            "текущий этап через current",
+            "заголовок через label",
+            "цвет заливки через accent"
+          ],
+          "notes": [
+            "current — индекс с нуля: значение, равное длине steps, зажимается до последнего этапа.",
+            "Длинные подписи обрезаются многоточием: под них рассчитывайте не больше двенадцати символов.",
+            "Больше семи этапов превращают сегменты в неразличимые полоски — сворачивайте их в группы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "current",
+            "label": "Текущий этап",
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 4
+          },
+          {
+            "prop": "label",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Пайплайн релиза",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Pipeline progress by stage: the track is cut into segments with gaps, so you read \"three of five stages done, the fourth is running\" instead of \"roughly sixty percent\".",
+            "ai": {
+              "summary": "Stage progress: a segmented track, captions under the segments and an aria-valuetext that names the current stage in words. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-progress-002-* palette — do not swap it for your theme tokens",
+                "the gaps between segments: without them the track reads as one solid ratio again",
+                "the aria-valuemin/valuemax scale in stages, not percent — otherwise speech drifts from the picture",
+                "the aria-valuetext naming the current stage: \"three of five\" alone does not say what is happening",
+                "the equal flex shares on segments and captions: different shares pull the columns apart",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the stage list through steps and their count",
+                "the current stage through current",
+                "the heading through label",
+                "the fill colour through accent"
+              ],
+              "notes": [
+                "current is a zero-based index: a value equal to steps.length is clamped to the last stage.",
+                "Long captions are ellipsized — plan for about twelve characters each.",
+                "More than seven stages turn the segments into indistinguishable slivers; group them instead.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Progress002\n  label=\"Release pipeline\"\n  steps={[\"Queued\", \"Build\", \"Tests\", \"Review\", \"Deploy\"]}\n  current={2}\n/>"
+            },
+            "controls": {
+              "current": {
+                "label": "Current stage"
+              },
+              "label": {
+                "label": "Heading",
+                "default": "Release pipeline"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "progress-003",
+      "type": "registry:component",
+      "title": "Ticked Goal Ring",
+      "description": "Кольцевая шкала с делениями и засечкой цели: видно и сколько сделано, и сколько было обещано, поэтому перевыполнение читается сразу, без сравнения двух чисел.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "progress-003/progress-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/progress-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-003-*. Серверный: хуков нет. Дуга — conic-gradient, вырезанный радиальной маской, поэтому кольцо остаётся одним элементом без svg и без круга-заглушки в центре. Деления — второй слой, repeating-conic-gradient цвета подложки поверх дуги под той же маской: риски «прорезаны» в кольце, а не нарисованы отдельными элементами. Засечка цели — абсолютный слой, повёрнутый на target × 3.6deg, поэтому положение считается прямо из процента. Число лежит поверх кольца, а не внутри маскированного элемента: маска вырезала бы и цифры. role=\"progressbar\" с aria-valuetext, который называет и факт, и цель.",
+      "meta": {
+        "tags": ["progress", "ring", "goal", "display"],
+        "ai": {
+          "export": "Progress003",
+          "usage": "<Progress003 value={72} target={85} label=\"План квартала\" unit=\"выполнено\" />",
+          "summary": "Кольцевая шкала: conic-gradient под радиальной маской, деления вторым conic-слоем и повёрнутая засечка цели. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-progress-003-* и не подменять её токенами вашей темы",
+            "радиальную маску на дуге и делениях: без неё кольцо станет закрашенным кругом",
+            "число поверх кольца, а не внутри маскированного слоя — иначе маска вырежет и цифры",
+            "поворот засечки на target × 3.6deg: любая другая формула разойдётся с дугой",
+            "моноширинные цифры: при обычных подпись дёргается на каждом обновлении",
+            "собственную светлую подложку: число и подписи тёмные и на тёмном фоне исчезнут"
+          ],
+          "adapt": [
+            "факт через value и цель через target",
+            "заголовок через label и подпись под числом через unit",
+            "диаметр и толщину кольца через переменные размера",
+            "цвет дуги через переменную акцента"
+          ],
+          "notes": [
+            "value и target зажимаются в 0–100: показать перевыполнение сверх ста процентов кольцо не может.",
+            "Шаг делений задан в repeating-conic-gradient: менять его надо в двух местах — в CSS и в подписи.",
+            "На диаметре меньше 5rem деления сливаются в серую кайму, уберите слой ticks.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "value",
+            "label": "Значение",
+            "type": "number",
+            "default": 72,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "target",
+            "label": "Цель",
+            "type": "number",
+            "default": 85,
+            "min": 0,
+            "max": 100
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A ring gauge with ticks and a goal notch: it shows both what is done and what was promised, so overachievement reads instantly without comparing two numbers.",
+            "ai": {
+              "summary": "A ring gauge: conic-gradient under a radial mask, ticks as a second conic layer and a rotated goal notch. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-progress-003-* palette — do not swap it for your theme tokens",
+                "the radial mask on the arc and the ticks: without it the ring becomes a filled disc",
+                "the number above the ring rather than inside the masked layer — the mask would cut the digits too",
+                "the notch rotation of target × 3.6deg: any other formula drifts away from the arc",
+                "the tabular figures: proportional ones make the caption jitter on every update",
+                "the component's own light surface: the number and captions are dark and vanish on a dark ground"
+              ],
+              "adapt": [
+                "the fact through value and the plan through target",
+                "the heading through label and the caption under the number through unit",
+                "the ring diameter and thickness through the size variables",
+                "the arc colour through the accent variable"
+              ],
+              "notes": [
+                "value and target are clamped to 0–100: the ring cannot show more than one hundred percent.",
+                "The tick step lives in repeating-conic-gradient: changing it means editing CSS and the caption both.",
+                "Below a 5rem diameter the ticks merge into a grey rim — drop the ticks layer there.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Progress003 value={72} target={85} label=\"Quarter plan\" unit=\"complete\" />"
+            },
+            "controls": {
+              "value": {
+                "label": "Value"
+              },
+              "target": {
+                "label": "Goal"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "progress-004",
+      "type": "registry:component",
+      "title": "Upload Speed Row",
+      "description": "Строка загрузки файла, которая отвечает не «сколько процентов», а «сколько ещё ждать»: объём, скорость и остаток считаются из трёх чисел и не могут разойтись между собой.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "progress-004/progress-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/progress-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-004-*. Серверный: хуков нет, форматирование байтов и остатка — чистые функции. Проценты, «7 МБ из 12 МБ» и «осталось 5 с» выводятся из loaded, total и speed, поэтому подписи согласованы по построению. Значок файла — плитка с срезанным углом на clip-path и расширением текстом, отдельной иконки не нужно. Дорожка растёт шириной от переменной значения с transition, а не пересобирает раскладку. Цифры моноширинные: при обычных числа дёргаются на каждом обновлении.",
+      "meta": {
+        "tags": ["progress", "upload", "file", "display"],
+        "ai": {
+          "export": "Progress004",
+          "usage": "<Progress004\n  fileName=\"quarterly-report-2026.pdf\"\n  loaded={7340032}\n  total={12582912}\n  speed={1048576}\n/>",
+          "summary": "Загрузка файла: доля, объём, скорость и оставшееся время выводятся из loaded, total и speed, поэтому подписи не расходятся. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-progress-004-* и не подменять её токенами вашей темы",
+            "вывод всех подписей из трёх чисел: посчитанный отдельно процент рано или поздно разойдётся с объёмом",
+            "aria-valuetext с остатком времени: голая доля не отвечает на вопрос «сколько ждать»",
+            "моноширинные цифры в строке показателей — иначе она дрожит на каждом обновлении",
+            "обрезку длинного имени многоточием с полным именем в title",
+            "собственную светлую подложку строки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "имя файла через fileName",
+            "переданный объём через loaded и полный через total",
+            "скорость через speed — из неё же считается остаток",
+            "цвет заливки через переменную акцента"
+          ],
+          "notes": [
+            "speed равная нулю даёт бесконечный остаток: компонент показывает «почти готово», а не «Infinity».",
+            "Форматирование объёма идёт в двоичных приставках: 1 МБ здесь 1048576 байт, а не миллион.",
+            "Отмену загрузки компонент не рисует: кнопку ставьте рядом, чтобы не спорить за ширину строки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "fileName",
+            "label": "Имя файла",
+            "type": "text",
+            "default": "quarterly-report-2026.pdf",
+            "maxLength": 60
+          },
+          {
+            "prop": "speed",
+            "label": "Скорость, байт/с",
+            "type": "number",
+            "default": 1048576,
+            "min": 0,
+            "max": 10485760
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A file upload row that answers \"how much longer\" rather than \"how many percent\": size, speed and time left are derived from three numbers and cannot contradict each other.",
+            "ai": {
+              "summary": "File upload: the ratio, the size, the speed and the time left all derive from loaded, total and speed, so the captions never drift apart. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-progress-004-* palette — do not swap it for your theme tokens",
+                "deriving every caption from the three numbers: a separately computed percent will eventually disagree with the size",
+                "the aria-valuetext carrying the time left: a bare ratio does not answer \"how long\"",
+                "the tabular figures in the stats row — otherwise it jitters on every update",
+                "the ellipsized long file name with the full name in title",
+                "the row's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the file name through fileName",
+                "the transferred size through loaded and the full size through total",
+                "the throughput through speed — the time left is derived from it",
+                "the fill colour through the accent variable"
+              ],
+              "notes": [
+                "A speed of zero yields an infinite remainder: the component prints \"almost done\", not \"Infinity\".",
+                "Sizes use binary prefixes: 1 MB here is 1048576 bytes, not a million.",
+                "The component draws no cancel control: put the button beside it so it does not fight for row width.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Progress004\n  fileName=\"quarterly-report-2026.pdf\"\n  loaded={7340032}\n  total={12582912}\n  speed={1048576}\n/>"
+            },
+            "controls": {
+              "fileName": {
+                "label": "File name",
+                "default": "quarterly-report-2026.pdf"
+              },
+              "speed": {
+                "label": "Speed, bytes/s"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "progress-005",
+      "type": "registry:component",
+      "title": "Category Usage Bars",
+      "description": "Расход по категориям столбиком полос с общей шкалой: все дорожки нормированы на одну ёмкость, поэтому длины сравнимы между собой, а не каждая сама себе сто процентов.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "progress-005/progress-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/progress-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-005-*. Серверный: хуков нет. Каждая строка — grid из двух колонок (имя и число) плюс дорожка на всю ширину: числа выстраиваются в колонку без табличной разметки. Доля считается от capacity, а не от суммы строк, поэтому свободное место остаётся видимым. Оттенок строки берётся хешем из её имени — новая категория получает свой цвет сама, таблицы соответствий нет; hue передаётся строке инлайновой переменной --vibeui-progress-005-hue и подставляется в oklch. У каждой дорожки собственный role=\"progressbar\" со шкалой в единицах ёмкости и aria-valuetext словами.",
+      "meta": {
+        "tags": ["progress", "storage", "breakdown", "display"],
+        "ai": {
+          "export": "Progress005",
+          "usage": "<Progress005\n  rows={[\n    { label: \"Видео\", value: 148 },\n    { label: \"Фотографии\", value: 96 },\n  ]}\n  capacity={512}\n  unit=\"ГБ\"\n/>",
+          "summary": "Расход по категориям: несколько дорожек с общей шкалой, оттенок строки считается из её имени, у каждой полосы своя роль progressbar. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-progress-005-* и не подменять её токенами вашей темы",
+            "общую нормировку на capacity: доли от собственной суммы строк сделают полосы несравнимыми",
+            "отдельный role=\"progressbar\" на каждой дорожке — одна общая роль скроет разбивку от скринридера",
+            "цветную метку рядом с именем: она связывает строку с её дорожкой без легенды",
+            "моноширинные числа: иначе колонка значений пляшет при обновлении",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "состав и значения строк через rows",
+            "полную ёмкость через capacity",
+            "единицу измерения через unit",
+            "формулу оттенка в функции hue, если нужна фирменная палитра"
+          ],
+          "notes": [
+            "capacity равная нулю переводит шкалу на сумму строк: свободное место тогда всегда ноль.",
+            "Строк больше восьми превращают карточку в частокол — сворачивайте хвост в «Прочее».",
+            "Хеш имени иногда сводит две соседние категории к близким оттенкам: проверяйте реальный список.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "capacity",
+            "label": "Ёмкость",
+            "type": "number",
+            "default": 512,
+            "min": 1,
+            "max": 2048
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "ГБ",
+            "maxLength": 8
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Usage by category as a stack of bars on one shared scale: every track is normalised to the same capacity, so the lengths are comparable instead of each being its own hundred percent.",
+            "ai": {
+              "summary": "Usage by category: several tracks on a shared scale, a hue derived from each row's name, and a progressbar role per bar. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-progress-005-* palette — do not swap it for your theme tokens",
+                "the shared normalisation against capacity: per-row ratios would make the bars incomparable",
+                "a separate progressbar role on every track — one shared role hides the breakdown from screen readers",
+                "the colour chip next to the name: it ties a row to its track without a legend",
+                "the tabular numbers: otherwise the value column dances on updates",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the row set and the values through rows",
+                "the full quota through capacity",
+                "the measurement unit through unit",
+                "the hue formula inside the hue function if you need brand colours"
+              ],
+              "notes": [
+                "A capacity of zero switches the scale to the row sum, and free space is then always zero.",
+                "More than eight rows turn the card into a picket fence — fold the tail into \"Other\".",
+                "The name hash occasionally maps two neighbouring categories to close hues: check your real list.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Progress005\n  rows={[\n    { label: \"Video\", value: 148 },\n    { label: \"Photos\", value: 96 },\n  ]}\n  capacity={512}\n  unit=\"GB\"\n/>"
+            },
+            "controls": {
+              "capacity": {
+                "label": "Capacity"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": "GB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "progress-006",
+      "type": "registry:component",
+      "title": "Threshold Alert Bar",
+      "description": "Полоса с порогом, нарисованным прямо на дорожке: пока расход ниже — она спокойная, выше — меняет цвет, получает штриховку и роняет предупреждение в role=\"status\".",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "progress-006/progress-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/progress-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-006-*. Серверный: хуков нет, состояние превышения выводится сравнением value и threshold. Засечка порога — абсолютный элемент внутри дорожки на left от переменной, поэтому она стоит там же, где заканчивается план, а не в подписи сбоку. Превышение помечено атрибутом data-over на корне: он переключает и цвет заливки, и штриховку repeating-linear-gradient, и показ блока предупреждения. Штриховка нужна, потому что «стало красным» не читается без цвета. Предупреждение объявлено role=\"status\" и скрыто атрибутом hidden, а не удалено из разметки: живая область должна существовать до того, как в ней появится текст.",
+      "meta": {
+        "tags": ["progress", "threshold", "quota", "display"],
+        "ai": {
+          "export": "Progress006",
+          "usage": "<Progress006 value={118} threshold={100} limit={140} label=\"Расход API-квоты\" />",
+          "summary": "Полоса с порогом: засечка плана на дорожке, штриховка при превышении и предупреждение в живой области role=\"status\". Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-progress-006-* и не подменять её токенами вашей темы",
+            "засечку порога внутри дорожки: подпись сбоку не показывает, где именно проходит план",
+            "штриховку при превышении — цвет один не читается при дальтонизме и в монохроме",
+            "role=\"status\" на предупреждении и скрытие через hidden, а не удаление узла: иначе объявление не прозвучит",
+            "aria-valuetext, называющий и расход, и порог одной фразой",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "текущий расход через value и порог через threshold",
+            "верх шкалы через limit",
+            "заголовок через label",
+            "цвета спокойного и тревожного состояния через переменные палитры"
+          ],
+          "notes": [
+            "Порог считается в единицах шкалы, а не в процентах: при смене limit его положение пересчитывается само.",
+            "Значение выше limit упирается в конец дорожки — сама шкала о перерасходе уже не расскажет, о нём говорит текст.",
+            "Текст предупреждения жёстко про запросы: под другую метрику его надо переписать вместе с единицей.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "value",
+            "label": "Расход",
+            "type": "number",
+            "default": 118,
+            "min": 0,
+            "max": 140
+          },
+          {
+            "prop": "threshold",
+            "label": "Порог",
+            "type": "number",
+            "default": 100,
+            "min": 1,
+            "max": 140
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A bar with the threshold drawn on the track itself: below it the bar stays calm, above it the fill changes colour, gains hatching and drops a warning into a role=\"status\" region.",
+            "ai": {
+              "summary": "A bar with a threshold: the plan notch sits on the track, the fill gains hatching when exceeded and a live status region carries the warning. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-progress-006-* palette — do not swap it for your theme tokens",
+                "the threshold notch inside the track: a caption beside it does not show where the plan actually ends",
+                "the hatching on overflow — colour alone fails for colour blindness and in monochrome",
+                "the role=\"status\" on the warning and hiding it with hidden rather than removing the node, or the announcement never fires",
+                "the aria-valuetext that names both the usage and the threshold in one phrase",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the current usage through value and the limit line through threshold",
+                "the top of the scale through limit",
+                "the heading through label",
+                "the calm and alarm colours through the palette variables"
+              ],
+              "notes": [
+                "The threshold is expressed in scale units, not percent: changing limit repositions it automatically.",
+                "A value above limit pins to the end of the track — the scale itself stops reporting the overshoot, the text does.",
+                "The warning copy is written about API requests: rewrite it together with the unit for another metric.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Progress006 value={118} threshold={100} limit={140} label=\"API quota usage\" />"
+            },
+            "controls": {
+              "value": {
+                "label": "Usage"
+              },
+              "threshold": {
+                "label": "Threshold"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "progress-007",
+      "type": "registry:component",
+      "title": "Barber Pole Task",
+      "description": "Неопределённый прогресс без выдуманной доли: дорожка залита бегущей штриховкой во всю ширину, а вместо процентов показан счётчик уже сделанной работы.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "progress-007/progress-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/progress-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-007-*. Серверный: хуков нет. Движение задано анимацией background-position по repeating-linear-gradient, поэтому дорожка остаётся одним элементом без бегунка внутри и без пересчёта раскладки на каждом кадре. У role=\"progressbar\" сознательно нет aria-valuenow: как только атрибут появляется, скринридер называет процент, которого никто не считал; вместо него стоит aria-valuetext про неизвестную длительность. Точка-маячок в заголовке пульсирует прозрачностью и остаётся признаком работы, когда дорожка не попала в поле зрения. При запрете движения штриховка снимается и дорожка становится ровной заливкой.",
+      "meta": {
+        "tags": ["progress", "indeterminate", "loading", "display"],
+        "ai": {
+          "export": "Progress007",
+          "usage": "<Progress007\n  label=\"Индексируем архив\"\n  processed={12480}\n  unit=\"документов\"\n  elapsed=\"идёт 3 мин\"\n/>",
+          "summary": "Неопределённый прогресс: бегущая штриховка вместо доли и честный счётчик сделанного вместо процента. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-progress-007-* и не подменять её токенами вашей темы",
+            "отсутствие aria-valuenow: любой выставленный процент здесь будет выдуманным",
+            "aria-valuetext про неизвестную длительность — иначе роль progressbar звучит как пустая",
+            "анимацию background-position, а не изменение ширины: ширина заставляет браузер пересчитывать раскладку",
+            "счётчик сделанной работы: это единственное честное число в блоке",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "заголовок через label",
+            "число сделанного через processed и его единицу через unit",
+            "строку времени через elapsed",
+            "цвет штриховки через переменную акцента"
+          ],
+          "notes": [
+            "Как только доля становится известна, этот блок надо менять на определённую полосу, а не дорисовывать ему проценты.",
+            "Быстрая штриховка утомляет: период меньше 0.7 с читается как мерцание.",
+            "processed форматируется локалью ru-RU — под другой язык поменяйте и её.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Индексируем архив",
+            "maxLength": 40
+          },
+          {
+            "prop": "processed",
+            "label": "Обработано",
+            "type": "number",
+            "default": 12480,
+            "min": 0,
+            "max": 1000000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Indeterminate progress with no invented ratio: the track is filled edge to edge with moving hatching, and a counter of finished work stands in for the percentage.",
+            "ai": {
+              "summary": "Indeterminate progress: moving hatching instead of a ratio and an honest counter of work done instead of a percent. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-progress-007-* palette — do not swap it for your theme tokens",
+                "the absence of aria-valuenow: any percentage set here would be invented",
+                "the aria-valuetext about the unknown duration — otherwise the progressbar role sounds empty",
+                "the background-position animation rather than a width change: width forces layout on every frame",
+                "the counter of finished work: it is the only honest number in the block",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the heading through label",
+                "the amount done through processed and its unit through unit",
+                "the elapsed line through elapsed",
+                "the hatching colour through the accent variable"
+              ],
+              "notes": [
+                "Once the ratio becomes known, swap this block for a determinate bar instead of bolting percentages onto it.",
+                "Fast hatching is tiring: a period under 0.7s reads as flicker.",
+                "processed is formatted with the ru-RU locale — change it along with the language.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Progress007\n  label=\"Indexing the archive\"\n  processed={12480}\n  unit=\"documents\"\n  elapsed=\"running 3 min\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Heading",
+                "default": "Indexing the archive"
+              },
+              "processed": {
+                "label": "Processed"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "progress-008",
+      "type": "registry:component",
+      "title": "Named Step Progress",
+      "description": "Прогресс, где главный ответ дан словами: крупная строка называет текущий шаг и следующий за ним, а вехи на непрерывной дорожке служат картой пути.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "progress-008/progress-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/progress-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-008-*. Серверный: хуков нет. Дорожка нарисована двумя псевдоэлементами контейнера: ::before — серая линия на всю ширину, ::after — заливка до текущей вехи по переменной значения; вехи лежат поверх обычными span'ами в flex с распором. Кольцо цвета подложки у вехи задано border, поэтому линия под ней не просвечивает. Доля считается как index / (total − 1): заливка приходит ровно в центр текущей вехи, а не «примерно туда». role=\"progressbar\" объявлен в шагах, aria-valuetext повторяет строку «Шаг 3 из 5: Проверка данных».",
+      "meta": {
+        "tags": ["progress", "steps", "wizard", "display"],
+        "ai": {
+          "export": "Progress008",
+          "usage": "<Progress008\n  title=\"Импорт справочника\"\n  steps={[\"Загрузка файла\", \"Разбор колонок\", \"Проверка данных\"]}\n  current={2}\n/>",
+          "summary": "Пошаговый прогресс: текущий шаг назван словами крупной строкой, вехи на непрерывной дорожке показывают остаток пути. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-progress-008-* и не подменять её токенами вашей темы",
+            "крупную строку с именем шага: она и есть главный ответ, доля — вспомогательная",
+            "формулу index / (total − 1): при делении на total заливка не доходит до последней вехи",
+            "кольцо цвета подложки у вехи — без него линия просвечивает сквозь точку",
+            "aria-valuetext, повторяющий подпись словами: «3 из 5» ничего не говорит о содержании шага",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "список шагов через steps",
+            "текущий шаг через current",
+            "заголовок процесса через title",
+            "цвет заливки и вех через переменную акцента"
+          ],
+          "notes": [
+            "Один шаг в steps даёт заливку на всю дорожку: это осознанное поведение, а не деление на ноль.",
+            "Имена шагов не обрезаются: слишком длинное перенесётся на вторую строку и сдвинет вехи вниз.",
+            "Подписи под вехами компонент не рисует специально — их место занимает крупная строка.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "current",
+            "label": "Текущий шаг",
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 4
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Импорт справочника",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Progress that gives its main answer in words: a large line names the current step and the one after it, while the milestones on a continuous track act as a map of the route.",
+            "ai": {
+              "summary": "Step progress: the current step is named in words by a large line, and milestones on a continuous track show how much is left. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-progress-008-* palette — do not swap it for your theme tokens",
+                "the large line with the step name: it is the main answer, the ratio is secondary",
+                "the index / (total − 1) formula: dividing by total leaves the fill short of the last milestone",
+                "the surface-coloured ring around each milestone — without it the line shows through the dot",
+                "the aria-valuetext repeating the caption in words: \"3 of 5\" says nothing about the step itself",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the step list through steps",
+                "the current step through current",
+                "the process heading through title",
+                "the fill and milestone colour through the accent variable"
+              ],
+              "notes": [
+                "A single step in steps fills the whole track: that is deliberate, not a division by zero.",
+                "Step names are not truncated: a very long one wraps to a second line and pushes the milestones down.",
+                "The component deliberately draws no captions under the milestones — the large line takes that role.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Progress008\n  title=\"Catalogue import\"\n  steps={[\"Upload file\", \"Parse columns\", \"Validate data\"]}\n  current={2}\n/>"
+            },
+            "controls": {
+              "current": {
+                "label": "Current step"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Catalogue import"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "progress-009",
+      "type": "registry:component",
+      "title": "Travelling Value Bubble",
+      "description": "Полоса, у которой число едет над концом заливки: глазу не нужно связывать разнесённые подпись и дорожку, а clamp не даёт пузырьку вылезти за края у нуля и ста процентов.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "progress-009/progress-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/progress-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-009-*. Серверный: хуков нет. Пузырёк позиционируется абсолютно по left от переменной значения и центрируется translateX(−50%); crop у краёв снимает clamp с границами в 1.5rem, поэтому у нуля и ста процентов он остаётся внутри карточки. Хвостик пузырька — псевдоэлемент с треугольником на бордюрах, отдельной картинки не нужно. Число в пузырьке помечено aria-hidden: его уже сообщает aria-valuenow дорожки, и без этого скринридер прочитал бы значение дважды.",
+      "meta": {
+        "tags": ["progress", "bar", "label", "display"],
+        "ai": {
+          "export": "Progress009",
+          "usage": "<Progress009\n  value={68}\n  label=\"Профиль заполнен\"\n  caption=\"Осталось добавить телефон и фотографию\"\n/>",
+          "summary": "Полоса с пузырьком значения над концом заливки: положение считается через clamp, число дублируется только визуально. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-progress-009-* и не подменять её токенами вашей темы",
+            "clamp в позиции пузырька: без него на нуле и на ста процентах он вылезает за карточку",
+            "aria-hidden на числе в пузырьке — иначе скринридер прочитает значение дважды",
+            "запас сверху у дорожки: пузырёк живёт в этом отступе и без него накроет заголовок",
+            "моноширинные цифры в пузырьке: иначе он дёргается по ширине при каждом обновлении",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "долю через value",
+            "заголовок через label",
+            "пояснение под полосой через caption",
+            "цвет заливки и пузырька через переменную акцента"
+          ],
+          "notes": [
+            "Пузырёк перекрывает соседей по вертикали: не ставьте два таких блока вплотную друг к другу.",
+            "На ширине меньше 12rem пузырёк почти всегда упирается в clamp и перестаёт показывать позицию.",
+            "value зажимается в 0–100: значения сверх ста показывать этот вариант не умеет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "value",
+            "label": "Значение",
+            "type": "number",
+            "default": 68,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "caption",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Осталось добавить телефон и фотографию",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A bar whose number rides above the end of the fill: the eye no longer has to link a distant caption to the track, and clamp keeps the bubble inside the card at zero and a hundred percent.",
+            "ai": {
+              "summary": "A bar with a value bubble above the end of the fill: the position is computed with clamp and the number is duplicated visually only. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-progress-009-* palette — do not swap it for your theme tokens",
+                "the clamp in the bubble position: without it zero and a hundred percent push it out of the card",
+                "the aria-hidden on the bubble number — otherwise the value is read out twice",
+                "the top padding on the rail: the bubble lives in that gap and would cover the heading without it",
+                "the tabular figures in the bubble: otherwise its width jumps on every update",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the ratio through value",
+                "the heading through label",
+                "the explanation under the bar through caption",
+                "the fill and bubble colour through the accent variable"
+              ],
+              "notes": [
+                "The bubble overlaps vertical neighbours: do not stack two of these blocks tightly.",
+                "Below 12rem wide the bubble almost always hits the clamp and stops indicating position.",
+                "value is clamped to 0–100: this variant cannot display anything above a hundred.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Progress009\n  value={68}\n  label=\"Profile completeness\"\n  caption=\"Add a phone number and a photo\"\n/>"
+            },
+            "controls": {
+              "value": {
+                "label": "Value"
+              },
+              "caption": {
+                "label": "Explanation",
+                "default": "Add a phone number and a photo"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "skeleton-002",
+      "type": "registry:component",
+      "title": "Card Skeleton",
+      "description": "Заглушка карточки, повторяющая её каркас целиком: обложка с заданной пропорцией, заголовок, две строки текста и ряд кнопок — при подстановке данных высота не меняется.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "skeleton-002/skeleton-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/skeleton-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-002-*. Серверный: хуков нет. Место под обложку занято через aspect-ratio, а не фиксированной высотой, поэтому карточка держит одну и ту же высоту при любой ширине колонки и соседи по сетке не прыгают. Заливка объявлена одним правилом сразу для обложки, полос и кнопок: блик и база не могут разойтись между частями. Блик едет background-position, а не transform, — элементы остаются на своих местах. Корень помечен role=\"status\" и aria-busy, поэтому вспомогательные технологии сообщают о загрузке, а не читают пустые прямоугольники.",
+      "meta": {
+        "tags": ["skeleton", "card", "loading", "display"],
+        "ai": {
+          "export": "Skeleton002",
+          "usage": "<Skeleton002 ratio=\"16 / 9\" label=\"Карточка загружается\" />",
+          "summary": "Заглушка карточки: обложка занимает место пропорцией, дальше заголовок, текст и кнопки. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-skeleton-002-* и не подменять её токенами вашей темы",
+            "aspect-ratio под обложку вместо фиксированной высоты: иначе сетка прыгает при подстановке картинки",
+            "role=\"status\" и aria-busy на корне — без них заглушка молчит для скринридера",
+            "общее правило заливки для всех частей: разными правилами блик разъедется",
+            "правило prefers-reduced-motion, гасящее блик до ровной заливки",
+            "собственную светлую подложку карточки: на тёмной витрине серые полосы иначе не видно"
+          ],
+          "adapt": [
+            "пропорцию обложки через ratio",
+            "подпись для скринридера через label",
+            "ширины полос заголовка и текста в CSS под свою типографику",
+            "радиусы и отступы карточки под свою систему"
+          ],
+          "notes": [
+            "Заглушка обязана совпадать по метрике с настоящей карточкой, иначе смысл в ней пропадает.",
+            "Больше секунды показывать скелетон вместо мгновенного ответа вреднее, чем показать пустое место.",
+            "Внутри заглушки нет текста: подпись живёт только в aria-label.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "ratio",
+            "label": "Пропорция обложки",
+            "type": "select",
+            "default": "16 / 9",
+            "options": ["16 / 9", "4 / 3", "1 / 1"]
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Карточка загружается",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A card skeleton that mirrors the whole frame: a cover with a fixed aspect ratio, a heading, two text lines and a row of buttons — the height does not change when the data lands.",
+            "ai": {
+              "summary": "A card skeleton: the cover reserves its space by aspect ratio, followed by heading, text and buttons. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-skeleton-002-* palette — do not swap it for your theme tokens",
+                "aspect-ratio for the cover instead of a fixed height: otherwise the grid jumps when the image lands",
+                "role=\"status\" and aria-busy on the root — without them the skeleton is silent to screen readers",
+                "the shared fill rule for every part: separate rules let the shimmer drift apart",
+                "the prefers-reduced-motion rule that flattens the shimmer to a plain fill",
+                "the card's own light surface: on a dark gallery the grey bars are invisible otherwise"
+              ],
+              "adapt": [
+                "the cover proportion through ratio",
+                "the screen-reader caption through label",
+                "the heading and text bar widths in CSS to match your typography",
+                "the radii and paddings of the card to fit your system"
+              ],
+              "notes": [
+                "The skeleton must match the real card's metrics, otherwise it loses its point.",
+                "Showing a skeleton for more than a second instead of answering instantly is worse than showing nothing.",
+                "There is no text inside the skeleton: the caption lives only in aria-label.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Skeleton002 ratio=\"16 / 9\" label=\"Card is loading\" />"
+            },
+            "controls": {
+              "ratio": {
+                "label": "Cover ratio"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Card is loading"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "skeleton-003",
+      "type": "registry:component",
+      "title": "List Rows Skeleton",
+      "description": "Заглушка списка, где строки оживают волной: каждой задана своя задержка анимации, поэтому блик идёт сверху вниз и список читается как один объект, а не пачка мигающих полос.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "skeleton-003/skeleton-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/skeleton-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-003-*. Серверный: хуков нет. Задержка передаётся строке инлайновой переменной --vibeui-skeleton-003-delay и подхватывается правилом animation-delay, поэтому число строк можно менять пропсом, не трогая CSS. Ширины текстовых полос чередуются через :nth-child: одинаковые прямоугольники читаются как таблица, а не как список людей. Аватар и полосы делят одно правило заливки, чтобы блик шёл по строке целиком. Корень помечен role=\"status\" и aria-busy; при prefers-reduced-motion блик снимается, остаётся ровная заливка.",
+      "meta": {
+        "tags": ["skeleton", "list", "loading", "display"],
+        "ai": {
+          "export": "Skeleton003",
+          "usage": "<Skeleton003 rows={5} label=\"Список загружается\" />",
+          "summary": "Заглушка списка строк: аватар, два текстовых поля и правый хвост, блик идёт волной сверху вниз. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-skeleton-003-* и не подменять её токенами вашей темы",
+            "ступенчатую задержку строк: без неё список мигает как одно пятно",
+            "чередование ширин полос — одинаковые читаются как таблица, а не как список",
+            "role=\"status\" и aria-busy на корне, иначе заглушка молчит для скринридера",
+            "правило prefers-reduced-motion, гасящее и волну, и блик",
+            "собственную светлую подложку списка: на тёмной витрине серые полосы иначе не видно"
+          ],
+          "adapt": [
+            "число строк через rows",
+            "подпись для скринридера через label",
+            "высоту строки и размер аватара в CSS",
+            "шаг задержки волны в коде компонента"
+          ],
+          "notes": [
+            "Число строк должно совпадать с ожидаемой страницей выдачи, иначе список дёрнется при подстановке.",
+            "Больше двадцати строк компонент не рисует: длинная волна выглядит как рябь.",
+            "Задержка последней строки в длинном списке заметно отстаёт — уменьшайте шаг при росте rows.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "rows",
+            "label": "Строк",
+            "type": "number",
+            "default": 5,
+            "min": 1,
+            "max": 20
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Список загружается",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A list skeleton whose rows come alive in a wave: each row carries its own animation delay, so the shimmer travels top to bottom and the list reads as one object, not a pile of blinking bars.",
+            "ai": {
+              "summary": "A list row skeleton: avatar, two text fields and a trailing chip, with the shimmer travelling top to bottom. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-skeleton-003-* palette — do not swap it for your theme tokens",
+                "the staggered row delay: without it the list blinks as a single blob",
+                "the alternating bar widths — identical ones read as a table, not a list",
+                "role=\"status\" and aria-busy on the root, or the skeleton is silent to screen readers",
+                "the prefers-reduced-motion rule that stops both the wave and the shimmer",
+                "the list's own light surface: on a dark gallery the grey bars are invisible otherwise"
+              ],
+              "adapt": [
+                "the row count through rows",
+                "the screen-reader caption through label",
+                "the row height and avatar size in CSS",
+                "the wave delay step in the component code"
+              ],
+              "notes": [
+                "The row count should match the expected page size, otherwise the list jerks when data lands.",
+                "The component caps at twenty rows: a longer wave looks like ripple noise.",
+                "In a long list the last row lags noticeably — shrink the step as rows grows.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Skeleton003 rows={5} label=\"List is loading\" />"
+            },
+            "controls": {
+              "rows": {
+                "label": "Rows"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "List is loading"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "skeleton-004",
+      "type": "registry:component",
+      "title": "Table Skeleton",
+      "description": "Заглушка таблицы, которая держит ширины будущих колонок: шапка и строки лежат на одной сетке grid-template-columns, поэтому при подстановке данных ничего не разъезжается.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "skeleton-004/skeleton-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/skeleton-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-004-*. Серверный: хуков нет. Раскладка задана единственной переменной --vibeui-skeleton-004-columns, которую подхватывают и шапка, и все строки: колонки не могут разойтись, потому что у них буквально одна сетка. Длины ячеек чередуются атрибутом data-fill и правилами :nth-child, иначе заглушка читается как решётка. Шапка выделена фоном и нижней границей, поэтому таблица узнаётся до появления текста. Корень помечен role=\"status\" и aria-busy; при prefers-reduced-motion блик снимается.",
+      "meta": {
+        "tags": ["skeleton", "table", "grid", "display"],
+        "ai": {
+          "export": "Skeleton004",
+          "usage": "<Skeleton004\n  rows={5}\n  columns=\"1.5rem 2fr 1fr 1fr 4rem\"\n  label=\"Таблица загружается\"\n/>",
+          "summary": "Заглушка таблицы: шапка и строки делят одну переменную с сеткой колонок, ячейки разной длины. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-skeleton-004-* и не подменять её токенами вашей темы",
+            "одну переменную сетки на шапку и строки: разные сетки расходятся на первой же правке",
+            "разную длину ячеек — одинаковые прямоугольники читаются как решётка, а не как данные",
+            "выделенную шапку: без неё блок не узнаётся как таблица",
+            "role=\"status\" и aria-busy на корне, иначе заглушка молчит для скринридера",
+            "собственную светлую подложку: на тёмной витрине серые ячейки иначе не видно"
+          ],
+          "adapt": [
+            "раскладку колонок через columns",
+            "число строк через rows",
+            "подпись для скринридера через label",
+            "высоту строки и отступы ячеек в CSS"
+          ],
+          "notes": [
+            "columns принимает любое валидное значение grid-template-columns, но число колонок в разметке фиксировано пятью.",
+            "Ширины колонок обязаны совпадать с настоящей таблицей, иначе заглушка врёт и данные прыгнут.",
+            "Горизонтальную прокрутку компонент не рисует: широкую таблицу оборачивайте сами.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "rows",
+            "label": "Строк",
+            "type": "number",
+            "default": 5,
+            "min": 1,
+            "max": 20
+          },
+          {
+            "prop": "columns",
+            "label": "Колонки",
+            "type": "text",
+            "default": "1.5rem 2fr 1fr 1fr 4rem",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A table skeleton that holds the future column widths: the header and the rows share one grid-template-columns value, so nothing shifts when the data arrives.",
+            "ai": {
+              "summary": "A table skeleton: the header and rows share a single column-grid variable, and cells vary in length. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-skeleton-004-* palette — do not swap it for your theme tokens",
+                "one grid variable for header and rows: separate grids drift apart on the first edit",
+                "the varying cell lengths — identical rectangles read as a lattice, not as data",
+                "the distinguished header: without it the block is not recognisable as a table",
+                "role=\"status\" and aria-busy on the root, or the skeleton is silent to screen readers",
+                "its own light surface: on a dark gallery the grey cells are invisible otherwise"
+              ],
+              "adapt": [
+                "the column layout through columns",
+                "the row count through rows",
+                "the screen-reader caption through label",
+                "the row height and cell padding in CSS"
+              ],
+              "notes": [
+                "columns accepts any valid grid-template-columns value, but the markup is fixed at five columns.",
+                "The widths must match the real table, otherwise the skeleton lies and the data jumps.",
+                "The component draws no horizontal scrolling: wrap wide tables yourself.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Skeleton004\n  rows={5}\n  columns=\"1.5rem 2fr 1fr 1fr 4rem\"\n  label=\"Table is loading\"\n/>"
+            },
+            "controls": {
+              "rows": {
+                "label": "Rows"
+              },
+              "columns": {
+                "label": "Columns",
+                "default": "1.5rem 2fr 1fr 1fr 4rem"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "skeleton-005",
+      "type": "registry:component",
+      "title": "Profile Header Skeleton",
+      "description": "Заглушка шапки профиля с самой хрупкой её деталью — круглым аватаром, наезжающим на обложку: наезд считается от той же переменной, что и высота обложки.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "skeleton-005/skeleton-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/skeleton-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-005-*. Серверный: хуков нет. Высота обложки объявлена переменной, а отрицательный margin аватара считается как половина его диаметра, поэтому при смене высоты каркас не разъезжается и настоящая шапка встаёт ровно на место заглушки. Кольцо вокруг аватара нарисовано box-shadow цветом подложки — это дешевле бордюра и не увеличивает размер круга. Метрики разложены сеткой из трёх равных колонок, столько же, сколько в настоящей шапке. Корень помечен role=\"status\" и aria-busy; при prefers-reduced-motion блик становится ровной заливкой.",
+      "meta": {
+        "tags": ["skeleton", "profile", "header", "display"],
+        "ai": {
+          "export": "Skeleton005",
+          "usage": "<Skeleton005 cover=\"5.5rem\" label=\"Профиль загружается\" />",
+          "summary": "Заглушка шапки профиля: обложка, наезжающий аватар, имя, био и три метрики. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-skeleton-005-* и не подменять её токенами вашей темы",
+            "наезд аватара отрицательным margin от его же диаметра: иначе при смене высоты обложки каркас разъедется",
+            "кольцо box-shadow цветом подложки — бордюр увеличил бы круг и сдвинул текст",
+            "три равные колонки метрик: другое число разойдётся с настоящей шапкой",
+            "role=\"status\" и aria-busy на корне, иначе заглушка молчит для скринридера",
+            "собственную светлую подложку: на тёмной витрине серые фигуры иначе не видно"
+          ],
+          "adapt": [
+            "высоту обложки через cover",
+            "подпись для скринридера через label",
+            "диаметр аватара переменной размера",
+            "ширины полос имени и био в CSS"
+          ],
+          "notes": [
+            "Диаметр аватара живёт в CSS-переменной: меняя его пропсом стиля, наезд пересчитается сам.",
+            "Заглушка обязана совпадать по высоте с настоящей шапкой, иначе страница дёрнется при подстановке.",
+            "Кнопки действий в шапке компонент не рисует: добавьте их отдельным рядом, если они у вас есть.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "cover",
+            "label": "Высота обложки",
+            "type": "text",
+            "default": "5.5rem",
+            "maxLength": 12
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Профиль загружается",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A profile header skeleton with its most fragile detail — the round avatar overlapping the cover: the overlap is computed from the same variable that sets the cover height.",
+            "ai": {
+              "summary": "A profile header skeleton: cover, overlapping avatar, name, bio and three stat tiles. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-skeleton-005-* palette — do not swap it for your theme tokens",
+                "the avatar overlap as a negative margin of its own diameter: otherwise changing the cover height breaks the frame",
+                "the surface-coloured box-shadow ring — a border would grow the circle and shift the text",
+                "the three equal stat columns: any other count diverges from the real header",
+                "role=\"status\" and aria-busy on the root, or the skeleton is silent to screen readers",
+                "its own light surface: on a dark gallery the grey shapes are invisible otherwise"
+              ],
+              "adapt": [
+                "the cover height through cover",
+                "the screen-reader caption through label",
+                "the avatar diameter through its size variable",
+                "the name and bio bar widths in CSS"
+              ],
+              "notes": [
+                "The avatar diameter lives in a CSS variable: change it and the overlap recomputes itself.",
+                "The skeleton must match the real header's height, otherwise the page jerks when data lands.",
+                "The component draws no header action buttons: add them as a separate row if you have them.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Skeleton005 cover=\"5.5rem\" label=\"Profile is loading\" />"
+            },
+            "controls": {
+              "cover": {
+                "label": "Cover height",
+                "default": "5.5rem"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Profile is loading"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "skeleton-006",
+      "type": "registry:component",
+      "title": "Masked Paragraph Skeleton",
+      "description": "Абзацы-заглушки, нарисованные одним элементом: строки вырезаны повторяющейся маской, поэтому их число меняется переменной, а интерлиньяж по определению совпадает с будущим текстом.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "skeleton-006/skeleton-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/skeleton-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-006-*. Серверный: хуков нет. Абзац — один элемент, у которого фон-блик вырезан repeating-linear-gradient в свойстве mask: число строк задаёт переменная, а не количество узлов, и высота считается формулой строки и шага. Недописанная последняя строка нарисована накладкой цвета подложки, которая лежит соседом, а не ребёнком: внутри маскированного элемента её вырезало бы вместе со строками. Длины хвостов берутся из фиксированного массива, а не случайно, — случайные разъехались бы между сервером и клиентом при гидратации. Корень помечен role=\"status\" и aria-busy.",
+      "meta": {
+        "tags": ["skeleton", "text", "mask", "display"],
+        "ai": {
+          "export": "Skeleton006",
+          "usage": "<Skeleton006 paragraphs={[3, 4, 2]} label=\"Текст загружается\" />",
+          "summary": "Заглушка абзацев: строки вырезаны маской в одном элементе, хвост последней строки закрыт накладкой подложки. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-skeleton-006-* и не подменять её токенами вашей темы",
+            "маску repeating-linear-gradient как способ рисовать строки: она держит интерлиньяж одним значением",
+            "накладку хвоста соседом, а не ребёнком абзаца — внутри маски её вырежет",
+            "фиксированные длины хвостов: случайные разъедутся между сервером и клиентом",
+            "role=\"status\" и aria-busy на корне, иначе заглушка молчит для скринридера",
+            "собственную светлую подложку: и накладка хвоста, и контраст полос считаются от неё"
+          ],
+          "adapt": [
+            "число абзацев и строк в каждом через paragraphs",
+            "подпись для скринридера через label",
+            "высоту строки и шаг интерлиньяжа переменными",
+            "набор длин хвостов в массиве TAILS"
+          ],
+          "notes": [
+            "Шаг маски обязан совпадать с line-height настоящего текста, иначе при подстановке абзац подпрыгнет.",
+            "Накладка хвоста закрашена цветом подложки: на прозрачном фоне она станет заметным прямоугольником.",
+            "mask пока требует префикса в очень старых WebKit — там строки просто станут сплошным блоком.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Текст загружается",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Paragraph skeletons drawn as a single element: the lines are cut out by a repeating mask, so their count is one variable and the leading matches the future text by construction.",
+            "ai": {
+              "summary": "A paragraph skeleton: lines are cut by a mask inside one element, and the last line's tail is covered by a surface-coloured patch. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-skeleton-006-* palette — do not swap it for your theme tokens",
+                "the repeating-linear-gradient mask as the way to draw lines: it keeps the leading in one value",
+                "the tail patch as a sibling rather than a child — inside the mask it would be cut away too",
+                "the fixed tail widths: random ones would mismatch between server and client",
+                "role=\"status\" and aria-busy on the root, or the skeleton is silent to screen readers",
+                "its own light surface: both the tail patch and the bar contrast are measured against it"
+              ],
+              "adapt": [
+                "the paragraph count and lines per paragraph through paragraphs",
+                "the screen-reader caption through label",
+                "the line height and leading step through the variables",
+                "the set of tail widths in the TAILS array"
+              ],
+              "notes": [
+                "The mask step must match the real text's line-height, otherwise the paragraph jumps when data lands.",
+                "The tail patch is painted in the surface colour: on a transparent background it becomes a visible rectangle.",
+                "mask still needs a prefix in very old WebKit builds — there the lines collapse into a solid block.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Skeleton006 paragraphs={[3, 4, 2]} label=\"Text is loading\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Text is loading"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "skeleton-007",
+      "type": "registry:component",
+      "title": "Tile Grid Skeleton",
+      "description": "Заглушка галереи, которая считает колонки сама: auto-fill с minmax берёт ширину блока, а не окна, поэтому в узкой карточке плиток две, а на широкой странице шесть.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "skeleton-007/skeleton-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/skeleton-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-007-*. Серверный: хуков нет. Сетка объявлена как repeat(auto-fill, minmax(var(--vibeui-skeleton-007-min), 1fr)): число колонок считается от собственной ширины блока, поэтому раскладка одинаково честна и в карточке каталога, и на полной странице. Плитка квадратная по aspect-ratio, а не по высоте, поэтому тянется вместе с колонкой. Задержка блика раздаётся по кругу из шести значений: волна идёт по сетке, но не растягивается бесконечно при росте числа плиток. Корень помечен role=\"status\" и aria-busy.",
+      "meta": {
+        "tags": ["skeleton", "grid", "gallery", "display"],
+        "ai": {
+          "export": "Skeleton007",
+          "usage": "<Skeleton007 tiles={8} minTile=\"6rem\" label=\"Галерея загружается\" />",
+          "summary": "Заглушка сетки плиток: число колонок считает auto-fill от ширины блока, плитки квадратные по пропорции. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-skeleton-007-* и не подменять её токенами вашей темы",
+            "auto-fill с minmax: раскладка обязана считаться от ширины блока, а не от ширины окна",
+            "квадрат через aspect-ratio, а не фиксированную высоту — иначе плитки перестанут тянуться",
+            "закольцованную задержку блика: линейная волна на двадцати плитках выглядит поломкой",
+            "role=\"status\" и aria-busy на корне, иначе заглушка молчит для скринридера",
+            "собственную светлую подложку: на тёмной витрине серые плитки иначе не видно"
+          ],
+          "adapt": [
+            "число плиток через tiles",
+            "минимальную ширину плитки через minTile",
+            "подпись для скринридера через label",
+            "зазор сетки и радиусы плиток в CSS"
+          ],
+          "notes": [
+            "minTile задаёт не ширину, а нижнюю границу: реальная плитка тянется до 1fr колонки.",
+            "Число плиток стоит брать равным размеру первой страницы выдачи, иначе сетка дёрнется.",
+            "Больше двадцати четырёх плиток компонент не рисует: заглушка тяжелее самой галереи не нужна.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tiles",
+            "label": "Плиток",
+            "type": "number",
+            "default": 8,
+            "min": 1,
+            "max": 24
+          },
+          {
+            "prop": "minTile",
+            "label": "Минимум плитки",
+            "type": "text",
+            "default": "6rem",
+            "maxLength": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A gallery skeleton that counts its own columns: auto-fill with minmax measures the block's width rather than the viewport, so a narrow card gets two tiles and a wide page gets six.",
+            "ai": {
+              "summary": "A tile grid skeleton: auto-fill derives the column count from the block width, and tiles stay square by aspect ratio. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-skeleton-007-* palette — do not swap it for your theme tokens",
+                "auto-fill with minmax: the layout must measure the block, not the viewport",
+                "the square via aspect-ratio rather than a fixed height — otherwise the tiles stop stretching",
+                "the wrapped shimmer delay: a linear wave across twenty tiles looks broken",
+                "role=\"status\" and aria-busy on the root, or the skeleton is silent to screen readers",
+                "its own light surface: on a dark gallery the grey tiles are invisible otherwise"
+              ],
+              "adapt": [
+                "the tile count through tiles",
+                "the minimum tile width through minTile",
+                "the screen-reader caption through label",
+                "the grid gap and tile radii in CSS"
+              ],
+              "notes": [
+                "minTile sets a lower bound, not a width: the real tile stretches to the 1fr column.",
+                "Match the tile count to your first page size, otherwise the grid jerks when data lands.",
+                "The component caps at twenty-four tiles: a skeleton heavier than the gallery serves no one.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Skeleton007 tiles={8} minTile=\"6rem\" label=\"Gallery is loading\" />"
+            },
+            "controls": {
+              "tiles": {
+                "label": "Tiles"
+              },
+              "minTile": {
+                "label": "Tile minimum",
+                "default": "6rem"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "skeleton-008",
+      "type": "registry:component",
+      "title": "Chart Skeleton",
+      "description": "Заглушка столбчатого графика с полем фиксированной высоты и линиями сетки: без сетки серые столбики читаются как список, а не как график.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "skeleton-008/skeleton-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/skeleton-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-008-*. Серверный: хуков нет. Поле графика держит высоту переменной, а линии сетки нарисованы repeating-linear-gradient на самом поле, поэтому отдельных элементов под них нет. Высоты столбиков заданы явным массивом и передаются каждому инлайновой переменной: случайные числа разъехались бы между сервером и клиентом при гидратации и React сообщил бы о несовпадении. Легенда сверху и подписи оси снизу занимают место заранее, поэтому появление настоящего графика не сдвигает соседний текст. Корень помечен role=\"status\" и aria-busy.",
+      "meta": {
+        "tags": ["skeleton", "chart", "loading", "display"],
+        "ai": {
+          "export": "Skeleton008",
+          "usage": "<Skeleton008 bars={[42, 68, 55, 88, 34, 72, 61]} height=\"8.5rem\" label=\"График загружается\" />",
+          "summary": "Заглушка графика: поле заданной высоты с линиями сетки, столбики разной высоты, легенда и подписи оси. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-skeleton-008-* и не подменять её токенами вашей темы",
+            "линии сетки фоном поля: без них блок читается как список, а не как график",
+            "фиксированные высоты столбиков вместо случайных — случайные ломают гидратацию",
+            "фиксированную высоту поля: она и есть обещание, что график встанет на это место",
+            "role=\"status\" и aria-busy на корне, иначе заглушка молчит для скринридера",
+            "собственную светлую подложку: на тёмной витрине серые столбики иначе не видно"
+          ],
+          "adapt": [
+            "силуэт столбиков через bars",
+            "высоту поля через height",
+            "подпись для скринридера через label",
+            "шаг линий сетки в правиле фона"
+          ],
+          "notes": [
+            "Число подписей оси равно числу столбиков: они рисуются из того же массива.",
+            "Высоты столбиков зажаты снизу четырьмя процентами, иначе нулевой столбик исчезает совсем.",
+            "Под линейный график заглушка не подходит: там силуэт задаётся кривой, а не прямоугольниками.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "height",
+            "label": "Высота поля",
+            "type": "text",
+            "default": "8.5rem",
+            "maxLength": 12
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "График загружается",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A bar chart skeleton with a fixed-height plot and grid lines: without the grid the grey bars read as a list rather than as a chart.",
+            "ai": {
+              "summary": "A chart skeleton: a fixed-height plot with grid lines, bars of varying height, a legend and axis ticks. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-skeleton-008-* palette — do not swap it for your theme tokens",
+                "the grid lines painted as the plot background: without them the block reads as a list",
+                "the fixed bar heights instead of random ones — random values break hydration",
+                "the fixed plot height: it is the promise that the chart will land in that exact space",
+                "role=\"status\" and aria-busy on the root, or the skeleton is silent to screen readers",
+                "its own light surface: on a dark gallery the grey bars are invisible otherwise"
+              ],
+              "adapt": [
+                "the bar silhouette through bars",
+                "the plot height through height",
+                "the screen-reader caption through label",
+                "the grid line step in the background rule"
+              ],
+              "notes": [
+                "The axis tick count equals the bar count: both come from the same array.",
+                "Bar heights are clamped to a minimum of four percent, otherwise a zero bar disappears entirely.",
+                "This skeleton does not fit a line chart: there the silhouette is a curve, not rectangles.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Skeleton008 bars={[42, 68, 55, 88, 34, 72, 61]} height=\"8.5rem\" label=\"Chart is loading\" />"
+            },
+            "controls": {
+              "height": {
+                "label": "Plot height",
+                "default": "8.5rem"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Chart is loading"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollarea-002",
+      "type": "registry:component",
+      "title": "Edge Shadow Scroll",
+      "description": "Область прокрутки, где тени у краёв появляются только с той стороны, где ещё есть содержимое, и делает это чистый CSS: четыре слоя фона вместо обработчика прокрутки.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollarea-002/scrollarea-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollarea-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-scrollarea-002-*. Серверный: хуков и обработчиков нет. Приём держится на background-attachment: две «крышки» цвета подложки объявлены как local и едут вместе с содержимым, две радиальные тени объявлены как scroll и приколоты к рамке. Пока лента не сдвинута, крышка накрывает тень; при прокрутке крышка уезжает и тень открывается. Прокручиваемый узел получает tabindex=\"0\" и role=\"region\" с aria-label: без них область нельзя пролистать с клавиатуры и она не попадает в список ориентиров. overscroll-behavior: contain не даёт прокрутке провалиться на страницу.",
+      "meta": {
+        "tags": ["scrollarea", "shadow", "css", "display"],
+        "ai": {
+          "export": "Scrollarea002",
+          "usage": "<Scrollarea002 title=\"Очередь работ\" items={[\"Пересобрать реестр\", \"Проверить типы\"]} height=\"13rem\" />",
+          "summary": "Область прокрутки с подсказками у краёв: тени нарисованы четырьмя слоями фона и появляются сами, без onScroll. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollarea-002-* и не подменять её токенами вашей темы",
+            "порядок и attachment четырёх слоёв фона: перестановка ломает весь приём",
+            "непрозрачный цвет крышек — на прозрачном фоне тень видна всегда и подсказка врёт",
+            "tabindex=\"0\" и role=\"region\" с aria-label на прокручиваемом узле: иначе с клавиатуры не прокрутить",
+            "overscroll-behavior: contain, чтобы прокрутка не проваливалась на страницу",
+            "собственную светлую подложку: тени считаются от её цвета"
+          ],
+          "adapt": [
+            "заголовок через title",
+            "содержимое списка через items",
+            "высоту области через height",
+            "силу тени переменной цвета тени"
+          ],
+          "notes": [
+            "Приём работает только на непрозрачном фоне: сквозь стеклянную подложку тень будет видна всегда.",
+            "Горизонтальные тени этот вариант не рисует — для ленты вбок слои нужно переписать по оси X.",
+            "Слишком высокие крышки съедают первые строки списка: держите их около двух строк.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Очередь работ",
+            "maxLength": 40
+          },
+          {
+            "prop": "height",
+            "label": "Высота",
+            "type": "text",
+            "default": "13rem",
+            "maxLength": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A scroll area where the edge shadows appear only on the side that still has content, done in pure CSS: four background layers instead of a scroll handler.",
+            "ai": {
+              "summary": "A scroll area with edge hints: the shadows are four background layers that reveal themselves, with no onScroll. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-scrollarea-002-* palette — do not swap it for your theme tokens",
+                "the order and attachment of the four background layers: reordering breaks the whole trick",
+                "the opaque cover colour — on a transparent ground the shadow is always visible and the hint lies",
+                "tabindex=\"0\" and role=\"region\" with aria-label on the scroller: without them keyboard users cannot scroll it",
+                "overscroll-behavior: contain so the scroll does not fall through to the page",
+                "its own light surface: the shadows are measured against its colour"
+              ],
+              "adapt": [
+                "the heading through title",
+                "the list content through items",
+                "the area height through height",
+                "the shadow strength through the shadow colour variable"
+              ],
+              "notes": [
+                "The trick only works on an opaque background: through a glass surface the shadow always shows.",
+                "This variant draws no horizontal shadows — for a sideways rail the layers must be rewritten on X.",
+                "Overly tall covers eat the first rows of the list: keep them at about two rows.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollarea002 title=\"Work queue\" items={[\"Rebuild the registry\", \"Check the types\"]} height=\"13rem\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Work queue"
+              },
+              "height": {
+                "label": "Height",
+                "default": "13rem"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollarea-003",
+      "type": "registry:component",
+      "title": "Snap Card Rail",
+      "description": "Горизонтальная лента с прилипанием: остановка всегда приходится на начало карточки, а не на её середину, и последняя карточка не упирается в край области.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollarea-003/scrollarea-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollarea-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-scrollarea-003-*. Серверный: хуков и обработчиков нет. Прилипание собрано из пары свойств: scroll-snap-type: x mandatory на ленте и scroll-snap-align: start на карточках; scroll-padding-inline повторяет внутренний отступ, поэтому прилипшая карточка не прижимается к самой границе. Внутренние отступы у ленты, а не у контейнера: иначе последняя карточка обрезалась бы краем прокрутки. Лента получает tabindex=\"0\" и role=\"region\" с aria-label, чтобы её можно было листать с клавиатуры. Ширина карточки вынесена в переменную: от неё зависит, сколько видно за раз.",
+      "meta": {
+        "tags": ["scrollarea", "carousel", "snap", "display"],
+        "ai": {
+          "export": "Scrollarea003",
+          "usage": "<Scrollarea003\n  title=\"Готовые блоки\"\n  cards={[{ title: \"Hero Split\", meta: \"блок · 2 мин\" }]}\n  cardWidth=\"9.5rem\"\n/>",
+          "summary": "Горизонтальная лента карточек с прилипанием к их началу и клавиатурной прокруткой. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollarea-003-* и не подменять её токенами вашей темы",
+            "пару scroll-snap-type и scroll-snap-align: по отдельности они ничего не прилепят",
+            "scroll-padding-inline, равный внутреннему отступу ленты, иначе карточка липнет впритык к краю",
+            "отступы на самой ленте, а не на контейнере — иначе последняя карточка обрежется",
+            "tabindex=\"0\" и role=\"region\" с aria-label на ленте: без них лента не листается с клавиатуры",
+            "собственную светлую подложку: карточки и подписи тёмные и на тёмном фоне исчезнут"
+          ],
+          "adapt": [
+            "заголовок через title",
+            "состав карточек через cards",
+            "ширину карточки через cardWidth",
+            "пропорцию превью и радиусы карточек в CSS"
+          ],
+          "notes": [
+            "mandatory не даёт остановиться между карточками: для длинных лент мягче proximity.",
+            "Кнопок «вперёд-назад» здесь нет намеренно — они требуют клиентского кода и ссылки на узел.",
+            "На тачпадах с инерцией прилипание иногда перепрыгивает карточку: это поведение браузера, не компонента.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Готовые блоки",
+            "maxLength": 40
+          },
+          {
+            "prop": "cardWidth",
+            "label": "Ширина карточки",
+            "type": "text",
+            "default": "9.5rem",
+            "maxLength": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A horizontal rail with snapping: the scroll always stops at the start of a card rather than mid-card, and the last card never presses against the edge of the area.",
+            "ai": {
+              "summary": "A horizontal card rail that snaps to card starts and scrolls from the keyboard. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-scrollarea-003-* palette — do not swap it for your theme tokens",
+                "the pair of scroll-snap-type and scroll-snap-align: neither snaps anything alone",
+                "scroll-padding-inline matching the rail's own padding, or the card snaps flush to the edge",
+                "the padding on the rail rather than the container — otherwise the last card is clipped",
+                "tabindex=\"0\" and role=\"region\" with aria-label on the rail: without them it cannot be scrolled by keyboard",
+                "its own light surface: the cards and captions are dark and vanish on a dark ground"
+              ],
+              "adapt": [
+                "the heading through title",
+                "the card set through cards",
+                "the card width through cardWidth",
+                "the thumbnail ratio and card radii in CSS"
+              ],
+              "notes": [
+                "mandatory forbids resting between cards: proximity is gentler for long rails.",
+                "There are deliberately no prev/next buttons — they need client code and a node reference.",
+                "On inertial trackpads snapping sometimes skips a card: that is browser behaviour, not the component.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollarea003\n  title=\"Ready-made blocks\"\n  cards={[{ title: \"Hero Split\", meta: \"block · 2 min\" }]}\n  cardWidth=\"9.5rem\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Ready-made blocks"
+              },
+              "cardWidth": {
+                "label": "Card width",
+                "default": "9.5rem"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollarea-004",
+      "type": "registry:component",
+      "title": "Sticky Group Headers",
+      "description": "Область прокрутки, где заголовок раздела липнет к её верху, а не к верху страницы: сама область и есть предок прокрутки, от которого считается sticky.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollarea-004/scrollarea-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollarea-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-scrollarea-004-*. Серверный: хуков нет. Список собран как один dl: dt — заголовок раздела с position: sticky и top: 0, dd — строки; группы обёрнуты фрагментами, поэтому между dl и dt нет лишнего узла с overflow, который отменил бы прилипание. Sticky считает верх от ближайшего предка с прокруткой, поэтому область обязана быть этим предком — отсюда фиксированная высота и overflow-y на ней. Прокручиваемый узел получает tabindex=\"0\" и role=\"region\" с aria-label. Непрозрачный фон заголовка обязателен: сквозь прозрачный просвечивают уезжающие строки.",
+      "meta": {
+        "tags": ["scrollarea", "sticky", "list", "display"],
+        "ai": {
+          "export": "Scrollarea004",
+          "usage": "<Scrollarea004\n  title=\"Контакты\"\n  groups={[{ title: \"Сегодня\", items: [\"Анна Реброва\"] }]}\n  height=\"14rem\"\n/>",
+          "summary": "Область с липкими заголовками разделов: sticky считается от самой области, разметка — один dl без лишних обёрток. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollarea-004-* и не подменять её токенами вашей темы",
+            "плоскую разметку dl без обёрток вокруг групп: любой предок с overflow отменяет прилипание",
+            "непрозрачный фон заголовка — сквозь прозрачный просвечивают уезжающие строки",
+            "фиксированную высоту и overflow-y на самой области: без них sticky считает верх от страницы",
+            "tabindex=\"0\" и role=\"region\" с aria-label на прокручиваемом узле",
+            "собственную светлую подложку: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "заголовок области через title",
+            "разделы и их содержимое через groups",
+            "высоту области через height",
+            "цвет и высоту липкой полосы в CSS"
+          ],
+          "notes": [
+            "Заголовок остаётся на месте до конца своего раздела и уступает место следующему: это поведение sticky, не анимация.",
+            "z-index у заголовка нужен, иначе строки следующего раздела перекрывают его при прокрутке.",
+            "Группы в dl обёрнуты фрагментами: не заменяйте их на div, прилипание сломается.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Контакты",
+            "maxLength": 40
+          },
+          {
+            "prop": "height",
+            "label": "Высота",
+            "type": "text",
+            "default": "14rem",
+            "maxLength": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A scroll area whose section headers stick to its own top rather than the page's: the area itself is the scrolling ancestor that sticky measures against.",
+            "ai": {
+              "summary": "An area with sticky section headers: sticky measures against the area, and the markup is one flat dl with no extra wrappers. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-scrollarea-004-* palette — do not swap it for your theme tokens",
+                "the flat dl markup with no wrappers around groups: any ancestor with overflow cancels sticking",
+                "the opaque header background — a transparent one lets the departing rows show through",
+                "the fixed height and overflow-y on the area itself: without them sticky measures against the page",
+                "tabindex=\"0\" and role=\"region\" with aria-label on the scroller",
+                "its own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the area heading through title",
+                "the sections and their contents through groups",
+                "the area height through height",
+                "the colour and height of the sticky bar in CSS"
+              ],
+              "notes": [
+                "A header stays put until its section ends and then yields to the next: that is sticky behaviour, not animation.",
+                "The header needs a z-index, otherwise the next section's rows paint over it while scrolling.",
+                "The dl groups are wrapped in fragments: replacing them with divs breaks the sticking.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollarea004\n  title=\"Contacts\"\n  groups={[{ title: \"Today\", items: [\"Anna Rebrova\"] }]}\n  height=\"14rem\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Contacts"
+              },
+              "height": {
+                "label": "Height",
+                "default": "14rem"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollarea-005",
+      "type": "registry:component",
+      "title": "Row Counted Panel",
+      "description": "Область, высота которой задана числом видимых строк, а не пикселями: обрезка всегда приходится на границу строки, и подпись «видно 6 из 12» не врёт.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollarea-005/scrollarea-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollarea-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-scrollarea-005-*. Серверный: хуков нет. Высота считается как строка × число строк из двух переменных, поэтому нижняя граница области совпадает с границей строки и полустрока не появляется. Нумерация рисуется CSS-счётчиком в псевдоэлементе: в разметке номеров нет, и при смене порядка список не надо перенумеровывать руками. Прокручиваемый узел получает tabindex=\"0\" и role=\"region\" с aria-label. В подвале стоит честное «видно N из M», где N зажат числом элементов: если строк меньше, чем помещается, подпись не обещает лишнего.",
+      "meta": {
+        "tags": ["scrollarea", "counter", "list", "display"],
+        "ai": {
+          "export": "Scrollarea005",
+          "usage": "<Scrollarea005 title=\"История сборок\" items={[\"Сборка 4821 · успешно\"]} rows={6} />",
+          "summary": "Область фиксированной высоты в строках со счётчиком и нумерацией от CSS-счётчика. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollarea-005-* и не подменять её токенами вашей темы",
+            "высоту как произведение строки и числа строк: в пикселях обрезка попадёт на середину строки",
+            "фиксированную высоту самой строки — при плавающей высоте расчёт разъедется",
+            "нумерацию CSS-счётчиком: номера в разметке пришлось бы пересчитывать при каждой сортировке",
+            "tabindex=\"0\" и role=\"region\" с aria-label на прокручиваемом узле",
+            "собственную светлую подложку: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "заголовок через title",
+            "содержимое через items",
+            "число видимых строк через rows",
+            "высоту строки переменной шага"
+          ],
+          "notes": [
+            "rows зажат числом элементов: список из трёх строк не станет высотой в шесть.",
+            "Многострочный текст в пункте ломает расчёт: строка обязана оставаться однострочной.",
+            "Счётчик в подвале статический — он не следит за прокруткой, а сообщает вместимость.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "История сборок",
+            "maxLength": 40
+          },
+          {
+            "prop": "rows",
+            "label": "Видимых строк",
+            "type": "number",
+            "default": 6,
+            "min": 1,
+            "max": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An area whose height is expressed in visible rows rather than pixels: the cut always lands on a row boundary, and the \"6 of 12 visible\" caption never lies.",
+            "ai": {
+              "summary": "A fixed-height area measured in rows, with a capacity counter and numbering from a CSS counter. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-scrollarea-005-* palette — do not swap it for your theme tokens",
+                "the height as row × row count: in pixels the cut lands mid-row",
+                "the fixed row height — a fluid one breaks the calculation",
+                "the CSS counter numbering: numbers in markup would need renumbering on every sort",
+                "tabindex=\"0\" and role=\"region\" with aria-label on the scroller",
+                "its own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the heading through title",
+                "the contents through items",
+                "the visible row count through rows",
+                "the row height through the step variable"
+              ],
+              "notes": [
+                "rows is clamped by the item count: a list of three will not grow to six rows tall.",
+                "Multiline item text breaks the calculation: rows must stay single-line.",
+                "The footer counter is static — it reports capacity, it does not track scrolling.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollarea005 title=\"Build history\" items={[\"Build 4821 · passed\"]} rows={6} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Build history"
+              },
+              "rows": {
+                "label": "Visible rows"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollarea-006",
+      "type": "registry:component",
+      "title": "Reveal Active Item",
+      "description": "Область, которая при первом показе сама встаёт на активный элемент, а кнопка «К текущему» возвращает вид на место после ручной прокрутки.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollarea-006/scrollarea-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollarea-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-scrollarea-006-*. Клиентский: нужны useRef на область и активный элемент плюс useEffect для первой установки. Позиция считается руками — scrollTop от offsetTop с поправкой на половину высоты области, — а не через scrollIntoView: тот прокручивает и всех предков, и вместе с областью уезжает страница. Кнопка вызывает тот же расчёт с плавным поведением. Прокручиваемый узел получает tabindex=\"0\" и role=\"region\" с aria-label. Активная строка помечена aria-current и, помимо заливки, несёт толстую отметку слева: цвет один не читается при дальтонизме.",
+      "meta": {
+        "tags": ["scrollarea", "active", "scroll", "display"],
+        "ai": {
+          "export": "Scrollarea006",
+          "usage": "<Scrollarea006 title=\"Разделы урока\" items={[\"00:00 Введение\"]} activeIndex={5} height=\"12rem\" />",
+          "summary": "Область, встающая на активный элемент при показе, с кнопкой возврата к нему. Ноль зависимостей, один файл, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollarea-006-* и не подменять её токенами вашей темы",
+            "ручной расчёт scrollTop вместо scrollIntoView: тот уводит за собой и страницу",
+            "мгновенную установку при первом показе и плавную по кнопке — плавная на старте выглядит как случайный скачок",
+            "aria-current на активной строке: заливка сама по себе не сообщает о ней скринридеру",
+            "отметку слева у активной строки — цвет один не читается при дальтонизме",
+            "tabindex=\"0\" и role=\"region\" с aria-label на прокручиваемом узле"
+          ],
+          "adapt": [
+            "заголовок через title",
+            "содержимое через items",
+            "активный элемент через activeIndex",
+            "высоту области через height"
+          ],
+          "notes": [
+            "Расчёт опирается на offsetTop: у строк не должно быть предков с position: relative внутри области.",
+            "При смене activeIndex после монтирования область сама не поедет — вызовите кнопку или добавьте эффект.",
+            "scroll-behavior: smooth снимается правилом prefers-reduced-motion, а не отдельным пропсом.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Разделы урока",
+            "maxLength": 40
+          },
+          {
+            "prop": "activeIndex",
+            "label": "Активный элемент",
+            "type": "number",
+            "default": 5,
+            "min": 0,
+            "max": 9
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An area that scrolls itself to the active item on first paint, with a \"jump to current\" button that brings the view back after manual scrolling.",
+            "ai": {
+              "summary": "An area that reveals the active item on mount, plus a button to return to it. Zero dependencies, one file, client component.",
+              "preserve": [
+                "the local --vibeui-scrollarea-006-* palette — do not swap it for your theme tokens",
+                "the manual scrollTop calculation instead of scrollIntoView: that one drags the page along",
+                "the instant placement on first paint and the smooth one on the button — smooth at start reads as a random jump",
+                "aria-current on the active row: the fill alone does not announce it to screen readers",
+                "the marker on the left of the active row — colour alone fails for colour blindness",
+                "tabindex=\"0\" and role=\"region\" with aria-label on the scroller"
+              ],
+              "adapt": [
+                "the heading through title",
+                "the contents through items",
+                "the active item through activeIndex",
+                "the area height through height"
+              ],
+              "notes": [
+                "The calculation relies on offsetTop: rows must have no positioned ancestors inside the area.",
+                "Changing activeIndex after mount does not move the area — press the button or add an effect.",
+                "scroll-behavior: smooth is disabled by the prefers-reduced-motion rule, not by a prop.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollarea006 title=\"Lesson chapters\" items={[\"00:00 Intro\"]} activeIndex={5} height=\"12rem\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Lesson chapters"
+              },
+              "activeIndex": {
+                "label": "Active item"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollarea-007",
+      "type": "registry:component",
+      "title": "Thin Scrollbar Area",
+      "description": "Область с тонкой полосой прокрутки, объявленной дважды: стандартными свойствами и запасным вариантом на псевдоэлементах WebKit — вид одинаков во всех браузерах.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollarea-007/scrollarea-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollarea-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-scrollarea-007-*. Серверный: хуков нет. Сначала объявлены стандартные scrollbar-width и scrollbar-color — их понимают Firefox и свежие сборки Chrome и Safari. Затем, под @supports not (scrollbar-width: thin), тот же вид собирается правилами ::-webkit-scrollbar: запасной путь не включается там, где работает стандартный, поэтому две реализации не спорят. scrollbar-gutter: stable резервирует место под полосу, и содержимое не дёргается, когда она появляется. Полосу не прячем: без неё исчезает и признак прокрутки, и возможность тащить её мышью. Прокручиваемый узел получает tabindex=\"0\" и role=\"region\" с aria-label.",
+      "meta": {
+        "tags": ["scrollarea", "scrollbar", "fallback", "display"],
+        "ai": {
+          "export": "Scrollarea007",
+          "usage": "<Scrollarea007 title=\"Условия использования\" height=\"12rem\" barWidth=\"0.5rem\" />",
+          "summary": "Область с тонкой стилизованной полосой прокрутки и запасным вариантом на ::-webkit-scrollbar под @supports not. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollarea-007-* и не подменять её токенами вашей темы",
+            "порядок «стандарт, затем @supports not»: без условия обе реализации применятся разом",
+            "видимую полосу прокрутки — спрятанная убирает и признак прокрутки, и возможность тащить мышью",
+            "scrollbar-gutter: stable, иначе текст дёргается в момент появления полосы",
+            "tabindex=\"0\" и role=\"region\" с aria-label на прокручиваемом узле",
+            "собственную светлую подложку: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "заголовок через title",
+            "текст через text — абзацы разделяются пустой строкой",
+            "высоту области через height",
+            "толщину полосы через barWidth"
+          ],
+          "notes": [
+            "scrollbar-color красит только стандартную полосу: в запасном варианте цвета берутся из правил бегунка.",
+            "На macOS полоса по умолчанию появляется только при прокрутке — стилизация видна не всегда.",
+            "Слишком тонкая полоса перестаёт быть целью для мыши: меньше 0.375rem её трудно поймать.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Условия использования",
+            "maxLength": 40
+          },
+          {
+            "prop": "barWidth",
+            "label": "Толщина полосы",
+            "type": "text",
+            "default": "0.5rem",
+            "maxLength": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An area with a thin scrollbar declared twice: once with the standard properties and once as a WebKit pseudo-element fallback — the look is the same everywhere.",
+            "ai": {
+              "summary": "An area with a thin styled scrollbar plus a ::-webkit-scrollbar fallback guarded by @supports not. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-scrollarea-007-* palette — do not swap it for your theme tokens",
+                "the \"standard first, then @supports not\" order: without the guard both implementations apply at once",
+                "the visible scrollbar — hiding it removes both the scroll cue and the ability to drag it",
+                "scrollbar-gutter: stable, otherwise the text jerks the moment the bar appears",
+                "tabindex=\"0\" and role=\"region\" with aria-label on the scroller",
+                "its own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the heading through title",
+                "the copy through text — paragraphs are split on a blank line",
+                "the area height through height",
+                "the bar thickness through barWidth"
+              ],
+              "notes": [
+                "scrollbar-color paints only the standard bar: the fallback takes its colours from the thumb rules.",
+                "On macOS the bar appears only while scrolling by default, so the styling is not always visible.",
+                "A bar that is too thin stops being a mouse target: below 0.375rem it is hard to grab.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollarea007 title=\"Terms of service\" height=\"12rem\" barWidth=\"0.5rem\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Terms of service"
+              },
+              "barWidth": {
+                "label": "Bar thickness",
+                "default": "0.5rem"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tree-002",
+      "type": "registry:component",
+      "title": "Typed File Tree",
+      "description": "Дерево файлов, где тип виден до чтения имени: оттенок значка считается из расширения хешем, поэтому новый тип получает свой цвет сам, без таблицы соответствий.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-002/tree-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tree-002-*. Клиентский: раскрытие живёт в useState, а не в details, потому что нужны role=\"treeitem\" и aria-expanded, которых у details нет. Видимые узлы разворачиваются в плоский список, отступ рисуется padding-left от уровня, а структуру объявляют aria-level, aria-posinset и aria-setsize — без них плоская разметка ничего не скажет скринридеру. Фокус ездит по узлам стрелками при одном таб-стопе на всё дерево: tabIndex=0 стоит только у текущего узла, остальные получают −1. Пометка состояния файла показана буквой, а не только цветом.",
+      "meta": {
+        "tags": ["tree", "files", "icons", "display"],
+        "ai": {
+          "export": "Tree002",
+          "usage": "<Tree002\n  label=\"Файлы проекта\"\n  nodes={[{ name: \"app\", open: true, children: [{ name: \"page.tsx\" }] }]}\n/>",
+          "summary": "Дерево файлов со значками типов и переездом фокуса стрелками: один таб-стоп, уровни объявлены атрибутами. Ноль зависимостей, один файл, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-002-* и не подменять её токенами вашей темы",
+            "aria-level вместе с aria-posinset и aria-setsize: в плоском списке структуру больше объявить нечем",
+            "роли tree и treeitem с aria-expanded на ветках — без них дерево звучит как обычный список",
+            "один таб-стоп на дерево: tabIndex=0 только у текущего узла, иначе Tab придётся жать десятки раз",
+            "букву состояния файла рядом с цветом — цвет один не читается при дальтонизме",
+            "собственную светлую подложку: без неё тёмные имена файлов пропадают на тёмном фоне"
+          ],
+          "adapt": [
+            "состав дерева через nodes, включая флаг open у веток",
+            "подпись дерева через label",
+            "формулу оттенка в функции hue под фирменную палитру",
+            "шаг отступа уровня переменной indent"
+          ],
+          "notes": [
+            "Идентификатором узла служит путь из имён: два одинаковых имени в одной папке склеятся в один узел.",
+            "Значок показывает первые два символа расширения — для длинных расширений это не полное имя типа.",
+            "Разметка плоская: обёртки role=\"group\" здесь нет намеренно, уровень несут атрибуты.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись дерева",
+            "type": "text",
+            "default": "Файлы проекта",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A file tree where the type is visible before you read the name: the badge hue is hashed from the extension, so a new file type gets its own colour without a lookup table.",
+            "ai": {
+              "summary": "A file tree with type badges and arrow-key focus movement: one tab stop, levels declared by attributes. Zero dependencies, one file, client component.",
+              "preserve": [
+                "the local --vibeui-tree-002-* palette — do not swap it for your theme tokens",
+                "aria-level together with aria-posinset and aria-setsize: in a flat list there is nothing else to declare structure with",
+                "the tree and treeitem roles with aria-expanded on branches — without them it sounds like a plain list",
+                "one tab stop for the tree: tabIndex=0 only on the current node, or Tab has to be pressed dozens of times",
+                "the status letter alongside the colour — colour alone fails for colour blindness",
+                "its own light surface: without it the dark file names disappear on a dark background"
+              ],
+              "adapt": [
+                "the tree contents through nodes, including the open flag on branches",
+                "the tree caption through label",
+                "the hue formula inside the hue function to match your brand",
+                "the level indent through the indent variable"
+              ],
+              "notes": [
+                "A node's identity is the path of names: two identical names in one folder collapse into one node.",
+                "The badge shows the first two characters of the extension — not a full type name for long ones.",
+                "The markup is flat: there is deliberately no role=\"group\" wrapper, the attributes carry the level.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree002\n  label=\"Project files\"\n  nodes={[{ name: \"app\", open: true, children: [{ name: \"page.tsx\" }] }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Tree caption",
+                "default": "Project files"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tree-003",
+      "type": "registry:component",
+      "title": "Details Only Tree",
+      "description": "Дерево разделов вообще без клиентского кода: раскрытие держит нативный details, поэтому оно работает до гидратации и находится встроенным поиском браузера.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-003/tree-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tree-003-*. Серверный: хуков нет, состояние веток хранит сам браузер. Вложенные details дают раскрытие, клавиатуру и память об открытых ветках даром; аria-level проставляется явно при обходе, потому что из вложенности details скринридер глубину не выводит. В бейдже стоит число листьев во всей ветке, а не в первом её уровне: countLeaves спускается до конца. Маркер summary снят и заменён треугольником на бордюрах, поэтому он поворачивается через transform и не зависит от отрисовки маркера в браузере.",
+      "meta": {
+        "tags": ["tree", "details", "server", "display"],
+        "ai": {
+          "export": "Tree003",
+          "usage": "<Tree003\n  label=\"Документация\"\n  nodes={[{ name: \"Начало работы\", open: true, children: [{ name: \"Установка\" }] }]}\n/>",
+          "summary": "Дерево разделов на нативных details: серверный рендер, клавиатура и память об открытых ветках от браузера. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-003-* и не подменять её токенами вашей темы",
+            "нативный details как источник состояния: своё состояние пришлось бы чинить в каждом браузере",
+            "явный aria-level: из вложенности details глубина не выводится",
+            "снятый маркер summary вместе с ::-webkit-details-marker — иначе останется второй треугольник",
+            "подсчёт листьев по всей ветке: число в бейдже иначе врёт на вложенных разделах",
+            "собственную светлую подложку: без неё тёмные подписи пропадают на тёмном фоне"
+          ],
+          "adapt": [
+            "состав дерева через nodes, включая флаг open у веток",
+            "подпись дерева через label",
+            "отступ и цвет линии уровня в CSS",
+            "содержимое бейджа, если счёт листьев не нужен"
+          ],
+          "notes": [
+            "Анимировать раскрытие details нечем: высота содержимого браузеру заранее неизвестна.",
+            "Ветки без флага open приходят свёрнутыми и на сервере, и на клиенте — состояние не переживает переход по ссылке.",
+            "Ключом узла служит имя: два одинаковых имени на одном уровне столкнутся.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись дерева",
+            "type": "text",
+            "default": "Документация",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A section tree with no client code at all: native details holds the expansion, so it works before hydration and is found by the browser's own in-page search.",
+            "ai": {
+              "summary": "A section tree on native details: server rendered, with keyboard support and open-branch memory provided by the browser. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-tree-003-* palette — do not swap it for your theme tokens",
+                "native details as the source of state: a hand-rolled one has to be fixed per browser",
+                "the explicit aria-level: details nesting does not imply depth for screen readers",
+                "the removed summary marker together with ::-webkit-details-marker — otherwise a second triangle remains",
+                "counting leaves across the whole branch: otherwise the badge number lies on nested sections",
+                "its own light surface: without it the dark captions disappear on a dark background"
+              ],
+              "adapt": [
+                "the tree contents through nodes, including the open flag on branches",
+                "the tree caption through label",
+                "the level indent and line colour in CSS",
+                "the badge contents if a leaf count is not what you need"
+              ],
+              "notes": [
+                "There is nothing to animate the details expansion with: the browser does not know the content height in advance.",
+                "Branches without the open flag arrive collapsed on both server and client — the state does not survive navigation.",
+                "The node key is its name: two identical names on one level collide.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree003\n  label=\"Documentation\"\n  nodes={[{ name: \"Getting started\", open: true, children: [{ name: \"Install\" }] }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Tree caption",
+                "default": "Documentation"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tree-004",
+      "type": "registry:component",
+      "title": "Selectable Keyboard Tree",
+      "description": "Дерево с выбранным узлом и полной клавиатурой: стрелки только переносят фокус, выбирает Enter или пробел, поэтому дерево не «выбирает» всё, над чем пробежали.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-004/tree-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tree-004-*. Клиентский: состояние раскрытия, фокуса и выбора живёт в useState, узлы держатся в ref-карте для программного focus(). Разметка вложенная — treeitem владеет своей группой, — а порядок обхода собирается отдельным плоским списком видимых узлов: по нему считаются стрелки вверх и вниз, Home и End. Стрелка вправо раскрывает ветку или спускается в неё, стрелка влево сворачивает или поднимается к родителю. Фокус и выбор разведены сознательно: aria-selected меняет только Enter и пробел. Выбранная строка помечена не только заливкой, но и полосой слева.",
+      "meta": {
+        "tags": ["tree", "keyboard", "selection", "display"],
+        "ai": {
+          "export": "Tree004",
+          "usage": "<Tree004\n  label=\"Направления\"\n  nodes={[{ name: \"Продажи\", open: true, children: [{ name: \"Партнёры\" }] }]}\n/>",
+          "summary": "Дерево с выбором узла и клавиатурой по образцу APG: стрелки, Home и End по плоскому порядку обхода, выбор — Enter и пробел. Ноль зависимостей, один файл, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-004-* и не подменять её токенами вашей темы",
+            "разведение фокуса и выбора: если выбирать стрелками, дерево «выберет» всё по пути",
+            "плоский порядок обхода для клавиш: по вложенной структуре стрелка вниз считается неверно",
+            "роли tree, treeitem и group с aria-level и aria-expanded — на них держится вся озвучка",
+            "полосу слева у выбранной строки — заливка одна не читается при дальтонизме",
+            "собственную светлую подложку: без неё тёмные подписи пропадают на тёмном фоне"
+          ],
+          "adapt": [
+            "состав дерева через nodes, включая флаг open у веток",
+            "подпись дерева через label",
+            "цвет выбранной строки переменными палитры",
+            "текст строки состояния под деревом"
+          ],
+          "notes": [
+            "Пробел здесь и выбирает, и раскрывает ветку: если нужен только выбор, уберите вызов toggle.",
+            "Клавиша перехода по первой букве (type-ahead) не реализована — в длинных деревьях её стоит добавить.",
+            "Идентификатор узла — путь из имён: два одинаковых имени в одной ветке склеятся.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись дерева",
+            "type": "text",
+            "default": "Направления",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tree with a selected node and a full keyboard: arrows only move focus, Enter or Space selects, so the tree does not \"select\" everything you pass over.",
+            "ai": {
+              "summary": "A tree with node selection and APG-style keyboard support: arrows, Home and End over a flat traversal order, selection on Enter and Space. Zero dependencies, one file, client component.",
+              "preserve": [
+                "the local --vibeui-tree-004-* palette — do not swap it for your theme tokens",
+                "keeping focus and selection separate: selecting with arrows would select everything on the way",
+                "the flat traversal order for the keys: computing Down over the nested structure gets it wrong",
+                "the tree, treeitem and group roles with aria-level and aria-expanded — all the speech rests on them",
+                "the left bar on the selected row — the fill alone fails for colour blindness",
+                "its own light surface: without it the dark captions disappear on a dark background"
+              ],
+              "adapt": [
+                "the tree contents through nodes, including the open flag on branches",
+                "the tree caption through label",
+                "the selected row colour through the palette variables",
+                "the status line copy under the tree"
+              ],
+              "notes": [
+                "Space both selects and expands here: drop the toggle call if you only want selection.",
+                "First-letter type-ahead is not implemented — worth adding for long trees.",
+                "A node's identity is the path of names: two identical names in one branch collapse.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree004\n  label=\"Business units\"\n  nodes={[{ name: \"Sales\", open: true, children: [{ name: \"Partners\" }] }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Tree caption",
+                "default": "Business units"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tree-005",
+      "type": "registry:component",
+      "title": "Partial Checkbox Tree",
+      "description": "Дерево чекбоксов с честным третьим состоянием: выбор хранится только по листьям, а галка ветки выводится из них, поэтому счётчик и вид родителя не могут разойтись.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-005/tree-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tree-005-*. Клиентский: множество выбранных листьев и множество раскрытых веток живут в useState, узлы чекбоксов держатся в ref-карте. Состояние ветки считается на лету: полностью выбрана, если выбраны все её листья, частично — если хотя бы один. Третье состояние в разметке объявить нечем, indeterminate — свойство узла, поэтому оно проставляется в эффекте после отрисовки, когда состав веток уже известен. Чекбоксы нативные: клавиатура, объявление состояния и связь с подписью достаются от браузера. Роли tree, treeitem и group с aria-level и aria-expanded описывают структуру.",
+      "meta": {
+        "tags": ["tree", "checkbox", "selection", "display"],
+        "ai": {
+          "export": "Tree005",
+          "usage": "<Tree005\n  label=\"Что присылать на почту\"\n  nodes={[{ name: \"Уведомления\", children: [{ name: \"Назначена задача\" }] }]}\n/>",
+          "summary": "Дерево чекбоксов: состояние хранится по листьям, ветки получают галку или indeterminate, счётчик считается из того же множества. Ноль зависимостей, один файл, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-005-* и не подменять её токенами вашей темы",
+            "хранение выбора только по листьям: параллельное состояние веток разойдётся с ними на первой же правке",
+            "простановку indeterminate в эффекте — атрибута для третьего состояния не существует",
+            "нативные чекбоксы: своя галка потеряет клавиатуру и объявление состояния",
+            "роли tree, treeitem и group с aria-level и aria-expanded на ветках",
+            "собственную светлую подложку: без неё тёмные подписи пропадают на тёмном фоне"
+          ],
+          "adapt": [
+            "состав дерева через nodes",
+            "подпись дерева через label",
+            "начальный набор выбранных листьев в коде компонента",
+            "цвет галки переменной акцента"
+          ],
+          "notes": [
+            "Свёрнутая ветка не размонтирует выбор: состояние живёт в множестве, а не в разметке.",
+            "Чекбокс ветки и её раскрытие — разные органы: нажатие на галку не разворачивает ветку.",
+            "Идентификатор листа — путь из имён: одинаковые имена в одной ветке склеятся в один пункт.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись дерева",
+            "type": "text",
+            "default": "Что присылать на почту",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A checkbox tree with an honest third state: the selection is stored on leaves only and a branch's tick is derived from them, so the counter and the parent can never disagree.",
+            "ai": {
+              "summary": "A checkbox tree: state lives on the leaves, branches derive a tick or indeterminate, and the counter comes from the same set. Zero dependencies, one file, client component.",
+              "preserve": [
+                "the local --vibeui-tree-005-* palette — do not swap it for your theme tokens",
+                "storing the selection on leaves only: a parallel branch state diverges on the first edit",
+                "setting indeterminate in an effect — there is no attribute for the third state",
+                "the native checkboxes: a hand-drawn tick loses keyboard support and state announcement",
+                "the tree, treeitem and group roles with aria-level and aria-expanded on branches",
+                "its own light surface: without it the dark captions disappear on a dark background"
+              ],
+              "adapt": [
+                "the tree contents through nodes",
+                "the tree caption through label",
+                "the initially selected leaves in the component code",
+                "the tick colour through the accent variable"
+              ],
+              "notes": [
+                "Collapsing a branch does not unmount its selection: the state lives in a set, not in the markup.",
+                "A branch checkbox and its expander are separate controls: ticking does not expand.",
+                "A leaf's identity is the path of names: identical names in one branch collapse into one item.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree005\n  label=\"Email notifications\"\n  nodes={[{ name: \"Task alerts\", children: [{ name: \"Assigned to me\" }] }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Tree caption",
+                "default": "Email notifications"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tree-006",
+      "type": "registry:component",
+      "title": "Searchable Tree Filter",
+      "description": "Поиск по дереву, который оставляет путь до находки: ветка остаётся в выдаче, если совпало её имя или имя любого потомка, иначе найденный файл повис бы без папки.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-006/tree-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tree-006-*. Клиентский: запрос живёт в useState, счёт совпадений мемоизирован. Фильтрация рекурсивная: узел проходит, если совпало его имя или совпало у любого потомка, поэтому вместе с находкой видна вся ветка над ней. Совпадение подсвечивается тегом mark, а не span с фоном: mark — семантика выделения, её объявляет и скринридер. Пока поле пустое, дерево показано целиком и ничего не сворачивается. Число совпадений объявлено в role=\"status\", чтобы результат поиска был слышен, а не только виден. Поле связано с подписью через useId.",
+      "meta": {
+        "tags": ["tree", "search", "filter", "display"],
+        "ai": {
+          "export": "Tree006",
+          "usage": "<Tree006\n  label=\"Файлы\"\n  placeholder=\"Поиск по дереву\"\n  nodes={[{ name: \"components\", children: [{ name: \"button.tsx\" }] }]}\n/>",
+          "summary": "Дерево с поиском: путь до находки сохраняется, совпадение подсвечено тегом mark, число совпадений объявлено живой областью. Ноль зависимостей, один файл, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-006-* и не подменять её токенами вашей темы",
+            "рекурсивное правило отбора: без пути до находки результат теряет смысл",
+            "тег mark для подсветки — фон на span не сообщает о выделении скринридеру",
+            "role=\"status\" на числе совпадений: результат поиска должен быть слышен",
+            "связь поля и подписи через useId, а не через placeholder вместо label",
+            "собственную светлую подложку: без неё тёмные подписи пропадают на тёмном фоне"
+          ],
+          "adapt": [
+            "состав дерева через nodes",
+            "подпись дерева через label",
+            "подсказку и доступное имя поля через placeholder",
+            "цвет подсветки переменной mark"
+          ],
+          "notes": [
+            "Поиск подстрочный и без учёта регистра: нечёткого совпадения и транслитерации здесь нет.",
+            "Подсвечивается только первое вхождение в имени, остальные остаются обычным текстом.",
+            "При запросе дерево показано раскрытым целиком: сворачивание веток в режиме поиска мешает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись дерева",
+            "type": "text",
+            "default": "Файлы",
+            "maxLength": 40
+          },
+          {
+            "prop": "placeholder",
+            "label": "Подсказка поиска",
+            "type": "text",
+            "default": "Поиск по дереву",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tree search that keeps the path to the hit: a branch stays in the results if its own name or any descendant's name matches, otherwise the found file would hang without its folder.",
+            "ai": {
+              "summary": "A tree with search: the path to the hit is preserved, matches are highlighted with mark, and the match count is announced by a live region. Zero dependencies, one file, client component.",
+              "preserve": [
+                "the local --vibeui-tree-006-* palette — do not swap it for your theme tokens",
+                "the recursive filter rule: without the path to the hit the result is meaningless",
+                "the mark tag for highlighting — a background on a span announces nothing to screen readers",
+                "role=\"status\" on the match count: a search result has to be audible",
+                "the field-to-label link through useId rather than a placeholder standing in for a label",
+                "its own light surface: without it the dark captions disappear on a dark background"
+              ],
+              "adapt": [
+                "the tree contents through nodes",
+                "the tree caption through label",
+                "the field hint and accessible name through placeholder",
+                "the highlight colour through the mark variable"
+              ],
+              "notes": [
+                "The search is a case-insensitive substring match: there is no fuzzy matching or transliteration.",
+                "Only the first occurrence in a name is highlighted, the rest stays plain text.",
+                "While a query is active the tree is shown fully expanded: collapsing during search gets in the way.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree006\n  label=\"Files\"\n  placeholder=\"Search the tree\"\n  nodes={[{ name: \"components\", children: [{ name: \"button.tsx\" }] }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Tree caption",
+                "default": "Files"
+              },
+              "placeholder": {
+                "label": "Search hint",
+                "default": "Search the tree"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tree-007",
+      "type": "registry:component",
+      "title": "Lazy Branch Tree",
+      "description": "Дерево, где ветка подгружается при первом раскрытии, а не при показе: пока идёт запрос, она помечена aria-busy и держит место тремя строками-заглушками.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-007/tree-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tree-007-*. Клиентский: множества раскрытых и загружаемых веток плюс кэш пришедших детей живут в useState, таймеры имитации запроса собираются в ref и снимаются при размонтировании. Ветка с полем lazy грузится один раз: результат кладётся в кэш, и повторное раскрытие уже ничего не запрашивает. На время запроса ветка получает aria-busy и группу из трёх заглушек — без них дерево прыгает на высоту пришедшего списка. Строка ветки — настоящая кнопка, поэтому раскрытие работает с клавиатуры без своего обработчика клавиш.",
+      "meta": {
+        "tags": ["tree", "lazy", "loading", "display"],
+        "ai": {
+          "export": "Tree007",
+          "usage": "<Tree007\n  label=\"Сервисы\"\n  nodes={[{ name: \"Основной кластер\", lazy: [\"api-gateway\", \"auth-service\"] }]}\n  delay={900}\n/>",
+          "summary": "Дерево с ленивой подгрузкой ветки: запрос идёт при первом раскрытии, результат кэшируется, ожидание помечено aria-busy и заглушками. Ноль зависимостей, один файл, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-007-* и не подменять её токенами вашей темы",
+            "aria-busy на загружаемой ветке: без него ожидание не объявляется",
+            "заглушки на время запроса — без них дерево прыгает в момент прихода данных",
+            "кэш пришедших детей: повторный запрос при каждом раскрытии бьёт по сети без нужды",
+            "снятие таймеров при размонтировании, иначе состояние обновляется у исчезнувшего узла",
+            "собственную светлую подложку: без неё тёмные подписи пропадают на тёмном фоне"
+          ],
+          "adapt": [
+            "состав дерева и ленивые ветки через nodes",
+            "подпись дерева через label",
+            "задержку имитации запроса через delay",
+            "число и ширины заглушек в CSS"
+          ],
+          "notes": [
+            "Задержка здесь имитирует сеть через setTimeout: в бою замените её на свой запрос и обработку ошибки.",
+            "Ошибка загрузки не предусмотрена — добавьте состояние отказа с возможностью повтора.",
+            "Ленивые ветки в этом варианте только на первом уровне: вложенная ленивая загрузка потребует рекурсии.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись дерева",
+            "type": "text",
+            "default": "Сервисы",
+            "maxLength": 40
+          },
+          {
+            "prop": "delay",
+            "label": "Задержка, мс",
+            "type": "number",
+            "default": 900,
+            "min": 0,
+            "max": 5000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tree whose branch loads on first expansion rather than on render: while the request runs the branch is marked aria-busy and holds its space with three placeholder rows.",
+            "ai": {
+              "summary": "A tree with lazy branch loading: the request fires on first expansion, the result is cached, and the wait is marked with aria-busy and placeholders. Zero dependencies, one file, client component.",
+              "preserve": [
+                "the local --vibeui-tree-007-* palette — do not swap it for your theme tokens",
+                "aria-busy on the loading branch: without it the wait is never announced",
+                "the placeholders during the request — without them the tree jumps when the data lands",
+                "the cache of loaded children: refetching on every expansion hits the network for nothing",
+                "clearing the timers on unmount, otherwise state updates target a node that is gone",
+                "its own light surface: without it the dark captions disappear on a dark background"
+              ],
+              "adapt": [
+                "the tree contents and lazy branches through nodes",
+                "the tree caption through label",
+                "the simulated request delay through delay",
+                "the count and widths of the placeholders in CSS"
+              ],
+              "notes": [
+                "The delay here fakes the network with setTimeout: in production replace it with your request and error handling.",
+                "There is no failure state — add one with a retry affordance.",
+                "Lazy branches are first level only in this variant: nested lazy loading needs recursion.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree007\n  label=\"Services\"\n  nodes={[{ name: \"Production cluster\", lazy: [\"api-gateway\", \"auth-service\"] }]}\n  delay={900}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Tree caption",
+                "default": "Services"
+              },
+              "delay": {
+                "label": "Delay, ms"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tree-008",
+      "type": "registry:component",
+      "title": "Guide Line Tree",
+      "description": "Развёрнутая структура с настоящими направляющими: у последнего узла в ветке вертикаль обрезается по высоте уголка, поэтому линия заканчивается на нём, а не уходит в пустоту.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-008/tree-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tree-008-*. Серверный: хуков нет, дерево всегда развёрнуто. Уголок рисуют два псевдоэлемента узла: ::before — вертикаль ветки, ::after — поперечина на середине строки; у :last-child вертикаль укорачивается до половины строки, и получается ровно то, что печатает команда tree в терминале. Псевдографика не уходит в текст: символы ├ и └ попали бы в буфер обмена при копировании имён. Высота строки вынесена в переменную, потому что от неё считается положение поперечины. Роли tree, treeitem и group с aria-level описывают структуру, aria-expanded на ветках объявлено постоянно истинным.",
+      "meta": {
+        "tags": ["tree", "guides", "structure", "display"],
+        "ai": {
+          "export": "Tree008",
+          "usage": "<Tree008\n  label=\"Состав пакета\"\n  nodes={[{ name: \"dist\", note: \"412 КБ\", children: [{ name: \"index.js\", note: \"184 КБ\" }] }]}\n/>",
+          "summary": "Развёрнутая структура с направляющими линиями уровней: уголки нарисованы псевдоэлементами, псевдографики в тексте нет. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-008-* и не подменять её токенами вашей темы",
+            "обрезку вертикали у последнего узла: без неё линия уходит в пустоту под веткой",
+            "рисование уголков псевдоэлементами, а не символами ├ и └ — те уедут в буфер при копировании",
+            "высоту строки в переменной: от неё считается положение поперечины",
+            "роли tree, treeitem и group с aria-level: линии рисуют структуру только глазу",
+            "собственную светлую подложку: без неё тёмные имена пропадают на тёмном фоне"
+          ],
+          "adapt": [
+            "состав структуры через nodes, включая заметку note у узла",
+            "подпись дерева через label",
+            "цвет и толщину направляющих переменной линии",
+            "шаг отступа уровня переменной indent"
+          ],
+          "notes": [
+            "Дерево всегда развёрнуто: сворачивания здесь нет, это витрина структуры, а не навигация.",
+            "Многострочное имя ломает положение поперечины: она считается от фиксированной высоты строки.",
+            "aria-expanded у веток всегда истинно — так и должно быть, свернуть их нечем.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись дерева",
+            "type": "text",
+            "default": "Состав пакета",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An expanded structure with real guide lines: on the last node of a branch the vertical is cut to the elbow's height, so the line ends there instead of trailing into empty space.",
+            "ai": {
+              "summary": "An expanded structure with level guides: the elbows are drawn by pseudo-elements, with no box-drawing characters in the text. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-tree-008-* palette — do not swap it for your theme tokens",
+                "cutting the vertical on the last node: without it the line trails into empty space",
+                "drawing the elbows with pseudo-elements rather than ├ and └ — those end up in the clipboard on copy",
+                "the row height in a variable: the elbow position is measured from it",
+                "the tree, treeitem and group roles with aria-level: the lines draw structure for the eye only",
+                "its own light surface: without it the dark names disappear on a dark background"
+              ],
+              "adapt": [
+                "the structure through nodes, including the note on a node",
+                "the tree caption through label",
+                "the guide colour and weight through the line variable",
+                "the level indent through the indent variable"
+              ],
+              "notes": [
+                "The tree is always expanded: there is no collapsing, this is a structure display, not navigation.",
+                "A multiline name breaks the elbow position: it is measured from a fixed row height.",
+                "aria-expanded on branches is always true — as it should be, there is nothing to collapse them with.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree008\n  label=\"Package contents\"\n  nodes={[{ name: \"dist\", note: \"412 KB\", children: [{ name: \"index.js\", note: \"184 KB\" }] }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Tree caption",
+                "default": "Package contents"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
