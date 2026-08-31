@@ -1,0 +1,290 @@
+"use client"
+
+import { useState } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Calendar030Props = Omit<
+  ComponentPropsWithoutRef<"section">,
+  "children" | "onChange"
+> & {
+  month?: string
+  maxDays?: number
+  defaultFrom?: string
+  defaultTo?: string
+  locale?: string
+  onChange?: (from: string, to: string) => void
+  accent?: string
+}
+
+// Идея компонента: ограничение «не больше N дней» нельзя объяснять ошибкой
+// после отправки формы. Здесь после выбора первой даты недоступные дни
+// физически гаснут: правило видно как форма сетки, а счётчик снизу говорит,
+// сколько дней ещё осталось в лимите.
+const STYLES = `
+:where([data-vibeui-block="calendar-030"]){
+--vibeui-calendar-030-bg:oklch(1 0 0);
+--vibeui-calendar-030-fg:oklch(0.23 0.014 165);
+--vibeui-calendar-030-muted:oklch(0.57 0.014 165);
+--vibeui-calendar-030-faint:oklch(0.82 0.01 165);
+--vibeui-calendar-030-border:oklch(0.91 0.008 165);
+--vibeui-calendar-030-soft:oklch(0.97 0.008 165);
+--vibeui-calendar-030-accent:oklch(0.48 0.11 165);
+--vibeui-calendar-030-accentsoft:oklch(0.94 0.05 165);
+--vibeui-calendar-030-radius:0.75rem;
+--vibeui-calendar-030-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="calendar-030"]{
+display:flex;flex-direction:column;gap:0.7rem;
+width:100%;max-width:22rem;box-sizing:border-box;padding:1rem;
+background:var(--vibeui-calendar-030-bg);
+border:1px solid var(--vibeui-calendar-030-border);
+border-radius:calc(var(--vibeui-calendar-030-radius) + 0.25rem);
+color:var(--vibeui-calendar-030-fg);
+font-family:var(--vibeui-calendar-030-font);
+}
+[data-vibeui-block="calendar-030"] [data-part="title"]{
+margin:0;font-size:0.95rem;font-weight:700;letter-spacing:-0.01em;text-transform:capitalize;
+}
+[data-vibeui-block="calendar-030"] [data-part="rule"]{
+margin:0.15rem 0 0;font-size:0.75rem;color:var(--vibeui-calendar-030-muted);
+}
+[data-vibeui-block="calendar-030"] [data-part="grid"]{
+display:grid;grid-template-columns:repeat(7,1fr);gap:0.15rem;
+}
+[data-vibeui-block="calendar-030"] [data-part="dow"]{
+text-align:center;font-size:0.65rem;font-weight:700;text-transform:uppercase;
+color:var(--vibeui-calendar-030-muted);padding-bottom:0.2rem;
+}
+[data-vibeui-block="calendar-030"] [data-part="day"]{
+appearance:none;cursor:pointer;font:inherit;
+height:2.1rem;border:0;border-radius:0.45rem;
+background:var(--vibeui-calendar-030-soft);color:inherit;
+font-size:0.8rem;font-variant-numeric:tabular-nums;
+transition:background-color .16s ease,color .16s ease;
+}
+[data-vibeui-block="calendar-030"] [data-part="day"]:hover:not(:disabled){
+background:var(--vibeui-calendar-030-accentsoft);
+}
+[data-vibeui-block="calendar-030"] [data-part="day"]:focus-visible{
+outline:2px solid var(--vibeui-calendar-030-accent);outline-offset:2px;
+}
+[data-vibeui-block="calendar-030"] [data-part="day"]:disabled{
+cursor:not-allowed;background:transparent;color:var(--vibeui-calendar-030-faint);
+}
+[data-vibeui-block="calendar-030"] [data-part="day"][data-inside="true"]{
+background:var(--vibeui-calendar-030-accentsoft);
+}
+[data-vibeui-block="calendar-030"] [data-part="day"][data-edge="true"]{
+background:var(--vibeui-calendar-030-accent);color:var(--vibeui-calendar-030-bg);font-weight:700;
+}
+[data-vibeui-block="calendar-030"] [data-part="foot"]{
+display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
+padding-top:0.6rem;border-top:1px solid var(--vibeui-calendar-030-border);
+}
+[data-vibeui-block="calendar-030"] [data-part="count"]{
+margin:0;font-size:0.8125rem;color:var(--vibeui-calendar-030-muted);
+}
+[data-vibeui-block="calendar-030"] [data-part="count"] b{
+color:var(--vibeui-calendar-030-fg);font-variant-numeric:tabular-nums;
+}
+[data-vibeui-block="calendar-030"] [data-part="reset"]{
+appearance:none;cursor:pointer;font:inherit;flex:none;
+padding:0.35rem 0.7rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-calendar-030-border);
+background:transparent;color:var(--vibeui-calendar-030-muted);
+font-size:0.78rem;font-weight:600;
+}
+[data-vibeui-block="calendar-030"] [data-part="reset"]:focus-visible{
+outline:2px solid var(--vibeui-calendar-030-accent);outline-offset:2px;
+}
+[data-vibeui-block="calendar-030"] [data-part="bar"]{
+height:0.3rem;border-radius:999px;overflow:hidden;background:var(--vibeui-calendar-030-soft);
+}
+[data-vibeui-block="calendar-030"] [data-part="bar"] i{
+display:block;height:100%;border-radius:inherit;
+width:calc(var(--vibeui-calendar-030-fill,0) * 1%);
+background:var(--vibeui-calendar-030-accent);
+transition:width .2s ease;
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-030"] *{animation:none!important;transition:none!important}}
+`
+
+const DAY = 86400000
+
+function stamp(date: Date) {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, "0")
+  const day = String(date.getDate()).padStart(2, "0")
+
+  return `${year}-${month}-${day}`
+}
+
+function pluralize(count: number, forms: [string, string, string]) {
+  const tens = count % 100
+  const ones = count % 10
+
+  if (tens > 10 && tens < 20) return forms[2]
+  if (ones === 1) return forms[0]
+  if (ones > 1 && ones < 5) return forms[1]
+
+  return forms[2]
+}
+
+/**
+ * Диапазон с потолком в N дней: лишние дни гаснут сразу после первой даты.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Calendar030({
+  month = "2026-04",
+  maxDays = 14,
+  defaultFrom = "2026-04-06",
+  defaultTo = "2026-04-12",
+  locale = "ru-RU",
+  onChange,
+  accent,
+  className,
+  style,
+  ...props
+}: Calendar030Props) {
+  const [from, setFrom] = useState(defaultFrom)
+  const [to, setTo] = useState(defaultTo)
+
+  const [year, index] = month.split("-").map(Number)
+  const first = new Date(year, index - 1, 1)
+  const offset = (first.getDay() + 6) % 7
+  const total = new Date(year, index, 0).getDate()
+  const cells = Array.from(
+    { length: Math.ceil((offset + total) / 7) * 7 },
+    (_, step) => new Date(year, index - 1, 1 - offset + step),
+  )
+
+  const weekdays = Array.from({ length: 7 }, (_, day) =>
+    new Intl.DateTimeFormat(locale, { weekday: "short" })
+      .format(new Date(2024, 0, 1 + day))
+      .slice(0, 2),
+  )
+
+  const start = from ? new Date(`${from}T00:00:00`).getTime() : 0
+  const finish = to ? new Date(`${to}T00:00:00`).getTime() : 0
+  const picking = Boolean(from) && !to
+
+  const blocked = (date: Date) => {
+    if (!picking) return false
+
+    const distance = (date.getTime() - start) / DAY
+
+    return distance < 0 || distance > maxDays - 1
+  }
+
+  const choose = (date: Date) => {
+    const value = stamp(date)
+
+    if (picking && date.getTime() >= start) {
+      setTo(value)
+      onChange?.(from, value)
+
+      return
+    }
+
+    setFrom(value)
+    setTo("")
+    onChange?.(value, "")
+  }
+
+  const length =
+    from && to ? Math.round((finish - start) / DAY) + 1 : from ? 1 : 0
+
+  const heading = new Intl.DateTimeFormat(locale, {
+    month: "long",
+    year: "numeric",
+  }).format(first)
+
+  const palette = {
+    "--vibeui-calendar-030-fill": Math.min(
+      100,
+      Math.round((length / maxDays) * 100),
+    ),
+    ...(accent ? { "--vibeui-calendar-030-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-calendar-030" precedence="medium">
+        {STYLES}
+      </style>
+      <section
+        {...props}
+        data-vibeui-block="calendar-030"
+        className={className}
+        style={palette}
+      >
+        <header>
+          <h3 data-part="title">{heading}</h3>
+          <p data-part="rule">
+            Не больше {maxDays} {pluralize(maxDays, ["дня", "дней", "дней"])}{" "}
+            подряд
+          </p>
+        </header>
+        <div data-part="grid">
+          {weekdays.map((name) => (
+            <span key={name} data-part="dow">
+              {name}
+            </span>
+          ))}
+          {cells.map((date) => {
+            const time = date.getTime()
+            const edge = stamp(date) === from || stamp(date) === to
+            const inside = Boolean(to) && time > start && time < finish
+
+            return (
+              <button
+                key={time}
+                type="button"
+                data-part="day"
+                data-edge={edge}
+                data-inside={inside}
+                disabled={blocked(date) || date.getMonth() !== index - 1}
+                aria-pressed={edge || inside}
+                onClick={() => choose(date)}
+              >
+                {date.getDate()}
+              </button>
+            )
+          })}
+        </div>
+        <div data-part="bar" aria-hidden="true">
+          <i />
+        </div>
+        <div data-part="foot">
+          <p data-part="count" aria-live="polite">
+            {length === 0 ? (
+              "Выберите первый день"
+            ) : picking ? (
+              <>
+                Начало выбрано, осталось до <b>{maxDays - 1}</b>{" "}
+                {pluralize(maxDays - 1, ["дня", "дней", "дней"])}
+              </>
+            ) : (
+              <>
+                Выбрано <b>{length}</b> из <b>{maxDays}</b>{" "}
+                {pluralize(maxDays, ["дня", "дней", "дней"])}
+              </>
+            )}
+          </p>
+          <button
+            type="button"
+            data-part="reset"
+            onClick={() => {
+              setFrom("")
+              setTo("")
+              onChange?.("", "")
+            }}
+          >
+            Сбросить
+          </button>
+        </div>
+      </section>
+    </>
+  )
+}

@@ -1,0 +1,293 @@
+"use client"
+
+import { useId, useState } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Calendar029Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children" | "onChange" | "defaultValue"
+> & {
+  label?: string
+  defaultValue?: string
+  neighbours?: string[]
+  locale?: string
+  onChange?: (value: string) => void
+  accent?: string
+}
+
+// Идея компонента: в строке фильтров дате нельзя занимать поле в половину
+// экрана. Поэтому дата здесь — такая же фишка, как «Статус» рядом: она
+// показывает выбранное значение текстом, а сетка месяца открывается панелью
+// поверх и закрывается сразу после выбора. Крестик снимает фильтр, не открывая
+// панель, — это отдельная кнопка внутри фишки.
+const STYLES = `
+:where([data-vibeui-block="calendar-029"]){
+--vibeui-calendar-029-bg:oklch(1 0 0);
+--vibeui-calendar-029-fg:oklch(0.23 0.014 265);
+--vibeui-calendar-029-muted:oklch(0.57 0.014 265);
+--vibeui-calendar-029-border:oklch(0.9 0.008 265);
+--vibeui-calendar-029-soft:oklch(0.97 0.006 265);
+--vibeui-calendar-029-accent:oklch(0.5 0.14 265);
+--vibeui-calendar-029-accentsoft:oklch(0.94 0.04 265);
+--vibeui-calendar-029-radius:0.6rem;
+--vibeui-calendar-029-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="calendar-029"]{
+display:flex;flex-wrap:wrap;align-items:center;gap:0.4rem;
+width:100%;max-width:26rem;box-sizing:border-box;padding:0.75rem;
+background:var(--vibeui-calendar-029-bg);
+border:1px solid var(--vibeui-calendar-029-border);
+border-radius:calc(var(--vibeui-calendar-029-radius) + 0.35rem);
+color:var(--vibeui-calendar-029-fg);
+font-family:var(--vibeui-calendar-029-font);
+}
+[data-vibeui-block="calendar-029"] [data-part="chip"]{
+appearance:none;cursor:pointer;font:inherit;
+display:inline-flex;align-items:center;gap:0.3rem;
+height:2rem;padding:0 0.65rem;border-radius:999px;
+border:1px solid var(--vibeui-calendar-029-border);
+background:var(--vibeui-calendar-029-soft);
+color:var(--vibeui-calendar-029-muted);
+font-size:0.78rem;font-weight:600;white-space:nowrap;
+transition:background-color .16s ease,color .16s ease,border-color .16s ease;
+}
+[data-vibeui-block="calendar-029"] [data-part="chip"]:hover{border-color:var(--vibeui-calendar-029-accent)}
+[data-vibeui-block="calendar-029"] [data-part="chip"]:focus-visible{
+outline:2px solid var(--vibeui-calendar-029-accent);outline-offset:2px;
+}
+[data-vibeui-block="calendar-029"] [data-part="anchor"]{position:relative;display:inline-flex;align-items:center;gap:0.15rem}
+[data-vibeui-block="calendar-029"] [data-part="date"][data-set="true"]{
+background:var(--vibeui-calendar-029-accentsoft);
+border-color:var(--vibeui-calendar-029-accent);
+color:var(--vibeui-calendar-029-fg);
+}
+[data-vibeui-block="calendar-029"] [data-part="clear"]{
+appearance:none;cursor:pointer;font:inherit;border:0;background:transparent;color:inherit;
+display:inline-flex;align-items:center;justify-content:center;
+width:1.5rem;height:1.5rem;border-radius:999px;font-size:0.9rem;line-height:1;
+color:var(--vibeui-calendar-029-muted);
+}
+[data-vibeui-block="calendar-029"] [data-part="clear"]:hover{background:var(--vibeui-calendar-029-soft)}
+[data-vibeui-block="calendar-029"] [data-part="clear"]:focus-visible{
+outline:2px solid var(--vibeui-calendar-029-accent);outline-offset:1px;
+}
+[data-vibeui-block="calendar-029"] [data-part="panel"]{
+position:absolute;top:calc(100% + 0.35rem);left:0;z-index:20;
+width:15.5rem;box-sizing:border-box;padding:0.6rem;
+background:var(--vibeui-calendar-029-bg);
+border:1px solid var(--vibeui-calendar-029-border);
+border-radius:0.75rem;
+box-shadow:0 12px 28px oklch(0.2 0.02 265 / 14%);
+}
+[data-vibeui-block="calendar-029"] [data-part="nav"]{
+display:flex;align-items:center;justify-content:space-between;gap:0.3rem;margin-bottom:0.4rem;
+}
+[data-vibeui-block="calendar-029"] [data-part="nav"] strong{
+font-size:0.8rem;font-weight:700;text-transform:capitalize;
+}
+[data-vibeui-block="calendar-029"] [data-part="step"]{
+appearance:none;cursor:pointer;font:inherit;
+width:1.6rem;height:1.6rem;border-radius:0.4rem;
+border:1px solid var(--vibeui-calendar-029-border);
+background:var(--vibeui-calendar-029-soft);color:inherit;line-height:1;
+}
+[data-vibeui-block="calendar-029"] [data-part="step"]:focus-visible{
+outline:2px solid var(--vibeui-calendar-029-accent);outline-offset:2px;
+}
+[data-vibeui-block="calendar-029"] [data-part="grid"]{
+display:grid;grid-template-columns:repeat(7,1fr);gap:0.1rem;
+}
+[data-vibeui-block="calendar-029"] [data-part="dow"]{
+text-align:center;font-size:0.62rem;font-weight:700;text-transform:uppercase;
+color:var(--vibeui-calendar-029-muted);padding-bottom:0.15rem;
+}
+[data-vibeui-block="calendar-029"] [data-part="day"]{
+appearance:none;cursor:pointer;font:inherit;
+height:1.85rem;border:0;border-radius:0.4rem;
+background:transparent;color:inherit;
+font-size:0.75rem;font-variant-numeric:tabular-nums;
+transition:background-color .16s ease;
+}
+[data-vibeui-block="calendar-029"] [data-part="day"]:hover{background:var(--vibeui-calendar-029-soft)}
+[data-vibeui-block="calendar-029"] [data-part="day"]:focus-visible{
+outline:2px solid var(--vibeui-calendar-029-accent);outline-offset:-2px;
+}
+[data-vibeui-block="calendar-029"] [data-part="day"][data-outside="true"]{color:var(--vibeui-calendar-029-muted);opacity:.6}
+[data-vibeui-block="calendar-029"] [data-part="day"][aria-pressed="true"]{
+background:var(--vibeui-calendar-029-accent);color:var(--vibeui-calendar-029-bg);font-weight:700;
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-029"] *{animation:none!important;transition:none!important}}
+`
+
+function stamp(date: Date) {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, "0")
+  const day = String(date.getDate()).padStart(2, "0")
+
+  return `${year}-${month}-${day}`
+}
+
+/**
+ * Компактный выбор даты фишкой в строке фильтров.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Calendar029({
+  label = "Дата",
+  defaultValue = "2026-04-15",
+  neighbours = ["Статус: в работе", "Автор: любой"],
+  locale = "ru-RU",
+  onChange,
+  accent,
+  className,
+  style,
+  ...props
+}: Calendar029Props) {
+  const id = useId()
+  const [value, setValue] = useState(defaultValue)
+  const [open, setOpen] = useState(false)
+  const [view, setView] = useState(() => {
+    const base = new Date(`${defaultValue || "2026-04-01"}T00:00:00`)
+
+    return new Date(base.getFullYear(), base.getMonth(), 1)
+  })
+
+  const first = new Date(view.getFullYear(), view.getMonth(), 1)
+  const offset = (first.getDay() + 6) % 7
+  const cells = Array.from(
+    { length: 42 },
+    (_, index) =>
+      new Date(view.getFullYear(), view.getMonth(), 1 - offset + index),
+  )
+
+  const weekdays = Array.from({ length: 7 }, (_, index) =>
+    new Intl.DateTimeFormat(locale, { weekday: "short" })
+      .format(new Date(2024, 0, 1 + index))
+      .slice(0, 2),
+  )
+
+  const short = new Intl.DateTimeFormat(locale, {
+    day: "numeric",
+    month: "short",
+  })
+
+  const commit = (date: Date) => {
+    const next = stamp(date)
+
+    setValue(next)
+    setOpen(false)
+    onChange?.(next)
+  }
+
+  const palette = {
+    ...(accent ? { "--vibeui-calendar-029-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-calendar-029" precedence="medium">
+        {STYLES}
+      </style>
+      <div
+        {...props}
+        data-vibeui-block="calendar-029"
+        className={className}
+        style={palette}
+        onKeyDown={(event) => {
+          if (event.key === "Escape" && open) {
+            event.stopPropagation()
+            setOpen(false)
+          }
+        }}
+      >
+        {neighbours.map((title) => (
+          <button key={title} type="button" data-part="chip">
+            {title}
+          </button>
+        ))}
+        <span data-part="anchor">
+          <button
+            type="button"
+            data-part="chip"
+            data-set={Boolean(value)}
+            aria-expanded={open}
+            aria-controls={`${id}-panel`}
+            onClick={() => setOpen(!open)}
+          >
+            {label}:{" "}
+            {value ? short.format(new Date(`${value}T00:00:00`)) : "любая"}
+            <span aria-hidden="true">▾</span>
+          </button>
+          {value ? (
+            <button
+              type="button"
+              data-part="clear"
+              aria-label="Снять фильтр по дате"
+              onClick={() => {
+                setValue("")
+                onChange?.("")
+              }}
+            >
+              ×
+            </button>
+          ) : null}
+          {open ? (
+            <div id={`${id}-panel`} data-part="panel">
+              <div data-part="nav">
+                <button
+                  type="button"
+                  data-part="step"
+                  aria-label="Предыдущий месяц"
+                  onClick={() =>
+                    setView(
+                      new Date(view.getFullYear(), view.getMonth() - 1, 1),
+                    )
+                  }
+                >
+                  ‹
+                </button>
+                <strong>
+                  {new Intl.DateTimeFormat(locale, {
+                    month: "long",
+                    year: "numeric",
+                  }).format(view)}
+                </strong>
+                <button
+                  type="button"
+                  data-part="step"
+                  aria-label="Следующий месяц"
+                  onClick={() =>
+                    setView(
+                      new Date(view.getFullYear(), view.getMonth() + 1, 1),
+                    )
+                  }
+                >
+                  ›
+                </button>
+              </div>
+              <div data-part="grid">
+                {weekdays.map((name) => (
+                  <span key={name} data-part="dow">
+                    {name}
+                  </span>
+                ))}
+                {cells.map((date) => (
+                  <button
+                    key={date.getTime()}
+                    type="button"
+                    data-part="day"
+                    data-outside={date.getMonth() !== view.getMonth()}
+                    aria-pressed={stamp(date) === value}
+                    onClick={() => commit(date)}
+                  >
+                    {date.getDate()}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : null}
+        </span>
+      </div>
+    </>
+  )
+}

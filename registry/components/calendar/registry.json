@@ -2106,6 +2106,1072 @@
           }
         }
       }
+    },
+    {
+      "name": "calendar-021",
+      "type": "registry:component",
+      "title": "ISO Week Grid",
+      "description": "Месячная сетка с колонкой номеров недель по ISO 8601: выбирается не день, а строка целиком, и подпись снизу переводит «неделя 16» в конкретные даты.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-021/calendar-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-021.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-021-*. Клиентский: номер выбранной недели живёт в useState. Разметка — обычная <table>, где заголовок строки <th scope=\"row\"> содержит кнопку с номером недели, поэтому связь «неделя → дни» читается скринридером без ARIA-костылей. Номер считает isoWeek: дата сдвигается на четверг своей недели и сравнивается с началом года в UTC, поэтому переход на летнее время и январские недели-перебежчики не ломают счёт. Сетка строится от понедельника ((getDay()+6)%7), пустые ведущие недели отбрасываются фильтром. Подсветка выбранной строки повешена на tr[data-picked=\"true\"], скругления краёв — на td:first-of-type и td:last-child.",
+      "meta": {
+        "tags": ["calendar", "week", "iso-8601", "planning"],
+        "ai": {
+          "export": "Calendar021",
+          "usage": "<Calendar021 month=\"2026-04\" defaultWeek={16} />",
+          "summary": "Календарь месяца, в котором единица выбора — неделя, а не день. Слева колонка номеров недель по ISO 8601, каждый номер — кнопка, выбирающая всю строку; подпись снизу показывает границы выбранной недели датами. Нужен там, где планируют производство, отгрузки и спринты: там говорят «на 16-й неделе», а не «с 13 по 19 апреля». Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-021-* и не подменять её токенами вашей темы (bg-card, text-muted-foreground и подобными)",
+            "функцию isoWeek целиком: номер недели по ISO определяется её четвергом, наивное деление дней на семь даёт другой ответ в начале и конце года",
+            "расчёт в UTC внутри isoWeek — в локальном времени ночь перевода часов даёт 23- и 25-часовые сутки и сбивает счёт",
+            "таблицу с <th scope=\"row\"> для номера недели: связь номера и семи ячеек строки объявляется разметкой, а не aria-описаниями",
+            "aria-label у кнопки недели с границами дат — иначе скринридер прочитает голое число",
+            "старт недели с понедельника ((getDay()+6)%7): ISO-неделя начинается в понедельник, воскресный старт сделает номера неверными",
+            "подпись снизу с aria-live=\"polite\": выбор недели меняет только цвет строки, без объявления это изменение не слышно"
+          ],
+          "adapt": [
+            "month — показываемый месяц строкой YYYY-MM",
+            "locale — локаль подписей месяца и дней недели",
+            "today — опорная дата для обводки «сегодня»",
+            "defaultWeek — номер недели, выбранной при первом рендере",
+            "onSelect — обработчик, получает номер недели и обе границы в формате YYYY-MM-DD",
+            "accent — цвет выделения; всё остальное красится от него"
+          ],
+          "notes": [
+            "Не считайте номер недели как Math.ceil(день/7): у ISO своя разметка года, и 1 января часто относится к последней неделе предыдущего года.",
+            "В США и Израиле неделя начинается с воскресенья — там нужен не этот компонент, а сетка с другим стартом и без ISO-номеров.",
+            "Не превращайте номер недели в подпись без кнопки: смысл варианта в том, что выбирается интервал, а не день.",
+            "onSelect отдаёт даты строкой без часового пояса — не прогоняйте их через new Date(...).toISOString(), это сдвинет день."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "month",
+            "label": "Месяц",
+            "type": "text",
+            "default": "2026-04",
+            "maxLength": 7
+          },
+          {
+            "prop": "locale",
+            "label": "Локаль",
+            "type": "select",
+            "default": "ru-RU",
+            "options": ["ru-RU", "en-US", "de-DE"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A month grid with an ISO 8601 week-number column: you pick the whole row rather than a day, and the caption below turns “week 16” into real dates.",
+            "ai": {
+              "summary": "A month calendar where the unit of choice is a week, not a day. The left column holds ISO 8601 week numbers, each one a button that selects the entire row, and the caption below spells the selected week out in dates. Built for planning production, shipments and sprints, where people say “in week 16”, not “13–19 April”. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-calendar-021-* palette — do not swap it for your theme tokens (bg-card, text-muted-foreground and the like)",
+                "the isoWeek function as a whole: an ISO week number is defined by its Thursday, and naive division of days by seven answers differently at both ends of the year",
+                "the UTC arithmetic inside isoWeek — in local time a daylight-saving night gives 23- and 25-hour days and breaks the count",
+                "the table with <th scope=\"row\"> for the week number: the link between the number and its seven cells is declared by markup, not by aria descriptions",
+                "the aria-label on the week button carrying both boundary dates — otherwise a screen reader announces a bare number",
+                "the Monday-first week ((getDay()+6)%7): an ISO week starts on Monday, and a Sunday start would make the numbers wrong",
+                "the caption with aria-live=\"polite\": selecting a week only changes a row colour, and without it the change is inaudible"
+              ],
+              "adapt": [
+                "month — the displayed month as a YYYY-MM string",
+                "locale — the locale for month and weekday labels",
+                "today — the reference date for the “today” outline",
+                "defaultWeek — the week number selected on first render",
+                "onSelect — the handler; it receives the week number and both boundaries as YYYY-MM-DD",
+                "accent — the highlight colour everything else is derived from"
+              ],
+              "notes": [
+                "Do not compute the week number as Math.ceil(day/7): ISO slices the year its own way, and 1 January often belongs to the last week of the previous year.",
+                "In the US and Israel the week starts on Sunday — that case needs a different grid start and no ISO numbers, not this component.",
+                "Do not turn the week number into a plain label: the whole point of this variant is that an interval is selected, not a day.",
+                "onSelect returns timezone-free date strings — do not push them through new Date(...).toISOString(), that shifts the day."
+              ],
+              "usage": "<Calendar021 month=\"2026-04\" defaultWeek={16} />"
+            },
+            "controls": {
+              "month": {
+                "label": "Month",
+                "default": "2026-04"
+              },
+              "locale": {
+                "label": "Locale"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-022",
+      "type": "registry:component",
+      "title": "Working Days",
+      "description": "Выбор рабочих дней недели семью переключателями: два пресета для типовых графиков и живой итог в часах вместо абстрактных галочек.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-022/calendar-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-022.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-022-*. Клиентский: набор выбранных дней живёт в useState как массив индексов, где 0 — понедельник. Корень — <fieldset> с <legend>, поэтому группа переключателей объявлена семантикой формы; каждый день — <button> с aria-pressed и aria-label из полного названия дня, короткая подпись помечена aria-hidden. Названия дней берутся из Intl.DateTimeFormat, поэтому смена locale меняет подписи без словаря в коде. Выходные отличаются пунктирной рамкой через [data-weekend], итог считается умножением количества дней на hoursPerDay и склоняется функцией pluralize.",
+      "meta": {
+        "tags": ["calendar", "weekday", "schedule", "settings"],
+        "ai": {
+          "export": "Calendar022",
+          "usage": "<Calendar022 hoursPerDay={8} defaultDays={[0, 1, 2, 3, 4]} />",
+          "summary": "Переключатели дней недели для настройки графика: часы работы, дни доставки, расписание рассылки. Семь кнопок с aria-pressed, три пресета (пятидневка, шестидневка, снять всё) и строка итога, которая переводит выбор в часы в неделю. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-022-* и не подменять её токенами вашей темы (bg-muted, border-input и подобными)",
+            "корень <fieldset> с <legend>: это группа полей формы, и скринридер обязан прочитать общий заголовок перед каждым переключателем",
+            "aria-pressed на кнопках дней — без него состояние «включён» существует только в цвете",
+            "aria-label с полным названием дня при видимой аббревиатуре под aria-hidden: «пн» вслух звучит как мусор",
+            "нумерацию дней от понедельника (0 — понедельник): весь расчёт итога и пресеты завязаны на неё",
+            "строку итога с aria-live=\"polite\": она единственная объясняет, во что превратился набор кнопок",
+            "склонение через pluralize — «5 дней», а не «5 день», иначе интерфейс выглядит машинным"
+          ],
+          "adapt": [
+            "label — заголовок группы над переключателями",
+            "defaultDays — дни, включённые при первом рендере",
+            "hoursPerDay — длина рабочего дня в часах для итога",
+            "locale — локаль названий дней недели",
+            "onChange — обработчик, получает отсортированный массив индексов дней",
+            "accent — цвет включённого дня"
+          ],
+          "notes": [
+            "Не путайте индексацию: у Date.getDay() воскресенье равно нулю, здесь ноль — понедельник, перевод делается формулой (getDay()+6)%7.",
+            "Не заменяйте кнопки чекбоксами без видимой рамки: у переключателя-дня состояние должно читаться с расстояния метра.",
+            "Пустой набор — законное состояние (магазин не работает), поэтому итог отдельно проговаривает «рабочих дней нет».",
+            "Для графика «два через два» этот компонент не подходит: там цикл не привязан к неделе, нужен другой вариант."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "hoursPerDay",
+            "label": "Часов в дне",
+            "type": "number",
+            "default": 8,
+            "min": 1,
+            "max": 24
+          },
+          {
+            "prop": "label",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Рабочие дни",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Working days of the week as seven toggles: two presets for the usual schedules and a live total in hours instead of abstract checkboxes.",
+            "ai": {
+              "summary": "Weekday toggles for configuring a schedule: opening hours, delivery days, a mailing timetable. Seven buttons with aria-pressed, three presets (five-day, six-day, clear all) and a total line that turns the selection into hours per week. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-calendar-022-* palette — do not swap it for your theme tokens (bg-muted, border-input and the like)",
+                "the <fieldset> root with a <legend>: this is a group of form controls, and a screen reader must read the shared heading before each toggle",
+                "aria-pressed on the day buttons — without it the “on” state exists only as a colour",
+                "the aria-label carrying the full weekday name while the visible abbreviation is aria-hidden: “Mo” read aloud is noise",
+                "the Monday-first day numbering (0 is Monday): the total and both presets are built on it",
+                "the total line with aria-live=\"polite\": it is the only thing that explains what the buttons add up to",
+                "pluralisation through pluralize — “5 days”, not “5 day”, or the UI reads as machine output"
+              ],
+              "adapt": [
+                "label — the group heading above the toggles",
+                "defaultDays — the days switched on at first render",
+                "hoursPerDay — the length of a working day used in the total",
+                "locale — the locale for weekday names",
+                "onChange — the handler; it receives a sorted array of day indices",
+                "accent — the colour of an enabled day"
+              ],
+              "notes": [
+                "Mind the indexing: Date.getDay() calls Sunday zero, here zero is Monday, and the conversion is (getDay()+6)%7.",
+                "Do not swap the buttons for borderless checkboxes: a day toggle has to be readable from a metre away.",
+                "An empty set is a legitimate state (the shop is closed), which is why the total says “no working days” explicitly.",
+                "A two-on-two-off rota does not fit this component: its cycle is not tied to the week and needs a different variant."
+              ],
+              "usage": "<Calendar022 hoursPerDay={8} defaultDays={[0, 1, 2, 3, 4]} />"
+            },
+            "controls": {
+              "hoursPerDay": {
+                "label": "Hours per day"
+              },
+              "label": {
+                "label": "Heading",
+                "default": "Working days"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-023",
+      "type": "registry:component",
+      "title": "Two Zone Slots",
+      "description": "Выбор слота созвона сразу в двух часовых поясах: каждая строка показывает своё и чужое время, а часы вне рабочего дня партнёра помечены.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-023/calendar-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-023.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-023-*. Клиентский: выбранный час живёт в useState. Разница поясов не хардкодится: zoneOffset читает смещение зоны через Intl.DateTimeFormat с timeZone и formatToParts, а instantOf двумя проходами находит момент UTC, которому соответствует заданное локальное время в домашней зоне (второй проход нужен в сутки перевода часов). Дальше один и тот же момент форматируется двумя Intl-форматтерами, поэтому строка «17:00 → 10:00» всегда согласована. Признак offhours считается по часу в чужой зоне и вешается на data-offhours, метка «вне часов» дорисовывается CSS-псевдоэлементом. Названия городов по умолчанию выводятся из имени зоны, поэтому смена awayZone меняет и подпись колонки.",
+      "meta": {
+        "tags": ["calendar", "timezone", "meeting", "scheduling"],
+        "ai": {
+          "export": "Calendar023",
+          "usage": "<Calendar023 homeZone=\"Europe/Moscow\" awayZone=\"America/New_York\" />",
+          "summary": "Список слотов созвона, где каждая строка сразу подписана двумя временами — своим и партнёрским. Разница поясов считается через Intl, а не константой, поэтому переход на летнее время не ломает расчёт; строки, попадающие вне рабочего дня партнёра, помечены цветом и словами. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-023-* и не подменять её токенами вашей темы (bg-popover, text-muted-foreground и подобными)",
+            "функции zoneOffset и instantOf: смещение зоны читается у Intl, а не считается вычитанием часов, иначе перевод часов даёт ошибку в час",
+            "второй проход в instantOf — в сутки перехода на летнее время одного прохода не хватает, и слот уезжает",
+            "форматирование обоих времён из одного момента: две независимые даты рано или поздно разойдутся",
+            "пометку data-offhours и её текстовую расшифровку: цвет один не должен нести смысл «партнёр спит»",
+            "aria-pressed на строке слота и итог с aria-live=\"polite\" — выбор иначе не объявляется",
+            "подпись чужой даты в итоге: за океаном слот часто попадает на другой календарный день, и это надо сказать словами"
+          ],
+          "adapt": [
+            "date — день, для которого показаны слоты",
+            "homeZone и awayZone — идентификаторы часовых поясов IANA",
+            "homeLabel и awayLabel — подписи городов; без них имя берётся из зоны",
+            "officeFrom и officeTo — границы рабочего дня, они же задают список слотов",
+            "locale — локаль подписей и формата времени",
+            "onSelect — обработчик выбранного часа; accent — цвет выделения"
+          ],
+          "notes": [
+            "Не храните разницу поясов числом в базе: она меняется дважды в год и по решению правительств.",
+            "Идентификатор зоны должен быть из базы IANA («Europe/Moscow»), сокращения вроде MSK и EST Intl не понимает.",
+            "Слот отдаётся часом в домашней зоне — на сервере превращайте его в момент через ту же зону, иначе смысл потеряется.",
+            "Для трёх и более городов список строк станет нечитаемым: там нужна сетка часов, а не пара колонок."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "awayZone",
+            "label": "Пояс партнёра",
+            "type": "select",
+            "default": "America/New_York",
+            "options": [
+              "America/New_York",
+              "Europe/Berlin",
+              "Asia/Dubai",
+              "Asia/Tokyo"
+            ]
+          },
+          {
+            "prop": "date",
+            "label": "Дата",
+            "type": "text",
+            "default": "2026-04-15",
+            "maxLength": 10
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Picking a call slot in two time zones at once: every row shows your time and theirs, and hours outside the partner's working day are flagged.",
+            "ai": {
+              "summary": "A list of call slots where each row is labelled with two times at once — yours and your partner's. The offset is computed through Intl rather than stored as a constant, so daylight saving does not break it, and rows falling outside the partner's working day are flagged by colour and by words. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-calendar-023-* palette — do not swap it for your theme tokens (bg-popover, text-muted-foreground and the like)",
+                "the zoneOffset and instantOf helpers: the offset is read from Intl instead of being subtracted by hand, or a DST switch is off by an hour",
+                "the second pass inside instantOf — on a daylight-saving day one pass is not enough and the slot slides",
+                "formatting both times from a single instant: two independent dates will drift apart eventually",
+                "the data-offhours flag together with its wording: colour alone must not carry the meaning “your partner is asleep”",
+                "aria-pressed on the slot row and the summary with aria-live=\"polite\" — otherwise the choice is never announced",
+                "the partner's date in the summary: across an ocean a slot often lands on another calendar day, and that has to be said"
+              ],
+              "adapt": [
+                "date — the day the slots are shown for",
+                "homeZone and awayZone — IANA time-zone identifiers",
+                "homeLabel and awayLabel — city captions; without them the name comes from the zone",
+                "officeFrom and officeTo — the working-day bounds, which also define the slot list",
+                "locale — the locale of the labels and the time format",
+                "onSelect — the handler for the chosen hour; accent — the highlight colour"
+              ],
+              "notes": [
+                "Do not store the offset as a number in the database: it changes twice a year and by government decree.",
+                "The zone id has to come from the IANA database (“Europe/Moscow”); Intl does not understand abbreviations such as MSK or EST.",
+                "The slot is reported as an hour in the home zone — convert it on the server through the same zone or the meaning is lost.",
+                "For three cities or more the row list stops being readable: that case needs an hour grid, not a pair of columns."
+              ],
+              "usage": "<Calendar023 homeZone=\"Europe/Moscow\" awayZone=\"America/New_York\" />"
+            },
+            "controls": {
+              "awayZone": {
+                "label": "Partner zone"
+              },
+              "date": {
+                "label": "Date",
+                "default": "2026-04-15"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-024",
+      "type": "registry:component",
+      "title": "Birth Date Fields",
+      "description": "Дата рождения тремя полями вместо сетки месяца: день, месяц и год вводятся с клавиатуры, а проверка отдельно разбирает несуществующее число, будущее и возрастной ценз.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-024/calendar-024.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-024.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-024-*. Клиентский: три части даты живут в отдельных useState, наружу onChange отдаёт собранную строку YYYY-MM-DD или пустую строку, если дата неполная. Корень — <fieldset> с <legend>, у каждого поля своя <label>, а автозаполнение включено атрибутами autoComplete=\"bday-day|bday-month|bday-year\". Месяц сделан <select> с названиями из Intl, поэтому цифра 07 не спорит с форматом даты в стране пользователя. Проверка собрана в один useMemo и возвращает не булево, а состояние idle/ok/bad с текстом: количество дней в месяце считается через new Date(year, month, 0).getDate(), возраст — сравнением месяца и дня. Состояние поднимается на корень как data-state, поэтому рамки полей и цвет подписи красятся одним правилом.",
+      "meta": {
+        "tags": ["calendar", "birthday", "form", "validation"],
+        "ai": {
+          "export": "Calendar024",
+          "usage": "<Calendar024 minAge={18} defaultValue=\"1994-07-19\" />",
+          "summary": "Ввод даты рождения тремя полями: день, месяц выпадающим списком и год. Календарной сетке до 1985 года нужно двадцать нажатий «назад», а тут дата набирается за секунду. Валидация разбирается на понятные случаи: 31 февраля, дата в будущем, слишком маленький возраст, невероятный год. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-024-* и не подменять её токенами вашей темы (border-input, text-destructive и подобными)",
+            "три отдельных поля вместо календаря: выбор года рождения в сетке месяца — это десятки нажатий",
+            "атрибуты autoComplete bday-day, bday-month и bday-year: без них браузер не подставит сохранённую дату",
+            "месяц списком названий, а не числом: 03/04 читается по-разному в разных странах",
+            "разбор ошибок на случаи вместо одного «неверная дата» — человек должен понять, что именно исправлять",
+            "aria-invalid и aria-describedby на всех трёх полях, связанные с одной подписью-объяснением",
+            "подпись с aria-live=\"polite\" и точкой-индикатором: ошибка не должна существовать только как красная рамка"
+          ],
+          "adapt": [
+            "label — заголовок группы полей",
+            "defaultValue — начальная дата строкой YYYY-MM-DD или пустая строка",
+            "minAge — минимальный возраст, ниже которого форма ругается",
+            "maxAge — верхняя граница правдоподобия возраста",
+            "today — опорная дата расчёта возраста; locale — локаль названий месяцев",
+            "onChange — обработчик собранной даты; accent — цвет фокуса"
+          ],
+          "notes": [
+            "Не считайте возраст делением разницы в миллисекундах на 365 дней: високосные годы дают ошибку в день, и на границе ценза это важно.",
+            "Не подставляйте текущую дату из Date.now() внутрь компонента: серверный и клиентский рендер разойдутся, поэтому «сегодня» приходит пропом.",
+            "Не блокируйте ввод цифр в поле дня: люди печатают быстрее, чем думают, и правку удобнее делать после, а не во время набора.",
+            "Возрастной ценз — не единственная проверка: год из двух цифр («94») тоже надо ловить, иначе получите 94-й год нашей эры."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "minAge",
+            "label": "Минимальный возраст",
+            "type": "number",
+            "default": 18,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "label",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Дата рождения",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A date of birth as three fields instead of a month grid: day, month and year typed from the keyboard, with validation that separates an impossible day, a future date and an age limit.",
+            "ai": {
+              "summary": "Date-of-birth entry as three fields: day, a month dropdown and year. A month grid needs twenty “back” taps to reach 1985, while this takes a second to type. Validation splits into readable cases: 31 February, a date in the future, an age below the limit, an implausible year. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-calendar-024-* palette — do not swap it for your theme tokens (border-input, text-destructive and the like)",
+                "three separate fields instead of a calendar: picking a birth year in a month grid is dozens of taps",
+                "the autoComplete attributes bday-day, bday-month and bday-year: without them the browser will not fill a saved date",
+                "the month as a list of names rather than a number: 03/04 reads differently in different countries",
+                "splitting errors into cases instead of one “invalid date” — a person has to know what exactly to fix",
+                "aria-invalid and aria-describedby on all three fields, tied to the single explanation line",
+                "the note with aria-live=\"polite\" and its status dot: an error must not exist only as a red border"
+              ],
+              "adapt": [
+                "label — the heading of the field group",
+                "defaultValue — the initial date as a YYYY-MM-DD string, or empty",
+                "minAge — the minimum age below which the form complains",
+                "maxAge — the upper plausibility bound for an age",
+                "today — the reference date the age is measured from; locale — the locale of month names",
+                "onChange — the handler for the assembled date; accent — the focus colour"
+              ],
+              "notes": [
+                "Do not compute age by dividing a millisecond difference by 365 days: leap years put you a day off, and on the limit boundary that matters.",
+                "Do not read the current date from Date.now() inside the component: server and client renders would diverge, which is why “today” arrives as a prop.",
+                "Do not block digits in the day field: people type faster than they think, and corrections are easier after typing than during it.",
+                "The age limit is not the only check: a two-digit year (“94”) has to be caught too, or you get the year 94 AD."
+              ],
+              "usage": "<Calendar024 minAge={18} defaultValue=\"1994-07-19\" />"
+            },
+            "controls": {
+              "minAge": {
+                "label": "Minimum age"
+              },
+              "label": {
+                "label": "Heading",
+                "default": "Date of birth"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-025",
+      "type": "registry:component",
+      "title": "Shift Roster",
+      "description": "График смен таблицей «сотрудники × дни»: код смены в клетке, цвет по типу и итог смен справа, так что дыру в покрытии видно как пустой столбец.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-025/calendar-025.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-025.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-025-*. Серверный: состояния нет, всё считается из пропа people при рендере. Разметка — настоящая <table> с <th scope=\"col\"> у дней и <th scope=\"row\"> у сотрудников, поэтому скринридер читает клетку как «Ирина Соколова, вторник». В клетке лежит короткий код под aria-hidden и полное название смены в визуально скрытом [data-part=\"sr\"], так что цвет не единственный носитель смысла. Тип смены выражен атрибутом data-shift, палитра для каждого типа своя. Плотность строк переключается переменной --vibeui-calendar-025-cell через data-density, горизонтальная прокрутка живёт в отдельной обёртке [data-part=\"scroll\"], поэтому таблица не растягивает карточку.",
+      "meta": {
+        "tags": ["calendar", "shifts", "roster", "team"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Calendar025",
+          "usage": "<Calendar025 weekStart=\"2026-04-13\" density=\"compact\" />",
+          "summary": "Недельный график смен: строки — сотрудники, столбцы — дни, в клетке код смены (дневная, ночная, выходной, отпуск). Справа итог смен за неделю, снизу легенда. Читается по столбцу («кто в ночь во вторник») и по строке («не перегружен ли человек»). Серверный компонент, ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-025-* и не подменять её токенами вашей темы (bg-muted, text-foreground и подобными)",
+            "настоящую <table> с scope=\"col\" и scope=\"row\": сетка из div потеряет связь клетки с человеком и днём",
+            "скрытый текст [data-part=\"sr\"] рядом с кодом смены — иначе тип смены существует только как цвет и одна буква",
+            "разные оттенки для дневной, ночной смены и отпуска: столбец без покрытия должен бросаться в глаза",
+            "колонку итога: перегруз человека виден числом, а не пересчётом клеток глазами",
+            "обёртку [data-part=\"scroll\"] с overflow-x: без неё таблица разорвёт карточку на узком экране",
+            "серверность компонента: здесь нет состояния, и \"use client\" только утяжелит страницу"
+          ],
+          "adapt": [
+            "heading — заголовок над графиком",
+            "weekStart — первый день недели строкой YYYY-MM-DD",
+            "people — список сотрудников с ролью и семью сменами подряд",
+            "density — compact для плотной таблицы, comfortable для крупных клеток",
+            "locale — локаль подписей дней и диапазона",
+            "accent — цвет ночной смены"
+          ],
+          "notes": [
+            "Массив shifts обязан быть длиной семь: лишнее обрезается, недостающие дни просто не отрисуются.",
+            "Не добавляйте больше четырёх типов смен: палитра перестанет различаться, нужен другой способ кодирования.",
+            "Для месяца эта таблица не годится — тридцать столбцов не влезут; для месяца берите тепловую карту загрузки.",
+            "Не заменяйте коды смен эмодзи: они по-разному выглядят в системах и плохо читаются скринридером."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "density",
+            "label": "Плотность",
+            "type": "select",
+            "default": "compact",
+            "options": ["compact", "comfortable"]
+          },
+          {
+            "prop": "weekStart",
+            "label": "Начало недели",
+            "type": "text",
+            "default": "2026-04-13",
+            "maxLength": 10
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A shift roster as a staff-by-day table: a shift code in every cell, a colour per shift type and a weekly total on the right, so a coverage gap shows up as an empty column.",
+            "ai": {
+              "summary": "A weekly shift roster: rows are people, columns are days, each cell holds a shift code (day, night, off, leave). A weekly total sits on the right and a legend below. It reads down a column (“who is on nights on Tuesday”) and across a row (“is this person overloaded”). A server component, zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-calendar-025-* palette — do not swap it for your theme tokens (bg-muted, text-foreground and the like)",
+                "the real <table> with scope=\"col\" and scope=\"row\": a grid of divs loses the link between a cell, a person and a day",
+                "the hidden [data-part=\"sr\"] text next to the shift code — otherwise the shift type exists only as a colour and one letter",
+                "distinct hues for day shift, night shift and leave: an uncovered column has to jump out",
+                "the totals column: an overloaded person shows up as a number instead of a manual cell count",
+                "the [data-part=\"scroll\"] wrapper with overflow-x: without it the table tears the card apart on a narrow screen",
+                "the component staying server-side: there is no state here, and \"use client\" would only add weight to the page"
+              ],
+              "adapt": [
+                "heading — the caption above the roster",
+                "weekStart — the first day of the week as a YYYY-MM-DD string",
+                "people — the staff list with a role and seven consecutive shifts",
+                "density — compact for a dense table, comfortable for larger cells",
+                "locale — the locale of the day labels and the range",
+                "accent — the colour of the night shift"
+              ],
+              "notes": [
+                "The shifts array has to be seven long: extra entries are trimmed and missing days simply do not render.",
+                "Do not add more than four shift types: the palette stops being distinguishable and you need a different encoding.",
+                "This table does not scale to a month — thirty columns will not fit; use a load heatmap for that.",
+                "Do not replace the shift codes with emoji: they render differently per platform and read poorly to a screen reader."
+              ],
+              "usage": "<Calendar025 weekStart=\"2026-04-13\" density=\"compact\" />"
+            },
+            "controls": {
+              "density": {
+                "label": "Density"
+              },
+              "weekStart": {
+                "label": "Week start",
+                "default": "2026-04-13"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-026",
+      "type": "registry:component",
+      "title": "Repeat Rule",
+      "description": "Правило повтора события, которое сразу переводится во фразу словами и в список ближайших дат, а внизу показывает собранную строку RRULE.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-026/calendar-026.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-026.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-026-*. Клиентский: частота, интервал и дни недели живут в useState. Строка правила собирается чистой функцией ruleOf, поэтому onChange всегда получает актуальное значение, а не состояние прошлого рендера. Ближайшие даты считаются в useMemo тремя ветками: для daily и monthly — сдвигом даты, для weekly — перебором дней с проверкой номера недели от старта, поэтому «каждые 2 недели» действительно пропускает неделю. Фраза словами строится отдельно и склоняется через pluralize. Названия дней берутся из Intl.DateTimeFormat, кнопки дней показываются только для weekly.",
+      "meta": {
+        "tags": ["calendar", "recurrence", "rrule", "form"],
+        "ai": {
+          "export": "Calendar026",
+          "usage": "<Calendar026 defaultFrequency=\"weekly\" defaultInterval={2} occurrences={3} />",
+          "summary": "Настройка повтора события: интервал, единица (дни, недели, месяцы) и дни недели. Форма не оставляет человека наедине с абстракцией — под ней фраза словами («каждые 2 недели по дням: вторник, четверг») и три ближайших даты, по которым видно ошибку в интервале. Внизу собранная строка RRULE, готовая уехать в календарь. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-026-* и не подменять её токенами вашей темы (bg-accent, text-muted-foreground и подобными)",
+            "тройку «форма — фраза — ближайшие даты»: правило повтора проверяется только по датам, форма сама себя не объясняет",
+            "чистую функцию ruleOf и вызов её в обработчиках: если собирать строку из состояния, onChange будет отдавать прошлое значение",
+            "перебор дней с проверкой номера недели для weekly — сдвиг на 7×интервал теряет второй и третий выбранный день",
+            "фразу с aria-live=\"polite\": изменение правила иначе не объявляется",
+            "склонение через pluralize: «каждые 2 недели», а не «каждые 2 неделя»",
+            "кнопки дней недели, показанные только при weekly: для ежемесячного правила они бессмысленны и путают"
+          ],
+          "adapt": [
+            "label — заголовок над формой",
+            "startDate — дата первого события, от неё считаются повторы",
+            "defaultFrequency — единица повтора при первом рендере",
+            "defaultInterval и defaultWeekdays — начальный интервал и дни недели",
+            "occurrences — сколько ближайших дат показать",
+            "locale — локаль названий дней; onChange — обработчик строки RRULE; accent — цвет включённого дня"
+          ],
+          "notes": [
+            "Строка RRULE здесь — упрощённая: без UNTIL, COUNT и BYSETPOS, добавляйте их, если календарь на той стороне их ждёт.",
+            "Ежемесячное правило по 31-му числу в коротком месяце уедет: JavaScript сам перенесёт дату на следующий месяц, это надо решать отдельно.",
+            "Не показывайте только фразу без дат: словами «каждые две недели» звучит правильно даже тогда, когда старт выбран не тот.",
+            "Не считайте повторы от Date.now(): старт приходит пропом, иначе серверный и клиентский рендер разойдутся."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultFrequency",
+            "label": "Единица повтора",
+            "type": "select",
+            "default": "weekly",
+            "options": ["daily", "weekly", "monthly"]
+          },
+          {
+            "prop": "occurrences",
+            "label": "Показать дат",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 8
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A recurrence rule that is immediately translated into a sentence and into a list of upcoming dates, with the assembled RRULE string shown underneath.",
+            "ai": {
+              "summary": "Recurrence setup for an event: interval, unit (days, weeks, months) and weekdays. The form does not leave a person alone with the abstraction — below it sits a sentence (“every 2 weeks on: Tuesday, Thursday”) and the next three dates, which is where an interval mistake shows. At the bottom, the assembled RRULE string ready to travel to a calendar. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-calendar-026-* palette — do not swap it for your theme tokens (bg-accent, text-muted-foreground and the like)",
+                "the trio “form — sentence — upcoming dates”: a recurrence rule can only be verified against dates, the form does not explain itself",
+                "the pure ruleOf function called from the handlers: assembling the string from state would make onChange report the previous value",
+                "the day-by-day walk with a week-index check for weekly — shifting by 7×interval drops the second and third selected day",
+                "the sentence with aria-live=\"polite\": a rule change is otherwise never announced",
+                "pluralisation through pluralize: “every 2 weeks”, not “every 2 week”",
+                "showing the weekday buttons only for weekly: for a monthly rule they are meaningless and confusing"
+              ],
+              "adapt": [
+                "label — the heading above the form",
+                "startDate — the date of the first event; repeats are counted from it",
+                "defaultFrequency — the recurrence unit at first render",
+                "defaultInterval and defaultWeekdays — the initial interval and weekdays",
+                "occurrences — how many upcoming dates to show",
+                "locale — the locale of weekday names; onChange — the RRULE handler; accent — the colour of an enabled day"
+              ],
+              "notes": [
+                "The RRULE here is simplified: no UNTIL, COUNT or BYSETPOS — add them if the calendar on the other side expects them.",
+                "A monthly rule on the 31st slides in a short month: JavaScript rolls the date into the next month by itself, and that needs handling.",
+                "Do not show the sentence without the dates: “every two weeks” sounds correct even when the start date is wrong.",
+                "Do not count repeats from Date.now(): the start arrives as a prop, otherwise server and client renders diverge."
+              ],
+              "usage": "<Calendar026 defaultFrequency=\"weekly\" defaultInterval={2} occurrences={3} />"
+            },
+            "controls": {
+              "defaultFrequency": {
+                "label": "Repeat unit"
+              },
+              "occurrences": {
+                "label": "Dates shown"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-027",
+      "type": "registry:component",
+      "title": "Range Presets",
+      "description": "Выбор периода отчёта пресетами: «последние 7 дней», «прошлый месяц» и ещё четыре, а два поля дат ниже показывают, во что пресет развернулся.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-027/calendar-027.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-027.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-027-*. Клиентский: выбранный пресет и обе границы живут в useState. Пресеты разворачиваются чистой функцией resolve от опорной даты today, которая приходит пропом, — Date.now() внутри компонента развёл бы серверный и клиентский рендер. Поля дат — нативные input type=\"date\" с взаимными min и max, поэтому браузер сам не даёт перевернуть период; ручная правка переводит выбор в состояние custom. Итог считает количество дней включительно и склоняет его через pluralize, а невалидный период (конец раньше начала) показывается отдельным текстом на приглушённой подложке.",
+      "meta": {
+        "tags": ["calendar", "range", "presets", "reports"],
+        "ai": {
+          "export": "Calendar027",
+          "usage": "<Calendar027 defaultPreset=\"7d\" today=\"2026-04-15\" />",
+          "summary": "Выбор периода для отчётов и аналитики: шесть пресетов одним нажатием, два нативных поля дат под ними и итог в днях. Пресеты считаются от опорной даты, а не от Date.now(), поэтому компонент безопасно рендерится на сервере. Ручная правка полей не ломает выбор, а просто переводит его в «свой период». Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-027-* и не подменять её токенами вашей темы (bg-secondary, border-input и подобными)",
+            "опорную дату пропом today: Date.now() внутри рендера ломает гидрацию и делает результат невоспроизводимым",
+            "чистую функцию resolve: одна точка, где живёт смысл каждого пресета, и её легко проверить тестом",
+            "нативные input type=\"date\" с min и max друг от друга — браузер бесплатно даёт календарь и защиту от перевёрнутого периода",
+            "aria-pressed на фишках пресетов и роль group у их контейнера",
+            "переход в состояние custom при ручной правке вместо снятия всех пресетов молча",
+            "итог с aria-live=\"polite\" и подсчёт дней включительно: «последние 7 дней» — это семь дней, а не шесть"
+          ],
+          "adapt": [
+            "label — заголовок над пресетами",
+            "today — опорная дата, от которой считаются все пресеты",
+            "defaultPreset — пресет, выбранный при первом рендере",
+            "locale — локаль подписи периода",
+            "onChange — обработчик, получает обе границы и имя пресета",
+            "accent — цвет активной фишки и подложки итога"
+          ],
+          "notes": [
+            "Границы отдаются строкой YYYY-MM-DD без времени: на сервере дотягивайте конец дня сами, иначе потеряете последние сутки.",
+            "Набор пресетов зависит от домена: в финансах нужны кварталы, в поддержке — «последние 24 часа», не копируйте список вслепую.",
+            "Не убирайте поля дат, оставив одни пресеты: разовый нестандартный период — законный сценарий, ради которого форму не переписывают.",
+            "input type=\"date\" в разных браузерах выглядит по-разному; это цена нативного календаря, а не дефект вёрстки."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultPreset",
+            "label": "Пресет",
+            "type": "select",
+            "default": "7d",
+            "options": ["today", "yesterday", "7d", "30d", "month", "prevMonth"]
+          },
+          {
+            "prop": "today",
+            "label": "Опорная дата",
+            "type": "text",
+            "default": "2026-04-15",
+            "maxLength": 10
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A reporting period chosen by preset — “last 7 days”, “previous month” and four more — with two date fields below showing what the preset expanded into.",
+            "ai": {
+              "summary": "A period picker for reports and analytics: six one-tap presets, two native date fields underneath and a total in days. Presets are computed from a reference date rather than Date.now(), so the component renders safely on the server. Editing the fields by hand does not break the choice, it just turns it into a custom period. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-calendar-027-* palette — do not swap it for your theme tokens (bg-secondary, border-input and the like)",
+                "the reference date arriving as the today prop: Date.now() inside render breaks hydration and makes the result irreproducible",
+                "the pure resolve function: a single place where each preset's meaning lives, easy to cover with a test",
+                "the native input type=\"date\" pair with mutual min and max — the browser gives you a calendar and reversal protection for free",
+                "aria-pressed on the preset chips and the group role on their container",
+                "switching to the custom state on manual editing instead of silently clearing every preset",
+                "the total with aria-live=\"polite\" and an inclusive day count: “last 7 days” is seven days, not six"
+              ],
+              "adapt": [
+                "label — the heading above the presets",
+                "today — the reference date every preset is measured from",
+                "defaultPreset — the preset selected at first render",
+                "locale — the locale of the period caption",
+                "onChange — the handler; it receives both bounds and the preset name",
+                "accent — the colour of the active chip and of the summary background"
+              ],
+              "notes": [
+                "Bounds are reported as YYYY-MM-DD without time: extend the end of day on the server yourself or you lose the last 24 hours.",
+                "The preset set is domain-specific: finance needs quarters, support needs “last 24 hours” — do not copy the list blindly.",
+                "Do not drop the date fields and keep presets only: a one-off custom period is a legitimate case, and forms should not be rewritten for it.",
+                "input type=\"date\" looks different across browsers; that is the price of a native calendar, not a layout defect."
+              ],
+              "usage": "<Calendar027 defaultPreset=\"7d\" today=\"2026-04-15\" />"
+            },
+            "controls": {
+              "defaultPreset": {
+                "label": "Preset"
+              },
+              "today": {
+                "label": "Reference date",
+                "default": "2026-04-15"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-028",
+      "type": "registry:component",
+      "title": "Hourly Booking",
+      "description": "Доступность переговорной по часам: интервал набирается двумя нажатиями — начало и конец, а занятые часы подписаны владельцем и не выбираются.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-028/calendar-028.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-028.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-028-*. Клиентский: начало, конец и текст ошибки живут в useState. Каждый час — <button> внутри списка: занятый час получает disabled и aria-label с именем владельца, поэтому недоступность объявляется, а не только красится. Логика набора интервала линейная: первое нажатие ставит начало, второе — конец, нажатие раньше начала перезапускает выбор. Перед фиксацией конца интервал проверяется на пересечение с чужой бронью циклом по часам, и при пересечении показывается отдельное сообщение вместо молчаливого игнорирования. Итог и ошибка живут в одном абзаце с aria-live и переключаются атрибутом data-bad.",
+      "meta": {
+        "tags": ["calendar", "booking", "availability", "rooms"],
+        "ai": {
+          "export": "Calendar028",
+          "usage": "<Calendar028 openFrom={8} openTo={20} date=\"2026-04-15\" />",
+          "summary": "Почасовая доступность ресурса — переговорной, корта, станка. Час здесь не слот, а край интервала: первое нажатие задаёт начало, второе конец, и бронь получается «с десяти до двенадцати», как её и формулируют. Занятые часы подписаны тем, кто их занял, а попытка перепрыгнуть через чужую бронь ловится сообщением. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-028-* и не подменять её токенами вашей темы (bg-muted, text-destructive и подобными)",
+            "набор интервала двумя нажатиями: одиночный слот заставляет бронировать два часа двумя записями",
+            "атрибут disabled у занятых часов вместе с aria-label «занято»: цвет один не сообщает недоступность",
+            "проверку пересечения перед фиксацией конца — без неё интервал молча накроет чужую встречу",
+            "отдельное сообщение об ошибке в том же абзаце с aria-live=\"polite\", а не всплывающий тост",
+            "подпись владельца занятого часа: «занято» без имени не даёт ни договориться, ни понять причину",
+            "промежуточное состояние «начало выбрано» с подсказкой — иначе после первого нажатия непонятно, что делать дальше"
+          ],
+          "adapt": [
+            "heading — название ресурса в заголовке",
+            "date — день, для которого показана доступность",
+            "openFrom и openTo — часы открытия и закрытия, они задают список строк",
+            "busy — массив чужих броней с часами и владельцем",
+            "locale — локаль подписи даты",
+            "onBook — обработчик подтверждённого интервала; accent — цвет выделения"
+          ],
+          "notes": [
+            "Часы здесь целые: для получасовых слотов список надо строить с шагом 0.5 и менять форматирование времени.",
+            "Компонент не знает о часовых поясах: если ресурс в другом городе, приводите часы заранее.",
+            "Не заменяйте disabled на pointer-events: none — кнопка останется в порядке табуляции и обманет клавиатуру.",
+            "Пересечение проверяется по часам, а не по минутам: для брони с 10:30 нужна другая единица сетки."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "openFrom",
+            "label": "Открытие",
+            "type": "number",
+            "default": 8,
+            "min": 0,
+            "max": 23
+          },
+          {
+            "prop": "openTo",
+            "label": "Закрытие",
+            "type": "number",
+            "default": 20,
+            "min": 1,
+            "max": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Hour-by-hour room availability: an interval is assembled in two taps — start and end — while busy hours carry their owner's name and cannot be selected.",
+            "ai": {
+              "summary": "Hourly availability for a resource — a meeting room, a court, a machine. An hour here is not a slot but an edge of an interval: the first tap sets the start, the second the end, and the booking comes out as “from ten to twelve”, exactly how people phrase it. Busy hours are labelled with whoever took them, and trying to jump over someone else's booking is caught by a message. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-calendar-028-* palette — do not swap it for your theme tokens (bg-muted, text-destructive and the like)",
+                "assembling the interval in two taps: single slots force a two-hour booking to be made as two records",
+                "the disabled attribute on busy hours together with the “busy” aria-label: colour alone does not convey unavailability",
+                "the overlap check before committing the end — without it an interval silently swallows someone else's meeting",
+                "the dedicated error message inside the same aria-live=\"polite\" paragraph rather than a floating toast",
+                "the owner's name on a busy hour: “busy” without a name lets you neither negotiate nor understand why",
+                "the intermediate “start selected” state with its hint — otherwise the first tap leaves no clue what to do next"
+              ],
+              "adapt": [
+                "heading — the resource name in the header",
+                "date — the day availability is shown for",
+                "openFrom and openTo — opening and closing hours, which define the row list",
+                "busy — an array of other bookings with hours and owner",
+                "locale — the locale of the date caption",
+                "onBook — the handler for a confirmed interval; accent — the highlight colour"
+              ],
+              "notes": [
+                "Hours here are whole: for half-hour slots build the list with a 0.5 step and change the time formatting.",
+                "The component knows nothing about time zones: if the resource is in another city, convert the hours beforehand.",
+                "Do not replace disabled with pointer-events: none — the button stays in the tab order and lies to the keyboard.",
+                "Overlap is checked per hour, not per minute: a booking starting at 10:30 needs a finer grid unit."
+              ],
+              "usage": "<Calendar028 openFrom={8} openTo={20} date=\"2026-04-15\" />"
+            },
+            "controls": {
+              "openFrom": {
+                "label": "Opens at"
+              },
+              "openTo": {
+                "label": "Closes at"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-029",
+      "type": "registry:component",
+      "title": "Filter Date Chip",
+      "description": "Дата в строке фильтров как фишка рядом с остальными: значение показано текстом, сетка месяца открывается панелью поверх и закрывается сразу после выбора.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-029/calendar-029.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-029.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-029-*. Клиентский: значение, открытость панели и показываемый месяц живут в useState. Панель позиционируется абсолютно относительно обёртки [data-part=\"anchor\"] с position:relative, поэтому не требует ни портала, ни расчёта координат. Кнопка-фишка несёт aria-expanded и aria-controls, Escape ловится обработчиком на корне и закрывает панель, выбор дня закрывает её же. Кнопка сброса вынесена рядом с фишкой, а не вложена внутрь неё: интерактивный элемент внутри кнопки — невалидная разметка, которую ломает и клавиатура, и скринридер. Сетка строится на 42 ячейки от понедельника, дни соседних месяцев помечаются data-outside.",
+      "meta": {
+        "tags": ["calendar", "filter", "chip", "compact"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Calendar029",
+          "usage": "<Calendar029 label=\"Дата\" defaultValue=\"2026-04-15\" />",
+          "summary": "Компактный выбор даты для строки фильтров: фишка показывает текущее значение словами, панель с месяцем открывается по нажатию и закрывается после выбора, а крестик снимает фильтр, не открывая календарь. Рядом стоят соседние фишки-фильтры, чтобы было видно, как компонент живёт в ряду. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-029-* и не подменять её токенами вашей темы (bg-popover, border-border и подобными)",
+            "кнопку сброса отдельным элементом рядом с фишкой: кнопка внутри кнопки — невалидная разметка и сломанная клавиатура",
+            "aria-expanded и aria-controls на фишке — иначе состояние панели не объявляется",
+            "закрытие панели по Escape и сразу после выбора дня: фильтр меняют быстро и подряд",
+            "позиционирование панели через relative-обёртку [data-part=\"anchor\"]: без портала и без расчёта координат",
+            "показ выбранной даты текстом на самой фишке — фильтр обязан читаться, не открывая панель",
+            "видимый фокус на днях (outline с отрицательным offset), иначе в сетке 42 кнопок теряется каретка"
+          ],
+          "adapt": [
+            "label — подпись фильтра слева от значения",
+            "defaultValue — дата, выбранная при первом рендере, строкой YYYY-MM-DD",
+            "neighbours — подписи соседних фишек, показывающих контекст строки фильтров",
+            "locale — локаль названий месяцев и дней",
+            "onChange — обработчик выбранной даты; пустая строка означает снятый фильтр",
+            "accent — цвет активной фишки и выбранного дня"
+          ],
+          "notes": [
+            "Панель не закрывается по клику мимо: добавьте обработчик на document, если фильтров в строке много.",
+            "Панель лежит в потоке страницы, поэтому в контейнере с overflow:hidden её обрежет — там нужен портал.",
+            "Не растягивайте фишку на всю ширину: смысл варианта в том, что дата занимает столько же места, сколько «Статус».",
+            "Пустая строка — законное значение «фильтр снят», не превращайте её в null молча, обработчик рассчитывает на строку."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Дата",
+            "maxLength": 24
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Значение",
+            "type": "text",
+            "default": "2026-04-15",
+            "maxLength": 10
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A date in a filter bar as one chip among the rest: the value is spelled out on the chip, the month grid opens as an overlay panel and closes right after a pick.",
+            "ai": {
+              "summary": "A compact date picker for a filter bar: the chip spells out the current value, the month panel opens on click and closes after a pick, and the cross clears the filter without opening the calendar at all. Neighbouring filter chips stand next to it to show how the component lives in a row. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-calendar-029-* palette — do not swap it for your theme tokens (bg-popover, border-border and the like)",
+                "the clear button as a separate element beside the chip: a button inside a button is invalid markup and broken keyboard support",
+                "aria-expanded and aria-controls on the chip — otherwise the panel state is never announced",
+                "closing the panel on Escape and immediately after a day is picked: filters get changed fast and repeatedly",
+                "positioning the panel through the relative [data-part=\"anchor\"] wrapper: no portal, no coordinate maths",
+                "spelling the selected date onto the chip itself — a filter must be readable without opening the panel",
+                "the visible focus ring on days (outline with a negative offset), or the caret gets lost in a grid of 42 buttons"
+              ],
+              "adapt": [
+                "label — the filter caption to the left of the value",
+                "defaultValue — the date selected at first render, as a YYYY-MM-DD string",
+                "neighbours — captions of the sibling chips that show the filter-bar context",
+                "locale — the locale of month and weekday names",
+                "onChange — the handler for the picked date; an empty string means the filter was cleared",
+                "accent — the colour of the active chip and of the selected day"
+              ],
+              "notes": [
+                "The panel does not close on an outside click: add a document listener when the bar holds many filters.",
+                "The panel sits in page flow, so a container with overflow:hidden will clip it — that case needs a portal.",
+                "Do not stretch the chip to full width: the point of this variant is that a date takes the same room as “Status”.",
+                "An empty string is the legitimate “filter cleared” value — do not silently turn it into null, the handler expects a string."
+              ],
+              "usage": "<Calendar029 label=\"Date\" defaultValue=\"2026-04-15\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Date"
+              },
+              "defaultValue": {
+                "label": "Value",
+                "default": "2026-04-15"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar-030",
+      "type": "registry:component",
+      "title": "Capped Range",
+      "description": "Диапазон с потолком в N дней: после выбора первой даты недоступные дни гаснут, а счётчик снизу показывает, сколько дней ещё осталось в лимите.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-030/calendar-030.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-030.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-030-*. Клиентский: обе границы диапазона живут в useState. Ограничение выражено не сообщением об ошибке, а состоянием сетки: пока выбрана только первая дата, функция blocked гасит дни раньше начала и дальше maxDays-1 через нативный disabled, поэтому запрет объявляется и скринридеру. Число строк сетки считается по Math.ceil((offset+дней)/7)*7, чтобы месяц не оставлял пустую шестую неделю. Полоса прогресса под сеткой заполняется переменной --vibeui-calendar-030-fill из отношения длины диапазона к лимиту. Итог склоняется через pluralize и объявляется через aria-live.",
+      "meta": {
+        "tags": ["calendar", "range", "limit", "booking"],
+        "ai": {
+          "export": "Calendar030",
+          "usage": "<Calendar030 maxDays={14} month=\"2026-04\" />",
+          "summary": "Выбор диапазона дат с жёстким ограничением длины: аренда не больше двух недель, отпуск не больше 28 дней, отчёт не глубже месяца. Правило работает не сообщением после отправки, а формой сетки — после первой даты лишние дни физически гаснут, а полоса и счётчик показывают остаток лимита. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-030-* и не подменять её токенами вашей темы (bg-accent, text-muted-foreground и подобными)",
+            "выражение лимита состоянием сетки, а не ошибкой после отправки: запрет должен быть виден до нажатия",
+            "нативный disabled на недоступных днях — он выкидывает их из порядка табуляции и объявляется скринридером",
+            "промежуточное состояние «выбрано только начало» с подсказкой об остатке дней",
+            "включающий подсчёт длины (конец минус начало плюс один): диапазон с 6 по 12 — это семь дней",
+            "полосу заполнения от --vibeui-calendar-030-fill: она показывает исчерпание лимита без чтения чисел",
+            "итог с aria-live=\"polite\": гашение дней невидимо для скринридера, объяснение должно звучать словами"
+          ],
+          "adapt": [
+            "month — показываемый месяц строкой YYYY-MM",
+            "maxDays — максимальная длина диапазона в днях",
+            "defaultFrom и defaultTo — границы, выбранные при первом рендере",
+            "locale — локаль заголовка месяца и дней недели",
+            "onChange — обработчик обеих границ; пустая вторая означает незавершённый выбор",
+            "accent — цвет краёв диапазона и полосы заполнения"
+          ],
+          "notes": [
+            "Показан один месяц: если лимит больше 20 дней, диапазон перестанет помещаться и нужен вариант с двумя месяцами.",
+            "Кнопка «Сбросить» обязательна: без неё из состояния «выбрано начало» нельзя выйти, не выбрав конец.",
+            "Не заменяйте disabled приглушённым цветом: клавиатура пройдёт по заблокированным дням и выберет запрещённое.",
+            "Лимит здесь считается в календарных днях; для рабочих дней нужен другой расчёт и другой текст подписи."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "maxDays",
+            "label": "Максимум дней",
+            "type": "number",
+            "default": 14,
+            "min": 1,
+            "max": 60
+          },
+          {
+            "prop": "month",
+            "label": "Месяц",
+            "type": "text",
+            "default": "2026-04",
+            "maxLength": 7
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A range with a hard cap of N days: once the first date is picked the unreachable days go dim, and the counter below shows how much of the limit is left.",
+            "ai": {
+              "summary": "A date-range picker with a hard length limit: a rental of no more than two weeks, leave of no more than 28 days, a report no deeper than a month. The rule is enforced by the shape of the grid rather than by an error after submit — after the first date the extra days physically go dim, while the bar and counter show the remaining allowance. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-calendar-030-* palette — do not swap it for your theme tokens (bg-accent, text-muted-foreground and the like)",
+                "expressing the cap as grid state rather than a post-submit error: the restriction has to be visible before the click",
+                "the native disabled attribute on unreachable days — it removes them from the tab order and is announced by screen readers",
+                "the intermediate “only the start is picked” state with its hint about the remaining days",
+                "the inclusive length count (end minus start plus one): 6 to 12 is seven days",
+                "the fill bar driven by --vibeui-calendar-030-fill: it shows the limit running out without reading numbers",
+                "the summary with aria-live=\"polite\": dimming days is invisible to a screen reader and the reason must be spoken"
+              ],
+              "adapt": [
+                "month — the displayed month as a YYYY-MM string",
+                "maxDays — the maximum range length in days",
+                "defaultFrom and defaultTo — the bounds selected at first render",
+                "locale — the locale of the month heading and weekday names",
+                "onChange — the handler for both bounds; an empty second one means the pick is unfinished",
+                "accent — the colour of the range edges and of the fill bar"
+              ],
+              "notes": [
+                "One month is shown: with a limit above 20 days the range stops fitting and a two-month variant is needed.",
+                "The reset button is mandatory: without it the “start picked” state cannot be left without picking an end.",
+                "Do not replace disabled with a dimmed colour: the keyboard would walk onto blocked days and select a forbidden one.",
+                "The cap here counts calendar days; working days need a different calculation and different wording."
+              ],
+              "usage": "<Calendar030 maxDays={14} month=\"2026-04\" />"
+            },
+            "controls": {
+              "maxDays": {
+                "label": "Maximum days"
+              },
+              "month": {
+                "label": "Month",
+                "default": "2026-04"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

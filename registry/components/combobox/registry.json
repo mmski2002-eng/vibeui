@@ -1214,6 +1214,857 @@
           }
         }
       }
+    },
+    {
+      "name": "combobox-013",
+      "type": "registry:component",
+      "title": "Section Then Value",
+      "description": "Выбор по иерархии «раздел → значение»: слева разделы, справа их содержимое, а как только в поле появляется текст, колонки схлопываются в сквозной список совпадений.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-013/combobox-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-013-*. Клиентский: запрос, активный раздел и значение живут в useState. Раскладка — grid из двух колонок, левая прокручивается отдельно от правой. Ключевая механика в useMemo: пока запрос пуст, правая колонка показывает элементы активного раздела, а при непустом запросе список собирается flatMap по всем разделам и у каждой строки появляется подпись раздела [data-part=\"where\"] — так поиск не ломает иерархию, а временно её выпрямляет. Левая колонка скрывается атрибутом hidden, а не размонтированием, поэтому не дёргается ширина. ARIA: input с role=\"combobox\", правая колонка — role=\"listbox\", строки — кнопки с role=\"option\" внутри li role=\"none\", поэтому доступна клавиатура без ручного управления activedescendant.",
+      "meta": {
+        "tags": ["combobox", "hierarchy", "two-pane", "search"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Combobox013",
+          "usage": "<Combobox013 label=\"Тип документа\" placeholder=\"Поиск\" />",
+          "summary": "Выбор из справочника, разложенного на разделы: слева список разделов со счётчиками, справа значения выбранного раздела. Пока поле пустое, работает навигация по иерархии; как только человек начинает печатать, поиск идёт по всем разделам сразу, а каждая найденная строка подписана своим разделом. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-013-* и не подменять её токенами вашей темы (bg-popover, text-muted-foreground и подобными)",
+            "переключение двух режимов по непустому запросу: иерархия для навигации, плоский список для поиска — это ядро варианта",
+            "подпись раздела у найденной строки: без неё два одинаковых названия из разных разделов неразличимы",
+            "скрытие левой колонки через hidden, а не размонтированием — иначе при вводе прыгает ширина панели",
+            "role=\"listbox\" на правой колонке и role=\"option\" на кнопках внутри li role=\"none\": иначе список не объявляется списком",
+            "счётчики у разделов: они показывают, где вообще есть что выбирать",
+            "строку итога с aria-live=\"polite\", называющую и значение, и его раздел"
+          ],
+          "adapt": [
+            "label — подпись поля над списком",
+            "placeholder — текст-подсказка в поле поиска",
+            "sections — сам справочник: массив разделов с их элементами",
+            "defaultValue — значение, выбранное при первом рендере",
+            "onSelect — обработчик, получает значение и раздел, из которого оно взято",
+            "accent — цвет активного раздела и выбранного значения"
+          ],
+          "notes": [
+            "Для трёх уровней вложенности две колонки не годятся — там нужен каскадер, а не этот вариант.",
+            "Не сортируйте разделы по алфавиту, если у них есть смысловой порядок: люди запоминают положение раздела.",
+            "Совпадения ищутся простым includes: для опечаток нужен нечёткий поиск, и его надо добавлять осознанно.",
+            "Не убирайте счётчики: пустой раздел без числа выглядит как поломка, а не как отсутствие данных."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Тип документа",
+            "maxLength": 32
+          },
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Поиск по всем разделам",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A “section then value” picker: sections on the left, their contents on the right, and the moment you type, both panes collapse into one cross-section list of matches.",
+            "ai": {
+              "summary": "A picker for a catalogue split into sections: the section list with counts on the left, the values of the active section on the right. While the field is empty you navigate the hierarchy; the moment someone types, the search runs across every section and each match is labelled with the section it came from. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-combobox-013-* palette — do not swap it for your theme tokens (bg-popover, text-muted-foreground and the like)",
+                "the two modes switched by a non-empty query: hierarchy for browsing, a flat list for searching — that is the core of this variant",
+                "the section caption on a match: without it two identical names from different sections are indistinguishable",
+                "hiding the left pane with hidden instead of unmounting it — otherwise the panel width jumps while typing",
+                "role=\"listbox\" on the right pane and role=\"option\" on the buttons inside li role=\"none\": otherwise the list is not announced as one",
+                "the per-section counts: they show where there is anything to pick at all",
+                "the summary line with aria-live=\"polite\" naming both the value and its section"
+              ],
+              "adapt": [
+                "label — the field caption above the list",
+                "placeholder — the hint text in the search field",
+                "sections — the catalogue itself: an array of sections with their items",
+                "defaultValue — the value selected at first render",
+                "onSelect — the handler; it receives the value and the section it came from",
+                "accent — the colour of the active section and the selected value"
+              ],
+              "notes": [
+                "Two panes do not cover three levels of nesting — that case needs a cascader, not this variant.",
+                "Do not alphabetise sections that have a meaningful order: people memorise where a section sits.",
+                "Matching uses a plain includes: fuzzy search for typos has to be added deliberately.",
+                "Do not drop the counts: an empty section without a number looks broken rather than empty."
+              ],
+              "usage": "<Combobox013 label=\"Document type\" placeholder=\"Search\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Document type"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Search across sections"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-014",
+      "type": "registry:component",
+      "title": "Thumbnail Options",
+      "description": "Выбор варианта с превью: у каждой строки картинка, а если ссылки нет — свой градиент с инициалами, оттенок которого детерминированно считается из названия.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-014/combobox-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-014.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-014-*. Клиентский: запрос и выбранное значение живут в useState. Строка списка — grid 2.4rem + 1fr: слева превью, справа название и подпись, обе строки текста обрезаются многоточием, поэтому длинное имя не ломает раскладку. Если у варианта есть src, рисуется обычный <img> с object-fit: cover и пустым alt (картинка декоративна, имя рядом текстом); если ссылки нет, показывается градиент, чей оттенок считает hueOf — детерминированный FNV-хэш по названию, поэтому вариант всегда одного цвета. Оттенок передаётся единственной инлайновой переменной --vibeui-combobox-014-hue: это динамическое значение, которое нельзя выразить статическим классом.",
+      "meta": {
+        "tags": ["combobox", "thumbnail", "templates", "visual"],
+        "ai": {
+          "export": "Combobox014",
+          "usage": "<Combobox014 label=\"Шаблон письма\" defaultValue=\"Брошенная корзина\" />",
+          "summary": "Список вариантов, которые различаются внешним видом: шаблоны писем, темы оформления, обложки. У каждой строки превью 2.4rem, название и подпись со служебными данными. Если картинки нет, вместо неё встаёт градиент с инициалами, а его оттенок выводится из названия, поэтому один и тот же вариант всегда узнаётся по цвету. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-014-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
+            "функцию hueOf: оттенок обязан быть детерминированным, случайный цвет менялся бы при каждом рендере",
+            "пустой alt у картинки: имя варианта стоит рядом текстом, и повтор в alt даёт двойное чтение",
+            "object-fit: cover и фиксированный размер превью — иначе разные пропорции картинок разъедут строки",
+            "обрезку названия и подписи многоточием: длинное имя не должно ломать сетку строки",
+            "обычный <img> вместо next/image: компонент обязан работать в любом React-проекте",
+            "запасной градиент с инициалами: список без картинок должен оставаться различимым"
+          ],
+          "adapt": [
+            "label — подпись поля",
+            "placeholder — текст-подсказка в поле поиска",
+            "options — варианты: имя, подпись и необязательная ссылка на картинку",
+            "defaultValue — вариант, выбранный при первом рендере",
+            "onSelect — обработчик выбранного имени",
+            "accent — цвет подсветки выбранной строки"
+          ],
+          "notes": [
+            "Не грузите в превью полноразмерные картинки: строка 2.4rem, а трафик уйдёт настоящий.",
+            "Не выводите оттенок из id, если человек видит название: цвет должен быть связан с тем, что на экране.",
+            "Для сетки карточек этот вариант не годится: здесь именно список, где превью помогает узнать строку.",
+            "Если у части вариантов картинки есть, а у части нет, смешение градиентов и фотографий выглядит грязно — выбирайте одно."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Шаблон письма",
+            "maxLength": 32
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Выбранный вариант",
+            "type": "text",
+            "default": "Брошенная корзина",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An option picker with previews: every row carries a thumbnail, and when there is no image URL it falls back to a gradient with initials whose hue is derived deterministically from the name.",
+            "ai": {
+              "summary": "A list of options that differ by appearance: email templates, themes, cover images. Every row has a 2.4rem preview, a name and a caption with supporting data. When no picture is available a gradient with initials takes its place, and its hue comes from the name, so the same option is always recognisable by colour. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-combobox-014-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
+                "the hueOf function: the hue has to be deterministic, a random colour would change on every render",
+                "the empty alt on the image: the option name sits right next to it as text, and repeating it in alt reads twice",
+                "object-fit: cover with a fixed preview size — otherwise images of different ratios pull the rows apart",
+                "the ellipsis truncation on name and caption: a long name must not break the row grid",
+                "the plain <img> instead of next/image: the component has to work in any React project",
+                "the fallback gradient with initials: a list without pictures still has to be distinguishable"
+              ],
+              "adapt": [
+                "label — the field caption",
+                "placeholder — the hint text in the search field",
+                "options — the options: a name, a caption and an optional image URL",
+                "defaultValue — the option selected at first render",
+                "onSelect — the handler for the chosen name",
+                "accent — the highlight colour of the selected row"
+              ],
+              "notes": [
+                "Do not feed full-size images into the preview: the row is 2.4rem tall but the traffic is real.",
+                "Do not derive the hue from an id when people see a name: the colour must map to what is on screen.",
+                "This variant is not a card grid: it is a list where the preview helps to recognise a row.",
+                "If only some options have pictures, mixing gradients and photos looks messy — pick one or the other."
+              ],
+              "usage": "<Combobox014 label=\"Email template\" defaultValue=\"Abandoned cart\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Email template"
+              },
+              "defaultValue": {
+                "label": "Selected option",
+                "default": "Abandoned cart"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-015",
+      "type": "registry:component",
+      "title": "Ranked Matches",
+      "description": "Поиск, где совпадения отсортированы по релевантности, а найденный кусок подсвечен: начало строки идёт выше начала слова, а середина — в самом конце.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-015/combobox-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-015-*. Клиентский: запрос и значение живут в useState. Ранжирование делает функция scoreOf: она возвращает ранг (0 — совпадение с начала строки, 1 — с начала слова, 2 — внутри слова) и позицию вхождения. Сортировка идёт по рангу, затем по позиции, затем по алфавиту — три ключа дают устойчивый порядок без дребезга при вводе. Подсветка не использует dangerouslySetInnerHTML: строка режется на три куска по индексу, средний оборачивается в семантический <mark>, поэтому подсветка переживает любой текст, включая символы разметки. Ранг подписан словами справа, чтобы порядок был объясним, а не магичен.",
+      "meta": {
+        "tags": ["combobox", "search", "ranking", "highlight"],
+        "ai": {
+          "export": "Combobox015",
+          "usage": "<Combobox015 label=\"Город доставки\" defaultQuery=\"нов\" />",
+          "summary": "Поиск по списку с честным ранжированием: строки, где запрос стоит в начале, идут выше тех, где он спрятан в середине. Совпавший кусок подсвечен <mark>, а справа подписано, почему строка попала именно сюда. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-015-* и не подменять её токенами вашей темы (bg-accent, text-muted-foreground и подобными)",
+            "функцию scoreOf и три ключа сортировки: без позиции и алфавита порядок будет дребезжать при вводе",
+            "подсветку через нарезку строки и <mark>, а не через dangerouslySetInnerHTML: пользовательский текст нельзя вставлять как HTML",
+            "семантический <mark> вместо span с цветом — подсветка совпадения имеет собственное значение и объявляется скринридером",
+            "подпись ранга словами: непрозрачный порядок выглядит как случайный",
+            "строку с числом совпадений и aria-live=\"polite\" — при вводе меняется весь список, и это надо объявлять",
+            "падение на алфавитный порядок при пустом запросе: ранжировать нечего, и притворяться не нужно"
+          ],
+          "adapt": [
+            "label — подпись поля",
+            "placeholder — текст-подсказка в поле",
+            "options — список строк для поиска",
+            "defaultQuery — запрос, с которым компонент рендерится в первый раз",
+            "onSelect — обработчик выбранного значения",
+            "accent — цвет выбранной строки, отдельный от цвета подсветки"
+          ],
+          "notes": [
+            "Регистр приводится к нижнему, но диакритика не нормализуется: для латиницы с умляутами добавьте normalize(\"NFD\").",
+            "Подсветка ищет первое вхождение: для запроса из нескольких слов нужен другой алгоритм разметки.",
+            "Не делайте подсветку цветом текста вместо фона: на длинных списках это читается как ошибка, а не как акцент.",
+            "Нечёткий поиск (опечатки, транслитерация) здесь сознательно не реализован — он требует словаря и своей метрики."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultQuery",
+            "label": "Запрос",
+            "type": "text",
+            "default": "нов",
+            "maxLength": 24
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Город доставки",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A search where matches are ordered by relevance and the matched fragment is highlighted: the start of a string outranks the start of a word, and mid-word matches come last.",
+            "ai": {
+              "summary": "List search with honest ranking: rows where the query sits at the start come before rows where it hides in the middle. The matched fragment is wrapped in <mark>, and a label on the right says why the row landed where it did. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-combobox-015-* palette — do not swap it for your theme tokens (bg-accent, text-muted-foreground and the like)",
+                "the scoreOf function and all three sort keys: without position and alphabet the order jitters while typing",
+                "highlighting by slicing the string around <mark> rather than dangerouslySetInnerHTML: user text must never be injected as HTML",
+                "the semantic <mark> instead of a coloured span — a search hit carries meaning and is announced by screen readers",
+                "the worded rank label: an opaque order looks random",
+                "the match-count line with aria-live=\"polite\" — typing rewrites the whole list and that has to be announced",
+                "falling back to alphabetical order on an empty query: there is nothing to rank, and pretending otherwise misleads"
+              ],
+              "adapt": [
+                "label — the field caption",
+                "placeholder — the hint text in the field",
+                "options — the list of strings to search",
+                "defaultQuery — the query the component renders with first",
+                "onSelect — the handler for the chosen value",
+                "accent — the colour of the selected row, kept separate from the highlight colour"
+              ],
+              "notes": [
+                "Case is folded but diacritics are not: for Latin text with umlauts add normalize(\"NFD\").",
+                "Highlighting marks the first occurrence only: a multi-word query needs a different marking algorithm.",
+                "Do not highlight by text colour instead of background: in long lists that reads as an error, not an accent.",
+                "Fuzzy matching (typos, transliteration) is deliberately absent — it needs a dictionary and its own metric."
+              ],
+              "usage": "<Combobox015 label=\"Delivery city\" defaultQuery=\"new\" />"
+            },
+            "controls": {
+              "defaultQuery": {
+                "label": "Query",
+                "default": "new"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Delivery city"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-016",
+      "type": "registry:component",
+      "title": "Capped Multi",
+      "description": "Множественный выбор с потолком: счётчик показывает остаток всё время, а на пределе невыбранные варианты становятся недоступными вместо сообщения об ошибке.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-016/combobox-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-016.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-016-*. Клиентский: массив выбранных значений и запрос живут в useState. Признак «предел достигнут» поднимается на корень атрибутом data-full, поэтому счётчик и подпись перекрашиваются одним правилом CSS без дублирования логики в JSX. На пределе невыбранные варианты получают нативный disabled — они выпадают из порядка табуляции, и запрет объявляется скринридером, а не только показывается цветом. Список помечен aria-multiselectable, выбранные значения дополнительно вынесены фишками сверху с кнопкой снятия у каждой. Подпись снизу связана с полем через aria-describedby и объявляется через aria-live.",
+      "meta": {
+        "tags": ["combobox", "multiselect", "limit", "counter"],
+        "ai": {
+          "export": "Combobox016",
+          "usage": "<Combobox016 maxItems={5} label=\"Навыки в резюме\" />",
+          "summary": "Множественный выбор, у которого есть жёсткий потолок: пять навыков, три категории, десять получателей. Счётчик «2 / 5» стоит рядом с подписью поля и виден до первого нажатия, а когда предел достигнут, остальные варианты гаснут нативным disabled и подпись объясняет, что делать. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-016-* и не подменять её токенами вашей темы (bg-secondary, text-destructive и подобными)",
+            "счётчик, видимый до первого нажатия: ограничение нельзя сообщать постфактум",
+            "нативный disabled на невыбранных вариантах при достижении предела — он убирает их из табуляции и объявляется скринридером",
+            "фишки выбранных значений с кнопкой снятия: на пределе снять один вариант должно быть проще, чем найти его в списке",
+            "aria-multiselectable на списке и aria-selected на каждом варианте",
+            "подпись через aria-describedby с aria-live=\"polite\": она объясняет и остаток, и достигнутый предел",
+            "атрибут data-full на корне: состояние предела красится одним правилом, а не ветвлением в разметке"
+          ],
+          "adapt": [
+            "label — подпись поля",
+            "placeholder — текст-подсказка в поле поиска",
+            "options — список доступных значений",
+            "defaultValue — значения, выбранные при первом рендере",
+            "maxItems — сам потолок, число значений",
+            "onChange — обработчик массива значений; accent — цвет фишек и галочек"
+          ],
+          "notes": [
+            "Не заменяйте disabled на молчаливое игнорирование нажатия: человек решит, что интерфейс сломался.",
+            "Потолок в один элемент — это не мультивыбор, а обычный список: для него берите другой вариант.",
+            "Порядок значений сохраняется по времени добавления, а не по алфавиту: если порядок важен для смысла, сортируйте на выходе.",
+            "Фишки растут в высоту при длинных названиях — на узкой ширине проверьте, что панель не прыгает."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "maxItems",
+            "label": "Предел",
+            "type": "number",
+            "default": 5,
+            "min": 1,
+            "max": 10
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Навыки в резюме",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Multi-select with a cap: the counter shows the remaining allowance at all times, and at the limit unselected options go disabled instead of raising an error.",
+            "ai": {
+              "summary": "A multi-select with a hard ceiling: five skills, three categories, ten recipients. The “2 / 5” counter sits next to the field caption and is visible before the first click; once the limit is reached the remaining options go dim through native disabled and the note explains what to do. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-combobox-016-* palette — do not swap it for your theme tokens (bg-secondary, text-destructive and the like)",
+                "the counter visible before the first click: a limit must not be announced after the fact",
+                "native disabled on unselected options once the cap is hit — it removes them from the tab order and is announced by screen readers",
+                "the chips for selected values with their remove buttons: at the cap, dropping one has to be easier than finding it in the list",
+                "aria-multiselectable on the list and aria-selected on every option",
+                "the note tied through aria-describedby with aria-live=\"polite\": it covers both the remaining allowance and the reached cap",
+                "the data-full attribute on the root: the cap state is styled by one rule instead of branching in markup"
+              ],
+              "adapt": [
+                "label — the field caption",
+                "placeholder — the hint text in the search field",
+                "options — the list of available values",
+                "defaultValue — the values selected at first render",
+                "maxItems — the cap itself, as a number of values",
+                "onChange — the handler for the value array; accent — the colour of chips and ticks"
+              ],
+              "notes": [
+                "Do not replace disabled with silently ignoring the click: people will assume the UI is broken.",
+                "A cap of one is not a multi-select but an ordinary list — use a different variant for it.",
+                "Values keep insertion order rather than alphabetical order: sort on the way out if order carries meaning.",
+                "Chips grow taller with long names — check on a narrow width that the panel does not jump."
+              ],
+              "usage": "<Combobox016 maxItems={5} label=\"Skills on the CV\" />"
+            },
+            "controls": {
+              "maxItems": {
+                "label": "Cap"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Skills on the CV"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-017",
+      "type": "registry:component",
+      "title": "Pinned Favourites",
+      "description": "Выбор с закреплёнными избранными: звёздочка поднимает вариант в группу сверху, и она остаётся на месте при вводе запроса.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-017/combobox-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-017.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-017-*. Клиентский: запрос, значение и набор избранного живут в useState. Отфильтрованные варианты делятся на два массива — pinned и rest, и каждая группа рендерится под собственным заголовком [data-part=\"caption\"] внутри одного listbox. Звезда — отдельная кнопка рядом с вариантом, а не вложенная в него: кнопка внутри кнопки невалидна и ломает клавиатуру, а по смыслу «отметить» и «выбрать» — разные действия. У звезды aria-pressed и полный aria-label с названием, у варианта — role=\"option\" внутри li role=\"none\". Обе группы обёрнуты в ul role=\"none\", чтобы вложенные списки не превращались во вложенные listbox.",
+      "meta": {
+        "tags": ["combobox", "favourites", "pinned", "shortcuts"],
+        "ai": {
+          "export": "Combobox017",
+          "usage": "<Combobox017 label=\"Счёт списания\" defaultFavourites={[\"Эквайринг · сайт\"]} />",
+          "summary": "Список, в котором человек сам решает, что держать под рукой: звёздочка у строки переносит её в закреплённую группу сверху. В справочнике из сотни счетов, складов или проектов ежедневно нужны три — и они всегда на первом экране, даже при вводе запроса. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-017-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
+            "звезду отдельной кнопкой рядом с вариантом: кнопка внутри кнопки — невалидная разметка и сломанная клавиатура",
+            "разделение на две группы с заголовками: закреплённое должно читаться как отдельный блок, а не как случайный порядок",
+            "aria-pressed и полный aria-label у звезды — «★» без подписи не читается вслух",
+            "фильтрацию, которая работает внутри обеих групп: избранное не должно всплывать в результатах, если не подходит запросу",
+            "обёртки ul role=\"none\": вложенный список внутри listbox иначе объявляется вторым списком",
+            "title у варианта: в узкой панели длинное название обрезается, и полный текст должен быть доступен"
+          ],
+          "adapt": [
+            "label — подпись поля",
+            "placeholder — текст-подсказка в поле поиска",
+            "options — полный список вариантов",
+            "defaultFavourites — что закреплено при первом рендере",
+            "defaultValue — выбранное значение при первом рендере",
+            "onSelect — обработчик выбора; accent — цвет выбранной строки, отдельный от цвета звезды"
+          ],
+          "notes": [
+            "Избранное здесь живёт в состоянии компонента: чтобы оно пережило перезагрузку, поднимайте его в своё хранилище.",
+            "Не сортируйте закреплённые по алфавиту, если человек добавлял их осознанно — порядок добавления сам по себе информация.",
+            "Не путайте избранное с недавним: недавнее считает система, избранное отмечает человек, и смешивать их не нужно.",
+            "Если закреплённых больше семи, группа перестаёт быть быстрым доступом — стоит ограничить их число."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Счёт списания",
+            "maxLength": 32
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Выбранный счёт",
+            "type": "text",
+            "default": "Расчётный счёт · Т-Банк",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A picker with pinned favourites: the star lifts an option into a group at the top, and that group stays put while you type.",
+            "ai": {
+              "summary": "A list where people decide themselves what to keep close: the star next to a row moves it into the pinned group at the top. Out of a hundred accounts, warehouses or projects three are needed daily — and they stay on the first screen even while searching. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-combobox-017-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
+                "the star as a separate button beside the option: a button inside a button is invalid markup and broken keyboard support",
+                "the split into two captioned groups: pinned items have to read as their own block, not as a random order",
+                "aria-pressed and a full aria-label on the star — “★” alone is unreadable aloud",
+                "filtering that applies inside both groups: a favourite should not surface when it does not match the query",
+                "the ul role=\"none\" wrappers: a nested list inside a listbox is otherwise announced as a second list",
+                "the title on the option: in a narrow panel a long name is truncated and the full text must stay available"
+              ],
+              "adapt": [
+                "label — the field caption",
+                "placeholder — the hint text in the search field",
+                "options — the full option list",
+                "defaultFavourites — what is pinned at first render",
+                "defaultValue — the value selected at first render",
+                "onSelect — the selection handler; accent — the selected-row colour, kept separate from the star colour"
+              ],
+              "notes": [
+                "Favourites live in component state here: lift them into your own storage to survive a reload.",
+                "Do not alphabetise pinned items that a person added deliberately — insertion order is information in itself.",
+                "Do not confuse favourites with recents: recents are computed by the system, favourites are marked by a person, and mixing them helps nobody.",
+                "Beyond seven pinned items the group stops being quick access — consider capping it."
+              ],
+              "usage": "<Combobox017 label=\"Debit account\" defaultFavourites={[\"Acquiring · website\"]} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Debit account"
+              },
+              "defaultValue": {
+                "label": "Selected account",
+                "default": "Current account · T-Bank"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-018",
+      "type": "registry:component",
+      "title": "Async Check",
+      "description": "Выбор с асинхронной проверкой: после нажатия строка статуса уходит в «проверяем», а потом отвечает остатком на складе или отказом с объяснением.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-018/combobox-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-018.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-018-*. Клиентский: запрос, значение и состояние проверки живут в useState. Проверка вынесена в useEffect с функцией очистки: таймер отменяется при каждой смене значения, поэтому при быстром переборе вариантов побеждает последний выбор, а не последний пришедший ответ — это лечит классическую гонку. Состояние проверки одно на четыре значения (idle, checking, ok, bad) и поднимается атрибутом data-state, поэтому цвет строки статуса задаётся CSS, а не ветвлением стилей в JSX. Спиннер собран из border с анимацией вращения и отключается правилом prefers-reduced-motion. Строка статуса связана с полем через aria-describedby и объявляется aria-live.",
+      "meta": {
+        "tags": ["combobox", "async", "validation", "stock"],
+        "ai": {
+          "export": "Combobox018",
+          "usage": "<Combobox018 label=\"Склад отгрузки\" delay={700} />",
+          "summary": "Выбор, после которого значение ещё нужно проверить на сервере: есть ли остаток, свободен ли домен, действует ли лицензия. Нажатие переводит строку статуса в «проверяем», а ответ приходит числом или отказом. Гонка ответов лечится очисткой таймера в эффекте: при быстром переборе побеждает последний выбор. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-018-* и не подменять её токенами вашей темы (bg-muted, text-destructive и подобными)",
+            "функцию очистки в useEffect: без отмены предыдущей проверки ответ по старому значению перезапишет актуальный",
+            "четыре состояния вместо булева флага: «ещё не проверяли» и «проверено и плохо» — разные вещи для человека",
+            "строку статуса с aria-live=\"polite\" и aria-describedby у поля: результат проверки обязан быть услышан",
+            "правило prefers-reduced-motion — вращающийся спиннер выключается вместе с остальной анимацией",
+            "неблокирующее ожидание: значение уже выбрано, а проверка идёт рядом, а не поверх интерфейса",
+            "объяснение отказа словами («нет в наличии — выберите другой склад»), а не одним красным цветом"
+          ],
+          "adapt": [
+            "label — подпись поля; placeholder — подсказка в поле поиска",
+            "options — список вариантов",
+            "stock — источник ответа проверки: остаток по каждому варианту",
+            "delay — задержка ответа, ею удобно показывать медленную сеть",
+            "defaultValue — вариант, выбранный при первом рендере",
+            "onSelect — обработчик, получает значение и итог проверки; accent — цвет выделения"
+          ],
+          "notes": [
+            "Здесь проверка имитируется таймером: подставляя реальный запрос, сохраните отмену — AbortController в той же функции очистки.",
+            "Не блокируйте кнопку отправки формы на время проверки без объяснения: человек должен понимать, чего ждёт.",
+            "Не показывайте спиннер меньше 300 мс: мгновенная вспышка читается как дефект, а не как процесс.",
+            "Ответ сервера может устареть: перед отправкой формы проверку стоит повторить на бэкенде."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "delay",
+            "label": "Задержка ответа",
+            "type": "number",
+            "default": 700,
+            "min": 0,
+            "max": 3000
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Склад отгрузки",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A picker with an asynchronous check: after a click the status line goes into “checking”, then answers with the stock left or a refusal with a reason.",
+            "ai": {
+              "summary": "A picker where the chosen value still has to be verified on the server: is there stock, is the domain free, is the licence valid. A click moves the status line into “checking”, and the answer arrives as a number or a refusal. The response race is handled by clearing the timer in the effect: rapid switching lets the last selection win. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-combobox-018-* palette — do not swap it for your theme tokens (bg-muted, text-destructive and the like)",
+                "the cleanup function in useEffect: without cancelling the previous check, a stale answer overwrites the current one",
+                "four states instead of a boolean: “not checked yet” and “checked and bad” are different things to a person",
+                "the status line with aria-live=\"polite\" and aria-describedby on the field: the result has to be heard",
+                "the prefers-reduced-motion rule — the spinning indicator switches off with the rest of the motion",
+                "the non-blocking wait: the value is already selected and the check runs beside the UI, not on top of it",
+                "explaining the refusal in words (“out of stock — pick another warehouse”) instead of a red colour alone"
+              ],
+              "adapt": [
+                "label — the field caption; placeholder — the hint in the search field",
+                "options — the option list",
+                "stock — the source of the check's answer: the amount left per option",
+                "delay — the response delay, handy for demonstrating a slow network",
+                "defaultValue — the option selected at first render",
+                "onSelect — the handler; it receives the value and the check result; accent — the highlight colour"
+              ],
+              "notes": [
+                "The check is simulated with a timer here: when you plug in a real request, keep the cancellation — an AbortController in the same cleanup.",
+                "Do not disable the submit button during the check without explaining: people need to know what they are waiting for.",
+                "Do not show the spinner for less than 300 ms: an instant flash reads as a defect, not as progress.",
+                "A server answer can go stale: repeat the check on the backend before accepting the form."
+              ],
+              "usage": "<Combobox018 label=\"Shipping warehouse\" delay={700} />"
+            },
+            "controls": {
+              "delay": {
+                "label": "Response delay"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Shipping warehouse"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-019",
+      "type": "registry:component",
+      "title": "Locked Options",
+      "description": "Варианты без прав остаются в списке: они заблокированы, подписаны причиной и снабжены кнопкой запроса доступа вместо молчаливого исчезновения.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-019/combobox-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-019.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-019-*. Клиентский: запрос, значение и список отправленных запросов доступа живут в useState. Закрытый вариант получает нативный disabled и расширенный aria-label, в который вшита причина, поэтому скринридер объявляет не просто «недоступно», а почему. Кнопка «Запросить» — отдельный элемент рядом с вариантом внутри общей строки [data-part=\"row\"], а не внутри кнопки-опции: она обязана оставаться доступной, когда сам вариант заблокирован. После нажатия кнопка заменяется статичной подписью «Запрошено», чтобы повторные запросы не уходили пачками. Список — role=\"listbox\", строки — role=\"option\" внутри li role=\"none\".",
+      "meta": {
+        "tags": ["combobox", "permissions", "locked", "access"],
+        "ai": {
+          "export": "Combobox019",
+          "usage": "<Combobox019 label=\"Рабочее пространство\" requestLabel=\"Запросить\" />",
+          "summary": "Список, в котором часть вариантов закрыта правами. Спрятать их нельзя — человек будет искать то, чего не видит; погасить без объяснения тоже нельзя — он напишет в поддержку. Поэтому строка остаётся, рядом с ней причина и кнопка «Запросить», а сам выбор заблокирован нативным disabled. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-019-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
+            "сохранение закрытых вариантов в списке: спрятанный вариант заставляет искать несуществующее",
+            "причину рядом с названием — «нет доступа» без объяснения превращается в обращение в поддержку",
+            "нативный disabled на закрытом варианте: он убирает его из табуляции и объявляется скринридером",
+            "кнопку запроса отдельным элементом вне кнопки-опции: она должна работать, когда сам вариант заблокирован",
+            "расширенный aria-label с причиной: визуальная подпись мелкая, но озвучена должна быть целиком",
+            "замену кнопки на подпись «Запрошено» после нажатия — повторные запросы не нужны ни человеку, ни администратору"
+          ],
+          "adapt": [
+            "label — подпись поля; placeholder — подсказка в поле поиска",
+            "options — варианты с флагом locked и текстом причины",
+            "defaultValue — вариант, выбранный при первом рендере",
+            "requestLabel — надпись на кнопке запроса доступа",
+            "onSelect — обработчик выбора доступного варианта",
+            "onRequest — обработчик запроса доступа; accent — цвет выделения и кнопки"
+          ],
+          "notes": [
+            "Причина должна быть действием, а не диагнозом: «нужен доступ финансового отдела» полезнее, чем «403».",
+            "Если закрыто больше половины списка, проблема не в компоненте, а в модели прав — покажите отдельный экран.",
+            "Не подсказывайте в причине то, что само по себе секретно: название закрытого проекта иногда уже утечка.",
+            "Состояние «Запрошено» живёт только в памяти компонента: после перезагрузки его должен вернуть сервер."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "requestLabel",
+            "label": "Кнопка запроса",
+            "type": "text",
+            "default": "Запросить",
+            "maxLength": 24
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Рабочее пространство",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Options you have no rights to stay in the list: disabled, labelled with the reason and paired with a request-access button instead of quietly disappearing.",
+            "ai": {
+              "summary": "A list where some options are locked by permissions. Hiding them is wrong — people search for what they cannot see; dimming them without a reason is wrong too — they will open a support ticket. So the row stays, the reason sits beside it with a “Request” button, and the selection itself is blocked by native disabled. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-combobox-019-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
+                "keeping locked options in the list: a hidden option makes people hunt for something that is not there",
+                "the reason next to the name — “no access” without an explanation turns into a support ticket",
+                "native disabled on the locked option: it drops out of the tab order and is announced by screen readers",
+                "the request button as a separate element outside the option button: it has to work while the option itself is blocked",
+                "the extended aria-label carrying the reason: the visible caption is small, but it must be spoken in full",
+                "replacing the button with a static “Requested” label after the click — repeat requests help neither the user nor the admin"
+              ],
+              "adapt": [
+                "label — the field caption; placeholder — the hint in the search field",
+                "options — the options with a locked flag and a reason string",
+                "defaultValue — the option selected at first render",
+                "requestLabel — the wording on the request-access button",
+                "onSelect — the handler for picking an available option",
+                "onRequest — the access-request handler; accent — the highlight and button colour"
+              ],
+              "notes": [
+                "The reason should be an action, not a diagnosis: “finance team approval needed” beats “403”.",
+                "If more than half the list is locked, the problem is the permission model, not the component — show a dedicated screen.",
+                "Do not leak secrets through the reason: the name of a locked project is sometimes already a leak.",
+                "The “Requested” state lives only in component memory: after a reload the server has to bring it back."
+              ],
+              "usage": "<Combobox019 label=\"Workspace\" requestLabel=\"Request\" />"
+            },
+            "controls": {
+              "requestLabel": {
+                "label": "Request button",
+                "default": "Request"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Workspace"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-020",
+      "type": "registry:component",
+      "title": "Narrow Column",
+      "description": "Выбор в узкой колонке, где список режется многоточием справа, а выбранное значение — по середине, чтобы сохранить и начало, и хвост.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-020/combobox-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-020.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-020-*. Клиентский: запрос и значение живут в useState. Ширина ограничена 15rem — это ячейка таблицы, колонка сайдбара или боковая панель. Обрезка сделана двумя разными способами осознанно: строки списка режутся средствами CSS (white-space: nowrap + text-overflow: ellipsis), потому что список читают с начала; выбранное значение режется функцией shorten по середине, потому что у пути, ветки или файла значим хвост. Полный текст никуда не теряется: он лежит в title каждой строки, в aria-label варианта и целиком выводится внизу с overflow-wrap: anywhere. Моноширинный шрифт включён только для значений — так одинаковые префиксы визуально выстраиваются в столбец.",
+      "meta": {
+        "tags": ["combobox", "narrow", "truncation", "sidebar"],
+        "ai": {
+          "export": "Combobox020",
+          "usage": "<Combobox020 headChars={14} tailChars={10} />",
+          "summary": "Выбор для узкого места: сайдбар, ячейка таблицы, боковая панель. Длинные значения обрезаются двумя способами — список режется справа, потому что его читают с начала, а выбранное значение по середине, потому что у ветки, пути или имени файла важен хвост. Полный текст доступен в title, в aria-label и строкой снизу. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-020-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
+            "разные способы обрезки для списка и для значения: это и есть решение варианта, а не украшение",
+            "функцию shorten с многоточием посередине — обычный ellipsis съедает хвост, а именно он различает похожие значения",
+            "aria-label с полным текстом у варианта: скринридер не должен читать обрезанную строку",
+            "полный текст снизу с overflow-wrap: anywhere — единственное место, где значение видно целиком без наведения",
+            "title у строк списка: мышью проверить полное имя должно быть можно без выбора",
+            "моноширинный шрифт только для значений: одинаковые префиксы выстраиваются в столбец и различаются быстрее"
+          ],
+          "adapt": [
+            "label — подпись поля; placeholder — подсказка в поле фильтра",
+            "options — список значений",
+            "defaultValue — значение, выбранное при первом рендере",
+            "headChars — сколько символов сохранить в начале при обрезке по середине",
+            "tailChars — сколько символов сохранить в хвосте",
+            "onSelect — обработчик выбора; accent — цвет выбранной строки"
+          ],
+          "notes": [
+            "Не увеличивайте max-width, чтобы «влезло целиком»: смысл варианта в том, что места мало и его не будет больше.",
+            "title не показывается на тач-устройствах: полная строка снизу — не дублирование, а единственный способ прочитать значение на телефоне.",
+            "Обрезка считает символы, а не пиксели: в широком шрифте головы в 14 символов может не хватить, подбирайте под свой шрифт.",
+            "Не режьте по середине строки списка: там важна не уникальность хвоста, а быстрое сканирование начал."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "headChars",
+            "label": "Символов в начале",
+            "type": "number",
+            "default": 14,
+            "min": 4,
+            "max": 40
+          },
+          {
+            "prop": "tailChars",
+            "label": "Символов в хвосте",
+            "type": "number",
+            "default": 10,
+            "min": 0,
+            "max": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A picker for a narrow column where the list truncates on the right while the selected value truncates in the middle, keeping both its head and its tail.",
+            "ai": {
+              "summary": "A picker for tight places: a sidebar, a table cell, a side panel. Long values are truncated two different ways — the list is cut on the right because it is read from the start, and the selected value is cut in the middle because the tail of a branch, path or filename is what distinguishes it. The full text stays available in title, in aria-label and as a line below. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-combobox-020-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
+                "the two different truncation strategies for the list and for the value: that is the substance of this variant, not decoration",
+                "the shorten helper with a middle ellipsis — a plain ellipsis eats the tail, and the tail is what tells similar values apart",
+                "the aria-label carrying the full text on each option: a screen reader must not read a truncated string",
+                "the full text below with overflow-wrap: anywhere — the only place the value is visible in full without hovering",
+                "the title on list rows: checking a full name with the mouse must not require selecting it",
+                "the monospace font on values only: identical prefixes line up into a column and diverge faster to the eye"
+              ],
+              "adapt": [
+                "label — the field caption; placeholder — the hint in the filter field",
+                "options — the list of values",
+                "defaultValue — the value selected at first render",
+                "headChars — how many characters to keep at the start when truncating in the middle",
+                "tailChars — how many characters to keep at the tail",
+                "onSelect — the selection handler; accent — the selected-row colour"
+              ],
+              "notes": [
+                "Do not raise max-width so “it all fits”: the point of this variant is that space is scarce and will stay scarce.",
+                "title does not appear on touch devices: the full line below is not duplication, it is the only way to read the value on a phone.",
+                "Truncation counts characters, not pixels: in a wide font a 14-character head may not be enough, tune it to your typeface.",
+                "Do not truncate list rows in the middle: there the priority is scanning the beginnings, not tail uniqueness."
+              ],
+              "usage": "<Combobox020 headChars={14} tailChars={10} />"
+            },
+            "controls": {
+              "headChars": {
+                "label": "Head characters"
+              },
+              "tailChars": {
+                "label": "Tail characters"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
