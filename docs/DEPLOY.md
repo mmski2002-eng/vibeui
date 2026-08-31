@@ -5,8 +5,10 @@
 Приложение собирается в самодостаточный сервер (`output: "standalone"`),
 слушает `127.0.0.1:3000`, наружу его отдаёт nginx с TLS.
 
-Фактическая установка: `vibeui.ru`, сервер `216.173.70.241`, каталог
-`/srv/vibeui`, порт `127.0.0.1:3003`, юнит `vibeui.service`.
+Фактическая установка: `vibeui.ru`, сервер `216.173.70.241`, порт
+`127.0.0.1:3003`, юнит `vibeui.service`. Каталогов два: `/srv/vibeui` —
+рабочая копия, где идёт сборка; `/srv/vibeui-live` — симлинк на текущий
+релиз в `/srv/vibeui-releases/<метка>`, откуда работает живой процесс.
 Порты 3000–3002 на этом сервере заняты другими проектами.
 Секреты — в `SECRETS.local.md` (не в git).
 
@@ -91,7 +93,7 @@ After=network.target
 [Service]
 Type=simple
 User=<user>
-WorkingDirectory=/srv/vibeui/.next/standalone
+WorkingDirectory=/srv/vibeui-live
 Environment=NODE_ENV=production
 Environment=PORT=3003
 Environment=HOSTNAME=127.0.0.1
@@ -109,6 +111,13 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now vibeui
 sudo systemctl status vibeui
 ```
+
+`WorkingDirectory` указывает на **симлинк**, а не на каталог сборки. systemd
+разрешает его при старте юнита, поэтому переключение релиза сводится к
+переносу симлинка и рестарту. Собирать в каталог, откуда сервер раздаёт
+статику, нельзя: `next build` вычищает `.next` в самом начале, и живой сайт
+на всё время сборки теряет `/_next/static/*` — HTML отдаётся, стили и скрипты
+отваливаются с 500.
 
 `REGISTRY_BASE_URL` в юните обязателен: страницы item'ов динамические и
 читают переменную из окружения процесса при каждом запросе.
@@ -186,17 +195,44 @@ curl -s https://<domain>/r/hero-001.json | head -c 120
 
 ## 7. Обновление
 
+Сборка идёт в рабочей копии, живой процесс её не видит. Готовый результат
+собирается в новый релиз, симлинк переключается, юнит рестартится:
+простой — только рестарт, около секунды.
+
 ```bash
-set -e                       # без него рестарт случится и на упавшей сборке
+set -e                          # без него рестарт случится и на упавшей сборке
 cd /srv/vibeui
 git checkout -- .               # сборка генерирует registry.json и registry/*.ts — они мешают git pull
 git pull
 npm ci
 export REGISTRY_BASE_URL="https://<domain>/r"
 npm run build
-cp -r public .next/standalone/public
-cp -r .next/static .next/standalone/.next/static
-sudo systemctl restart vibeui
+
+REL=/srv/vibeui-releases/$(date +%Y%m%d-%H%M%S)
+cp -a .next/standalone "$REL"
+mkdir -p "$REL/.next"
+cp -a .next/static "$REL/.next/static"
+rm -rf "$REL/public"; cp -a public "$REL/public"
+
+ln -sfn "$REL" /srv/vibeui-live.tmp     # подмена симлинка атомарна:
+mv -Tf /srv/vibeui-live.tmp /srv/vibeui-live   # полусостояния не бывает
+systemctl restart vibeui
+
+# держим два последних релиза, остальное убираем
+ls -1dt /srv/vibeui-releases/* | tail -n +3 | xargs -r rm -rf
+```
+
+Релиз занимает около 190 МБ, поэтому старые чистятся сразу: на диске
+20 ГБ, и десяток забытых релизов его заполнит.
+
+Откат — переключить симлинк на предыдущий релиз и рестартнуть; пересборка
+для этого не нужна:
+
+```bash
+ls -1dt /srv/vibeui-releases/*
+ln -sfn /srv/vibeui-releases/<предыдущий> /srv/vibeui-live.tmp
+mv -Tf /srv/vibeui-live.tmp /srv/vibeui-live
+systemctl restart vibeui
 ```
 
 Три правила, купленные падением прода:
