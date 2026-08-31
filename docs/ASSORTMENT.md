@@ -43,6 +43,46 @@
 | `charts`     | chart (line, bar, area, pie, radial), sparkline                                                                                                                               |   ~55 |    11 |
 | `calendar`   | calendar, event calendar, gantt, kanban, sortable, filters                                                                                                                    |   ~70 |     0 |
 
+## Порядок работ: по алфавиту сверху вниз
+
+Сверка с reui.io от 31 августа 2026 года. У них 72 страницы компонентов,
+счётчик берётся из описания страницы. Идём строго сверху вниз и не
+перескакиваем: пропущенная категория не догоняется сама.
+
+| категория ReUI  | у них | у нас | состояние       |
+| --------------- | ----: | ----: | --------------- |
+| accordion       |    11 |    11 | закрыто         |
+| alert           |    20 |    20 | закрыто         |
+| alert-dialog    |    14 |     7 | **в работе**    |
+| aspect-ratio    |     8 |     8 | закрыто         |
+| autocomplete    |    12 |    12 | закрыто         |
+| avatar          |    35 |    12 | добор 23        |
+| badge           |    25 |    12 | добор 13        |
+| breadcrumb      |    15 |    12 | добор 3         |
+| button          |    61 |    20 | добор 41        |
+| button-group    |    57 |     0 | новая категория |
+| calendar        |    30 |    10 | добор 20        |
+| card            |    21 |    10 | добор 11        |
+| carousel        |     ? |     8 | сверить         |
+| cascader        |    20 |     1 | добор 19        |
+| chart           |    25 |    11 | добор 14        |
+| checkbox        |    22 |     8 | добор 14        |
+| code-block      |    27 |     1 | добор 26        |
+| combobox        |    20 |     0 | новая категория |
+| data-grid       |    29 |     0 | новая категория |
+| event-calendar  |     5 |     0 | новая категория |
+| gantt           |     7 |     1 | добор 6         |
+
+Дальше по алфавиту: collapsible, command, context-menu, date-selector,
+dialog, drawer, dropdown-menu, empty, field, file-upload, filters, frame,
+hover-card, icon-stack, icon-tile, input, input-group, input-otp, item,
+kanban, kbd, label, menubar, native-select, navigation-menu, number-field,
+pagination, phone-input, popover, progress, radio-group, rating,
+resizable, scroll-area, scrollspy, select, separator, sheet, skeleton,
+slider, sonner, sortable, spinner, stepper, switch, table, tabs, textarea,
+timeline, toggle, toggle-group, tooltip, tree — счётчики сверяются перед
+началом каждой категории.
+
 ## kind: block
 
 Ориентир пересчитан по фактическому каталогу reui.io (сверка 31 августа

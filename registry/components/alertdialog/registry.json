@@ -1,0 +1,705 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "alertdialog-001",
+      "type": "registry:component",
+      "title": "Confirm Dialog",
+      "description": "Подтверждение на нативном dialog: фокус стоит на отмене, а кнопка называет действие, а не отвечает «Да».",
+      "categories": ["alertdialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alertdialog-001/alertdialog-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alertdialog-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-001-*. Клиентский: \"use client\" ради открытия окна. Модалка открывается методом showModal(), поэтому ловушка фокуса, закрытие по Escape и затемнение достаются от браузера. Отмена стоит первой в разметке и получает фокус, порядок кнопок задаёт row-reverse.",
+      "meta": {
+        "tags": ["alert-dialog", "confirm", "dialog", "a11y"],
+        "ai": {
+          "export": "Alertdialog001",
+          "usage": "<Alertdialog001 title=\"Опубликовать каталог?\" confirm=\"Опубликовать\" cancel=\"Не сейчас\" />",
+          "summary": "Окно подтверждения: заголовок-вопрос, пояснение о последствиях и две кнопки с фокусом на отмене. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-alertdialog-001-* и не подменять её токенами вашей темы",
+            "нативный dialog: ловушка фокуса, Escape и затемнение достаются даром",
+            "фокус на отмене при открытии — Enter вслепую не должен запускать действие",
+            "название действия в кнопке вместо «Да» и «Нет»",
+            "aria-labelledby, связывающий окно с заголовком",
+            "порядок кнопок через row-reverse: отмена первой в разметке, действие первым для глаза"
+          ],
+          "adapt": [
+            "title, text, confirm и подписи кнопок",
+            "triggerLabel — подпись кнопки открытия",
+            "акцент через проп accent",
+            "ширину окна"
+          ],
+          "notes": [
+            "Для необратимого действия этого мало: возьмите alertdialog-002 с вводом имени.",
+            "Не используйте окно для сообщений — подтверждение спрашивает, а не уведомляет.",
+            "Действие выполняет вызывающий код: onClick только закрывает окно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Вопрос",
+            "type": "text",
+            "default": "Опубликовать каталог?",
+            "maxLength": 32
+          },
+          {
+            "prop": "confirm",
+            "label": "Действие",
+            "type": "text",
+            "default": "Опубликовать",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A confirmation on the native dialog: focus sits on cancel, and the button names the action instead of saying \"Yes\".",
+            "ai": {
+              "summary": "A confirmation dialog: a question heading, a note about consequences and two buttons with focus on cancel. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-alertdialog-001-* palette — do not swap it for your theme tokens",
+                "the native dialog: focus trapping, Escape and the backdrop come free",
+                "focus on cancel at open — a blind Enter must not fire the action",
+                "the action named in the button instead of \"Yes\" and \"No\"",
+                "the aria-labelledby tying the dialog to its heading",
+                "the row-reverse order: cancel first in markup, the action first for the eye"
+              ],
+              "adapt": [
+                "title, text, confirm and the button labels",
+                "triggerLabel — the opener's label",
+                "the accent through the accent prop",
+                "the dialog width"
+              ],
+              "notes": [
+                "For an irreversible action this is not enough: use alertdialog-002 with typed confirmation.",
+                "Do not use it for messages — a confirmation asks, it does not notify.",
+                "The action belongs to the caller: onClick only closes the dialog.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alertdialog001 title=\"Publish the catalog?\" confirm=\"Publish\" cancel=\"Not now\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Question",
+                "default": "Publish the catalog?"
+              },
+              "confirm": {
+                "label": "Action",
+                "default": "Publish"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alertdialog-002",
+      "type": "registry:component",
+      "title": "Type To Confirm",
+      "description": "Удаление с вводом имени: случайно набрать имя проекта нельзя, поэтому промах по кнопке не проходит.",
+      "categories": ["alertdialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alertdialog-002/alertdialog-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alertdialog-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-002-*. Клиентский: \"use client\" ради проверки ввода. Сравнение точное, без приведения регистра: имя показано рядом моноширинным шрифтом и копируется глазами. Последствия перечислены списком до кнопок.",
+      "meta": {
+        "tags": ["alert-dialog", "destructive", "confirm", "delete"],
+        "ai": {
+          "export": "Alertdialog002",
+          "usage": "<Alertdialog002 target=\"vibeui-catalog\" confirm=\"Удалить навсегда\" />",
+          "summary": "Необратимое удаление: список последствий, поле ввода имени и кнопка, выключенная до точного совпадения. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-alertdialog-002-* и не подменять её токенами вашей темы",
+            "ввод имени: это единственный способ отличить осознанное удаление от промаха",
+            "точное сравнение без приведения регистра — имя показано рядом",
+            "список последствий до кнопок, а не после",
+            "моноширинное имя цели: его сверяют посимвольно",
+            "выключенную кнопку до совпадения, а не сообщение об ошибке после нажатия"
+          ],
+          "adapt": [
+            "target, title и список последствий",
+            "hint, confirm и подписи кнопок",
+            "ширину окна",
+            "цвет опасного действия"
+          ],
+          "notes": [
+            "Не подставляйте имя в поле заранее: это возвращает удаление одним кликом.",
+            "Само удаление выполняет вызывающий код, окно только собирает согласие.",
+            "Для обратимых действий такой барьер лишний — берите alertdialog-001.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "target",
+            "label": "Имя цели",
+            "type": "text",
+            "default": "vibeui-catalog",
+            "maxLength": 24
+          },
+          {
+            "prop": "confirm",
+            "label": "Действие",
+            "type": "text",
+            "default": "Удалить навсегда",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Deletion with a typed name: the project name cannot be typed by accident, so a mis-click never gets through.",
+            "ai": {
+              "summary": "Irreversible deletion: a list of consequences, a name field and a button disabled until an exact match. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-alertdialog-002-* palette — do not swap it for your theme tokens",
+                "the typed name: it is the only way to tell a deliberate deletion from a mis-click",
+                "the exact, case-sensitive comparison — the name is shown right there",
+                "the consequences listed before the buttons, not after",
+                "the monospaced target name: it gets checked character by character",
+                "the disabled button until it matches, rather than an error after the click"
+              ],
+              "adapt": [
+                "target, title and the consequences list",
+                "hint, confirm and the button labels",
+                "the dialog width",
+                "the destructive colour"
+              ],
+              "notes": [
+                "Never prefill the field: that turns deletion back into a single click.",
+                "The deletion itself belongs to the caller; the dialog only collects consent.",
+                "For reversible actions this barrier is overkill — use alertdialog-001.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alertdialog002 target=\"vibeui-catalog\" confirm=\"Delete forever\" />"
+            },
+            "controls": {
+              "target": {
+                "label": "Target name",
+                "default": "vibeui-catalog"
+              },
+              "confirm": {
+                "label": "Action",
+                "default": "Delete forever"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alertdialog-003",
+      "type": "registry:component",
+      "title": "Unsaved Changes",
+      "description": "Развилка о несохранённых изменениях: три исхода, потому что «остаться» нельзя выкидывать ради симметрии кнопок.",
+      "categories": ["alertdialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alertdialog-003/alertdialog-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alertdialog-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-003-*. Клиентский: \"use client\" ради открытия окна. Три исхода выведены кнопками в столбик, разрушающий вариант оформлен вторичной кнопкой, закрытие по Escape равнозначно «остаться».",
+      "meta": {
+        "tags": ["alert-dialog", "unsaved", "editor", "confirm"],
+        "ai": {
+          "export": "Alertdialog003",
+          "usage": "<Alertdialog003 saveLabel=\"Сохранить и закрыть\" discardLabel=\"Закрыть без сохранения\" />",
+          "summary": "Окно о несохранённых правках: сохранить, уйти без сохранения или остаться. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-alertdialog-003-* и не подменять её токенами вашей темы",
+            "третий исход «остаться»: без него закрытие крестиком означает неизвестно что",
+            "вторичное оформление разрушающего варианта — красная кнопка рядом жмётся по инерции",
+            "Escape как «остаться»: самый безопасный исход должен быть и самым лёгким",
+            "названия исходов глаголами, а не «Да», «Нет», «Отмена»",
+            "кнопки в столбик: три подписи не помещаются в строку без сокращений"
+          ],
+          "adapt": [
+            "title, text и подписи трёх кнопок",
+            "triggerLabel",
+            "акцент через проп accent",
+            "ширину окна"
+          ],
+          "notes": [
+            "Окно должно появляться только при настоящих несохранённых правках, иначе его перестают читать.",
+            "Автосохранение снимает нужду в этом окне — сначала подумайте о нём.",
+            "Сохранение выполняет вызывающий код: кнопки только закрывают окно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Изменения не сохранены",
+            "maxLength": 32
+          },
+          {
+            "prop": "discardLabel",
+            "label": "Уйти без сохранения",
+            "type": "text",
+            "default": "Закрыть без сохранения",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An unsaved-changes fork: three outcomes, because \"stay\" must not be dropped for the sake of two tidy buttons.",
+            "ai": {
+              "summary": "An unsaved-changes dialog: save, leave without saving, or stay. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-alertdialog-003-* palette — do not swap it for your theme tokens",
+                "the third outcome \"stay\": without it closing by the X means anyone's guess",
+                "the secondary styling on the destructive choice — a red button here gets hit by reflex",
+                "Escape as \"stay\": the safest outcome must also be the easiest",
+                "outcomes named with verbs rather than Yes, No, Cancel",
+                "stacked buttons: three labels do not fit one row without truncation"
+              ],
+              "adapt": [
+                "title, text and the three button labels",
+                "triggerLabel",
+                "the accent through the accent prop",
+                "the dialog width"
+              ],
+              "notes": [
+                "Show it only for real unsaved changes, or people stop reading it.",
+                "Autosave removes the need for this dialog — consider that first.",
+                "Saving belongs to the caller: the buttons only close the dialog.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alertdialog003 saveLabel=\"Save and close\" discardLabel=\"Close without saving\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Changes not saved"
+              },
+              "discardLabel": {
+                "label": "Leave without saving",
+                "default": "Close without saving"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alertdialog-004",
+      "type": "registry:component",
+      "title": "Delayed Confirm",
+      "description": "Подтверждение с задержкой: кнопка включается через несколько секунд — пауза стоит там, где жмут по инерции.",
+      "categories": ["alertdialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alertdialog-004/alertdialog-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alertdialog-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-004-*. Клиентский: \"use client\" ради отсчёта. Таймер живёт в эффекте и снимается при закрытии окна, оставшиеся секунды написаны цифрой в кнопке и продублированы полосой.",
+      "meta": {
+        "tags": ["alert-dialog", "delay", "destructive", "confirm"],
+        "ai": {
+          "export": "Alertdialog004",
+          "usage": "<Alertdialog004 seconds={5} confirm=\"Стереть\" />",
+          "summary": "Подтверждение с паузой: полоса и обратный отсчёт в кнопке, действие доступно через несколько секунд. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-alertdialog-004-* и не подменять её токенами вашей темы",
+            "паузу перед доступностью действия: она ловит нажатие по инерции",
+            "цифру отсчёта в кнопке — неизвестное ожидание раздражает сильнее известного",
+            "снятие таймера при закрытии: иначе кнопка «включается» в невидимом окне",
+            "доступную отмену всё время паузы",
+            "полосу как дубль отсчёта, а не как единственный признак"
+          ],
+          "adapt": [
+            "seconds — длину паузы",
+            "title, text, confirm и подписи кнопок",
+            "цвет опасного действия",
+            "ширину окна"
+          ],
+          "notes": [
+            "Пауза дольше пяти секунд воспринимается как поломка, а не как защита.",
+            "Не ставьте задержку на обратимые действия — она раздражает без пользы.",
+            "Задержка не заменяет подтверждение вводом имени там, где потери невосполнимы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "seconds",
+            "label": "Пауза, с",
+            "type": "number",
+            "default": 5,
+            "min": 2,
+            "max": 10
+          },
+          {
+            "prop": "confirm",
+            "label": "Действие",
+            "type": "text",
+            "default": "Стереть",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A delayed confirmation: the button unlocks after a few seconds — the pause catches the click made by reflex.",
+            "ai": {
+              "summary": "A confirmation with a pause: a bar and a countdown in the button, the action available a few seconds later. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-alertdialog-004-* palette — do not swap it for your theme tokens",
+                "the pause before the action unlocks: it catches the reflex click",
+                "the countdown digit in the button — an unknown wait annoys more than a known one",
+                "clearing the timer on close: otherwise the button unlocks in an invisible dialog",
+                "cancel available throughout the pause",
+                "the bar as a duplicate of the countdown, not its only cue"
+              ],
+              "adapt": [
+                "seconds — the pause length",
+                "title, text, confirm and the button labels",
+                "the destructive colour",
+                "the dialog width"
+              ],
+              "notes": [
+                "A pause over five seconds reads as a bug rather than protection.",
+                "Do not delay reversible actions — it annoys without benefit.",
+                "A delay does not replace typed confirmation where the loss is unrecoverable.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alertdialog004 seconds={5} confirm=\"Erase\" />"
+            },
+            "controls": {
+              "seconds": {
+                "label": "Pause, s"
+              },
+              "confirm": {
+                "label": "Action",
+                "default": "Erase"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alertdialog-005",
+      "type": "registry:component",
+      "title": "Bulk Confirm",
+      "description": "Подтверждение массового действия со списком: «удалить 24 записи» звучит одинаково для нужных и для случайных.",
+      "categories": ["alertdialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alertdialog-005/alertdialog-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alertdialog-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-005-*. Клиентский: \"use client\" ради открытия окна. Общее число считается из длины списка и остатка, поэтому заголовок и содержимое не расходятся; список прокручивается и ограничен по высоте.",
+      "meta": {
+        "tags": ["alert-dialog", "bulk", "confirm", "list"],
+        "ai": {
+          "export": "Alertdialog005",
+          "usage": "<Alertdialog005 items={[\"Счёт № 300\"]} more={20} confirm=\"Удалить\" />",
+          "summary": "Подтверждение массового удаления: список первых записей, строка «и ещё N» и число в кнопке. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-alertdialog-005-* и не подменять её токенами вашей темы",
+            "список того, что попадёт под действие: одно число звучит одинаково для любого набора",
+            "строку «и ещё N» вместо полного списка — окно не должно быть таблицей",
+            "расчёт числа из массива и остатка, а не отдельным пропом",
+            "число в подписи кнопки: перед нажатием видно масштаб",
+            "прокрутку списка с ограниченной высотой"
+          ],
+          "adapt": [
+            "массив items и остаток more",
+            "title, text, confirm и подписи кнопок",
+            "высоту списка",
+            "цвет опасного действия"
+          ],
+          "notes": [
+            "Показывайте первыми те записи, о которых пользователь мог забыть, а не первые по алфавиту.",
+            "Массовое удаление без возможности отмены требует ещё и ввода имени — берите alertdialog-002.",
+            "Отбор и само действие делает вызывающий код: окно только показывает набор.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "more",
+            "label": "Остаток",
+            "type": "number",
+            "default": 20,
+            "min": 0,
+            "max": 200
+          },
+          {
+            "prop": "confirm",
+            "label": "Действие",
+            "type": "text",
+            "default": "Удалить",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A bulk-action confirmation with the list: \"delete 24 records\" sounds the same for the right ones and the accidental ones.",
+            "ai": {
+              "summary": "Bulk deletion confirmation: the first records listed, an \"and N more\" line and the count in the button. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-alertdialog-005-* palette — do not swap it for your theme tokens",
+                "the list of what is affected: a bare number sounds identical for any selection",
+                "the \"and N more\" line instead of the full list — a dialog is not a table",
+                "deriving the count from the array and the remainder rather than a separate prop",
+                "the count inside the button label: the scale is visible before the click",
+                "the scrollable list with a height cap"
+              ],
+              "adapt": [
+                "the items array and the more remainder",
+                "title, text, confirm and the button labels",
+                "the list height",
+                "the destructive colour"
+              ],
+              "notes": [
+                "List first the records the user might have forgotten, not the alphabetically first ones.",
+                "Irreversible bulk deletion also needs a typed name — use alertdialog-002.",
+                "Selection and the action belong to the caller: the dialog only shows the set.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alertdialog005 items={[\"Invoice 300\"]} more={20} confirm=\"Delete\" />"
+            },
+            "controls": {
+              "more": {
+                "label": "Remainder"
+              },
+              "confirm": {
+                "label": "Action",
+                "default": "Delete"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alertdialog-006",
+      "type": "registry:component",
+      "title": "Confirm With Result",
+      "description": "Подтверждение, которое умеет провалиться: ожидание и ошибка живут в том же окне, а не исчезают вместе с ним.",
+      "categories": ["alertdialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alertdialog-006/alertdialog-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alertdialog-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-006-*. Клиентский: \"use client\" ради состояния запроса. Во время ожидания кнопки выключены, а событие cancel перехвачено, поэтому Escape не прерывает запрос на середине. Демонстрационный исход задаётся таймером и заменяется настоящим запросом.",
+      "meta": {
+        "tags": ["alert-dialog", "async", "error", "retry"],
+        "ai": {
+          "export": "Alertdialog006",
+          "usage": "<Alertdialog006 title=\"Отозвать ключ доступа?\" retry=\"Повторить\" />",
+          "summary": "Подтверждение с ходом выполнения: вопрос, ожидание с кольцом и ошибка с кнопкой повтора в одном окне. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-alertdialog-006-* и не подменять её токенами вашей темы",
+            "исход в том же окне: исчезнувшее окно оставляет гадать, случилось ли действие",
+            "перехват Escape во время запроса — прерывать на середине опаснее, чем подождать",
+            "выключенные кнопки на время ожидания",
+            "текст ошибки с причиной и следующим шагом вместо «что-то пошло не так»",
+            "aria-live у строки ожидания"
+          ],
+          "adapt": [
+            "title, text, errorTitle и errorText",
+            "подписи retry, cancel, confirm и close",
+            "запрос вместо демонстрационного таймера",
+            "ширину окна"
+          ],
+          "notes": [
+            "Таймер в примере заменяется настоящим запросом: блок не ходит в сеть.",
+            "Успешный исход закрывает окно — оставлять «готово» стоит только для длинных операций.",
+            "Повтор должен быть безопасным: убедитесь, что действие идемпотентно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Вопрос",
+            "type": "text",
+            "default": "Отозвать ключ доступа?",
+            "maxLength": 32
+          },
+          {
+            "prop": "errorTitle",
+            "label": "Заголовок ошибки",
+            "type": "text",
+            "default": "Ключ не отозван",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A confirmation that can fail: waiting and the error live in the same dialog instead of vanishing with it.",
+            "ai": {
+              "summary": "A confirmation with progress: the question, a waiting state with a ring and an error with a retry, all in one dialog. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-alertdialog-006-* palette — do not swap it for your theme tokens",
+                "the outcome in the same dialog: a vanished dialog leaves people guessing",
+                "intercepting Escape during the request — aborting midway is worse than waiting",
+                "the buttons disabled while waiting",
+                "an error text with a cause and a next step instead of \"something went wrong\"",
+                "aria-live on the waiting line"
+              ],
+              "adapt": [
+                "title, text, errorTitle and errorText",
+                "the retry, cancel, confirm and close labels",
+                "your request in place of the demo timer",
+                "the dialog width"
+              ],
+              "notes": [
+                "The demo timer is meant to be replaced: the block makes no network calls.",
+                "A successful outcome closes the dialog — keep a \"done\" state only for long operations.",
+                "Retry must be safe: make sure the action is idempotent.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alertdialog006 title=\"Revoke the access key?\" retry=\"Retry\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Question",
+                "default": "Revoke the access key?"
+              },
+              "errorTitle": {
+                "label": "Error heading",
+                "default": "Key not revoked"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alertdialog-007",
+      "type": "registry:component",
+      "title": "Confirm With Option",
+      "description": "Подтверждение с побочным решением: галочка выключена по умолчанию, а подпись кнопки меняется вместе с ней.",
+      "categories": ["alertdialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alertdialog-007/alertdialog-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alertdialog-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-007-*. Клиентский: \"use client\" ради состояния галочки. Галочка выключена по умолчанию, а подпись главной кнопки собирается из выбора, поэтому перед нажатием видно, что именно произойдёт.",
+      "meta": {
+        "tags": ["alert-dialog", "confirm", "checkbox", "consent"],
+        "ai": {
+          "export": "Alertdialog007",
+          "usage": "<Alertdialog007 optionLabel=\"Сообщить участникам\" confirm=\"Опубликовать\" />",
+          "summary": "Подтверждение с дополнительным выбором: галочка с пояснением и кнопка, подпись которой меняется вместе с ней. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-alertdialog-007-* и не подменять её токенами вашей темы",
+            "выключенную галочку по умолчанию: включённая превращает подтверждение в рассылку",
+            "изменение подписи кнопки вместе с выбором — видно, что произойдёт",
+            "пояснение под галочкой с числом затронутых людей",
+            "решение в самом окне, а не в настройках: его принимают один раз и здесь",
+            "нативный чекбокс: клавиатура и состояние достаются от браузера"
+          ],
+          "adapt": [
+            "optionLabel и optionHint",
+            "title, text, confirm и подписи кнопок",
+            "акцент через проп accent",
+            "ширину окна"
+          ],
+          "notes": [
+            "Одна галочка — предел: два побочных решения превращают окно в форму.",
+            "Не прячьте за галочкой необратимое действие: у него должно быть своё подтверждение.",
+            "Состояние галочки не сохраняется между открытиями — так и задумано.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "optionLabel",
+            "label": "Галочка",
+            "type": "text",
+            "default": "Сообщить участникам",
+            "maxLength": 28
+          },
+          {
+            "prop": "confirm",
+            "label": "Действие",
+            "type": "text",
+            "default": "Опубликовать",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A confirmation with a side decision: the checkbox is off by default and the button label changes with it.",
+            "ai": {
+              "summary": "A confirmation with an extra choice: a checkbox with a note and a button whose label follows it. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-alertdialog-007-* palette — do not swap it for your theme tokens",
+                "the checkbox off by default: a pre-checked one turns confirmation into a mailout",
+                "the button label changing with the choice — what will happen stays visible",
+                "the note under the checkbox naming how many people are affected",
+                "the decision inside the dialog, not in settings: it is made once, right here",
+                "the native checkbox: keyboard and state come from the browser"
+              ],
+              "adapt": [
+                "optionLabel and optionHint",
+                "title, text, confirm and the button labels",
+                "the accent through the accent prop",
+                "the dialog width"
+              ],
+              "notes": [
+                "One checkbox is the limit: two side decisions turn the dialog into a form.",
+                "Never hide an irreversible action behind a checkbox: it deserves its own confirmation.",
+                "The checkbox state is not remembered between openings — by design.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alertdialog007 optionLabel=\"Notify the team\" confirm=\"Publish\" />"
+            },
+            "controls": {
+              "optionLabel": {
+                "label": "Checkbox",
+                "default": "Notify the team"
+              },
+              "confirm": {
+                "label": "Action",
+                "default": "Publish"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

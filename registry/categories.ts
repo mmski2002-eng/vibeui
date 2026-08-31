@@ -51,6 +51,7 @@ export const CATEGORIES = [
   { slug: "accordion", label: "Accordion", group: "application" },
   { slug: "alert", label: "Alert", group: "application" },
   { slug: "dialog", label: "Dialog", group: "application" },
+  { slug: "alertdialog", label: "Alert Dialog", group: "application" },
   { slug: "aspect", label: "Aspect Ratio", group: "application" },
   { slug: "autocomplete", label: "Autocomplete", group: "application" },
   { slug: "avatar", label: "Avatar", group: "application" },

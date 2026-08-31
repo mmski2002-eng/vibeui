@@ -20,6 +20,7 @@ import buttonsRegistry from "@/registry/components/buttons/registry.json"
 import accordionRegistry from "@/registry/components/accordion/registry.json"
 import alertRegistry from "@/registry/components/alert/registry.json"
 import dialogRegistry from "@/registry/components/dialog/registry.json"
+import alertdialogRegistry from "@/registry/components/alertdialog/registry.json"
 import aspectRegistry from "@/registry/components/aspect/registry.json"
 import autocompleteRegistry from "@/registry/components/autocomplete/registry.json"
 import avatarRegistry from "@/registry/components/avatar/registry.json"
@@ -131,6 +132,11 @@ export const SOURCES = [
     directory: "registry/components/dialog",
     kind: "component",
     items: dialogRegistry.items,
+  },
+  {
+    directory: "registry/components/alertdialog",
+    kind: "component",
+    items: alertdialogRegistry.items,
   },
   {
     directory: "registry/components/aspect",

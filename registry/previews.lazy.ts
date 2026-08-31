@@ -565,6 +565,41 @@ export const LAZY_PREVIEWS = {
       (module) => module.Dialog014,
     ),
   ),
+  "alertdialog-001": dynamic(() =>
+    import("@/registry/components/alertdialog/alertdialog-001/alertdialog-001").then(
+      (module) => module.Alertdialog001,
+    ),
+  ),
+  "alertdialog-002": dynamic(() =>
+    import("@/registry/components/alertdialog/alertdialog-002/alertdialog-002").then(
+      (module) => module.Alertdialog002,
+    ),
+  ),
+  "alertdialog-003": dynamic(() =>
+    import("@/registry/components/alertdialog/alertdialog-003/alertdialog-003").then(
+      (module) => module.Alertdialog003,
+    ),
+  ),
+  "alertdialog-004": dynamic(() =>
+    import("@/registry/components/alertdialog/alertdialog-004/alertdialog-004").then(
+      (module) => module.Alertdialog004,
+    ),
+  ),
+  "alertdialog-005": dynamic(() =>
+    import("@/registry/components/alertdialog/alertdialog-005/alertdialog-005").then(
+      (module) => module.Alertdialog005,
+    ),
+  ),
+  "alertdialog-006": dynamic(() =>
+    import("@/registry/components/alertdialog/alertdialog-006/alertdialog-006").then(
+      (module) => module.Alertdialog006,
+    ),
+  ),
+  "alertdialog-007": dynamic(() =>
+    import("@/registry/components/alertdialog/alertdialog-007/alertdialog-007").then(
+      (module) => module.Alertdialog007,
+    ),
+  ),
   "aspect-001": dynamic(() =>
     import("@/registry/components/aspect/aspect-001/aspect-001").then(
       (module) => module.Aspect001,
