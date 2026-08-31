@@ -1,0 +1,1142 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "buttongroup-001",
+      "type": "registry:component",
+      "title": "Segmented Filter",
+      "description": "Сегментированный переключатель на настоящих radio: состояние держит форма, клиентского JS нет, а схлопнутые границы оставляют между сегментами ровно один пиксель.",
+      "categories": ["buttongroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "buttongroup-001/buttongroup-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/buttongroup-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-001-*. Серверный: хуков и обработчиков нет вовсе. Выбор держат radio внутри fieldset, поэтому стрелки, Home/End и объявление «выбрано 2 из 3» приходят от браузера. Input растянут на весь сегмент и прозрачен, вид рисует label. Границы схлопнуты через margin-inline-start:-1px, скругления заданы логическими свойствами только первому и последнему сегменту. Выбранный сегмент поднят z-index:1, сфокусированный — z-index:2, иначе сосед срезает акцентную рамку и обводку фокуса. Legend спрятан clip-path, а не display:none: иначе fieldset теряет доступное имя.",
+      "meta": {
+        "tags": ["buttongroup", "segmented", "radio", "filter"],
+        "ai": {
+          "export": "Buttongroup001",
+          "usage": "<Buttongroup001\n  options={[\"Все\", \"Активные\", \"Архив\"]}\n  defaultValue=\"Активные\"\n  label=\"Показывать\"\n  name=\"status\"\n/>",
+          "summary": "Сегментированный переключатель на radio: без клиентского состояния, со схлопнутыми границами и клавиатурой от браузера. Ноль зависимостей, один файл, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-buttongroup-001-* и не подменять её токенами вашей темы",
+            "radio внутри fieldset вместо кнопок: стрелки, Home/End и «выбрано 2 из 3» иначе придётся писать руками",
+            "z-index у выбранного и сфокусированного сегмента: при схлопнутых границах сосед срезает и рамку, и обводку",
+            "скругления только у первого и последнего сегмента — иначе группа распадается на отдельные кнопки",
+            "legend, спрятанный clip-path: display:none лишает fieldset доступного имени",
+            "точку у выбранного сегмента: состояние, размеченное только цветом, не читается при дальтонизме"
+          ],
+          "adapt": [
+            "набор сегментов через options",
+            "исходно выбранный сегмент через defaultValue",
+            "доступное имя группы через label",
+            "имя поля формы через name и акцент через accent"
+          ],
+          "notes": [
+            "Сегментов больше пяти — переключатель превращается в горизонтальный скролл, берите список или select.",
+            "Все input делят одно значение name: две группы на странице с одинаковым name будут гасить друг друга.",
+            "Компонент неуправляемый: значение живёт в форме, снаружи его читают через FormData или ref.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultValue",
+            "label": "Выбрано",
+            "type": "select",
+            "default": "Активные",
+            "options": ["Все", "Активные", "Архив"]
+          },
+          {
+            "prop": "label",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "Показывать",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A segmented control built on real radio inputs: the form holds the state, there is no client JS, and collapsed borders leave exactly one pixel between segments.",
+            "ai": {
+              "summary": "A segmented control on radios: no client state, collapsed borders, keyboard behaviour handed over to the browser. Zero dependencies, one file, a server component.",
+              "preserve": [
+                "the local --vibeui-buttongroup-001-* palette — do not swap it for your theme tokens",
+                "radios inside a fieldset instead of buttons: arrows, Home/End and \"2 of 3 selected\" would otherwise be hand-written",
+                "the z-index on the selected and focused segment: with collapsed borders a neighbour clips both the border and the focus ring",
+                "rounded corners only on the first and last segment — otherwise the group falls apart into separate buttons",
+                "the legend hidden with clip-path: display:none strips the fieldset of its accessible name",
+                "the dot on the selected segment: a state carried by colour alone is unreadable to colour-blind users"
+              ],
+              "adapt": [
+                "the set of segments through options",
+                "the initially selected segment through defaultValue",
+                "the accessible group name through label",
+                "the form field name through name and the accent through accent"
+              ],
+              "notes": [
+                "More than five segments turn the control into a horizontal scroll — use a list or a select instead.",
+                "All inputs share one name: two groups with the same name on a page cancel each other out.",
+                "The component is uncontrolled: the value lives in the form and is read via FormData or a ref.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Buttongroup001\n  options={[\"All\", \"Active\", \"Archived\"]}\n  defaultValue=\"Active\"\n  label=\"Show\"\n  name=\"status\"\n/>"
+            },
+            "controls": {
+              "defaultValue": { "label": "Selected" },
+              "label": { "label": "Group name", "default": "Show" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "buttongroup-002",
+      "type": "registry:component",
+      "title": "Attached Actions",
+      "description": "Группа связанных действий как одна деталь: рамка ровно одна — на контейнере, а разделители внутри рисуются левой границей соседей.",
+      "categories": ["buttongroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "buttongroup-002/buttongroup-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/buttongroup-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-002-*. Серверный: хуков нет. Приём — единственная рамка на контейнере role=\"group\" и разделители через button + button {border-inline-start}: два соседних border дали бы линию в два пикселя. Скругления детей считаются как calc(radius - 1px), чтобы внутренний угол совпал с внешним. Кнопка с фокусом поднимается z-index:1, обводка ставится внутрь через outline-offset:-2px, иначе рамка контейнера её обрезает. Высота вынесена в --vibeui-buttongroup-002-height и переключается атрибутом data-size.",
+      "meta": {
+        "tags": ["buttongroup", "toolbar", "actions", "attached"],
+        "ai": {
+          "export": "Buttongroup002",
+          "usage": "<Buttongroup002\n  actions={[\"Скопировать\", \"Продублировать\", \"Экспорт\"]}\n  label=\"Действия над документом\"\n  size=\"regular\"\n/>",
+          "summary": "Сцепка равнозначных действий с одной общей рамкой и внутренними разделителями. Ноль зависимостей, один файл, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-buttongroup-002-* и не подменять её токенами вашей темы",
+            "одну рамку на контейнере: рамка у каждой кнопки даёт двойную линию на стыке",
+            "разделитель через button + button — привязка к соседу переживает любое число кнопок",
+            "calc(radius - 1px) у крайних кнопок: без вычитания внутренний угол выпирает из внешнего",
+            "z-index и outline-offset:-2px у фокуса — иначе рамка контейнера срезает обводку",
+            "role=\"group\" с aria-label: без имени три кнопки читаются вслух как три несвязанных действия"
+          ],
+          "adapt": [
+            "набор подписей через actions",
+            "доступное имя группы через label",
+            "высоту кнопок через size",
+            "акцент обводки фокуса через accent"
+          ],
+          "notes": [
+            "Группа для равнозначных действий: главную кнопку сюда не кладут, приоритет в сцепке не читается.",
+            "Больше четырёх кнопок в ряд на телефоне не помещаются — уводите лишнее в меню.",
+            "Подписи не переносятся: длинное слово растянет группу, а не сложит её в две строки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "regular",
+            "options": ["compact", "regular"]
+          },
+          {
+            "prop": "label",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "Действия над документом",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A set of related actions that reads as one part: exactly one border on the container, with inner separators drawn by the neighbours' inline-start border.",
+            "ai": {
+              "summary": "A cluster of equal actions with one shared border and inner separators. Zero dependencies, one file, a server component.",
+              "preserve": [
+                "the local --vibeui-buttongroup-002-* palette — do not swap it for your theme tokens",
+                "the single border on the container: a border per button doubles the line at every joint",
+                "the separator via button + button — binding it to the neighbour survives any number of buttons",
+                "calc(radius - 1px) on the edge buttons: without the subtraction the inner corner sticks out of the outer one",
+                "the z-index and outline-offset:-2px on focus — otherwise the container border clips the ring",
+                "role=\"group\" with aria-label: unnamed, the three buttons are read out as three unrelated actions"
+              ],
+              "adapt": [
+                "the set of captions through actions",
+                "the accessible group name through label",
+                "the button height through size",
+                "the focus ring accent through accent"
+              ],
+              "notes": [
+                "The group is for equal actions: a primary button does not belong here, priority is unreadable inside a cluster.",
+                "More than four buttons in a row do not fit on a phone — move the rest into a menu.",
+                "Captions do not wrap: a long word stretches the group instead of folding it into two lines.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Buttongroup002\n  actions={[\"Copy\", \"Duplicate\", \"Export\"]}\n  label=\"Document actions\"\n  size=\"regular\"\n/>"
+            },
+            "controls": {
+              "size": { "label": "Size" },
+              "label": { "label": "Group name", "default": "Document actions" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "buttongroup-003",
+      "type": "registry:component",
+      "title": "Split Save Button",
+      "description": "Split-кнопка: частое действие нажимается сразу, редкие живут в меню на нативном popover — верхний слой, Esc и клик мимо достаются от браузера.",
+      "categories": ["buttongroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "buttongroup-003/buttongroup-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/buttongroup-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-003-*. Серверный: состояние меню держит браузер через popover и popovertarget, клиентского JS нет. Позиционирование берётся из CSS anchor positioning внутри @supports (anchor-name), с position-try-fallbacks:flip-block; где anchor-positioning не поддержан, popover остаётся карточкой по центру экрана — это рабочий вид, а не поломка. Граница между двумя заливками одного цвета нарисована inset box-shadow, потому что рамка на стыке дала бы тёмную линию. Правило [data-part=\"menu\"]:not(:popover-open){display:none} прячет меню до открытия.",
+      "meta": {
+        "tags": ["buttongroup", "split", "popover", "menu"],
+        "ai": {
+          "export": "Buttongroup003",
+          "usage": "<Buttongroup003\n  action=\"Сохранить\"\n  options={[{ label: \"Сохранить и закрыть\", hint: \"Вернуться к списку\" }]}\n  menuLabel=\"Другие способы сохранить\"\n  menuId=\"save-menu\"\n/>",
+          "summary": "Split-кнопка с меню альтернатив на нативном popover: основное действие в один клик, остальные за стрелкой. Ноль зависимостей, один файл, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-buttongroup-003-* и не подменять её токенами вашей темы",
+            "нативный popover вместо самодельного меню: Esc, клик мимо и верхний слой уже сделаны браузером",
+            "aria-label на стрелке: кнопка без текста иначе читается как «кнопка» без смысла",
+            "разделительную полосу через inset box-shadow — рамка на стыке двух заливок даёт тёмный шов",
+            "@supports вокруг anchor positioning: без него в старых браузерах меню уедет неизвестно куда",
+            "правило :not(:popover-open){display:none} — иначе меню будет занимать место в потоке до открытия"
+          ],
+          "adapt": [
+            "подпись основного действия через action",
+            "содержимое меню через options",
+            "имя стрелки для скринридера через menuLabel и идентификатор меню через menuId",
+            "цвет заливки через accent"
+          ],
+          "notes": [
+            "menuId обязан быть уникальным на странице: две split-кнопки с одним id откроют одно и то же меню.",
+            "Пункты меню — обычные button без обработчиков: подключите свои onClick при установке.",
+            "Стрелка узкая по дизайну, но на телефоне цель меньше 44 px — увеличьте её для тач-интерфейса.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "action",
+            "label": "Действие",
+            "type": "text",
+            "default": "Сохранить",
+            "maxLength": 24
+          },
+          {
+            "prop": "menuLabel",
+            "label": "Имя меню",
+            "type": "text",
+            "default": "Другие способы сохранить",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A split button: the frequent action fires straight away while the rare ones live in a native popover menu — top layer, Esc and outside click come from the browser.",
+            "ai": {
+              "summary": "A split button with an alternatives menu on the native popover: the main action in one click, the rest behind the caret. Zero dependencies, one file, a server component.",
+              "preserve": [
+                "the local --vibeui-buttongroup-003-* palette — do not swap it for your theme tokens",
+                "the native popover instead of a hand-rolled menu: Esc, outside click and the top layer are already done",
+                "the aria-label on the caret: a button without text is otherwise announced as a meaningless \"button\"",
+                "the divider drawn with an inset box-shadow — a border between two identical fills leaves a dark seam",
+                "the @supports guard around anchor positioning: without it older browsers park the menu anywhere",
+                "the :not(:popover-open){display:none} rule — otherwise the menu occupies flow space before it opens"
+              ],
+              "adapt": [
+                "the main action caption through action",
+                "the menu contents through options",
+                "the caret's screen-reader name through menuLabel and the menu id through menuId",
+                "the fill colour through accent"
+              ],
+              "notes": [
+                "menuId must be unique on the page: two split buttons sharing an id open the same menu.",
+                "Menu items are plain buttons without handlers: wire your own onClick at install time.",
+                "The caret is narrow by design, but on a phone the target is under 44 px — enlarge it for touch.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Buttongroup003\n  action=\"Save\"\n  options={[{ label: \"Save and close\", hint: \"Back to the list\" }]}\n  menuLabel=\"Other ways to save\"\n  menuId=\"save-menu\"\n/>"
+            },
+            "controls": {
+              "action": { "label": "Action", "default": "Save" },
+              "menuLabel": {
+                "label": "Menu name",
+                "default": "Other ways to save"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "buttongroup-004",
+      "type": "registry:component",
+      "title": "Editor Toolbar",
+      "description": "Панель инструментов с roving tabindex: Tab заходит внутрь один раз, дальше по значкам ходят стрелки, Home и End — как требует паттерн toolbar.",
+      "categories": ["buttongroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "buttongroup-004/buttongroup-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/buttongroup-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-004-*. Клиентский: useState хранит индекс активной кнопки, useRef держит панель, обработчик onKeyDown разбирает ArrowLeft/ArrowRight с переносом по кругу и Home/End. Активной кнопке ставится tabIndex=0, остальным -1 — это roving tabindex из паттерна toolbar WAI-ARIA. onFocus синхронизирует индекс, если фокус пришёл мышью. Значки — инлайновые SVG с stroke=\"currentColor\", разделитель между третьей и четвёртой кнопкой рисуется отдельным узлом. Подписи включаются пропсом showLabels: тогда aria-label снимается, чтобы имя не задваивалось.",
+      "meta": {
+        "tags": ["buttongroup", "toolbar", "keyboard", "icons"],
+        "ai": {
+          "export": "Buttongroup004",
+          "usage": "<Buttongroup004\n  tools={[{ id: \"bold\", label: \"Жирный\" }, { id: \"link\", label: \"Ссылка\" }]}\n  label=\"Форматирование\"\n  showLabels={false}\n/>",
+          "summary": "Панель инструментов, которая занимает одну остановку Tab: внутри навигация стрелками, Home и End. Ноль зависимостей, один файл, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-buttongroup-004-* и не подменять её токенами вашей темы",
+            "roving tabindex: без него панель из шести значков крадёт шесть нажатий Tab у страницы",
+            "role=\"toolbar\" вместе с aria-orientation — по ним скринридер обещает пользователю стрелки",
+            "перенос по кругу в стрелках: паттерн toolbar требует именно цикла, а не упора в край",
+            "синхронизацию индекса в onFocus — иначе после клика мышью стрелки поедут не с той кнопки",
+            "aria-label у кнопки, пока подписи скрыты: голый значок не имеет доступного имени"
+          ],
+          "adapt": [
+            "набор инструментов через tools",
+            "доступное имя панели через label",
+            "показ текстовых подписей через showLabels",
+            "цвет обводки фокуса через accent"
+          ],
+          "notes": [
+            "Кнопки без onClick: подключите свои команды редактора при установке.",
+            "Разделитель стоит после третьей кнопки жёстко — под свой набор перенесите его в данные.",
+            "Для кнопок-тумблеров (жирный включён) добавьте aria-pressed: сам roving tabindex состояние не объявляет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "showLabels",
+            "label": "Подписи",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "label",
+            "label": "Имя панели",
+            "type": "text",
+            "default": "Форматирование",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A toolbar with roving tabindex: Tab enters once and from there arrows, Home and End walk the icons — exactly as the toolbar pattern requires.",
+            "ai": {
+              "summary": "A toolbar that takes a single Tab stop: arrows, Home and End navigate inside it. Zero dependencies, one file, a client component.",
+              "preserve": [
+                "the local --vibeui-buttongroup-004-* palette — do not swap it for your theme tokens",
+                "the roving tabindex: without it a six-icon bar steals six Tab presses from the page",
+                "role=\"toolbar\" together with aria-orientation — they are the promise of arrow keys to a screen reader",
+                "the wrap-around on the arrows: the toolbar pattern asks for a cycle, not a dead end at the edge",
+                "the index sync in onFocus — otherwise after a mouse click the arrows resume from the wrong button",
+                "the aria-label on each button while captions are hidden: a bare icon has no accessible name"
+              ],
+              "adapt": [
+                "the set of instruments through tools",
+                "the accessible toolbar name through label",
+                "visible text captions through showLabels",
+                "the focus ring colour through accent"
+              ],
+              "notes": [
+                "The buttons carry no onClick: wire your editor commands at install time.",
+                "The divider is hard-coded after the third button — move it into your data for another set.",
+                "For toggle buttons (bold is on) add aria-pressed: roving tabindex announces no state by itself.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Buttongroup004\n  tools={[{ id: \"bold\", label: \"Bold\" }, { id: \"link\", label: \"Link\" }]}\n  label=\"Formatting\"\n  showLabels={false}\n/>"
+            },
+            "controls": {
+              "showLabels": { "label": "Captions" },
+              "label": { "label": "Toolbar name", "default": "Formatting" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "buttongroup-005",
+      "type": "registry:component",
+      "title": "View Switcher",
+      "description": "Переключатель вида списка на кнопках-тумблерах: состояние объявлено через aria-pressed, а вид выбирается тем же атрибутом, так что разметка и стиль не расходятся.",
+      "categories": ["buttongroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "buttongroup-005/buttongroup-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/buttongroup-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-005-*. Клиентский: useState хранит текущий вид, onChange отдаёт его наружу. Здесь сознательно не radio: значение не отправляется формой, оно меняет представление на месте — это набор кнопок-тумблеров с aria-pressed. Стиль нажатой кнопки выбирается селектором button[aria-pressed=\"true\"], поэтому доступное состояние и внешний вид не могут разойтись. Значки — инлайновые SVG на currentColor, у активной кнопки они перекрашиваются в акцент; активность несут ещё и подложка с тенью, а не только цвет.",
+      "meta": {
+        "tags": ["buttongroup", "toggle", "view", "aria-pressed"],
+        "ai": {
+          "export": "Buttongroup005",
+          "usage": "<Buttongroup005\n  views={[{ id: \"list\", label: \"Список\" }, { id: \"grid\", label: \"Сетка\" }]}\n  defaultView=\"grid\"\n  label=\"Вид списка\"\n  onChange={(id) => setView(id)}\n/>",
+          "summary": "Переключатель представления на кнопках с aria-pressed: значение не уходит в форму, а меняет вид списка. Ноль зависимостей, один файл, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-buttongroup-005-* и не подменять её токенами вашей темы",
+            "aria-pressed вместо radio: значение не отправляется формой, и radio здесь был бы неправдой",
+            "выбор стиля по [aria-pressed=\"true\"] — так вид не может разойтись с доступным состоянием",
+            "белую подложку и тень у активной кнопки: одного цвета значка для состояния мало",
+            "видимые подписи рядом со значками — «сетка» и «таблица» по силуэту различают не все",
+            "role=\"group\" с aria-label: без имени три тумблера читаются как несвязанные кнопки"
+          ],
+          "adapt": [
+            "набор представлений через views",
+            "исходное представление через defaultView",
+            "доступное имя группы через label",
+            "реакцию на выбор через onChange и акцент через accent"
+          ],
+          "notes": [
+            "Компонент управляет только собой: перерисовку списка делает ваш обработчик onChange.",
+            "defaultView сравнивается с id, а не с подписью: опечатка тихо снимет выделение со всех кнопок.",
+            "Три вида — предел для этой раскладки, дальше подписи не помещаются на телефоне.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultView",
+            "label": "Вид",
+            "type": "select",
+            "default": "grid",
+            "options": ["list", "grid", "table"]
+          },
+          {
+            "prop": "label",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "Вид списка",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A list view switcher on toggle buttons: the state is announced through aria-pressed and the styling is selected by the same attribute, so markup and looks cannot drift apart.",
+            "ai": {
+              "summary": "A view switcher on buttons with aria-pressed: the value never reaches a form, it reshapes the list in place. Zero dependencies, one file, a client component.",
+              "preserve": [
+                "the local --vibeui-buttongroup-005-* palette — do not swap it for your theme tokens",
+                "aria-pressed instead of radios: nothing is submitted, and a radio here would be a lie",
+                "styling picked by [aria-pressed=\"true\"] — the look then cannot drift from the accessible state",
+                "the white surface and shadow on the active button: icon colour alone is too little for state",
+                "the visible captions next to the icons — not everyone tells \"grid\" from \"table\" by silhouette",
+                "role=\"group\" with aria-label: unnamed, the three toggles read as unrelated buttons"
+              ],
+              "adapt": [
+                "the set of views through views",
+                "the initial view through defaultView",
+                "the accessible group name through label",
+                "the selection callback through onChange and the accent through accent"
+              ],
+              "notes": [
+                "The component governs itself only: redrawing the list is your onChange handler's job.",
+                "defaultView is matched against id, not the caption: a typo silently deselects every button.",
+                "Three views are the limit for this layout, beyond that the captions stop fitting on a phone.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Buttongroup005\n  views={[{ id: \"list\", label: \"List\" }, { id: \"grid\", label: \"Grid\" }]}\n  defaultView=\"grid\"\n  label=\"List view\"\n  onChange={(id) => setView(id)}\n/>"
+            },
+            "controls": {
+              "defaultView": { "label": "View" },
+              "label": { "label": "Group name", "default": "List view" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "buttongroup-006",
+      "type": "registry:component",
+      "title": "Icon Action Group",
+      "description": "Группа из одних значков, у которой имя есть у каждой кнопки: подпись лежит текстом для скринридера, а видимая подсказка всплывает по наведению и по фокусу.",
+      "categories": ["buttongroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "buttongroup-006/buttongroup-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/buttongroup-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-006-*. Серверный: хуков нет. Имя кнопки — настоящий текст внутри неё, спрятанный clip-path:inset(50%): его читает скринридер и находит поиск по странице, в отличие от aria-label. Видимая подсказка — отдельный aria-hidden узел, иначе имя прочиталось бы дважды; показывается она и на :hover, и на :focus-visible. Границы схлопнуты через margin-inline-start:-1px, скругления заданы логическими свойствами крайним кнопкам, а форму переключает атрибут data-shape. При фокусе кнопка поднимается z-index:2, иначе сосед срезает обводку.",
+      "meta": {
+        "tags": ["buttongroup", "icons", "tooltip", "a11y"],
+        "ai": {
+          "export": "Buttongroup006",
+          "usage": "<Buttongroup006\n  actions={[{ id: \"undo\", label: \"Отменить\" }, { id: \"copy\", label: \"Скопировать\" }]}\n  label=\"Быстрые действия\"\n  shape=\"square\"\n/>",
+          "summary": "Сцепка значков без подписей, где у каждой кнопки есть настоящее текстовое имя и всплывающая подсказка. Ноль зависимостей, один файл, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-buttongroup-006-* и не подменять её токенами вашей темы",
+            "текстовое имя внутри кнопки под clip-path: его находит поиск по странице, в отличие от aria-label",
+            "aria-hidden на видимой подсказке — иначе скринридер прочитает имя дважды",
+            "показ подсказки по :focus-visible, а не только по :hover: с клавиатуры значки иначе неразличимы",
+            "z-index при фокусе: границы схлопнуты, и без него обводку срезает соседняя кнопка",
+            "размер кнопки не меньше 2.25rem — цель для пальца и так на пределе"
+          ],
+          "adapt": [
+            "набор кнопок и их имена через actions",
+            "доступное имя группы через label",
+            "форму крайних кнопок через shape",
+            "цвет обводки фокуса через accent"
+          ],
+          "notes": [
+            "Значки заданы путями в объекте ICONS: незнакомый id молча получит путь «скопировать».",
+            "Подсказка всплывает вверх и обрезается, если группа стоит у верхнего края скроллящегося контейнера.",
+            "Одни значки без подписей узнаются хуже: для редких действий добавьте текст или уводите их в меню.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "shape",
+            "label": "Форма",
+            "type": "select",
+            "default": "square",
+            "options": ["square", "round"]
+          },
+          {
+            "prop": "label",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "Быстрые действия",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A group of bare icons where every button still has a name: the caption sits as real text for screen readers, and a visible tooltip appears on hover and on focus.",
+            "ai": {
+              "summary": "A cluster of icon-only buttons, each carrying a real text name and a tooltip. Zero dependencies, one file, a server component.",
+              "preserve": [
+                "the local --vibeui-buttongroup-006-* palette — do not swap it for your theme tokens",
+                "the text name inside the button under clip-path: unlike aria-label, find-in-page can reach it",
+                "aria-hidden on the visible tooltip — otherwise the screen reader announces the name twice",
+                "showing the tooltip on :focus-visible, not just :hover: from the keyboard the icons are otherwise unreadable",
+                "the z-index on focus: with collapsed borders the neighbouring button clips the ring",
+                "a button no smaller than 2.25rem — the touch target is already at its limit"
+              ],
+              "adapt": [
+                "the buttons and their names through actions",
+                "the accessible group name through label",
+                "the shape of the edge buttons through shape",
+                "the focus ring colour through accent"
+              ],
+              "notes": [
+                "Icons live as paths in the ICONS map: an unknown id silently falls back to the \"copy\" path.",
+                "The tooltip pops upwards and gets clipped if the group sits at the top edge of a scrolling container.",
+                "Bare icons are recognised worse: for rare actions add text or move them into a menu.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Buttongroup006\n  actions={[{ id: \"undo\", label: \"Undo\" }, { id: \"copy\", label: \"Copy\" }]}\n  label=\"Quick actions\"\n  shape=\"square\"\n/>"
+            },
+            "controls": {
+              "shape": { "label": "Shape" },
+              "label": { "label": "Group name", "default": "Quick actions" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "buttongroup-007",
+      "type": "registry:component",
+      "title": "Vertical Actions",
+      "description": "Вертикальная группа для узкой колонки: кнопки во всю ширину, границы схлопнуты по вертикали, подпись слева, подсказка справа.",
+      "categories": ["buttongroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "buttongroup-007/buttongroup-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/buttongroup-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-007-*. Серверный: хуков нет. Ширина считается от собственной: width:100% с max-width из --vibeui-buttongroup-007-width, значение приходит пропсом width в rem. Границы схлопнуты по вертикали через margin-block-start:-1px, скругления логическими свойствами достаются только первой и последней кнопке. Кнопка с фокусом поднимается z-index:2, потому что соседняя перекрывает её нижнюю границу. Подпись занимает всё свободное место (flex:1 1 auto; min-width:0), подсказка прижата к правому краю и набрана табличными цифрами.",
+      "meta": {
+        "tags": ["buttongroup", "vertical", "sidebar", "actions"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Buttongroup007",
+          "usage": "<Buttongroup007\n  actions={[{ label: \"Переименовать\", hint: \"F2\" }, { label: \"Переместить\", hint: \"⌘M\" }]}\n  label=\"Операции с файлом\"\n  width={16}\n/>",
+          "summary": "Список действий, сложенный в столбец для узкой колонки: одна сцепка вместо порванной на две строки строки кнопок. Ноль зависимостей, один файл, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-buttongroup-007-* и не подменять её токенами вашей темы",
+            "схлопнутые границы по вертикали: две соседние рамки дают линию в два пикселя",
+            "z-index при фокусе — нижнюю границу кнопки перекрывает следующая, и обводка иначе видна только сверху",
+            "скругления только у первой и последней кнопки, чтобы столбец читался одной деталью",
+            "выравнивание подписи по левому краю: по центру глаз теряет колонку названий",
+            "собственную светлую подложку кнопок — без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "набор действий и подсказок через actions",
+            "доступное имя группы через label",
+            "ширину столбца через width",
+            "цвет обводки фокуса через accent"
+          ],
+          "notes": [
+            "Подсказка справа — не горячая клавиша по умолчанию: туда одинаково ложатся счётчик и размер.",
+            "Подписи не переносятся по умолчанию только визуально: длинный текст растянет строку по высоте.",
+            "Кнопки без onClick: подключите свои обработчики при установке.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "width",
+            "label": "Ширина, rem",
+            "type": "number",
+            "default": 16,
+            "min": 12,
+            "max": 28
+          },
+          {
+            "prop": "label",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "Операции с файлом",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A vertical group for a narrow column: full-width buttons, borders collapsed vertically, caption on the left and hint on the right.",
+            "ai": {
+              "summary": "A list of actions folded into a column for a narrow rail: one cluster instead of a button row torn across two lines. Zero dependencies, one file, a server component.",
+              "preserve": [
+                "the local --vibeui-buttongroup-007-* palette — do not swap it for your theme tokens",
+                "the vertically collapsed borders: two adjacent borders make a two-pixel line",
+                "the z-index on focus — the next button covers the bottom border, so the ring would show only on top",
+                "rounded corners only on the first and last button, so the column reads as one part",
+                "the left-aligned caption: centred, the eye loses the column of names",
+                "the buttons' own light surface — without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the actions and their hints through actions",
+                "the accessible group name through label",
+                "the column width through width",
+                "the focus ring colour through accent"
+              ],
+              "notes": [
+                "The right-hand hint is not a shortcut by default: a counter or a file size fits there just as well.",
+                "Captions are only visually single-line: long text grows the row in height.",
+                "The buttons carry no onClick: wire your handlers at install time.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Buttongroup007\n  actions={[{ label: \"Rename\", hint: \"F2\" }, { label: \"Move\", hint: \"⌘M\" }]}\n  label=\"File operations\"\n  width={16}\n/>"
+            },
+            "controls": {
+              "width": { "label": "Width, rem" },
+              "label": { "label": "Group name", "default": "File operations" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "buttongroup-008",
+      "type": "registry:component",
+      "title": "Pager Group",
+      "description": "Пагинатор из трёх ячеек: назад, счётчик и вперёд в одной рамке, ширина счётчика зафиксирована, поэтому кнопки не прыгают при переходе через десяток.",
+      "categories": ["buttongroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "buttongroup-008/buttongroup-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/buttongroup-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-008-*. Серверный: хуков нет, номер страницы приходит пропсом и зажимается в диапазон 1..total. Корень — nav с aria-label, внутри две кнопки и неинтерактивная ячейка счётчика в той же рамке. Границы схлопнуты через margin-inline-start:-1px, скругления логическими свойствами у первой и последней ячейки, при фокусе кнопка поднимается z-index:2. Ширина счётчика зафиксирована min-width и font-variant-numeric:tabular-nums, поэтому «9 / 12» и «10 / 12» занимают одинаковое место. Дробь помечена aria-hidden, а рядом лежит текст «Страница 3 из 12» под clip-path.",
+      "meta": {
+        "tags": ["buttongroup", "pagination", "nav", "stepper"],
+        "ai": {
+          "export": "Buttongroup008",
+          "usage": "<Buttongroup008 page={3} total={12} label=\"Постраничная навигация\" />",
+          "summary": "Группа-пагинатор: назад, счётчик страниц и вперёд в одной рамке, с крайними состояниями и озвученной позицией. Ноль зависимостей, один файл, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-buttongroup-008-* и не подменять её токенами вашей темы",
+            "фиксированную ширину счётчика и табличные цифры: иначе группа дёргается на каждом десятке",
+            "текст «Страница N из M» под clip-path — дробь вслух звучит как «три дробь двенадцать»",
+            "aria-hidden на видимой дроби, чтобы позиция не читалась дважды",
+            "disabled на крайних страницах: кликабельная кнопка «назад» на первой странице обманывает",
+            "nav с aria-label — пагинатор обязан находиться в списке ориентиров страницы"
+          ],
+          "adapt": [
+            "текущую страницу через page",
+            "число страниц через total",
+            "доступное имя навигации через label",
+            "цвет обводки фокуса через accent"
+          ],
+          "notes": [
+            "Кнопки без onClick: переход делает ваш роутер, компонент только показывает состояние.",
+            "В реальной навигации prev/next чаще уместнее ссылками — тогда крайние состояния делают span, а не disabled.",
+            "Кнопка disabled выпадает из обхода Tab: это стандартное поведение, но фокус на ней не задержится.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "page",
+            "label": "Страница",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 999
+          },
+          {
+            "prop": "total",
+            "label": "Всего страниц",
+            "type": "number",
+            "default": 12,
+            "min": 1,
+            "max": 999
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A three-cell pager: previous, counter and next inside one border, with the counter's width pinned so the buttons never jump when the page crosses a ten.",
+            "ai": {
+              "summary": "A pager group: previous, page counter and next in one border, with edge states and a spoken position. Zero dependencies, one file, a server component.",
+              "preserve": [
+                "the local --vibeui-buttongroup-008-* palette — do not swap it for your theme tokens",
+                "the pinned counter width and tabular figures: otherwise the group twitches at every ten",
+                "the \"Page N of M\" text under clip-path — the fraction is read aloud as \"three slash twelve\"",
+                "aria-hidden on the visible fraction so the position is not announced twice",
+                "disabled on the edge pages: a clickable \"previous\" on page one is a lie",
+                "the nav with aria-label — a pager belongs in the page's landmark list"
+              ],
+              "adapt": [
+                "the current page through page",
+                "the number of pages through total",
+                "the accessible navigation name through label",
+                "the focus ring colour through accent"
+              ],
+              "notes": [
+                "The buttons carry no onClick: your router performs the move, the component only shows the state.",
+                "In real navigation prev/next are usually links — then the edge states become a span, not a disabled button.",
+                "A disabled button drops out of the Tab order: standard behaviour, but focus will not rest on it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Buttongroup008 page={3} total={12} label=\"Pagination\" />"
+            },
+            "controls": {
+              "page": { "label": "Page" },
+              "total": { "label": "Total pages" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "buttongroup-009",
+      "type": "registry:component",
+      "title": "Overflow Group",
+      "description": "Группа действий, которая сама решает, сколько кнопок показать: порог берётся от собственной ширины через container query, лишнее уезжает под «Ещё».",
+      "categories": ["buttongroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "buttongroup-009/buttongroup-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/buttongroup-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-009-*. Серверный: раскрытие держит details/summary, клиентского JS нет. Корень объявлен container-type:inline-size, а вся раскладка лежит на внутреннем [data-part=\"shell\"] — правило внутри @container действует на потомков контейнера, но не на сам контейнер. По умолчанию раскладка узкая: [data-part=\"extra\"] скрыты, «Ещё» показано; @container (min-width: 32rem) переворачивает это. Дублирования в доступном дереве нет: на широкой ширине details скрыт целиком, на узкой скрыты все extra. Лист меню позиционируется абсолютно относительно details.",
+      "meta": {
+        "tags": ["buttongroup", "overflow", "container-query", "details"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Buttongroup009",
+          "usage": "<Buttongroup009\n  primary=\"Опубликовать\"\n  actions={[\"Предпросмотр\", \"Запланировать\", \"В архив\"]}\n  moreLabel=\"Ещё\"\n  label=\"Действия над черновиком\"\n/>",
+          "summary": "Панель действий с переполнением: на узкой ширине лишние кнопки уходят под «Ещё» на details, без единой строки JS. Ноль зависимостей, один файл, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-buttongroup-009-* и не подменять её токенами вашей темы",
+            "раскладку на внутреннем shell: правило внутри @container не применяется к самому контейнеру",
+            "container query вместо media query — в узкой колонке широкого экрана группа обязана схлопнуться так же, как на телефоне",
+            "узкую раскладку как состояние по умолчанию: при отсутствии поддержки контейнеров группа останется рабочей",
+            "взаимное исключение extra и «Ещё» — иначе одно действие попадёт в доступное дерево дважды",
+            "details/summary вместо самодельного меню: раскрытие и клавиатура достаются от браузера"
+          ],
+          "adapt": [
+            "подпись главного действия через primary",
+            "список второстепенных действий через actions",
+            "подпись кнопки переполнения через moreLabel и имя группы через label",
+            "цвет главной кнопки через accent"
+          ],
+          "notes": [
+            "Порог 32rem зашит в @container: под свой набор кнопок его придётся подобрать заново.",
+            "details не закрывается по клику мимо — для настоящего меню нужен popover или обработчик.",
+            "Второстепенные действия перечислены в разметке дважды: одна ветка всегда скрыта, но текст в HTML лежит два раза.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "primary",
+            "label": "Главное действие",
+            "type": "text",
+            "default": "Опубликовать",
+            "maxLength": 24
+          },
+          {
+            "prop": "moreLabel",
+            "label": "Кнопка «Ещё»",
+            "type": "text",
+            "default": "Ещё",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An action group that decides for itself how many buttons to show: the threshold comes from its own width through a container query, and the rest hides under \"More\".",
+            "ai": {
+              "summary": "An action bar with overflow: at narrow widths the extra buttons move under \"More\" on details, without a line of JS. Zero dependencies, one file, a server component.",
+              "preserve": [
+                "the local --vibeui-buttongroup-009-* palette — do not swap it for your theme tokens",
+                "the layout on the inner shell: a rule inside @container does not apply to the container itself",
+                "the container query instead of a media query — in a narrow column of a wide screen the group must collapse just as it does on a phone",
+                "the narrow layout as the default state: without container support the group still works",
+                "the mutual exclusion of extra and \"More\" — otherwise one action lands in the accessibility tree twice",
+                "details/summary instead of a hand-rolled menu: disclosure and keyboard come from the browser"
+              ],
+              "adapt": [
+                "the primary action caption through primary",
+                "the list of secondary actions through actions",
+                "the overflow button caption through moreLabel and the group name through label",
+                "the primary button colour through accent"
+              ],
+              "notes": [
+                "The 32rem threshold is hard-coded in @container: retune it for your own set of buttons.",
+                "details does not close on an outside click — a real menu needs a popover or a handler.",
+                "Secondary actions appear twice in the markup: one branch is always hidden, but the text ships twice in the HTML.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Buttongroup009\n  primary=\"Publish\"\n  actions={[\"Preview\", \"Schedule\", \"Archive\"]}\n  moreLabel=\"More\"\n  label=\"Draft actions\"\n/>"
+            },
+            "controls": {
+              "primary": { "label": "Primary action", "default": "Publish" },
+              "moreLabel": { "label": "\"More\" button", "default": "More" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "buttongroup-010",
+      "type": "registry:component",
+      "title": "Period Range",
+      "description": "Выбор периода отчёта, где подложка выбранного переезжает по индексу, а строка под группой сразу называет получившийся диапазон.",
+      "categories": ["buttongroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "buttongroup-010/buttongroup-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/buttongroup-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-010-*. Клиентский: useState хранит выбранный период, onChange отдаёт его наружу. Трек — grid из равных колонок (repeat(var(--vibeui-buttongroup-010-count),1fr)), подложка одна на всю группу: её ширина равна доле колонки, а смещение считается как translateX(index * 100%). Равные колонки здесь обязательны — на разной ширине сегментов смещение перестало бы попадать в кнопку. Состояние объявлено через aria-pressed, строка диапазона помечена aria-live=\"polite\": смена вида без слов не сообщает незрячему, что данные уже другие.",
+      "meta": {
+        "tags": ["buttongroup", "period", "indicator", "analytics"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Buttongroup010",
+          "usage": "<Buttongroup010\n  periods={[{ label: \"День\", caption: \"сегодня, с 00:00\" }, { label: \"Неделя\", caption: \"последние 7 дней\" }]}\n  defaultPeriod=\"Неделя\"\n  label=\"Период отчёта\"\n  onChange={(period) => reload(period)}\n/>",
+          "summary": "Переключатель периода с переезжающей подложкой и подписью получившегося диапазона. Ноль зависимостей, один файл, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-buttongroup-010-* и не подменять её токенами вашей темы",
+            "равные колонки трека: смещение подложки на «индекс × 100%» иначе промахивается мимо кнопки",
+            "одну подложку на всю группу — переезд читается как движение, а не как мигание четырёх фонов",
+            "aria-live на строке диапазона: смена вида без слов не сообщает незрячему, что данные другие",
+            "aria-pressed на кнопках, потому что значение не отправляется формой и radio здесь был бы неправдой",
+            "правило prefers-reduced-motion — переезд подложки первым раздражает при вестибулярных нарушениях"
+          ],
+          "adapt": [
+            "набор периодов и подписи диапазонов через periods",
+            "исходный период через defaultPeriod",
+            "доступное имя группы через label",
+            "реакцию на выбор через onChange и цвет подложки через accent"
+          ],
+          "notes": [
+            "defaultPeriod сравнивается с label периода: опечатка вернёт индекс 0, а не пустой выбор.",
+            "Больше пяти периодов — подписи перестают помещаться в равные колонки.",
+            "Данные компонент не грузит: перезапрос делает ваш обработчик onChange.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultPeriod",
+            "label": "Период",
+            "type": "select",
+            "default": "Неделя",
+            "options": ["День", "Неделя", "Месяц", "Год"]
+          },
+          {
+            "prop": "label",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "Период отчёта",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A report period picker where the selected surface slides by index and the line underneath immediately names the resulting range.",
+            "ai": {
+              "summary": "A period switcher with a sliding surface and a caption for the resulting range. Zero dependencies, one file, a client component.",
+              "preserve": [
+                "the local --vibeui-buttongroup-010-* palette — do not swap it for your theme tokens",
+                "the equal track columns: otherwise the \"index × 100%\" offset misses the button",
+                "one surface for the whole group — a slide reads as movement, not as four backgrounds blinking",
+                "aria-live on the range line: a silent view change never tells a blind user the data is different now",
+                "aria-pressed on the buttons, because nothing is submitted and a radio here would be a lie",
+                "the prefers-reduced-motion rule — a sliding surface is the first thing to hurt with vestibular disorders"
+              ],
+              "adapt": [
+                "the periods and their range captions through periods",
+                "the initial period through defaultPeriod",
+                "the accessible group name through label",
+                "the selection callback through onChange and the surface colour through accent"
+              ],
+              "notes": [
+                "defaultPeriod is matched against a period's label: a typo returns index 0, not an empty selection.",
+                "Beyond five periods the captions stop fitting into equal columns.",
+                "The component loads no data: refetching is your onChange handler's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Buttongroup010\n  periods={[{ label: \"Day\", caption: \"today, from 00:00\" }, { label: \"Week\", caption: \"the last 7 days\" }]}\n  defaultPeriod=\"Week\"\n  label=\"Report period\"\n  onChange={(period) => reload(period)}\n/>"
+            },
+            "controls": {
+              "defaultPeriod": { "label": "Period" },
+              "label": { "label": "Group name", "default": "Report period" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "buttongroup-011",
+      "type": "registry:component",
+      "title": "Record Actions",
+      "description": "Действия над записью: обычные стоят одной сцепкой, а необратимое вынесено за неё отступом, своей рамкой и предупреждением через aria-describedby.",
+      "categories": ["buttongroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "buttongroup-011/buttongroup-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/buttongroup-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-011-*. Серверный: хуков нет. Внутри две зоны: сцепка безопасных действий со схлопнутыми границами (margin-inline-start:-1px, скругления только крайним) и отдельная опасная кнопка, отделённая gap:1.25rem. Разрыв — часть защиты от промаха, а не украшение. Предупреждение о необратимости лежит текстом под clip-path и связано с кнопкой через aria-describedby, поэтому читается вслух вместе с именем; цвет — только дополнительный канал. Значок корзины — инлайновый SVG на currentColor.",
+      "meta": {
+        "tags": ["buttongroup", "destructive", "row-actions", "a11y"],
+        "ai": {
+          "export": "Buttongroup011",
+          "usage": "<Buttongroup011\n  actions={[\"Правка\", \"Дублировать\"]}\n  danger=\"Удалить\"\n  warning=\"Действие необратимо: запись и её версии будут стёрты\"\n  label=\"Действия над записью\"\n/>",
+          "summary": "Набор действий над записью, где необратимое отделено расстоянием, цветом и озвученным предупреждением. Ноль зависимостей, один файл, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-buttongroup-011-* и не подменять её токенами вашей темы",
+            "разрыв между сцепкой и опасной кнопкой: вплотную к «Дублировать» удаление ловит промах пальца",
+            "aria-describedby с предупреждением — красный цвет сам по себе не сообщает о необратимости",
+            "отдельную рамку и скругление у опасной кнопки, чтобы она не читалась частью сцепки",
+            "z-index при фокусе внутри сцепки: границы схлопнуты, и сосед срезает обводку",
+            "порядок «безопасное слева, опасное справа»: последняя цель движения не должна быть удалением"
+          ],
+          "adapt": [
+            "набор безопасных действий через actions",
+            "подпись необратимого действия через danger",
+            "текст предупреждения через warning и имя группы через label",
+            "цвет обводки фокуса безопасных кнопок через accent"
+          ],
+          "notes": [
+            "Компонент не подтверждает удаление: диалог или отмену действия добавляйте сами.",
+            "Красный цвет один не защищает — предупреждение обязано оставаться текстом.",
+            "Идентификатор предупреждения зашит строкой: две группы на странице дадут одинаковый id.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "danger",
+            "label": "Опасное действие",
+            "type": "text",
+            "default": "Удалить",
+            "maxLength": 20
+          },
+          {
+            "prop": "label",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "Действия над записью",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Actions on a record: the ordinary ones form one cluster while the irreversible one is pushed out by a gap, its own border and a warning wired through aria-describedby.",
+            "ai": {
+              "summary": "A set of record actions where the irreversible one is separated by distance, colour and a spoken warning. Zero dependencies, one file, a server component.",
+              "preserve": [
+                "the local --vibeui-buttongroup-011-* palette — do not swap it for your theme tokens",
+                "the gap between the cluster and the dangerous button: pressed against \"Duplicate\", delete catches a missed tap",
+                "aria-describedby with the warning — red alone does not communicate irreversibility",
+                "the separate border and radius on the dangerous button so it never reads as part of the cluster",
+                "the z-index on focus inside the cluster: with collapsed borders the neighbour clips the ring",
+                "the \"safe on the left, dangerous on the right\" order: the last target of a movement must not be delete"
+              ],
+              "adapt": [
+                "the set of safe actions through actions",
+                "the irreversible action caption through danger",
+                "the warning text through warning and the group name through label",
+                "the focus ring colour of the safe buttons through accent"
+              ],
+              "notes": [
+                "The component does not confirm deletion: add a dialog or an undo yourself.",
+                "Red alone is no protection — the warning has to stay as text.",
+                "The warning id is a hard-coded string: two groups on a page would share it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Buttongroup011\n  actions={[\"Edit\", \"Duplicate\"]}\n  danger=\"Delete\"\n  warning=\"This cannot be undone: the record and its versions will be erased\"\n  label=\"Record actions\"\n/>"
+            },
+            "controls": {
+              "danger": { "label": "Dangerous action", "default": "Delete" },
+              "label": { "label": "Group name", "default": "Record actions" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "buttongroup-012",
+      "type": "registry:component",
+      "title": "Form Footer Bar",
+      "description": "Нижняя панель формы на телефоне: две кнопки делят ширину поровну через flex:1 1 0, а снизу добавлен отступ на домашнюю полоску.",
+      "categories": ["buttongroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "buttongroup-012/buttongroup-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/buttongroup-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-012-*. Серверный: хуков нет. Равные доли держит flex:1 1 0 — именно ноль в основе, иначе длинная подпись раздувает свою долю; min-width:0 разрешает кнопке сжиматься меньше содержимого, а лишний текст обрезается ellipsis. Нижний отступ считается как calc(0.75rem + env(safe-area-inset-bottom,0px)), чтобы главная кнопка не оказалась под жестом системы. Приоритет несут цвет и порядок, а не ширина: главная кнопка не шире второстепенной. Раскладка от собственной ширины: width:100% с max-width:26rem.",
+      "meta": {
+        "tags": ["buttongroup", "mobile", "form", "full-width"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Buttongroup012",
+          "usage": "<Buttongroup012\n  primary=\"Сохранить\"\n  secondary=\"Отмена\"\n  note=\"Черновик сохраняется автоматически\"\n  label=\"Завершение формы\"\n/>",
+          "summary": "Панель завершения формы во всю ширину: две кнопки равными долями, безопасный отступ снизу и пояснение над ними. Ноль зависимостей, один файл, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-buttongroup-012-* и не подменять её токенами вашей темы",
+            "flex:1 1 0 с нулевой основой: при flex:1 1 auto длинная подпись забирает себе больше половины",
+            "min-width:0 на кнопках — без него flex-элемент не сжимается меньше содержимого и панель выезжает за экран",
+            "env(safe-area-inset-bottom) в нижнем отступе, иначе главная кнопка уходит под домашнюю полоску",
+            "равную ширину кнопок: приоритет несут цвет и порядок, а не размер",
+            "высоту 2.75rem — это минимальная комфортная цель для пальца"
+          ],
+          "adapt": [
+            "подпись главного действия через primary",
+            "подпись отмены через secondary",
+            "пояснение над кнопками через note и имя группы через label",
+            "цвет главной кнопки через accent"
+          ],
+          "notes": [
+            "Кнопки без onClick и без type=\"submit\": внутри настоящей формы поменяйте тип у главной.",
+            "Подписи обрезаются ellipsis: длинный перевод исчезнет незаметно, проверяйте на самом узком экране.",
+            "Панель не липкая по умолчанию: position:sticky добавляйте на стороне страницы, а не внутри компонента.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "primary",
+            "label": "Главное действие",
+            "type": "text",
+            "default": "Сохранить",
+            "maxLength": 20
+          },
+          {
+            "prop": "secondary",
+            "label": "Второе действие",
+            "type": "text",
+            "default": "Отмена",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A form footer bar for phones: two buttons split the width evenly through flex:1 1 0, with extra bottom padding reserved for the home indicator.",
+            "ai": {
+              "summary": "A full-width form footer: two equal-share buttons, a safe bottom inset and a note above them. Zero dependencies, one file, a server component.",
+              "preserve": [
+                "the local --vibeui-buttongroup-012-* palette — do not swap it for your theme tokens",
+                "flex:1 1 0 with a zero basis: with flex:1 1 auto a long caption claims more than half the bar",
+                "min-width:0 on the buttons — without it a flex item never shrinks below its content and the bar overflows",
+                "env(safe-area-inset-bottom) in the bottom padding, or the primary button hides under the home indicator",
+                "the equal button widths: priority is carried by colour and order, not by size",
+                "the 2.75rem height — that is the minimum comfortable touch target"
+              ],
+              "adapt": [
+                "the primary action caption through primary",
+                "the cancel caption through secondary",
+                "the note above the buttons through note and the group name through label",
+                "the primary button colour through accent"
+              ],
+              "notes": [
+                "The buttons have no onClick and no type=\"submit\": inside a real form change the primary button's type.",
+                "Captions are truncated with an ellipsis: a long translation disappears quietly, check the narrowest screen.",
+                "The bar is not sticky by default: add position:sticky on the page side, not inside the component.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Buttongroup012\n  primary=\"Save\"\n  secondary=\"Cancel\"\n  note=\"The draft is saved automatically\"\n  label=\"Form footer\"\n/>"
+            },
+            "controls": {
+              "primary": { "label": "Primary action", "default": "Save" },
+              "secondary": { "label": "Secondary action", "default": "Cancel" }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
