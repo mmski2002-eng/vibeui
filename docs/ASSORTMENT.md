@@ -55,7 +55,7 @@
 | `faq`          | faq-секции                                                        |    ~6 |     1 |
 | `testimonials` | отзывы, wall of love, review                                      |   ~12 |     1 |
 | `footer`       | подвалы                                                           |    ~8 |     1 |
-| `dashboard`    | app shell, dashboard, settings, profile, filter sidebar, schedule |   ~80 |     4 |
+| `dashboard`    | app shell, dashboard, settings, profile, filter sidebar, schedule |   ~80 |     6 |
 | `ai`           | чат, ассистент, агентные сценарии                                 |   ~20 |     3 |
 
 Ещё не заведённые категории блоков, если пойдём в e-commerce и в auth:
@@ -186,7 +186,8 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
 22. `dashboard` — первая волна: `dashboard-001` (обзор с показателями и
     графиком на SVG), `dashboard-002` (каркас приложения на гриде),
     `dashboard-003` (настройки с опасной зоной), `dashboard-004`
-    (участники, роли и расход мест).
+    (участники, роли и расход мест), `dashboard-005` (панель фильтров с
+    чипами выбранного), `dashboard-006` (недельное расписание на гриде).
 23. `ai` — первая волна: `ai-001` (чат с ассистентом), `ai-002` (панель
     запроса к модели), `ai-003` (лента шагов агента).
 24. Дальше: вторые волны в `dashboard` и `ai`, затем блоки `commerce`

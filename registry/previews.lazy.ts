@@ -100,6 +100,16 @@ export const LAZY_PREVIEWS = {
       (module) => module.Dashboard004,
     ),
   ),
+  "dashboard-005": dynamic(() =>
+    import("@/registry/blocks/dashboard/dashboard-005/dashboard-005").then(
+      (module) => module.Dashboard005,
+    ),
+  ),
+  "dashboard-006": dynamic(() =>
+    import("@/registry/blocks/dashboard/dashboard-006/dashboard-006").then(
+      (module) => module.Dashboard006,
+    ),
+  ),
   "button-001": dynamic(() =>
     import("@/registry/components/buttons/button-001/button-001").then(
       (module) => module.Button001,

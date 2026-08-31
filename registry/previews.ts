@@ -20,6 +20,8 @@ import { Dashboard001 } from "@/registry/blocks/dashboard/dashboard-001/dashboar
 import { Dashboard002 } from "@/registry/blocks/dashboard/dashboard-002/dashboard-002"
 import { Dashboard003 } from "@/registry/blocks/dashboard/dashboard-003/dashboard-003"
 import { Dashboard004 } from "@/registry/blocks/dashboard/dashboard-004/dashboard-004"
+import { Dashboard005 } from "@/registry/blocks/dashboard/dashboard-005/dashboard-005"
+import { Dashboard006 } from "@/registry/blocks/dashboard/dashboard-006/dashboard-006"
 import { Button001 } from "@/registry/components/buttons/button-001/button-001"
 import { Button002 } from "@/registry/components/buttons/button-002/button-002"
 import { Button003 } from "@/registry/components/buttons/button-003/button-003"
@@ -284,6 +286,8 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "dashboard-002": Dashboard002,
   "dashboard-003": Dashboard003,
   "dashboard-004": Dashboard004,
+  "dashboard-005": Dashboard005,
+  "dashboard-006": Dashboard006,
   "button-001": Button001,
   "button-002": Button002,
   "button-003": Button003,

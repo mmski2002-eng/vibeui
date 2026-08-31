@@ -416,6 +416,209 @@
           }
         }
       }
+    },
+    {
+      "name": "dashboard-005",
+      "type": "registry:block",
+      "title": "Filter Sidebar",
+      "description": "Панель фильтров: группы свёрнуты в details, а выбранные значения продублированы чипами — иначе фильтр в свёрнутой группе невидим.",
+      "categories": ["dashboard"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dashboard-005/dashboard-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dashboard-005.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dashboard-005-*. Серверный: хуков нет, состояние групп держит details, а выбор — нативные чекбоксы и радиокнопки. Счётчик найденного объявлен aria-live: результат меняется от действий пользователя и должен быть услышан.",
+      "meta": {
+        "tags": ["dashboard", "filters", "sidebar", "no-js"],
+        "ai": {
+          "export": "Dashboard005",
+          "usage": "<Dashboard005 found=\"Найдено 42 из 255\" chips={[\"Компоненты\"]} groups={[{ title: \"Тип\", options: [{ label: \"Блоки\", count: 17 }] }]} />",
+          "summary": "Панель фильтров: счётчик найденного, чипы выбранного, группы чекбоксов и радиокнопок со счётчиками. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-dashboard-005-* и не подменять её токенами вашей темы",
+            "чипы выбранного: в свёрнутой группе фильтр невидим, и пустая выдача кажется поломкой",
+            "details под группы — состояние держит браузер, свой стейт не нужен",
+            "aria-live у счётчика найденного",
+            "счётчики у вариантов: пустой фильтр видно до нажатия",
+            "радиокнопки там, где выбор один, а чекбоксы — где несколько"
+          ],
+          "adapt": [
+            "массив groups и их варианты",
+            "title, found и resetLabel",
+            "список chips",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Фильтрация не выполняется: блок показывает состояние, запрос делает вызывающий код.",
+            "Счётчики обязаны обновляться вместе с выдачей — устаревшие цифры хуже, чем их отсутствие.",
+            "Уникальный name на группу радиокнопок обязателен: две группы с одним именем сольются.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Фильтры",
+            "maxLength": 20
+          },
+          {
+            "prop": "found",
+            "label": "Найдено",
+            "type": "text",
+            "default": "Найдено 42 из 255",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A filter sidebar: groups collapse into details and the active values repeat as chips — otherwise a filter inside a closed group is invisible.",
+            "ai": {
+              "summary": "A filter sidebar: a result counter, chips for the active filters, and checkbox and radio groups with counts. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-dashboard-005-* palette — do not swap it for your theme tokens",
+                "the chips for active filters: inside a closed group a filter is invisible and empty results look broken",
+                "details for the groups — the browser holds the state, no store needed",
+                "aria-live on the result counter",
+                "the per-option counts: an empty filter is visible before it is clicked",
+                "radios where the choice is single and checkboxes where it is not"
+              ],
+              "adapt": [
+                "the groups array and their options",
+                "title, found and resetLabel",
+                "the chips list",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "No filtering happens here: the block shows state, the caller runs the query.",
+                "Counts must update with the results — stale figures are worse than none.",
+                "A unique name per radio group is mandatory: two groups sharing one merge.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Dashboard005 found=\"42 of 255\" chips={[\"Components\"]} groups={[{ title: \"Type\", options: [{ label: \"Blocks\", count: 17 }] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Filters"
+              },
+              "found": {
+                "label": "Found",
+                "default": "42 of 255 found"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dashboard-006",
+      "type": "registry:block",
+      "title": "Week Schedule",
+      "description": "Недельное расписание на CSS-гриде: событие занимает строки от начала до конца, поэтому длительность видна геометрией, а не подписью.",
+      "categories": ["dashboard"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dashboard-006/dashboard-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dashboard-006.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dashboard-006-*. Серверный: хуков нет. Событие размещается через grid-row от начала до конца, поэтому пересчёт времени в пиксели не нужен. Колонка часов липкая, тон события продублирован полосой слева, а вся сетка прокручивается по горизонтали на узком экране.",
+      "meta": {
+        "tags": ["dashboard", "schedule", "grid", "calendar"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Dashboard006",
+          "usage": "<Dashboard006 week=\"9–13 марта\" events={[{ title: \"Созвон\", day: 0, start: 10, end: 11, tone: \"call\" }]} />",
+          "summary": "Недельная сетка: дни в колонках, часы в строках, события занимают свои интервалы и различаются полосой тона. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-dashboard-006-* и не подменять её токенами вашей темы",
+            "размещение события через grid-row: пересчёт времени в пиксели не нужен",
+            "липкую колонку часов — иначе при прокрутке теряется время строки",
+            "полосу тона слева: цвет фона один не различается на печати",
+            "время внутри события текстом, а не только длиной прямоугольника",
+            "горизонтальную прокрутку вместо сжатия колонок на узком экране"
+          ],
+          "adapt": [
+            "массив events и их тона",
+            "days, fromHour и toHour",
+            "title и week",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Пересечения не раскладываются: два события в одно время лягут друг на друга.",
+            "Часы целые: получасовые интервалы требуют удвоить строки сетки.",
+            "Перетаскивание отсутствует — блок показывает расписание, а не редактирует его.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Расписание",
+            "maxLength": 20
+          },
+          {
+            "prop": "week",
+            "label": "Период",
+            "type": "text",
+            "default": "9–13 марта",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A week schedule on a CSS grid: an event spans rows from start to end, so its duration is geometry rather than a caption.",
+            "ai": {
+              "summary": "A week grid: days as columns, hours as rows, events spanning their intervals and distinguished by a tone stripe. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-dashboard-006-* palette — do not swap it for your theme tokens",
+                "placing events by grid-row: no time-to-pixel arithmetic is needed",
+                "the sticky hour column — otherwise scrolling loses the row's time",
+                "the tone stripe on the left: a background colour alone dies in print",
+                "the time inside the event as text, not only as a rectangle's height",
+                "horizontal scrolling instead of squeezing the columns on narrow screens"
+              ],
+              "adapt": [
+                "the events array and their tones",
+                "days, fromHour and toHour",
+                "title and week",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Overlaps are not laid out: two events at the same time stack on top of each other.",
+                "Hours are whole: half-hour slots require doubling the grid rows.",
+                "There is no drag and drop — the block shows a schedule, it does not edit one.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Dashboard006 week=\"9–13 March\" events={[{ title: \"Call\", day: 0, start: 10, end: 11, tone: \"call\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Schedule"
+              },
+              "week": {
+                "label": "Period",
+                "default": "9–13 March"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
