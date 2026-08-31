@@ -1,0 +1,1219 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "combobox-001",
+      "type": "registry:component",
+      "title": "Filter Combobox",
+      "description": "Базовый combobox: кнопка показывает выбранное, панель открывает поле фильтра и список, значение берётся только из списка.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-001/combobox-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-combobox-001-*. Клиентский: useState держит значение, запрос, открытость и индекс курсора, useEffect переводит фокус в поле фильтра при открытии. Кнопка-триггер несёт aria-haspopup=\"listbox\" и aria-expanded, поле внутри панели — role=\"combobox\", aria-controls и aria-activedescendant, список — role=\"listbox\" со строками role=\"option\" и aria-selected. Клавиатура: стрелки ведут курсор по кругу, Home и End прыгают на края, Enter выбирает, Escape закрывает панель и возвращает фокус на кнопку. Панель лежит в потоке, а не поверх: всплывающий слой в узкой колонке нечем позиционировать без замера. Выбор мышью идёт по onMouseDown с preventDefault, чтобы поле не потеряло фокус раньше выбора.",
+      "meta": {
+        "tags": ["combobox", "filter", "keyboard", "a11y"],
+        "preview": {
+          "props": {
+            "defaultOpen": true
+          }
+        },
+        "ai": {
+          "export": "Combobox001",
+          "usage": "<Combobox001\n  label=\"Статус задачи\"\n  placeholder=\"Выберите статус\"\n  options={[\"Активен\", \"В работе\", \"Завершён\"]}\n  onSelect={(value) => console.log(value)}\n/>",
+          "summary": "Combobox с фильтром и полной клавиатурой: значение выбирается из известного списка, текст фильтра значением не становится. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-001-* и не подменять её токенами вашей темы",
+            "разделение фильтра и значения: текст в поле не должен уезжать в форму, иначе получится свободный ввод, а не выбор из списка",
+            "связку role=\"combobox\" + aria-controls + aria-activedescendant: без неё скринридер не называет строку под курсором",
+            "возврат фокуса на кнопку по Escape — иначе после закрытия панели фокус улетает в начало страницы",
+            "onMouseDown с preventDefault на строках: onClick срабатывает после blur, и выбор мышью теряется",
+            "собственную светлую подложку блока: без неё тёмный текст пропадает на тёмной карточке каталога"
+          ],
+          "adapt": [
+            "подпись поля через label и текст-заглушку через placeholder",
+            "подсказку в поле фильтра через searchPlaceholder",
+            "состав списка через options и начальный выбор через defaultValue",
+            "цвет выделения через accent и ширину через max-width"
+          ],
+          "notes": [
+            "Панель лежит в потоке и раздвигает соседей: если нужен слой поверх, добавляйте position:absolute и сами следите за краем экрана.",
+            "Список без ограничения по длине упрётся в max-height и прокрутку — для сотен строк берите вариант с окном показа.",
+            "Фильтр ищет подстроку без учёта регистра, но без нормализации «ё» и раскладки: это осознанный минимум.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Статус задачи",
+            "maxLength": 32
+          },
+          {
+            "prop": "placeholder",
+            "label": "Заглушка",
+            "type": "text",
+            "default": "Выберите статус",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A basic combobox: the trigger shows the selection, the panel holds a filter field and the list, and the value can only come from the list.",
+            "ai": {
+              "summary": "A combobox with a filter and full keyboard support: the value is picked from a known list and the filter text never becomes the value. One file, zero dependencies, client component.",
+              "preserve": [
+                "the local --vibeui-combobox-001-* palette — do not swap it for your theme tokens",
+                "the split between filter and value: the text in the field must not reach the form, otherwise it is free input, not a choice from a list",
+                "the role=\"combobox\" + aria-controls + aria-activedescendant chain: without it a screen reader never announces the row under the cursor",
+                "returning focus to the trigger on Escape — otherwise focus jumps to the top of the page when the panel closes",
+                "onMouseDown with preventDefault on the rows: onClick fires after blur and the mouse selection is lost",
+                "the block's own light surface: without it the dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the field caption through label and the empty text through placeholder",
+                "the filter hint through searchPlaceholder",
+                "the list content through options and the initial choice through defaultValue",
+                "the highlight color through accent and the width through max-width"
+              ],
+              "notes": [
+                "The panel sits in the flow and pushes siblings: for an overlay add position:absolute and handle the screen edge yourself.",
+                "An unbounded list hits max-height and scrolling — for hundreds of rows take the windowed variant.",
+                "The filter matches a case-insensitive substring, with no transliteration or keyboard-layout fixes: that is a deliberate minimum.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Combobox001\n  label=\"Task status\"\n  placeholder=\"Pick a status\"\n  options={[\"Active\", \"In progress\", \"Done\"]}\n  onSelect={(value) => console.log(value)}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Task status"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Pick a status"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-002",
+      "type": "registry:component",
+      "title": "Grouped Sections",
+      "description": "Combobox с разделами: заголовки групп подписывают строки, пустые группы при фильтрации исчезают, а стрелки идут насквозь мимо заголовков.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-002/combobox-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-002-*. Клиентский: useState держит запрос, значение и индекс курсора, useMemo пересобирает группы и плоский порядок строк. Разметка вложенная: внешний ul с role=\"listbox\", внутри li role=\"presentation\" с ul role=\"group\" и aria-labelledby на заголовок. Заголовок группы — li role=\"presentation\", поэтому он не попадает в счёт строк и стрелки через него перепрыгивают; нумерация option'ов сквозная, на ней держится aria-activedescendant. Счётчик у заголовка показывает, сколько строк осталось в разделе после фильтра. Группа без совпадений выбрасывается целиком: пустой заголовок вводит в заблуждение сильнее, чем его отсутствие.",
+      "meta": {
+        "tags": ["combobox", "groups", "sections", "keyboard"],
+        "ai": {
+          "export": "Combobox002",
+          "usage": "<Combobox002\n  label=\"Раздел\"\n  placeholder=\"Найти раздел\"\n  groups={[{ label: \"Продажи\", options: [\"Новая сделка\", \"Список клиентов\"] }]}\n  onSelect={(value) => console.log(value)}\n/>",
+          "summary": "Combobox с группами и заголовками разделов: заголовки не мешают клавиатуре, пустые группы скрываются, у каждой группы счётчик совпадений. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-002-* и не подменять её токенами вашей темы",
+            "сквозную нумерацию строк: индекс курсора считается по плоскому списку, иначе aria-activedescendant указывает не туда",
+            "role=\"presentation\" на заголовке группы — заголовок со ролью option ломает и стрелки, и подсчёт «строка N из M» у скринридера",
+            "aria-labelledby на ul role=\"group\": именно так раздел проговаривается при входе в группу",
+            "скрытие пустых групп: заголовок без строк читается как сломанный фильтр",
+            "собственную светлую подложку блока: без неё тёмный текст пропадает на тёмной карточке каталога"
+          ],
+          "adapt": [
+            "состав разделов и строк через groups",
+            "подпись поля через label и текст-заглушку через placeholder",
+            "текст пустой выдачи через emptyLabel",
+            "цвет акцента через accent и ширину через max-width"
+          ],
+          "notes": [
+            "Заголовки не липкие: при длинных разделах добавьте position:sticky на [data-part=\"grouplabel\"].",
+            "Ключ группы берётся из её подписи — две группы с одинаковым названием сольются по id заголовка.",
+            "Enter выбирает строку под курсором, а не первую в разделе: после фильтра курсор всегда стоит на первой видимой строке.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Раздел",
+            "maxLength": 32
+          },
+          {
+            "prop": "placeholder",
+            "label": "Заглушка",
+            "type": "text",
+            "default": "Найти раздел",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A combobox with sections: group headings label the rows, empty groups disappear while filtering, and the arrow keys step straight past the headings.",
+            "ai": {
+              "summary": "A combobox with groups and section headings: headings stay out of the keyboard's way, empty groups are hidden, and every group shows a match count. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-combobox-002-* palette — do not swap it for your theme tokens",
+                "the flat row numbering: the cursor index is counted over the flattened list, otherwise aria-activedescendant points at the wrong row",
+                "role=\"presentation\" on the group heading — a heading with the option role breaks both the arrows and the \"row N of M\" count",
+                "aria-labelledby on ul role=\"group\": that is what makes the section announced on entry",
+                "hiding empty groups: a heading with no rows reads as a broken filter",
+                "the block's own light surface: without it the dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the sections and their rows through groups",
+                "the field caption through label and the empty text through placeholder",
+                "the empty-result text through emptyLabel",
+                "the accent color through accent and the width through max-width"
+              ],
+              "notes": [
+                "Headings are not sticky: for long sections add position:sticky to [data-part=\"grouplabel\"].",
+                "A group's key comes from its caption — two groups with the same name collide on the heading id.",
+                "Enter picks the row under the cursor, not the first row of a section: after filtering the cursor always sits on the first visible row.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Combobox002\n  label=\"Section\"\n  placeholder=\"Find a section\"\n  groups={[{ label: \"Sales\", options: [\"New deal\", \"Client list\"] }]}\n  onSelect={(value) => console.log(value)}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Section"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Find a section"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-003",
+      "type": "registry:component",
+      "title": "Multi Chips",
+      "description": "Множественный выбор фишками: отмеченное остаётся в списке с галочкой, счётчик держит лимит, Backspace в пустом поле снимает последнюю фишку.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-003/combobox-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-003-*. Клиентский: useState держит массив выбранного, запрос и курсор. Список объявлен aria-multiselectable=\"true\", каждая строка несёт aria-selected по факту выбора и рисует свой квадратик-отметку. В отличие от тег-пикера выбранное не удаляется из списка: повторное нажатие снимает выбор там же, где ставилось. Фишки лежат в общем поле с input, обводка фокуса ставится на поле через :has(input:focus-visible). Лимит maxSelected блокирует добавление и прячет заглушку, счётчик в шапке объявлен aria-live=\"polite\".",
+      "meta": {
+        "tags": ["combobox", "multiselect", "chips", "keyboard"],
+        "ai": {
+          "export": "Combobox003",
+          "usage": "<Combobox003\n  label=\"Команды\"\n  options={[\"Дизайн\", \"Фронтенд\", \"Бэкенд\"]}\n  defaultSelected={[\"Дизайн\"]}\n  maxSelected={3}\n  onChange={(values) => console.log(values)}\n/>",
+          "summary": "Множественный выбор из закрытого списка: фишки в поле, отметки в списке, лимит со счётчиком и снятие последней фишки по Backspace. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-003-* и не подменять её токенами вашей темы",
+            "aria-multiselectable на списке и aria-selected на строках: без них множественный выбор не читается вслух",
+            "сохранение выбранных строк в списке — исчезающие строки сбивают позицию курсора и прячут состояние",
+            "обводку фокуса на поле через :has(): фишки и input выглядят одним элементом, значит и фокус должен быть общим",
+            "отдельную кнопку с aria-label на каждой фишке: крестик без подписи не называет, что именно снимается",
+            "собственную светлую подложку блока: без неё тёмный текст пропадает на тёмной карточке каталога"
+          ],
+          "adapt": [
+            "состав списка через options и стартовый набор через defaultSelected",
+            "предел выбора через maxSelected и подпись поля через label",
+            "текст-заглушку через placeholder и текст пустой выдачи через emptyLabel",
+            "цвет акцента через accent"
+          ],
+          "notes": [
+            "При достижении лимита строки не блокируются: нажатие просто ничего не делает — если нужен запрет, добавьте aria-disabled.",
+            "Backspace снимает фишку только при пустом запросе, иначе он стирал бы текст и выбор одновременно.",
+            "Много фишек переносят поле на вторую строку: проверьте раскладку на телефоне.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "maxSelected",
+            "label": "Предел выбора",
+            "type": "number",
+            "default": 5,
+            "min": 1,
+            "max": 8
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Команды",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Multi-select with chips: a picked row stays in the list with a check mark, a counter holds the limit, and Backspace in an empty field drops the last chip.",
+            "ai": {
+              "summary": "Multi-select from a closed list: chips in the field, check marks in the list, a limit with a counter and Backspace to drop the last chip. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-combobox-003-* palette — do not swap it for your theme tokens",
+                "aria-multiselectable on the list and aria-selected on the rows: without them multi-select is never announced",
+                "keeping selected rows in the list — vanishing rows shift the cursor and hide the state",
+                "the focus ring on the field through :has(): chips and input look like one control, so the focus must be shared",
+                "the separate button with aria-label on every chip: a bare cross does not say what it removes",
+                "the block's own light surface: without it the dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the list content through options and the starting set through defaultSelected",
+                "the selection limit through maxSelected and the field caption through label",
+                "the placeholder text through placeholder and the empty-result text through emptyLabel",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "At the limit the rows are not disabled: a press simply does nothing — add aria-disabled if you need a hard block.",
+                "Backspace drops a chip only while the query is empty, otherwise it would erase text and selection at once.",
+                "Many chips wrap the field onto a second line: check the layout on a phone.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Combobox003\n  label=\"Teams\"\n  options={[\"Design\", \"Frontend\", \"Backend\"]}\n  defaultSelected={[\"Design\"]}\n  maxSelected={3}\n  onChange={(values) => console.log(values)}\n/>"
+            },
+            "controls": {
+              "maxSelected": {
+                "label": "Selection limit",
+                "default": 5
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Teams"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-004",
+      "type": "registry:component",
+      "title": "People Picker",
+      "description": "Выбор человека: аватар с инициалами, вторая строка с почтой и ролью, поиск идёт по обеим строкам сразу.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-004/combobox-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-004-*. Клиентский: useState держит запрос, выбранное имя и курсор, useMemo фильтрует людей по склейке имени и второй строки. Оттенок аватара считается из имени хешем FNV-1a и приходит в inline-стиле одной переменной --vibeui-combobox-004-hue, из которой oklch собирает фон и цвет текста — так палитра остаётся управляемой и не превращается в набор захардкоженных цветов. Строка выложена flex: аватар фиксированной ширины, двухэтажный текст с overflow:hidden, галочка выбранного прижата margin-left:auto. Роли ARIA полные: role=\"combobox\" с aria-controls и aria-activedescendant на поле, role=\"listbox\" и role=\"option\" с aria-selected на списке.",
+      "meta": {
+        "tags": ["combobox", "people", "avatar", "search"],
+        "ai": {
+          "export": "Combobox004",
+          "usage": "<Combobox004\n  label=\"Исполнитель\"\n  people={[{ name: \"Анна Ковалёва\", detail: \"anna@studio.ru · дизайн\" }]}\n  defaultValue=\"Анна Ковалёва\"\n  onSelect={(name) => console.log(name)}\n/>",
+          "summary": "Combobox с людьми: кружок с инициалами, имя и вторая строка с почтой и ролью, поиск по обеим строкам. Один файл, ноль зависимостей, цвет аватара выводится из имени.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-004-* и не подменять её токенами вашей темы",
+            "поиск по второй строке: половина людей помнит почту, а не фамилию",
+            "aria-hidden на аватаре — инициалы дублируют имя и в звуке превращаются в мусор",
+            "overflow:hidden с многоточием на обеих строках: длинная почта иначе распирает список",
+            "разное начертание имени и второй строки — одинаковый серый текст сливается в одну полосу",
+            "собственную светлую подложку блока: без неё тёмный текст пропадает на тёмной карточке каталога"
+          ],
+          "adapt": [
+            "состав списка через people и начальный выбор через defaultValue",
+            "подпись поля через label и текст-заглушку через placeholder",
+            "текст пустой выдачи через emptyLabel",
+            "цвет галочки через accent, размер аватара и ширину блока"
+          ],
+          "notes": [
+            "Вторая строка склеена в одну строку detail: разделяйте её точкой с пробелами, иначе на телефоне обрежется важное.",
+            "Инициалы берутся из первых двух слов имени — для односложных ников будет одна буква.",
+            "Хеш имени даёт 12 оттенков: в списке из тридцати человек цвета неизбежно повторятся, это не идентификатор.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Исполнитель",
+            "maxLength": 32
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Выбран по умолчанию",
+            "type": "text",
+            "default": "Вера Наумова",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A person picker: an initials avatar, a second line with the email and the role, and a search that runs over both lines at once.",
+            "ai": {
+              "summary": "A people combobox: an initials circle, a name and a second line with email and role, search across both lines. One file, zero dependencies, the avatar color is derived from the name.",
+              "preserve": [
+                "the local --vibeui-combobox-004-* palette — do not swap it for your theme tokens",
+                "searching the second line: half the people remember the email, not the surname",
+                "aria-hidden on the avatar — the initials repeat the name and turn into noise in speech",
+                "overflow:hidden with an ellipsis on both lines: a long email would otherwise stretch the list",
+                "the different weights of the name and the second line — the same grey on both merges into one band",
+                "the block's own light surface: without it the dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the list content through people and the initial choice through defaultValue",
+                "the field caption through label and the empty text through placeholder",
+                "the empty-result text through emptyLabel",
+                "the check color through accent, the avatar size and the block width"
+              ],
+              "notes": [
+                "The second line is a single detail string: separate its parts with a spaced dot, otherwise something important gets cut on a phone.",
+                "Initials come from the first two words of the name — single-word handles get one letter.",
+                "The name hash yields 12 hues: in a list of thirty people colors inevitably repeat, so it is not an identifier.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Combobox004\n  label=\"Assignee\"\n  people={[{ name: \"Anna Kovaleva\", detail: \"anna@studio.io · design\" }]}\n  defaultValue=\"Anna Kovaleva\"\n  onSelect={(name) => console.log(name)}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Assignee"
+              },
+              "defaultValue": {
+                "label": "Selected by default",
+                "default": "Vera Naumova"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-005",
+      "type": "registry:component",
+      "title": "Create Option",
+      "description": "Combobox с созданием значения: последняя строка списка заводит метку прямо из запроса, сразу выбирает её и помечает как новую.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-005/combobox-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-005-*. Клиентский: useState держит известный список, список созданного, запрос, значение и курсор. Строка создания добавляется в конец массива строк, только если запрос непустой и точного совпадения нет; она полноценный role=\"option\", поэтому берётся стрелками и Enter, а не отдельной кнопкой мимо клавиатуры. Созданное попадает в known и получает бейдж — человек видит, что список изменился по его вине. aria-selected на строке создания всегда false: выбранным считается только существующее значение. Строка отделена пунктиром и цветом, чтобы её не нажимали вслепую вместо совпадения.",
+      "meta": {
+        "tags": ["combobox", "create", "tags", "keyboard"],
+        "ai": {
+          "export": "Combobox005",
+          "usage": "<Combobox005\n  label=\"Метка задачи\"\n  options={[\"Баг\", \"Улучшение\"]}\n  createLabel=\"Создать\"\n  onSelect={(value, created) => console.log(value, created)}\n/>",
+          "summary": "Combobox, который умеет заводить недостающее: строка «Создать …» появляется при отсутствии точного совпадения, работает с клавиатуры и добавляет значение в список. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-005-* и не подменять её токенами вашей темы",
+            "строку создания как role=\"option\" — кнопка сбоку выпадает из клавиатурного обхода списка",
+            "проверку на точное совпадение: без неё появляется предложение создать то, что уже есть",
+            "позицию строки последней в списке: сверху её нажимают случайно вместо первого совпадения",
+            "визуальное отделение пунктиром и цветом — создание не равно выбору и не должно выглядеть так же",
+            "собственную светлую подложку блока: без неё тёмный текст пропадает на тёмной карточке каталога"
+          ],
+          "adapt": [
+            "исходный список через options и подпись действия через createLabel",
+            "подпись отметки нового значения через newBadge",
+            "подпись поля через label, заглушку через placeholder и начальное значение через defaultValue",
+            "цвет акцента через accent"
+          ],
+          "notes": [
+            "Созданное живёт только в состоянии компонента: сохранение на сервер вешайте на onSelect по второму аргументу.",
+            "Запрос не нормализуется, кроме обрезки пробелов: «Баг» и «баг » создадут разные метки, если снять проверку регистра.",
+            "Длинный запрос растянет строку создания — при необходимости добавьте обрезку многоточием.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "createLabel",
+            "label": "Подпись действия",
+            "type": "text",
+            "default": "Создать",
+            "maxLength": 24
+          },
+          {
+            "prop": "newBadge",
+            "label": "Отметка нового",
+            "type": "text",
+            "default": "новая",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A combobox that can create: the last row turns the query into a new label, selects it right away and marks it as new.",
+            "ai": {
+              "summary": "A combobox that can add what is missing: a \"Create …\" row appears when there is no exact match, works from the keyboard and puts the value into the list. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-combobox-005-* palette — do not swap it for your theme tokens",
+                "the create row as role=\"option\" — a side button falls out of the list's keyboard walk",
+                "the exact-match check: without it the list offers to create something that already exists",
+                "the row's position at the very end: at the top it gets hit by accident instead of the first match",
+                "the dashed rule and color that set it apart — creating is not selecting and must not look the same",
+                "the block's own light surface: without it the dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the starting list through options and the action caption through createLabel",
+                "the new-value marker through newBadge",
+                "the field caption through label, the placeholder through placeholder and the initial value through defaultValue",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "Created values live only in component state: persist them from onSelect using its second argument.",
+                "The query is only trimmed, not normalized: \"Bug\" and \"bug \" become different labels if you drop the case check.",
+                "A long query stretches the create row — add an ellipsis if that matters.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Combobox005\n  label=\"Issue label\"\n  options={[\"Bug\", \"Enhancement\"]}\n  createLabel=\"Create\"\n  onSelect={(value, created) => console.log(value, created)}\n/>"
+            },
+            "controls": {
+              "createLabel": {
+                "label": "Action caption",
+                "default": "Create"
+              },
+              "newBadge": {
+                "label": "New marker",
+                "default": "new"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-006",
+      "type": "registry:component",
+      "title": "Recent First",
+      "description": "Combobox с недавними значениями: последние выборы поднимаются отдельным блоком наверх, из общего списка при этом убираются, блок можно очистить.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-006/combobox-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-006-*. Клиентский: useState держит список недавних, запрос, значение и курсор, useMemo собирает две группы и общий плоский порядок. Выбранное значение уходит в начало недавних и подрезается по recentLimit; из общего блока оно исключается, чтобы одна строка не встречалась дважды и не ломала счёт стрелками. Заголовки разделов — li role=\"presentation\", кнопка очистки живёт прямо в заголовке. Иконка часов нарисована псевдоэлементами на кружке: SVG-файл здесь избыточен. Роли ARIA полные, курсор ведётся по aria-activedescendant.",
+      "meta": {
+        "tags": ["combobox", "recent", "history", "keyboard"],
+        "ai": {
+          "export": "Combobox006",
+          "usage": "<Combobox006\n  label=\"Город доставки\"\n  options={[\"Москва\", \"Казань\", \"Самара\"]}\n  defaultRecent={[\"Казань\"]}\n  recentLimit={3}\n  onSelect={(value) => console.log(value)}\n/>",
+          "summary": "Combobox, который помнит выбор: недавние значения идут отдельным блоком сверху и очищаются одной кнопкой. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-006-* и не подменять её токенами вашей темы",
+            "исключение недавних из общего списка: дубль строки сбивает и глаз, и счёт стрелками",
+            "сквозную нумерацию строк по обоим блокам — на ней держится aria-activedescendant",
+            "кнопку очистки как настоящий button: ссылка или span не берутся с клавиатуры",
+            "иконку часов с aria-hidden — она украшает строку, а не сообщает новое",
+            "собственную светлую подложку блока: без неё тёмный текст пропадает на тёмной карточке каталога"
+          ],
+          "adapt": [
+            "состав списка через options и стартовые недавние через defaultRecent",
+            "длину блока недавних через recentLimit",
+            "подписи разделов через recentLabel и allLabel",
+            "подпись поля через label, заглушку через placeholder и цвет через accent"
+          ],
+          "notes": [
+            "Недавние живут в состоянии компонента и умирают при перезагрузке: за долгую память отвечает ваш код на onSelect.",
+            "Очистка недавних необратима и не спрашивает подтверждения — для важных списков добавьте отмену.",
+            "При фильтре недавние тоже фильтруются: блок исчезает, когда совпадений в нём нет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "recentLimit",
+            "label": "Сколько недавних",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 6
+          },
+          {
+            "prop": "recentLabel",
+            "label": "Заголовок блока",
+            "type": "text",
+            "default": "Недавние",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A combobox with recent values: the latest choices rise into their own block on top, disappear from the main list and can be cleared in one press.",
+            "ai": {
+              "summary": "A combobox that remembers: recent values sit in a separate block on top and are cleared with one button. One file, zero dependencies, client component.",
+              "preserve": [
+                "the local --vibeui-combobox-006-* palette — do not swap it for your theme tokens",
+                "removing recent values from the main list: a duplicated row confuses both the eye and the arrow count",
+                "the continuous row numbering across both blocks — aria-activedescendant depends on it",
+                "the clear control as a real button: a link or a span cannot be reached from the keyboard",
+                "aria-hidden on the clock icon — it decorates the row and says nothing new",
+                "the block's own light surface: without it the dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the list content through options and the starting history through defaultRecent",
+                "the length of the recent block through recentLimit",
+                "the section captions through recentLabel and allLabel",
+                "the field caption through label, the placeholder through placeholder and the color through accent"
+              ],
+              "notes": [
+                "Recent values live in component state and die on reload: long-term memory is your code on onSelect.",
+                "Clearing the history is irreversible and asks nothing — add an undo for lists that matter.",
+                "Recent values are filtered too: the block disappears when nothing in it matches.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Combobox006\n  label=\"Delivery city\"\n  options={[\"Moscow\", \"Kazan\", \"Samara\"]}\n  defaultRecent={[\"Kazan\"]}\n  recentLimit={3}\n  onSelect={(value) => console.log(value)}\n/>"
+            },
+            "controls": {
+              "recentLimit": {
+                "label": "Recent count",
+                "default": 3
+              },
+              "recentLabel": {
+                "label": "Block heading",
+                "default": "Recent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-007",
+      "type": "registry:component",
+      "title": "Windowed List",
+      "description": "Combobox для справочника на сотни строк: рисуется окно из первых совпадений, под списком честная подпись «показано N из M» и полоса охвата.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-007/combobox-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-007-*. Клиентский: useMemo фильтрует список и режет его до visibleLimit, useState держит запрос, значение и курсор. В DOM попадает не больше visibleLimit строк — это дешёвая замена виртуализации без внешней библиотеки и без замеров высоты. Подпись «показано N из M» лежит в aria-live=\"polite\" и связана с полем через aria-describedby: она объясняет, почему нужного нет на экране. Полоса под списком показывает долю показанного и не несёт текста, поэтому aria-hidden. Клавиатура добавляет PageDown и PageUp — прыжок на десять строк, без него длинный список не пролистать.",
+      "meta": {
+        "tags": ["combobox", "long list", "window", "performance"],
+        "ai": {
+          "export": "Combobox007",
+          "usage": "<Combobox007\n  label=\"Артикул\"\n  options={catalog}\n  visibleLimit={40}\n  onSelect={(value) => console.log(value)}\n/>",
+          "summary": "Combobox для длинного справочника: в DOM живёт окно из первых совпадений, счётчик показывает полный размер выдачи, PageUp и PageDown прыгают по десять строк. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-007-* и не подменять её токенами вашей темы",
+            "обрезку списка до visibleLimit: сотни строк в DOM тормозят прокрутку и раздувают дерево доступности",
+            "подпись «показано N из M» — без неё человек считает, что совпадений всего сорок, и перестаёт искать",
+            "aria-live на подписи и aria-describedby на поле: счётчик обязан звучать, а не только рисоваться",
+            "моноширинный код в строке: коды разной ширины перестают сравниваться глазом",
+            "собственную светлую подложку блока: без неё тёмный текст пропадает на тёмной карточке каталога"
+          ],
+          "adapt": [
+            "состав справочника через options и размер окна через visibleLimit",
+            "подсказку в счётчике через hintLabel",
+            "подпись поля через label и текст-заглушку через placeholder",
+            "цвет акцента через accent и высоту списка через max-height"
+          ],
+          "notes": [
+            "Это не виртуализация: строки за окном не отрисовываются вовсе, а не переиспользуются при прокрутке.",
+            "Строка режется по первому пробелу на код и название — свой формат данных придётся резать иначе.",
+            "Фильтр линейный: на десятках тысяч строк выносите поиск в useDeferredValue или на сервер.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "visibleLimit",
+            "label": "Размер окна",
+            "type": "number",
+            "default": 40,
+            "min": 5,
+            "max": 120
+          },
+          {
+            "prop": "hintLabel",
+            "label": "Подсказка счётчика",
+            "type": "text",
+            "default": "уточните запрос",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A combobox for a directory of hundreds of rows: only a window of the first matches is rendered, with an honest \"showing N of M\" line and a coverage bar below.",
+            "ai": {
+              "summary": "A combobox for a long directory: the DOM holds a window of the first matches, the counter shows the real result size, and PageUp/PageDown jump ten rows at a time. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-combobox-007-* palette — do not swap it for your theme tokens",
+                "the cut to visibleLimit: hundreds of rows in the DOM slow scrolling and bloat the accessibility tree",
+                "the \"showing N of M\" line — without it people assume there are only forty matches and stop searching",
+                "aria-live on the line and aria-describedby on the field: the counter has to be spoken, not only drawn",
+                "the monospaced code in the row: codes of varying width stop being comparable by eye",
+                "the block's own light surface: without it the dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the directory content through options and the window size through visibleLimit",
+                "the counter hint through hintLabel",
+                "the field caption through label and the placeholder through placeholder",
+                "the accent color through accent and the list height through max-height"
+              ],
+              "notes": [
+                "This is not virtualization: rows beyond the window are simply not rendered, not recycled while scrolling.",
+                "A row is split on the first space into code and name — another data shape needs another split.",
+                "The filter is linear: at tens of thousands of rows move the search into useDeferredValue or to the server.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Combobox007\n  label=\"Part number\"\n  options={catalog}\n  visibleLimit={40}\n  onSelect={(value) => console.log(value)}\n/>"
+            },
+            "controls": {
+              "visibleLimit": {
+                "label": "Window size",
+                "default": 40
+              },
+              "hintLabel": {
+                "label": "Counter hint",
+                "default": "narrow the query"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-008",
+      "type": "registry:component",
+      "title": "Loading Empty",
+      "description": "Combobox с двумя забытыми состояниями: полосы-заглушки, пока список едет, и содержательная пустота с готовыми запросами вместо «ничего не найдено».",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-008/combobox-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-008-*. Клиентский: состояний два — набранный запрос и показанный, — а ожидание из них выводится: пока показанный не догнал набранный, список считается едущим, и отдельного флага загрузки нет. useEffect только ставит таймер на delay и чистит его при следующем нажатии, поэтому устаревший ответ не перетирает свежий, а синхронного setState в теле эффекта нет. Панель держит min-height, заглушки повторяют высоту строк — панель не прыгает при смене состояния. Поле объявляет aria-busy на время ожидания, блок заглушек — role=\"status\" с подписью, поэтому загрузка проговаривается. Пустая выдача не заканчивается сообщением: под ним лежат кнопки с заведомо результативными запросами. Список скрывается атрибутом hidden, а не удаляется, — aria-controls обязан указывать на существующий узел.",
+      "meta": {
+        "tags": ["combobox", "loading", "empty state", "skeleton"],
+        "preview": {
+          "props": {
+            "defaultQuery": "пра"
+          }
+        },
+        "ai": {
+          "export": "Combobox008",
+          "usage": "<Combobox008\n  label=\"Город\"\n  options={[\"Прага\", \"Прато\"]}\n  suggestions={[\"Прага\", \"Пусан\"]}\n  delay={600}\n  onSelect={(value) => console.log(value)}\n/>",
+          "summary": "Combobox с честными состояниями ожидания и пустоты: скелетон вместо прыжка панели и готовые запросы вместо тупика. Один файл, ноль зависимостей, таймер чистится при каждом вводе.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-008-* и не подменять её токенами вашей темы",
+            "очистку таймера в useEffect и вывод ожидания из состояний: без первого старый ответ перетирает новый, без второго setState в теле эффекта устраивает каскад рендеров",
+            "min-height у панели и высоту заглушек — иначе панель прыгает и человек промахивается мимо строки",
+            "aria-busy на поле и role=\"status\" у заглушек: ожидание обязано звучать, а не только мигать",
+            "кнопки-подсказки в пустой выдаче — тупик без выхода читается как сломанный поиск",
+            "собственную светлую подложку блока: без неё тёмный текст пропадает на тёмной карточке каталога"
+          ],
+          "adapt": [
+            "источник строк через options и готовые запросы через suggestions",
+            "паузу ожидания через delay и стартовый запрос через defaultQuery",
+            "тексты состояний через loadingLabel и emptyLabel",
+            "подпись поля через label, заглушку через placeholder и цвет через accent"
+          ],
+          "notes": [
+            "Загрузка здесь имитируется таймером: подставляя fetch, оставьте отмену — иначе гонка ответов вернётся.",
+            "Три полосы-заглушки — компромисс: больше выглядит честнее, но дольше держит пустую панель на экране.",
+            "Подсказки в пустой выдаче не проверяются на результативность: следите, чтобы они действительно что-то находили.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "delay",
+            "label": "Пауза, мс",
+            "type": "number",
+            "default": 600,
+            "min": 0,
+            "max": 3000
+          },
+          {
+            "prop": "emptyLabel",
+            "label": "Пустая выдача",
+            "type": "text",
+            "default": "Ничего не нашлось",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A combobox with the two forgotten states: skeleton bars while the list is on its way, and a useful empty state with ready-made queries instead of \"nothing found\".",
+            "ai": {
+              "summary": "A combobox with honest waiting and empty states: a skeleton instead of a jumping panel and ready queries instead of a dead end. One file, zero dependencies, the timer is cleared on every keystroke.",
+              "preserve": [
+                "the local --vibeui-combobox-008-* palette — do not swap it for your theme tokens",
+                "clearing the timer inside useEffect and deriving the waiting state: without the first a stale answer overwrites the fresh one, without the second setState in the effect body causes cascading renders",
+                "the panel's min-height and the skeleton row height — otherwise the panel jumps and people miss the row",
+                "aria-busy on the field and role=\"status\" on the skeleton: waiting must be spoken, not only blinked",
+                "the suggestion buttons in the empty state — a dead end with no exit reads as broken search",
+                "the block's own light surface: without it the dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the row source through options and the ready queries through suggestions",
+                "the wait through delay and the starting query through defaultQuery",
+                "the state texts through loadingLabel and emptyLabel",
+                "the field caption through label, the placeholder through placeholder and the color through accent"
+              ],
+              "notes": [
+                "Loading is simulated with a timer: when you plug in fetch, keep the cancellation or the response race comes back.",
+                "Three skeleton bars are a compromise: more of them looks honest but keeps an empty panel on screen longer.",
+                "Suggestions in the empty state are not checked for results: make sure they actually find something.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Combobox008\n  label=\"City\"\n  options={[\"Prague\", \"Prato\"]}\n  suggestions={[\"Prague\", \"Busan\"]}\n  delay={600}\n  onSelect={(value) => console.log(value)}\n/>"
+            },
+            "controls": {
+              "delay": {
+                "label": "Delay, ms",
+                "default": 600
+              },
+              "emptyLabel": {
+                "label": "Empty result",
+                "default": "Nothing found"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-009",
+      "type": "registry:component",
+      "title": "Status Rows",
+      "description": "Combobox со статусом у каждой строки: цветная точка и подпись состояния, а недоступные узлы выключены и пропускаются стрелками.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-009/combobox-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-009-*. Клиентский: useState держит запрос, значение и курсор. Статус приходит полем данных и раскрашивает точку через data-status, а не через отдельные классы. Строки со статусом down несут aria-disabled=\"true\", выбор на них не срабатывает, а перемещение курсора перепрыгивает их циклом с ограничением по длине списка — если доступных строк нет, курсор остаётся на месте вместо зависания. Подпись состояния дублирует цвет словом: по одному цвету состояние не читается при дальтонизме и в чёрно-белой печати. Строка выложена grid из трёх колонок, поэтому подписи выравниваются по правому краю независимо от длины имени.",
+      "meta": {
+        "tags": ["combobox", "status", "disabled", "a11y"],
+        "ai": {
+          "export": "Combobox009",
+          "usage": "<Combobox009\n  label=\"Окружение\"\n  items={[{ name: \"prod-eu-1\", status: \"ok\", note: \"работает\" }]}\n  defaultValue=\"prod-eu-1\"\n  onSelect={(value) => console.log(value)}\n/>",
+          "summary": "Combobox с состоянием у строк: цвет плюс слово, недоступные строки выключены и пропускаются клавиатурой. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-009-* и не подменять её токенами вашей темы",
+            "подпись статуса рядом с точкой: цвет без слова не читается при дальтонизме и в печати",
+            "aria-disabled на недоступных строках — визуально серая, но выбираемая строка обманывает",
+            "пропуск выключенных строк с ограничением по длине списка: без ограничения цикл зависает, когда доступных нет",
+            "grid из трёх колонок — при flex подписи состояния перестают выстраиваться в столбец",
+            "собственную светлую подложку блока: без неё тёмный текст пропадает на тёмной карточке каталога"
+          ],
+          "adapt": [
+            "состав узлов и их состояния через items",
+            "начальный выбор через defaultValue и подпись поля через label",
+            "текст-заглушку через placeholder и текст пустой выдачи через emptyLabel",
+            "цвета состояний через переменные ok, warn, down и акцент через accent"
+          ],
+          "notes": [
+            "Статусов ровно три: четвёртый нужно завести и в типе, и в палитре, иначе точка останется бесцветной.",
+            "aria-disabled не запрещает нажатие сам по себе — проверка на down в обработчике обязательна.",
+            "Точка нарисована box-shadow вокруг цвета: при смене размера подправьте и радиус подсветки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Окружение",
+            "maxLength": 32
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Выбран по умолчанию",
+            "type": "text",
+            "default": "prod-eu-1",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A combobox with a status on every row: a colored dot and a state caption, while unavailable nodes are disabled and skipped by the arrow keys.",
+            "ai": {
+              "summary": "A combobox with row states: color plus word, unavailable rows disabled and skipped from the keyboard. One file, zero dependencies, client component.",
+              "preserve": [
+                "the local --vibeui-combobox-009-* palette — do not swap it for your theme tokens",
+                "the state caption next to the dot: color without a word fails color blindness and print",
+                "aria-disabled on unavailable rows — a greyed but selectable row lies",
+                "skipping disabled rows with a bound on the list length: without the bound the loop hangs when nothing is available",
+                "the three-column grid — with flex the state captions stop lining up",
+                "the block's own light surface: without it the dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the nodes and their states through items",
+                "the initial choice through defaultValue and the field caption through label",
+                "the placeholder through placeholder and the empty-result text through emptyLabel",
+                "the state colors through the ok, warn and down variables and the accent through accent"
+              ],
+              "notes": [
+                "There are exactly three statuses: a fourth has to be added to the type and to the palette, or the dot stays colorless.",
+                "aria-disabled does not block the press by itself — the down check in the handler is mandatory.",
+                "The dot is drawn with a box-shadow halo: change the size and you change the halo radius too.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Combobox009\n  label=\"Environment\"\n  items={[{ name: \"prod-eu-1\", status: \"ok\", note: \"healthy\" }]}\n  defaultValue=\"prod-eu-1\"\n  onSelect={(value) => console.log(value)}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Environment"
+              },
+              "defaultValue": {
+                "label": "Selected by default",
+                "default": "prod-eu-1"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-010",
+      "type": "registry:component",
+      "title": "Required Choice",
+      "description": "Обязательный выбор в форме: ошибка появляется только после отправки, связана с полем через aria-describedby и снимается выбором строки.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-010/combobox-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-010-*. Корень — form с noValidate: браузерная валидация не умеет проверять рисованный список, поэтому проверку ведёт обработчик submit. Ошибка ставится только после попытки отправки, а не на каждое нажатие: ругаться на человека, пока он ещё заполняет форму, — худшее, что может сделать поле. Поле получает aria-invalid и aria-describedby, указывающий на сообщение или на подсказку, сообщение живёт в role=\"alert\" и потому проговаривается без перевода фокуса. Enter в поле выбирает строку и не отправляет форму — иначе половина людей отправит её, промахнувшись мимо списка. После неудачной отправки фокус возвращается в поле.",
+      "meta": {
+        "tags": ["combobox", "form", "validation", "required"],
+        "ai": {
+          "export": "Combobox010",
+          "usage": "<Combobox010\n  label=\"Способ оплаты\"\n  options={[\"Картой онлайн\", \"Наличными курьеру\"]}\n  errorText=\"Выберите способ оплаты из списка\"\n  onSubmitValue={(value) => console.log(value)}\n/>",
+          "summary": "Обязательный combobox с валидацией формы: сообщение об ошибке в role=\"alert\", aria-invalid на поле и возврат фокуса после неудачной отправки. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-010-* и не подменять её токенами вашей темы",
+            "показ ошибки только после отправки: подсветка во время набора воспринимается как обвинение",
+            "aria-invalid вместе с aria-describedby — без связки сообщение не читается вслух рядом с полем",
+            "role=\"alert\" у сообщения: оно обязано прозвучать без перевода фокуса на себя",
+            "перехват Enter в поле — иначе форма уходит вместо выбора строки",
+            "собственную светлую подложку блока: без неё тёмный текст пропадает на тёмной карточке каталога"
+          ],
+          "adapt": [
+            "текст ошибки через errorText и подсказку через hintText",
+            "подпись кнопки через submitLabel и состав списка через options",
+            "подпись поля через label и текст-заглушку через placeholder",
+            "цвет акцента через accent и цвет ошибки через переменную danger"
+          ],
+          "notes": [
+            "noValidate выключает браузерные подсказки на всей форме: остальные поля придётся проверять своим кодом.",
+            "Ошибка и подсказка занимают одно место — при разной длине текста блок подпрыгивает, задайте min-height, если это мешает.",
+            "Значение не уходит на сервер само: обработчик отдаёт его через onSubmitValue.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "errorText",
+            "label": "Текст ошибки",
+            "type": "text",
+            "default": "Выберите способ оплаты из списка",
+            "maxLength": 60
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Оформить",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A required choice inside a form: the error shows up only after a submit, is tied to the field through aria-describedby and clears as soon as a row is picked.",
+            "ai": {
+              "summary": "A required combobox with form validation: the error message lives in role=\"alert\", the field carries aria-invalid and focus returns after a failed submit. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-combobox-010-* palette — do not swap it for your theme tokens",
+                "showing the error only after a submit: highlighting while typing reads as an accusation",
+                "aria-invalid together with aria-describedby — without the pair the message is not read next to the field",
+                "role=\"alert\" on the message: it has to be spoken without stealing focus",
+                "intercepting Enter in the field — otherwise the form submits instead of picking a row",
+                "the block's own light surface: without it the dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the error copy through errorText and the hint through hintText",
+                "the button caption through submitLabel and the list content through options",
+                "the field caption through label and the placeholder through placeholder",
+                "the accent color through accent and the error color through the danger variable"
+              ],
+              "notes": [
+                "noValidate turns off native hints for the whole form: other fields need your own checks.",
+                "The error and the hint share one slot — texts of different length make the block jump, set a min-height if that hurts.",
+                "The value does not reach a server by itself: the handler hands it over through onSubmitValue.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Combobox010\n  label=\"Payment method\"\n  options={[\"Card online\", \"Cash on delivery\"]}\n  errorText=\"Pick a payment method from the list\"\n  onSubmitValue={(value) => console.log(value)}\n/>"
+            },
+            "controls": {
+              "errorText": {
+                "label": "Error copy",
+                "default": "Pick a payment method from the list"
+              },
+              "submitLabel": {
+                "label": "Button caption",
+                "default": "Place order"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-011",
+      "type": "registry:component",
+      "title": "Clearable Value",
+      "description": "Combobox с очисткой: выбранное лежит фишкой в поле, крестик снимает его и оставляет фокус на месте, а снятое значение можно вернуть одним нажатием.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-011/combobox-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-011-*. Клиентский: useState держит значение, снятое значение, запрос и курсор. Фишка со значением и поле фильтра лежат в одном контейнере, обводка фокуса ставится на контейнер через :has(input:focus-visible) — визуально это один элемент, значит и фокус общий. Крестик несёт aria-label с самим значением: «Очистить» без названия в списке фильтров бесполезно. После очистки фокус остаётся в поле, чтобы менять фильтр подряд без мыши. Escape сначала стирает запрос, затем снимает значение — две ступени вместо одной. Строка снизу с aria-live=\"polite\" сообщает состояние и предлагает вернуть снятое.",
+      "meta": {
+        "tags": ["combobox", "clear", "filter", "undo"],
+        "ai": {
+          "export": "Combobox011",
+          "usage": "<Combobox011\n  label=\"Проект\"\n  options={[\"Витрина\", \"Личный кабинет\"]}\n  defaultValue=\"Витрина\"\n  onSelect={(value) => console.log(value)}\n/>",
+          "summary": "Combobox с крестиком очистки и возвратом снятого: значение показано фишкой, фокус после очистки остаётся в поле. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-011-* и не подменять её токенами вашей темы",
+            "aria-label крестика с самим значением: «Очистить» без названия ничего не сообщает в списке фильтров",
+            "сохранение фокуса в поле после очистки — иначе следующий фильтр приходится ловить мышью",
+            "две ступени Escape: сначала запрос, потом значение, чтобы случайный Escape не сносил выбор",
+            "обводку фокуса на контейнере через :has(): фишка и поле выглядят одним элементом",
+            "собственную светлую подложку блока: без неё тёмный текст пропадает на тёмной карточке каталога"
+          ],
+          "adapt": [
+            "состав списка через options и начальное значение через defaultValue",
+            "подпись крестика через clearLabel и подпись возврата через undoLabel",
+            "подпись поля через label и текст-заглушку через placeholder",
+            "цвет акцента через accent и ширину фишки через max-width"
+          ],
+          "notes": [
+            "Очистка отдаёт в onSelect пустую строку: если ваш обработчик ждёт значение, проверьте пустоту.",
+            "Возврат хранит ровно одно снятое значение — истории отмен здесь нет.",
+            "Backspace при пустом запросе снимает значение целиком, а не по букве: это осознанное поведение фильтра.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "clearLabel",
+            "label": "Подпись очистки",
+            "type": "text",
+            "default": "Очистить выбор",
+            "maxLength": 24
+          },
+          {
+            "prop": "undoLabel",
+            "label": "Подпись возврата",
+            "type": "text",
+            "default": "вернуть",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A clearable combobox: the selected value sits as a chip in the field, the cross removes it and keeps focus in place, and the dropped value can be restored in one press.",
+            "ai": {
+              "summary": "A combobox with a clear cross and an undo for the dropped value: the value is shown as a chip and focus stays in the field after clearing. One file, zero dependencies, client component.",
+              "preserve": [
+                "the local --vibeui-combobox-011-* palette — do not swap it for your theme tokens",
+                "the cross aria-label carrying the value itself: \"Clear\" alone says nothing in a row of filters",
+                "keeping focus in the field after clearing — otherwise the next filter has to be caught with the mouse",
+                "the two-step Escape: first the query, then the value, so a stray Escape does not wipe the choice",
+                "the focus ring on the container through :has(): the chip and the field look like one control",
+                "the block's own light surface: without it the dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the list content through options and the initial value through defaultValue",
+                "the cross caption through clearLabel and the undo caption through undoLabel",
+                "the field caption through label and the placeholder through placeholder",
+                "the accent color through accent and the chip width through max-width"
+              ],
+              "notes": [
+                "Clearing hands an empty string to onSelect: check for emptiness if your handler expects a value.",
+                "The undo keeps exactly one dropped value — there is no history here.",
+                "Backspace on an empty query removes the whole value, not one letter: that is deliberate filter behavior.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Combobox011\n  label=\"Project\"\n  options={[\"Storefront\", \"Account area\"]}\n  defaultValue=\"Storefront\"\n  onSelect={(value) => console.log(value)}\n/>"
+            },
+            "controls": {
+              "clearLabel": {
+                "label": "Clear caption",
+                "default": "Clear selection"
+              },
+              "undoLabel": {
+                "label": "Undo caption",
+                "default": "restore"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox-012",
+      "type": "registry:component",
+      "title": "Form Field",
+      "description": "Combobox внутри формы: человек видит подпись, а в скрытом input с настоящим name лежит код — форма уходит обычным submit и попадает в FormData.",
+      "categories": ["combobox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "combobox-012/combobox-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/combobox-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-012-*. Корень — form, значение живёт в input type=\"hidden\" с настоящим name, поэтому работает обычная отправка, FormData и Server Action: рисованный список сам по себе отправляться не умеет. Подпись и код разведены: options — это пары value и label, в списке код показан мелким моноширинным текстом, а на сервер уезжает именно он. Кнопка отправки выключена, пока ничего не выбрано; обработчик читает FormData с формы и показывает, что реально ушло. Поле фильтра — role=\"combobox\" с aria-controls и aria-activedescendant, список — role=\"listbox\" с aria-selected на строках.",
+      "meta": {
+        "tags": ["combobox", "form", "formdata", "hidden input"],
+        "ai": {
+          "export": "Combobox012",
+          "usage": "<Combobox012\n  label=\"Способ доставки\"\n  name=\"delivery\"\n  options={[{ value: \"pickup\", label: \"Самовывоз со склада\" }]}\n  onSubmitValue={(value) => console.log(value)}\n/>",
+          "summary": "Combobox, готовый к отправке формы: скрытый input с name несёт код значения, кнопка блокируется без выбора, под формой видно содержимое FormData. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-combobox-012-* и не подменять её токенами вашей темы",
+            "скрытый input с настоящим name — без него список остаётся картинкой и в FormData ничего не попадает",
+            "разделение value и label: на сервер обязан уезжать код, а не видимая подпись, которую завтра переведут",
+            "блокировку кнопки без выбора: пустая отправка обязательного поля — самая частая жалоба на такие формы",
+            "aria-activedescendant на поле фильтра, иначе строка под курсором не проговаривается",
+            "собственную светлую подложку блока: без неё тёмный текст пропадает на тёмной карточке каталога"
+          ],
+          "adapt": [
+            "имя поля через name и состав списка через options",
+            "подпись кнопки через submitLabel и подпись поля через label",
+            "текст-заглушку через placeholder",
+            "цвет акцента через accent и ширину формы через max-width"
+          ],
+          "notes": [
+            "Скрытое поле не участвует в браузерной валидации: обязательность проверяйте своим кодом или на сервере.",
+            "Строка с FormData под формой — витрина, а не часть механики: в бою её убирают.",
+            "Отправка перехвачена preventDefault: для настоящего POST уберите перехват или вызовите Server Action.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя поля",
+            "type": "text",
+            "default": "delivery",
+            "maxLength": 24
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Отправить",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A combobox inside a form: people see the caption while a hidden input with a real name carries the code, so the form submits normally and lands in FormData.",
+            "ai": {
+              "summary": "A submit-ready combobox: a hidden input with a name carries the value code, the button is disabled without a choice, and the FormData payload is shown under the form. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-combobox-012-* palette — do not swap it for your theme tokens",
+                "the hidden input with a real name — without it the list is just a picture and FormData stays empty",
+                "the split between value and label: the server must receive the code, not the visible caption that gets translated tomorrow",
+                "disabling the button without a choice: submitting a required field empty is the most common complaint about such forms",
+                "aria-activedescendant on the filter field, otherwise the row under the cursor is never announced",
+                "the block's own light surface: without it the dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the field key through name and the list content through options",
+                "the button caption through submitLabel and the field caption through label",
+                "the placeholder text through placeholder",
+                "the accent color through accent and the form width through max-width"
+              ],
+              "notes": [
+                "A hidden field takes no part in native validation: check the requirement in your own code or on the server.",
+                "The FormData line under the form is a showcase, not machinery: drop it in production.",
+                "The submit is intercepted with preventDefault: for a real POST remove the interception or call a Server Action.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Combobox012\n  label=\"Delivery method\"\n  name=\"delivery\"\n  options={[{ value: \"pickup\", label: \"Pickup from warehouse\" }]}\n  onSubmitValue={(value) => console.log(value)}\n/>"
+            },
+            "controls": {
+              "name": {
+                "label": "Field key",
+                "default": "delivery"
+              },
+              "submitLabel": {
+                "label": "Button caption",
+                "default": "Submit"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
