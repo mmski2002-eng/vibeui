@@ -618,6 +618,2063 @@
           }
         }
       }
+    },
+    {
+      "name": "solutions-007",
+      "type": "registry:block",
+      "title": "Deal Board",
+      "description": "Доска сделок по этапам: в шапке колонки стоит сумма этапа, а прогноз внизу взвешен вероятностью каждой сделки.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-007/solutions-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-007.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-007-*. Серверный: хуков нет. Колонки разложены grid-auto-flow:column с горизонтальной прокруткой и переключаются в равные доли контейнерным запросом. Взвешенный прогноз считается в компоненте как сумма amount×probability/100, полоса вероятности объявлена role=\"progressbar\".",
+      "meta": {
+        "tags": ["solutions", "crm", "deals", "board"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions007",
+          "usage": "<Solutions007 title=\"Сделки по этапам\" stages={[{ name: \"Договор\", deals: [{ company: \"Верста\", owner: \"Игорь П.\", amount: 780000, probability: 70 }] }]} />",
+          "summary": "Доска сделок: колонки этапов со счётчиком и суммой, карточки с вероятностью и владельцем, взвешенный прогноз строкой внизу. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-007-* и не подменять её токенами вашей темы",
+            "сумму этапа рядом со счётчиком: десять мелких сделок не равны одной крупной",
+            "расчёт прогноза как сумму amount×probability — простая сумма сделок обещает то, чего не будет",
+            "вероятность и полосой, и числом: полоса для взгляда по колонке, число для отчёта",
+            "горизонтальную прокрутку колонок вместо сжатия — узкая карточка сделки нечитаема",
+            "role=\"progressbar\" с aria-valuenow у полосы вероятности"
+          ],
+          "adapt": [
+            "массив stages вместе со сделками внутри",
+            "title, hint и подпись forecastLabel",
+            "валюту через проп currency",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Суммы приходят числами: форматирование локали делает сам блок, не передавайте строки.",
+            "Вероятность — процент от 0 до 100, дробь 0,7 сломает и полосу, и прогноз.",
+            "Больше пяти этапов не ставьте: прокрутка перестаёт помещать колонку целиком.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Сделки по этапам",
+            "maxLength": 28
+          },
+          {
+            "prop": "forecastLabel",
+            "label": "Подпись прогноза",
+            "type": "text",
+            "default": "Взвешенный прогноз квартала",
+            "maxLength": 36
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A deal board by stage: each column header carries the stage sum, and the forecast at the bottom is weighted by every deal's probability.",
+            "ai": {
+              "summary": "A deal board: stage columns with a count and a sum, cards carrying probability and owner, and a weighted forecast line at the bottom. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-007-* palette — do not swap it for your theme tokens",
+                "the stage sum next to the count: ten small deals are not one large one",
+                "the forecast as a sum of amount×probability — a plain total promises what will not arrive",
+                "probability as both a bar and a number: the bar for scanning, the number for the report",
+                "horizontal scrolling of columns instead of squeezing — a narrow deal card is unreadable",
+                "role=\"progressbar\" with aria-valuenow on the probability bar"
+              ],
+              "adapt": [
+                "the stages array together with the deals inside it",
+                "title, hint and the forecastLabel caption",
+                "the currency through the currency prop",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Amounts arrive as numbers: the block formats the locale itself, do not pass strings.",
+                "Probability is a percentage from 0 to 100 — a 0.7 fraction breaks both the bar and the forecast.",
+                "Do not exceed five stages: scrolling stops fitting a whole column.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions007 title=\"Deals by stage\" stages={[{ name: \"Contract\", deals: [{ company: \"Versta\", owner: \"Igor P.\", amount: 780000, probability: 70 }] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Deals by stage"
+              },
+              "forecastLabel": {
+                "label": "Forecast caption",
+                "default": "Weighted quarter forecast"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-008",
+      "type": "registry:block",
+      "title": "Deal Record",
+      "description": "Карточка сделки: следующий шаг стоит над историей и в рамке, а просрочка меняет рамку, подпись и тон сразу.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-008/solutions-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-008.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-008-*. Серверный: хуков нет. Раскладка разъезжается в две колонки контейнерным запросом на внутреннем shell. История — ol с вертикальной линией на псевдоэлементе, тип события подписан буквой на кружке, просрочка следующего шага управляется атрибутом data-overdue.",
+      "meta": {
+        "tags": ["solutions", "crm", "deal", "timeline"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions008",
+          "usage": "<Solutions008 company=\"Логистика «Верста»\" amount=\"780 000 ₽\" overdue nextStep=\"Забрать подписанный договор\" events={[{ date: \"12 марта\", title: \"Отправили договор\", kind: \"mail\" }]} />",
+          "summary": "Карточка сделки: шапка с суммой и этапом, выделенный следующий шаг, реквизиты списком определений и история событий лентой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-008-* и не подменять её токенами вашей темы",
+            "следующий шаг НАД историей: работу двигает «что дальше», а внизу его не находят",
+            "просрочку рамкой, подписью и тоном разом — одного красного цвета мало",
+            "срок и ответственного в одной строке со следующим шагом: без них шаг ничей",
+            "историю списком ol: порядок событий — часть смысла, а не оформление",
+            "букву типа события на кружке, чтобы лента читалась и без цвета"
+          ],
+          "adapt": [
+            "массивы fields и events",
+            "company, stage, amount и флаг overdue",
+            "текст nextStep, nextDate и nextOwner",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Просрочка приходит флагом overdue: сравнивать даты строками блок не умеет и не должен.",
+            "История не пагинируется: для длинной переписки нужна отдельная страница со свёрткой.",
+            "Тип события ограничен четырьмя значениями — новый тип требует своей буквы в KIND_LETTER.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "company",
+            "label": "Клиент",
+            "type": "text",
+            "default": "Логистика «Верста»",
+            "maxLength": 28
+          },
+          {
+            "prop": "overdue",
+            "label": "Шаг просрочен",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A deal record: the next step sits above the history in its own frame, and an overdue step changes the frame, the caption and the tone at once.",
+            "ai": {
+              "summary": "A deal record: a header with amount and stage, a highlighted next step, the fields as a definition list and the history as a timeline. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-008-* palette — do not swap it for your theme tokens",
+                "the next step ABOVE the history: work moves on \"what is next\", and at the bottom nobody finds it",
+                "the overdue state as border, caption and tone at once — red alone is not enough",
+                "the due date and owner on the same line as the next step: without them the step belongs to nobody",
+                "the history as an ol: event order is part of the meaning, not decoration",
+                "the event-type letter on the dot so the timeline reads without colour"
+              ],
+              "adapt": [
+                "the fields and events arrays",
+                "company, stage, amount and the overdue flag",
+                "the nextStep, nextDate and nextOwner text",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The overdue state arrives as a flag: the block does not and should not compare date strings.",
+                "The history is not paginated: a long thread needs its own page with folding.",
+                "The event kind is limited to four values — a new one needs its letter in KIND_LETTER.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions008 company=\"Versta Logistics\" amount=\"$8,400\" overdue nextStep=\"Collect the signed contract\" events={[{ date: \"12 March\", title: \"Contract sent\", kind: \"mail\" }]} />"
+            },
+            "controls": {
+              "company": {
+                "label": "Client",
+                "default": "Versta Logistics"
+              },
+              "overdue": {
+                "label": "Step overdue"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-009",
+      "type": "registry:block",
+      "title": "Subscription Renewals",
+      "description": "Подписки с продлениями: срок написан обратным отсчётом, а выключенное автопродление помечено как предупреждение, а не как настройка.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-009/solutions-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-009.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-009-*. Серверный: хуков нет. Строка раскладывается в три колонки контейнерным запросом. Полоса рисует долю прошедшего окна внимания window и объявлена role=\"progressbar\"; окончание «день / дня / дней» выбирает функция склонения.",
+      "meta": {
+        "tags": ["solutions", "billing", "subscriptions", "renewal"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions009",
+          "usage": "<Solutions009 mrr=\"619 300 ₽\" window={30} items={[{ customer: \"Кофейня «Мера»\", plan: \"Команда\", amount: \"14 400 ₽\", period: \"в месяц\", renewsIn: 2, autoRenew: false }]} />",
+          "summary": "Подписки: MRR с динамикой, список клиентов с планом, суммой и обратным отсчётом до продления, полоса окна и пометка выключенного автопродления. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-009-* и не подменять её токенами вашей темы",
+            "обратный отсчёт вместо даты: «через 3 дня» не требует считать в уме",
+            "выключенное автопродление как предупреждение — такие подписки заканчиваются молча",
+            "полосу окна вместе с числом дней: полоса даёт срочность, число — точность",
+            "склонение «день / дня / дней»: «через 3 день» читается как баг",
+            "role=\"progressbar\" с aria-valuemin и aria-valuemax у полосы"
+          ],
+          "adapt": [
+            "массив items с планами и суммами",
+            "title, hint, mrr и mrrDelta",
+            "ширину окна внимания через проп window",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "renewsIn — число дней, а не дата: дату блок не разбирает и часовые пояса не учитывает.",
+            "MRR приходит строкой: считайте его там же, где считаете подписки, а не в вёрстке.",
+            "Отмену подписки блок не показывает — это отдельное состояние со своим текстом.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Подписки",
+            "maxLength": 24
+          },
+          {
+            "prop": "window",
+            "label": "Окно внимания, дней",
+            "type": "number",
+            "default": 30,
+            "min": 7,
+            "max": 90
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Subscriptions and renewals: the term is a countdown, and disabled auto-renewal is flagged as a warning rather than a setting.",
+            "ai": {
+              "summary": "Subscriptions: MRR with its delta, a list of customers with plan, amount and a countdown to renewal, a window bar and a flag for disabled auto-renewal. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-009-* palette — do not swap it for your theme tokens",
+                "the countdown instead of a date: \"in 3 days\" needs no mental arithmetic",
+                "disabled auto-renewal as a warning — such subscriptions end silently",
+                "the window bar together with the day count: the bar gives urgency, the number precision",
+                "the plural agreement of the day noun: a broken plural reads as a bug",
+                "role=\"progressbar\" with aria-valuemin and aria-valuemax on the bar"
+              ],
+              "adapt": [
+                "the items array with its plans and amounts",
+                "title, hint, mrr and mrrDelta",
+                "the attention window through the window prop",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "renewsIn is a day count, not a date: the block parses no dates and knows no time zones.",
+                "MRR arrives as a string: compute it where the subscriptions live, not in the markup.",
+                "Cancellation is not shown — it is a separate state with its own wording.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions009 mrr=\"$6,193\" window={30} items={[{ customer: \"Mera Coffee\", plan: \"Team\", amount: \"$144\", period: \"per month\", renewsIn: 2, autoRenew: false }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Subscriptions"
+              },
+              "window": {
+                "label": "Attention window, days"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-010",
+      "type": "registry:block",
+      "title": "Revenue Breakdown",
+      "description": "Отчёт по выручке: столбик месяца собран из сегментов со штриховкой, поэтому итог и состав сравниваются одним взглядом.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-010/solutions-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-010.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-010-*. Серверный: хуков нет. График построен на гриде: высота столбика считается от максимального месяца, доли сегментов — от суммы месяца. Сегменты различаются оттенком и repeating-linear-gradient, у графика есть role=\"img\" с aria-label.",
+      "meta": {
+        "tags": ["solutions", "analytics", "revenue", "chart"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions010",
+          "usage": "<Solutions010 total=\"20,4 млн ₽\" months={[{ label: \"мар\", parts: [2040, 960, 610, 380] }]} segments={[{ name: \"Подписки\", total: \"10,4 млн ₽\", share: 51 }]} />",
+          "summary": "Отчёт по выручке: итог с динамикой, столбики месяцев с сегментами внутри и таблица разбивки с долями. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-010-* и не подменять её токенами вашей темы",
+            "стек вместо двух графиков: итог и состав читаются одновременно",
+            "высоту столбика от самого большого месяца, а не от ста процентов",
+            "штриховку сегментов: одним цветом стек не различить на печати и при дальтонизме",
+            "таблицу под графиком — столбик отвечает «как менялось», таблица «сколько именно»",
+            "role=\"img\" с aria-label у графика: сами по себе столбики скринридеру ничего не говорят"
+          ],
+          "adapt": [
+            "массивы months и segments",
+            "title, period, total и delta",
+            "подпись единиц через проп unit",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Больше четырёх сегментов не берите: пятый оттенок со штриховкой уже не отличить.",
+            "parts — числа в одних единицах, смешивать рубли и тысячи в одном массиве нельзя.",
+            "Итог и доли приходят строками и числами отдельно: считайте их из одного источника.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Выручка по направлениям",
+            "maxLength": 32
+          },
+          {
+            "prop": "unit",
+            "label": "Единицы",
+            "type": "text",
+            "default": "тыс. ₽",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A revenue report: each month's bar is stacked from hatched segments, so the total and its composition compare in one glance.",
+            "ai": {
+              "summary": "A revenue report: the headline total with its delta, monthly stacked bars and a breakdown table with shares. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-010-* palette — do not swap it for your theme tokens",
+                "the stack instead of two charts: total and composition read at once",
+                "bar height relative to the largest month rather than to a hundred percent",
+                "the segment hatching: colour alone cannot separate a stack in print or for colour blindness",
+                "the table under the chart — the bar answers \"how it moved\", the table \"how much exactly\"",
+                "role=\"img\" with aria-label on the chart: bars alone say nothing to a screen reader"
+              ],
+              "adapt": [
+                "the months and segments arrays",
+                "title, period, total and delta",
+                "the unit caption through the unit prop",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Do not use more than four segments: a fifth hatched shade is no longer distinguishable.",
+                "parts are numbers in one unit — never mix currency and thousands in the same array.",
+                "The total and the shares arrive as strings and numbers separately: derive both from one source.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions010 total=\"$204k\" months={[{ label: \"Mar\", parts: [2040, 960, 610, 380] }]} segments={[{ name: \"Subscriptions\", total: \"$104k\", share: 51 }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Revenue by line"
+              },
+              "unit": {
+                "label": "Units",
+                "default": "$ thousands"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-011",
+      "type": "registry:block",
+      "title": "Expense Limits",
+      "description": "Расходы по категориям: шкала у всех общая, лимит помечен засечкой, а перерасход рисуется за ней, а не упирается в край.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-011/solutions-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-011.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-011-*. Серверный: хуков нет. Общий масштаб шкалы считается как максимум расходов и суммы лимитов, поэтому категории сравнимы. Засечка лимита — абсолютно позиционированный элемент, перерасход — второй заштрихованный отрезок после засечки; полоса объявлена role=\"progressbar\".",
+      "meta": {
+        "tags": ["solutions", "finance", "expenses", "limits"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions011",
+          "usage": "<Solutions011 month=\"Март · план 650 000 ₽\" categories={[{ name: \"Реклама\", spent: 214000, limit: 180000, note: \"контекст и посевы\" }]} />",
+          "summary": "Расходы месяца: итог и остаток бюджета сверху, категории с общей шкалой, засечкой лимита и явно нарисованным перерасходом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-011-* и не подменять её токенами вашей темы",
+            "общую шкалу для всех категорий: иначе каждая полоса живёт в своём масштабе",
+            "засечку лимита на полосе — без неё непонятно, где проходит граница",
+            "перерасход отдельным отрезком за засечкой, а не упором в край шкалы",
+            "штриховку перерасхода: это второе состояние, а не более насыщенный цвет",
+            "итог и остаток бюджета сверху: категории говорят «куда ушло», итог — «сколько ещё»"
+          ],
+          "adapt": [
+            "массив categories с лимитами и пояснениями",
+            "title и подпись month",
+            "валюту через проп currency",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "spent и limit — числа: строками ни перерасход, ни общий масштаб не вычислить.",
+            "Категория с лимитом 0 сломает масштаб — такие позиции отфильтруйте до передачи.",
+            "Прогноз до конца месяца блок не строит: это отдельная задача с отдельными данными.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Расходы месяца",
+            "maxLength": 24
+          },
+          {
+            "prop": "month",
+            "label": "Период и план",
+            "type": "text",
+            "default": "Март · план 650 000 ₽",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Expenses by category: one shared scale, a tick marking the limit, and the overage drawn past it instead of hitting the end of the bar.",
+            "ai": {
+              "summary": "Monthly expenses: the total and remaining budget on top, categories on a shared scale with a limit tick and an explicitly drawn overage. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-011-* palette — do not swap it for your theme tokens",
+                "the shared scale across categories: otherwise each bar lives in its own scale",
+                "the limit tick on the bar — without it the boundary is invisible",
+                "the overage as a separate span past the tick, not as a bar hitting the end",
+                "the hatching on the overage: it is a second state, not a deeper colour",
+                "the total and remaining budget on top: categories say \"where it went\", the total \"how much is left\""
+              ],
+              "adapt": [
+                "the categories array with its limits and notes",
+                "title and the month caption",
+                "the currency through the currency prop",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "spent and limit are numbers: strings yield neither the overage nor the shared scale.",
+                "A category with a zero limit breaks the scale — filter those out before passing them in.",
+                "The block does not forecast to month end: that is a separate task with separate data.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions011 month=\"March · plan $6,500\" categories={[{ name: \"Advertising\", spent: 214000, limit: 180000, note: \"search and seeding\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Monthly expenses"
+              },
+              "month": {
+                "label": "Period and plan",
+                "default": "March · plan $6,500"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-012",
+      "type": "registry:block",
+      "title": "Invoice Ledger",
+      "description": "Реестр счетов: сверху суммы по статусам, а просроченная строка помечена полосой и числом дней прямо у срока оплаты.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-012/solutions-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-012.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-012-*. Серверный: хуков нет. Таблица прокручивается по горизонтали внутри собственного контейнера, статус несёт букву на кружке и рамку, просрочка рисуется inset box-shadow первой ячейки строки.",
+      "meta": {
+        "tags": ["solutions", "finance", "invoices", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions012",
+          "usage": "<Solutions012 overdueSum=\"780 000 ₽\" invoices={[{ number: \"СЧ-2024-0141\", client: \"Верста\", amount: \"780 000 ₽\", issued: \"12 фев\", due: \"26 фев\", status: \"overdue\", overdueDays: 16 }]} />",
+          "summary": "Реестр счетов: три суммы по статусам, таблица со счётом, клиентом, сроком и статусом, просрочка помечена полосой и днями. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-012-* и не подменять её токенами вашей темы",
+            "три суммы по статусам сверху: иначе итоги складывают по списку в уме",
+            "число дней просрочки рядом со сроком — «до 2 марта» само по себе не говорит о срыве",
+            "букву и рамку у статуса: «оплачен» и «отправлен» одинаково зелёные при дальтонизме",
+            "полосу слева у просроченной строки, чтобы её было видно при прокрутке",
+            "моноширинный номер счёта: номера сверяют посимвольно"
+          ],
+          "adapt": [
+            "массив invoices со статусами",
+            "title, hint и подпись cta",
+            "суммы overdueSum, waitingSum и paidSum",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Итоги приходят строками: блок их не складывает, считайте на той же стороне, что и счета.",
+            "Статус «просрочен» не выводится из даты — передавайте его вместе с overdueDays.",
+            "Черновик не имеет срока: в примере это прочерки, а не пустые ячейки, чтобы не читалось как сбой.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Счета на оплату",
+            "maxLength": 24
+          },
+          {
+            "prop": "cta",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Выставить счёт",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An invoice ledger: status totals on top, and an overdue row flagged with a stripe and a day count right beside the due date.",
+            "ai": {
+              "summary": "An invoice ledger: three status totals, a table with number, client, due date and status, and overdue rows flagged with a stripe and a day count. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-012-* palette — do not swap it for your theme tokens",
+                "the three status totals on top: otherwise the sums get added up by eye",
+                "the overdue day count next to the due date — \"due 2 March\" alone says nothing about a miss",
+                "the letter and border on the status: \"paid\" and \"sent\" look the same green to a colour-blind eye",
+                "the left stripe on an overdue row so it stays visible while scrolling",
+                "the monospaced invoice number: numbers are checked character by character"
+              ],
+              "adapt": [
+                "the invoices array with its statuses",
+                "title, hint and the cta label",
+                "the overdueSum, waitingSum and paidSum figures",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Totals arrive as strings: the block does not add them, compute them where the invoices live.",
+                "The \"overdue\" status is not derived from the date — pass it together with overdueDays.",
+                "A draft has no due date: the sample shows dashes rather than empty cells so it does not read as a failure.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions012 overdueSum=\"$7,800\" invoices={[{ number: \"INV-2024-0141\", client: \"Versta\", amount: \"$7,800\", issued: \"12 Feb\", due: \"26 Feb\", status: \"overdue\", overdueDays: 16 }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Invoices"
+              },
+              "cta": {
+                "label": "Button",
+                "default": "New invoice"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-013",
+      "type": "registry:block",
+      "title": "Warehouse Flow",
+      "description": "Смена на складе: приёмка и отгрузка стоят двумя потоками рядом, а готовность документа написана дробью «собрано из позиций».",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-013/solutions-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-013.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-013-*. Серверный: хуков нет. Два потока раскладываются в две колонки контейнерным запросом на внутреннем shell, направление помечено стрелкой и цветом левой границы карточки, полоса готовности объявлена role=\"progressbar\" с aria-valuemax по числу позиций.",
+      "meta": {
+        "tags": ["solutions", "warehouse", "logistics", "operations"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions013",
+          "usage": "<Solutions013 day=\"Четверг, 14 марта\" inbound={[{ code: \"ПР-4471\", partner: \"Фабрика «Дуб»\", gate: \"Ворота 2\", done: 18, total: 24, time: \"09:40\" }]} />",
+          "summary": "Смена склада: приёмка и отгрузка двумя колонками, карточка документа с воротами, временем, готовностью дробью и полосой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-013-* и не подменять её токенами вашей темы",
+            "два потока рядом: фильтр «приёмка / отгрузка» прячет половину смены",
+            "дробь «собрано из позиций» вместо процента — процент не говорит, сколько ещё коробок",
+            "ворота у каждой строки: задача склада — «куда идти», а не «какой документ»",
+            "цвет левой границы как признак направления, продублированный стрелкой в заголовке",
+            "моноширинный номер документа: коды сверяют посимвольно"
+          ],
+          "adapt": [
+            "массивы inbound и outbound",
+            "title и подпись day",
+            "заголовки потоков inboundTitle и outboundTitle",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "done и total — числа: из строк ни дробь, ни полоса не получатся.",
+            "Документ с total = 0 даст деление на ноль в доле — отфильтруйте такие до передачи.",
+            "Пересорт и брак здесь не различаются: для них нужен свой статус и своя строка.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Смена на складе",
+            "maxLength": 24
+          },
+          {
+            "prop": "inboundTitle",
+            "label": "Заголовок приёмки",
+            "type": "text",
+            "default": "Приёмка",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A warehouse shift: inbound and outbound stand as two flows side by side, and a document's progress reads as a \"picked of items\" fraction.",
+            "ai": {
+              "summary": "A warehouse shift: inbound and outbound as two columns, each document card carrying gate, time and progress as a fraction and a bar. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-013-* palette — do not swap it for your theme tokens",
+                "the two flows side by side: an \"inbound / outbound\" filter hides half the shift",
+                "the \"done of total items\" fraction instead of a percentage — a percentage does not say how many boxes are left",
+                "the gate on every row: the warehouse question is \"where do I go\", not \"which document\"",
+                "the left border colour as the direction marker, echoed by the arrow in the heading",
+                "the monospaced document code: codes are checked character by character"
+              ],
+              "adapt": [
+                "the inbound and outbound arrays",
+                "title and the day caption",
+                "the inboundTitle and outboundTitle headings",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "done and total are numbers: strings give neither the fraction nor the bar.",
+                "A document with total = 0 divides by zero in the share — filter those out beforehand.",
+                "Mis-picks and damage are not distinguished here: they need their own status and row.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions013 day=\"Thursday, 14 March\" inbound={[{ code: \"IN-4471\", partner: \"Oak Factory\", gate: \"Gate 2\", done: 18, total: 24, time: \"09:40\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Warehouse shift"
+              },
+              "inboundTitle": {
+                "label": "Inbound heading",
+                "default": "Inbound"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-014",
+      "type": "registry:block",
+      "title": "Supplier Ratings",
+      "description": "Поставщики с рейтингом: оценка нарисована пятью сегментами и продублирована числом, а под ней стоят метрики, из которых она сложилась.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-014/solutions-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-014.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-014-*. Серверный: хуков нет. Сегменты рейтинга различают полное, половинное и пустое состояние, половина рисуется linear-gradient. Карточки раскладываются в две колонки контейнерным запросом, состояние «на паузе» меняет фон и стиль рамки, слабые метрики подсвечиваются порогами.",
+      "meta": {
+        "tags": ["solutions", "suppliers", "rating", "procurement"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions014",
+          "usage": "<Solutions014 suppliers={[{ name: \"Свет-Импорт\", city: \"Санкт-Петербург\", score: 4.1, onTime: 88, defects: 2.1, orders: 64, status: \"active\" }]} />",
+          "summary": "Реестр поставщиков: карточка с рейтингом сегментами и числом, метриками «в срок», «брак», «заказов» и состоянием работы. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-014-* и не подменять её токенами вашей темы",
+            "пять сегментов вместе с цифрой: шкала для взгляда по списку, цифра для точности",
+            "метрики под оценкой — без них рейтинг выглядит произвольным и ему не верят",
+            "состояние «на паузе» фоном и пунктирной рамкой: с таким поставщиком нельзя оформить заказ",
+            "подсветку слабых метрик по порогу, а не ручной пометкой в данных",
+            "aria-label у шкалы рейтинга: сегменты скринридеру ничего не говорят"
+          ],
+          "adapt": [
+            "массив suppliers с метриками и комментариями",
+            "title и hint",
+            "подпись шкалы scoreLabel",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "score — число от 0 до 5: значение вне диапазона просто закрасит все сегменты.",
+            "Пороги «слабых» метрик зашиты в разметке — меняйте их вместе, а не по одному.",
+            "Историю оценок блок не показывает: для динамики нужен график и своя страница.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Поставщики",
+            "maxLength": 24
+          },
+          {
+            "prop": "scoreLabel",
+            "label": "Подпись шкалы",
+            "type": "text",
+            "default": "из 5",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Suppliers with ratings: the score is five segments plus a figure, and the metrics it is built from sit right underneath.",
+            "ai": {
+              "summary": "A supplier registry: cards with a segmented rating and a figure, on-time, defect and order metrics, and a working state. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-014-* palette — do not swap it for your theme tokens",
+                "the five segments together with the figure: the scale for scanning, the figure for precision",
+                "the metrics under the score — without them the rating looks arbitrary and nobody trusts it",
+                "the \"paused\" state as a fill and a dashed border: you cannot place an order with such a supplier",
+                "highlighting weak metrics by threshold rather than by a manual flag in the data",
+                "the aria-label on the rating scale: the segments say nothing to a screen reader"
+              ],
+              "adapt": [
+                "the suppliers array with its metrics and comments",
+                "title and hint",
+                "the scoreLabel scale caption",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "score is a number from 0 to 5: a value outside the range simply fills every segment.",
+                "The \"weak metric\" thresholds live in the markup — change them together, not one by one.",
+                "The block shows no rating history: a trend needs a chart and its own page.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions014 suppliers={[{ name: \"Light Import\", city: \"Saint Petersburg\", score: 4.1, onTime: 88, defects: 2.1, orders: 64, status: \"active\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Suppliers"
+              },
+              "scoreLabel": {
+                "label": "Scale caption",
+                "default": "of 5"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-015",
+      "type": "registry:block",
+      "title": "Delivery Routes",
+      "description": "Маршруты доставки: остановки нарисованы лентой, положение машины видно точкой на линии, а опоздание написано минутами.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-015/solutions-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-015.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-015-*. Серверный: хуков нет. Лента остановок — ol на гриде с горизонтальной прокруткой, линия между точками рисуется псевдоэлементом ::before и закрашивается у пройденных остановок, текущая точка увеличена и обведена box-shadow.",
+      "meta": {
+        "tags": ["solutions", "logistics", "routes", "delivery"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions015",
+          "usage": "<Solutions015 routes={[{ code: \"М-118\", driver: \"Игорь Панин\", truck: \"Фургон\", eta: \"18:55\", delayMinutes: 45, stops: [{ place: \"Склад Б\", time: \"08:30\", state: \"done\" }] }]} />",
+          "summary": "Маршруты на день: карточка рейса с водителем, машиной и временем возвращения, лента остановок с пройденным участком и отметка опоздания. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-015-* и не подменять её токенами вашей темы",
+            "ленту остановок вместо таблицы: положение машины видно без чтения строк",
+            "закрашенную часть линии — она и есть ответ на вопрос «сколько уже проехали»",
+            "увеличенную обведённую точку текущей остановки: цвета для этого недостаточно",
+            "опоздание в минутах: «опаздывает» без числа не помогает решить, звонить ли клиенту",
+            "горизонтальную прокрутку ленты — сжатые остановки склеивают подписи времени"
+          ],
+          "adapt": [
+            "массив routes вместе с остановками",
+            "title и подпись day",
+            "подписи onTimeLabel и lateLabel",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Состояние остановки приходит полем state: из времени блок его не выводит.",
+            "delayMinutes — число; отсутствие поля означает «по графику», а не «неизвестно».",
+            "Карты здесь нет намеренно: она тянет ключ, сеть и свою страницу настроек.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Маршруты на сегодня",
+            "maxLength": 28
+          },
+          {
+            "prop": "lateLabel",
+            "label": "Подпись опоздания",
+            "type": "text",
+            "default": "опаздывает на",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Delivery routes: stops drawn as a timeline, the vehicle's position visible as a dot on the line, and delays spelled out in minutes.",
+            "ai": {
+              "summary": "Routes for the day: a trip card with driver, vehicle and return time, a stop timeline with the covered leg, and a delay flag. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-015-* palette — do not swap it for your theme tokens",
+                "the stop timeline instead of a table: the vehicle's position shows without reading rows",
+                "the filled part of the line — that is the answer to \"how far along are we\"",
+                "the enlarged ringed dot on the current stop: colour alone is not enough",
+                "the delay in minutes: \"running late\" without a number does not help decide whether to call",
+                "the horizontal scrolling of the timeline — squeezed stops glue the time labels together"
+              ],
+              "adapt": [
+                "the routes array together with its stops",
+                "title and the day caption",
+                "the onTimeLabel and lateLabel captions",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "A stop's state arrives in the state field: the block does not derive it from the time.",
+                "delayMinutes is a number; a missing field means \"on schedule\", not \"unknown\".",
+                "There is deliberately no map: it drags in a key, a network call and its own settings page.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions015 routes={[{ code: \"R-118\", driver: \"Igor Panin\", truck: \"Van\", eta: \"18:55\", delayMinutes: 45, stops: [{ place: \"Depot B\", time: \"08:30\", state: \"done\" }] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Routes today"
+              },
+              "lateLabel": {
+                "label": "Delay caption",
+                "default": "running late by"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-016",
+      "type": "registry:block",
+      "title": "Shift Roster",
+      "description": "График смен на неделю: матрица «человек × день» с липкой первой колонкой и строкой покрытия, которая показывает дыры в смене.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-016/solutions-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-016.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-016-*. Серверный: хуков нет. Таблица прокручивается по горизонтали, первая колонка держится position:sticky. Смена подписана буквой и временем, больничный дополнительно заштрихован; покрытие по дням считается в компоненте и живёт в tfoot.",
+      "meta": {
+        "tags": ["solutions", "hr", "shifts", "schedule"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions016",
+          "usage": "<Solutions016 normHours={40} people={[{ name: \"Анна Гаврилова\", role: \"старший смены\", week: [\"morning\", \"morning\", \"off\", \"evening\", \"evening\", \"off\", \"off\"], hours: 32 }]} />",
+          "summary": "График смен: легенда состояний, матрица «человек × день» с буквой и временем в клетке, часы за неделю и строка покрытия по дням. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-016-* и не подменять её токенами вашей темы",
+            "матрицу вместо списка смен по дням: пересменки и дыры видно сразу",
+            "букву и время в клетке — ночная и вечерняя смена не различаются одним цветом",
+            "липкую первую колонку: при прокрутке иначе непонятно, чья это строка",
+            "строку покрытия внизу — дыру в четверге по клеткам глазами не сосчитать",
+            "штриховку больничного: это не смена, а отсутствие, и путать их дорого"
+          ],
+          "adapt": [
+            "массив people и подписи days",
+            "title и подпись week",
+            "норму недели через проп normHours",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Длина массива week должна совпадать с длиной days, иначе колонки разъедутся.",
+            "Часы приходят числом и не считаются из смен: у смен бывают перерывы и переработки.",
+            "Пять типов смен — предел читаемости легенды; шестой тип уже никто не запомнит.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "График смен",
+            "maxLength": 24
+          },
+          {
+            "prop": "normHours",
+            "label": "Норма недели, ч",
+            "type": "number",
+            "default": 40,
+            "min": 20,
+            "max": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A weekly shift roster: a person-by-day matrix with a sticky first column and a coverage row that exposes the gaps.",
+            "ai": {
+              "summary": "A shift roster: a state legend, a person-by-day matrix with a letter and hours in each cell, weekly hours and a coverage row. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-016-* palette — do not swap it for your theme tokens",
+                "the matrix instead of a per-day shift list: handovers and gaps show at once",
+                "the letter and hours in the cell — a night and an evening shift are not one colour apart",
+                "the sticky first column: while scrolling it is otherwise unclear whose row it is",
+                "the coverage row at the bottom — a Thursday gap cannot be counted by eye across cells",
+                "the hatching on sick leave: it is an absence, not a shift, and confusing them is expensive"
+              ],
+              "adapt": [
+                "the people array and the days labels",
+                "title and the week caption",
+                "the weekly norm through the normHours prop",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The week array must match the days array in length, or the columns drift apart.",
+                "Hours arrive as a number and are not derived from shifts: shifts have breaks and overtime.",
+                "Five shift types is the legend's readability limit; a sixth is no longer memorable.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions016 normHours={40} people={[{ name: \"Anna Gavrilova\", role: \"shift lead\", week: [\"morning\", \"morning\", \"off\", \"evening\", \"evening\", \"off\", \"off\"], hours: 32 }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Shift roster"
+              },
+              "normHours": {
+                "label": "Weekly norm, h"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-017",
+      "type": "registry:block",
+      "title": "Time Tracking",
+      "description": "Учёт времени за день: длительность записана и часами, и полосой, а идущая прямо сейчас запись помечена рамкой и мигающей точкой.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-017/solutions-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-017.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-017-*. Серверный: хуков нет. Полоса каждой записи считается от самой длинной за день, неоплачиваемое время окрашено нейтрально. Идущая запись помечена собственной анимацией с обязательным правилом prefers-reduced-motion; недельная сводка — столбики на гриде с role=\"img\".",
+      "meta": {
+        "tags": ["solutions", "time", "tracking", "productivity"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions017",
+          "usage": "<Solutions017 dayNorm={480} entries={[{ task: \"Правки по форме заявки\", project: \"Мера · поддержка\", from: \"11:10\", to: \"13:00\", minutes: 110, billable: true }]} />",
+          "summary": "Учёт времени: сумма дня против нормы, записи с проектом, интервалом и полосой длительности, идущая запись с точкой и недельная сводка столбиками. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-017-* и не подменять её токенами вашей темы",
+            "полосу длительности от самой длинной записи: «1:45» и «0:15» в списке на глаз не различить",
+            "идущую запись рамкой и точкой — забытый таймер стоит дороже неучтённого часа",
+            "правило prefers-reduced-motion: мигающая точка обязана останавливаться",
+            "нейтральный цвет неоплачиваемого времени, а не его исчезновение из списка",
+            "недельную сводку рядом: день без недели не отвечает «догоняю или отстаю»"
+          ],
+          "adapt": [
+            "массив entries и данные weekBars с подписями weekDays",
+            "title и подпись day",
+            "норму дня в минутах через проп dayNorm",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "minutes — целое число минут: часы вида 1.75 дадут неверную полосу и сумму.",
+            "Идущая запись не тикает: блок серверный, реальный таймер живёт на клиенте или на сервере.",
+            "Пересечения записей не проверяются — два таймера подряд сложатся в сумму дня.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Учёт времени",
+            "maxLength": 24
+          },
+          {
+            "prop": "dayNorm",
+            "label": "Норма дня, мин",
+            "type": "number",
+            "default": 480,
+            "min": 60,
+            "max": 720
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Time tracking for a day: durations written as both hours and bars, with the entry running right now marked by a frame and a blinking dot.",
+            "ai": {
+              "summary": "Time tracking: the day's total against the norm, entries with project, interval and a duration bar, a running entry with a dot, and a weekly bar summary. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-017-* palette — do not swap it for your theme tokens",
+                "the duration bar scaled to the longest entry: \"1:45\" and \"0:15\" do not separate by eye in a list",
+                "the running entry marked by frame and dot — a forgotten timer costs more than an untracked hour",
+                "the prefers-reduced-motion rule: the blinking dot has to stop",
+                "the neutral colour for non-billable time rather than dropping it from the list",
+                "the weekly summary alongside: a day without a week does not answer \"ahead or behind\""
+              ],
+              "adapt": [
+                "the entries array and the weekBars data with its weekDays labels",
+                "title and the day caption",
+                "the daily norm in minutes through the dayNorm prop",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "minutes is a whole number of minutes: an hour value like 1.75 gives a wrong bar and total.",
+                "The running entry does not tick: the block is server-side, a real timer lives on the client or server.",
+                "Overlapping entries are not checked — two concurrent timers both land in the day's total.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions017 dayNorm={480} entries={[{ task: \"Request form fixes\", project: \"Mera · support\", from: \"11:10\", to: \"13:00\", minutes: 110, billable: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Time tracking"
+              },
+              "dayNorm": {
+                "label": "Daily norm, min"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-018",
+      "type": "registry:block",
+      "title": "Leave Calendar",
+      "description": "Календарь отсутствий: отпуск занимает диапазон ячеек гридом, а вертикальная линия сегодняшнего дня отделяет «идёт» от «запланировано».",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-018/solutions-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-018.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-018-*. Серверный: хуков нет. Число колонок сетки задаётся переменной --vibeui-solutions-018-days, диапазон отсутствия занимает ячейки через grid-column от from до to. Тип отсутствия несёт букву и штриховку, сегодняшний день подчёркнут в линейке.",
+      "meta": {
+        "tags": ["solutions", "hr", "leave", "calendar"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions018",
+          "usage": "<Solutions018 today={14} daysInMonth={31} rows={[{ name: \"Игорь Панин\", team: \"внедрение\", absences: [{ kind: \"vacation\", from: 12, to: 26, label: \"отпуск\" }] }]} />",
+          "summary": "Календарь отсутствий: линейка дней месяца, полосы отпусков и больничных по людям, отметка сегодняшнего дня и счётчик отсутствующих. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-018-* и не подменять её токенами вашей темы",
+            "диапазон гридом, а не списком дат: длина отпуска должна быть видна геометрией",
+            "вертикальную отметку сегодняшнего дня — иначе «идёт» и «будет» неразличимы",
+            "букву и штриховку типа отсутствия: цвет один не переживает печать и дальтонизм",
+            "расположение строк друг под другом: пересечения читаются только по вертикали",
+            "горизонтальную прокрутку месяца — тридцать одна колонка в ширину телефона не влезает"
+          ],
+          "adapt": [
+            "массив rows с интервалами отсутствий",
+            "title и подпись month",
+            "число дней daysInMonth и номер дня today",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "from и to — номера дней внутри месяца, а не даты: переход через месяц режьте до передачи.",
+            "Выходные не выделены: производственный календарь у каждой страны свой.",
+            "Пересечения интервалов у одного человека наложатся друг на друга — склеивайте их заранее.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Отпуска и отсутствия",
+            "maxLength": 28
+          },
+          {
+            "prop": "today",
+            "label": "Сегодняшний день",
+            "type": "number",
+            "default": 14,
+            "min": 1,
+            "max": 31
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A leave calendar: vacations span cells on a grid, and the vertical today line separates \"ongoing\" from \"planned\".",
+            "ai": {
+              "summary": "A leave calendar: a ruler of month days, absence bars per person, a today marker and a count of who is out. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-018-* palette — do not swap it for your theme tokens",
+                "the range as a grid span rather than a date list: leave length has to be visible as geometry",
+                "the vertical today marker — otherwise \"ongoing\" and \"upcoming\" are indistinguishable",
+                "the letter and hatching per absence type: colour alone survives neither print nor colour blindness",
+                "the rows stacked one under another: overlaps read only vertically",
+                "the horizontal scrolling of the month — thirty-one columns do not fit a phone"
+              ],
+              "adapt": [
+                "the rows array with its absence intervals",
+                "title and the month caption",
+                "the daysInMonth count and the today day number",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "from and to are day numbers inside the month, not dates: split cross-month ranges beforehand.",
+                "Weekends are not highlighted: every country has its own working calendar.",
+                "Overlapping intervals for one person stack on top of each other — merge them in advance.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions018 today={14} daysInMonth={31} rows={[{ name: \"Igor Panin\", team: \"delivery\", absences: [{ kind: \"vacation\", from: 12, to: 26, label: \"vacation\" }] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Leave and absence"
+              },
+              "today": {
+                "label": "Today's day"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-019",
+      "type": "registry:block",
+      "title": "Hiring Funnel",
+      "description": "Воронка найма: между ступенями подписана конверсия шага, а кандидаты со сроком на этапе выше норматива помечены полосой.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-019/solutions-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-019.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-019-*. Серверный: хуков нет. Ступени идут флекс-лентой с горизонтальной прокруткой, между ними вставлены вычисленные конверсии шага. Список кандидатов раскладывается в три колонки контейнерным запросом, превышение slaDays помечает строку атрибутом data-stuck.",
+      "meta": {
+        "tags": ["solutions", "hr", "hiring", "funnel"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions019",
+          "usage": "<Solutions019 slaDays={7} stages={[{ name: \"Интервью\", count: 24 }]} candidates={[{ name: \"Пётр Аникин\", role: \"Frontend\", stage: \"Интервью\", daysOnStage: 14, recruiter: \"Дина С.\" }]} />",
+          "summary": "Воронка найма: ступени со счётчиками и конверсией шага между ними, список кандидатов с этапом, сроком на этапе и рекрутёром. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-019-* и не подменять её токенами вашей темы",
+            "конверсию шага, а не долю от первой ступени: важно, где именно теряются люди",
+            "срок на этапе рядом с этапом — кандидат, висящий две недели, уходит молча",
+            "сравнение срока с нормативом внутри блока, а не готовую метку «завис» в данных",
+            "полосу и слово у просроченной строки: одного цвета для тревоги мало",
+            "горизонтальную прокрутку ступеней — сжатая ступень теряет и число, и подпись"
+          ],
+          "adapt": [
+            "массивы stages и candidates",
+            "title и подпись vacancy",
+            "норматив этапа через проп slaDays",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Порядок stages задаёт порядок воронки: сортировкой по числу вы сломаете конверсию.",
+            "count и daysOnStage — числа: конверсию и просрочку из строк не вычислить.",
+            "Отказы блок не показывает: их причины требуют отдельного разреза и своей страницы.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Наём",
+            "maxLength": 24
+          },
+          {
+            "prop": "slaDays",
+            "label": "Норматив этапа, дней",
+            "type": "number",
+            "default": 7,
+            "min": 1,
+            "max": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A hiring funnel: step conversion is written between the stages, and candidates past the stage norm are flagged with a stripe.",
+            "ai": {
+              "summary": "A hiring funnel: stages with counts and step conversion between them, plus a candidate list with stage, days on stage and recruiter. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-019-* palette — do not swap it for your theme tokens",
+                "step conversion rather than a share of the first stage: what matters is where people are lost",
+                "the days-on-stage next to the stage — a candidate stuck for two weeks leaves silently",
+                "comparing the age to the norm inside the block rather than a ready-made \"stuck\" flag in the data",
+                "the stripe and the word on an overdue row: colour alone is not enough for an alarm",
+                "the horizontal scrolling of stages — a squeezed stage loses both its number and its label"
+              ],
+              "adapt": [
+                "the stages and candidates arrays",
+                "title and the vacancy caption",
+                "the stage norm through the slaDays prop",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The stages order defines the funnel order: sorting by count breaks the conversion figures.",
+                "count and daysOnStage are numbers: neither conversion nor overdue state comes from strings.",
+                "Rejections are not shown: their reasons need a separate cut and their own page.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions019 slaDays={7} stages={[{ name: \"Interview\", count: 24 }]} candidates={[{ name: \"Pyotr Anikin\", role: \"Frontend\", stage: \"Interview\", daysOnStage: 14, recruiter: \"Dina S.\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Hiring"
+              },
+              "slaDays": {
+                "label": "Stage norm, days"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-020",
+      "type": "registry:block",
+      "title": "Property Listings",
+      "description": "Подборка объектов: фильтр собран на радиокнопках и :has(), поэтому работает без JS, а цена за квадратный метр считается из цены и площади.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-020/solutions-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-020.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-020-*. Серверный: хуков нет. Фильтр — группа радиокнопок внутри fieldset, подсветка выбранного чипа сделана на :has(input:checked), фокус ловится через :has(input:focus-visible). У legend с float стоит clear через ::after, иначе чипы обтекают подпись. Сетка карточек переключается контейнерными запросами.",
+      "meta": {
+        "tags": ["solutions", "realestate", "listings", "filter"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions020",
+          "usage": "<Solutions020 activeFilter=\"2 комнаты\" listings={[{ title: \"Двушка с изолированными комнатами\", district: \"Сокол\", metro: \"Панфиловская · 5 мин\", price: 24600000, area: 58, rooms: 2, floor: \"2 из 12\" }]} />",
+          "summary": "Подборка недвижимости: фильтр по комнатности на радиокнопках, карточки с районом, метро, ценой, вычисленной ценой за метр и характеристиками. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-020-* и не подменять её токенами вашей темы",
+            "фильтр на радиокнопках: выбор живёт в форме и работает с клавиатуры без единой строчки JS",
+            "clear у fieldset после плавающего legend — иначе чипы обтекают подпись сбоку",
+            "расчёт цены за метр из цены и площади: два отдельных поля рано или поздно разойдутся",
+            "район и метро вместо фотографии-заглушки: подборка без картинок честнее",
+            "видимый фокус через :has(input:focus-visible), раз сам input визуально скрыт"
+          ],
+          "adapt": [
+            "массив listings и набор filters",
+            "title и подпись found",
+            "выбранный фильтр через проп activeFilter",
+            "валюту через проп currency"
+          ],
+          "notes": [
+            "Фильтр только подсвечивает выбор: сама выборка делается на сервере или ссылками.",
+            "price и area — числа: цена за метр из строк не посчитается, а деление на нулевую площадь упадёт.",
+            "Имя группы радиокнопок зашито в разметке — двум копиям блока на одной странице оно помешает.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Объекты в продаже",
+            "maxLength": 28
+          },
+          {
+            "prop": "activeFilter",
+            "label": "Выбранный фильтр",
+            "type": "select",
+            "default": "Все",
+            "options": ["Все", "Студии", "1 комната", "2 комнаты", "3+"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A property shortlist: the filter is radio inputs plus :has(), so it works without JS, and price per square metre is computed from price and area.",
+            "ai": {
+              "summary": "A property shortlist: a room-count filter on radio inputs and cards with district, metro, price, a computed price per square metre and specs. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-020-* palette — do not swap it for your theme tokens",
+                "the radio-based filter: the choice lives in the form and works from the keyboard without a line of JS",
+                "the clear on the fieldset after the floated legend — otherwise the chips wrap around the caption",
+                "computing price per square metre from price and area: two separate fields will drift apart",
+                "district and metro instead of a placeholder photo: a shortlist without images is more honest",
+                "the visible focus via :has(input:focus-visible), since the input itself is hidden"
+              ],
+              "adapt": [
+                "the listings array and the filters set",
+                "title and the found caption",
+                "the selected filter through the activeFilter prop",
+                "the currency through the currency prop"
+              ],
+              "notes": [
+                "The filter only highlights the choice: the actual filtering happens on the server or via links.",
+                "price and area are numbers: price per metre needs them, and a zero area divides by zero.",
+                "The radio group name is hard-coded — two copies of the block on one page would collide.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions020 activeFilter=\"2 rooms\" listings={[{ title: \"Two separate bedrooms\", district: \"Sokol\", metro: \"Panfilovskaya · 5 min\", price: 24600000, area: 58, rooms: 2, floor: \"2 of 12\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Listings for sale"
+              },
+              "activeFilter": {
+                "label": "Selected filter"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-021",
+      "type": "registry:block",
+      "title": "Room Booking",
+      "description": "Сетка переговорных: матрица «комната × час», где бронь занимает диапазон колонок, а свободный час остаётся кнопкой.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-021/solutions-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-021.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-021-*. Серверный: хуков нет. Число колонок задаётся переменной --vibeui-solutions-021-hours, бронь занимает ячейки через grid-column от from до to. Занятые часы собираются в Set, поэтому под бронью не рисуется кнопка: нажать чужую встречу нельзя ни мышью, ни с клавиатуры.",
+      "meta": {
+        "tags": ["solutions", "booking", "rooms", "schedule"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions021",
+          "usage": "<Solutions021 day=\"Четверг, 14 марта · UTC+3\" rooms={[{ name: \"Аквариум\", seats: 12, gear: \"экран, ВКС\", bookings: [{ from: 0, to: 2, who: \"Планёрка продукта\" }] }]} />",
+          "summary": "Переговорные на день: линейка часов, строки комнат с вместимостью и техникой, брони одним блоком на весь интервал и свободные часы кнопками. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-021-* и не подменять её токенами вашей темы",
+            "матрицу «комната × час»: список броней по комнатам заставляет перебирать вкладки",
+            "бронь одним блоком на весь интервал — две одинаковые ячейки не читаются как одна встреча",
+            "кнопку только у свободного часа: занятое время должно быть ненажимаемым и с клавиатуры",
+            "вместимость и технику у названия комнаты: комнату выбирают по ним, а не по имени",
+            "часовой пояс рядом с датой, иначе 14:00 значит разное для двух сторон"
+          ],
+          "adapt": [
+            "массив rooms вместе с бронями",
+            "title и подпись day",
+            "линейку часов через проп hours",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "from и to — индексы в массиве hours, а не время: получасовые брони эта сетка не показывает.",
+            "Пересекающиеся брони в одной комнате наложатся друг на друга — проверяйте их до передачи.",
+            "Кнопка свободного часа ничего не резервирует: удержание слота живёт на сервере.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Переговорные",
+            "maxLength": 24
+          },
+          {
+            "prop": "day",
+            "label": "День и пояс",
+            "type": "text",
+            "default": "Четверг, 14 марта · 3 этаж · UTC+3",
+            "maxLength": 44
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A meeting-room grid: a room-by-hour matrix where a booking spans columns and a free hour stays a button.",
+            "ai": {
+              "summary": "Meeting rooms for a day: an hour ruler, room rows with capacity and equipment, bookings as one block per interval and free hours as buttons. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-021-* palette — do not swap it for your theme tokens",
+                "the room-by-hour matrix: a per-room booking list makes people cycle through tabs",
+                "a booking as one block across the interval — two identical cells do not read as one meeting",
+                "a button only on a free hour: taken time must be unclickable from the keyboard too",
+                "capacity and equipment beside the room name: rooms are chosen by those, not by the name",
+                "the time zone next to the date, or 14:00 means two different things"
+              ],
+              "adapt": [
+                "the rooms array together with its bookings",
+                "title and the day caption",
+                "the hour ruler through the hours prop",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "from and to are indexes into the hours array, not times: this grid cannot show half-hour bookings.",
+                "Overlapping bookings in one room stack on each other — validate them before passing them in.",
+                "The free-hour button reserves nothing: holding a slot lives on the server.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions021 day=\"Thursday, 14 March · UTC+3\" rooms={[{ name: \"Aquarium\", seats: 12, gear: \"screen, video\", bookings: [{ from: 0, to: 2, who: \"Product standup\" }] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Meeting rooms"
+              },
+              "day": {
+                "label": "Day and time zone",
+                "default": "Thursday, 14 March · 3rd floor · UTC+3"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-022",
+      "type": "registry:block",
+      "title": "Clinic Schedule",
+      "description": "Расписание приёма врача: время стоит отдельной колонкой, окно между приёмами названо словами, а отменённый приём остаётся зачёркнутым.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-022/solutions-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-022.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-022-*. Серверный: хуков нет. Список — ol с фиксированной колонкой времени в моноширинном шрифте; на широком контейнере добавляется третья колонка статуса. Текущий приём подсвечивается фоном и обведённой точкой, окно рисуется штриховой линией на псевдоэлементе.",
+      "meta": {
+        "tags": ["solutions", "clinic", "appointments", "schedule"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions022",
+          "usage": "<Solutions022 doctor=\"Иванцова Е. Л. · терапевт\" visits={[{ time: \"10:30\", duration: \"30 мин\", patient: \"Лунёва М. В.\", age: \"28 лет\", reason: \"Расшифровка анализов\", room: \"Кабинет 212\", state: \"now\" }]} />",
+          "summary": "Приём врача на день: список визитов с временем, длительностью, пациентом и поводом, статусами приёма, пометкой первичного и окнами между приёмами. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-022-* и не подменять её токенами вашей темы",
+            "время отдельной колонкой одной ширины: расписание сравнивают по столбцу",
+            "окно между приёмами явной строкой — пустое место читается как ошибка загрузки",
+            "отменённый приём зачёркнутым, а не удалённым: исчезнувшая запись выглядит как потеря данных",
+            "пометку первичного пациента: такой приём длиннее и меняет план дня",
+            "форму точки под статус, чтобы «идёт приём» и «ожидает» различались без цвета"
+          ],
+          "adapt": [
+            "массив visits вместе с полем gapBefore",
+            "title, doctor и подпись day",
+            "подпись окна через проп gapLabel",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Окно приходит полем gapBefore: из времени соседних приёмов блок его не вычисляет.",
+            "Диагнозов в поводе визита быть не должно — это медицинская тайна, а экран видят в коридоре.",
+            "Порядок визитов задаётся массивом: по времени блок не сортирует.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Приём на сегодня",
+            "maxLength": 24
+          },
+          {
+            "prop": "doctor",
+            "label": "Врач",
+            "type": "text",
+            "default": "Иванцова Е. Л. · терапевт",
+            "maxLength": 36
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A doctor's appointment list: time in its own column, gaps named in words, and cancelled visits left struck through.",
+            "ai": {
+              "summary": "A doctor's day: visits with time, duration, patient and reason, appointment states, a first-visit flag and named gaps between slots. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-022-* palette — do not swap it for your theme tokens",
+                "the time as its own fixed-width column: schedules are compared down the column",
+                "the gap between visits as an explicit row — empty space reads as a loading error",
+                "a cancelled visit struck through rather than removed: a vanished row looks like data loss",
+                "the first-visit flag: such an appointment runs longer and reshapes the day",
+                "the dot shape for the state, so \"in progress\" and \"waiting\" differ without colour"
+              ],
+              "adapt": [
+                "the visits array together with its gapBefore field",
+                "title, doctor and the day caption",
+                "the gap caption through the gapLabel prop",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The gap arrives in the gapBefore field: the block does not derive it from neighbouring times.",
+                "Keep diagnoses out of the visit reason — it is medical data, and the screen is visible from the corridor.",
+                "Visit order comes from the array: the block does not sort by time.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions022 doctor=\"Dr. Ivantsova · therapist\" visits={[{ time: \"10:30\", duration: \"30 min\", patient: \"M. Luneva\", age: \"28\", reason: \"Lab results review\", room: \"Room 212\", state: \"now\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Today's clinic"
+              },
+              "doctor": {
+                "label": "Doctor",
+                "default": "Dr. Ivantsova · therapist"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-023",
+      "type": "registry:block",
+      "title": "Class Groups",
+      "description": "Учебные группы: дни занятий показаны семью клетками вместо строки «пн, ср, пт», а свободные места названы числом, а не процентом.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-023/solutions-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-023.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-023-*. Серверный: хуков нет. Карточки раскладываются в две колонки контейнерным запросом. Дни — семь клеток с data-on, у набора есть полоса с role=\"progressbar\" и дробь; заполненная группа помечается атрибутом data-full, меняющим фон и рамку.",
+      "meta": {
+        "tags": ["solutions", "education", "groups", "schedule"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions023",
+          "usage": "<Solutions023 groups={[{ name: \"Английский · разговорный\", level: \"B1\", teacher: \"Ольга Панфилова\", days: [\"пн\", \"ср\"], time: \"19:00 — 20:30\", room: \"ауд. 4\", enrolled: 11, capacity: 12, nextLesson: \"понедельник, 18 марта\" }]} />",
+          "summary": "Учебные группы: карточка с уровнем, преподавателем, днями занятий клетками, временем, набором дробью и полосой и датой ближайшего занятия. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-023-* и не подменять её токенами вашей темы",
+            "семь клеток вместо строки «пн, ср, пт»: узор сравнивается между группами быстрее текста",
+            "свободные места числом, а не процентом — администратору важно «сколько ещё возьмём»",
+            "полную группу рамкой и словом: в неё нельзя записать, и это должно быть видно до клика",
+            "дробь «занято из мест» вместе с полосой: полоса для взгляда, дробь для точности",
+            "aria-label у ряда дней, чтобы расписание читалось скринридером словами"
+          ],
+          "adapt": [
+            "массив groups и набор weekDays",
+            "title и подпись term",
+            "подпись fullLabel для заполненной группы",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Подписи в days должны совпадать со значениями weekDays посимвольно, иначе клетки не подсветятся.",
+            "enrolled и capacity — числа: дробь и полоса из строк не соберутся.",
+            "Занятия с разным временем по дням этот формат не покажет: нужна строка на каждое занятие.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Группы и расписание",
+            "maxLength": 28
+          },
+          {
+            "prop": "fullLabel",
+            "label": "Подпись «мест нет»",
+            "type": "text",
+            "default": "мест нет",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Class groups: lesson days shown as seven cells instead of a \"Mon, Wed, Fri\" string, and free seats named as a number rather than a percentage.",
+            "ai": {
+              "summary": "Class groups: cards with level, teacher, weekday cells, time, enrolment as a fraction and a bar, and the next lesson date. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-023-* palette — do not swap it for your theme tokens",
+                "the seven cells instead of a \"Mon, Wed, Fri\" string: the pattern compares faster than text",
+                "free seats as a number, not a percentage — the admin needs \"how many more can we take\"",
+                "a full group marked by frame and word: you cannot enrol into it, and that must show before the click",
+                "the \"enrolled of seats\" fraction together with the bar: the bar for scanning, the fraction for precision",
+                "the aria-label on the weekday row so the schedule reads as words to a screen reader"
+              ],
+              "adapt": [
+                "the groups array and the weekDays set",
+                "title and the term caption",
+                "the fullLabel caption for a full group",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The days labels must match weekDays character for character, or the cells will not light up.",
+                "enrolled and capacity are numbers: strings give neither the fraction nor the bar.",
+                "Different times on different days do not fit this format: that needs a row per lesson.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions023 groups={[{ name: \"English · speaking\", level: \"B1\", teacher: \"Olga Panfilova\", days: [\"Mon\", \"Wed\"], time: \"19:00 — 20:30\", room: \"room 4\", enrolled: 11, capacity: 12, nextLesson: \"Monday, 18 March\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Groups and schedule"
+              },
+              "fullLabel": {
+                "label": "Full-group caption",
+                "default": "no seats left"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-024",
+      "type": "registry:block",
+      "title": "Newsletter Segments",
+      "description": "База рассылки по сегментам: у каждого сегмента написано правило отбора, а пересечения названы словами, а не спрятаны нормализацией долей.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-024/solutions-024.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-024.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-024-*. Серверный: хуков нет. Карточки сегментов раскладываются в две колонки контейнерным запросом, доля от базы считается в компоненте и объявлена role=\"progressbar\". Правило отбора набрано моноширинным шрифтом, неподтверждённая почта помечена отдельной плашкой.",
+      "meta": {
+        "tags": ["solutions", "marketing", "segments", "newsletter"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions024",
+          "usage": "<Solutions024 baseSize={16480} segments={[{ name: \"Активные читатели\", people: 8420, openRate: 54, rule: \"открыл ≥3 писем за 60 дней\" }]} />",
+          "summary": "Подписчики рассылки: объём базы с приростом, сегменты с правилом отбора, долей и открываемостью, оговорка о пересечениях и таблица последних подписок. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-024-* и не подменять её токенами вашей темы",
+            "правило отбора рядом с числом: сегмент без правила невозможно воспроизвести и проверить",
+            "оговорку о пересечениях — сумма долей больше ста процентов, и это нормально",
+            "долю от базы вместе с абсолютным числом: одно без другого вводит в заблуждение",
+            "пометку неподтверждённой почты: по такому адресу нельзя слать, а в общем счётчике он опасен",
+            "моноширинный шрифт правила, раз это по сути выражение отбора"
+          ],
+          "adapt": [
+            "массивы segments и subscribers",
+            "title, hint и текст overlapNote",
+            "объём базы через проп baseSize",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Доли не нормализуются намеренно: сегменты пересекаются, и подгонка под сто процентов соврала бы.",
+            "people и baseSize — числа: доля из строк не посчитается, а нулевая база даст деление на ноль.",
+            "Адреса в таблице показаны целиком только потому, что это внутренний экран.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Подписчики рассылки",
+            "maxLength": 28
+          },
+          {
+            "prop": "baseSize",
+            "label": "Объём базы",
+            "type": "number",
+            "default": 16480,
+            "min": 1,
+            "max": 200000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A newsletter base by segment: every segment carries its selection rule, and overlaps are stated in words instead of being hidden by normalised shares.",
+            "ai": {
+              "summary": "Newsletter subscribers: base size with growth, segments with their selection rule, share and open rate, an overlap caveat and a table of recent sign-ups. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-024-* palette — do not swap it for your theme tokens",
+                "the selection rule next to the number: a segment without its rule cannot be reproduced or checked",
+                "the overlap caveat — the shares add up to more than a hundred percent, and that is fine",
+                "the share of base together with the absolute count: either one alone misleads",
+                "the unconfirmed-email flag: you cannot mail such an address, and it is dangerous inside a total",
+                "the monospaced rule text, since it is effectively a selection expression"
+              ],
+              "adapt": [
+                "the segments and subscribers arrays",
+                "title, hint and the overlapNote text",
+                "the base size through the baseSize prop",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Shares are deliberately not normalised: segments overlap, and forcing a hundred percent would lie.",
+                "people and baseSize are numbers: strings give no share, and a zero base divides by zero.",
+                "Addresses are shown in full only because this is an internal screen.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions024 baseSize={16480} segments={[{ name: \"Active readers\", people: 8420, openRate: 54, rule: \"opened ≥3 emails in 60 days\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Newsletter subscribers"
+              },
+              "baseSize": {
+                "label": "Base size"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-025",
+      "type": "registry:block",
+      "title": "Moderation Queue",
+      "description": "Очередь модерации: спорный текст показан цитатой целиком, у каждой карточки написан срок ожидания, а безвозвратное решение стоит последним.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-025/solutions-025.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-025.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-025-*. Серверный: хуков нет. Карточки раскладываются в две колонки контейнерным запросом, тяжёлые случаи помечаются атрибутом data-severity, меняющим рамку и цвет полосы цитаты. Кнопка блокировки отодвинута margin-left:auto и не имеет заливки.",
+      "meta": {
+        "tags": ["solutions", "moderation", "queue", "content"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions025",
+          "usage": "<Solutions025 items={[{ author: \"user_84120\", authorNote: \"3 публикации\", posted: \"Комментарий\", waiting: \"ждёт 3 дня\", reason: \"спам\", reports: 12, severity: \"high\", quote: \"…\" }]} />",
+          "summary": "Очередь модерации: карточка с автором, сроком ожидания, цитатой целиком, причиной и числом жалоб и тремя решениями в ряд. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-025-* и не подменять её токенами вашей темы",
+            "цитату целиком: решение принимают по содержанию, а «показать полностью» — лишний клик на каждой карточке",
+            "срок ожидания у каждой карточки — очередь, где неясно, что висит третий день, разъезжается сама",
+            "причину жалобы рядом с их количеством: одна жалоба и двенадцать — разные ситуации",
+            "безвозвратное действие последним и без заливки, чтобы его не нажимали по инерции",
+            "историю автора под именем: у новичка с тремя постами и у старожила разный вес"
+          ],
+          "adapt": [
+            "массив items с цитатами и причинами",
+            "title и подпись queueNote",
+            "подписи approveLabel, hideLabel и banLabel",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Кнопки ничего не делают: решения обязаны уходить на сервер с подтверждением и журналом.",
+            "Блокировка автора необратима — в проде добавьте диалог подтверждения перед вызовом.",
+            "Персональные данные в цитате не маскируются: маскировка — задача источника, а не вёрстки.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Очередь модерации",
+            "maxLength": 24
+          },
+          {
+            "prop": "approveLabel",
+            "label": "Кнопка одобрения",
+            "type": "text",
+            "default": "Опубликовать",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A moderation queue: the disputed text is quoted in full, every card states how long it has waited, and the irreversible decision comes last.",
+            "ai": {
+              "summary": "A moderation queue: cards with author, waiting time, the full quote, the reason and report count, and three decisions in a row. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-025-* palette — do not swap it for your theme tokens",
+                "the full quote: decisions are made on content, and \"show more\" is an extra click on every card",
+                "the waiting time on every card — a queue that hides what has sat for three days drifts on its own",
+                "the report reason next to the report count: one complaint and twelve are different situations",
+                "the irreversible action last and unfilled, so nobody hits it out of momentum",
+                "the author history under the name: a newcomer with three posts and a veteran carry different weight"
+              ],
+              "adapt": [
+                "the items array with its quotes and reasons",
+                "title and the queueNote caption",
+                "the approveLabel, hideLabel and banLabel captions",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The buttons do nothing: decisions must go to the server with confirmation and an audit log.",
+                "Banning an author is irreversible — in production add a confirmation dialog before the call.",
+                "Personal data inside a quote is not masked: masking belongs to the source, not the markup.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions025 items={[{ author: \"user_84120\", authorNote: \"3 posts\", posted: \"Comment\", waiting: \"waiting 3 days\", reason: \"spam\", reports: 12, severity: \"high\", quote: \"…\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Moderation queue"
+              },
+              "approveLabel": {
+                "label": "Approve button",
+                "default": "Publish"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "solutions-026",
+      "type": "registry:block",
+      "title": "Affiliate Payouts",
+      "description": "Партнёрская программа: порог выплаты нарисован полосой с недостающей суммой, а комиссия каждого партнёра подкреплена его воронкой.",
+      "categories": ["solutions"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "solutions-026/solutions-026.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/solutions-026.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-026-*. Серверный: хуков нет. Полоса порога объявлена role=\"progressbar\" и меняет цвет при достижении порога через data-ready. Обе таблицы прокручиваются по горизонтали внутри собственных контейнеров, статус выплаты несёт форму точки, а удержание — причину отдельной строкой.",
+      "meta": {
+        "tags": ["solutions", "affiliate", "payouts", "partners"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Solutions026",
+          "usage": "<Solutions026 balance={4200} threshold={5000} partners={[{ name: \"Блог «Складской ум»\", channel: \"статьи\", clicks: 4820, signups: 341, paid: 46, earned: 138000, rate: 20 }]} />",
+          "summary": "Партнёрская программа: баланс и сумма в обработке, полоса порога выплаты с недостающей суммой, таблица партнёров с воронкой и ставкой и история выплат со статусами. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-solutions-026-* и не подменять её токенами вашей темы",
+            "формулировку «до выплаты не хватает столько-то» вместо голого баланса: иначе деньги выглядят зависшими",
+            "полосу порога вместе с суммой порога словами — шкала без числа не объясняет правило",
+            "воронку партнёра в строке: комиссия без переходов, регистраций и оплат выглядит случайным числом",
+            "ставку комиссии у каждого партнёра — она разная и это главный повод для спора",
+            "удержанную выплату в списке вместе с причиной, а не её исчезновение"
+          ],
+          "adapt": [
+            "массивы partners и payouts",
+            "title, hint и подпись thresholdLabel",
+            "числа balance, pending и threshold",
+            "валюту через проп currency"
+          ],
+          "notes": [
+            "balance и threshold — числа: недостающую сумму и полосу из строк не собрать.",
+            "Налоги и удержания блок не считает: их размер зависит от страны и статуса партнёра.",
+            "Реквизиты выплаты показаны текстом — полные номера счетов сюда класть нельзя.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Партнёрская программа",
+            "maxLength": 28
+          },
+          {
+            "prop": "threshold",
+            "label": "Порог выплаты",
+            "type": "number",
+            "default": 5000,
+            "min": 500,
+            "max": 100000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An affiliate programme: the payout threshold is a bar with the missing amount spelled out, and every partner's commission is backed by their funnel.",
+            "ai": {
+              "summary": "An affiliate programme: balance and pending amount, a payout-threshold bar with the shortfall, a partner table with funnel and rate, and a payout history with states. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-solutions-026-* palette — do not swap it for your theme tokens",
+                "the wording \"you need this much more to be paid\" instead of a bare balance: otherwise the money looks stuck",
+                "the threshold bar together with the threshold amount in words — a scale without a number explains no rule",
+                "the partner funnel in the row: a commission without clicks, sign-ups and payments looks arbitrary",
+                "the commission rate on every partner — it differs, and it is the main source of disputes",
+                "a held payout kept in the list with its reason rather than disappearing"
+              ],
+              "adapt": [
+                "the partners and payouts arrays",
+                "title, hint and the thresholdLabel caption",
+                "the balance, pending and threshold figures",
+                "the currency through the currency prop"
+              ],
+              "notes": [
+                "balance and threshold are numbers: neither the shortfall nor the bar comes from strings.",
+                "The block computes no taxes or withholdings: those depend on country and partner status.",
+                "Payout details are plain text — full account numbers do not belong here.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Solutions026 balance={4200} threshold={5000} partners={[{ name: \"Warehouse Mind blog\", channel: \"articles\", clicks: 4820, signups: 341, paid: 46, earned: 138000, rate: 20 }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Affiliate programme"
+              },
+              "threshold": {
+                "label": "Payout threshold"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
