@@ -3488,6 +3488,3248 @@
           }
         }
       }
+    },
+    {
+      "name": "button-033",
+      "type": "registry:component",
+      "title": "Ghost Button",
+      "description": "Кнопка-призрак на собственной поверхности: в покое ни рамки, ни фона, вес приходит только на наведении, а включённое состояние держится акцентной подложкой.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-033/button-033.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-033.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-033-*. Серверный компонент. Корень блока — не сама кнопка, а бумажная поверхность, на которой призрак только и читается; кнопка лежит внутри и помечена data-part=\"button\". Активное состояние объявлено через aria-current, поэтому его видно и скринридеру, а не только по цвету. Подложки собраны через color-mix от акцента, отдельных переменных под оттенки нет.",
+      "meta": {
+        "tags": ["button", "ghost", "secondary", "toolbar"],
+        "ai": {
+          "export": "Button033",
+          "usage": "<Button033 active onClick={openSettings}>\n  Настройки\n</Button033>",
+          "summary": "Кнопка минимального веса, поставленная на собственную бумажную поверхность. В покое видна только подпись и квадратный маркер; на наведении появляется подложка из акцента, на активном состоянии она остаётся и подпись уходит в акцентный цвет. Состояние объявлено через aria-current. Ноль зависимостей, один файл.",
+          "preserve": [
+            "поверхность в корне блока: призрак существует только по контрасту с ней, на голом фоне кнопка исчезает",
+            "отсутствие рамки и заливки у самой кнопки в покое — это и есть определение призрака",
+            "aria-current как носитель активного состояния: цвет один его не передаёт",
+            "подложку из color-mix с акцентом, а не отдельный серый: она держит связь с акцентом темы",
+            "квадратный маркер и его поворот на 45° при наведении — второй, бесцветный сигнал",
+            "focus-visible с отступом: без него кнопка теряется при работе с клавиатуры"
+          ],
+          "adapt": [
+            "подпись кнопки",
+            "включённое состояние — проп active",
+            "акцентный цвет — проп accent",
+            "обработчик onClick и disabled",
+            "внешние отступы через className — он попадает на поверхность"
+          ],
+          "notes": [
+            "Не убирай поверхность в корне: на тёмной подложке призрак без неё не читается.",
+            "Не ставь несколько призраков подряд как основные действия — этот вес рассчитан на второстепенные.",
+            "Не подменяй aria-current классом «active»: состояние должно уходить в дерево доступности.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Настройки",
+            "maxLength": 40
+          },
+          {
+            "prop": "active",
+            "label": "Активна",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A ghost button on its own surface: no border and no fill at rest, weight arrives only on hover, and the active state keeps a tinted wash.",
+            "ai": {
+              "summary": "A minimal-weight button placed on its own paper surface. At rest only the label and a square marker show; hover brings in a wash mixed from the accent, and the active state keeps that wash while the label turns accent-coloured. The state is announced through aria-current. Zero dependencies, one file.",
+              "preserve": [
+                "the surface at the root of the block: a ghost exists only by contrast with it, on a bare background the button disappears",
+                "the absence of a border and a fill on the button itself at rest — that is the definition of a ghost",
+                "aria-current as the carrier of the active state: colour alone does not convey it",
+                "the wash built with color-mix from the accent rather than a separate grey: it keeps the tie to the theme accent",
+                "the square marker and its 45° turn on hover — a second, colourless signal",
+                "focus-visible with an offset: without it the button is lost during keyboard use"
+              ],
+              "adapt": [
+                "the label",
+                "the on state through the active prop",
+                "the accent colour through the accent prop",
+                "the onClick handler and disabled",
+                "outer spacing through className — it lands on the surface"
+              ],
+              "notes": [
+                "Do not drop the surface at the root: on a dark background the ghost is unreadable without it.",
+                "Do not line up several ghosts as primary actions — this weight is meant for secondary ones.",
+                "Do not replace aria-current with an 'active' class: the state has to reach the accessibility tree.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button033 active onClick={openSettings}>\n  Settings\n</Button033>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Settings"
+              },
+              "active": {
+                "label": "Active"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-034",
+      "type": "registry:component",
+      "title": "Outline Button",
+      "description": "Кнопка на обводке: бумажная середина, акцентный контур и три толщины линии; на наведении заливка и рамка меняются местами.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-034/button-034.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-034.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-034-*. Серверный компонент, корень — сам <button>, поэтому все нативные пропсы проходят насквозь. Толщина обводки вынесена в переменную --vibeui-button-034-line и переключается data-атрибутом emphasis: то же значение управляет и толщиной кольца в значке, поэтому линии не расходятся. Фокус вынесен наружу с отступом 3px — иначе обводка сливается с рамкой.",
+      "meta": {
+        "tags": ["button", "outline", "secondary", "border"],
+        "ai": {
+          "export": "Button034",
+          "usage": "<Button034 emphasis=\"regular\" onClick={openPricing}>\n  Подробнее о тарифах\n</Button034>",
+          "summary": "Контурная кнопка с бумажной серединой: она читается и на светлом, и на тёмном фоне. Толщина линии — одна переменная на три значения пропа emphasis, её же наследует круглый значок. На наведении кнопка выворачивается: акцент уходит в заливку, подпись становится светлой. Ноль зависимостей, один файл.",
+          "preserve": [
+            "бумажную заливку внутри контура: без неё кнопка исчезает на тёмном фоне",
+            "толщину линии как переменную, общую для рамки и значка — иначе линии в одном пятне разной толщины",
+            "три значения emphasis как шкалу веса, а не как три разных стиля",
+            "выворот на наведении: акцент переходит из линии в заливку, это и есть жест компонента",
+            "отступ обводки фокуса в 3px: вплотную она читается как утолщение рамки",
+            "затемнение фона на :active — подтверждение нажатия помимо ховера"
+          ],
+          "adapt": [
+            "подпись кнопки",
+            "толщину контура — проп emphasis",
+            "акцентный цвет — проп accent",
+            "любые нативные пропсы button: onClick, type, form, disabled",
+            "внешние отступы и ширину через className"
+          ],
+          "notes": [
+            "Не делай контурную кнопку главным действием экрана: её вес рассчитан на пару с залитой.",
+            "Не убирай бумажную заливку ради «прозрачности» — компонент перестанет работать на цветных подложках.",
+            "Не задавай border-width напрямую: толщина живёт в переменной, иначе значок отстанет от рамки.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Подробнее о тарифах",
+            "maxLength": 40
+          },
+          {
+            "prop": "emphasis",
+            "label": "Толщина контура",
+            "type": "select",
+            "default": "regular",
+            "options": ["hairline", "regular", "heavy"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A button carried by its outline: paper inside, accent contour outside, three line weights; on hover the fill and the border swap places.",
+            "ai": {
+              "summary": "An outlined button with a paper middle, so it reads on both light and dark backgrounds. The line weight is a single variable with three values of the emphasis prop, and the round mark inherits it. On hover the button inverts: the accent moves into the fill and the label goes light. Zero dependencies, one file.",
+              "preserve": [
+                "the paper fill inside the contour: without it the button vanishes on a dark background",
+                "the line weight as one variable shared by the border and the mark — otherwise the two lines differ inside one shape",
+                "the three emphasis values as a weight scale, not as three separate styles",
+                "the inversion on hover: the accent moves from the line into the fill, that is the component's gesture",
+                "the 3px offset on the focus ring: pressed against the border it reads as a thicker frame",
+                "the darkening on :active — press feedback beyond hover"
+              ],
+              "adapt": [
+                "the label",
+                "the contour weight through the emphasis prop",
+                "the accent colour through the accent prop",
+                "any native button props: onClick, type, form, disabled",
+                "outer spacing and width through className"
+              ],
+              "notes": [
+                "Do not make an outlined button the main action on screen: its weight is calibrated to sit next to a filled one.",
+                "Do not drop the paper fill for the sake of transparency — the component stops working on coloured backgrounds.",
+                "Do not set border-width directly: the weight lives in a variable, otherwise the mark falls out of step with the border.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button034 emphasis=\"regular\" onClick={openPricing}>\n  See plan details\n</Button034>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "See plan details"
+              },
+              "emphasis": {
+                "label": "Contour weight"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-035",
+      "type": "registry:component",
+      "title": "Inline Link Button",
+      "description": "Кнопка-ссылка без рамки прямо внутри фразы: она наследует кегль и межстрочник абзаца, а подчёркивание нарисовано пунктирной линейкой из фона.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-035/button-035.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-035.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-035-*. Серверный компонент. Корень — <p> с текстом до и после кнопки: без окружения проверить наследование типографики нельзя, поэтому оно часть компонента. Сама кнопка объявлена font:inherit и padding:0, поэтому не ломает строку; подчёркивание сделано background-image с background-size, а не text-decoration, — так его толщина и отступ управляются точно и анимируются.",
+      "meta": {
+        "tags": ["button", "link", "inline", "typography"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Button035",
+          "usage": "<Button035 before=\"Списание произойдёт 30 числа. Можно \" after=\" в любой момент.\" onClick={openBilling}>\n  изменить способ оплаты\n</Button035>",
+          "summary": "Текстовое действие внутри абзаца. Кнопка не задаёт ни кегля, ни высоты — берёт их у строки через font:inherit, поэтому межстрочник не разъезжается. Подчёркивание в покое пунктирное и нарисовано фоновой линейкой; на наведении и фокусе оно уплотняется до сплошного, а цвет темнеет. Ноль зависимостей, один файл.",
+          "preserve": [
+            "font:inherit и нулевые padding у кнопки: любой собственный кегль разорвёт строку",
+            "подчёркивание через background-image и background-size, а не text-decoration — только так им можно управлять по толщине",
+            "текст до и после кнопки: компонент показывает поведение в потоке, а не отдельную кнопку",
+            "изменение подчёркивания и на focus-visible, а не только на hover",
+            "отдельную обводку фокуса поверх подчёркивания: подчёркивание само по себе не является индикатором фокуса",
+            "бумажную подложку абзаца — на ней и виден тёмный текст"
+          ],
+          "adapt": [
+            "подпись кнопки",
+            "текст вокруг — пропы before и after",
+            "акцентный цвет — проп accent",
+            "обработчик onClick",
+            "кегль и межстрочник абзаца: кнопка подстроится сама"
+          ],
+          "notes": [
+            "Не задавай кнопке высоту или padding: она должна оставаться частью строки, а не встраиваемой плашкой.",
+            "Не заменяй <button> на <a> без href — для перехода по адресу нужна настоящая ссылка, здесь же действие на месте.",
+            "Не убирай текст вокруг, оставив одну кнопку: компонент про поведение внутри фразы.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "изменить способ оплаты",
+            "maxLength": 40
+          },
+          {
+            "prop": "before",
+            "label": "Текст до",
+            "type": "text",
+            "default": "Списание произойдёт 30 числа. Можно ",
+            "maxLength": 70
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A borderless link button living inside a sentence: it inherits the paragraph's type, and its underline is a dotted rule painted from the background.",
+            "ai": {
+              "summary": "A textual action inside a paragraph. The button sets neither size nor height — it takes them from the line through font:inherit, so the leading never breaks. At rest the underline is dotted and painted as a background rule; on hover and focus it thickens into a solid line and the colour deepens. Zero dependencies, one file.",
+              "preserve": [
+                "font:inherit and zero padding on the button: any type size of its own tears the line apart",
+                "the underline via background-image and background-size rather than text-decoration — only that way can its weight be driven",
+                "the text before and after the button: the component demonstrates behaviour in flow, not a standalone control",
+                "the underline change on focus-visible, not only on hover",
+                "the separate focus ring above the underline: an underline on its own is not a focus indicator",
+                "the paper background of the paragraph — it is what makes the dark text visible"
+              ],
+              "adapt": [
+                "the label",
+                "the surrounding text through the before and after props",
+                "the accent colour through the accent prop",
+                "the onClick handler",
+                "the paragraph's type size and leading: the button follows on its own"
+              ],
+              "notes": [
+                "Do not give the button a height or padding: it has to stay part of the line rather than become an inline chip.",
+                "Do not swap <button> for an <a> without href — navigation needs a real link, while this one acts in place.",
+                "Do not strip the surrounding text and keep the button alone: the component is about behaviour inside a sentence.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button035 before=\"We charge on the 30th. You can \" after=\" at any time.\" onClick={openBilling}>\n  change payment method\n</Button035>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "change payment method"
+              },
+              "before": {
+                "label": "Text before",
+                "default": "We charge on the 30th. You can "
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-036",
+      "type": "registry:component",
+      "title": "Dual Icon Button",
+      "description": "Кнопка со значками с двух сторон: левый называет действие, правый обещает продолжение, и на наведении они ведут себя по-разному.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-036/button-036.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-036.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-036-*. Серверный компонент. Оба значка — пустые span с data-part=\"lead\"/\"trail\" и data-icon, форма рисуется гранями и фоном псевдоэлементов, поэтому ни SVG, ни иконочного шрифта не нужно. Левый паддинг меньше правого: значок оптически тяжелее пустоты. Значения \"none\" убирают узел из разметки.",
+      "meta": {
+        "tags": ["button", "icon", "leading", "trailing"],
+        "ai": {
+          "export": "Button036",
+          "usage": "<Button036 leading=\"plus\" trailing=\"chevron\" onClick={createProject}>\n  Создать проект\n</Button036>",
+          "summary": "Залитая кнопка с двумя значками разных ролей. Левый (плюс или лупа) называет действие и оживает на месте: плюс поворачивается, лупа подрастает. Правый (шеврон или стрелка) обещает переход и уезжает вперёд. Оба нарисованы на CSS. Ноль зависимостей, один файл.",
+          "preserve": [
+            "разные роли значков: слева — что делаем, справа — что будет дальше; менять их местами бессмысленно",
+            "разное поведение на наведении: левый оживает на месте, правый уезжает — так читается направление",
+            "асимметричные паддинги: слева меньше, потому что значок оптически тяжелее пустоты",
+            "значки на псевдоэлементах: они масштабируются вместе с currentColor и не тянут иконочную библиотеку",
+            "aria-hidden на обоих значках — они украшают подпись, а не заменяют её",
+            "вариант none для каждой стороны: кнопка должна уметь работать и с одним значком"
+          ],
+          "adapt": [
+            "подпись кнопки",
+            "левый значок — проп leading (plus, search или none)",
+            "правый значок — проп trailing (chevron, arrow или none)",
+            "акцентный цвет — проп accent",
+            "обработчик onClick и остальные нативные пропсы button"
+          ],
+          "notes": [
+            "Не ставь оба значка «направляющими»: две стрелки в одной кнопке спорят друг с другом.",
+            "Не подменяй CSS-значки картинками: компонент должен оставаться одним файлом без сетевых запросов.",
+            "Не убирай aria-hidden — иначе скринридер зачитает декоративные узлы как пустые элементы.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Создать проект",
+            "maxLength": 40
+          },
+          {
+            "prop": "leading",
+            "label": "Значок слева",
+            "type": "select",
+            "default": "plus",
+            "options": ["plus", "search", "none"]
+          },
+          {
+            "prop": "trailing",
+            "label": "Значок справа",
+            "type": "select",
+            "default": "chevron",
+            "options": ["chevron", "arrow", "none"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A button with icons on both sides: the left one names the action, the right one promises what follows, and on hover they behave differently.",
+            "ai": {
+              "summary": "A filled button with two icons in different roles. The left one (a plus or a magnifier) names the action and animates in place: the plus turns, the magnifier grows. The right one (a chevron or an arrow) promises a transition and slides forward. Both are drawn in CSS. Zero dependencies, one file.",
+              "preserve": [
+                "the distinct roles of the icons: what we do on the left, what happens next on the right; swapping them makes no sense",
+                "their different hover behaviour: the left one animates in place, the right one slides away — that is how direction reads",
+                "the asymmetric padding: smaller on the left, because an icon is optically heavier than empty space",
+                "the icons built from pseudo-elements: they scale with currentColor and pull in no icon library",
+                "aria-hidden on both icons — they decorate the label rather than replace it",
+                "the none option on each side: the button has to work with a single icon too"
+              ],
+              "adapt": [
+                "the label",
+                "the left icon through the leading prop (plus, search or none)",
+                "the right icon through the trailing prop (chevron, arrow or none)",
+                "the accent colour through the accent prop",
+                "the onClick handler and the rest of the native button props"
+              ],
+              "notes": [
+                "Do not make both icons directional: two arrows inside one button argue with each other.",
+                "Do not replace the CSS icons with images: the component has to stay a single file with no network requests.",
+                "Do not remove aria-hidden — otherwise a screen reader announces the decorative nodes as empty elements.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button036 leading=\"plus\" trailing=\"chevron\" onClick={createProject}>\n  Create project\n</Button036>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Create project"
+              },
+              "leading": {
+                "label": "Leading icon"
+              },
+              "trailing": {
+                "label": "Trailing icon"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-037",
+      "type": "registry:component",
+      "title": "Speed Dial FAB",
+      "description": "Круглая кнопка главного действия, из-под которой лесенкой выезжают быстрые действия с подписями; Esc закрывает веер.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-037/button-037.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-037.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-037-*. Клиентский компонент: раскрытие — внутреннее состояние, наружу уходит только выбранный id через onSelect. Лесенка сделана на transition-delay, который считается из индекса элемента через переменную --vibeui-button-037-index, — никаких таймеров в JS. Список абсолютно позиционирован над кнопкой и скрыт атрибутом hidden, поэтому закрытые пункты не попадают в порядок обхода Tab.",
+      "meta": {
+        "tags": ["button", "fab", "speed-dial", "actions"],
+        "ai": {
+          "export": "Button037",
+          "usage": "<Button037\n  label=\"Быстрые действия\"\n  actions={[\n    { id: \"task\", label: \"Новая задача\" },\n    { id: \"note\", label: \"Заметка\" },\n  ]}\n  onSelect={run}\n/>",
+          "summary": "Круглая кнопка действия с веером быстрых команд. По клику плюс поворачивается в крестик, а над кнопкой лесенкой выезжают пилюли с подписями: у каждой свой transition-delay от индекса. Esc закрывает веер, состояние объявлено через aria-expanded. Ноль зависимостей, один файл.",
+          "preserve": [
+            "подписи у каждого быстрого действия: набор безымянных кружков нечитаем",
+            "лесенку из transition-delay по индексу — она превращает появление в раскрытие, а не в рывок",
+            "поворот плюса в крестик: он показывает, что повторный клик закроет веер",
+            "aria-expanded на главной кнопке и hidden на списке: закрытые пункты не должны ловить Tab",
+            "закрытие по Esc — раскрытый веер перекрывает интерфейс и обязан иметь выход с одной клавиши",
+            "правило prefers-reduced-motion: веер открывается мгновенно, но всё ещё открывается"
+          ],
+          "adapt": [
+            "имя главной кнопки — проп label, оно уходит в aria-label",
+            "набор быстрых действий — проп actions",
+            "начальное раскрытие — проп defaultOpen",
+            "акцентный цвет — проп accent",
+            "обработчик onSelect: он получает id выбранного действия"
+          ],
+          "notes": [
+            "Не клади в actions больше пяти пунктов: веер перестаёт читаться и превращается в меню, которому нужен свой слой.",
+            "Не убирай подписи ради компактности — иконка без имени не опознаётся ни глазом, ни скринридером.",
+            "Компонент не рисует меню поверх страницы: он позиционируется относительно себя, за общий слой отвечает приложение.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Имя кнопки",
+            "type": "text",
+            "default": "Быстрые действия",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Раскрыта",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A round primary action button with quick actions that stagger out from under it, labels and all; Esc closes the fan.",
+            "ai": {
+              "summary": "A round action button with a fan of quick commands. On click the plus turns into a cross and labelled pills stagger out above the button, each with its own transition-delay derived from its index. Esc closes the fan, and the state is announced through aria-expanded. Zero dependencies, one file.",
+              "preserve": [
+                "the label on every quick action: a row of anonymous circles is unreadable",
+                "the stagger built from transition-delay by index — it turns an appearance into an unfolding rather than a jump",
+                "the plus turning into a cross: it shows that a second click closes the fan",
+                "aria-expanded on the main button and hidden on the list: closed items must not catch Tab",
+                "the Esc shortcut — an open fan covers the interface and needs a one-key way out",
+                "the prefers-reduced-motion rule: the fan opens instantly, but it still opens"
+              ],
+              "adapt": [
+                "the main button's name through the label prop, which becomes its aria-label",
+                "the set of quick actions through the actions prop",
+                "the initial expansion through the defaultOpen prop",
+                "the accent colour through the accent prop",
+                "the onSelect handler: it receives the id of the chosen action"
+              ],
+              "notes": [
+                "Do not put more than five entries into actions: the fan stops reading and turns into a menu that needs its own layer.",
+                "Do not drop the labels for compactness — an unnamed icon is identified neither by eye nor by screen reader.",
+                "The component does not draw an overlay menu: it positions itself relative to itself, the shared layer is your app's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button037\n  label=\"Quick actions\"\n  actions={[\n    { id: \"task\", label: \"New task\" },\n    { id: \"note\", label: \"Note\" },\n  ]}\n  onSelect={run}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Button name",
+                "default": "Quick actions"
+              },
+              "defaultOpen": {
+                "label": "Open"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-038",
+      "type": "registry:component",
+      "title": "Wrapping Label Button",
+      "description": "Кнопка с длинной подписью, которая честно переносится на две строки: значок прибит к первой строке, а не уплывает в вертикальный центр.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-038/button-038.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-038.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-038-*. Серверный компонент. Ширина ограничена переменной --vibeui-button-038-width, которую задаёт проп width в rem; включены text-wrap:balance, overflow-wrap:anywhere и hyphens:auto, поэтому длинное слово не выламывает кнопку. align-items:flex-start плюс высота значка, равная line-height первой строки, держат его на верхней строке.",
+      "meta": {
+        "tags": ["button", "wrap", "multiline", "long-label"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Button038",
+          "usage": "<Button038 width={18} onClick={confirmMove}>\n  Подтвердить перенос встречи на следующую неделю\n</Button038>",
+          "summary": "Кнопка, рассчитанная на подпись длиннее строки. Ширина ограничена, текст выключен влево и переносится с балансировкой строк, а значок остаётся на первой строке за счёт выравнивания по верху и собственной высоты в один line-height. Подложка светлая и мягко тонированная. Ноль зависимостей, один файл.",
+          "preserve": [
+            "align-items:flex-start и высоту значка в один line-height: иначе на двух строках он уползёт в середину",
+            "text-wrap:balance — без него вторая строка вырождается в одно слово",
+            "overflow-wrap:anywhere: длинный адрес или артикул не должен выламывать кнопку",
+            "выключку текста влево: на переносе центрирование читается как ошибка вёрстки",
+            "ограничение ширины переменной, а не фиксированный width: кнопка должна ужиматься на узком экране",
+            "светлую тонированную подложку — на ней виден тёмный текст подписи"
+          ],
+          "adapt": [
+            "подпись кнопки, в том числе длинную",
+            "предельную ширину — проп width в rem",
+            "акцентный цвет — проп accent",
+            "обработчик onClick и остальные нативные пропсы button",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Не ставь белый text-align:center: с переносом строк центрирование ломает читаемость.",
+            "Не используй эту кнопку в плотном ряду управления — двухстрочная кнопка сломает высоту панели.",
+            "Не выравнивай значок по центру кнопки: он должен указывать на первую строку подписи.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Подтвердить перенос встречи на следующую неделю",
+            "maxLength": 80
+          },
+          {
+            "prop": "width",
+            "label": "Ширина, rem",
+            "type": "number",
+            "default": 18,
+            "min": 10,
+            "max": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A button with a long label that honestly wraps onto two lines: the icon stays pinned to the first line instead of drifting to the vertical centre.",
+            "ai": {
+              "summary": "A button built for a label longer than a line. Its width is capped, the text is set flush left and wraps with balanced lines, and the icon stays on the first line thanks to top alignment and a height of exactly one line-height. The surface is light and softly tinted. Zero dependencies, one file.",
+              "preserve": [
+                "align-items:flex-start and the icon's one-line-height box: otherwise on two lines it drifts to the middle",
+                "text-wrap:balance — without it the second line collapses into a single word",
+                "overflow-wrap:anywhere: a long URL or SKU must not break the button apart",
+                "the flush-left text: with wrapping, centring reads as a layout mistake",
+                "the width cap as a variable rather than a fixed width: the button has to shrink on a narrow screen",
+                "the light tinted surface — it is what makes the dark label visible"
+              ],
+              "adapt": [
+                "the label, long ones included",
+                "the maximum width through the width prop, in rem",
+                "the accent colour through the accent prop",
+                "the onClick handler and the rest of the native button props",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not switch to text-align:center: with wrapped lines, centring hurts readability.",
+                "Do not drop this button into a dense toolbar — a two-line button breaks the row height.",
+                "Do not centre the icon vertically: it has to point at the first line of the label.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button038 width={18} onClick={confirmMove}>\n  Confirm moving the meeting to next week\n</Button038>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Confirm moving the meeting to next week"
+              },
+              "width": {
+                "label": "Width, rem"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-039",
+      "type": "registry:component",
+      "title": "Scale Ramp Button",
+      "description": "Размерная шкала sm/md/lg/xl из одного числа: высота, паддинги, кегль, радиус и значок считаются через calc от общего шага.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-039/button-039.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-039.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-039-*. Серверный компонент. Переменная --vibeui-button-039-step переключается data-атрибутом size и умножает базовые метрики: высоту (--vibeui-button-039-unit), паддинг, кегль, радиус, толщину обводки фокуса и размер значка. Разрядка, наоборот, делится на шаг — крупный кегль требует меньшего трекинга. Новый размер добавляется одной строкой с новым значением step.",
+      "meta": {
+        "tags": ["button", "size", "scale", "tokens"],
+        "ai": {
+          "export": "Button039",
+          "usage": "<Button039 size=\"lg\" onClick={addBlock}>\n  Добавить блок\n</Button039>",
+          "summary": "Кнопка, у которой размер — это одно число. Четыре значения пропа size задают множитель, из которого calc считает всю геометрию, включая значок и толщину обводки фокуса. Разрядка делится на шаг, поэтому крупные размеры не выглядят разреженными. Ноль зависимостей, один файл.",
+          "preserve": [
+            "единый множитель step как источник всей геометрии: жёстко прописанные значения у одного размера ломают шкалу",
+            "участие значка и обводки фокуса в шкале — они обязаны расти вместе с кеглем",
+            "деление разрядки на шаг: на крупном кегле прежний трекинг читается как разрядка вразрядку",
+            "четыре значения size именно как шкалу, а не как четыре независимых стиля",
+            "базовую единицу --vibeui-button-039-unit: от неё считается высота всех размеров",
+            "пропорции шагов 0.82 / 1 / 1.22 / 1.5 — они подобраны так, чтобы соседние размеры различались, но не спорили"
+          ],
+          "adapt": [
+            "подпись кнопки",
+            "размер — проп size (sm, md, lg или xl)",
+            "акцентный цвет — проп accent",
+            "обработчик onClick и остальные нативные пропсы button",
+            "базовую единицу и множители шкалы под свою типографику"
+          ],
+          "notes": [
+            "Не задавай высоту или паддинг напрямую для одного размера: это выведет его из шкалы и сломает ряд.",
+            "Не добавляй пятый размер копированием правил — достаточно новой строки со своим значением step.",
+            "Не уменьшай sm ниже 0.8: значок и обводка фокуса перестают попадать в пиксельную сетку.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Добавить блок",
+            "maxLength": 40
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": ["sm", "md", "lg", "xl"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An sm/md/lg/xl size ramp driven by a single number: height, padding, type size, radius and icon are all derived through calc from one step.",
+            "ai": {
+              "summary": "A button whose size is a single number. Four values of the size prop set a multiplier, and calc derives the whole geometry from it, the icon and the focus ring width included. Letter spacing is divided by the step, so the large sizes never look loose. Zero dependencies, one file.",
+              "preserve": [
+                "the single step multiplier as the source of the whole geometry: hardcoding values for one size breaks the ramp",
+                "the icon and the focus ring taking part in the ramp — they must grow with the type size",
+                "dividing letter spacing by the step: at a large size the original tracking reads as spaced-out lettering",
+                "the four size values as a ramp, not as four independent styles",
+                "the --vibeui-button-039-unit base unit: every size's height is derived from it",
+                "the 0.82 / 1 / 1.22 / 1.5 step ratios — chosen so that neighbouring sizes differ without competing"
+              ],
+              "adapt": [
+                "the label",
+                "the size through the size prop (sm, md, lg or xl)",
+                "the accent colour through the accent prop",
+                "the onClick handler and the rest of the native button props",
+                "the base unit and the ramp multipliers to match your typography"
+              ],
+              "notes": [
+                "Do not set a height or padding directly for one size: it drops out of the ramp and breaks the row.",
+                "Do not add a fifth size by copying rules — one new line with its own step value is enough.",
+                "Do not push sm below 0.8: the icon and the focus ring stop landing on the pixel grid.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button039 size=\"lg\" onClick={addBlock}>\n  Add block\n</Button039>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Add block"
+              },
+              "size": {
+                "label": "Size"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-040",
+      "type": "registry:component",
+      "title": "Full Width Button",
+      "description": "Кнопка во всю ширину колонки с двумя раскладками: подпись по центру для коротких строк и разнесённая пара «подпись с уточнением — стрелка».",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-040/button-040.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-040.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-040-*. Серверный компонент, корень — сам <button> с width:100% и max-width, поэтому ширину задаёт родитель, а не вьюпорт. Раскладка переключается data-атрибутом align: center центрирует содержимое, between разносит текстовый блок и стрелку. Вторая строка hint набрана tabular-nums — в ней обычно цена или срок.",
+      "meta": {
+        "tags": ["button", "full-width", "form", "cta"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Button040",
+          "usage": "<Button040 align=\"between\" hint=\"Бесплатно 14 дней, карта не нужна\" onClick={subscribe}>\n  Оформить подписку\n</Button040>",
+          "summary": "Кнопка на всю ширину колонки, у которой есть что положить в середину: под подписью идёт вторая строка с условием, а справа — стрелка. Для коротких подписей раскладка переключается на центрированную, и стрелка убирается из разметки. Ноль зависимостей, один файл.",
+          "preserve": [
+            "width:100% с ограничением max-width: ширина должна приходить от колонки, а не от окна",
+            "вторую строку hint меньшим кеглем и с пониженной непрозрачностью — она уточняет, а не спорит с подписью",
+            "tabular-nums во второй строке: цены и сроки не должны прыгать по ширине",
+            "две раскладки как разные случаи, а не как декор: у центрированной нет стрелки, и это осознанно",
+            "уезжающую вперёд стрелку и лёгкое сжатие на :active — обратная связь на широкой кнопке особенно нужна",
+            "минимальную высоту 3.25rem: узкая кнопка во всю ширину читается как полоса, а не как действие"
+          ],
+          "adapt": [
+            "подпись кнопки и вторую строку — проп hint",
+            "раскладку — проп align (center или between)",
+            "акцентный цвет — проп accent",
+            "обработчик onClick и остальные нативные пропсы button",
+            "предельную ширину через className"
+          ],
+          "notes": [
+            "Не убирай max-width: на широком экране кнопка во всю ширину контейнера выглядит как баннер.",
+            "Не клади во вторую строку важное условие целиком — она набрана мелко и с пониженным контрастом.",
+            "Для раскладки between всегда оставляй стрелку: без неё правый край пустеет.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Оформить подписку",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Вторая строка",
+            "type": "text",
+            "default": "Бесплатно 14 дней, карта не нужна",
+            "maxLength": 50
+          },
+          {
+            "prop": "align",
+            "label": "Раскладка",
+            "type": "select",
+            "default": "between",
+            "options": ["center", "between"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A full-width column button with two layouts: a centred label for short strings, and a split pair of label-with-caveat and arrow.",
+            "ai": {
+              "summary": "A full-width button with something to put in the middle: a second line carrying the caveat sits under the label, and an arrow sits on the right. For short labels the layout switches to centred and the arrow leaves the markup. Zero dependencies, one file.",
+              "preserve": [
+                "width:100% with a max-width cap: the width has to come from the column, not the window",
+                "the second hint line at a smaller size and lowered opacity — it qualifies the label rather than competing with it",
+                "tabular-nums on the second line: prices and deadlines must not shift the width",
+                "the two layouts as different cases rather than decoration: the centred one has no arrow, and that is deliberate",
+                "the arrow sliding forward and the slight squeeze on :active — a wide button needs that feedback most",
+                "the 3.25rem minimum height: a short full-width button reads as a bar, not as an action"
+              ],
+              "adapt": [
+                "the label and the second line through the hint prop",
+                "the layout through the align prop (center or between)",
+                "the accent colour through the accent prop",
+                "the onClick handler and the rest of the native button props",
+                "the maximum width through className"
+              ],
+              "notes": [
+                "Do not drop the max-width: on a wide screen a button spanning the whole container reads as a banner.",
+                "Do not put a critical condition entirely into the second line — it is set small and at lowered contrast.",
+                "Always keep the arrow in the between layout: without it the right edge goes empty.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button040 align=\"between\" hint=\"Free for 14 days, no card needed\" onClick={subscribe}>\n  Start subscription\n</Button040>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Start subscription"
+              },
+              "hint": {
+                "label": "Second line",
+                "default": "Free for 14 days, no card needed"
+              },
+              "align": {
+                "label": "Layout"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-041",
+      "type": "registry:component",
+      "title": "Gradient Border Button",
+      "description": "Градиент живёт в рамке, а не в заливке: два фона по padding-box и border-box, и отдельно решённый фокус, который градиент обычно съедает.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-041/button-041.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-041.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-041-*. Серверный компонент. Приём: border:2px solid transparent и два фона — сплошной по padding-box для середины и линейный градиент по border-box для границы. Из-за прозрачной рамки системная обводка фокуса теряется на градиенте, поэтому focus-visible даёт outline с отступом 3px плюс белое кольцо box-shadow, отделяющее обводку от границы.",
+      "meta": {
+        "tags": ["button", "gradient", "border", "focus"],
+        "ai": {
+          "export": "Button041",
+          "usage": "<Button041 onClick={build}>Собрать страницу</Button041>",
+          "summary": "Кнопка с градиентной границей и бумажной серединой. Граница остаётся настоящим border: она собрана вторым фоном по border-box, поэтому радиус и толщина ведут себя обычным образом. Фокус решён отдельно — обводка с отступом и белое кольцо, чтобы её было видно поверх градиента. Ноль зависимостей, один файл.",
+          "preserve": [
+            "пару фонов padding-box и border-box: это единственный способ получить градиентную границу без лишнего узла",
+            "border:2px solid transparent — без прозрачной рамки второй фон некуда рисовать",
+            "обводку фокуса с отступом плюс кольцо box-shadow: на градиенте обычный outline теряется",
+            "градиент из двух переменных accent и accentEnd, а не из захардкоженных цветов",
+            "тот же градиент в значке-искре — он связывает содержимое с рамкой",
+            "бумажную середину: тёмный текст на ней читается на любой подложке"
+          ],
+          "adapt": [
+            "подпись кнопки",
+            "первый цвет градиента — проп accent",
+            "второй цвет градиента — проп accentEnd",
+            "обработчик onClick и остальные нативные пропсы button",
+            "угол градиента и радиус — они живут в одном месте в блоке стилей"
+          ],
+          "notes": [
+            "Не заменяй пару фонов обёрткой с внутренним div: лишний узел ломает передачу нативных пропсов кнопке.",
+            "Не убирай кольцо box-shadow у фокуса — на светлом градиенте обводка сливается с границей.",
+            "Не заливай середину градиентом: тогда это будет обычная градиентная кнопка, а не рамка.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Собрать страницу",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Начало градиента",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "accentEnd",
+            "label": "Конец градиента",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The gradient lives in the border rather than the fill: two backgrounds across padding-box and border-box, plus a focus ring that gradients usually swallow.",
+            "ai": {
+              "summary": "A button with a gradient border and a paper middle. The border stays a real border: it is the second background painted across border-box, so radius and width behave normally. Focus is handled separately — an offset ring plus a white halo so it stays visible over the gradient. Zero dependencies, one file.",
+              "preserve": [
+                "the padding-box and border-box background pair: it is the only way to get a gradient border without an extra node",
+                "border:2px solid transparent — with no transparent border there is nowhere to paint the second background",
+                "the offset focus ring plus the box-shadow halo: a plain outline gets lost against a gradient",
+                "the gradient built from the accent and accentEnd variables rather than hardcoded colours",
+                "the same gradient inside the spark mark — it ties the content to the border",
+                "the paper middle: dark text on it reads against any backdrop"
+              ],
+              "adapt": [
+                "the label",
+                "the first gradient colour through the accent prop",
+                "the second gradient colour through the accentEnd prop",
+                "the onClick handler and the rest of the native button props",
+                "the gradient angle and the radius — both live in one place in the style block"
+              ],
+              "notes": [
+                "Do not replace the background pair with a wrapper and an inner div: the extra node breaks native prop forwarding to the button.",
+                "Do not remove the box-shadow halo on focus — against a light gradient the ring merges with the border.",
+                "Do not fill the middle with the gradient: that turns it into an ordinary gradient button, not a gradient border.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button041 onClick={build}>Build the page</Button041>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Build the page"
+              },
+              "accent": {
+                "label": "Gradient start"
+              },
+              "accentEnd": {
+                "label": "Gradient end"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-042",
+      "type": "registry:component",
+      "title": "Beveled Corner Button",
+      "description": "Кнопка со срезанным углом на clip-path и с внутренним кольцом фокуса: обычная обводка такой фигурой обрезается и исчезает.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-042/button-042.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-042.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-042-*. Серверный компонент. Срез задан clip-path-полигоном, величина угла — переменная --vibeui-button-042-cut, её задаёт проп cut в пикселях. Побочный эффект приёма: clip-path обрезает outline, поэтому focus-visible обнуляет outline и рисует двойное внутреннее кольцо через inset box-shadow. Контрастная засечка в углу повторяет срез тем же значением переменной.",
+      "meta": {
+        "tags": ["button", "bevel", "clip-path", "technical"],
+        "ai": {
+          "export": "Button042",
+          "usage": "<Button042 cut={12} onClick={runBuild}>Запустить сборку</Button042>",
+          "summary": "Кнопка с срезанным правым нижним углом: фигура вырезана clip-path, а не скруглена радиусом. Поскольку clip-path обрезает и обводку фокуса, кольцо фокуса нарисовано внутренним двойным box-shadow. В самом углу лежит контрастная засечка, повторяющая срез, — она объясняет, что угол убран намеренно. Ноль зависимостей, один файл.",
+          "preserve": [
+            "внутреннее кольцо фокуса через inset box-shadow: обычный outline обрезается вместе с углом и пропадает",
+            "величину среза как переменную: её же использует засечка, иначе фигуры разойдутся",
+            "контрастную засечку в углу — без неё срез читается как дефект рендеринга",
+            "верхнерегистровую подпись с разрядкой: она поддерживает техническую интонацию формы",
+            "clip-path именно на кнопке, а не на обёртке: иначе форму потеряют hover и фокус",
+            "плотную заливку — на срезанном углу подложка кнопки должна быть непрозрачной"
+          ],
+          "adapt": [
+            "подпись кнопки",
+            "величину среза — проп cut в пикселях",
+            "акцентный цвет — проп accent",
+            "обработчик onClick и остальные нативные пропсы button",
+            "цвет засечки — переменная --vibeui-button-042-notch в блоке стилей"
+          ],
+          "notes": [
+            "Не возвращай обычный outline на focus-visible: clip-path обрежет его, и кнопка станет недоступной с клавиатуры.",
+            "Не задавай cut больше половины высоты: полигон вырождается и кнопка теряет правый край.",
+            "Не добавляй border-radius поверх среза — два способа скругления в одной фигуре конфликтуют.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Запустить сборку",
+            "maxLength": 40
+          },
+          {
+            "prop": "cut",
+            "label": "Срез, px",
+            "type": "number",
+            "default": 12,
+            "min": 4,
+            "max": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A clip-path button with a cut corner and an inner focus ring: an ordinary outline gets clipped away by that very shape.",
+            "ai": {
+              "summary": "A button with its bottom-right corner cut away: the shape is carved by clip-path rather than rounded by a radius. Because clip-path also clips the focus outline, the focus ring is drawn as a double inset box-shadow. A contrasting notch sits in the corner repeating the cut, explaining that the corner is missing on purpose. Zero dependencies, one file.",
+              "preserve": [
+                "the inner focus ring via inset box-shadow: a plain outline is clipped away with the corner and disappears",
+                "the cut size as a variable: the notch uses the same value, otherwise the two shapes drift apart",
+                "the contrasting notch in the corner — without it the cut reads as a rendering defect",
+                "the uppercase, letter-spaced label: it supports the technical tone of the shape",
+                "clip-path on the button itself rather than a wrapper: otherwise hover and focus lose the shape",
+                "the solid fill — with a cut corner the button's surface has to be opaque"
+              ],
+              "adapt": [
+                "the label",
+                "the cut size through the cut prop, in pixels",
+                "the accent colour through the accent prop",
+                "the onClick handler and the rest of the native button props",
+                "the notch colour through the --vibeui-button-042-notch variable in the style block"
+              ],
+              "notes": [
+                "Do not bring a plain outline back on focus-visible: clip-path cuts it off and the button becomes unusable from the keyboard.",
+                "Do not set cut larger than half the height: the polygon degenerates and the button loses its right edge.",
+                "Do not add a border-radius on top of the cut — two rounding methods in one shape conflict.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button042 cut={12} onClick={runBuild}>Run build</Button042>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Run build"
+              },
+              "cut": {
+                "label": "Cut, px"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-043",
+      "type": "registry:component",
+      "title": "Lift Shadow Button",
+      "description": "Кнопка, которая отрывается от поверхности: три слоя тени растут и размываются вместе с подъёмом, а нажатие возвращает её на стол.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-043/button-043.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-043.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-043-*. Серверный компонент, корень — сам <button>. Тень собрана из трёх слоёв: контактного без размытия, среднего и дальнего; на наведении меняются смещение и размытие двух дальних, контактный остаётся. Высота подъёма вынесена в переменную --vibeui-button-043-lift и задаётся пропом lift в пикселях. Переходы идут на cubic-bezier(0.16,1,0.3,1).",
+      "meta": {
+        "tags": ["button", "shadow", "hover", "elevation"],
+        "ai": {
+          "export": "Button043",
+          "usage": "<Button043 lift={6} onClick={openCard}>Открыть карточку</Button043>",
+          "summary": "Светлая кнопка с физикой подъёма. В покое под ней лежит трёхслойная тень: жёсткий контакт, средний ореол и дальнее размытие. На наведении кнопка уезжает вверх, а дальние слои растут и размываются — предмет оторвался от стола. На нажатии остаётся один контактный слой. Ноль зависимостей, один файл.",
+          "preserve": [
+            "три слоя тени: один размытый слой читается как ореол, а не как высота",
+            "контактный слой без размытия — он держит связь предмета с поверхностью на любой высоте",
+            "одновременный рост смещения и размытия: тень, которая только сдвигается, выглядит нарисованной",
+            "возврат на :active с единственной контактной тенью — это и есть нажатие",
+            "cubic-bezier(0.16,1,0.3,1): на линейном easing подъём читается как рывок",
+            "светлую поверхность кнопки — тень строится на контрасте с ней, а тёмный текст остаётся читаемым"
+          ],
+          "adapt": [
+            "подпись кнопки",
+            "высоту подъёма — проп lift в пикселях",
+            "акцентный цвет значка — проп accent",
+            "обработчик onClick и остальные нативные пропсы button",
+            "цвет тени — переменная --vibeui-button-043-shadow в блоке стилей"
+          ],
+          "notes": [
+            "Не ставь такие кнопки плотным рядом: подъём соседних элементов создаёт визуальный шум.",
+            "Не задавай lift больше 12px — на большей высоте тень отрывается от кнопки и выглядит чужой.",
+            "Не заменяй трёхслойную тень одним box-shadow ради краткости: пропадёт ощущение высоты.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Открыть карточку",
+            "maxLength": 40
+          },
+          {
+            "prop": "lift",
+            "label": "Подъём, px",
+            "type": "number",
+            "default": 6,
+            "min": 0,
+            "max": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A button that lifts off the surface: three shadow layers grow and blur along with the rise, and a press puts it back on the table.",
+            "ai": {
+              "summary": "A light button with the physics of a lift. At rest a three-layer shadow sits beneath it: a hard contact, a middle halo and a distant blur. On hover the button rises while the far layers grow and soften — the object has left the table. On press only the contact layer remains. Zero dependencies, one file.",
+              "preserve": [
+                "the three shadow layers: a single blurred layer reads as a halo, not as height",
+                "the unblurred contact layer — it keeps the object tied to the surface at any height",
+                "the offset and the blur growing together: a shadow that merely shifts looks painted on",
+                "the return on :active down to a single contact shadow — that is the press",
+                "cubic-bezier(0.16,1,0.3,1): on linear easing the lift reads as a jerk",
+                "the light surface of the button — the shadow is built on contrast with it, and the dark label stays readable"
+              ],
+              "adapt": [
+                "the label",
+                "the lift height through the lift prop, in pixels",
+                "the mark's accent colour through the accent prop",
+                "the onClick handler and the rest of the native button props",
+                "the shadow colour through the --vibeui-button-043-shadow variable in the style block"
+              ],
+              "notes": [
+                "Do not line these buttons up densely: neighbouring elements lifting at once create visual noise.",
+                "Do not set lift above 12px — any higher and the shadow detaches from the button and looks borrowed.",
+                "Do not collapse the three-layer shadow into one box-shadow for brevity: the sense of height goes with it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button043 lift={6} onClick={openCard}>Open card</Button043>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Open card"
+              },
+              "lift": {
+                "label": "Lift, px"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-044",
+      "type": "registry:component",
+      "title": "Running Border Button",
+      "description": "По рамке кнопки бежит светлый сектор: вращающийся conic-gradient в подложке, из которого видна только полоска толщиной в границу.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-044/button-044.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-044.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-044-*. Серверный компонент. Корень блока — обёртка с padding 1.5px и overflow:hidden; её псевдоэлемент — квадрат в 220% ширины с conic-gradient, который крутится анимацией. Поверх лежит кнопка с непрозрачным фоном, поэтому от сектора остаётся только рамка. Размер 220% не случаен: меньший квадрат не покрывает диагональ, и сектор рвётся на углах. Скорость оборота — проп speed в секундах.",
+      "meta": {
+        "tags": ["button", "border", "animated", "conic-gradient"],
+        "ai": {
+          "export": "Button044",
+          "usage": "<Button044 speed={4} onClick={stop}>Идёт генерация</Button044>",
+          "summary": "Тёмная кнопка, по границе которой бежит светлый сектор. Приём: вращающийся conic-gradient лежит в подложке, а непрозрачная кнопка сверху оставляет от него только рамку в полтора пикселя. Скорость оборота задаётся пропом. При prefers-reduced-motion вращение останавливается, но градиент на рамке остаётся. Ноль зависимостей, один файл.",
+          "preserve": [
+            "квадрат в 220% ширины: меньший не покрывает диагональ, и сектор рвётся на углах",
+            "overflow:hidden на обёртке — без него вращающийся квадрат вылезает за кнопку",
+            "непрозрачный фон внутренней кнопки: именно он превращает сектор в рамку",
+            "padding обёртки как толщину рамки — она задаётся одним числом в одном месте",
+            "правило prefers-reduced-motion, которое останавливает вращение, не убирая градиент",
+            "радиус внутренней кнопки, посчитанный от радиуса обёртки минус толщина: иначе углы разъезжаются"
+          ],
+          "adapt": [
+            "подпись кнопки",
+            "скорость оборота — проп speed в секундах",
+            "цвет бегущего сектора — проп accent",
+            "обработчики onClick и disabled",
+            "цвет внутренней поверхности — переменная --vibeui-button-044-inner"
+          ],
+          "notes": [
+            "Не оставляй бегущую рамку на кнопке в покое: движение по краю читается как «идёт процесс», и без процесса оно врёт.",
+            "Не делай speed меньше двух секунд: быстрый оборот превращается в мигание и утомляет.",
+            "Не убирай padding обёртки в ноль — рамка исчезнет вместе с эффектом.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Идёт генерация",
+            "maxLength": 40
+          },
+          {
+            "prop": "speed",
+            "label": "Оборот, с",
+            "type": "number",
+            "default": 4,
+            "min": 2,
+            "max": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет сектора",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A bright sector runs around the button's border: a rotating conic-gradient in the backing plate, of which only a border-thin strip stays visible.",
+            "ai": {
+              "summary": "A dark button with a bright sector running around its edge. The trick: a rotating conic-gradient sits in the backing plate, and the opaque button on top leaves only a pixel-and-a-half border of it. The revolution speed is a prop. Under prefers-reduced-motion the rotation stops while the gradient stays on the border. Zero dependencies, one file.",
+              "preserve": [
+                "the 220%-wide square: a smaller one does not cover the diagonal and the sector tears at the corners",
+                "overflow:hidden on the wrapper — without it the rotating square spills outside the button",
+                "the opaque background of the inner button: that is what turns the sector into a border",
+                "the wrapper's padding as the border weight — one number in one place",
+                "the prefers-reduced-motion rule, which stops the rotation without removing the gradient",
+                "the inner radius computed as the wrapper radius minus the border weight: otherwise the corners drift apart"
+              ],
+              "adapt": [
+                "the label",
+                "the revolution time through the speed prop, in seconds",
+                "the running sector's colour through the accent prop",
+                "the onClick handler and disabled",
+                "the inner surface colour through the --vibeui-button-044-inner variable"
+              ],
+              "notes": [
+                "Do not leave the running border on an idle button: motion along the edge reads as work in progress and lies without it.",
+                "Do not set speed below two seconds: a fast revolution turns into flicker and tires the eye.",
+                "Do not zero out the wrapper padding — the border disappears and takes the effect with it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button044 speed={4} onClick={stop}>Generating</Button044>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Generating"
+              },
+              "speed": {
+                "label": "Revolution, s"
+              },
+              "accent": {
+                "label": "Sector color"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-045",
+      "type": "registry:component",
+      "title": "Deep Press Button",
+      "description": "Настоящий ход клавиши: объём даёт жёсткая нижняя грань, а при нажатии кнопка опускается ровно на её высоту, не сдвигая соседей.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-045/button-045.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-045.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-045-*. Серверный компонент. Объём даёт box-shadow без размытия высотой --vibeui-button-045-depth (проп depth в пикселях); на :active грань обнуляется, а кнопка сдвигается вниз ровно на ту же величину, поэтому суммарная высота пятна постоянна и ряд кнопок не дёргается. Внутренний блик сверху — второй inset-слой той же тени.",
+      "meta": {
+        "tags": ["button", "press", "3d", "tactile"],
+        "ai": {
+          "export": "Button045",
+          "usage": "<Button045 depth={5} onClick={submit}>Нажми меня</Button045>",
+          "summary": "Кнопка с настоящим ходом. Под ней лежит жёсткая грань без размытия — это не тень, а торец клавиши; сверху идёт светлый inset-блик, дающий пластик. На нажатии грань уходит, а кнопка опускается на её высоту: сумма высот постоянна, поэтому соседние элементы не смещаются. Ноль зависимостей, один файл.",
+          "preserve": [
+            "равенство хода и высоты грани: если они разойдутся, кнопка при нажатии начнёт двигать соседей",
+            "нижнюю грань без размытия — размытая тень даёт парение, а не торец клавиши",
+            "внутренний блик сверху: без него пластик выглядит плоской заливкой",
+            "короткий переход .08s: длинная анимация нажатия ощущается как задержка отклика",
+            "переменную depth как единственный источник глубины — её же использует сдвиг",
+            "потемневшую грань относительно лицевой поверхности: одинаковый цвет убивает объём"
+          ],
+          "adapt": [
+            "подпись кнопки",
+            "глубину хода — проп depth в пикселях",
+            "цвет лицевой поверхности — проп accent",
+            "обработчик onClick и остальные нативные пропсы button",
+            "цвет торца — переменная --vibeui-button-045-edge в блоке стилей"
+          ],
+          "notes": [
+            "Не задавай depth больше 10px: кнопка начинает выглядеть как коробка, а ход становится заметно медленным.",
+            "Не забывай про нижний отступ у соседей: грань занимает место, и вплотную поставленный элемент её перекроет.",
+            "Не меняй цвет торца на прозрачный — исчезнет объём, ради которого компонент и сделан.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Нажми меня",
+            "maxLength": 40
+          },
+          {
+            "prop": "depth",
+            "label": "Глубина, px",
+            "type": "number",
+            "default": 5,
+            "min": 2,
+            "max": 10
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A real key travel: depth comes from a hard bottom edge, and on press the button drops by exactly that height without nudging its neighbours.",
+            "ai": {
+              "summary": "A button with real travel. A hard, unblurred edge sits beneath it — not a shadow but the side of a keycap; a light inset highlight on top adds the plastic. On press the edge collapses and the button drops by its height: the total stays constant, so neighbouring elements never shift. Zero dependencies, one file.",
+              "preserve": [
+                "the equality of the travel and the edge height: if they diverge, pressing the button starts moving its neighbours",
+                "the unblurred bottom edge — a blurred shadow gives float, not the side of a keycap",
+                "the inset highlight on top: without it the plastic reads as a flat fill",
+                "the short .08s transition: a long press animation feels like input lag",
+                "the depth variable as the single source of depth — the same value drives the shift",
+                "the darker edge relative to the face: an identical colour kills the volume"
+              ],
+              "adapt": [
+                "the label",
+                "the travel depth through the depth prop, in pixels",
+                "the face colour through the accent prop",
+                "the onClick handler and the rest of the native button props",
+                "the edge colour through the --vibeui-button-045-edge variable in the style block"
+              ],
+              "notes": [
+                "Do not set depth above 10px: the button starts to look like a box and the travel feels sluggish.",
+                "Remember the bottom spacing of the neighbours: the edge takes room, and an element placed flush will cover it.",
+                "Do not make the edge colour transparent — that removes the very volume the component exists for.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button045 depth={5} onClick={submit}>Press me</Button045>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Press me"
+              },
+              "depth": {
+                "label": "Depth, px"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-046",
+      "type": "registry:component",
+      "title": "Back To Top Button",
+      "description": "Кнопка «наверх» с кольцом прочитанного: обработчик прокрутки заполняет кольцо и, если нужно, прячет кнопку до заданного порога.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-046/button-046.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-046.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-046-*. Клиентский компонент: слушатели scroll и resize висят на window, scroll повешен с passive:true, оба снимаются при размонтировании. Доля прокрутки уходит в переменную --vibeui-button-046-progress и рисует кольцо conic-gradient. Прячется кнопка только при autoHide; в скрытом виде она получает pointer-events:none, aria-hidden и tabIndex -1, поэтому не ловит Tab. Прокрутка наверх идёт behavior:smooth, а при prefers-reduced-motion — мгновенно.",
+      "meta": {
+        "tags": ["button", "scroll", "progress", "navigation"],
+        "ai": {
+          "export": "Button046",
+          "usage": "<Button046 autoHide threshold={320} label=\"Наверх\" />",
+          "summary": "Круглая кнопка возврата наверх, которая заодно показывает, сколько страницы позади: кольцо прогресса нарисовано conic-gradient по доле прокрутки. При autoHide кнопка появляется только после порога и в скрытом виде выпадает из порядка обхода. Прокрутка плавная, а при отключённой анимации — мгновенная. Ноль зависимостей, один файл.",
+          "preserve": [
+            "снятие слушателей в возвращаемой функции useEffect — иначе они копятся при каждом монтировании",
+            "passive:true у слушателя прокрутки: без него обработчик тормозит саму прокрутку",
+            "aria-hidden и tabIndex -1 в скрытом состоянии: невидимая кнопка не должна ловить Tab",
+            "проверку prefers-reduced-motion перед плавной прокруткой — это единственное место, где движение нельзя отключить одним CSS",
+            "кольцо прогресса как conic-gradient по переменной, а не отдельный элемент поверх",
+            "светлую середину и рамку: кнопка обязана читаться поверх любого содержимого страницы"
+          ],
+          "adapt": [
+            "имя кнопки — проп label, оно уходит в aria-label",
+            "порог появления — проп threshold в пикселях",
+            "скрытие до порога — проп autoHide",
+            "цвет кольца — проп accent",
+            "позиционирование через className: сам компонент position не задаёт"
+          ],
+          "notes": [
+            "Компонент не позиционирует себя: fixed или sticky задаёт приложение, иначе кнопка уедет в поток.",
+            "Не включай autoHide там, где страница короче экрана: кнопка не появится никогда.",
+            "Не убирай проверку prefers-reduced-motion: плавная прокрутка укачивает часть пользователей.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Имя кнопки",
+            "type": "text",
+            "default": "Наверх",
+            "maxLength": 40
+          },
+          {
+            "prop": "threshold",
+            "label": "Порог, px",
+            "type": "number",
+            "default": 320,
+            "min": 0,
+            "max": 2000
+          },
+          {
+            "prop": "autoHide",
+            "label": "Прятать до порога",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A back-to-top button with a progress ring: the scroll handler fills the ring and, when asked, hides the button until a threshold is passed.",
+            "ai": {
+              "summary": "A round back-to-top button that also shows how much of the page is behind you: the progress ring is a conic-gradient driven by the scroll fraction. With autoHide it appears only past a threshold and drops out of the tab order while hidden. The scroll is smooth, or instant when motion is reduced. Zero dependencies, one file.",
+              "preserve": [
+                "removing the listeners in the useEffect cleanup — otherwise they pile up on every mount",
+                "passive:true on the scroll listener: without it the handler slows the scroll itself",
+                "aria-hidden and tabIndex -1 while hidden: an invisible button must not catch Tab",
+                "the prefers-reduced-motion check before smooth scrolling — this is the one place CSS alone cannot switch motion off",
+                "the progress ring as a conic-gradient driven by a variable, not a separate element on top",
+                "the light middle and the border: the button has to read over any page content"
+              ],
+              "adapt": [
+                "the button's name through the label prop, which becomes its aria-label",
+                "the appearance threshold through the threshold prop, in pixels",
+                "hiding before the threshold through the autoHide prop",
+                "the ring colour through the accent prop",
+                "positioning through className: the component sets no position of its own"
+              ],
+              "notes": [
+                "The component does not position itself: fixed or sticky is your app's job, otherwise the button stays in the flow.",
+                "Do not enable autoHide where the page is shorter than the viewport: the button will never appear.",
+                "Do not drop the prefers-reduced-motion check: smooth scrolling makes some people motion-sick.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button046 autoHide threshold={320} label=\"Back to top\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Button name",
+                "default": "Back to top"
+              },
+              "threshold": {
+                "label": "Threshold, px"
+              },
+              "autoHide": {
+                "label": "Hide until threshold"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-047",
+      "type": "registry:component",
+      "title": "External Link Button",
+      "description": "Ссылка на внешний ресурс, которая называет домен назначения до клика и добавляет скрытую строку «откроется в новой вкладке».",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-047/button-047.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-047.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-047-*. Серверный компонент, корень — настоящий <a> с target=\"_blank\" и rel=\"noreferrer noopener\": адрес можно скопировать, открыть в новой вкладке и увидеть в строке состояния. Домен вынимается из href через URL с запасным разбором строки. Значок «стрелка из рамки» нарисован гранями псевдоэлементов; скрытая строка для скринридера спрятана clip-path.",
+      "meta": {
+        "tags": ["link", "external", "navigation", "security"],
+        "ai": {
+          "export": "Button047",
+          "usage": "<Button047 href=\"https://ui.shadcn.com/docs\">Документация shadcn</Button047>",
+          "summary": "Кнопка-ссылка, которая честно показывает, куда ведёт: рядом с подписью стоит моноширинная плашка с доменом, а справа — значок выхода, уезжающий по диагонали на наведении. Для скринридера добавлена строка про новую вкладку, которую сам target не объявляет. Ноль зависимостей, один файл.",
+          "preserve": [
+            "настоящий <a> с href: с обработчиком клика теряются копирование адреса, средний клик и предпросмотр в строке состояния",
+            "rel=\"noreferrer noopener\" рядом с target=\"_blank\" — это защита открывающей страницы, а не украшение",
+            "скрытую строку «откроется в новой вкладке»: target сам по себе ничего не сообщает скринридеру",
+            "плашку с доменом: она отвечает на вопрос «куда я ухожу» до клика",
+            "диагональный сдвиг значка выхода — направление наружу читается движением",
+            "светлую поверхность с рамкой, на которой видна тёмная подпись"
+          ],
+          "adapt": [
+            "подпись ссылки",
+            "адрес — проп href, из него же берётся домен",
+            "показ домена — проп showHost",
+            "акцентный цвет — проп accent",
+            "остальные нативные пропсы ссылки: download, hrefLang, aria-*"
+          ],
+          "notes": [
+            "Не заменяй ссылку на <button> с window.open: браузеры блокируют такие окна и теряется контекстное меню.",
+            "Не убирай rel при target=\"_blank\" — открытая страница получит доступ к window.opener.",
+            "Не подставляй в href пользовательский ввод без проверки схемы: javascript: в ссылке опасен.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Документация shadcn",
+            "maxLength": 40
+          },
+          {
+            "prop": "href",
+            "label": "Адрес",
+            "type": "text",
+            "default": "https://ui.shadcn.com/docs",
+            "maxLength": 90
+          },
+          {
+            "prop": "showHost",
+            "label": "Показывать домен",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An external link that names its destination host before the click and adds a hidden 'opens in a new tab' note.",
+            "ai": {
+              "summary": "A link button that is honest about its destination: a monospace chip beside the label carries the host, and an exit mark on the right slides diagonally on hover. A hidden note tells screen reader users about the new tab, which target alone never announces. Zero dependencies, one file.",
+              "preserve": [
+                "a real <a> with href: a click handler loses copy-link, middle click and the status-bar preview",
+                "rel=\"noreferrer noopener\" next to target=\"_blank\" — that is protection for the opening page, not decoration",
+                "the hidden 'opens in a new tab' note: target on its own tells a screen reader nothing",
+                "the host chip: it answers the question of where you are going before the click",
+                "the diagonal slide of the exit mark — the outward direction reads through movement",
+                "the light surface with a border, on which the dark label stays visible"
+              ],
+              "adapt": [
+                "the link label",
+                "the address through the href prop, which also supplies the host",
+                "whether the host shows, through the showHost prop",
+                "the accent colour through the accent prop",
+                "the rest of the native anchor props: download, hrefLang, aria-*"
+              ],
+              "notes": [
+                "Do not replace the link with a <button> calling window.open: browsers block such windows and the context menu is lost.",
+                "Do not drop rel with target=\"_blank\" — the opened page gains access to window.opener.",
+                "Do not put unchecked user input into href: a javascript: URL there is dangerous.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button047 href=\"https://ui.shadcn.com/docs\">shadcn documentation</Button047>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "shadcn documentation"
+              },
+              "href": {
+                "label": "URL",
+                "default": "https://ui.shadcn.com/docs"
+              },
+              "showHost": {
+                "label": "Show host"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-048",
+      "type": "registry:component",
+      "title": "Provider Sign In",
+      "description": "Кнопка входа через провайдера: знак прижат к левому краю, а подпись центрируется по всей ширине, поэтому колонка кнопок держит общую ось.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-048/button-048.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-048.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-048-*. Серверный компонент. Знак вынут из потока (position:absolute) и не влияет на центрирование подписи — из-за этого несколько кнопок разных провайдеров выстраиваются с общей осью текста. Знаки условные, собраны из conic-gradient и псевдоэлементов; реальные логотипы приносит проект. Подпись по умолчанию берётся из карты LABELS по значению provider.",
+      "meta": {
+        "tags": ["button", "auth", "oauth", "sign-in"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Button048",
+          "usage": "<Button048 provider=\"google\" onClick={signIn} />",
+          "summary": "Белая кнопка входа через внешнего провайдера. Знак лежит абсолютом у левого края, поэтому подпись центрируется по всей кнопке и колонка «Продолжить с …» выстраивается по одной оси. Три провайдера меняют и знак, и подпись по умолчанию. Знаки нарисованы CSS, картинок нет. Ноль зависимостей, один файл.",
+          "preserve": [
+            "знак вне потока: если положить его в строку, подпись сместится и колонка кнопок потеряет общую ось",
+            "белую поверхность с рамкой — привычная форма кнопки входа, по которой её узнают",
+            "подпись вида «Продолжить с …»: она честнее, чем «Войти», потому что покрывает и регистрацию",
+            "правый паддинг, равный левому: без него центрированная подпись уезжает вправо",
+            "focus-visible с отступом: кнопки входа часто первые в порядке обхода",
+            "постоянную высоту 2.75rem — колонка провайдеров должна быть ровной"
+          ],
+          "adapt": [
+            "провайдера — проп provider, он меняет знак и подпись по умолчанию",
+            "подпись — проп label, если нужна своя формулировка",
+            "обработчик onClick и остальные нативные пропсы button",
+            "знак: замените CSS-фигуру на настоящий логотип провайдера",
+            "предельную ширину через className"
+          ],
+          "notes": [
+            "Знаки здесь условные. Перед публикацией поставьте официальные логотипы: у провайдеров свои правила использования марки.",
+            "Не переводи название провайдера: «Гугл» вместо Google выглядит подделкой.",
+            "Не клади знак в поток ради «простоты» — сломается выравнивание подписей в колонке.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "provider",
+            "label": "Провайдер",
+            "type": "select",
+            "default": "google",
+            "options": ["google", "github", "apple"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A provider sign-in button: the mark is pinned to the left edge while the label centres across the full width, so a column of buttons keeps one axis.",
+            "ai": {
+              "summary": "A white sign-in button for an external provider. The mark is absolutely positioned at the left edge, so the label centres across the whole button and a column of 'Continue with …' lines up on one axis. Three providers switch both the mark and the default label. The marks are pure CSS, no images. Zero dependencies, one file.",
+              "preserve": [
+                "the mark out of the flow: put it in the line and the label shifts, breaking the column's shared axis",
+                "the white surface with a border — the familiar shape people recognise as a sign-in button",
+                "the 'Continue with …' wording: it is more honest than 'Sign in', because it covers signing up too",
+                "the right padding matching the left one: without it the centred label drifts right",
+                "focus-visible with an offset: sign-in buttons are often first in the tab order",
+                "the constant 2.75rem height — a provider column has to be even"
+              ],
+              "adapt": [
+                "the provider through the provider prop, which switches the mark and the default label",
+                "the label through the label prop when you need your own wording",
+                "the onClick handler and the rest of the native button props",
+                "the mark: replace the CSS shape with the provider's real logo",
+                "the maximum width through className"
+              ],
+              "notes": [
+                "The marks here are placeholders. Put the official logos in before shipping: providers have their own brand rules.",
+                "Do not translate the provider's name: a localised spelling reads as a counterfeit.",
+                "Do not move the mark into the flow for simplicity — it breaks label alignment across the column.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button048 provider=\"google\" onClick={signIn} />"
+            },
+            "controls": {
+              "provider": {
+                "label": "Provider"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-049",
+      "type": "registry:component",
+      "title": "Add To Cart Button",
+      "description": "Кнопка «в корзину», у которой после добавления меняется не только вид, но и смысл клика: теперь она ведёт в корзину.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-049/button-049.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-049.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-049-*. Клиентский компонент: состояние «в корзине» внутреннее, наружу уходят два разных обработчика — onAdd и onOpenCart, компонент сам решает, какой вызвать. Минимальная ширина зафиксирована, поэтому при смене подписи кнопка не прыгает. Смена состояния объявляется скрытой строкой role=\"status\" с aria-live=\"polite\".",
+      "meta": {
+        "tags": ["button", "cart", "commerce", "stateful"],
+        "ai": {
+          "export": "Button049",
+          "usage": "<Button049 onAdd={addToCart} onOpenCart={openCart}>\n  В корзину\n</Button049>",
+          "summary": "Кнопка товара с двумя состояниями. До добавления — акцентная «В корзину» со значком сумки; после — зелёная «В корзине — открыть» с галочкой, и клик уже ведёт в корзину, а не добавляет второй раз. Изменение уходит в aria-live, поэтому его слышно и без экрана. Ноль зависимостей, один файл.",
+          "preserve": [
+            "смену смысла клика вместе с состоянием: повторное добавление одного товара — почти всегда ошибка пользователя",
+            "скрытую строку aria-live: без неё факт добавления доходит только глазами",
+            "фиксированную минимальную ширину — иначе кнопка прыгает при смене подписи",
+            "смену значка сумки на галочку вместе с цветом: цвет один не различают все пользователи",
+            "два разных обработчика onAdd и onOpenCart — приложению нужно знать, какое из действий произошло",
+            "зелёную палитру состояния «в корзине», отличную от акцента покоя"
+          ],
+          "adapt": [
+            "подписи children и addedLabel",
+            "обработчики onAdd и onOpenCart",
+            "начальное состояние — проп defaultAdded",
+            "акцентный цвет — проп accent",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Компонент не знает про корзину: он только переключает состояние и зовёт обработчики. Синхронизация с реальной корзиной — задача приложения.",
+            "Не оставляй состояние «в корзине», если запрос на сервер провалился: сбрасывай его через defaultAdded или пересоздание.",
+            "Не превращай кнопку в счётчик количества — для этого нужен отдельный степпер.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "В корзину",
+            "maxLength": 40
+          },
+          {
+            "prop": "addedLabel",
+            "label": "Подпись после добавления",
+            "type": "text",
+            "default": "В корзине — открыть",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An add-to-cart button where adding changes not only the look but the meaning of the click: now it opens the cart.",
+            "ai": {
+              "summary": "A product button with two states. Before adding it is an accent 'Add to cart' with a bag mark; after, a green 'In cart — open' with a checkmark, and the click now opens the cart instead of adding a second time. The change goes into aria-live, so it is heard without a screen too. Zero dependencies, one file.",
+              "preserve": [
+                "the click changing meaning with the state: adding the same item twice is almost always a user error",
+                "the hidden aria-live line: without it the fact of adding reaches the eyes only",
+                "the fixed minimum width — otherwise the button jumps when the label changes",
+                "the bag mark switching to a checkmark alongside the colour: colour alone is not read by everyone",
+                "the two separate onAdd and onOpenCart handlers — your app needs to know which action happened",
+                "the green palette of the in-cart state, distinct from the resting accent"
+              ],
+              "adapt": [
+                "the children and addedLabel labels",
+                "the onAdd and onOpenCart handlers",
+                "the initial state through the defaultAdded prop",
+                "the accent colour through the accent prop",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "The component knows nothing about the cart: it only flips state and calls handlers. Syncing with the real cart is your app's job.",
+                "Do not leave the in-cart state when the server request failed: reset it through defaultAdded or by remounting.",
+                "Do not turn the button into a quantity counter — that needs a dedicated stepper.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button049 onAdd={addToCart} onOpenCart={openCart}>\n  Add to cart\n</Button049>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Add to cart"
+              },
+              "addedLabel": {
+                "label": "Label after adding",
+                "default": "In cart — open"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-050",
+      "type": "registry:component",
+      "title": "Favorite Toggle",
+      "description": "Круглая кнопка избранного: сердце собрано из двух кругов и повёрнутого квадрата, а при включении из-под него расходится кольцо-вспышка.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-050/button-050.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-050.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-050-*. Клиентский компонент: состояние внутреннее, наружу уходит через onChange. Состояние объявлено через aria-pressed, а имя кнопки меняется вместе с ним — подписи нет, поэтому aria-label единственный носитель смысла. Сердце нарисовано двумя псевдоэлементами с общим transform-origin, заливка приходит через background-color. Кольцо-вспышка — отдельная анимация, привязанная к aria-pressed.",
+      "meta": {
+        "tags": ["button", "favorite", "toggle", "icon"],
+        "ai": {
+          "export": "Button050",
+          "usage": "<Button050 defaultPressed={false} onChange={setFavorite} label=\"В избранное\" />",
+          "summary": "Кнопка-иконка без подписи. Сердце в покое контурное, во включённом состоянии заливается и слегка увеличивается, а по кругу расходится кольцо — короткое подтверждение нажатия без смены раскладки. Состояние объявлено через aria-pressed, имя кнопки меняется вместе с ним. Ноль зависимостей, один файл.",
+          "preserve": [
+            "aria-pressed как носитель состояния: у кнопки нет подписи, и по одному цвету состояние не читается",
+            "смену aria-label вместе с состоянием — «В избранное» и «Убрать из избранного» это разные действия",
+            "сердце на псевдоэлементах: оно наследует currentColor и не тянет иконочную библиотеку",
+            "заливку сердца во включённом состоянии, а не только смену цвета контура",
+            "кольцо-вспышку как подтверждение нажатия и правило prefers-reduced-motion, которое его гасит",
+            "круглую форму и постоянный размер: кнопка часто стоит в углу карточки товара"
+          ],
+          "adapt": [
+            "имена состояний — пропы label и activeLabel",
+            "начальное состояние — проп defaultPressed",
+            "обработчик onChange: он получает новое состояние",
+            "цвет включённого состояния — проп accent",
+            "размер — переменная --vibeui-button-050-size в блоке стилей"
+          ],
+          "notes": [
+            "Не добавляй счётчик в эту кнопку: для «лайка с числом» нужен другой компонент с местом под цифру.",
+            "Не передавай onClick: компонент управляет переключением сам, изменения приходят через onChange.",
+            "Не оставляй label и activeLabel одинаковыми — тогда состояние не объявляется вовсе.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Имя в покое",
+            "type": "text",
+            "default": "В избранное",
+            "maxLength": 40
+          },
+          {
+            "prop": "activeLabel",
+            "label": "Имя во включённом",
+            "type": "text",
+            "default": "Убрать из избранного",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultPressed",
+            "label": "Включена",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A round favourite toggle: the heart is built from two circles and a rotated square, and switching it on sends a ring flashing outward.",
+            "ai": {
+              "summary": "A label-less icon button. At rest the heart is an outline; switched on it fills, grows slightly, and a ring flashes outward — a short press confirmation that costs no layout. The state is announced through aria-pressed and the button's name changes with it. Zero dependencies, one file.",
+              "preserve": [
+                "aria-pressed as the carrier of state: the button has no label, and colour alone does not convey it",
+                "the aria-label changing with the state — 'add to favourites' and 'remove from favourites' are different actions",
+                "the pseudo-element heart: it inherits currentColor and pulls in no icon library",
+                "filling the heart in the on state rather than only recolouring its outline",
+                "the ring flash as press confirmation, and the prefers-reduced-motion rule that kills it",
+                "the round shape and constant size: this button usually sits in the corner of a product card"
+              ],
+              "adapt": [
+                "the state names through the label and activeLabel props",
+                "the initial state through the defaultPressed prop",
+                "the onChange handler: it receives the new state",
+                "the on-state colour through the accent prop",
+                "the size through the --vibeui-button-050-size variable in the style block"
+              ],
+              "notes": [
+                "Do not add a counter to this button: a 'like with a number' needs a different component with room for the digits.",
+                "Do not pass onClick: the component owns the toggle, and changes arrive through onChange.",
+                "Do not leave label and activeLabel identical — the state then is not announced at all.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button050 defaultPressed={false} onChange={setFavorite} label=\"Add to favourites\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Idle name",
+                "default": "Add to favourites"
+              },
+              "activeLabel": {
+                "label": "Active name",
+                "default": "Remove from favourites"
+              },
+              "defaultPressed": {
+                "label": "Pressed"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-051",
+      "type": "registry:component",
+      "title": "Follow Button",
+      "description": "Кнопка подписки с тремя подписями на два состояния: «Вы подписаны» честно превращается в «Отписаться» под курсором и на фокусе.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-051/button-051.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-051.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-051-*. Клиентский компонент: состояние внутреннее, наружу уходит через onChange, дополнительно объявлено через aria-pressed. Подмена подписи сделана двумя слоями в одной grid-ячейке (grid-area:1/1): обе строки всегда в разметке, ширина берётся по длинной, поэтому кнопка не меняет размер под курсором. Подмена срабатывает и на :focus-visible, а не только на :hover.",
+      "meta": {
+        "tags": ["button", "follow", "subscribe", "toggle"],
+        "ai": {
+          "export": "Button051",
+          "usage": "<Button051 defaultFollowing onChange={setFollowing} />",
+          "summary": "Кнопка подписки, которая не врёт о последствиях клика. Не подписан — акцентная «Подписаться». Подписан — светлая «Вы подписаны», но стоит навести или дать фокус, как подпись становится «Отписаться» и палитра уходит в тревожную. Обе подписи лежат в одной ячейке, поэтому ширина не скачет. Ноль зависимостей, один файл.",
+          "preserve": [
+            "три подписи на два состояния: «Вы подписаны» сообщает статус, «Отписаться» — последствие клика",
+            "подмену подписи и на focus-visible: с клавиатуры последствие должно быть видно так же",
+            "обе подписи в одной grid-ячейке — иначе ширина кнопки прыгает под курсором",
+            "тревожную палитру только у «Отписаться», а не у всего состояния «подписан»",
+            "aria-pressed рядом с видимой подписью: состояние должно уходить в дерево доступности",
+            "форму пилюли и разный вес состояний: подписка — акцент, статус — тихая рамка"
+          ],
+          "adapt": [
+            "три подписи — пропы followLabel, followingLabel и unfollowLabel",
+            "начальное состояние — проп defaultFollowing",
+            "обработчик onChange: он получает новое состояние",
+            "акцентный цвет — проп accent",
+            "цвет предупреждения — переменная --vibeui-button-051-danger"
+          ],
+          "notes": [
+            "Не убирай состояние «Отписаться»: кнопка, которая под курсором выглядит как «подписан», обманывает про результат клика.",
+            "Не передавай onClick: компонент управляет переключением сам, изменения приходят через onChange.",
+            "Не делай подписи разной длины слишком контрастными — ширина считается по самой длинной.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "followLabel",
+            "label": "Подпись «подписаться»",
+            "type": "text",
+            "default": "Подписаться",
+            "maxLength": 40
+          },
+          {
+            "prop": "followingLabel",
+            "label": "Подпись «подписан»",
+            "type": "text",
+            "default": "Вы подписаны",
+            "maxLength": 40
+          },
+          {
+            "prop": "unfollowLabel",
+            "label": "Подпись «отписаться»",
+            "type": "text",
+            "default": "Отписаться",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultFollowing",
+            "label": "Уже подписан",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A follow button with three labels across two states: 'Following' honestly turns into 'Unfollow' under the cursor and on focus.",
+            "ai": {
+              "summary": "A follow button that does not lie about what a click will do. Not following: an accent 'Follow'. Following: a light 'Following' that turns into 'Unfollow' with a warning palette the moment it is hovered or focused. Both labels share one grid cell, so the width never jumps. Zero dependencies, one file.",
+              "preserve": [
+                "the three labels across two states: 'Following' reports status, 'Unfollow' reports the consequence of a click",
+                "the swap firing on focus-visible too: from the keyboard the consequence must be just as visible",
+                "both labels inside one grid cell — otherwise the button's width jumps under the cursor",
+                "the warning palette only on 'Unfollow', not on the whole following state",
+                "aria-pressed beside the visible label: the state has to reach the accessibility tree",
+                "the pill shape and the different weights: following is an accent, status is a quiet outline"
+              ],
+              "adapt": [
+                "the three labels through the followLabel, followingLabel and unfollowLabel props",
+                "the initial state through the defaultFollowing prop",
+                "the onChange handler: it receives the new state",
+                "the accent colour through the accent prop",
+                "the warning colour through the --vibeui-button-051-danger variable"
+              ],
+              "notes": [
+                "Do not drop the 'Unfollow' state: a button that still reads as 'following' under the cursor misleads about the click.",
+                "Do not pass onClick: the component owns the toggle, and changes arrive through onChange.",
+                "Do not make the labels wildly different in length — the width is set by the longest one.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button051 defaultFollowing onChange={setFollowing} />"
+            },
+            "controls": {
+              "followLabel": {
+                "label": "Follow label",
+                "default": "Follow"
+              },
+              "followingLabel": {
+                "label": "Following label",
+                "default": "Following"
+              },
+              "unfollowLabel": {
+                "label": "Unfollow label",
+                "default": "Unfollow"
+              },
+              "defaultFollowing": {
+                "label": "Already following"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-052",
+      "type": "registry:component",
+      "title": "Call Link Button",
+      "description": "Кнопка связи на настоящей ссылке tel:: номер виден и копируется, а пульсирующее кольцо и строка часов говорят, что линия открыта.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-052/button-052.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-052.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-052-*. Серверный компонент, корень — <a href=\"tel:…\">: на телефоне вызов уходит в звонилку, на десктопе — в приложение пользователя. Из видимой записи номера пробелы и разделители вычищаются только в href, поэтому человекочитаемый вид сохраняется. Трубка нарисована рамкой с прозрачными гранями, кольцо доступности — анимация на псевдоэлементе, номер набран моноширинным с tabular-nums.",
+      "meta": {
+        "tags": ["button", "call", "tel", "contact"],
+        "ai": {
+          "export": "Button052",
+          "usage": "<Button052 phone=\"+7 495 120-45-90\" hint=\"Отвечаем с 9:00 до 21:00\">\n  Позвонить в поддержку\n</Button052>",
+          "summary": "Кнопка звонка, которая показывает сам номер: сверху назначение, под ним моноширинный номер, ещё ниже — часы работы. Слева трубка в круге с расходящимся кольцом: линия открыта. Это ссылка tel:, поэтому номер копируется из контекстного меню и работает на любой платформе. Ноль зависимостей, один файл.",
+          "preserve": [
+            "ссылку tel: вместо обработчика клика: только так номер копируется и открывается в звонилке",
+            "видимый номер в человекочитаемом виде — чистится только href, а не то, что читает пользователь",
+            "моноширинный шрифт и tabular-nums у номера: цифры не должны прыгать по ширине",
+            "кольцо доступности и правило prefers-reduced-motion, которое его останавливает",
+            "три строки в порядке «назначение — номер — часы»: сначала зачем звонить, потом куда",
+            "контрастную заливку — кнопка связи должна находиться на странице сразу"
+          ],
+          "adapt": [
+            "подпись назначения",
+            "номер — проп phone, из него же собирается href",
+            "строку часов — проп hint",
+            "акцентный цвет — проп accent",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Не показывай пульсирующее кольцо, если линия по факту закрыта: анимация обещает доступность прямо сейчас.",
+            "Держи номер в международном формате с плюсом — иначе звонок из-за границы не пройдёт.",
+            "Не заменяй ссылку на кнопку с обработчиком: на десктопе исчезнет возможность скопировать номер.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Позвонить в поддержку",
+            "maxLength": 40
+          },
+          {
+            "prop": "phone",
+            "label": "Номер",
+            "type": "text",
+            "default": "+7 495 120-45-90",
+            "maxLength": 30
+          },
+          {
+            "prop": "hint",
+            "label": "Часы работы",
+            "type": "text",
+            "default": "Отвечаем с 9:00 до 21:00",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A contact button built on a real tel: link: the number is visible and copyable, while a pulsing ring and an hours line say the line is open.",
+            "ai": {
+              "summary": "A call button that shows the number itself: the purpose on top, a monospace number below it, opening hours under that. On the left a handset in a circle with an expanding ring: the line is open. It is a tel: link, so the number can be copied from the context menu and works on any platform. Zero dependencies, one file.",
+              "preserve": [
+                "the tel: link instead of a click handler: only that way is the number copyable and dialable",
+                "the human-readable number on screen — only href is stripped, never what the user reads",
+                "the monospace face and tabular-nums on the number: the digits must not shift the width",
+                "the availability ring and the prefers-reduced-motion rule that stops it",
+                "the three lines in the order purpose, number, hours: why call first, where second",
+                "the contrasting fill — a contact button has to be findable on the page at a glance"
+              ],
+              "adapt": [
+                "the purpose label",
+                "the number through the phone prop, which also builds the href",
+                "the hours line through the hint prop",
+                "the accent colour through the accent prop",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not show the pulsing ring when the line is actually closed: the animation promises availability right now.",
+                "Keep the number in international format with a plus — otherwise a call from abroad will not connect.",
+                "Do not swap the link for a button with a handler: on desktop that removes the ability to copy the number.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button052 phone=\"+7 495 120-45-90\" hint=\"We answer 9:00–21:00\">\n  Call support\n</Button052>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Call support"
+              },
+              "phone": {
+                "label": "Phone",
+                "default": "+7 495 120-45-90"
+              },
+              "hint": {
+                "label": "Hours",
+                "default": "We answer 9:00–21:00"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-053",
+      "type": "registry:component",
+      "title": "Print Button",
+      "description": "Кнопка печати, которая исчезает с самой распечатки: собственное правило @media print убирает её, а клик зовёт системный диалог.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-053/button-053.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-053.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-053-*. Клиентский компонент: обработчик вызывает window.print(). Пользовательский onClick вызывается первым, и если он сделал preventDefault, диалог не открывается — так печать можно отменить или подменить. В блоке стилей есть собственное @media print с display:none, поэтому прятать кнопку снаружи не нужно. Принтер нарисован тремя фигурами: корпус, лоток и выезжающий лист.",
+      "meta": {
+        "tags": ["button", "print", "document", "utility"],
+        "ai": {
+          "export": "Button053",
+          "usage": "<Button053 hint=\"Ctrl + P\">Распечатать счёт</Button053>",
+          "summary": "Кнопка печати со значком принтера, из которого на наведении выезжает лист. Клик открывает системный диалог печати; собственное правило @media print убирает саму кнопку из распечатки, чтобы она не оставила чёрный прямоугольник на бумаге. Рядом с подписью стоит моноширинная подсказка сочетания. Ноль зависимостей, один файл.",
+          "preserve": [
+            "собственное @media print с display:none — иначе кнопка попадает на бумагу",
+            "вызов window.print() после пользовательского onClick и проверку defaultPrevented: печать должно быть можно отменить",
+            "выезжающий лист на наведении: он объясняет значок без подписи",
+            "подсказку сочетания моноширинным и приглушённым — она не должна спорить с подписью",
+            "светлую поверхность с рамкой: кнопка печати живёт среди документа, а не на герое",
+            "aria-hidden на подсказке: сочетание клавиш не является содержанием кнопки"
+          ],
+          "adapt": [
+            "подпись кнопки",
+            "подсказку сочетания — проп hint, приведите её к платформе пользователя",
+            "акцентный цвет — проп accent",
+            "обработчик onClick: он вызывается до диалога и может его отменить",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Кнопка не готовит страницу к печати: за печатные стили остального содержимого отвечает приложение.",
+            "Держи hint в соответствии с платформой: на macOS это ⌘P, а не Ctrl + P.",
+            "Не вызывай window.print() в серверном коде — компонент намеренно помечен «use client».",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Распечатать счёт",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Сочетание",
+            "type": "text",
+            "default": "Ctrl + P",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A print button that disappears from the printout itself: its own @media print rule removes it, and the click calls the system dialog.",
+            "ai": {
+              "summary": "A print button with a printer mark from which a sheet slides out on hover. The click opens the system print dialog, while its own @media print rule removes the button from the printout so it leaves no black rectangle on paper. A monospace shortcut hint sits beside the label. Zero dependencies, one file.",
+              "preserve": [
+                "the component's own @media print with display:none — otherwise the button lands on paper",
+                "calling window.print() after the user's onClick and checking defaultPrevented: printing must be cancellable",
+                "the sheet sliding out on hover: it explains the mark without words",
+                "the shortcut hint in monospace and muted — it must not compete with the label",
+                "the light surface with a border: a print button lives among the document, not on a hero",
+                "aria-hidden on the hint: a shortcut is not the button's content"
+              ],
+              "adapt": [
+                "the label",
+                "the shortcut hint through the hint prop — match it to the user's platform",
+                "the accent colour through the accent prop",
+                "the onClick handler: it runs before the dialog and can cancel it",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "The button does not prepare the page for print: print styles for the rest of the content are your app's job.",
+                "Keep hint in step with the platform: on macOS it is ⌘P, not Ctrl + P.",
+                "Do not call window.print() from server code — the component is deliberately marked 'use client'.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button053 hint=\"Ctrl + P\">Print invoice</Button053>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Print invoice"
+              },
+              "hint": {
+                "label": "Shortcut",
+                "default": "Ctrl + P"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-054",
+      "type": "registry:component",
+      "title": "Native Share Button",
+      "description": "Кнопка «поделиться» с двумя путями: системный лист там, где он есть, и тихое копирование ссылки с отчётом там, где его нет.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-054/button-054.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-054.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-054-*. Клиентский компонент. Обработчик проверяет navigator.share и при его наличии открывает системный лист; отказ пользователя (AbortError) перехватывается и не считается ошибкой. Иначе ссылка уходит в navigator.clipboard, и кнопка на 2,2 секунды переходит в состояние «скопировано» — таймер снимается в useEffect. Пустой url означает текущий адрес страницы, поэтому компонент безопасен при серверном рендере.",
+      "meta": {
+        "tags": ["button", "share", "clipboard", "progressive"],
+        "ai": {
+          "export": "Button054",
+          "usage": "<Button054 url=\"https://vibeui.dev/blocks\" title=\"VibeUI\">\n  Поделиться\n</Button054>",
+          "summary": "Кнопка с двумя сценариями в одном обработчике. Есть navigator.share — открывается системный лист «Поделиться». Нет — ссылка молча уходит в буфер обмена, значок меняется на галочку, подпись на «Ссылка скопирована», и через пару секунд всё возвращается. Отчёт дублируется в aria-live. Ноль зависимостей, один файл.",
+          "preserve": [
+            "проверку navigator.share перед вызовом: на десктопе его нет, и без запасного пути кнопка молчала бы",
+            "перехват отказа от системного листа: закрытие листа пользователем — не ошибка и не повод отчитываться",
+            "отчёт о копировании в самой кнопке — иначе непонятно, произошло ли что-нибудь",
+            "снятие таймера в возвращаемой функции useEffect: без этого состояние возвращается после размонтирования",
+            "aria-live на скрытой строке: отчёт должен доходить и без экрана",
+            "фиксированную минимальную ширину — подписи разной длины не должны менять размер кнопки"
+          ],
+          "adapt": [
+            "подписи children и copiedLabel",
+            "ссылку — проп url, пустая строка означает текущий адрес",
+            "заголовок системного листа — проп title",
+            "акцентный цвет — проп accent",
+            "длительность состояния «скопировано» в обработчике useEffect"
+          ],
+          "notes": [
+            "navigator.share работает только по HTTPS и только по жесту пользователя — не вызывай его из таймера.",
+            "Не показывай отчёт «скопировано» после системного листа: пользователь мог ничего не выбрать.",
+            "Буфер обмена может быть недоступен из-за политики страницы — обработчик уже это переживает, не убирай try/catch.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Поделиться",
+            "maxLength": 40
+          },
+          {
+            "prop": "copiedLabel",
+            "label": "Подпись после копирования",
+            "type": "text",
+            "default": "Ссылка скопирована",
+            "maxLength": 40
+          },
+          {
+            "prop": "url",
+            "label": "Ссылка",
+            "type": "text",
+            "default": "",
+            "maxLength": 120
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A share button with two paths: the system sheet where it exists, and a quiet link copy with a receipt where it does not.",
+            "ai": {
+              "summary": "One handler covering two scenarios. Where navigator.share exists, the system share sheet opens. Where it does not, the link quietly goes to the clipboard, the mark turns into a checkmark, the label into 'Link copied', and a couple of seconds later everything returns. The receipt is mirrored in aria-live. Zero dependencies, one file.",
+              "preserve": [
+                "the navigator.share check before calling it: on desktop it is missing, and without a fallback the button would do nothing",
+                "catching the share-sheet dismissal: the user closing the sheet is not an error and needs no receipt",
+                "the copy receipt inside the button itself — otherwise it is unclear whether anything happened",
+                "clearing the timer in the useEffect cleanup: without it the state flips back after unmount",
+                "aria-live on the hidden line: the receipt has to arrive without a screen too",
+                "the fixed minimum width — labels of different length must not resize the button"
+              ],
+              "adapt": [
+                "the children and copiedLabel labels",
+                "the link through the url prop, where an empty string means the current address",
+                "the share sheet's heading through the title prop",
+                "the accent colour through the accent prop",
+                "the length of the copied state in the useEffect handler"
+              ],
+              "notes": [
+                "navigator.share works only over HTTPS and only from a user gesture — never call it from a timer.",
+                "Do not show the 'copied' receipt after the system sheet: the user may have chosen nothing.",
+                "The clipboard can be blocked by page policy — the handler already survives that, do not remove the try/catch.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button054 url=\"https://vibeui.dev/blocks\" title=\"VibeUI\">\n  Share\n</Button054>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Share"
+              },
+              "copiedLabel": {
+                "label": "Copied label",
+                "default": "Link copied"
+              },
+              "url": {
+                "label": "Link",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-055",
+      "type": "registry:component",
+      "title": "Modifier Guard Button",
+      "description": "Опасное действие с предохранителем на клавише: кнопка заблокирована, пока не удерживают Alt, и подпись объясняет, что нужно сделать.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-055/button-055.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-055.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-055-*. Клиентский компонент: слушатели keydown и keyup висят на window и читают флаг модификатора (altKey, shiftKey или ctrlKey) прямо из события, поэтому состояние не рассинхронизируется при переключении раскладки. Дополнительно слушается blur окна: отпущенная вне вкладки клавиша иначе оставила бы кнопку взведённой. Взведённость объявляется через aria-disabled, а клик в заблокированном состоянии отменяется.",
+      "meta": {
+        "tags": ["button", "danger", "guard", "keyboard"],
+        "ai": {
+          "export": "Button055",
+          "usage": "<Button055 modifier=\"Alt\" onConfirm={wipeWorkspace}>\n  Стереть все данные\n</Button055>",
+          "summary": "Кнопка необратимого действия, у которой есть предохранитель. В покое она серая, некликабельная и подписана «Удерживайте, чтобы стереть», а справа стоит клавиша. Стоит зажать модификатор — палитра становится тревожной, замок открывается, подпись меняется на само действие. Дешевле модального окна и не крадёт фокус. Ноль зависимостей, один файл.",
+          "preserve": [
+            "чтение флага модификатора из события, а не по event.key: так состояние не ломается при смене раскладки",
+            "слушатель blur окна: без него отпущенная вне вкладки клавиша оставит кнопку взведённой",
+            "aria-disabled и отмену клика в заблокированном состоянии — кнопка должна оставаться в порядке обхода, но не срабатывать",
+            "смену подписи между «удерживайте» и самим действием: пользователь должен понимать, что произойдёт",
+            "тревожную палитру только у взведённого состояния — серый цвет покоя и есть предохранитель",
+            "видимую клавишу kbd: без неё правило удержания нигде не написано"
+          ],
+          "adapt": [
+            "подписи children и lockedLabel",
+            "клавишу-предохранитель — проп modifier (Alt, Shift или Control)",
+            "обработчик onConfirm: он вызывается только во взведённом состоянии",
+            "цвет опасности — переменная --vibeui-button-055-danger",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Предохранитель на клавише недоступен на сенсорном экране: для мобильных оставь отдельный путь подтверждения.",
+            "Не выбирай Control как модификатор на macOS: там он занят системными сочетаниями.",
+            "Не заменяй aria-disabled на настоящий disabled: выпавшая из обхода кнопка не объяснит, почему она заблокирована.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись действия",
+            "type": "text",
+            "default": "Стереть все данные",
+            "maxLength": 40
+          },
+          {
+            "prop": "modifier",
+            "label": "Клавиша",
+            "type": "select",
+            "default": "Alt",
+            "options": ["Alt", "Shift", "Control"]
+          },
+          {
+            "prop": "lockedLabel",
+            "label": "Подпись в покое",
+            "type": "text",
+            "default": "Удерживайте, чтобы стереть",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dangerous action guarded by a held key: the button stays locked until Alt is held down, and the label explains what to do.",
+            "ai": {
+              "summary": "A button for an irreversible action with a safety catch. At rest it is grey, unclickable and labelled 'Hold to erase', with a keycap on the right. Hold the modifier and the palette turns to warning, the padlock opens and the label becomes the action itself. Cheaper than a modal and it steals no focus. Zero dependencies, one file.",
+              "preserve": [
+                "reading the modifier flag from the event rather than from event.key: the state then survives a keyboard layout switch",
+                "the window blur listener: without it a key released outside the tab leaves the button armed",
+                "aria-disabled and cancelling the click while locked — the button stays in the tab order but must not fire",
+                "the label swap between 'hold' and the action itself: the user must know what will happen",
+                "the warning palette only in the armed state — the grey resting colour is the safety catch",
+                "the visible kbd key: without it the hold rule is written nowhere"
+              ],
+              "adapt": [
+                "the children and lockedLabel labels",
+                "the guard key through the modifier prop (Alt, Shift or Control)",
+                "the onConfirm handler: it fires only in the armed state",
+                "the danger colour through the --vibeui-button-055-danger variable",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "A key guard is unavailable on a touch screen: keep a separate confirmation path for mobile.",
+                "Do not pick Control as the modifier on macOS: there it is taken by system shortcuts.",
+                "Do not replace aria-disabled with a real disabled: a button out of the tab order cannot explain why it is locked.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button055 modifier=\"Alt\" onConfirm={wipeWorkspace}>\n  Erase all data\n</Button055>"
+            },
+            "controls": {
+              "children": {
+                "label": "Action label",
+                "default": "Erase all data"
+              },
+              "modifier": {
+                "label": "Key"
+              },
+              "lockedLabel": {
+                "label": "Locked label",
+                "default": "Hold to erase"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-056",
+      "type": "registry:component",
+      "title": "Language Picker Button",
+      "description": "Кнопка выбора языка на настоящем select: клавиатура, поиск по первой букве и системный список на телефоне достаются от браузера.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-056/button-056.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-056.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-056-*. Серверный компонент, JS не нужен вовсе: внутри плашки стоит настоящий <select> с appearance:none, глобус и шеврон нарисованы CSS. Фокус приходит на select, а обводку рисует плашка через :has(select:focus-visible) — поэтому кольцо охватывает всю кнопку. Шеврон помечен pointer-events:none, чтобы клик по нему открывал список.",
+      "meta": {
+        "tags": ["button", "language", "select", "no-js"],
+        "ai": {
+          "export": "Button056",
+          "usage": "<Button056 defaultValue=\"ru\" onChange={switchLocale} label=\"Язык интерфейса\" />",
+          "summary": "Переключатель языка, который выглядит кнопкой, а работает как нативный select. Отсюда бесплатно приходят клавиатура, поиск по первой букве, системный список на телефоне и корректное объявление выбранного значения. Глобус и шеврон нарисованы CSS, JS не требуется вовсе. Ноль зависимостей, один файл.",
+          "preserve": [
+            "настоящий <select> внутри: своё меню пришлось бы заново учить клавиатуре, поиску по букве и мобильному списку",
+            "обводку фокуса на плашке через :has(select:focus-visible) — иначе кольцо рисуется вокруг узкого поля",
+            "pointer-events:none у шеврона: иначе клик по значку не открывает список",
+            "aria-label на select: у него нет видимой подписи, а глобус её не заменяет",
+            "названия языков на самих языках — «Deutsch», а не «Немецкий»: их ищут глазами носители",
+            "appearance:none вместе с полным набором своих отступов: без них системная стрелка накладывается на шеврон"
+          ],
+          "adapt": [
+            "имя переключателя — проп label, оно уходит в aria-label",
+            "список языков — проп languages",
+            "выбранный язык — проп defaultValue",
+            "акцентный цвет — проп accent",
+            "обработчик onChange и остальные нативные пропсы select: name, form, disabled"
+          ],
+          "notes": [
+            "Не заменяй select на собственное меню ради вида: вы потеряете клавиатуру, поиск по букве и мобильный список.",
+            "Не переводи названия языков на текущий язык интерфейса — ищущий свой язык не знает нынешнего.",
+            "Компонент не переключает локаль: он только сообщает выбор через onChange.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Имя переключателя",
+            "type": "text",
+            "default": "Язык интерфейса",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Выбранный язык",
+            "type": "select",
+            "default": "ru",
+            "options": ["ru", "en", "de", "fr", "es"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A language picker built on a real select: keyboard support, type-ahead and the native mobile list all come from the browser.",
+            "ai": {
+              "summary": "A language switcher that looks like a button and works like a native select. That brings keyboard support, type-ahead, the system list on phones and a correct announcement of the chosen value for free. The globe and the chevron are pure CSS, and no JS is needed at all. Zero dependencies, one file.",
+              "preserve": [
+                "the real <select> inside: a custom menu would have to relearn the keyboard, type-ahead and the mobile list",
+                "the focus ring on the plate via :has(select:focus-visible) — otherwise it wraps only the narrow field",
+                "pointer-events:none on the chevron: without it a click on the mark does not open the list",
+                "the aria-label on the select: it has no visible label, and the globe is not one",
+                "language names in their own languages — 'Deutsch', not 'German': native speakers scan for them",
+                "appearance:none together with a full set of custom padding: without it the system arrow overlaps the chevron"
+              ],
+              "adapt": [
+                "the switcher's name through the label prop, which becomes its aria-label",
+                "the list of languages through the languages prop",
+                "the selected language through the defaultValue prop",
+                "the accent colour through the accent prop",
+                "the onChange handler and the rest of the native select props: name, form, disabled"
+              ],
+              "notes": [
+                "Do not replace the select with a custom menu for looks: you lose the keyboard, type-ahead and the mobile list.",
+                "Do not translate language names into the current interface language — someone looking for their own language does not read the current one.",
+                "The component does not switch the locale: it only reports the choice through onChange.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button056 defaultValue=\"ru\" onChange={switchLocale} label=\"Interface language\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Switcher name",
+                "default": "Interface language"
+              },
+              "defaultValue": {
+                "label": "Selected language"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-057",
+      "type": "registry:component",
+      "title": "View Count Button",
+      "description": "Кнопка-показатель со счётчиком просмотров и столбиками динамики: сокращённое число на виду, полное — в aria-label и подсказке.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-057/button-057.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-057.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-057-*. Серверный компонент. Число сокращается до «тыс.» и «млн» с запятой как десятичным разделителем; полное значение через toLocaleString уходит в title и aria-label, потому что сокращение округляет и врёт. Столбики нормируются по максимуму массива trend, минимальная высота 12% не даёт нулевым значениям исчезнуть. Последний столбик подсвечен как текущий период.",
+      "meta": {
+        "tags": ["button", "stats", "counter", "sparkline"],
+        "ai": {
+          "export": "Button057",
+          "usage": "<Button057 count={12400} trend={[3, 5, 4, 7, 6, 9, 8, 12]} onClick={openStats}>\n  Просмотры\n</Button057>",
+          "summary": "Кнопка, которая открывает подробную статистику и уже в свёрнутом виде несёт цифру и форму динамики. Число сокращается до «12,4 тыс.», рядом стоят столбики, нормированные по максимуму, с подсвеченным последним периодом. Полное значение доступно в подсказке и скринридеру. Ноль зависимостей, один файл.",
+          "preserve": [
+            "полное число в aria-label и title: сокращение округляет, и опираться на него нельзя",
+            "нормировку столбиков по максимуму массива — иначе на больших числах они упираются в потолок",
+            "минимальную высоту столбика: нулевое значение должно быть видно как нулевое, а не отсутствовать",
+            "подсветку последнего столбика — она отвечает на вопрос «а сейчас как»",
+            "tabular-nums у числа: при обновлении счётчика ширина кнопки не должна прыгать",
+            "aria-hidden на числе и столбиках: их содержание уже собрано в aria-label кнопки"
+          ],
+          "adapt": [
+            "подпись показателя",
+            "значение — проп count",
+            "динамику — проп trend, массив любой длины",
+            "акцентный цвет — проп accent",
+            "обработчик onClick и остальные нативные пропсы button"
+          ],
+          "notes": [
+            "Сокращение и разделители заданы для русской локали: под другую локаль замените функцию compact и toLocaleString.",
+            "Не клади в trend больше десяти значений: столбики становятся уже двух пикселей и перестают читаться.",
+            "Не используй компонент как единственный носитель цифры в отчёте — это кнопка, а не таблица.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Просмотры",
+            "maxLength": 40
+          },
+          {
+            "prop": "count",
+            "label": "Просмотров",
+            "type": "number",
+            "default": 12400,
+            "min": 0,
+            "max": 100000000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A metric button with a view counter and trend bars: the shortened number on screen, the full one in aria-label and the tooltip.",
+            "ai": {
+              "summary": "A button that opens detailed statistics while already carrying the figure and the shape of the trend. The number shortens to '12.4K', beside it sit bars normalised to the maximum with the latest period highlighted. The full value stays available in the tooltip and to screen readers. Zero dependencies, one file.",
+              "preserve": [
+                "the full number in aria-label and title: the short form rounds, and nothing should rely on it",
+                "normalising the bars to the array maximum — otherwise large numbers push them all to the ceiling",
+                "the minimum bar height: a zero value has to read as zero rather than as missing",
+                "the highlight on the last bar — it answers the question of how things stand right now",
+                "tabular-nums on the figure: refreshing the counter must not shift the button's width",
+                "aria-hidden on the figure and the bars: their content is already assembled into the button's aria-label"
+              ],
+              "adapt": [
+                "the metric label",
+                "the value through the count prop",
+                "the trend through the trend prop, an array of any length",
+                "the accent colour through the accent prop",
+                "the onClick handler and the rest of the native button props"
+              ],
+              "notes": [
+                "The shortening and separators are set for the Russian locale: for another one replace the compact function and toLocaleString.",
+                "Do not put more than ten values into trend: the bars drop below two pixels and stop reading.",
+                "Do not use the component as the only carrier of a figure in a report — it is a button, not a table.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button057 count={12400} trend={[3, 5, 4, 7, 6, 9, 8, 12]} onClick={openStats}>\n  Views\n</Button057>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "Views"
+              },
+              "count": {
+                "label": "Views"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-058",
+      "type": "registry:component",
+      "title": "Reveal Password Button",
+      "description": "Кнопка «показать пароль» внутри поля: она переключает только type, поэтому введённый текст и позиция каретки остаются на месте.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-058/button-058.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-058.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-058-*. Клиентский компонент: состояние показа внутреннее. Поле всегда одно и то же — меняется только атрибут type, поэтому React не пересоздаёт узел и каретка не сбрасывается. Состояние объявлено через aria-pressed, а имя кнопки меняется вместе с ним. Обводку фокуса рисует обёртка поля через :has(input:focus-visible). Перечёркивание глаза — отдельный узел с тенью цвета подложки, дающей вырез.",
+      "meta": {
+        "tags": ["input", "password", "toggle", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Button058",
+          "usage": "<Button058 label=\"Пароль\" placeholder=\"Введите пароль\" />",
+          "summary": "Поле пароля с кнопкой-глазом у правого края. Нажатие меняет только type поля, поэтому текст и каретка не сбрасываются; в скрытом состоянии глаз перечёркнут линией с вырезом цвета подложки. Состояние объявлено через aria-pressed, а имя кнопки меняется между «показать» и «скрыть». Ноль зависимостей, один файл.",
+          "preserve": [
+            "смену только атрибута type: пересоздание поля сбрасывает каретку и ломает менеджеры паролей",
+            "aria-pressed вместе со сменой aria-label — по одной иконке состояние не читается",
+            "autoComplete=\"current-password\": без него браузер и менеджеры паролей не узнают поле",
+            "обводку фокуса на обёртке через :has(input:focus-visible) — фокус приходит на поле, а рамка нужна на всём поле",
+            "перечёркивание с вырезом цвета подложки: сплошная линия поверх глаза читается хуже",
+            "положение кнопки внутри поля и правый паддинг ввода: текст не должен заезжать под кнопку"
+          ],
+          "adapt": [
+            "подпись поля — проп label",
+            "текст подсказки — проп placeholder",
+            "начальное значение — проп defaultValue",
+            "акцентный цвет — проп accent",
+            "подписи кнопки — пропы showLabel и hideLabel"
+          ],
+          "notes": [
+            "Идентификатор поля в компоненте фиксированный: если полей на странице несколько, сделайте его пропом.",
+            "Не оставляй пароль показанным по умолчанию — состояние показа должно быть осознанным действием.",
+            "Не логируй и не отправляй значение поля из компонента: он ничего не знает про форму.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись поля",
+            "type": "text",
+            "default": "Пароль",
+            "maxLength": 40
+          },
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Введите пароль",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Значение",
+            "type": "text",
+            "default": "correct-horse-battery",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A reveal-password button inside the field: it flips only the type, so the entered text and the caret position stay put.",
+            "ai": {
+              "summary": "A password field with an eye button at its right edge. Pressing it flips only the field's type, so the text and the caret survive; while hidden the eye is crossed by a line with a cut-out in the surface colour. The state is announced through aria-pressed and the button's name switches between show and hide. Zero dependencies, one file.",
+              "preserve": [
+                "flipping only the type attribute: recreating the field resets the caret and breaks password managers",
+                "aria-pressed together with the aria-label swap — a single icon does not convey the state",
+                "autoComplete=\"current-password\": without it browsers and password managers do not recognise the field",
+                "the focus ring on the wrapper via :has(input:focus-visible) — focus lands on the input, but the ring belongs to the whole field",
+                "the slash with a cut-out in the surface colour: a solid line over the eye reads worse",
+                "the button's position inside the field and the input's right padding: the text must not run under the button"
+              ],
+              "adapt": [
+                "the field label through the label prop",
+                "the hint text through the placeholder prop",
+                "the initial value through the defaultValue prop",
+                "the accent colour through the accent prop",
+                "the button names through the showLabel and hideLabel props"
+              ],
+              "notes": [
+                "The field id is fixed inside the component: if the page has several fields, make it a prop.",
+                "Do not leave the password revealed by default — revealing has to be a deliberate action.",
+                "Do not log or submit the field's value from the component: it knows nothing about your form.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button058 label=\"Password\" placeholder=\"Enter password\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Field label",
+                "default": "Password"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Enter password"
+              },
+              "defaultValue": {
+                "label": "Value",
+                "default": "correct-horse-battery"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-059",
+      "type": "registry:component",
+      "title": "Validity Gated Submit",
+      "description": "Кнопка отправки, заблокированная до готовности формы: правило :has(:invalid) гасит её без JS, а подсказка под ней держит место всегда.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-059/button-059.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-059.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-059-*. Серверный компонент, JS не нужен: корень — <form>, а правило form:has(:invalid) гасит кнопку и показывает подсказку. Валидность считает браузер по required и type=\"email\", а не наш код. Подсказка занимает место всегда (visibility, а не display), поэтому раскладка не прыгает при смене статуса. Кнопка остаётся кликабельной для скринридера — вместо disabled используется визуальное гашение, и попытка отправки покажет системное сообщение о поле.",
+      "meta": {
+        "tags": ["button", "submit", "form", "validation"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Button059",
+          "usage": "<Button059 label=\"Рабочая почта\" submitLabel=\"Отправить заявку\" onSubmit={send} />",
+          "summary": "Форма из одного поля и кнопки, которая сама знает, готова ли отправка. Пока поле пустое или адрес неверный, правило :has(:invalid) гасит кнопку и показывает подсказку под ней; как только браузер признаёт поле валидным, кнопка загорается. Ни строчки JS, состояние считает сам браузер. Ноль зависимостей, один файл.",
+          "preserve": [
+            "правило :has(:invalid) на форме: это и есть механика компонента, замена на JS-состояние лишает его смысла",
+            "нативную валидацию через required и type: браузер знает про формат адреса больше, чем самописная проверка",
+            "визуальное гашение вместо атрибута disabled — заблокированная кнопка не объяснила бы, чего не хватает",
+            "подсказку с постоянным местом (visibility, а не display): иначе раскладка прыгает при каждом вводе",
+            "поле и кнопку в одном <form>: без формы селектор :has(:invalid) не к чему привязать",
+            "связку label и input по id — без неё клик по подписи не ставит фокус"
+          ],
+          "adapt": [
+            "подпись поля — проп label",
+            "подпись кнопки — проп submitLabel",
+            "текст подсказки — проп hint",
+            "акцентный цвет — проп accent",
+            "обработчик onSubmit и остальные нативные пропсы формы: action, method, noValidate"
+          ],
+          "notes": [
+            "Компонент не защищает от повторной отправки: за блокировку кнопки после успешного submit отвечает приложение.",
+            "Не ставь noValidate на форму — вместе с ним отключится и вся механика :has(:invalid).",
+            "Идентификатор поля фиксированный: при нескольких формах на странице сделайте его пропом.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись поля",
+            "type": "text",
+            "default": "Рабочая почта",
+            "maxLength": 40
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Отправить заявку",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Введите адрес, чтобы отправить",
+            "maxLength": 50
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A submit button locked until the form is ready: a :has(:invalid) rule dims it without JS, and the hint below always keeps its space.",
+            "ai": {
+              "summary": "A one-field form whose button knows on its own whether submission is ready. While the field is empty or the address is wrong, a :has(:invalid) rule dims the button and reveals the hint beneath it; the moment the browser calls the field valid, the button lights up. Not a line of JS — the browser computes the state. Zero dependencies, one file.",
+              "preserve": [
+                "the :has(:invalid) rule on the form: that is the mechanic, swapping it for JS state removes the point",
+                "native validation through required and type: the browser knows more about address formats than a hand-rolled check",
+                "visual dimming instead of the disabled attribute — a disabled button could not explain what is missing",
+                "the hint keeping its space (visibility rather than display): otherwise the layout jumps on every keystroke",
+                "the field and the button inside one <form>: without a form the :has(:invalid) selector has nothing to hang on",
+                "the label tied to the input by id — without it clicking the label does not focus the field"
+              ],
+              "adapt": [
+                "the field label through the label prop",
+                "the button label through the submitLabel prop",
+                "the hint text through the hint prop",
+                "the accent colour through the accent prop",
+                "the onSubmit handler and the rest of the native form props: action, method, noValidate"
+              ],
+              "notes": [
+                "The component does not guard against double submission: locking the button after a successful submit is your app's job.",
+                "Do not put noValidate on the form — it switches off the whole :has(:invalid) mechanic along with validation.",
+                "The field id is fixed: with several forms on a page, make it a prop.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button059 label=\"Work email\" submitLabel=\"Send request\" onSubmit={send} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Field label",
+                "default": "Work email"
+              },
+              "submitLabel": {
+                "label": "Button label",
+                "default": "Send request"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "Enter an address to send"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-060",
+      "type": "registry:component",
+      "title": "Filter Chip Button",
+      "description": "Фильтр-чип из двух кнопок в одном пятне: левая включает фильтр и несёт число совпадений, правая сбрасывает его и появляется только у включённого.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-060/button-060.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-060.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-060-*. Клиентский компонент: включённость внутренняя, наружу уходит через onToggle и onClear. Вложить кнопку в кнопку нельзя, поэтому обе лежат соседями внутри общей обёртки с overflow:hidden и общим скруглением. Обводка фокуса нарисована с отрицательным offset — иначе она обрезалась бы обёрткой. Включённость объявлена через aria-pressed на левой кнопке.",
+      "meta": {
+        "tags": ["button", "filter", "chip", "counter"],
+        "ai": {
+          "export": "Button060",
+          "usage": "<Button060 count={24} onToggle={setStatusFilter} onClear={resetStatus}>\n  В работе\n</Button060>",
+          "summary": "Чип фильтра, у которого внутри две отдельные кнопки: включение с числом совпадений и сброс. В выключенном состоянии чип светлый, число приглушённое, крестика нет — сбрасывать нечего. Во включённом он заливается акцентом, число выворачивается, справа появляется крестик. Ноль зависимостей, один файл.",
+          "preserve": [
+            "две отдельные кнопки вместо вложенной: вложенная кнопка невалидна и не работает с клавиатуры",
+            "общее скругление и overflow:hidden — иначе пара распадается на две кнопки рядом",
+            "отрицательный offset у обводки фокуса: положительный обрезается обёрткой",
+            "появление крестика только во включённом состоянии — у выключенного фильтра нечего сбрасывать",
+            "число в бейдже с tabular-nums: при пересчёте ширина чипа не должна прыгать",
+            "aria-pressed на левой кнопке и явное имя у крестика — «Сбросить фильтр …»"
+          ],
+          "adapt": [
+            "подпись фильтра",
+            "число совпадений — проп count",
+            "начальное состояние — проп defaultActive",
+            "акцентный цвет — проп accent",
+            "обработчики onToggle и onClear"
+          ],
+          "notes": [
+            "Компонент не фильтрует данные: он сообщает состояние через onToggle и onClear, счёт приходит снаружи.",
+            "Не показывай трёхзначные числа в бейдже без сокращения: чип рассчитан на счётчики до сотен.",
+            "Не объединяй включение и сброс в одну кнопку — пользователь должен различать «выключить» и «сбросить».",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "В работе",
+            "maxLength": 40
+          },
+          {
+            "prop": "count",
+            "label": "Совпадений",
+            "type": "number",
+            "default": 24,
+            "min": 0,
+            "max": 999
+          },
+          {
+            "prop": "defaultActive",
+            "label": "Включён",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A filter chip made of two buttons in one shape: the left one toggles the filter and carries the match count, the right one clears it and shows only when active.",
+            "ai": {
+              "summary": "A filter chip holding two separate buttons: the toggle with its match count and the clear. While off, the chip is light, the number muted and there is no cross — nothing to clear. While on, it fills with the accent, the number inverts and a cross appears on the right. Zero dependencies, one file.",
+              "preserve": [
+                "two separate buttons instead of a nested one: a nested button is invalid and unusable from the keyboard",
+                "the shared radius and overflow:hidden — otherwise the pair falls apart into two adjacent buttons",
+                "the negative offset on the focus ring: a positive one gets clipped by the wrapper",
+                "the cross appearing only in the on state — an off filter has nothing to clear",
+                "the badge number with tabular-nums: recounting must not shift the chip's width",
+                "aria-pressed on the left button and an explicit name on the cross — 'Clear filter …'"
+              ],
+              "adapt": [
+                "the filter label",
+                "the match count through the count prop",
+                "the initial state through the defaultActive prop",
+                "the accent colour through the accent prop",
+                "the onToggle and onClear handlers"
+              ],
+              "notes": [
+                "The component filters nothing: it reports state through onToggle and onClear, and the count comes from outside.",
+                "Do not show four-digit numbers in the badge without shortening: the chip is sized for counts up to the hundreds.",
+                "Do not merge the toggle and the clear into one button — the user has to tell 'switch off' from 'clear'.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button060 count={24} onToggle={setStatusFilter} onClear={resetStatus}>\n  In progress\n</Button060>"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "In progress"
+              },
+              "count": {
+                "label": "Matches"
+              },
+              "defaultActive": {
+                "label": "Active"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "button-061",
+      "type": "registry:component",
+      "title": "Cancel With Elapsed",
+      "description": "Отмена длительной операции с честным таймером: прошедшее время идёт моноширинными цифрами, а после порога плашка меняет тон и объясняет задержку.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-061/button-061.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-061.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-061-*. Клиентский компонент: интервал заводится в useEffect при running и снимается при остановке или размонтировании, счётчик сбрасывается на каждом запуске. Сама операция живёт в приложении — компонент только считает время и зовёт onCancel. Порог slowAfter в секундах переводит плашку в предупреждающий тон через data-slow; спиннер и рамка меняют цвет вместе. Время выведено моноширинным с tabular-nums.",
+      "meta": {
+        "tags": ["button", "cancel", "progress", "async"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Button061",
+          "usage": "<Button061 running={isImporting} task=\"Импортируем 4 210 строк\" slowAfter={20} onCancel={abort}>\n  Отменить\n</Button061>",
+          "summary": "Плашка выполняемой операции с кнопкой отмены. Слева крутится спиннер, в центре — что именно делается и сколько времени прошло, справа «Отменить». После порога slowAfter тон уходит в предупреждающий и добавляется строка «дольше обычного», чтобы отмена перестала выглядеть паникой. Ноль зависимостей, один файл.",
+          "preserve": [
+            "прошедшее время: без него непонятно, идёт операция или зависла, и отмена превращается в гадание",
+            "порог slowAfter и смену тона: она отделяет «работает» от «что-то не так»",
+            "моноширинные цифры с tabular-nums — иначе плашка дёргается каждую секунду",
+            "снятие интервала в возвращаемой функции useEffect: иначе таймеры копятся при каждом перезапуске",
+            "кнопку отмены как отдельный элемент, а не всю плашку: случайный клик по строке не должен прерывать работу",
+            "блокировку кнопки, когда операция уже не идёт — отменять нечего"
+          ],
+          "adapt": [
+            "подпись кнопки отмены",
+            "описание операции — проп task",
+            "признак выполнения — проп running, им управляет приложение",
+            "порог задержки — проп slowAfter в секундах",
+            "строку задержки — проп slowHint, и акцентный цвет — проп accent"
+          ],
+          "notes": [
+            "Компонент ничего не выполняет и не прерывает: он считает время и зовёт onCancel, отмену делает приложение.",
+            "Переключай running в false после завершения — иначе таймер продолжит идти и соврёт про состояние.",
+            "Не ставь slowAfter меньше типичного времени операции: предупреждение будет появляться всегда и перестанет работать.",
+            "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись отмены",
+            "type": "text",
+            "default": "Отменить",
+            "maxLength": 40
+          },
+          {
+            "prop": "task",
+            "label": "Операция",
+            "type": "text",
+            "default": "Импортируем 4 210 строк",
+            "maxLength": 40
+          },
+          {
+            "prop": "running",
+            "label": "Выполняется",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "slowAfter",
+            "label": "Порог, с",
+            "type": "number",
+            "default": 20,
+            "min": 5,
+            "max": 300
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Cancelling a long operation with an honest timer: elapsed time ticks in monospace figures, and past a threshold the plate changes tone and explains the delay.",
+            "ai": {
+              "summary": "A running-operation plate with a cancel button. A spinner turns on the left, the middle says what is happening and how long it has taken, and Cancel sits on the right. Past the slowAfter threshold the tone turns to warning and a 'longer than usual' line appears, so cancelling stops looking like panic. Zero dependencies, one file.",
+              "preserve": [
+                "the elapsed time: without it there is no telling whether the operation runs or hangs, and cancelling becomes guesswork",
+                "the slowAfter threshold and the tone change: it separates 'working' from 'something is wrong'",
+                "monospace digits with tabular-nums — otherwise the plate twitches every second",
+                "clearing the interval in the useEffect cleanup: otherwise timers pile up on every restart",
+                "the cancel button as a separate element rather than the whole plate: a stray click on the row must not abort the work",
+                "disabling the button once the operation is over — there is nothing left to cancel"
+              ],
+              "adapt": [
+                "the cancel button's label",
+                "the operation description through the task prop",
+                "the running flag through the running prop, owned by your app",
+                "the delay threshold through the slowAfter prop, in seconds",
+                "the delay line through the slowHint prop, and the accent colour through the accent prop"
+              ],
+              "notes": [
+                "The component neither runs nor aborts anything: it counts time and calls onCancel, the abort is your app's job.",
+                "Switch running to false when the work is done — otherwise the timer keeps going and lies about the state.",
+                "Do not set slowAfter below the operation's typical duration: the warning would always show and stop meaning anything.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Button061 running={isImporting} task=\"Importing 4,210 rows\" slowAfter={20} onCancel={abort}>\n  Cancel\n</Button061>"
+            },
+            "controls": {
+              "children": {
+                "label": "Cancel label",
+                "default": "Cancel"
+              },
+              "task": {
+                "label": "Operation",
+                "default": "Importing 4,210 rows"
+              },
+              "running": {
+                "label": "Running"
+              },
+              "slowAfter": {
+                "label": "Threshold, s"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

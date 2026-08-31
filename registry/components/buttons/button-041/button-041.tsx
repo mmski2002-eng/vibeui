@@ -1,0 +1,91 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Button041Props = ComponentPropsWithoutRef<"button"> & {
+  accent?: string
+  /** Второй цвет градиента: рамка собирается из пары. */
+  accentEnd?: string
+}
+
+// Идея компонента: градиент живёт в рамке, а не в заливке. Он собран из двух
+// фонов — padding-box для бумажной середины и border-box для градиентной
+// границы, — поэтому граница остаётся настоящим border. Главное здесь фокус:
+// градиент на границе съедает системную обводку, и focus-visible рисуется
+// отдельным box-shadow-кольцом плюс outline с отступом.
+const STYLES = `
+:where([data-vibeui-block="button-041"]){
+--vibeui-button-041-paper:oklch(1 0 0);
+--vibeui-button-041-accent:oklch(0.6 0.2 25);
+--vibeui-button-041-accent-end:oklch(0.55 0.2 300);
+--vibeui-button-041-ink:oklch(0.26 0.02 285);
+--vibeui-button-041-radius:0.75rem;
+--vibeui-button-041-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="button-041"]{
+appearance:none;cursor:pointer;box-sizing:border-box;
+display:inline-flex;align-items:center;gap:0.5rem;
+height:2.75rem;padding:0 1.125rem;
+border:2px solid transparent;border-radius:var(--vibeui-button-041-radius);
+/* Два фона: середина по padding-box, градиент по border-box. */
+background:
+linear-gradient(var(--vibeui-button-041-paper),var(--vibeui-button-041-paper)) padding-box,
+linear-gradient(110deg,var(--vibeui-button-041-accent),var(--vibeui-button-041-accent-end)) border-box;
+color:var(--vibeui-button-041-ink);
+font-family:var(--vibeui-button-041-font);font-size:0.875rem;font-weight:650;line-height:1;
+transition:box-shadow .18s ease,color .16s ease;
+}
+[data-vibeui-block="button-041"]:hover:not(:disabled){
+box-shadow:0 10px 24px -16px color-mix(in oklab,var(--vibeui-button-041-accent-end) 90%,transparent);
+color:var(--vibeui-button-041-accent-end);
+}
+/* Кольцо фокуса дублируется box-shadow: outline поверх градиентной границы
+   в некоторых движках читается хуже, а кольцо всегда лежит по её форме. */
+[data-vibeui-block="button-041"]:focus-visible{
+outline:2px solid var(--vibeui-button-041-accent-end);outline-offset:3px;
+box-shadow:0 0 0 1px var(--vibeui-button-041-paper);
+}
+[data-vibeui-block="button-041"]:disabled{cursor:not-allowed;opacity:.5}
+[data-vibeui-block="button-041"] [data-part="spark"]{
+flex:none;width:0.75rem;height:0.75rem;
+background:linear-gradient(110deg,var(--vibeui-button-041-accent),var(--vibeui-button-041-accent-end));
+clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="button-041"]{transition:none!important}}
+`
+
+/**
+ * Кнопка с градиентной рамкой и не сломанным фокусом.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Button041({
+  accent,
+  accentEnd,
+  type = "button",
+  className,
+  style,
+  children = "Собрать страницу",
+  ...props
+}: Button041Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-button-041-accent": accent } : null),
+    ...(accentEnd ? { "--vibeui-button-041-accent-end": accentEnd } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-button-041" precedence="medium">
+        {STYLES}
+      </style>
+      <button
+        {...props}
+        type={type}
+        data-vibeui-block="button-041"
+        className={className}
+        style={palette}
+      >
+        <span data-part="spark" aria-hidden="true" />
+        {children}
+      </button>
+    </>
+  )
+}
