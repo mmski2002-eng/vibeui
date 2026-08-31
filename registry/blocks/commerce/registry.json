@@ -4748,6 +4748,3410 @@
           }
         }
       }
+    },
+    {
+      "name": "commerce-047",
+      "type": "registry:block",
+      "title": "Season Home",
+      "description": "Главная магазина вокруг сезона: у подборки есть срок и число товаров, а крупная плитка задаётся флагом в данных.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-047/commerce-047.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-047.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-047-*. Серверный: хуков нет. Сетка подборок и полоса преимуществ перестраиваются контейнерными запросами, крупная плитка получает два столбца по атрибуту data-wide, который ставится из флага wide в данных. Обложки нарисованы градиентом по оттенку, ссылка растянута псевдоэлементом, фокус ловится на плитке через :has().",
+      "meta": {
+        "tags": ["commerce", "home", "season", "collections"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce047",
+          "usage": "<Commerce047 season=\"Осенний сезон\" edits={[{ id: \"1\", title: \"Тёплый свет\", note: \"Торшеры и лампы\", count: \"42 товара\", wide: true }]} />",
+          "summary": "Главная магазина: сезонный герой со сроком, мозаика подборок с числом товаров и полоса причин купить здесь. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-047-* и не подменять её токенами вашей темы",
+            "срок сезона рядом с героем: подборка без даты висит на витрине круглый год",
+            "число товаров в каждой плитке — без него подборка выглядит картинкой, а не разделом",
+            "флаг wide в данных вместо ручной раскладки: главный экран меняет редактор, а не разработчик",
+            "заголовок плитки ссылкой с растянутым псевдоэлементом — подборку открывают в новой вкладке",
+            "контейнерные запросы вместо медиазапросов: главная живёт и в узкой колонке"
+          ],
+          "adapt": [
+            "подпись сезона season и заголовок title",
+            "массивы edits и reasons",
+            "подписи кнопок cta и secondary, строку until",
+            "оттенки обложек через hue у подборки"
+          ],
+          "notes": [
+            "Обложки — градиенты, а не фотографии: подставьте свои изображения, сохранив пропорции плитки.",
+            "Дата в строке until должна быть настоящей: просроченный сезон хуже отсутствующего.",
+            "Больше пяти подборок не ставьте: мозаика перестаёт читаться как выбор.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "season",
+            "label": "Сезон",
+            "type": "text",
+            "default": "Осенний сезон",
+            "maxLength": 24
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Собрали то, что делает вечер длиннее",
+            "maxLength": 44
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A storefront home built around a season: every edit carries a deadline and a count, and the wide tile is a flag in the data.",
+            "ai": {
+              "summary": "A storefront home: a seasonal hero with a deadline, a mosaic of edits with item counts and a strip of reasons to buy here. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-047-* palette — do not swap it for your theme tokens",
+                "the season deadline beside the hero: an undated edit sits on the storefront all year",
+                "the item count inside every tile — without it an edit looks like a picture, not a section",
+                "the wide flag in the data instead of a hand-built layout: an editor changes the home page, not a developer",
+                "the tile heading as a link with a stretched pseudo-element — edits get opened in a new tab",
+                "container queries instead of media queries: the home page survives a narrow column"
+              ],
+              "adapt": [
+                "the season label and the title",
+                "the edits and reasons arrays",
+                "the cta and secondary labels and the until line",
+                "the cover hue per edit"
+              ],
+              "notes": [
+                "Covers are gradients, not photos: drop in your images keeping the tile proportions.",
+                "The date in the until line must be real: an expired season is worse than none.",
+                "Do not go past five edits: the mosaic stops reading as a choice.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce047 season=\"Autumn season\" edits={[{ id: \"1\", title: \"Warm light\", note: \"Floor and table lamps\", count: \"42 items\", wide: true }]} />"
+            },
+            "controls": {
+              "season": {
+                "label": "Season",
+                "default": "Autumn season"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Everything that makes an evening longer"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-048",
+      "type": "registry:block",
+      "title": "Sale Countdown",
+      "description": "Лендинг распродажи с таймером: цифры приходят пропами и подтверждены датой в теге time, а пороги скидки стоят рядом со сроком.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-048/commerce-048.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-048.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-048-*. Серверный: хуков нет — значения таймера приходят пропами, а тикать их заставляет вызывающий код. Дата продублирована атрибутом dateTime у time. Полоса разобранного товара считается от процента через локальную переменную, тёмная подложка своя, пульс точки выключается в prefers-reduced-motion.",
+      "meta": {
+        "tags": ["commerce", "sale", "countdown", "landing"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce048",
+          "usage": "<Commerce048 units={[{ id: \"d\", value: \"02\", label: \"дня\" }]} soldPercent={68} deadlineIso=\"2024-11-30T23:59:00+03:00\" />",
+          "summary": "Лендинг распродажи: таймер из блоков, дата окончания в теге time, пороги скидки, полоса разобранного и кнопка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-048-* и не подменять её токенами вашей темы",
+            "дату окончания в теге time рядом с цифрами: таймер без даты нельзя проверить",
+            "пороги скидки рядом с таймером — срок без выгоды никого не двигает",
+            "табличные цифры в блоках таймера: иначе цифры прыгают на каждой секунде",
+            "полосу с ролью progressbar и числом процентов рядом, а не только цветом",
+            "правило prefers-reduced-motion — пульс точки обязан выключаться"
+          ],
+          "adapt": [
+            "массивы units и tiers",
+            "тексты title, lead, kicker и fine",
+            "значения deadline, deadlineIso и soldPercent",
+            "подпись кнопки cta и акцент через accent"
+          ],
+          "notes": [
+            "Таймер не тикает: значения статичны, обновление раз в секунду добавляет вызывающий код.",
+            "Дата в deadlineIso должна совпадать с текстом deadline, иначе разметка врёт роботам.",
+            "Не перезапускайте акцию при перезагрузке страницы: вечный таймер обесценивает срок.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Три дня, дальше цены возвращаются",
+            "maxLength": 40
+          },
+          {
+            "prop": "soldPercent",
+            "label": "Разобрано, %",
+            "type": "number",
+            "default": 68,
+            "min": 0,
+            "max": 100
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A sale landing with a countdown: the digits arrive as props and are backed by a real date, with the discount tiers beside them.",
+            "ai": {
+              "summary": "A sale landing: a block countdown, the end date in a time element, discount tiers, a sold-out bar and a call to action. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-048-* palette — do not swap it for your theme tokens",
+                "the end date in a time element beside the digits: a countdown without a date cannot be checked",
+                "the discount tiers beside the countdown — a deadline without a gain moves nobody",
+                "tabular figures in the countdown blocks: otherwise the digits jump every second",
+                "the bar with a progressbar role and the percentage in text, not colour alone",
+                "the prefers-reduced-motion rule — the pulsing dot has to stop"
+              ],
+              "adapt": [
+                "the units and tiers arrays",
+                "the title, lead, kicker and fine texts",
+                "the deadline, deadlineIso and soldPercent values",
+                "the cta label and the accent prop"
+              ],
+              "notes": [
+                "The countdown does not tick: the values are static, the per-second update belongs to the caller.",
+                "deadlineIso must match the deadline text or the markup lies to crawlers.",
+                "Do not restart the sale on every page load: an eternal countdown devalues the deadline.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce048 units={[{ id: \"d\", value: \"02\", label: \"days\" }]} soldPercent={68} deadlineIso=\"2024-11-30T23:59:00+03:00\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Three days, then the prices come back"
+              },
+              "soldPercent": {
+                "label": "Sold, %"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-049",
+      "type": "registry:block",
+      "title": "Collection Banner",
+      "description": "Страница коллекции с баннером: над обложкой стоит контекст — кто собрал, когда и сколько вещей внутри.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-049/commerce-049.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-049.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-049-*. Серверный: хуков нет. Баннер собран из двух наложенных градиентов — нижний рисует фон, верхний даёт затемнение под текстом, поэтому подпись читается и на фотографии. Крошки выведены списком в nav, сетка вещей и колонка с рассказом включаются контейнерными запросами.",
+      "meta": {
+        "tags": ["commerce", "collection", "banner", "catalog"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce049",
+          "usage": "<Commerce049 title=\"Северный лён\" curator=\"Мастерская «Плёс»\" items={[{ id: \"1\", title: \"Скатерть\", material: \"Лён\", price: \"6 900 ₽\" }]} />",
+          "summary": "Страница коллекции: крошки, баннер с куратором и датой выпуска, рассказ о коллекции и сетка вещей. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-049-* и не подменять её токенами вашей темы",
+            "затемняющий градиент над фоном баннера: без него текст пропадает на светлой фотографии",
+            "куратора, дату выпуска и число вещей на баннере — иначе коллекция это просто красивое слово",
+            "крошки списком внутри nav с aria-label, а не строкой из ссылок через слэш",
+            "рассказ о коллекции рядом с вещами: он объясняет цену лучше, чем описание каждой вещи",
+            "контейнерные запросы вместо медиазапросов: страница живёт и в узкой колонке"
+          ],
+          "adapt": [
+            "заголовок title, текст lead и рассказ story",
+            "массивы crumbs и items",
+            "значения curator, released и count",
+            "оттенки обложек и подпись кнопки cta"
+          ],
+          "notes": [
+            "Баннер — градиент: подставляя фотографию, оставьте верхний слой затемнения на месте.",
+            "Число вещей должно совпадать с содержимым коллекции, иначе строка врёт при первой сверке.",
+            "Четыре вещи в сетке — витрина, а не каталог: полный список открывается по кнопке.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Коллекция",
+            "type": "text",
+            "default": "Северный лён",
+            "maxLength": 28
+          },
+          {
+            "prop": "curator",
+            "label": "Куратор",
+            "type": "text",
+            "default": "Мастерская «Плёс»",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A collection page with a banner: the cover carries context — who curated it, when, and how many pieces it holds.",
+            "ai": {
+              "summary": "A collection page: breadcrumbs, a banner with the curator and release date, a story block and a grid of pieces. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-049-* palette — do not swap it for your theme tokens",
+                "the scrim gradient over the banner background: without it the text disappears on a light photo",
+                "the curator, release date and piece count on the banner — otherwise a collection is just a pretty word",
+                "the breadcrumbs as a list inside a nav with an aria-label, not a row of links split by slashes",
+                "the story beside the pieces: it explains the price better than any per-item description",
+                "container queries instead of media queries: the page survives a narrow column"
+              ],
+              "adapt": [
+                "the title, the lead and the story text",
+                "the crumbs and items arrays",
+                "the curator, released and count values",
+                "the cover hues and the cta label"
+              ],
+              "notes": [
+                "The banner is a gradient: if you swap in a photo, keep the scrim layer on top.",
+                "The piece count must match the collection or the line lies at the first check.",
+                "Four pieces are a showcase, not a catalog: the full list opens from the button.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce049 title=\"Northern linen\" curator=\"Ples workshop\" items={[{ id: \"1\", title: \"Tablecloth\", material: \"Linen\", price: \"$69\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Collection",
+                "default": "Northern linen"
+              },
+              "curator": {
+                "label": "Curator",
+                "default": "Ples workshop"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-050",
+      "type": "registry:block",
+      "title": "Infinite Catalog",
+      "description": "Каталог с бесконечной прокруткой, у которого есть выход: скелетоны, счётчик в aria-live и кнопка «показать ещё».",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-050/commerce-050.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-050.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-050-*. Серверный: хуков нет, подгрузку выполняет вызывающий код. Скелетоны нарисованы движущимся градиентом и скрыты от скринридера через aria-hidden, счётчик объявляется в aria-live, а строка загрузки помечена role=status. Число колонок считается контейнерными запросами, анимация выключается в prefers-reduced-motion.",
+      "meta": {
+        "tags": ["commerce", "catalog", "pagination", "skeleton"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce050",
+          "usage": "<Commerce050 shown={8} total={128} skeletons={4} cards={[{ id: \"1\", title: \"Кресло\", spec: \"Букле\", price: \"38 900 ₽\" }]} />",
+          "summary": "Каталог с бесконечной прокруткой: сетка карточек, ряд скелетонов, счётчик «показано N из M» и кнопка догрузки. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-050-* и не подменять её токенами вашей темы",
+            "кнопку догрузки рядом с бесконечной прокруткой: без неё до подвала нельзя добраться ни клавиатурой, ни колесом",
+            "счётчик «показано N из M» в aria-live — иначе прирост списка не слышен",
+            "скелетоны под aria-hidden: скринридер не должен читать пустые заглушки",
+            "число колонок из контейнерных запросов, а не из ширины окна",
+            "правило prefers-reduced-motion — бегущий блик скелетона обязан выключаться"
+          ],
+          "adapt": [
+            "массив cards и число скелетонов skeletons",
+            "значения shown и total, заголовок title",
+            "тексты loading, cta и footerHint",
+            "число колонок в контейнерных запросах"
+          ],
+          "notes": [
+            "Подгрузка не выполняется: наблюдатель пересечения и запрос добавляются в проекте.",
+            "Показывайте скелетоны только во время запроса — вечная заглушка читается как поломка.",
+            "Значения shown и total должны приходить из одного запроса, иначе счётчик врёт.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "total",
+            "label": "Всего товаров",
+            "type": "number",
+            "default": 128,
+            "min": 1,
+            "max": 9999
+          },
+          {
+            "prop": "skeletons",
+            "label": "Скелетонов",
+            "type": "number",
+            "default": 4,
+            "min": 0,
+            "max": 8
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An infinite-scroll catalog that still has an exit: skeletons, a live counter and a load-more button.",
+            "ai": {
+              "summary": "An infinite-scroll catalog: a card grid, a skeleton row, a \"showing N of M\" counter and a load-more button. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-050-* palette — do not swap it for your theme tokens",
+                "the load-more button beside the infinite scroll: without it the footer is unreachable by keyboard or wheel",
+                "the \"showing N of M\" counter in an aria-live region — otherwise the growth is inaudible",
+                "the skeletons under aria-hidden: a screen reader must not read empty placeholders",
+                "column counts from container queries rather than the window width",
+                "the prefers-reduced-motion rule — the sweeping skeleton shimmer has to stop"
+              ],
+              "adapt": [
+                "the cards array and the skeletons count",
+                "the shown and total values and the title",
+                "the loading, cta and footerHint texts",
+                "the column counts in the container queries"
+              ],
+              "notes": [
+                "Nothing is loaded here: the intersection observer and the request belong to your project.",
+                "Show skeletons only while a request is in flight — a permanent placeholder reads as a bug.",
+                "shown and total must come from the same query or the counter lies.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce050 shown={8} total={128} skeletons={4} cards={[{ id: \"1\", title: \"Armchair\", spec: \"Boucle\", price: \"$389\" }]} />"
+            },
+            "controls": {
+              "total": {
+                "label": "Total items"
+              },
+              "skeletons": {
+                "label": "Skeletons"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-051",
+      "type": "registry:block",
+      "title": "Grid List Switch",
+      "description": "Каталог с переключателем «плиткой или списком»: раскладку и состав полей меняет :has(), без единой строки JS.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-051/commerce-051.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-051.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-051-*. Серверный: вид держат две радиокнопки в fieldset со скрытой legend, а раскладку переключает :has() на оболочке. В списке дополнительно показываются описание и наличие — правила display на этих узлах и есть смысл переключателя. Идентификаторы радиокнопок фиксированы, поэтому два экземпляра на странице делят один переключатель.",
+      "meta": {
+        "tags": ["commerce", "catalog", "view", "toggle"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce051",
+          "usage": "<Commerce051 found={46} rows={[{ id: \"1\", title: \"Кофемолка\", spec: \"Жернова\", detail: \"38 степеней помола\", price: \"14 900 ₽\", stock: \"12 шт.\" }]} />",
+          "summary": "Каталог в двух видах: переключатель на радиокнопках, сетка плиток и построчный список с описанием и наличием. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-051-* и не подменять её токенами вашей темы",
+            "переключатель на радиокнопках: выбор одного вида и клавиатуру держит браузер",
+            "разный состав полей у видов — иначе переключатель меняет только ширину карточек и не даёт ничего",
+            "видимую обводку фокуса на подписи переключателя: сам input скрыт визуально, но не для клавиатуры",
+            "имя товара в подписи кнопки корзины, а не «в корзину» без предмета",
+            "контейнерные запросы вместо медиазапросов: оба вида живут и в узкой колонке"
+          ],
+          "adapt": [
+            "массив rows и число найденного found",
+            "заголовок title и подписи gridLabel, listLabel",
+            "подпись кнопки cta и акцент через accent",
+            "число колонок в контейнерных запросах"
+          ],
+          "notes": [
+            "Идентификаторы радиокнопок фиксированы: два блока на одной странице делят один переключатель.",
+            "Выбранный вид не сохраняется между страницами — хранение добавляется в проекте.",
+            "Число found должно приходить из того же запроса, что и строки, иначе счётчик врёт.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Кофейное оборудование",
+            "maxLength": 32
+          },
+          {
+            "prop": "found",
+            "label": "Найдено",
+            "type": "number",
+            "default": 46,
+            "min": 1,
+            "max": 9999
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A catalog with a grid/list switch: :has() changes both the layout and the visible fields, with no JS at all.",
+            "ai": {
+              "summary": "A catalog in two views: a radio-driven switch, a tile grid and a row list with descriptions and stock. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-051-* palette — do not swap it for your theme tokens",
+                "the radio-driven switch: single selection and keyboard support come from the browser",
+                "the different field sets per view — otherwise the switch only changes card width and gives nothing",
+                "the visible focus ring on the switch labels: the input is hidden visually, not from the keyboard",
+                "the product name inside the cart button label rather than a bare \"add to cart\"",
+                "container queries instead of media queries: both views survive a narrow column"
+              ],
+              "adapt": [
+                "the rows array and the found count",
+                "the title and the gridLabel, listLabel captions",
+                "the cta label and the accent prop",
+                "the column counts in the container queries"
+              ],
+              "notes": [
+                "The radio ids are fixed: two blocks on one page share a single switch.",
+                "The chosen view is not remembered across pages — persistence belongs to your project.",
+                "The found count must come from the same query as the rows or the counter lies.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce051 found={46} rows={[{ id: \"1\", title: \"Grinder\", spec: \"Conical burrs\", detail: \"38 grind steps\", price: \"$149\", stock: \"12 in stock\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Coffee equipment"
+              },
+              "found": {
+                "label": "Found"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-052",
+      "type": "registry:block",
+      "title": "Video Product",
+      "description": "Страница товара с видеообзором: запуск только вручную, главы с таймкодами рядом, расшифровка в details.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-052/commerce-052.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-052.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-052-*. Серверный: хуков нет, плеер — заглушка с кнопкой запуска, которую подключает вызывающий код. Треугольник кнопки нарисован границами псевдоэлемента, главы выведены нумерованным списком кнопок, расшифровка сложена в нативный details. Две колонки включаются контейнерным запросом.",
+      "meta": {
+        "tags": ["commerce", "product", "video", "review"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce052",
+          "usage": "<Commerce052 title=\"Диван «Отмель»\" duration=\"9:12\" chapters={[{ id: \"1\", at: \"0:00\", title: \"Что в коробке\" }]} />",
+          "summary": "Страница товара с видеообзором: плеер с ручным запуском, длительность, главы с таймкодами, цена, кнопки и текстовая расшифровка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-052-* и не подменять её токенами вашей темы",
+            "ручной запуск видео: автовоспроизведение съедает мобильный трафик и пугает звуком",
+            "длительность на плеере — по ней решают, смотреть сейчас или отложить",
+            "главы с таймкодами: девятиминутный обзор смотрят выборочно, а не целиком",
+            "расшифровку в details — она нужна при выключенном звуке и попадает в поиск",
+            "aria-label на кнопке запуска: у неё нет текста, только нарисованный треугольник"
+          ],
+          "adapt": [
+            "заголовок title, цену price и текст lead",
+            "массив chapters и значения duration, reviewer",
+            "подписи cta, secondary и playLabel",
+            "текст transcript и примечание note"
+          ],
+          "notes": [
+            "Плеер — заглушка: подключите свой проигрыватель к кнопке запуска, сохранив пропорцию 16:9.",
+            "Главы должны совпадать с таймкодами в видео, иначе кнопка ведёт не туда.",
+            "Расшифровка обязана быть настоящей: пересказ вместо неё бесполезен для глухих пользователей.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Товар",
+            "type": "text",
+            "default": "Диван «Отмель» с механизмом «еврокнижка»",
+            "maxLength": 48
+          },
+          {
+            "prop": "duration",
+            "label": "Длительность",
+            "type": "text",
+            "default": "9:12",
+            "maxLength": 10
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A product page with a video review: playback starts by hand, chapters sit beside it, and a transcript hides in details.",
+            "ai": {
+              "summary": "A product page built around a video review: a manual-start player, duration, timecoded chapters, price, actions and a text transcript. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-052-* palette — do not swap it for your theme tokens",
+                "manual playback: autoplay eats mobile data and startles people with sound",
+                "the duration on the player — it decides whether to watch now or later",
+                "the timecoded chapters: a nine-minute review is watched selectively, not end to end",
+                "the transcript inside details — it serves muted viewers and reaches search engines",
+                "the aria-label on the play button: it has no text, only a drawn triangle"
+              ],
+              "adapt": [
+                "the title, the price and the lead text",
+                "the chapters array and the duration, reviewer values",
+                "the cta, secondary and playLabel captions",
+                "the transcript text and the note"
+              ],
+              "notes": [
+                "The player is a placeholder: wire your own player to the play button, keeping the 16:9 ratio.",
+                "Chapters must match the video timecodes or the button jumps to the wrong place.",
+                "The transcript has to be real: a summary in its place is useless for deaf viewers.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce052 title=\"Otmel sofa\" duration=\"9:12\" chapters={[{ id: \"1\", at: \"0:00\", title: \"What is in the box\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Product",
+                "default": "Otmel sofa with a click-clack mechanism"
+              },
+              "duration": {
+                "label": "Duration",
+                "default": "9:12"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-053",
+      "type": "registry:block",
+      "title": "Option Configurator",
+      "description": "Конфигуратор товара: цена и срок изготовления считаются из выбранных опций, а код конфигурации собирается из их значений.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-053/commerce-053.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-053.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-053-*. Клиентский: \"use client\" ради состояния выбора — радиогруппы держат опции, чекбоксы дополнительные работы. Итог, срок и код конфигурации выводятся из выбора при каждом рендере, а не хранятся отдельно. Сводка помечена aria-live, раскладка на две колонки включается контейнерным запросом.",
+      "meta": {
+        "tags": ["commerce", "product", "configurator", "options"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce053",
+          "usage": "<Commerce053 base={42000} groups={[{ id: \"material\", legend: \"Материал\", options: [{ value: \"oak\", label: \"Дуб\", hint: \"Массив\", add: 0, days: 14 }] }]} />",
+          "summary": "Конфигуратор товара: группы опций с надбавкой и сроком, дополнительные работы, сводка выбора, итоговая цена, срок изготовления и код конфигурации. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-053-* и не подменять её токенами вашей темы",
+            "расчёт итога и срока из выбора: отдельно хранимое число врёт после первой правки",
+            "надбавку и срок в подписи каждой опции — выбор без цены превращается в лотерею",
+            "радиогруппы в fieldset с legend: вопрос объявляется до вариантов",
+            "код конфигурации с user-select:all — его копируют в переписку с мастерской",
+            "сводку в aria-live: при смене опции меняется цена, и об этом нужно объявить"
+          ],
+          "adapt": [
+            "базовую цену base и массивы groups, extras",
+            "заголовок title и текст lead",
+            "подписи cta, totalLabel и codeLabel",
+            "валюту currency и примечание note"
+          ],
+          "notes": [
+            "Срок берётся как максимум по выбранным опциям: если у вас сроки складываются, замените формулу.",
+            "Идентификаторы полей собираются из id группы — держите их уникальными на странице.",
+            "Цены хранятся числами, а не строками: иначе итог посчитать нечем.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Товар",
+            "type": "text",
+            "default": "Стол «Отмель» под заказ",
+            "maxLength": 36
+          },
+          {
+            "prop": "base",
+            "label": "Базовая цена",
+            "type": "number",
+            "default": 42000,
+            "min": 1000,
+            "max": 500000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A product configurator: price and lead time are computed from the chosen options, and the configuration code is built from their values.",
+            "ai": {
+              "summary": "A product configurator: option groups with surcharges and lead times, extras, a choice summary, the total, the production time and a configuration code. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-commerce-053-* palette — do not swap it for your theme tokens",
+                "computing the total and the lead time from the choice: a stored number lies after the first edit",
+                "the surcharge and lead time in every option label — a choice without a price is a lottery",
+                "the radio groups inside fieldsets with legends: the question precedes the options",
+                "the configuration code with user-select:all — people copy it into the workshop thread",
+                "the summary in an aria-live region: changing an option changes the price and that must be announced"
+              ],
+              "adapt": [
+                "the base price and the groups and extras arrays",
+                "the title and the lead text",
+                "the cta, totalLabel and codeLabel captions",
+                "the currency and the note"
+              ],
+              "notes": [
+                "The lead time is the maximum across the chosen options: if yours add up, replace the formula.",
+                "Field ids are built from the group id — keep them unique on the page.",
+                "Prices are numbers, not strings: otherwise there is nothing to total.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce053 base={42000} groups={[{ id: \"material\", legend: \"Material\", options: [{ value: \"oak\", label: \"Oak\", hint: \"Solid wood\", add: 0, days: 14 }] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Product",
+                "default": "Otmel table, made to order"
+              },
+              "base": {
+                "label": "Base price"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-054",
+      "type": "registry:block",
+      "title": "Price Calculator",
+      "description": "Расчёт стоимости услуги по параметрам: видно не только число, но и как оно получилось, и когда включается минимальный заказ.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-054/commerce-054.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-054.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-054-*. Клиентский: \"use client\" ради состояния параметров. Площадь задаётся ползунком, число окон — числовым полем, срочность радиогруппой с коэффициентом. Расшифровка показывает каждую строку с множителем, итог помечен aria-live, а порог минимального заказа выводится отдельным предупреждением.",
+      "meta": {
+        "tags": ["commerce", "service", "calculator", "pricing"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce054",
+          "usage": "<Commerce054 area={64} ratePerArea={95} minimum={6000} speeds={[{ value: \"plan\", label: \"По записи\", hint: \"Через 4 дня\", factor: 1 }]} />",
+          "summary": "Калькулятор услуги: ползунок площади, число окон, срочность с коэффициентом, расшифровка расчёта построчно, итог и порог минимального заказа. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-054-* и не подменять её токенами вашей темы",
+            "расшифровку с множителями: спор о цене решается на экране, а не в переписке",
+            "минимальный заказ отдельным предупреждением — иначе калькулятор обещает сумму, которую не примут",
+            "два способа ввода: ползунок пальцем и поле цифрами — оба обязаны быть",
+            "итог в aria-live: при движении ползунка меняется число, и об этом нужно объявить",
+            "коэффициент срочности рядом с названием варианта, а не только в итоговой сумме"
+          ],
+          "adapt": [
+            "ставки ratePerArea и ratePerWindow, порог minimum",
+            "начальные значения area и windows, массив speeds",
+            "тексты title, lead и formula",
+            "дополнительную работу extraLabel и её цену extraPrice"
+          ],
+          "notes": [
+            "Формула зашита в компонент: если у вас другая, меняйте расчёт вместе с текстом расшифровки.",
+            "Округление до рубля делается на выводе — для договора считайте сумму на сервере.",
+            "Ставки приходят числами: строка с пробелами сломает арифметику молча.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "ratePerArea",
+            "label": "Ставка за м²",
+            "type": "number",
+            "default": 95,
+            "min": 10,
+            "max": 1000
+          },
+          {
+            "prop": "minimum",
+            "label": "Минимальный заказ",
+            "type": "number",
+            "default": 6000,
+            "min": 0,
+            "max": 50000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A parameter-based service calculator: it shows not just the number but how it was reached, and when the minimum order kicks in.",
+            "ai": {
+              "summary": "A service calculator: an area slider, a window count, an urgency multiplier, a line-by-line breakdown, the total and a minimum-order floor. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-commerce-054-* palette — do not swap it for your theme tokens",
+                "the breakdown with multipliers: a price dispute is settled on screen, not over email",
+                "the minimum order as a separate warning — otherwise the calculator promises a sum nobody will accept",
+                "both input modes: a slider for thumbs and a field for exact figures — keep both",
+                "the total in an aria-live region: dragging the slider changes the number and that must be announced",
+                "the urgency multiplier beside the option name, not only inside the total"
+              ],
+              "adapt": [
+                "the ratePerArea and ratePerWindow rates and the minimum threshold",
+                "the initial area and windows values and the speeds array",
+                "the title, lead and formula texts",
+                "the extraLabel add-on and its extraPrice"
+              ],
+              "notes": [
+                "The formula is hard-coded: if yours differs, change the maths together with the breakdown text.",
+                "Rounding happens on output — compute the contractual sum on the server.",
+                "Rates arrive as numbers: a spaced string breaks the arithmetic silently.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce054 area={64} ratePerArea={95} minimum={6000} speeds={[{ value: \"plan\", label: \"Scheduled\", hint: \"In 4 days\", factor: 1 }]} />"
+            },
+            "controls": {
+              "ratePerArea": {
+                "label": "Rate per m²"
+              },
+              "minimum": {
+                "label": "Minimum order"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-055",
+      "type": "registry:block",
+      "title": "Compatibility Table",
+      "description": "Таблица совместимости товара с моделями: состояние названо словом и формой значка, а первая колонка залипает при прокрутке.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-055/commerce-055.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-055.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-055-*. Серверный: хуков нет. Данные выведены настоящей таблицей с caption и заголовками строк, поэтому связь ячейки с моделью читается скринридером. Значок состояния различается формой: круг, треугольник через clip-path и квадрат. Обёртка со скроллом получает tabIndex, чтобы таблица прокручивалась с клавиатуры.",
+      "meta": {
+        "tags": ["commerce", "product", "compatibility", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce055",
+          "usage": "<Commerce055 product=\"Багажник «Кряж»\" models={[{ id: \"1\", brand: \"Ладога\", model: \"Каскад 2.0\", years: \"2018–2024\", fit: \"yes\", comment: \"Штатные крепления\" }]} />",
+          "summary": "Таблица совместимости: легенда состояний, строки моделей с годами выпуска, состоянием и комментарием, форма для проверки по VIN. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-055-* и не подменять её токенами вашей темы",
+            "состояние словом рядом со значком: цвет сам по себе совместимость не называет",
+            "разную форму значков — круг, треугольник и квадрат читаются без различения цветов",
+            "строку «с доработкой» вместо округления до «подходит»: именно из-за неё оформляют возврат",
+            "настоящую таблицу с caption и th scope: сетка из div теряет связь ячейки с моделью",
+            "прокручиваемую обёртку с tabIndex — иначе на телефоне таблица недоступна с клавиатуры"
+          ],
+          "adapt": [
+            "массив models и заголовок title",
+            "название товара product и текст lead",
+            "подписи колонок и текст vinHint",
+            "подпись кнопки vinCta и акцент через accent"
+          ],
+          "notes": [
+            "Состояний ровно три: yes, partial и no — четвёртое придётся описать и цветом, и формой.",
+            "Комментарий у «с доработкой» обязателен: без него состояние не отличается от отказа.",
+            "Проверка по VIN ничего не проверяет — запрос добавляется в проекте.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "product",
+            "label": "Товар",
+            "type": "text",
+            "default": "Багажник «Кряж» на рейлинги",
+            "maxLength": 36
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "С какими моделями подходит",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A product compatibility table: each state is named in words and marked by shape, and the first column sticks while scrolling.",
+            "ai": {
+              "summary": "A compatibility table: a state legend, model rows with years, fit and a comment, plus a VIN check form. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-055-* palette — do not swap it for your theme tokens",
+                "the state in words beside the mark: colour alone does not name compatibility",
+                "the distinct mark shapes — a circle, a triangle and a square read without colour vision",
+                "the \"needs a part\" state instead of rounding it up to \"fits\": that row is what returns are made of",
+                "a real table with a caption and scoped headers: a grid of divs loses the cell-to-model link",
+                "the scrollable wrapper with tabIndex — otherwise the table is unreachable by keyboard on a phone"
+              ],
+              "adapt": [
+                "the models array and the title",
+                "the product name and the lead text",
+                "the column captions and the vinHint text",
+                "the vinCta label and the accent prop"
+              ],
+              "notes": [
+                "There are exactly three states: yes, partial and no — a fourth needs both a colour and a shape.",
+                "A comment on \"partial\" is mandatory: without it the state is indistinguishable from a refusal.",
+                "The VIN check checks nothing — add the request in your project.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce055 product=\"Kryazh roof rack\" models={[{ id: \"1\", brand: \"Ladoga\", model: \"Kaskad 2.0\", years: \"2018–2024\", fit: \"yes\", comment: \"Factory mounts\" }]} />"
+            },
+            "controls": {
+              "product": {
+                "label": "Product",
+                "default": "Kryazh roof rack for rails"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Which models it fits"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-056",
+      "type": "registry:block",
+      "title": "Digital License",
+      "description": "Страница цифрового товара: три лицензии радиокнопками, панель прав переключается на :has(), а разрешённое и запрещённое разведены.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-056/commerce-056.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-056.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-056-*. Серверный: хуков нет — панель прав показывается селектором :has() на оболочке по выбранной радиокнопке. Списки прав помечены псевдоэлементами разной формы, характеристики выведены списком определений с обёрткой display:contents. Идентификаторы лицензий фиксированы, поэтому два экземпляра на странице конфликтуют.",
+      "meta": {
+        "tags": ["commerce", "digital", "license", "download"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce056",
+          "usage": "<Commerce056 kind=\"Шрифт\" licenses={[{ value: \"personal\", label: \"Личная\", price: \"1 900 ₽\", audience: \"Личные проекты\", allowed: [\"…\"], denied: [\"…\"] }]} />",
+          "summary": "Страница цифрового товара: выбор лицензии с ценой, панель разрешённого и запрещённого, характеристики файла, условия выдачи и возврата. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-056-* и не подменять её токенами вашей темы",
+            "два раздельных списка «можно» и «нельзя»: смешанный перечень читают наискосок и ошибаются",
+            "цену внутри варианта лицензии — права различаются сильнее, чем цена, и выбирают по ним",
+            "строку про возврат рядом с кнопкой: у файла возврата почти нет, и это узнают заранее",
+            "радиокнопки в fieldset с legend, а не выпадающий список: три лицензии сравнивают глазами",
+            "срок жизни ссылки на скачивание в тексте выдачи"
+          ],
+          "adapt": [
+            "массив licenses и список facts",
+            "тип товара kind, заголовок title и текст lead",
+            "подписи allowedTitle, deniedTitle и cta",
+            "тексты delivery и refund"
+          ],
+          "notes": [
+            "Значения лицензий personal, business и extended зашиты в селекторы :has() — переименовывая их, правьте CSS.",
+            "Идентификаторы фиксированы: два блока на одной странице делят один переключатель лицензий.",
+            "Юридический текст лицензии здесь не заменяется: это витрина, а договор лежит отдельной страницей.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "kind",
+            "label": "Тип товара",
+            "type": "text",
+            "default": "Шрифт",
+            "maxLength": 20
+          },
+          {
+            "prop": "cta",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Купить и скачать",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A digital product page: three licences as radios, the rights panel switching on :has(), with allowed and forbidden kept apart.",
+            "ai": {
+              "summary": "A digital product page: a licence choice with prices, an allowed/forbidden panel, file specs and the delivery and refund terms. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-056-* palette — do not swap it for your theme tokens",
+                "the two separate allowed and forbidden lists: a mixed list is skimmed and misread",
+                "the price inside each licence option — rights differ more than prices, and people choose by them",
+                "the refund line beside the button: a file is barely refundable and that must be known upfront",
+                "radios in a fieldset with a legend rather than a select: three licences get compared by eye",
+                "the download link lifetime inside the delivery text"
+              ],
+              "adapt": [
+                "the licenses array and the facts list",
+                "the product kind, the title and the lead text",
+                "the allowedTitle, deniedTitle and cta captions",
+                "the delivery and refund texts"
+              ],
+              "notes": [
+                "The personal, business and extended values are wired into the :has() selectors — rename them and fix the CSS.",
+                "The ids are fixed: two blocks on one page share a single licence switch.",
+                "This does not replace the legal licence text: it is a storefront, the contract lives on its own page.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce056 kind=\"Typeface\" licenses={[{ value: \"personal\", label: \"Personal\", price: \"$19\", audience: \"Personal projects\", allowed: [\"…\"], denied: [\"…\"] }]} />"
+            },
+            "controls": {
+              "kind": {
+                "label": "Product kind",
+                "default": "Typeface"
+              },
+              "cta": {
+                "label": "Button",
+                "default": "Buy and download"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-057",
+      "type": "registry:block",
+      "title": "Service Booking",
+      "description": "Запись на услугу: занятое время остаётся видимым и отключённым, а сетка нужного дня показывается через :has() без JS.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-057/commerce-057.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-057.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-057-*. Серверный: день и время держат две радиогруппы, сетку выбранного дня показывает :has() на оболочке. Занятые слоты остаются в разметке с атрибутом disabled и перечёркиванием, а слово «занято» спрятано для скринридера. Раскладка на две колонки включается контейнерным запросом.",
+      "meta": {
+        "tags": ["commerce", "service", "booking", "schedule"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce057",
+          "usage": "<Commerce057 price=\"7 400 ₽\" days={[{ value: \"1\", weekday: \"Пн\", date: \"11 марта\", slots: [{ at: \"10:00\" }, { at: \"11:30\", taken: true }] }]} />",
+          "summary": "Страница услуги с записью: описание, длительность и цена, выбор дня чипами, сетка слотов с занятыми, карточка мастера и правила отмены. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-057-* и не подменять её токенами вашей темы",
+            "занятые слоты видимыми и отключёнными: исчезнувшее время ищут глазами и звонят уточнить",
+            "слово «занято» в скрытой подписи — перечёркивание стилем скринридер не читает",
+            "правила отмены рядом с кнопкой записи: спор о деньгах начинается именно здесь",
+            "длительность и цену над выбором времени — по ним решают, влезает ли услуга в день",
+            "радиогруппы дня и времени в fieldset с legend, а не два выпадающих списка"
+          ],
+          "adapt": [
+            "массив days со слотами и значения duration, price",
+            "заголовок title, текст lead и название service",
+            "карточку мастера master и подпись cta",
+            "текст правил policy и подсказку takenHint"
+          ],
+          "notes": [
+            "Селекторы :has() написаны под четыре дня: добавляя пятый, допишите правило для него.",
+            "Идентификаторы слотов собираются из дня и времени — два блока на странице делят одну сетку.",
+            "Занятость приходит пропом: проверка расписания за вызывающим кодом.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Услуга",
+            "type": "text",
+            "default": "Реставрация деревянной столешницы",
+            "maxLength": 40
+          },
+          {
+            "prop": "price",
+            "label": "Стоимость",
+            "type": "text",
+            "default": "7 400 ₽",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Service booking: taken slots stay visible but disabled, and the right day's grid appears through :has() without JS.",
+            "ai": {
+              "summary": "A service page with booking: description, duration and price, day chips, a slot grid with taken hours, the specialist card and the cancellation policy. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-057-* palette — do not swap it for your theme tokens",
+                "taken slots visible and disabled: vanished hours get hunted for and phoned about",
+                "the hidden \"taken\" label — a strike-through style is not read aloud",
+                "the cancellation policy beside the booking button: that is where money disputes start",
+                "the duration and price above the time choice — they decide whether the service fits the day",
+                "the day and time radio groups in fieldsets with legends rather than two selects"
+              ],
+              "adapt": [
+                "the days array with slots and the duration, price values",
+                "the title, the lead text and the service label",
+                "the master card and the cta label",
+                "the policy text and the takenHint"
+              ],
+              "notes": [
+                "The :has() selectors cover four days: add a fifth and write its rule too.",
+                "Slot ids are built from the day and the time — two blocks on a page share one grid.",
+                "Availability arrives as a prop: the schedule check belongs to the caller.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce057 price=\"$74\" days={[{ value: \"1\", weekday: \"Mon\", date: \"11 March\", slots: [{ at: \"10:00\" }, { at: \"11:30\", taken: true }] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Service",
+                "default": "Wooden tabletop restoration"
+              },
+              "price": {
+                "label": "Price",
+                "default": "$74"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-058",
+      "type": "registry:block",
+      "title": "Course Syllabus",
+      "description": "Страница курса с программой в details: у каждого урока стоит хронометраж, а бесплатные помечены отдельно.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-058/commerce-058.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-058.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-058-*. Серверный: модули сложены в нативные details, первый открыт по флагу openFirst. Маркер summary скрыт, номер модуля нарисован квадратом, уроки выведены нумерованным списком с хронометражом. Колонка с ценой и автором встаёт рядом по контейнерному запросу.",
+      "meta": {
+        "tags": ["commerce", "course", "syllabus", "education"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce058",
+          "usage": "<Commerce058 price=\"12 400 ₽\" modules={[{ id: \"1\", title: \"Основа\", summary: \"Разбираем переплетения\", lessons: [{ id: \"1\", title: \"Состав на этикетке\", length: \"12 мин\", free: true }] }]} />",
+          "summary": "Страница курса: обещание и уровень, программа модулями в details с хронометражом уроков, цена со старой, автор и гарантия возврата. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-058-* и не подменять её токенами вашей темы",
+            "хронометраж у каждого урока: «13 уроков» ничего не говорит о потраченном времени",
+            "пометку бесплатных уроков — именно с них начинают знакомство с курсом",
+            "программу в details: развёрнутая целиком она занимает экран, свёрнутая читается за десять секунд",
+            "общую длительность в чипах рядом с уровнем, а не в подвале страницы",
+            "гарантию возврата рядом с ценой: сомнение снимается до нажатия, а не после"
+          ],
+          "adapt": [
+            "массив modules с уроками и флаг openFirst",
+            "заголовок title, текст lead и значения level, total",
+            "цену price, старую цену oldPrice и подпись cta",
+            "автора author, его роль authorRole и текст guarantee"
+          ],
+          "notes": [
+            "Сумма хронометражей должна сходиться со значением total, иначе страница противоречит сама себе.",
+            "Не открывайте все модули сразу: смысл details именно в свёрнутом состоянии.",
+            "Старую цену показывайте только если она была настоящей — иначе это обман, а не скидка.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Курс",
+            "type": "text",
+            "default": "Шитьё с нуля: от отреза до готовой вещи",
+            "maxLength": 48
+          },
+          {
+            "prop": "price",
+            "label": "Цена",
+            "type": "text",
+            "default": "12 400 ₽",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A course page whose syllabus lives in details: every lesson carries its runtime and the free ones are marked.",
+            "ai": {
+              "summary": "A course page: the promise and level, a syllabus of details modules with lesson runtimes, price with the old one, the author and a refund guarantee. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-058-* palette — do not swap it for your theme tokens",
+                "the runtime on every lesson: \"13 lessons\" says nothing about the time it takes",
+                "the free-lesson mark — that is where people start getting to know the course",
+                "the syllabus inside details: fully expanded it owns the screen, collapsed it reads in ten seconds",
+                "the total runtime in the chips beside the level, not in the page footer",
+                "the refund guarantee beside the price: doubt is removed before the click, not after"
+              ],
+              "adapt": [
+                "the modules array with lessons and the openFirst flag",
+                "the title, the lead text and the level and total values",
+                "the price, the oldPrice and the cta label",
+                "the author, the authorRole and the guarantee text"
+              ],
+              "notes": [
+                "The lesson runtimes must add up to the total or the page contradicts itself.",
+                "Do not open every module at once: the point of details is the collapsed state.",
+                "Show an old price only if it was real — otherwise it is a lie, not a discount.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce058 price=\"$124\" modules={[{ id: \"1\", title: \"Basics\", summary: \"Weaves and density\", lessons: [{ id: \"1\", title: \"Reading the label\", length: \"12 min\", free: true }] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Course",
+                "default": "Sewing from scratch: cloth to garment"
+              },
+              "price": {
+                "label": "Price",
+                "default": "$124"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-059",
+      "type": "registry:block",
+      "title": "Multi Seller Cart",
+      "description": "Корзина маркетплейса: товары сгруппированы по продавцам, у каждой группы свои условия доставки, срок и промежуточный итог.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-059/commerce-059.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-059.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-059-*. Серверный: хуков нет. Каждая группа продавца — отдельная карточка с шапкой условий, списком строк и подвалом промежуточного итога. Общий итог вынесен в липкую колонку, которая встаёт рядом по контейнерному запросу; строки итога выведены списком определений с обёрткой display:contents.",
+      "meta": {
+        "tags": ["commerce", "cart", "marketplace", "sellers"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce059",
+          "usage": "<Commerce059 total=\"67 640 ₽\" sellers={[{ id: \"1\", name: \"Мастерская «Плёс»\", rating: \"4,9\", shipping: \"Доставка 0 ₽\", eta: \"12 марта\", subtotal: \"45 800 ₽\", lines: [] }]} />",
+          "summary": "Корзина с несколькими продавцами: группы со своими условиями и промежуточными итогами, общий итог с числом посылок и предупреждение о раздельном возврате. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-059-* и не подменять её токенами вашей темы",
+            "группировку по продавцам: одна общая строка доставки скрывает, что посылок будет несколько",
+            "срок и цену доставки в шапке каждой группы — они разные, и это выясняют до оплаты",
+            "промежуточный итог у продавца рядом с общим: без него непонятно, из чего сложилась сумма",
+            "число посылок в подписи строки доставки, а не только сумму",
+            "предупреждение о раздельном возврате: кнопки «вернуть весь заказ» не существует"
+          ],
+          "adapt": [
+            "массив sellers со строками и значения items, shipping, total",
+            "заголовок title и текст lead",
+            "подписи itemsLabel, shippingLabel и totalLabel",
+            "подпись кнопки cta и примечание note"
+          ],
+          "notes": [
+            "Итоги приходят готовыми строками: считайте их там же, где корзину, иначе цифры разойдутся.",
+            "Число посылок в подписи доставки правьте вместе с числом групп — иначе строка врёт.",
+            "Больше пяти продавцов в одной корзине не показывайте: список перестаёт читаться.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Корзина: три продавца",
+            "maxLength": 28
+          },
+          {
+            "prop": "total",
+            "label": "К оплате",
+            "type": "text",
+            "default": "67 640 ₽",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A marketplace cart: items grouped by seller, each group carrying its own shipping terms, date and subtotal.",
+            "ai": {
+              "summary": "A multi-seller cart: groups with their own terms and subtotals, a grand total naming the number of parcels and a note on separate returns. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-059-* palette — do not swap it for your theme tokens",
+                "the grouping by seller: a single shipping line hides that several parcels are coming",
+                "the shipping price and date in every group header — they differ, and that is learned before payment",
+                "the per-seller subtotal beside the grand total: without it the sum is unexplained",
+                "the parcel count in the shipping row label, not just the amount",
+                "the warning about separate returns: there is no \"return the whole order\" button"
+              ],
+              "adapt": [
+                "the sellers array with lines and the items, shipping, total values",
+                "the title and the lead text",
+                "the itemsLabel, shippingLabel and totalLabel captions",
+                "the cta label and the note"
+              ],
+              "notes": [
+                "Totals arrive as ready-made rows: compute them where the cart lives or the figures will drift.",
+                "Update the parcel count in the shipping label together with the number of groups.",
+                "Do not show more than five sellers in one cart: the list stops being readable.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce059 total=\"$676\" sellers={[{ id: \"1\", name: \"Ples workshop\", rating: \"4.9\", shipping: \"Free shipping\", eta: \"12 March\", subtotal: \"$458\", lines: [] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Cart: three sellers"
+              },
+              "total": {
+                "label": "Total",
+                "default": "$676"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-060",
+      "type": "registry:block",
+      "title": "Split Shipment Cart",
+      "description": "Корзина с раздельной доставкой: две посылки с причиной задержки у каждой и выбор между ожиданием и отправкой частями.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-060/commerce-060.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-060.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-060-*. Серверный: способ доставки держит радиогруппа, состояния нет. Обе цены — доставка и итог — написаны прямо внутри вариантов, потому что без JS пересчитать итог нечем, а прятать разницу нельзя. Карточки посылок и варианты встают в две колонки по контейнерному запросу.",
+      "meta": {
+        "tags": ["commerce", "cart", "shipping", "split"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce060",
+          "usage": "<Commerce060 parcels={[{ id: \"1\", label: \"Посылка 1 из 2\", eta: \"Завтра\", reason: \"Есть на складе\", lines: [] }]} plans={[{ value: \"together\", label: \"Одной посылкой\", detail: \"…\", shipping: \"0 ₽\", total: \"62 000 ₽\" }]} />",
+          "summary": "Корзина, разложенная по посылкам: у каждой свой срок и причина задержки, ниже выбор между одной доставкой и отправкой по мере готовности с обеими ценами. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-060-* и не подменять её токенами вашей темы",
+            "причину задержки у каждой посылки: «27 марта» без объяснения читается как ошибка магазина",
+            "обе цены прямо в вариантах — без JS итог не пересчитать, а спрятать разницу значит соврать",
+            "нумерацию «посылка 1 из 2» в шапке: она объясняет, почему заказ приедет дважды",
+            "радиогруппу в fieldset с legend вместо переключателя без вопроса",
+            "предупреждение о необратимости выбора: курьерская служба забирает груз сразу"
+          ],
+          "adapt": [
+            "массив parcels со строками и массив plans",
+            "заголовок title и текст lead",
+            "подписи shippingLabel, totalLabel и planLegend",
+            "подпись кнопки cta и примечание note"
+          ],
+          "notes": [
+            "Цены в вариантах приходят строками: считайте их вместе с корзиной, иначе они разойдутся.",
+            "Больше двух посылок не показывайте здесь: экран превращается в расписание, а не в выбор.",
+            "Срок «под заказ» должен приходить из реального планирования производства.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Заказ приедет двумя посылками",
+            "maxLength": 36
+          },
+          {
+            "prop": "cta",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Перейти к оплате",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A cart split into shipments: two parcels, each with the reason for its delay, and a choice between waiting and shipping in parts.",
+            "ai": {
+              "summary": "A cart laid out by parcels: each with its date and delay reason, plus a choice between one delivery and shipping as ready, both priced. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-060-* palette — do not swap it for your theme tokens",
+                "the delay reason on every parcel: a bare \"27 March\" reads as the shop's mistake",
+                "both prices inside the options — without JS the total cannot be recomputed, and hiding the gap is a lie",
+                "the \"parcel 1 of 2\" numbering in the header: it explains why the order arrives twice",
+                "the radio group in a fieldset with a legend rather than a switch without a question",
+                "the warning that the choice is final: the carrier picks up the load right away"
+              ],
+              "adapt": [
+                "the parcels array with lines and the plans array",
+                "the title and the lead text",
+                "the shippingLabel, totalLabel and planLegend captions",
+                "the cta label and the note"
+              ],
+              "notes": [
+                "The option prices arrive as strings: compute them with the cart or they will drift apart.",
+                "Do not show more than two parcels here: the screen becomes a timetable, not a choice.",
+                "The made-to-order date must come from real production planning.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce060 parcels={[{ id: \"1\", label: \"Parcel 1 of 2\", eta: \"Tomorrow\", reason: \"In stock\", lines: [] }]} plans={[{ value: \"together\", label: \"One parcel\", detail: \"…\", shipping: \"$0\", total: \"$620\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Your order arrives in two parcels"
+              },
+              "cta": {
+                "label": "Button",
+                "default": "Continue to payment"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-061",
+      "type": "registry:block",
+      "title": "Address Book",
+      "description": "Шаг оформления с адресной книгой: сохранённые адреса радиогруппой, а форма нового раскрывается на :has() только под своим вариантом.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-061/commerce-061.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-061.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-061-*. Серверный: адреса держит радиогруппа, форма нового адреса показывается селектором :has() у оболочки книги. Кнопка правки вынесена из подписи и позиционируется абсолютно, чтобы не попадать внутрь label. Поля адреса встают в две колонки по контейнерному запросу.",
+      "meta": {
+        "tags": ["commerce", "checkout", "address", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce061",
+          "usage": "<Commerce061 addresses={[{ value: \"home\", label: \"Дом\", line: \"наб. реки Карповки, 12\", recipient: \"Анна Ремизова\", phone: \"+7 921 000-14-08\", main: true }]} />",
+          "summary": "Шаг оформления: список сохранённых адресов с получателем и телефоном, пометка адреса по умолчанию, правка каждого и раскрывающаяся форма нового. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-061-* и не подменять её токенами вашей темы",
+            "«новый адрес» как последний вариант той же радиогруппы: иначе экран начинается с пустых полей",
+            "получателя и телефон в каждой строке — нужный адрес узнают по ним, а не по улице",
+            "пометку адреса по умолчанию: без неё выбор делают заново каждый раз",
+            "подсказку про домофон и часы приёма — курьер читает именно её",
+            "название адреса в подписи кнопки правки, а не «изменить» без предмета"
+          ],
+          "adapt": [
+            "массив addresses и подписи legend, mainLabel",
+            "заголовок title, шаг step и текст lead",
+            "подписи newLabel, editLabel и cta",
+            "набор полей формы нового адреса и примечание note"
+          ],
+          "notes": [
+            "Идентификатор commerce-061-new зашит в селектор :has() — переименовав его, поправьте CSS.",
+            "Форма ничего не отправляет: обработчик submit добавляется в проекте.",
+            "Не сортируйте адреса по алфавиту: порядок должен быть по частоте использования.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Куда привезти заказ",
+            "maxLength": 32
+          },
+          {
+            "prop": "cta",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Продолжить к оплате",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A checkout step with an address book: saved addresses as radios, and the new-address form opening on :has() only under its own option.",
+            "ai": {
+              "summary": "A checkout step: saved addresses with recipient and phone, a default mark, per-address editing and a revealed new-address form. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-061-* palette — do not swap it for your theme tokens",
+                "\"new address\" as the last option of the same radio group: otherwise the screen opens with empty fields",
+                "the recipient and phone on every row — that is how the right address is recognised, not by the street",
+                "the default-address mark: without it the choice is remade every time",
+                "the entry-code and opening-hours hint — that is what the courier actually reads",
+                "the address name inside the edit button label rather than a bare \"edit\""
+              ],
+              "adapt": [
+                "the addresses array and the legend and mainLabel captions",
+                "the title, the step label and the lead text",
+                "the newLabel, editLabel and cta captions",
+                "the fields of the new-address form and the note"
+              ],
+              "notes": [
+                "The commerce-061-new id is wired into the :has() selector — rename it and fix the CSS.",
+                "The form submits nothing: add the submit handler in your project.",
+                "Do not sort addresses alphabetically: order them by how often they are used.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce061 addresses={[{ value: \"home\", label: \"Home\", line: \"12 Karpovka emb.\", recipient: \"Anna Remizova\", phone: \"+7 921 000-14-08\", main: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Where to deliver the order"
+              },
+              "cta": {
+                "label": "Button",
+                "default": "Continue to payment"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-062",
+      "type": "registry:block",
+      "title": "Pickup Points",
+      "description": "Выбор пункта выдачи списком по расстоянию: часы работы, срок хранения и ограничения по габаритам видны до выбора.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-062/commerce-062.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-062.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-062-*. Серверный: пункты — радиогруппа в fieldset, состояния нет. Каждая карточка несёт расстояние, часы, цену, срок и набор возможностей чипами, а ограничение по габаритам выведено отдельной строкой. Поиск рядом — обычное поле со скрытой подписью, запрос выполняет вызывающий код.",
+      "meta": {
+        "tags": ["commerce", "checkout", "pickup", "delivery"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce062",
+          "usage": "<Commerce062 points={[{ value: \"karpovka\", name: \"Пункт на Карповке\", address: \"наб. реки Карповки, 12\", distance: \"350 м\", hours: \"09:00–22:00\", price: \"0 ₽\", eta: \"12 марта\", perks: [\"Примерочная\"] }]} />",
+          "summary": "Выбор пункта выдачи: поиск рядом, список точек с расстоянием, часами, ценой, сроком, возможностями и ограничениями по габаритам. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-062-* и не подменять её токенами вашей темы",
+            "сортировку по расстоянию: список без порядка заставляет читать все точки подряд",
+            "часы работы в карточке — по ним решают, успевают ли забрать сегодня",
+            "ограничение по габаритам отдельной строкой: крупный заказ в постамат не влезет, и это узнают заранее",
+            "срок хранения среди возможностей, а не в общем тексте внизу",
+            "радиогруппу в fieldset с legend вместо списка ссылок"
+          ],
+          "adapt": [
+            "массив points и подпись legend",
+            "заголовок title, шаг step и текст lead",
+            "подписи searchLabel, searchCta и cta",
+            "текст примечания note и акцент через accent"
+          ],
+          "notes": [
+            "Поиск ничего не ищет: запрос по адресу добавляется в проекте.",
+            "Расстояние должно считаться от адреса покупателя, а не от центра города.",
+            "Габаритные ограничения приходят из данных пункта — выдумывать их нельзя.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Где забрать заказ",
+            "maxLength": 32
+          },
+          {
+            "prop": "cta",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Продолжить к оплате",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Pickup points listed by distance: opening hours, storage window and size limits are visible before the choice.",
+            "ai": {
+              "summary": "Pickup point selection: a nearby search, a list of points with distance, hours, price, date, perks and size limits. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-062-* palette — do not swap it for your theme tokens",
+                "sorting by distance: an unordered list forces reading every point in turn",
+                "the opening hours inside the card — they decide whether today's pickup is possible",
+                "the size limit on its own line: a bulky order will not fit a locker, and that must be known upfront",
+                "the storage window among the perks, not in a general note at the bottom",
+                "the radio group in a fieldset with a legend rather than a list of links"
+              ],
+              "adapt": [
+                "the points array and the legend caption",
+                "the title, the step label and the lead text",
+                "the searchLabel, searchCta and cta captions",
+                "the note text and the accent prop"
+              ],
+              "notes": [
+                "The search searches nothing: add the address query in your project.",
+                "Distance must be measured from the customer's address, not from the city centre.",
+                "Size limits come from the point's data — do not invent them.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce062 points={[{ value: \"karpovka\", name: \"Karpovka point\", address: \"12 Karpovka emb.\", distance: \"350 m\", hours: \"09:00–22:00\", price: \"$0\", eta: \"12 March\", perks: [\"Fitting room\"] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Where to collect the order"
+              },
+              "cta": {
+                "label": "Button",
+                "default": "Continue to payment"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-063",
+      "type": "registry:block",
+      "title": "Split Payment",
+      "description": "Оплата двумя картами: сумма второй считается как остаток, поэтому недоплата невозможна, а перебор объявляется ошибкой.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-063/commerce-063.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-063.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-063-*. Клиентский: \"use client\" ради суммы первой карты. Ползунок и числовое поле связаны одним состоянием, остаток вычисляется из итога, а при выходе за границы кнопка блокируется и появляется сообщение с role=alert. Строка остатка помечена aria-live.",
+      "meta": {
+        "tags": ["commerce", "payment", "cards", "split"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce063",
+          "usage": "<Commerce063 total={62580} cards={[{ id: \"1\", bank: \"Северный банк\", tail: \"•• 4821\", system: \"Мир\" }]} />",
+          "summary": "Оплата с разделением между двумя картами: ползунок и точное поле для первой суммы, автоматический остаток на второй, быстрые кнопки и блокировка при перекосе. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-063-* и не подменять её токенами вашей темы",
+            "остаток как вычисляемое значение: два свободных поля позволяют оплатить меньше заказа",
+            "два способа ввода — ползунок пальцем и поле цифрами, оба обязаны быть",
+            "блокировку кнопки при перекосе и сообщение с role=alert рядом",
+            "строку остатка в aria-live: при движении ползунка меняется вторая сумма",
+            "предупреждение о двух операциях в выписке и раздельном возврате"
+          ],
+          "adapt": [
+            "сумму заказа total и массив cards",
+            "заголовок title и текст lead",
+            "подписи firstLabel, restLabel, halfLabel и allLabel",
+            "подпись кнопки cta, текст ошибки errorText и примечание note"
+          ],
+          "notes": [
+            "Разделение платежа поддерживает не каждый провайдер: проверьте это до вёрстки экрана.",
+            "Шаг ползунка равен ста рублям, а поле принимает точную сумму — не убирайте поле.",
+            "Больше двух карт этот блок не описывает: три части требуют другой раскладки и другой логики.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "total",
+            "label": "Сумма заказа",
+            "type": "number",
+            "default": 62580,
+            "min": 100,
+            "max": 1000000
+          },
+          {
+            "prop": "cta",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Оплатить двумя картами",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Paying with two cards: the second amount is the remainder, so underpayment is impossible and an overshoot raises an error.",
+            "ai": {
+              "summary": "A split payment across two cards: a slider and an exact field for the first amount, an automatic remainder on the second, quick presets and a guard against overshoot. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-commerce-063-* palette — do not swap it for your theme tokens",
+                "the remainder as a computed value: two free fields let people underpay the order",
+                "both input modes — a slider for thumbs and a field for exact figures, keep both",
+                "the disabled button on an overshoot with a role=alert message beside it",
+                "the remainder line in an aria-live region: moving the slider changes the second amount",
+                "the warning about two statement entries and a split refund"
+              ],
+              "adapt": [
+                "the order total and the cards array",
+                "the title and the lead text",
+                "the firstLabel, restLabel, halfLabel and allLabel captions",
+                "the cta label, the errorText and the note"
+              ],
+              "notes": [
+                "Not every provider supports split payments: check that before designing the screen.",
+                "The slider steps by a hundred while the field takes an exact sum — do not remove the field.",
+                "This block covers two cards only: three parts need a different layout and different logic.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce063 total={62580} cards={[{ id: \"1\", bank: \"Northern Bank\", tail: \"•• 4821\", system: \"Visa\" }]} />"
+            },
+            "controls": {
+              "total": {
+                "label": "Order total"
+              },
+              "cta": {
+                "label": "Button",
+                "default": "Pay with two cards"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-064",
+      "type": "registry:block",
+      "title": "Crypto Payment",
+      "description": "Оплата криптовалютой: сеть выбирается явно, адрес выделяется целиком, а предупреждение о неверной сети стоит над кнопкой.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-064/commerce-064.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-064.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-064-*. Серверный: сеть держит радиогруппа, состояния нет. QR нарисован сеткой из ячеек по массиву, а не картинкой: блок остаётся одним файлом. Адрес и комментарий выделяются целиком через user-select:all, тёмная подложка своя, мигание точки выключается в prefers-reduced-motion.",
+      "meta": {
+        "tags": ["commerce", "payment", "crypto", "wallet"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce064",
+          "usage": "<Commerce064 amount=\"684,20 USDT\" address=\"TQ7hLm4xW2pF9cVnR3sJb8YdK5aZgUe1Nq\" networks={[{ value: \"trc20\", label: \"TRC-20\", fee: \"Комиссия 1 USDT\", time: \"≈ 1 минута\" }]} />",
+          "summary": "Экран оплаты криптовалютой: сумма в токене и в рублях, срок фиксации курса, выбор сети с комиссией, QR-заглушка, адрес с копированием и комментарий к переводу. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-064-* и не подменять её токенами вашей темы",
+            "выбор сети радиокнопками с явными названиями: монета в чужой сети уходит навсегда",
+            "предупреждение о неверной сети над кнопкой, а не в подвале экрана",
+            "адрес с user-select:all — его копируют целиком, и ошибка в одном символе стоит всей суммы",
+            "комиссию и время подтверждения у каждой сети: по ним и выбирают",
+            "срок фиксации курса рядом с суммой — иначе непонятно, сколько платить при задержке"
+          ],
+          "adapt": [
+            "сумму amount, эквивалент fiat и адрес address",
+            "массив networks и текст holdFor",
+            "комментарий memo и его подпись memoLabel",
+            "тексты warning, cta и waiting"
+          ],
+          "notes": [
+            "QR — узор-заглушка: настоящий код генерируется на сервере и подставляется картинкой или SVG.",
+            "Кнопка копирования не копирует: обработчик буфера обмена добавляется в проекте.",
+            "Курс не пересчитывается: срок фиксации и сумму обновляет вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "amount",
+            "label": "Сумма в токене",
+            "type": "text",
+            "default": "684,20 USDT",
+            "maxLength": 20
+          },
+          {
+            "prop": "memo",
+            "label": "Комментарий",
+            "type": "text",
+            "default": "ORD-2024-1187",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A crypto payment screen: the network is chosen explicitly, the address selects in one click, and the wrong-network warning sits above the button.",
+            "ai": {
+              "summary": "A crypto payment screen: the amount in tokens and fiat, the rate hold, a network choice with fees, a QR placeholder, a copyable address and a transfer memo. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-064-* palette — do not swap it for your theme tokens",
+                "the explicit network radios: a coin sent on the wrong network is gone for good",
+                "the wrong-network warning above the button, not in the screen footer",
+                "the address with user-select:all — it is copied whole, and one wrong character costs the full amount",
+                "the fee and confirmation time on every network: that is what the choice rests on",
+                "the rate-hold timer beside the amount — otherwise a delayed transfer has an unknown price"
+              ],
+              "adapt": [
+                "the amount, the fiat equivalent and the address",
+                "the networks array and the holdFor text",
+                "the memo and its memoLabel caption",
+                "the warning, cta and waiting texts"
+              ],
+              "notes": [
+                "The QR is a placeholder pattern: generate the real code on the server and drop it in as an image or SVG.",
+                "The copy button copies nothing: add the clipboard handler in your project.",
+                "The rate does not recompute: the caller refreshes the hold timer and the amount.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce064 amount=\"684.20 USDT\" address=\"TQ7hLm4xW2pF9cVnR3sJb8YdK5aZgUe1Nq\" networks={[{ value: \"trc20\", label: \"TRC-20\", fee: \"Fee 1 USDT\", time: \"≈ 1 minute\" }]} />"
+            },
+            "controls": {
+              "amount": {
+                "label": "Token amount",
+                "default": "684.20 USDT"
+              },
+              "memo": {
+                "label": "Memo",
+                "default": "ORD-2024-1187"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-065",
+      "type": "registry:block",
+      "title": "Payment Receipt",
+      "description": "Экран успешной оплаты с чеком: сумма набрана крупно, номер операции копируется целиком, нижний край чека вырезан маской.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-065/commerce-065.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-065.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-065-*. Серверный: хуков нет. Строки чека выведены списком определений с обёрткой display:contents, номер операции выделяется целиком через user-select:all, а зубчатый край нарисован повторяющейся маской из радиального градиента — без картинки. Время платежа продублировано атрибутом dateTime.",
+      "meta": {
+        "tags": ["commerce", "payment", "receipt", "success"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce065",
+          "usage": "<Commerce065 amount=\"62 580 ₽\" receiptNumber=\"OP-8842-113705\" rows={[{ id: \"1\", term: \"Заказ\", value: \"№ 2024-1187\" }]} />",
+          "summary": "Экран после оплаты: галочка, сумма и время, чек с позициями и налогом, номер операции, кнопки скачивания и отправки на почту. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-065-* и не подменять её токенами вашей темы",
+            "номер операции отдельной строкой с user-select:all — его диктуют в поддержку",
+            "сумму крупнее статуса: сначала сверяют деньги, потом читают слова",
+            "способ оплаты рядом со временем — по нему находят операцию в выписке банка",
+            "кнопку скачивания рядом с отправкой на почту: письмо доходит не всегда",
+            "строку про фискальный чек: она объясняет, почему в налоговой он появится не сразу"
+          ],
+          "adapt": [
+            "сумму amount, статус status и время paidAt",
+            "массив rows и номер receiptNumber",
+            "подписи download, sendMail и back",
+            "тексты mailHint и fiscalHint"
+          ],
+          "notes": [
+            "Экран подтверждает платёж, а не заказ: состав и сроки доставки живут на своей странице.",
+            "Значение paidAtIso должно совпадать с текстом времени, иначе разметка врёт роботам.",
+            "Кнопки ничего не скачивают и не отправляют — обработчики добавляются в проекте.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "amount",
+            "label": "Сумма",
+            "type": "text",
+            "default": "62 580 ₽",
+            "maxLength": 16
+          },
+          {
+            "prop": "status",
+            "label": "Статус",
+            "type": "text",
+            "default": "Платёж прошёл",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A successful payment screen with a receipt: the amount set large, a one-click-copy operation number and a masked torn edge.",
+            "ai": {
+              "summary": "A post-payment screen: a tick, the amount and time, a receipt with lines and tax, the operation number and download or e-mail actions. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-065-* palette — do not swap it for your theme tokens",
+                "the operation number on its own line with user-select:all — it gets dictated to support",
+                "the amount larger than the status: money is checked first, words second",
+                "the payment method beside the time — that is how the entry is found in a bank statement",
+                "the download button beside the e-mail action: letters do not always arrive",
+                "the fiscal-receipt line: it explains why the tax office sees it later"
+              ],
+              "adapt": [
+                "the amount, the status and the paidAt time",
+                "the rows array and the receiptNumber",
+                "the download, sendMail and back captions",
+                "the mailHint and fiscalHint texts"
+              ],
+              "notes": [
+                "This screen confirms the payment, not the order: contents and delivery live on their own page.",
+                "paidAtIso must match the visible time or the markup lies to crawlers.",
+                "The buttons download and send nothing — add the handlers in your project.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce065 amount=\"$625\" receiptNumber=\"OP-8842-113705\" rows={[{ id: \"1\", term: \"Order\", value: \"No. 2024-1187\" }]} />"
+            },
+            "controls": {
+              "amount": {
+                "label": "Amount",
+                "default": "$625"
+              },
+              "status": {
+                "label": "Status",
+                "default": "Payment went through"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-066",
+      "type": "registry:block",
+      "title": "Payment Declined",
+      "description": "Экран отказа в оплате: причина набрана крупнее статуса, код банка стоит отдельной строкой, а срок брони заказа назван.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-066/commerce-066.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-066.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-066-*. Серверный: хуков нет. Реквизиты попытки выведены списком определений с обёрткой display:contents, шаги — нумерованным списком на CSS-счётчике, а код ответа банка выделяется целиком через user-select:all. Отдельным блоком объяснено удержание средств по отклонённой операции.",
+      "meta": {
+        "tags": ["commerce", "payment", "error", "recovery"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce066",
+          "usage": "<Commerce066 reason=\"Превышен лимит на интернет-покупки\" code=\"51 · insufficient_limit\" steps={[{ id: \"1\", title: \"Проверьте лимит\", text: \"Он меняется в приложении банка\" }]} />",
+          "summary": "Экран отклонённого платежа: статус, причина словами, реквизиты попытки с кодом банка, шаги по исправлению, две кнопки и объяснение удержания средств. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-066-* и не подменять её токенами вашей темы",
+            "причину крупнее статуса: «платёж не прошёл» без объяснения отправляет человека в поддержку",
+            "код ответа банка отдельной строкой — его спрашивают в банке дословно",
+            "фразу о том, что деньги не списаны: это первый вопрос после отказа",
+            "объяснение удержания средств — именно из-за него пишут в чат через минуту",
+            "срок, на который сохранён заказ, рядом с кнопкой повтора"
+          ],
+          "adapt": [
+            "причину reason, статус status и текст explain",
+            "реквизиты amount, method, attemptedAt и код code",
+            "массив steps и подписи retry, otherCard",
+            "тексты holdNote и support"
+          ],
+          "notes": [
+            "Причину нужно переводить с языка банка на человеческий: код 51 сам по себе ничего не объясняет.",
+            "Не показывайте технический текст провайдера как есть — он пугает и не помогает.",
+            "Срок брони должен быть настоящим: истёкшая бронь без предупреждения хуже отказа.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "reason",
+            "label": "Причина",
+            "type": "text",
+            "default": "Банк не пропустил операцию: превышен лимит на интернет-покупки",
+            "maxLength": 72
+          },
+          {
+            "prop": "code",
+            "label": "Код банка",
+            "type": "text",
+            "default": "51 · insufficient_limit",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A declined payment screen: the reason is set larger than the status, the bank code gets its own line and the order hold is named.",
+            "ai": {
+              "summary": "A declined payment screen: the status, the reason in plain words, the attempt details with the bank code, recovery steps, two actions and an explanation of held funds. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-066-* palette — do not swap it for your theme tokens",
+                "the reason larger than the status: a bare \"payment failed\" sends people to support",
+                "the bank response code on its own line — the bank asks for it verbatim",
+                "the sentence that no money was taken: it is the first question after a decline",
+                "the explanation of held funds — that is what the chat message a minute later is about",
+                "the order hold period beside the retry button"
+              ],
+              "adapt": [
+                "the reason, the status and the explain text",
+                "the amount, method, attemptedAt details and the code",
+                "the steps array and the retry, otherCard captions",
+                "the holdNote and support texts"
+              ],
+              "notes": [
+                "Translate the reason from bank language into human: code 51 alone explains nothing.",
+                "Do not show the provider's raw message — it scares people without helping them.",
+                "The hold period must be real: an expired hold without warning is worse than the decline.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce066 reason=\"Online purchase limit exceeded\" code=\"51 · insufficient_limit\" steps={[{ id: \"1\", title: \"Check the limit\", text: \"It changes in the bank app\" }]} />"
+            },
+            "controls": {
+              "reason": {
+                "label": "Reason",
+                "default": "The bank declined it: the online purchase limit was exceeded"
+              },
+              "code": {
+                "label": "Bank code",
+                "default": "51 · insufficient_limit"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-067",
+      "type": "registry:block",
+      "title": "Account Balance",
+      "description": "Кабинет с балансом: доступная сумма отделена от денег в пути, а бонусы и кэшбэк разложены по карманам со сроками сгорания.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-067/commerce-067.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-067.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-067-*. Серверный: хуков нет. Баланс вынесен в градиентный герой, карманы — сетка карточек с необязательной строкой сгорания, последние движения выведены списком со знаком суммы и отдельным атрибутом для положительных. Сетка карманов перестраивается контейнерными запросами.",
+      "meta": {
+        "tags": ["commerce", "account", "balance", "bonuses"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce067",
+          "usage": "<Commerce067 balance=\"18 340 ₽\" pockets={[{ id: \"1\", label: \"Бонусы\", value: \"2 480\", hint: \"Списываются как рубли\", expires: \"Сгорают 30 июня\" }]} />",
+          "summary": "Личный кабинет: доступный баланс, деньги в пути, карманы бонусов и кэшбэка со сроками, последние движения со знаком и ссылка на полную историю. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-067-* и не подменять её токенами вашей темы",
+            "строку «в пути» рядом с балансом: деньги, которые ещё не зашли, нельзя складывать с доступными",
+            "срок сгорания у бонусов — бонус без даты люди считают деньгами",
+            "знак у суммы движения, а не только цвет: минус и плюс читаются без различения оттенков",
+            "правило списания бонусов в подписи кармана, а не в подвале страницы",
+            "разделение выводимых денег и бонусов в примечании под списком"
+          ],
+          "adapt": [
+            "баланс balance, строку pending и приветствие greeting",
+            "массивы pockets и moves",
+            "подписи topUp, withdraw и allMoves",
+            "заголовки pocketsTitle, movesTitle и примечание note"
+          ],
+          "notes": [
+            "Баланс приходит строкой: считайте его на сервере, клиент не должен складывать деньги.",
+            "Не показывайте больше трёх карманов: экран превращается в бухгалтерию.",
+            "Дата сгорания должна быть настоящей — сгоревший без предупреждения бонус читается как обман.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "balance",
+            "label": "Доступно",
+            "type": "text",
+            "default": "18 340 ₽",
+            "maxLength": 16
+          },
+          {
+            "prop": "topUp",
+            "label": "Кнопка пополнения",
+            "type": "text",
+            "default": "Пополнить счёт",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An account with a balance: available money is kept apart from money in transit, and bonuses sit in pockets with expiry dates.",
+            "ai": {
+              "summary": "A customer account: the available balance, money in transit, bonus and cashback pockets with expiry, recent movements with signs and a link to the full history. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-067-* palette — do not swap it for your theme tokens",
+                "the \"in transit\" line beside the balance: money that has not landed cannot be added to available funds",
+                "the expiry date on bonuses — an undated bonus is mistaken for cash",
+                "the sign on every movement, not just its colour: plus and minus read without colour vision",
+                "the bonus spending rule inside the pocket hint, not in the page footer",
+                "the distinction between withdrawable cash and bonuses in the note below the list"
+              ],
+              "adapt": [
+                "the balance, the pending line and the greeting",
+                "the pockets and moves arrays",
+                "the topUp, withdraw and allMoves captions",
+                "the pocketsTitle, movesTitle headings and the note"
+              ],
+              "notes": [
+                "The balance arrives as a string: compute it on the server, the client must not add money up.",
+                "Do not show more than three pockets: the screen turns into accounting.",
+                "The expiry date must be real — a bonus that vanishes unannounced reads as a scam.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce067 balance=\"$183\" pockets={[{ id: \"1\", label: \"Bonuses\", value: \"2 480\", hint: \"Spend like cash\", expires: \"Expire on 30 June\" }]} />"
+            },
+            "controls": {
+              "balance": {
+                "label": "Available",
+                "default": "$183"
+              },
+              "topUp": {
+                "label": "Top-up button",
+                "default": "Top up the account"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-068",
+      "type": "registry:block",
+      "title": "Payment History",
+      "description": "История платежей: итоги периода стоят над таблицей, статус назван словом и подкреплён формой значка, возвраты идут в общем списке.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-068/commerce-068.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-068.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-068-*. Серверный: период выбирается нативным select с defaultValue, запрос делает вызывающий код. Данные выведены настоящей таблицей с caption, значки состояний различаются формой через clip-path, обёртка со скроллом получает tabIndex. Есть отдельное пустое состояние.",
+      "meta": {
+        "tags": ["commerce", "payments", "history", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce068",
+          "usage": "<Commerce068 period=\"Март 2024\" spent=\"78 780 ₽\" payments={[{ id: \"1\", date: \"11 марта\", dateIso: \"2024-03-11\", title: \"Заказ № 2024-1187\", method: \"Мир •• 4821\", amount: \"− 62 580 ₽\", state: \"done\" }]} />",
+          "summary": "История платежей: выбор периода, итоги потраченного и возвращённого, таблица операций со статусами и чеками, пустое состояние и догрузка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-068-* и не подменять её токенами вашей темы",
+            "итоги периода над таблицей: сюда приходят узнать сумму, а не читать двадцать строк",
+            "возвраты в той же таблице со знаком — «сколько потратил» без их вычета неверно",
+            "статус словом рядом со значком и разную форму значков вместо одного цвета",
+            "нативный select под период: на телефоне он открывается системным списком",
+            "название операции в подписи кнопки чека, а не «чек» без предмета"
+          ],
+          "adapt": [
+            "массив payments и список периодов periods",
+            "текущий период period и итоги spent, returned",
+            "подписи колонок и текст пустого состояния emptyText",
+            "подписи receiptLabel и more"
+          ],
+          "notes": [
+            "Состояний ровно четыре: done, hold, back и fail — пятое придётся описать и цветом, и формой.",
+            "Select не фильтрует: значение задаётся, запрос делает вызывающий код.",
+            "Итоги должны приходить из того же запроса, что и строки, иначе они разойдутся.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "period",
+            "label": "Период",
+            "type": "select",
+            "default": "Март 2024",
+            "options": [
+              "Март 2024",
+              "Февраль 2024",
+              "Январь 2024",
+              "Весь 2023 год"
+            ]
+          },
+          {
+            "prop": "spent",
+            "label": "Потрачено",
+            "type": "text",
+            "default": "78 780 ₽",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A payment history: period totals sit above the table, each status is named and shape-coded, and refunds share the same list.",
+            "ai": {
+              "summary": "A payment history: a period select, spent and refunded totals, a table of operations with statuses and receipts, an empty state and a load-more action. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-068-* palette — do not swap it for your theme tokens",
+                "the period totals above the table: people come here for a sum, not for twenty rows",
+                "refunds in the same table with a sign — \"how much I spent\" is wrong without them",
+                "the status in words beside the mark and distinct mark shapes instead of colour alone",
+                "the native select for the period: on a phone it opens the system list",
+                "the operation name inside the receipt button label rather than a bare \"receipt\""
+              ],
+              "adapt": [
+                "the payments array and the periods list",
+                "the current period and the spent, returned totals",
+                "the column captions and the emptyText",
+                "the receiptLabel and more captions"
+              ],
+              "notes": [
+                "There are exactly four states: done, hold, back and fail — a fifth needs both a colour and a shape.",
+                "The select filters nothing: it holds the value, the query belongs to the caller.",
+                "Totals must come from the same query as the rows or they will drift apart.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce068 period=\"March 2024\" spent=\"$787\" payments={[{ id: \"1\", date: \"11 March\", dateIso: \"2024-03-11\", title: \"Order 2024-1187\", method: \"Visa •• 4821\", amount: \"− $625\", state: \"done\" }]} />"
+            },
+            "controls": {
+              "period": {
+                "label": "Period",
+                "default": "March 2024"
+              },
+              "spent": {
+                "label": "Spent",
+                "default": "$787"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-069",
+      "type": "registry:block",
+      "title": "Subscription Manager",
+      "description": "Управление подписками: суммы в месяц и в год посчитаны сверху, а у каждой строки видна дата списания, карта и кнопка паузы рядом с отменой.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-069/commerce-069.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-069.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-069-*. Серверный: хуков нет. Состояние подписки помечено словом и значком разной формы, дата следующего списания вынесена в отдельную плашку, а действия собраны в ряд, где отмена отодвинута вправо через margin-left:auto. Название подписки продублировано в скрытой подписи каждой кнопки.",
+      "meta": {
+        "tags": ["commerce", "subscriptions", "account", "billing"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce069",
+          "usage": "<Commerce069 monthly=\"2 456 ₽\" subs={[{ id: \"1\", title: \"Кофе каждый месяц\", detail: \"250 г зерна\", price: \"1 690 ₽\", every: \"раз в месяц\", next: \"Спишем 2 апреля\", card: \"Мир •• 4821\", state: \"active\" }]} />",
+          "summary": "Подписки покупателя: суммы в месяц и в год, карточки подписок со статусом, ценой, периодом, датой списания и картой, кнопки паузы, смены карты и отмены. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-069-* и не подменять её токенами вашей темы",
+            "суммы в месяц и в год сверху: с этим вопросом сюда и приходят",
+            "дату следующего списания и карту в каждой строке — без них строка ни на что не отвечает",
+            "паузу рядом с отменой: чаще нужна именно она, и прятать её нечестно",
+            "статус словом со значком разной формы, а не одним цветом",
+            "название подписки в скрытой подписи каждой кнопки действия"
+          ],
+          "adapt": [
+            "массив subs и суммы monthly, yearly",
+            "заголовок title и текст lead",
+            "подписи pause, resume, changeCard и cancel",
+            "подпись nextLabel и примечание note"
+          ],
+          "notes": [
+            "Состояний ровно три: active, paused и ending — четвёртое придётся описать и цветом, и формой.",
+            "Суммы приходят готовыми строками: считайте их на сервере вместе со списком.",
+            "Отмена не должна требовать письма в поддержку: кнопка обязана работать сама.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Мои подписки",
+            "maxLength": 24
+          },
+          {
+            "prop": "monthly",
+            "label": "В месяц",
+            "type": "text",
+            "default": "2 456 ₽",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Subscription management: monthly and yearly totals up top, and every row showing the next charge, the card and a pause beside the cancel.",
+            "ai": {
+              "summary": "A customer's subscriptions: monthly and yearly totals, cards with status, price, period, next charge and card, plus pause, change-card and cancel actions. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-069-* palette — do not swap it for your theme tokens",
+                "the monthly and yearly totals up top: that is the question people arrive with",
+                "the next charge date and the card on every row — without them the row answers nothing",
+                "the pause beside the cancel: pausing is what people usually want, and hiding it is dishonest",
+                "the status in words with a shape-coded mark rather than colour alone",
+                "the subscription name inside the hidden label of every action button"
+              ],
+              "adapt": [
+                "the subs array and the monthly, yearly totals",
+                "the title and the lead text",
+                "the pause, resume, changeCard and cancel captions",
+                "the nextLabel caption and the note"
+              ],
+              "notes": [
+                "There are exactly three states: active, paused and ending — a fourth needs both a colour and a shape.",
+                "The totals arrive as ready-made strings: compute them on the server with the list.",
+                "Cancelling must not require an e-mail to support: the button has to work on its own.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce069 monthly=\"$24\" subs={[{ id: \"1\", title: \"Coffee every month\", detail: \"250 g of beans\", price: \"$16\", every: \"monthly\", next: \"Charged on 2 April\", card: \"Visa •• 4821\", state: \"active\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "My subscriptions"
+              },
+              "monthly": {
+                "label": "Per month",
+                "default": "$24"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-070",
+      "type": "registry:block",
+      "title": "Parcel Map",
+      "description": "Отслеживание посылки на карте-заглушке: карта нарисована CSS, а все точки продублированы списком со временем.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-070/commerce-070.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-070.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-070-*. Серверный: хуков нет. Карта собрана из слоёв градиентов — вода, сетка кварталов и дороги, — а точки расставлены процентами через локальные переменные. Карта помечена role=img с подписью, а маршрут продублирован нумерованным списком; пульс текущей точки выключается в prefers-reduced-motion.",
+      "meta": {
+        "tags": ["commerce", "delivery", "tracking", "map"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce070",
+          "usage": "<Commerce070 eta=\"Сегодня до 18:00\" points={[{ id: \"1\", label: \"Склад отправителя\", at: \"9 марта, 20:15\", x: 16, y: 22, state: \"done\" }]} />",
+          "summary": "Отслеживание посылки: статус и срок, схема маршрута с точками, список пройденных пунктов со временем, карточка курьера и правила переноса. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-070-* и не подменять её токенами вашей темы",
+            "дублирование карты списком: карта не читается скринридером и не грузится на плохом интернете",
+            "срок доставки заголовком — это единственный вопрос, с которым сюда приходят",
+            "подпись «сейчас» у текущей точки: цвет и пульс сами по себе состояние не называют",
+            "оговорку о том, что схема условная — иначе по ней начинают искать реальный адрес курьера",
+            "правило prefers-reduced-motion — пульс текущей точки обязан выключаться"
+          ],
+          "adapt": [
+            "массив points с координатами и значения status, eta",
+            "номер посылки parcel и строку where",
+            "карточку курьера courier с телефоном courierPhone",
+            "подписи cta, secondary и текст mapFallback"
+          ],
+          "notes": [
+            "Карта условная: под настоящие тайлы нужна библиотека, а этот блок обязан оставаться без зависимостей.",
+            "Координаты задаются процентами от прямоугольника, а не широтой и долготой.",
+            "Состояний ровно три: done, now и wait, и текущая точка должна быть одна.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "eta",
+            "label": "Срок",
+            "type": "text",
+            "default": "Сегодня до 18:00",
+            "maxLength": 28
+          },
+          {
+            "prop": "status",
+            "label": "Статус",
+            "type": "text",
+            "default": "Курьер везёт заказ",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Parcel tracking on a placeholder map: the map is drawn in CSS and every pin is duplicated in a timestamped list.",
+            "ai": {
+              "summary": "Parcel tracking: status and arrival time, a route sketch with pins, a timestamped list of checkpoints, the courier card and the reschedule rules. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-070-* palette — do not swap it for your theme tokens",
+                "duplicating the map as a list: a map is unreadable by screen readers and unloadable on bad connections",
+                "the arrival time as the heading — it is the only question people come here with",
+                "the \"now\" label on the current pin: colour and a pulse do not name a state",
+                "the note that the sketch is schematic — otherwise people hunt the courier's real address on it",
+                "the prefers-reduced-motion rule — the pulse on the current pin has to stop"
+              ],
+              "adapt": [
+                "the points array with coordinates and the status, eta values",
+                "the parcel number and the where line",
+                "the courier card and the courierPhone",
+                "the cta, secondary captions and the mapFallback text"
+              ],
+              "notes": [
+                "The map is schematic: real tiles need a library, and this block must stay dependency-free.",
+                "Coordinates are percentages of the rectangle, not latitude and longitude.",
+                "There are exactly three states: done, now and wait, and only one pin may be current.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce070 eta=\"Today by 6 pm\" points={[{ id: \"1\", label: \"Sender warehouse\", at: \"9 March, 8:15 pm\", x: 16, y: 22, state: \"done\" }]} />"
+            },
+            "controls": {
+              "eta": {
+                "label": "Arrives",
+                "default": "Today by 6 pm"
+              },
+              "status": {
+                "label": "Status",
+                "default": "The courier is on the way"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-071",
+      "type": "registry:block",
+      "title": "Buy Again",
+      "description": "Блок «купить снова» из истории: частота покупок и дата последней видны до нажатия, а подорожание названо словами.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-071/commerce-071.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-071.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-071-*. Серверный: хуков нет. Лента собрана гридом с автоколонками и прокруткой с привязкой scroll-snap, карточки остаются обычными элементами списка со ссылкой, растянутой псевдоэлементом. Кнопка добавления поднята над ссылкой z-index'ом, имя товара продублировано в скрытой подписи.",
+      "meta": {
+        "tags": ["commerce", "reorder", "history", "rail"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce071",
+          "usage": "<Commerce071 items={[{ id: \"1\", title: \"Зерно «Плёс»\", spec: \"250 г\", price: \"1 690 ₽\", times: \"Брали 7 раз\", last: \"последний — 12 февраля\" }]} />",
+          "summary": "Блок «купить снова»: горизонтальная лента товаров из прошлых заказов с частотой покупок, датой последней, отметкой подорожания и кнопкой добавления. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-071-* и не подменять её токенами вашей темы",
+            "частоту и дату последней покупки: повторную покупку двигает факт, а не картинка",
+            "отметку подорожания словами — молча подорожавший товар в один клик приносит возврат",
+            "карточки обычными элементами списка со ссылкой: лента должна проходиться клавиатурой",
+            "имя товара в скрытой подписи кнопки добавления, а не «добавить» без предмета",
+            "прокрутку с привязкой scroll-snap вместо кнопок-стрелок, требующих JS"
+          ],
+          "adapt": [
+            "массив items и заголовок title",
+            "текст lead и подпись allLabel",
+            "подпись кнопки cta и примечание note",
+            "оттенки миниатюр через hue у товара"
+          ],
+          "notes": [
+            "Частота считается по истории заказов: без неё блок превращается в обычную подборку.",
+            "Наличие проверяется в момент добавления — обработчик добавляется в проекте.",
+            "Больше шести карточек в ленте не ставьте: дальше её просто не прокручивают.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Купить снова",
+            "maxLength": 24
+          },
+          {
+            "prop": "cta",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Добавить",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A buy-again rail built from history: purchase frequency and the last date are visible upfront, and a price rise is spelled out.",
+            "ai": {
+              "summary": "A buy-again rail: past purchases with how often they were bought, the last date, a price-change flag and an add button. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-071-* palette — do not swap it for your theme tokens",
+                "the frequency and the last purchase date: a repeat purchase is driven by facts, not pictures",
+                "the price-rise flag in words — a silently pricier one-click item comes back as a refund",
+                "cards as plain list items with links: the rail must be traversable by keyboard",
+                "the product name in the hidden label of the add button rather than a bare \"add\"",
+                "scroll-snap scrolling instead of arrow buttons that would require JS"
+              ],
+              "adapt": [
+                "the items array and the title",
+                "the lead text and the allLabel caption",
+                "the cta label and the note",
+                "the thumbnail hue per item"
+              ],
+              "notes": [
+                "Frequency comes from order history: without it the block is just another carousel.",
+                "Stock is checked when adding — the handler belongs to your project.",
+                "Do not put more than six cards in the rail: past that nobody scrolls.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce071 items={[{ id: \"1\", title: \"Ples beans\", spec: \"250 g\", price: \"$16\", times: \"Bought 7 times\", last: \"last on 12 February\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Buy again"
+              },
+              "cta": {
+                "label": "Button",
+                "default": "Add"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-072",
+      "type": "registry:block",
+      "title": "Personal Picks",
+      "description": "Персональные рекомендации с причиной у каждой карточки и кнопкой «не интересно», которая правит выдачу.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-072/commerce-072.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-072.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-072-*. Серверный: хуков нет. Причина рекомендации выведена отдельной плашкой внутри карточки, кнопка скрытия поднята над растянутой ссылкой z-index'ом и лежит поверх обложки, а объяснение механики сложено в нативный details. Сетка перестраивается контейнерными запросами.",
+      "meta": {
+        "tags": ["commerce", "recommendations", "personal", "grid"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce072",
+          "usage": "<Commerce072 picks={[{ id: \"1\", title: \"Кружка «Затон»\", spec: \"Керамика\", price: \"2 400 ₽\", because: \"вы купили кофемолку\" }]} />",
+          "summary": "Персональные рекомендации: карточки с обложкой, причиной подбора, ценой, кнопкой в корзину и отметкой «не интересно», плюс раскрываемое объяснение механики. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-072-* и не подменять её токенами вашей темы",
+            "строку «потому что» в каждой карточке: подборка без причины выглядит случайной и её листают",
+            "кнопку «не интересно» — это единственный способ поправить выдачу, без неё блок читается как реклама",
+            "объяснение механики в details: оно снимает вопрос о том, кто и за что попал в подборку",
+            "оговорку об отсутствии платных мест — если она правда, её нельзя убирать молча",
+            "имя товара в скрытых подписях обеих кнопок карточки"
+          ],
+          "adapt": [
+            "массив picks и заголовок title",
+            "текст lead и подпись becauseLabel",
+            "подписи кнопок cta и hide",
+            "тексты howLabel и howText"
+          ],
+          "notes": [
+            "Причина должна быть настоящей: выдуманное «потому что» подрывает доверие ко всей подборке.",
+            "Кнопка «не интересно» ничего не скрывает — обработчик и хранение отметки добавляются в проекте.",
+            "Если в подборку попадает реклама, помечайте её отдельно и не выдавайте за рекомендацию.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вам может подойти",
+            "maxLength": 28
+          },
+          {
+            "prop": "hide",
+            "label": "Скрыть",
+            "type": "text",
+            "default": "Не интересно",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Personal recommendations with a reason on every card and a not-interested button that actually reshapes the feed.",
+            "ai": {
+              "summary": "Personal recommendations: cards with a cover, the reason, the price, an add button and a not-interested action, plus a collapsible explanation of how the feed works. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-072-* palette — do not swap it for your theme tokens",
+                "the \"because\" line on every card: a feed without reasons looks random and gets scrolled past",
+                "the not-interested button — it is the only way to fix the feed, and without it the block reads as an ad",
+                "the mechanics explanation in details: it answers who got in and why",
+                "the note about no paid placements — if it is true, it must not vanish quietly",
+                "the product name in the hidden labels of both card buttons"
+              ],
+              "adapt": [
+                "the picks array and the title",
+                "the lead text and the becauseLabel caption",
+                "the cta and hide button captions",
+                "the howLabel and howText texts"
+              ],
+              "notes": [
+                "The reason must be real: an invented \"because\" undermines trust in the whole feed.",
+                "The not-interested button hides nothing — the handler and its storage belong to your project.",
+                "If ads enter the feed, mark them and do not pass them off as recommendations.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce072 picks={[{ id: \"1\", title: \"Zaton mug\", spec: \"Ceramic\", price: \"$24\", because: \"you bought the grinder\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "You might like"
+              },
+              "hide": {
+                "label": "Hide",
+                "default": "Not interested"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-073",
+      "type": "registry:block",
+      "title": "Recently Viewed",
+      "description": "Недавно просмотренное по дням: у каждой строки время просмотра и своё удаление, а над списком — кнопка очистки истории.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-073/commerce-073.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-073.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-073-*. Серверный: хуков нет. Просмотры сгруппированы по дням в отдельные списки с заголовком, строка — обычный элемент списка со ссылкой, растянутой псевдоэлементом, и кнопкой удаления поверх неё. Есть пустое состояние и примечание о том, как используется история.",
+      "meta": {
+        "tags": ["commerce", "history", "viewed", "privacy"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce073",
+          "usage": "<Commerce073 groups={[{ id: \"today\", when: \"Сегодня\", items: [{ id: \"1\", title: \"Кресло «Хмарь»\", spec: \"Букле\", price: \"38 900 ₽\", at: \"14:12\" }] }]} />",
+          "summary": "Недавно просмотренное: группы по дням, строки с временем просмотра, ценой и пометкой об окончании товара, удаление по одной и очистка всей истории. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-073-* и не подменять её токенами вашей темы",
+            "группировку по дням: плоская лента из тридцати карточек не помогает вернуться к нужному",
+            "время просмотра в строке — по нему и находят «то, что смотрел вчера вечером»",
+            "удаление по одной строке рядом с очисткой всей истории: стирать должно быть так же легко, как копить",
+            "пометку об окончании товара со следующим шагом вместо тупика",
+            "примечание о том, куда идёт история просмотров: это личные данные"
+          ],
+          "adapt": [
+            "массив groups с просмотрами и заголовок title",
+            "текст lead и подпись clearLabel",
+            "подпись removeLabel и текст пустого состояния emptyText",
+            "текст примечания privacy"
+          ],
+          "notes": [
+            "Группы формируются на сервере: клиент не должен раскладывать даты по «сегодня» и «вчера» сам.",
+            "Кнопки ничего не удаляют — обработчики и хранение добавляются в проекте.",
+            "Срок хранения истории в тексте должен совпадать с реальным, иначе обещание пустое.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вы недавно смотрели",
+            "maxLength": 28
+          },
+          {
+            "prop": "clearLabel",
+            "label": "Очистка",
+            "type": "text",
+            "default": "Очистить историю",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Recently viewed items grouped by day: every row carries its time and its own remove action, with a clear-history button above.",
+            "ai": {
+              "summary": "Recently viewed: day groups, rows with the view time, price and a sold-out flag, per-row removal and a full history wipe. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-073-* palette — do not swap it for your theme tokens",
+                "the day grouping: a flat rail of thirty cards does not help anyone get back to one item",
+                "the view time on the row — that is how \"the thing I saw last night\" is found",
+                "per-row removal beside the full wipe: erasing must be as easy as accumulating",
+                "the sold-out flag with a next step instead of a dead end",
+                "the note on where the view history goes: it is personal data"
+              ],
+              "adapt": [
+                "the groups array with views and the title",
+                "the lead text and the clearLabel caption",
+                "the removeLabel caption and the emptyText",
+                "the privacy note"
+              ],
+              "notes": [
+                "Groups are built on the server: the client must not bucket dates into \"today\" and \"yesterday\" itself.",
+                "The buttons delete nothing — handlers and storage belong to your project.",
+                "The retention period in the text must match reality or the promise is empty.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce073 groups={[{ id: \"today\", when: \"Today\", items: [{ id: \"1\", title: \"Khmar armchair\", spec: \"Boucle\", price: \"$389\", at: \"14:12\" }] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Recently viewed"
+              },
+              "clearLabel": {
+                "label": "Clear",
+                "default": "Clear history"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-074",
+      "type": "registry:block",
+      "title": "Gift Card",
+      "description": "Покупка подарочного сертификата: номинал и дизайн радиокнопками, превью открытки меняется на :has(), правила стоят рядом с кнопкой.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-074/commerce-074.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-074.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-074-*. Серверный: номинал и дизайн держат две радиогруппы, а фон превью меняется селектором :has() на оболочке по выбранному дизайну. Поля отправки собраны гридом, подпись на открытке — textarea с ограничением длины. Идентификаторы дизайнов зашиты в CSS.",
+      "meta": {
+        "tags": ["commerce", "gift", "certificate", "checkout"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce074",
+          "usage": "<Commerce074 values={[{ value: \"5000\", amount: \"5 000 ₽\", hint: \"на текстиль\" }]} designs={[{ value: \"sunset\", label: \"Закат\", hue: 10 }]} />",
+          "summary": "Страница подарочного сертификата: выбор номинала и оформления открытки, поля получателя и даты отправки, подпись, превью карточки и правила использования. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-074-* и не подменять её токенами вашей темы",
+            "правила рядом с кнопкой: срок действия, остаток и невозврат — то, о чём спорят потом",
+            "дату отправки отдельным полем — сертификат ко дню рождения приходит именно в этот день",
+            "остаток, который сохраняется, в списке правил: иначе подарок тратят с потерями",
+            "радиокнопки в fieldset с legend для номинала и дизайна",
+            "ограничение длины подписи на открытке: длинный текст не помещается в макет письма"
+          ],
+          "adapt": [
+            "массивы values и designs, список rules",
+            "заголовок title, текст lead и подпись kicker",
+            "подписи полей toLabel, whenLabel и messageLabel",
+            "подпись кнопки cta и заголовок rulesTitle"
+          ],
+          "notes": [
+            "Значения дизайнов sunset, forest и sea зашиты в селекторы :has() — переименовывая их, правьте CSS.",
+            "Сумма на превью статична: связать её с выбранным номиналом без JS нельзя, задайте её вместе с дефолтом.",
+            "Срок действия в правилах должен совпадать с датой на открытке.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Подарок, который не нужно угадывать",
+            "maxLength": 44
+          },
+          {
+            "prop": "cta",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Купить сертификат",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Buying a gift card: value and design as radios, the card preview switching on :has(), and the rules right beside the button.",
+            "ai": {
+              "summary": "A gift card page: value and card design choice, recipient and send-date fields, a message, a live preview and the usage rules. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-074-* palette — do not swap it for your theme tokens",
+                "the rules beside the button: expiry, leftover balance and no refunds are what gets argued about later",
+                "the send date as its own field — a birthday gift card has to arrive on the day",
+                "the kept-balance rule in the list: otherwise the gift is spent at a loss",
+                "the radios in fieldsets with legends for both the value and the design",
+                "the message length limit: a long text does not fit the e-mail layout"
+              ],
+              "adapt": [
+                "the values and designs arrays and the rules list",
+                "the title, the lead text and the kicker",
+                "the toLabel, whenLabel and messageLabel field captions",
+                "the cta label and the rulesTitle heading"
+              ],
+              "notes": [
+                "The sunset, forest and sea design values are wired into the :has() selectors — rename them and fix the CSS.",
+                "The preview amount is static: it cannot follow the chosen value without JS, so set it with the default.",
+                "The expiry in the rules must match the date printed on the card.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce074 values={[{ value: \"5000\", amount: \"$50\", hint: \"for textiles\" }]} designs={[{ value: \"sunset\", label: \"Sunset\", hue: 10 }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "A gift you do not have to guess"
+              },
+              "cta": {
+                "label": "Button",
+                "default": "Buy the gift card"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-075",
+      "type": "registry:block",
+      "title": "Charity Roundup",
+      "description": "Благотворительное округление суммы: надбавка считается от реального чека, а галочка снята по умолчанию.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-075/commerce-075.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-075.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-075-*. Клиентский: \"use client\" ради галочки и выбора фонда. Надбавка вычисляется округлением суммы заказа вверх до заданного шага, итог помечен aria-live, а группа фондов выключается атрибутом disabled у fieldset, пока округление не включено. Объяснение механики платежа сложено в details.",
+      "meta": {
+        "tags": ["commerce", "checkout", "charity", "donation"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce075",
+          "usage": "<Commerce075 order={62580} roundTo={100} funds={[{ value: \"les\", name: \"Фонд «Лесной дозор»\", what: \"Восстановление лесов\" }]} />",
+          "summary": "Округление заказа в пользу фонда: галочка с посчитанной надбавкой, выбор фонда, строки заказа и пожертвования, итог и объяснение того, как идёт платёж. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-075-* и не подменять её токенами вашей темы",
+            "снятую галочку по умолчанию: включённое пожертвование — это списание, о котором не просили",
+            "надбавку, посчитанную от суммы заказа, а не фиксированную строку в сто рублей",
+            "выключенную группу фондов, пока округление не включено: выбор без действия сбивает",
+            "итог в aria-live — при включении галочки меняется сумма к оплате",
+            "объяснение механики платежа: без него округление выглядит как сбор денег магазином"
+          ],
+          "adapt": [
+            "сумму заказа order и шаг округления roundTo",
+            "массив funds и подпись fundLegend",
+            "заголовок title, текст lead и подпись toggleLabel",
+            "тексты yearNote и reportText"
+          ],
+          "notes": [
+            "Если сумма уже круглая, надбавкой берётся полный шаг — иначе кнопка предлагает пожертвовать ноль.",
+            "Разделение платежа на стороне банка нужно действительно реализовать: иначе текст объяснения врёт.",
+            "Не переносите галочку в шаг оплаты: там она читается как навязанная строка.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "order",
+            "label": "Сумма заказа",
+            "type": "number",
+            "default": 62580,
+            "min": 100,
+            "max": 1000000
+          },
+          {
+            "prop": "roundTo",
+            "label": "Округлять до",
+            "type": "number",
+            "default": 100,
+            "min": 10,
+            "max": 1000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A charity round-up: the top-up is computed from the actual order total, and the checkbox starts unchecked.",
+            "ai": {
+              "summary": "Rounding an order up for charity: a checkbox with the computed top-up, a fund choice, order and donation rows, the total and an explanation of how the money moves. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-commerce-075-* palette — do not swap it for your theme tokens",
+                "the checkbox unchecked by default: a pre-enabled donation is a charge nobody asked for",
+                "the top-up computed from the order total rather than a fixed hundred-rouble line",
+                "the fund group disabled until the round-up is on: a choice with no effect misleads",
+                "the total in an aria-live region — ticking the box changes the amount due",
+                "the explanation of how the payment splits: without it the round-up looks like the shop collecting money"
+              ],
+              "adapt": [
+                "the order total and the roundTo step",
+                "the funds array and the fundLegend caption",
+                "the title, the lead text and the toggleLabel",
+                "the yearNote and reportText texts"
+              ],
+              "notes": [
+                "If the total is already round, a full step is taken — otherwise the button offers to donate nothing.",
+                "The bank-side payment split has to actually exist, or the explanation text is a lie.",
+                "Do not move the checkbox into the payment step: there it reads as an imposed line.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce075 order={62580} roundTo={100} funds={[{ value: \"les\", name: \"Forest Watch fund\", what: \"Restoring burnt forests\" }]} />"
+            },
+            "controls": {
+              "order": {
+                "label": "Order total"
+              },
+              "roundTo": {
+                "label": "Round to"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-076",
+      "type": "registry:block",
+      "title": "Wholesale Tiers",
+      "description": "Оптовый прайс по количеству: пороги таблицей, текущий уровень помечен словом, а до следующего посчитан конкретный шаг.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-076/commerce-076.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-076.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-076-*. Серверный: хуков нет. Пороги выведены настоящей таблицей с caption и заголовками строк, текущий уровень помечен атрибутом data-current и подписью словом. Условия работы собраны списком определений с обёрткой display:contents, обёртка со скроллом получает tabIndex.",
+      "meta": {
+        "tags": ["commerce", "wholesale", "pricing", "b2b"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce076",
+          "usage": "<Commerce076 tiers={[{ id: \"2\", from: \"от 10 шт.\", price: \"1 490 ₽\", save: \"−12%\", perPack: \"14 900 ₽\", current: true }]} />",
+          "summary": "Оптовый прайс: таблица порогов с ценой за штуку, выгодой и стоимостью партии, подсказка о шаге до следующего уровня, условия работы и запрос коммерческого предложения. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-076-* и не подменять её токенами вашей темы",
+            "шаг до следующего уровня словами: без него разницу считают в уме и обычно не считают",
+            "текущий уровень словом и рамкой, а не только фоном строки",
+            "стоимость партии рядом с ценой за штуку — решение принимают по общей сумме",
+            "условия работы рядом с прайсом: минимальная партия и отсрочка важнее самой скидки",
+            "оговорку о том, что цены действуют только по счёту от юридического лица"
+          ],
+          "adapt": [
+            "массив tiers и текст nextStep",
+            "заголовок title, подпись kicker и текст lead",
+            "список terms и заголовок termsTitle",
+            "подписи кнопок cta и secondary"
+          ],
+          "notes": [
+            "Текущий уровень приходит флагом current: определять его должен сервер по содержимому заказа.",
+            "Подсказку nextStep придётся пересчитывать вместе с прайсом — статичный текст быстро устаревает.",
+            "Накопительная скидка тут не описана: уровень считается по одному заказу.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Товар",
+            "type": "text",
+            "default": "Зерно «Плёс», обжарка под фильтр",
+            "maxLength": 40
+          },
+          {
+            "prop": "cta",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Добавить партию в заказ",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A wholesale price ladder: tiers in a table, the current level named in words, and the exact step to the next one.",
+            "ai": {
+              "summary": "A wholesale price list: a tier table with unit price, savings and batch cost, a hint on the step to the next tier, the trading terms and a quote request. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-076-* palette — do not swap it for your theme tokens",
+                "the step to the next tier in words: without it the gap is estimated mentally and usually isn't",
+                "the current tier named in words and framed, not merely shaded",
+                "the batch cost beside the unit price — the decision is made on the total",
+                "the trading terms beside the price list: the minimum batch and payment delay matter more than the discount",
+                "the note that these prices apply to invoiced business orders only"
+              ],
+              "adapt": [
+                "the tiers array and the nextStep text",
+                "the title, the kicker and the lead text",
+                "the terms list and the termsTitle heading",
+                "the cta and secondary button captions"
+              ],
+              "notes": [
+                "The current tier arrives as a flag: the server decides it from the order contents.",
+                "The nextStep hint must be recomputed with the price list — static text goes stale fast.",
+                "Cumulative discounts are out of scope: the tier is decided per single order.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce076 tiers={[{ id: \"2\", from: \"from 10 pcs\", price: \"$14.90\", save: \"−12%\", perPack: \"$149\", current: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Product",
+                "default": "Ples beans, filter roast"
+              },
+              "cta": {
+                "label": "Button",
+                "default": "Add the batch to the order"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-077",
+      "type": "registry:block",
+      "title": "Nearby Stock",
+      "description": "Наличие в магазинах поблизости: расстояние продублировано временем в пути, последний экземпляр помечен, есть выход для тех, у кого рядом ничего нет.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-077/commerce-077.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-077.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-077-*. Серверный: хуков нет. Строка магазина несёт расстояние, время в пути, часы работы, количество и срок брони; последний экземпляр помечается атрибутом data-last, который меняет и цвет, и форму значка. Внизу отдельная секция подписки на поступление.",
+      "meta": {
+        "tags": ["commerce", "stock", "stores", "pickup"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce077",
+          "usage": "<Commerce077 shops={[{ id: \"1\", name: \"Магазин на Карповке\", address: \"наб. реки Карповки, 12\", distance: \"350 м\", walk: \"4 минуты пешком\", hours: \"Сегодня до 22:00\", stock: 4, hold: \"Держим до конца дня\" }]} />",
+          "summary": "Наличие рядом: кнопка определения местоположения, список магазинов с расстоянием, временем в пути, часами, количеством и сроком брони, подписка на поступление. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-077-* и не подменять её токенами вашей темы",
+            "время в пути рядом с расстоянием: «1,9 км» ничего не говорит тому, кто решает идти ли сейчас",
+            "количество числом, а не значком «есть»: одна штука и девять — разные решения",
+            "отдельную пометку последнего экземпляра словом и формой значка",
+            "срок брони под количеством — именно он определяет, ехать сегодня или завтра",
+            "секцию подписки на поступление вместо тупика для тех, у кого рядом ничего нет"
+          ],
+          "adapt": [
+            "массив shops и название товара product",
+            "заголовок title и подписи geoLabel, geoHint",
+            "подписи reserve, notify и inStockLabel",
+            "тексты emptyText и примечание note"
+          ],
+          "notes": [
+            "Местоположение не запрашивается: обращение к геолокации добавляется в проекте по кнопке.",
+            "Количество должно обновляться из склада — устаревшая цифра приводит человека в пустой магазин.",
+            "Бронь ничего не резервирует: обработчик добавляется в проекте.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Есть рядом с вами",
+            "maxLength": 28
+          },
+          {
+            "prop": "reserve",
+            "label": "Кнопка брони",
+            "type": "text",
+            "default": "Забронировать",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Nearby store stock: distance is paired with travel time, the last unit is flagged, and there is an exit for anyone with nothing close by.",
+            "ai": {
+              "summary": "Nearby availability: a locate button, a store list with distance, travel time, hours, unit count and hold period, plus a restock subscription. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-077-* palette — do not swap it for your theme tokens",
+                "the travel time beside the distance: \"1.9 km\" says nothing to someone deciding whether to go now",
+                "the count as a number rather than an \"in stock\" badge: one unit and nine are different decisions",
+                "the separate last-unit flag in words and by mark shape",
+                "the hold period under the count — it decides between going today and tomorrow",
+                "the restock subscription instead of a dead end for people with nothing nearby"
+              ],
+              "adapt": [
+                "the shops array and the product name",
+                "the title and the geoLabel, geoHint captions",
+                "the reserve, notify and inStockLabel captions",
+                "the emptyText and the note"
+              ],
+              "notes": [
+                "Geolocation is not requested: wire the browser call to the button in your project.",
+                "The count must come from live stock — a stale number sends people to an empty store.",
+                "The hold button reserves nothing: add the handler in your project.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce077 shops={[{ id: \"1\", name: \"Karpovka store\", address: \"12 Karpovka emb.\", distance: \"350 m\", walk: \"4 minutes on foot\", hours: \"Open until 10 pm\", stock: 4, hold: \"Held until closing\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Available near you"
+              },
+              "reserve": {
+                "label": "Hold button",
+                "default": "Hold it for me"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-078",
+      "type": "registry:block",
+      "title": "Loyalty Program",
+      "description": "Программа лояльности покупателя: уровень с датой удержания, полоса прогресса до следующего и сравнение уровней колонками.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-078/commerce-078.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-078.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-078-*. Серверный: хуков нет. Прогресс нарисован полосой с ролью progressbar и шириной из локальной переменной, уровни выведены карточками с одинаковым набором строк, текущий помечен атрибутом data-current. Правила начисления сложены в нативный details, тёмная подложка своя.",
+      "meta": {
+        "tags": ["commerce", "loyalty", "levels", "account"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce078",
+          "usage": "<Commerce078 levelName=\"Серебряный уровень\" progress={74} levels={[{ id: \"2\", name: \"Серебро\", from: \"от 60 000 ₽ за год\", cashback: \"3% баллами\", perks: [\"Возврат 30 дней\"], current: true }]} />",
+          "summary": "Программа лояльности: баллы и сумма покупок за год, прогресс до следующего уровня с датой удержания, сравнение трёх уровней и правила начисления. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-078-* и не подменять её токенами вашей темы",
+            "дату удержания уровня рядом с полосой: без неё статус читается как навсегда, а его потеря — как обман",
+            "полосу с ролью progressbar и числом процентов рядом, а не только цветом",
+            "одинаковый набор строк во всех уровнях — иначе колонки не сравниваются",
+            "текущий уровень словом и рамкой, а не только фоном карточки",
+            "правила начисления в details: они длинные, но нужны целиком"
+          ],
+          "adapt": [
+            "массив levels и значение progress",
+            "название уровня levelName, строку member и текст keepUntil",
+            "значения points, spent и toNext",
+            "список rules и подпись кнопки cta"
+          ],
+          "notes": [
+            "Прогресс приходит числом от нуля до ста: считайте его на сервере вместе с суммой покупок.",
+            "Больше трёх уровней не показывайте колонками: сравнение перестаёт помещаться и читаться.",
+            "Дата удержания должна быть настоящей — иначе первое понижение уровня выглядит как обман.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "levelName",
+            "label": "Уровень",
+            "type": "text",
+            "default": "Серебряный уровень",
+            "maxLength": 28
+          },
+          {
+            "prop": "progress",
+            "label": "Прогресс, %",
+            "type": "number",
+            "default": 74,
+            "min": 0,
+            "max": 100
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A customer loyalty page: the tier with its retention date, a progress bar to the next one and a column-by-column tier comparison.",
+            "ai": {
+              "summary": "A loyalty program: points and yearly spend, progress to the next tier with a retention date, a three-tier comparison and the earning rules. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-078-* palette — do not swap it for your theme tokens",
+                "the retention date beside the bar: without it the tier reads as permanent and losing it reads as a scam",
+                "the bar with a progressbar role and the percentage in text, not colour alone",
+                "the same row set in every tier — otherwise the columns cannot be compared",
+                "the current tier named in words and framed, not merely shaded",
+                "the earning rules inside details: they are long but needed in full"
+              ],
+              "adapt": [
+                "the levels array and the progress value",
+                "the levelName, the member line and the keepUntil text",
+                "the points, spent and toNext values",
+                "the rules list and the cta label"
+              ],
+              "notes": [
+                "Progress arrives as a number from zero to a hundred: compute it on the server with the spend.",
+                "Do not show more than three tiers as columns: the comparison stops fitting and stops being read.",
+                "The retention date must be real — otherwise the first downgrade looks like a scam.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce078 levelName=\"Silver tier\" progress={74} levels={[{ id: \"2\", name: \"Silver\", from: \"from $600 a year\", cashback: \"3% in points\", perks: [\"30-day returns\"], current: true }]} />"
+            },
+            "controls": {
+              "levelName": {
+                "label": "Tier",
+                "default": "Silver tier"
+              },
+              "progress": {
+                "label": "Progress, %"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-079",
+      "type": "registry:block",
+      "title": "Price History",
+      "description": "Сравнение цены с историей: минимум за период и дата минимума рядом со скидкой, график столбиками без библиотеки.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-079/commerce-079.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-079.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-079-*. Серверный: хуков нет. Столбики нарисованы элементами с высотой из локальной переменной, нормированной по минимуму и максимуму ряда; график помечен aria-hidden, а все значения продублированы списком определений под ним. Минимальная точка выделена отдельным цветом по флагу low.",
+      "meta": {
+        "tags": ["commerce", "price", "history", "chart"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce079",
+          "usage": "<Commerce079 price=\"41 400 ₽\" minPrice=\"39 900 ₽\" points={[{ id: \"4\", month: \"янв\", value: 39900, label: \"39 900 ₽\", low: true }]} />",
+          "summary": "История цены: текущая цена со старой и скидкой, минимум и средняя за период, график столбиками, значения списком и кнопка слежения за ценой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-079-* и не подменять её токенами вашей темы",
+            "минимум за период и дату минимума рядом со скидкой: скидка от вчерашней завышенной цены — обман витрины",
+            "дублирование графика списком значений: столбики под aria-hidden скринридер не читает",
+            "вывод словами о том, дороже или дешевле сейчас средней — цифры сами по себе решения не дают",
+            "оговорку о том, что сравнение идёт с ценой этого магазина, а не с рекомендованной производителем",
+            "старую цену тегом s, а не зачёркиванием стилем"
+          ],
+          "adapt": [
+            "массив points и текущую цену price",
+            "старую цену oldPrice и скидку discount",
+            "значения minPrice, minWhen и avgPrice",
+            "текст verdict и подписи кнопок cta, watch"
+          ],
+          "notes": [
+            "Высота столбиков нормируется по минимуму и максимуму ряда: одно выпадающее значение сплющит остальные.",
+            "Шесть точек — предел читаемости в таком размере, дальше нужен настоящий график.",
+            "Минимум и среднее должны считаться из того же ряда, что и столбики, иначе блок противоречит себе.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "price",
+            "label": "Цена сейчас",
+            "type": "text",
+            "default": "41 400 ₽",
+            "maxLength": 16
+          },
+          {
+            "prop": "minPrice",
+            "label": "Минимум",
+            "type": "text",
+            "default": "39 900 ₽",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Price compared against its own history: the period minimum and its date beside the discount, with a bar chart drawn in CSS.",
+            "ai": {
+              "summary": "A price history: the current price with the old one and the discount, the period minimum and average, a bar chart, the values as a list and a price-watch action. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-079-* palette — do not swap it for your theme tokens",
+                "the period minimum and its date beside the discount: a discount off yesterday's inflated price is a storefront lie",
+                "duplicating the chart as a value list: bars under aria-hidden are not read aloud",
+                "the verdict in words on whether today beats the average — figures alone do not decide",
+                "the note that the comparison uses this shop's own price, not a manufacturer's RRP",
+                "the old price in an s element rather than a strike-through style"
+              ],
+              "adapt": [
+                "the points array and the current price",
+                "the oldPrice and the discount",
+                "the minPrice, minWhen and avgPrice values",
+                "the verdict text and the cta, watch captions"
+              ],
+              "notes": [
+                "Bar heights are normalised to the series minimum and maximum: one outlier flattens the rest.",
+                "Six points is the readability limit at this size; beyond it you need a real chart.",
+                "The minimum and average must come from the same series as the bars or the block contradicts itself.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce079 price=\"$414\" minPrice=\"$399\" points={[{ id: \"4\", month: \"Jan\", value: 39900, label: \"$399\", low: true }]} />"
+            },
+            "controls": {
+              "price": {
+                "label": "Price now",
+                "default": "$414"
+              },
+              "minPrice": {
+                "label": "Minimum",
+                "default": "$399"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
