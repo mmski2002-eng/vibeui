@@ -38,8 +38,10 @@ border:1px solid var(--vibeui-calendar-013-border);border-radius:0.875rem;
 color:var(--vibeui-calendar-013-fg);font-family:var(--vibeui-calendar-013-font);
 }
 [data-vibeui-block="calendar-013"] [data-part="title"]{
-margin:0;font-size:0.875rem;font-weight:650;text-transform:capitalize;
+margin:0;font-size:0.875rem;font-weight:650;
 }
+/* Заглавная только первая буква: capitalize поднимает и «г.» в «январь 2026 г.». */
+[data-vibeui-block="calendar-013"] [data-part="title"]::first-letter{text-transform:uppercase}
 [data-vibeui-block="calendar-013"] table{width:100%;border-collapse:collapse;table-layout:fixed}
 [data-vibeui-block="calendar-013"] th{
 padding:0.25rem 0;font-size:0.6875rem;font-weight:600;

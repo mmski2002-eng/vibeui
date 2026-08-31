@@ -68,6 +68,18 @@ import { Button017 } from "@/registry/components/buttons/button-017/button-017"
 import { Button018 } from "@/registry/components/buttons/button-018/button-018"
 import { Button019 } from "@/registry/components/buttons/button-019/button-019"
 import { Button020 } from "@/registry/components/buttons/button-020/button-020"
+import { Button021 } from "@/registry/components/buttons/button-021/button-021"
+import { Button022 } from "@/registry/components/buttons/button-022/button-022"
+import { Button023 } from "@/registry/components/buttons/button-023/button-023"
+import { Button024 } from "@/registry/components/buttons/button-024/button-024"
+import { Button025 } from "@/registry/components/buttons/button-025/button-025"
+import { Button026 } from "@/registry/components/buttons/button-026/button-026"
+import { Button027 } from "@/registry/components/buttons/button-027/button-027"
+import { Button028 } from "@/registry/components/buttons/button-028/button-028"
+import { Button029 } from "@/registry/components/buttons/button-029/button-029"
+import { Button030 } from "@/registry/components/buttons/button-030/button-030"
+import { Button031 } from "@/registry/components/buttons/button-031/button-031"
+import { Button032 } from "@/registry/components/buttons/button-032/button-032"
 import { Accordion001 } from "@/registry/components/accordion/accordion-001/accordion-001"
 import { Accordion002 } from "@/registry/components/accordion/accordion-002/accordion-002"
 import { Accordion003 } from "@/registry/components/accordion/accordion-003/accordion-003"
@@ -182,6 +194,28 @@ import { Badge012 } from "@/registry/components/badge/badge-012/badge-012"
 import { Badge013 } from "@/registry/components/badge/badge-013/badge-013"
 import { Badge014 } from "@/registry/components/badge/badge-014/badge-014"
 import { Badge015 } from "@/registry/components/badge/badge-015/badge-015"
+import { Badge016 } from "@/registry/components/badge/badge-016/badge-016"
+import { Badge017 } from "@/registry/components/badge/badge-017/badge-017"
+import { Badge018 } from "@/registry/components/badge/badge-018/badge-018"
+import { Badge019 } from "@/registry/components/badge/badge-019/badge-019"
+import { Badge020 } from "@/registry/components/badge/badge-020/badge-020"
+import { Badge021 } from "@/registry/components/badge/badge-021/badge-021"
+import { Badge022 } from "@/registry/components/badge/badge-022/badge-022"
+import { Badge023 } from "@/registry/components/badge/badge-023/badge-023"
+import { Badge024 } from "@/registry/components/badge/badge-024/badge-024"
+import { Badge025 } from "@/registry/components/badge/badge-025/badge-025"
+import { Buttongroup001 } from "@/registry/components/buttongroup/buttongroup-001/buttongroup-001"
+import { Buttongroup002 } from "@/registry/components/buttongroup/buttongroup-002/buttongroup-002"
+import { Buttongroup003 } from "@/registry/components/buttongroup/buttongroup-003/buttongroup-003"
+import { Buttongroup004 } from "@/registry/components/buttongroup/buttongroup-004/buttongroup-004"
+import { Buttongroup005 } from "@/registry/components/buttongroup/buttongroup-005/buttongroup-005"
+import { Buttongroup006 } from "@/registry/components/buttongroup/buttongroup-006/buttongroup-006"
+import { Buttongroup007 } from "@/registry/components/buttongroup/buttongroup-007/buttongroup-007"
+import { Buttongroup008 } from "@/registry/components/buttongroup/buttongroup-008/buttongroup-008"
+import { Buttongroup009 } from "@/registry/components/buttongroup/buttongroup-009/buttongroup-009"
+import { Buttongroup010 } from "@/registry/components/buttongroup/buttongroup-010/buttongroup-010"
+import { Buttongroup011 } from "@/registry/components/buttongroup/buttongroup-011/buttongroup-011"
+import { Buttongroup012 } from "@/registry/components/buttongroup/buttongroup-012/buttongroup-012"
 import { Breadcrumb001 } from "@/registry/components/breadcrumb/breadcrumb-001/breadcrumb-001"
 import { Breadcrumb002 } from "@/registry/components/breadcrumb/breadcrumb-002/breadcrumb-002"
 import { Breadcrumb003 } from "@/registry/components/breadcrumb/breadcrumb-003/breadcrumb-003"
@@ -194,6 +228,9 @@ import { Breadcrumb009 } from "@/registry/components/breadcrumb/breadcrumb-009/b
 import { Breadcrumb010 } from "@/registry/components/breadcrumb/breadcrumb-010/breadcrumb-010"
 import { Breadcrumb011 } from "@/registry/components/breadcrumb/breadcrumb-011/breadcrumb-011"
 import { Breadcrumb012 } from "@/registry/components/breadcrumb/breadcrumb-012/breadcrumb-012"
+import { Breadcrumb013 } from "@/registry/components/breadcrumb/breadcrumb-013/breadcrumb-013"
+import { Breadcrumb014 } from "@/registry/components/breadcrumb/breadcrumb-014/breadcrumb-014"
+import { Breadcrumb015 } from "@/registry/components/breadcrumb/breadcrumb-015/breadcrumb-015"
 import { Calendar001 } from "@/registry/components/calendar/calendar-001/calendar-001"
 import { Calendar002 } from "@/registry/components/calendar/calendar-002/calendar-002"
 import { Calendar003 } from "@/registry/components/calendar/calendar-003/calendar-003"
@@ -204,6 +241,16 @@ import { Calendar007 } from "@/registry/components/calendar/calendar-007/calenda
 import { Calendar008 } from "@/registry/components/calendar/calendar-008/calendar-008"
 import { Calendar009 } from "@/registry/components/calendar/calendar-009/calendar-009"
 import { Calendar010 } from "@/registry/components/calendar/calendar-010/calendar-010"
+import { Calendar011 } from "@/registry/components/calendar/calendar-011/calendar-011"
+import { Calendar012 } from "@/registry/components/calendar/calendar-012/calendar-012"
+import { Calendar013 } from "@/registry/components/calendar/calendar-013/calendar-013"
+import { Calendar014 } from "@/registry/components/calendar/calendar-014/calendar-014"
+import { Calendar015 } from "@/registry/components/calendar/calendar-015/calendar-015"
+import { Calendar016 } from "@/registry/components/calendar/calendar-016/calendar-016"
+import { Calendar017 } from "@/registry/components/calendar/calendar-017/calendar-017"
+import { Calendar018 } from "@/registry/components/calendar/calendar-018/calendar-018"
+import { Calendar019 } from "@/registry/components/calendar/calendar-019/calendar-019"
+import { Calendar020 } from "@/registry/components/calendar/calendar-020/calendar-020"
 import { Card001 } from "@/registry/components/card/card-001/card-001"
 import { Card002 } from "@/registry/components/card/card-002/card-002"
 import { Card003 } from "@/registry/components/card/card-003/card-003"
@@ -214,6 +261,17 @@ import { Card007 } from "@/registry/components/card/card-007/card-007"
 import { Card008 } from "@/registry/components/card/card-008/card-008"
 import { Card009 } from "@/registry/components/card/card-009/card-009"
 import { Card010 } from "@/registry/components/card/card-010/card-010"
+import { Card011 } from "@/registry/components/card/card-011/card-011"
+import { Card012 } from "@/registry/components/card/card-012/card-012"
+import { Card013 } from "@/registry/components/card/card-013/card-013"
+import { Card014 } from "@/registry/components/card/card-014/card-014"
+import { Card015 } from "@/registry/components/card/card-015/card-015"
+import { Card016 } from "@/registry/components/card/card-016/card-016"
+import { Card017 } from "@/registry/components/card/card-017/card-017"
+import { Card018 } from "@/registry/components/card/card-018/card-018"
+import { Card019 } from "@/registry/components/card/card-019/card-019"
+import { Card020 } from "@/registry/components/card/card-020/card-020"
+import { Card021 } from "@/registry/components/card/card-021/card-021"
 import { Carousel001 } from "@/registry/components/carousel/carousel-001/carousel-001"
 import { Carousel002 } from "@/registry/components/carousel/carousel-002/carousel-002"
 import { Carousel003 } from "@/registry/components/carousel/carousel-003/carousel-003"
@@ -260,6 +318,17 @@ import { Field001 } from "@/registry/components/inputs/field-001/field-001"
 import { Range001 } from "@/registry/components/inputs/range-001/range-001"
 import { Cascader001 } from "@/registry/components/inputs/cascader-001/cascader-001"
 import { Filters001 } from "@/registry/components/inputs/filters-001/filters-001"
+import { Cascader002 } from "@/registry/components/inputs/cascader-002/cascader-002"
+import { Cascader003 } from "@/registry/components/inputs/cascader-003/cascader-003"
+import { Cascader004 } from "@/registry/components/inputs/cascader-004/cascader-004"
+import { Cascader005 } from "@/registry/components/inputs/cascader-005/cascader-005"
+import { Cascader006 } from "@/registry/components/inputs/cascader-006/cascader-006"
+import { Cascader007 } from "@/registry/components/inputs/cascader-007/cascader-007"
+import { Cascader008 } from "@/registry/components/inputs/cascader-008/cascader-008"
+import { Cascader009 } from "@/registry/components/inputs/cascader-009/cascader-009"
+import { Cascader010 } from "@/registry/components/inputs/cascader-010/cascader-010"
+import { Cascader011 } from "@/registry/components/inputs/cascader-011/cascader-011"
+import { Cascader012 } from "@/registry/components/inputs/cascader-012/cascader-012"
 import { Skeleton001 } from "@/registry/components/display/skeleton-001/skeleton-001"
 import { Progress001 } from "@/registry/components/display/progress-001/progress-001"
 import { Separator001 } from "@/registry/components/display/separator-001/separator-001"
@@ -319,6 +388,20 @@ import { Chart007 } from "@/registry/components/charts/chart-007/chart-007"
 import { Chart008 } from "@/registry/components/charts/chart-008/chart-008"
 import { Chart009 } from "@/registry/components/charts/chart-009/chart-009"
 import { Gantt001 } from "@/registry/components/charts/gantt-001/gantt-001"
+import { Chart010 } from "@/registry/components/charts/chart-010/chart-010"
+import { Chart011 } from "@/registry/components/charts/chart-011/chart-011"
+import { Chart012 } from "@/registry/components/charts/chart-012/chart-012"
+import { Chart013 } from "@/registry/components/charts/chart-013/chart-013"
+import { Chart014 } from "@/registry/components/charts/chart-014/chart-014"
+import { Chart015 } from "@/registry/components/charts/chart-015/chart-015"
+import { Chart016 } from "@/registry/components/charts/chart-016/chart-016"
+import { Chart017 } from "@/registry/components/charts/chart-017/chart-017"
+import { Chart018 } from "@/registry/components/charts/chart-018/chart-018"
+import { Chart019 } from "@/registry/components/charts/chart-019/chart-019"
+import { Chart020 } from "@/registry/components/charts/chart-020/chart-020"
+import { Chart021 } from "@/registry/components/charts/chart-021/chart-021"
+import { Chart022 } from "@/registry/components/charts/chart-022/chart-022"
+import { Sparkline002 } from "@/registry/components/charts/sparkline-002/sparkline-002"
 
 /**
  * Карта slug -> React-компонент. Из неё рендерятся и миниатюра каталога,
@@ -393,6 +476,18 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "button-018": Button018,
   "button-019": Button019,
   "button-020": Button020,
+  "button-021": Button021,
+  "button-022": Button022,
+  "button-023": Button023,
+  "button-024": Button024,
+  "button-025": Button025,
+  "button-026": Button026,
+  "button-027": Button027,
+  "button-028": Button028,
+  "button-029": Button029,
+  "button-030": Button030,
+  "button-031": Button031,
+  "button-032": Button032,
   "accordion-001": Accordion001,
   "accordion-002": Accordion002,
   "accordion-003": Accordion003,
@@ -507,6 +602,28 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "badge-013": Badge013,
   "badge-014": Badge014,
   "badge-015": Badge015,
+  "badge-016": Badge016,
+  "badge-017": Badge017,
+  "badge-018": Badge018,
+  "badge-019": Badge019,
+  "badge-020": Badge020,
+  "badge-021": Badge021,
+  "badge-022": Badge022,
+  "badge-023": Badge023,
+  "badge-024": Badge024,
+  "badge-025": Badge025,
+  "buttongroup-001": Buttongroup001,
+  "buttongroup-002": Buttongroup002,
+  "buttongroup-003": Buttongroup003,
+  "buttongroup-004": Buttongroup004,
+  "buttongroup-005": Buttongroup005,
+  "buttongroup-006": Buttongroup006,
+  "buttongroup-007": Buttongroup007,
+  "buttongroup-008": Buttongroup008,
+  "buttongroup-009": Buttongroup009,
+  "buttongroup-010": Buttongroup010,
+  "buttongroup-011": Buttongroup011,
+  "buttongroup-012": Buttongroup012,
   "breadcrumb-001": Breadcrumb001,
   "breadcrumb-002": Breadcrumb002,
   "breadcrumb-003": Breadcrumb003,
@@ -519,6 +636,9 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "breadcrumb-010": Breadcrumb010,
   "breadcrumb-011": Breadcrumb011,
   "breadcrumb-012": Breadcrumb012,
+  "breadcrumb-013": Breadcrumb013,
+  "breadcrumb-014": Breadcrumb014,
+  "breadcrumb-015": Breadcrumb015,
   "calendar-001": Calendar001,
   "calendar-002": Calendar002,
   "calendar-003": Calendar003,
@@ -529,6 +649,16 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "calendar-008": Calendar008,
   "calendar-009": Calendar009,
   "calendar-010": Calendar010,
+  "calendar-011": Calendar011,
+  "calendar-012": Calendar012,
+  "calendar-013": Calendar013,
+  "calendar-014": Calendar014,
+  "calendar-015": Calendar015,
+  "calendar-016": Calendar016,
+  "calendar-017": Calendar017,
+  "calendar-018": Calendar018,
+  "calendar-019": Calendar019,
+  "calendar-020": Calendar020,
   "card-001": Card001,
   "card-002": Card002,
   "card-003": Card003,
@@ -539,6 +669,17 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "card-008": Card008,
   "card-009": Card009,
   "card-010": Card010,
+  "card-011": Card011,
+  "card-012": Card012,
+  "card-013": Card013,
+  "card-014": Card014,
+  "card-015": Card015,
+  "card-016": Card016,
+  "card-017": Card017,
+  "card-018": Card018,
+  "card-019": Card019,
+  "card-020": Card020,
+  "card-021": Card021,
   "carousel-001": Carousel001,
   "carousel-002": Carousel002,
   "carousel-003": Carousel003,
@@ -585,6 +726,17 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "range-001": Range001,
   "cascader-001": Cascader001,
   "filters-001": Filters001,
+  "cascader-002": Cascader002,
+  "cascader-003": Cascader003,
+  "cascader-004": Cascader004,
+  "cascader-005": Cascader005,
+  "cascader-006": Cascader006,
+  "cascader-007": Cascader007,
+  "cascader-008": Cascader008,
+  "cascader-009": Cascader009,
+  "cascader-010": Cascader010,
+  "cascader-011": Cascader011,
+  "cascader-012": Cascader012,
   "skeleton-001": Skeleton001,
   "progress-001": Progress001,
   "separator-001": Separator001,
@@ -644,4 +796,18 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "chart-008": Chart008,
   "chart-009": Chart009,
   "gantt-001": Gantt001,
+  "chart-010": Chart010,
+  "chart-011": Chart011,
+  "chart-012": Chart012,
+  "chart-013": Chart013,
+  "chart-014": Chart014,
+  "chart-015": Chart015,
+  "chart-016": Chart016,
+  "chart-017": Chart017,
+  "chart-018": Chart018,
+  "chart-019": Chart019,
+  "chart-020": Chart020,
+  "chart-021": Chart021,
+  "chart-022": Chart022,
+  "sparkline-002": Sparkline002,
 }

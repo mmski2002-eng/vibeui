@@ -340,6 +340,66 @@ export const LAZY_PREVIEWS = {
       (module) => module.Button020,
     ),
   ),
+  "button-021": dynamic(() =>
+    import("@/registry/components/buttons/button-021/button-021").then(
+      (module) => module.Button021,
+    ),
+  ),
+  "button-022": dynamic(() =>
+    import("@/registry/components/buttons/button-022/button-022").then(
+      (module) => module.Button022,
+    ),
+  ),
+  "button-023": dynamic(() =>
+    import("@/registry/components/buttons/button-023/button-023").then(
+      (module) => module.Button023,
+    ),
+  ),
+  "button-024": dynamic(() =>
+    import("@/registry/components/buttons/button-024/button-024").then(
+      (module) => module.Button024,
+    ),
+  ),
+  "button-025": dynamic(() =>
+    import("@/registry/components/buttons/button-025/button-025").then(
+      (module) => module.Button025,
+    ),
+  ),
+  "button-026": dynamic(() =>
+    import("@/registry/components/buttons/button-026/button-026").then(
+      (module) => module.Button026,
+    ),
+  ),
+  "button-027": dynamic(() =>
+    import("@/registry/components/buttons/button-027/button-027").then(
+      (module) => module.Button027,
+    ),
+  ),
+  "button-028": dynamic(() =>
+    import("@/registry/components/buttons/button-028/button-028").then(
+      (module) => module.Button028,
+    ),
+  ),
+  "button-029": dynamic(() =>
+    import("@/registry/components/buttons/button-029/button-029").then(
+      (module) => module.Button029,
+    ),
+  ),
+  "button-030": dynamic(() =>
+    import("@/registry/components/buttons/button-030/button-030").then(
+      (module) => module.Button030,
+    ),
+  ),
+  "button-031": dynamic(() =>
+    import("@/registry/components/buttons/button-031/button-031").then(
+      (module) => module.Button031,
+    ),
+  ),
+  "button-032": dynamic(() =>
+    import("@/registry/components/buttons/button-032/button-032").then(
+      (module) => module.Button032,
+    ),
+  ),
   "accordion-001": dynamic(() =>
     import("@/registry/components/accordion/accordion-001/accordion-001").then(
       (module) => module.Accordion001,
@@ -910,6 +970,116 @@ export const LAZY_PREVIEWS = {
       (module) => module.Badge015,
     ),
   ),
+  "badge-016": dynamic(() =>
+    import("@/registry/components/badge/badge-016/badge-016").then(
+      (module) => module.Badge016,
+    ),
+  ),
+  "badge-017": dynamic(() =>
+    import("@/registry/components/badge/badge-017/badge-017").then(
+      (module) => module.Badge017,
+    ),
+  ),
+  "badge-018": dynamic(() =>
+    import("@/registry/components/badge/badge-018/badge-018").then(
+      (module) => module.Badge018,
+    ),
+  ),
+  "badge-019": dynamic(() =>
+    import("@/registry/components/badge/badge-019/badge-019").then(
+      (module) => module.Badge019,
+    ),
+  ),
+  "badge-020": dynamic(() =>
+    import("@/registry/components/badge/badge-020/badge-020").then(
+      (module) => module.Badge020,
+    ),
+  ),
+  "badge-021": dynamic(() =>
+    import("@/registry/components/badge/badge-021/badge-021").then(
+      (module) => module.Badge021,
+    ),
+  ),
+  "badge-022": dynamic(() =>
+    import("@/registry/components/badge/badge-022/badge-022").then(
+      (module) => module.Badge022,
+    ),
+  ),
+  "badge-023": dynamic(() =>
+    import("@/registry/components/badge/badge-023/badge-023").then(
+      (module) => module.Badge023,
+    ),
+  ),
+  "badge-024": dynamic(() =>
+    import("@/registry/components/badge/badge-024/badge-024").then(
+      (module) => module.Badge024,
+    ),
+  ),
+  "badge-025": dynamic(() =>
+    import("@/registry/components/badge/badge-025/badge-025").then(
+      (module) => module.Badge025,
+    ),
+  ),
+  "buttongroup-001": dynamic(() =>
+    import("@/registry/components/buttongroup/buttongroup-001/buttongroup-001").then(
+      (module) => module.Buttongroup001,
+    ),
+  ),
+  "buttongroup-002": dynamic(() =>
+    import("@/registry/components/buttongroup/buttongroup-002/buttongroup-002").then(
+      (module) => module.Buttongroup002,
+    ),
+  ),
+  "buttongroup-003": dynamic(() =>
+    import("@/registry/components/buttongroup/buttongroup-003/buttongroup-003").then(
+      (module) => module.Buttongroup003,
+    ),
+  ),
+  "buttongroup-004": dynamic(() =>
+    import("@/registry/components/buttongroup/buttongroup-004/buttongroup-004").then(
+      (module) => module.Buttongroup004,
+    ),
+  ),
+  "buttongroup-005": dynamic(() =>
+    import("@/registry/components/buttongroup/buttongroup-005/buttongroup-005").then(
+      (module) => module.Buttongroup005,
+    ),
+  ),
+  "buttongroup-006": dynamic(() =>
+    import("@/registry/components/buttongroup/buttongroup-006/buttongroup-006").then(
+      (module) => module.Buttongroup006,
+    ),
+  ),
+  "buttongroup-007": dynamic(() =>
+    import("@/registry/components/buttongroup/buttongroup-007/buttongroup-007").then(
+      (module) => module.Buttongroup007,
+    ),
+  ),
+  "buttongroup-008": dynamic(() =>
+    import("@/registry/components/buttongroup/buttongroup-008/buttongroup-008").then(
+      (module) => module.Buttongroup008,
+    ),
+  ),
+  "buttongroup-009": dynamic(() =>
+    import("@/registry/components/buttongroup/buttongroup-009/buttongroup-009").then(
+      (module) => module.Buttongroup009,
+    ),
+  ),
+  "buttongroup-010": dynamic(() =>
+    import("@/registry/components/buttongroup/buttongroup-010/buttongroup-010").then(
+      (module) => module.Buttongroup010,
+    ),
+  ),
+  "buttongroup-011": dynamic(() =>
+    import("@/registry/components/buttongroup/buttongroup-011/buttongroup-011").then(
+      (module) => module.Buttongroup011,
+    ),
+  ),
+  "buttongroup-012": dynamic(() =>
+    import("@/registry/components/buttongroup/buttongroup-012/buttongroup-012").then(
+      (module) => module.Buttongroup012,
+    ),
+  ),
   "breadcrumb-001": dynamic(() =>
     import("@/registry/components/breadcrumb/breadcrumb-001/breadcrumb-001").then(
       (module) => module.Breadcrumb001,
@@ -970,6 +1140,21 @@ export const LAZY_PREVIEWS = {
       (module) => module.Breadcrumb012,
     ),
   ),
+  "breadcrumb-013": dynamic(() =>
+    import("@/registry/components/breadcrumb/breadcrumb-013/breadcrumb-013").then(
+      (module) => module.Breadcrumb013,
+    ),
+  ),
+  "breadcrumb-014": dynamic(() =>
+    import("@/registry/components/breadcrumb/breadcrumb-014/breadcrumb-014").then(
+      (module) => module.Breadcrumb014,
+    ),
+  ),
+  "breadcrumb-015": dynamic(() =>
+    import("@/registry/components/breadcrumb/breadcrumb-015/breadcrumb-015").then(
+      (module) => module.Breadcrumb015,
+    ),
+  ),
   "calendar-001": dynamic(() =>
     import("@/registry/components/calendar/calendar-001/calendar-001").then(
       (module) => module.Calendar001,
@@ -1020,6 +1205,56 @@ export const LAZY_PREVIEWS = {
       (module) => module.Calendar010,
     ),
   ),
+  "calendar-011": dynamic(() =>
+    import("@/registry/components/calendar/calendar-011/calendar-011").then(
+      (module) => module.Calendar011,
+    ),
+  ),
+  "calendar-012": dynamic(() =>
+    import("@/registry/components/calendar/calendar-012/calendar-012").then(
+      (module) => module.Calendar012,
+    ),
+  ),
+  "calendar-013": dynamic(() =>
+    import("@/registry/components/calendar/calendar-013/calendar-013").then(
+      (module) => module.Calendar013,
+    ),
+  ),
+  "calendar-014": dynamic(() =>
+    import("@/registry/components/calendar/calendar-014/calendar-014").then(
+      (module) => module.Calendar014,
+    ),
+  ),
+  "calendar-015": dynamic(() =>
+    import("@/registry/components/calendar/calendar-015/calendar-015").then(
+      (module) => module.Calendar015,
+    ),
+  ),
+  "calendar-016": dynamic(() =>
+    import("@/registry/components/calendar/calendar-016/calendar-016").then(
+      (module) => module.Calendar016,
+    ),
+  ),
+  "calendar-017": dynamic(() =>
+    import("@/registry/components/calendar/calendar-017/calendar-017").then(
+      (module) => module.Calendar017,
+    ),
+  ),
+  "calendar-018": dynamic(() =>
+    import("@/registry/components/calendar/calendar-018/calendar-018").then(
+      (module) => module.Calendar018,
+    ),
+  ),
+  "calendar-019": dynamic(() =>
+    import("@/registry/components/calendar/calendar-019/calendar-019").then(
+      (module) => module.Calendar019,
+    ),
+  ),
+  "calendar-020": dynamic(() =>
+    import("@/registry/components/calendar/calendar-020/calendar-020").then(
+      (module) => module.Calendar020,
+    ),
+  ),
   "card-001": dynamic(() =>
     import("@/registry/components/card/card-001/card-001").then(
       (module) => module.Card001,
@@ -1068,6 +1303,61 @@ export const LAZY_PREVIEWS = {
   "card-010": dynamic(() =>
     import("@/registry/components/card/card-010/card-010").then(
       (module) => module.Card010,
+    ),
+  ),
+  "card-011": dynamic(() =>
+    import("@/registry/components/card/card-011/card-011").then(
+      (module) => module.Card011,
+    ),
+  ),
+  "card-012": dynamic(() =>
+    import("@/registry/components/card/card-012/card-012").then(
+      (module) => module.Card012,
+    ),
+  ),
+  "card-013": dynamic(() =>
+    import("@/registry/components/card/card-013/card-013").then(
+      (module) => module.Card013,
+    ),
+  ),
+  "card-014": dynamic(() =>
+    import("@/registry/components/card/card-014/card-014").then(
+      (module) => module.Card014,
+    ),
+  ),
+  "card-015": dynamic(() =>
+    import("@/registry/components/card/card-015/card-015").then(
+      (module) => module.Card015,
+    ),
+  ),
+  "card-016": dynamic(() =>
+    import("@/registry/components/card/card-016/card-016").then(
+      (module) => module.Card016,
+    ),
+  ),
+  "card-017": dynamic(() =>
+    import("@/registry/components/card/card-017/card-017").then(
+      (module) => module.Card017,
+    ),
+  ),
+  "card-018": dynamic(() =>
+    import("@/registry/components/card/card-018/card-018").then(
+      (module) => module.Card018,
+    ),
+  ),
+  "card-019": dynamic(() =>
+    import("@/registry/components/card/card-019/card-019").then(
+      (module) => module.Card019,
+    ),
+  ),
+  "card-020": dynamic(() =>
+    import("@/registry/components/card/card-020/card-020").then(
+      (module) => module.Card020,
+    ),
+  ),
+  "card-021": dynamic(() =>
+    import("@/registry/components/card/card-021/card-021").then(
+      (module) => module.Card021,
     ),
   ),
   "carousel-001": dynamic(() =>
@@ -1298,6 +1588,61 @@ export const LAZY_PREVIEWS = {
   "filters-001": dynamic(() =>
     import("@/registry/components/inputs/filters-001/filters-001").then(
       (module) => module.Filters001,
+    ),
+  ),
+  "cascader-002": dynamic(() =>
+    import("@/registry/components/inputs/cascader-002/cascader-002").then(
+      (module) => module.Cascader002,
+    ),
+  ),
+  "cascader-003": dynamic(() =>
+    import("@/registry/components/inputs/cascader-003/cascader-003").then(
+      (module) => module.Cascader003,
+    ),
+  ),
+  "cascader-004": dynamic(() =>
+    import("@/registry/components/inputs/cascader-004/cascader-004").then(
+      (module) => module.Cascader004,
+    ),
+  ),
+  "cascader-005": dynamic(() =>
+    import("@/registry/components/inputs/cascader-005/cascader-005").then(
+      (module) => module.Cascader005,
+    ),
+  ),
+  "cascader-006": dynamic(() =>
+    import("@/registry/components/inputs/cascader-006/cascader-006").then(
+      (module) => module.Cascader006,
+    ),
+  ),
+  "cascader-007": dynamic(() =>
+    import("@/registry/components/inputs/cascader-007/cascader-007").then(
+      (module) => module.Cascader007,
+    ),
+  ),
+  "cascader-008": dynamic(() =>
+    import("@/registry/components/inputs/cascader-008/cascader-008").then(
+      (module) => module.Cascader008,
+    ),
+  ),
+  "cascader-009": dynamic(() =>
+    import("@/registry/components/inputs/cascader-009/cascader-009").then(
+      (module) => module.Cascader009,
+    ),
+  ),
+  "cascader-010": dynamic(() =>
+    import("@/registry/components/inputs/cascader-010/cascader-010").then(
+      (module) => module.Cascader010,
+    ),
+  ),
+  "cascader-011": dynamic(() =>
+    import("@/registry/components/inputs/cascader-011/cascader-011").then(
+      (module) => module.Cascader011,
+    ),
+  ),
+  "cascader-012": dynamic(() =>
+    import("@/registry/components/inputs/cascader-012/cascader-012").then(
+      (module) => module.Cascader012,
     ),
   ),
   "skeleton-001": dynamic(() =>
@@ -1593,6 +1938,76 @@ export const LAZY_PREVIEWS = {
   "gantt-001": dynamic(() =>
     import("@/registry/components/charts/gantt-001/gantt-001").then(
       (module) => module.Gantt001,
+    ),
+  ),
+  "chart-010": dynamic(() =>
+    import("@/registry/components/charts/chart-010/chart-010").then(
+      (module) => module.Chart010,
+    ),
+  ),
+  "chart-011": dynamic(() =>
+    import("@/registry/components/charts/chart-011/chart-011").then(
+      (module) => module.Chart011,
+    ),
+  ),
+  "chart-012": dynamic(() =>
+    import("@/registry/components/charts/chart-012/chart-012").then(
+      (module) => module.Chart012,
+    ),
+  ),
+  "chart-013": dynamic(() =>
+    import("@/registry/components/charts/chart-013/chart-013").then(
+      (module) => module.Chart013,
+    ),
+  ),
+  "chart-014": dynamic(() =>
+    import("@/registry/components/charts/chart-014/chart-014").then(
+      (module) => module.Chart014,
+    ),
+  ),
+  "chart-015": dynamic(() =>
+    import("@/registry/components/charts/chart-015/chart-015").then(
+      (module) => module.Chart015,
+    ),
+  ),
+  "chart-016": dynamic(() =>
+    import("@/registry/components/charts/chart-016/chart-016").then(
+      (module) => module.Chart016,
+    ),
+  ),
+  "chart-017": dynamic(() =>
+    import("@/registry/components/charts/chart-017/chart-017").then(
+      (module) => module.Chart017,
+    ),
+  ),
+  "chart-018": dynamic(() =>
+    import("@/registry/components/charts/chart-018/chart-018").then(
+      (module) => module.Chart018,
+    ),
+  ),
+  "chart-019": dynamic(() =>
+    import("@/registry/components/charts/chart-019/chart-019").then(
+      (module) => module.Chart019,
+    ),
+  ),
+  "chart-020": dynamic(() =>
+    import("@/registry/components/charts/chart-020/chart-020").then(
+      (module) => module.Chart020,
+    ),
+  ),
+  "chart-021": dynamic(() =>
+    import("@/registry/components/charts/chart-021/chart-021").then(
+      (module) => module.Chart021,
+    ),
+  ),
+  "chart-022": dynamic(() =>
+    import("@/registry/components/charts/chart-022/chart-022").then(
+      (module) => module.Chart022,
+    ),
+  ),
+  "sparkline-002": dynamic(() =>
+    import("@/registry/components/charts/sparkline-002/sparkline-002").then(
+      (module) => module.Sparkline002,
     ),
   ),
 } as unknown as Record<string, ComponentType<PreviewProps>>

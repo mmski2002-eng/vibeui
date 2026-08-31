@@ -25,6 +25,7 @@ import aspectRegistry from "@/registry/components/aspect/registry.json"
 import autocompleteRegistry from "@/registry/components/autocomplete/registry.json"
 import avatarRegistry from "@/registry/components/avatar/registry.json"
 import badgeRegistry from "@/registry/components/badge/registry.json"
+import buttongroupRegistry from "@/registry/components/buttongroup/registry.json"
 import breadcrumbRegistry from "@/registry/components/breadcrumb/registry.json"
 import calendarRegistry from "@/registry/components/calendar/registry.json"
 import cardRegistry from "@/registry/components/card/registry.json"
@@ -157,6 +158,11 @@ export const SOURCES = [
     directory: "registry/components/badge",
     kind: "component",
     items: badgeRegistry.items,
+  },
+  {
+    directory: "registry/components/buttongroup",
+    kind: "component",
+    items: buttongroupRegistry.items,
   },
   {
     directory: "registry/components/breadcrumb",

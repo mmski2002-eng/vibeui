@@ -56,16 +56,16 @@
 | alert-dialog    |    14 |    14 | закрыто         |
 | aspect-ratio    |     8 |     8 | закрыто         |
 | autocomplete    |    12 |    12 | закрыто         |
-| avatar          |    35 |    20 | **в работе**    |
-| badge           |    25 |    12 | добор 13        |
-| breadcrumb      |    15 |    12 | добор 3         |
-| button          |    61 |    20 | добор 41        |
-| button-group    |    57 |     0 | новая категория |
-| calendar        |    30 |    10 | добор 20        |
-| card            |    21 |    10 | добор 11        |
+| avatar          |    35 |    20 | добор 15        |
+| badge           |    25 |    25 | закрыто         |
+| breadcrumb      |    15 |    15 | закрыто         |
+| button          |    61 |    32 | добор 29        |
+| button-group    |    57 |    12 | добор 45        |
+| calendar        |    30 |    20 | добор 10        |
+| card            |    21 |    21 | закрыто         |
 | carousel        |     ? |     8 | сверить         |
-| cascader        |    20 |     1 | добор 19        |
-| chart           |    25 |    11 | добор 14        |
+| cascader        |    20 |    12 | добор 8         |
+| chart           |    25 |    25 | закрыто         |
 | checkbox        |    22 |     8 | добор 14        |
 | code-block      |    27 |     1 | добор 26        |
 | combobox        |    20 |     0 | новая категория |
