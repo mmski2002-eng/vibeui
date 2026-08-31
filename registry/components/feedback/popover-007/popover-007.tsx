@@ -1,0 +1,194 @@
+import { useId } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Popover007Item = {
+  title: string
+  meta: string
+  unread?: boolean
+}
+
+export type Popover007Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children"
+> & {
+  /** Число на значке. 0 убирает значок целиком. */
+  count?: number
+  items?: Popover007Item[]
+  footerLabel?: string
+}
+
+// Идея компонента: колокольчик со счётчиком и списком внутри. Непрочитанное
+// помечено точкой и весом, а не только цветом; список — настоящий <ul> со
+// ссылками, поэтому по нему ходят стрелками и Tab, а не мышью по div'ам.
+const STYLES = `
+:where([data-vibeui-block="popover-007"]){
+--vibeui-popover-007-bg:oklch(1 0 0);
+--vibeui-popover-007-fg:oklch(0.23 0.014 265);
+--vibeui-popover-007-muted:oklch(0.54 0.014 265);
+--vibeui-popover-007-border:oklch(0.9 0.006 265);
+--vibeui-popover-007-hover:oklch(0.965 0.004 265);
+--vibeui-popover-007-accent:oklch(0.58 0.19 25);
+--vibeui-popover-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="popover-007"]{
+position:relative;display:inline-block;
+font-family:var(--vibeui-popover-007-font);color:var(--vibeui-popover-007-fg);
+}
+[data-vibeui-block="popover-007"] [data-part="trigger"]{
+position:relative;appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;
+width:2.375rem;height:2.375rem;border-radius:0.75rem;
+border:1px solid var(--vibeui-popover-007-border);
+background:var(--vibeui-popover-007-bg);color:inherit;
+font:inherit;font-size:1.0625rem;line-height:1;
+anchor-name:--vibeui-popover-007-anchor;
+}
+[data-vibeui-block="popover-007"] [data-part="trigger"]:hover{background:var(--vibeui-popover-007-hover)}
+[data-vibeui-block="popover-007"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-popover-007-accent);outline-offset:2px}
+[data-vibeui-block="popover-007"] [data-part="badge"]{
+position:absolute;top:-0.3125rem;right:-0.3125rem;
+display:flex;align-items:center;justify-content:center;
+min-width:1.125rem;height:1.125rem;padding:0 0.25rem;box-sizing:border-box;
+border-radius:9999px;border:2px solid var(--vibeui-popover-007-bg);
+background:var(--vibeui-popover-007-accent);color:oklch(0.99 0.01 25);
+font-size:0.625rem;font-weight:750;line-height:1;font-variant-numeric:tabular-nums;
+}
+/* Раскладка панели только в :popover-open, иначе display перебьёт
+   браузерный display:none и список будет висеть поверх страницы. */
+[data-vibeui-block="popover-007"] [data-part="panel"]{
+position:fixed;margin:0;padding:0;
+width:min(20rem,100vw - 2rem);box-sizing:border-box;overflow:hidden;
+border:1px solid var(--vibeui-popover-007-border);border-radius:1rem;
+background:var(--vibeui-popover-007-bg);color:inherit;
+box-shadow:0 26px 54px -30px oklch(0.2 0.02 265 / 62%);
+position-anchor:--vibeui-popover-007-anchor;
+top:anchor(bottom);right:anchor(right);margin-top:0.5rem;
+}
+[data-vibeui-block="popover-007"] [data-part="panel"]:popover-open{display:flex;flex-direction:column}
+@supports not (anchor-name: --a){
+[data-vibeui-block="popover-007"] [data-part="panel"]{position:absolute;inset:auto;top:calc(100% + 0.5rem);right:0}
+}
+[data-vibeui-block="popover-007"] [data-part="head"]{
+display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem;
+padding:0.75rem 0.875rem 0.5rem;
+}
+[data-vibeui-block="popover-007"] [data-part="heading"]{margin:0;font-size:0.875rem;font-weight:660}
+[data-vibeui-block="popover-007"] [data-part="unreadCount"]{font-size:0.75rem;color:var(--vibeui-popover-007-muted)}
+[data-vibeui-block="popover-007"] [data-part="list"]{
+margin:0;padding:0;list-style:none;max-height:15rem;overflow-y:auto;
+border-top:1px solid var(--vibeui-popover-007-border);
+}
+[data-vibeui-block="popover-007"] [data-part="link"]{
+display:grid;grid-template-columns:auto 1fr;gap:0.125rem 0.5rem;
+padding:0.625rem 0.875rem;color:inherit;text-decoration:none;
+border-bottom:1px solid var(--vibeui-popover-007-border);
+transition:background-color .14s ease;
+}
+[data-vibeui-block="popover-007"] [data-part="link"]:hover{background:var(--vibeui-popover-007-hover)}
+[data-vibeui-block="popover-007"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-popover-007-accent);outline-offset:-2px}
+[data-vibeui-block="popover-007"] [data-part="dot"]{
+width:0.4375rem;height:0.4375rem;margin-top:0.375rem;border-radius:9999px;
+background:var(--vibeui-popover-007-accent);
+}
+[data-vibeui-block="popover-007"] [data-part="link"][data-read="true"] [data-part="dot"]{background:transparent}
+[data-vibeui-block="popover-007"] [data-part="itemTitle"]{font-size:0.8125rem;line-height:1.35;font-weight:600}
+[data-vibeui-block="popover-007"] [data-part="link"][data-read="true"] [data-part="itemTitle"]{font-weight:450;color:var(--vibeui-popover-007-muted)}
+[data-vibeui-block="popover-007"] [data-part="itemMeta"]{grid-column:2;font-size:0.75rem;color:var(--vibeui-popover-007-muted)}
+[data-vibeui-block="popover-007"] [data-part="foot"]{
+padding:0.5rem 0.875rem;text-align:center;
+font-size:0.8125rem;font-weight:640;
+color:var(--vibeui-popover-007-fg);text-decoration:none;
+}
+[data-vibeui-block="popover-007"] [data-part="foot"]:hover{background:var(--vibeui-popover-007-hover)}
+[data-vibeui-block="popover-007"] [data-part="foot"]:focus-visible{outline:2px solid var(--vibeui-popover-007-accent);outline-offset:-2px}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-007"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_ITEMS: Popover007Item[] = [
+  {
+    title: "Сборка 412 прошла",
+    meta: "конвейер · 3 минуты назад",
+    unread: true,
+  },
+  {
+    title: "Новый комментарий в задаче VU-88",
+    meta: "Мария · 20 минут назад",
+    unread: true,
+  },
+  { title: "Счёт за август оплачен", meta: "биллинг · вчера" },
+  { title: "Ключ доступа истекает через 7 дней", meta: "безопасность · вчера" },
+]
+
+/**
+ * Поповер уведомлений: значок со счётчиком и список со ссылками внутри.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Popover007({
+  count = 2,
+  items = DEFAULT_ITEMS,
+  footerLabel = "Все уведомления",
+  className,
+  style,
+  ...props
+}: Popover007Props) {
+  const id = useId().replace(/:/g, "")
+
+  return (
+    <>
+      <style href="vibeui-popover-007" precedence="medium">
+        {STYLES}
+      </style>
+      <div
+        {...props}
+        data-vibeui-block="popover-007"
+        className={className}
+        style={style as CSSProperties}
+      >
+        <button
+          type="button"
+          data-part="trigger"
+          popoverTarget={`${id}-panel`}
+          aria-label={
+            count > 0 ? `Уведомления, непрочитанных: ${count}` : "Уведомления"
+          }
+        >
+          <span aria-hidden="true">🔔</span>
+          {count > 0 ? (
+            <span data-part="badge" aria-hidden="true">
+              {count > 99 ? "99+" : count}
+            </span>
+          ) : null}
+        </button>
+        <div
+          data-part="panel"
+          id={`${id}-panel`}
+          popover="auto"
+          aria-label="Уведомления"
+        >
+          <div data-part="head">
+            <p data-part="heading">Уведомления</p>
+            <span data-part="unreadCount">{count} новых</span>
+          </div>
+          <ul data-part="list">
+            {items.map((item) => (
+              <li key={item.title}>
+                <a
+                  data-part="link"
+                  data-read={item.unread ? undefined : "true"}
+                  href="#notification"
+                >
+                  <span data-part="dot" aria-hidden="true" />
+                  <span data-part="itemTitle">{item.title}</span>
+                  <span data-part="itemMeta">{item.meta}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a data-part="foot" href="#all">
+            {footerLabel}
+          </a>
+        </div>
+      </div>
+    </>
+  )
+}

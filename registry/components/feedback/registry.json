@@ -3353,6 +3353,3540 @@
           }
         }
       }
+    },
+    {
+      "name": "toast-004",
+      "type": "registry:component",
+      "title": "Lifecycle Toast",
+      "description": "Одно уведомление на всю операцию: карточка не пересоздаётся, а меняет значок и строку с «собираем» на «готово» или «не вышло».",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-004/toast-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-004-*. Серверный: хуков нет, стадия приходит пропом state. Кольцо загрузки — конический градиент, вырезанный radial-маской в тонкий обод, значок результата лежит тем же слоем и переключается правилами [data-state]. Полоса-«пульс» показывает неопределённую длительность и скрывается, как только стадия перестаёт быть loading. Роль меняется вместе со стадией: ошибка объявляется как alert, остальное как status.",
+      "meta": {
+        "tags": ["toast", "loading", "status", "async"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast004",
+          "usage": "<Toast004\n  state=\"success\"\n  loadingText=\"Собираем архив проекта\"\n  successText=\"Архив готов к скачиванию\"\n  hint=\"Ссылка живёт сутки.\"\n/>",
+          "summary": "Уведомление операции с тремя стадиями в одной карточке: загрузка, успех, ошибка. Ноль зависимостей, один файл, клиентского JS нет — стадию передаёт родитель.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-004-* и не подменять её токенами вашей темы",
+            "одну карточку на всю операцию: два отдельных уведомления заставляют читать одно и то же дважды",
+            "переключение роли на alert при ошибке — успех не должен перебивать чтение экрана",
+            "маску кольца загрузки: без radial-маски конический градиент превращается в закрашенный круг",
+            "скрытие полосы-пульса вне стадии loading — иначе готовая операция выглядит незавершённой",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "стадию через state — loading, success или error",
+            "надписи стадий через loadingText, successText и errorText",
+            "вторую строку через hint или убрать её пустой строкой",
+            "цвет стадии через переменную --vibeui-toast-004-tone"
+          ],
+          "notes": [
+            "Компонент не считает время сам: стадию переключает родитель после ответа сервера.",
+            "Полоса-пульс не показывает процент — для определённого прогресса нужен другой вариант.",
+            "При reduced-motion кольцо останавливается, а полоса растягивается на всю ширину: движение убрано, смысл остался.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "state",
+            "label": "Стадия",
+            "type": "select",
+            "default": "loading",
+            "options": ["loading", "success", "error"]
+          },
+          {
+            "prop": "successText",
+            "label": "Текст успеха",
+            "type": "text",
+            "default": "Архив готов к скачиванию",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "One toast for the whole operation: the card is not recreated, it swaps the icon and the line from «packing» to «done» or «failed».",
+            "ai": {
+              "summary": "An operation toast with three stages inside a single card: loading, success, error. Zero dependencies, one file, no client JS — the parent supplies the stage.",
+              "preserve": [
+                "the local --vibeui-toast-004-* palette — do not swap it for your theme tokens",
+                "one card for the whole operation: two separate toasts make people read the same thing twice",
+                "the role switching to alert on failure — success must not interrupt a screen reader",
+                "the mask on the spinner ring: without the radial mask the conic gradient becomes a filled disc",
+                "hiding the pulse bar outside the loading stage — otherwise a finished operation still looks busy",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the stage through state — loading, success or error",
+                "the stage captions through loadingText, successText and errorText",
+                "the second line through hint, or drop it with an empty string",
+                "the stage colour through the --vibeui-toast-004-tone variable"
+              ],
+              "notes": [
+                "The component does not time anything itself: the parent switches the stage once the server answers.",
+                "The pulse bar shows no percentage — determinate progress needs a different variant.",
+                "Under reduced motion the ring stops and the bar spans the full width: the motion is gone, the meaning stays.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast004\n  state=\"success\"\n  loadingText=\"Packing the project archive\"\n  successText=\"The archive is ready to download\"\n  hint=\"The link lives for a day.\"\n/>"
+            },
+            "controls": {
+              "state": {
+                "label": "Stage"
+              },
+              "successText": {
+                "label": "Success text",
+                "default": "The archive is ready"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-005",
+      "type": "registry:component",
+      "title": "Retry Toast",
+      "description": "Уведомление об ошибке, из которого есть выход: действие «Повторить» на первом месте, технические подробности спрятаны под раскрытием.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-005/toast-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-005-*. Серверный: состояние раскрытия держит нативный <details>, обработчик не нужен. Маркер summary снят через list-style:none и ::-webkit-details-marker, поэтому строка выглядит ссылкой, но остаётся кнопкой раскрытия. Карточка объявлена role=\"alert\": ошибка читается сразу. Левая грань окрашена тоном ошибки — цвет дублирован значком и словами, не только заливкой.",
+      "meta": {
+        "tags": ["toast", "error", "retry", "details"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast005",
+          "usage": "<Toast005\n  title=\"Не удалось сохранить черновик\"\n  message=\"Соединение оборвалось. Текст остался в браузере.\"\n  retryLabel=\"Повторить\"\n  details=\"PUT /api/drafts/8412 — 504\"\n/>",
+          "summary": "Уведомление об ошибке с повтором и техническими подробностями под нативным <details>. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-005-* и не подменять её токенами вашей темы",
+            "порядок «сначала выход, потом подробности»: кнопка повтора обязана стоять первой",
+            "role=\"alert\" на карточке — ошибка должна дойти до скринридера без действий пользователя",
+            "нативный <details> вместо своего состояния: раскрытие работает и без JS",
+            "снятый маркер summary с сохранённым фокус-стилем — иначе кнопка раскрытия теряется",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "заголовок через title и объяснение через message",
+            "подпись действия через retryLabel",
+            "содержимое раскрытия через details — код ответа, адрес, время",
+            "тон ошибки через переменную --vibeui-toast-005-tone"
+          ],
+          "notes": [
+            "Текст message адресован человеку: стек вызовов кладите в details, а не в первую строку.",
+            "Пустая строка в details убирает раскрытие целиком, кнопка повтора остаётся.",
+            "Внутри <pre> перенос включён: длинный адрес не растянет карточку по горизонтали.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Не удалось сохранить черновик",
+            "maxLength": 40
+          },
+          {
+            "prop": "retryLabel",
+            "label": "Повтор",
+            "type": "text",
+            "default": "Повторить",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An error toast with a way out: the retry action comes first and the technical detail hides behind a disclosure.",
+            "ai": {
+              "summary": "An error toast with a retry action and technical detail inside a native <details>. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-toast-005-* palette — do not swap it for your theme tokens",
+                "the order «way out first, detail second»: the retry button must come first",
+                "role=\"alert\" on the card — the failure has to reach a screen reader without any action",
+                "the native <details> instead of your own state: the disclosure works without JS",
+                "the stripped summary marker with its focus ring kept — otherwise the disclosure control disappears",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the heading through title and the explanation through message",
+                "the action caption through retryLabel",
+                "the disclosure content through details — status code, URL, timestamp",
+                "the error tone through the --vibeui-toast-005-tone variable"
+              ],
+              "notes": [
+                "The message text is written for a person: put the stack trace in details, not in the first line.",
+                "An empty details string removes the disclosure entirely and keeps the retry button.",
+                "Wrapping is on inside the <pre>: a long URL will not stretch the card sideways.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast005\n  title=\"Could not save the draft\"\n  message=\"The connection dropped. Your text is still in the browser.\"\n  retryLabel=\"Retry\"\n  details=\"PUT /api/drafts/8412 — 504\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Could not save the draft"
+              },
+              "retryLabel": {
+                "label": "Retry",
+                "default": "Retry"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-006",
+      "type": "registry:component",
+      "title": "Progress Toast",
+      "description": "Уведомление длинной операции с честным прогрессом: процент, полоса заполнения, счётчик файлов и отмена рядом.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-006/toast-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-006-*. Серверный: значение приходит пропом value и кладётся в переменную --vibeui-toast-006-value, ширину полосы считает calc — при перерисовке меняется одно число, а не разметка. Полоса размечена role=\"progressbar\" с aria-valuenow, поэтому прогресс читается вслух. Значение зажимается в диапазон 0–100 и округляется, чтобы дробь не разъезжала в табличных цифрах.",
+      "meta": {
+        "tags": ["toast", "progress", "upload", "cancel"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast006",
+          "usage": "<Toast006\n  title=\"Загружаем фотографии\"\n  value={62}\n  countLabel=\"15 из 24 файлов\"\n  cancelLabel=\"Отменить\"\n/>",
+          "summary": "Уведомление длинной операции: процент, полоса на CSS-переменной, счётчик и отмена. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-006-* и не подменять её токенами вашей темы",
+            "полосу на переменной: пересчёт ширины через calc дешевле перерисовки разметки",
+            "role=\"progressbar\" вместе с aria-valuenow — без них прогресс не читается вслух",
+            "счётчик рядом с процентом: 62% без «15 из 24» не говорят, сколько ещё ждать",
+            "кнопку отмены: длинную операцию обязательно должно быть чем остановить",
+            "табличные цифры у процента и счётчика — иначе числа прыгают при каждом обновлении"
+          ],
+          "adapt": [
+            "заголовок через title и значение прогресса через value",
+            "подпись счётчика через countLabel",
+            "подпись отмены через cancelLabel или убрать её пустой строкой",
+            "цвет заполнения через переменную --vibeui-toast-006-tone"
+          ],
+          "notes": [
+            "Значение зажимается в 0–100: передать 120 безопасно, полоса не вылезет.",
+            "Компонент ничего не загружает сам — value обновляет владелец операции.",
+            "Отмена только вызывает onCancel: остановить запрос должен вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "value",
+            "label": "Прогресс",
+            "type": "number",
+            "default": 62,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "countLabel",
+            "label": "Счётчик",
+            "type": "text",
+            "default": "15 из 24 файлов",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A long-operation toast with honest progress: a percentage, a fill bar, a file counter and cancel right beside it.",
+            "ai": {
+              "summary": "A long-operation toast: percentage, a bar driven by a CSS variable, a counter and cancel. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-toast-006-* palette — do not swap it for your theme tokens",
+                "the bar driven by a variable: recomputing width in calc is cheaper than re-rendering markup",
+                "role=\"progressbar\" together with aria-valuenow — without them progress is never announced",
+                "the counter beside the percentage: 62% without «15 of 24» never says how long is left",
+                "the cancel button: a long operation must always be stoppable",
+                "tabular figures on the percentage and counter — otherwise the numbers jump on every update"
+              ],
+              "adapt": [
+                "the heading through title and the progress through value",
+                "the counter caption through countLabel",
+                "the cancel caption through cancelLabel, or drop it with an empty string",
+                "the fill colour through the --vibeui-toast-006-tone variable"
+              ],
+              "notes": [
+                "The value is clamped to 0–100: passing 120 is safe, the bar will not overflow.",
+                "The component uploads nothing itself — the owner of the operation updates value.",
+                "Cancel only calls onCancel: aborting the request is the caller's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast006\n  title=\"Uploading photos\"\n  value={62}\n  countLabel=\"15 of 24 files\"\n  cancelLabel=\"Cancel\"\n/>"
+            },
+            "controls": {
+              "value": {
+                "label": "Progress"
+              },
+              "countLabel": {
+                "label": "Counter",
+                "default": "15 of 24 files"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-007",
+      "type": "registry:component",
+      "title": "Rich Toast",
+      "description": "Уведомление с описанием: две строки текста под заголовком и действия отдельной строкой, чтобы они не сжимали заголовок на узком экране.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-007/toast-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-007-*. Серверный: хуков нет. Раскладка — сетка из трёх колонок: значок занимает три ряда, заголовок и крестик стоят в первом, описание и действия растянуты на две колонки. Описание обрезано на двух строках через -webkit-line-clamp: третья строка превращает уведомление в письмо. Действия вынесены вниз, поэтому на узком экране заголовок не сжимается до одного слова.",
+      "meta": {
+        "tags": ["toast", "actions", "invite", "clamp"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast007",
+          "usage": "<Toast007\n  title=\"Приглашение в команду\"\n  description=\"Мария зовёт вас в проект «Каталог».\"\n  primaryLabel=\"Принять\"\n  secondaryLabel=\"Позже\"\n/>",
+          "summary": "Уведомление с двухстрочным описанием и парой действий под текстом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-007-* и не подменять её токенами вашей темы",
+            "обрезку описания на двух строках: третья превращает уведомление в письмо",
+            "действия отдельной строкой — в одну линию с заголовком они сжимают его до слова",
+            "разный вес главного и второстепенного действия: две одинаковые кнопки заставляют выбирать дважды",
+            "видимую подпись у крестика через aria-label — иконка без имени бесполезна для скринридера",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "заголовок через title и описание через description",
+            "подписи кнопок через primaryLabel и secondaryLabel",
+            "значок в левом квадрате — символ или свою иконку",
+            "акцент через переменную --vibeui-toast-007-tone"
+          ],
+          "notes": [
+            "Обрезка на двух строках зависит от -webkit-line-clamp: в очень старых движках текст просто не обрежется.",
+            "Пустой secondaryLabel убирает вторую кнопку, раскладка не ломается.",
+            "Крестик не закрывает карточку сам — обработчик вешает вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "primaryLabel",
+            "label": "Главное действие",
+            "type": "text",
+            "default": "Принять",
+            "maxLength": 20
+          },
+          {
+            "prop": "secondaryLabel",
+            "label": "Второе действие",
+            "type": "text",
+            "default": "Позже",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A toast with an explanation: two lines of text under the heading and the actions on their own row so they never squeeze the title on a narrow screen.",
+            "ai": {
+              "summary": "A toast with a two-line description and a pair of actions under the text. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-toast-007-* palette — do not swap it for your theme tokens",
+                "the two-line clamp on the description: a third line turns the toast into a letter",
+                "the actions on their own row — inline with the heading they squeeze it down to one word",
+                "the different weight of the primary and secondary action: two identical buttons make people choose twice",
+                "the aria-label on the close button — an unnamed icon is useless to a screen reader",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the heading through title and the copy through description",
+                "the button captions through primaryLabel and secondaryLabel",
+                "the glyph in the left square — a character or your own icon",
+                "the accent through the --vibeui-toast-007-tone variable"
+              ],
+              "notes": [
+                "The two-line clamp relies on -webkit-line-clamp: in very old engines the text simply will not be cut.",
+                "An empty secondaryLabel removes the second button without breaking the layout.",
+                "The close button does not dismiss the card itself — the caller attaches the handler.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast007\n  title=\"Team invitation\"\n  description=\"Maria invites you to the «Catalog» project.\"\n  primaryLabel=\"Accept\"\n  secondaryLabel=\"Later\"\n/>"
+            },
+            "controls": {
+              "primaryLabel": {
+                "label": "Primary action",
+                "default": "Accept"
+              },
+              "secondaryLabel": {
+                "label": "Secondary action",
+                "default": "Later"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-008",
+      "type": "registry:component",
+      "title": "Toast Region",
+      "description": "Не одно уведомление, а место для них: угол задаётся одним пропом, все четыре варианта собираются из переменной отступа и двух переключателей выравнивания.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-008/toast-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-008-*. Серверный: хуков нет. Угол разобран селекторами [data-corner^=\"top\"] и [data-corner$=\"right\"], поэтому четыре варианта дают четыре короткие строки CSS вместо четырёх наборов правил. Для нижних углов порядок карточек переворачивается column-reverse: свежее сообщение всегда ближе к краю. Сцена с клетчатым фоном изображает окно приложения — иначе «угол экрана» показать нечем. Стопка объявлена role=\"log\" с aria-live=\"polite\".",
+      "meta": {
+        "tags": ["toast", "position", "region", "stack"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast008",
+          "usage": "<Toast008\n  corner=\"top-right\"\n  offset=\"1.5rem\"\n  messages={[\"Черновик сохранён\", \"Файл выгружен\"]}\n/>",
+          "summary": "Область уведомлений: угол и отступ задаются пропами и раскладываются четырьмя строками CSS. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-008-* и не подменять её токенами вашей темы",
+            "разбор угла через селекторы начала и конца строки: иначе под каждый угол придётся писать свой набор правил",
+            "переворот порядка column-reverse в нижних углах — свежее сообщение обязано быть у края",
+            "role=\"log\" с aria-live=\"polite\" на стопке: поток сообщений читается именно так",
+            "ограничение ширины стопки формулой с отступом — на телефоне карточка иначе упирается в края",
+            "собственную светлую подложку сцены: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "угол через corner — top-left, top-right, bottom-left или bottom-right",
+            "расстояние до краёв через offset",
+            "содержимое стопки через messages",
+            "цвет точки через переменную --vibeui-toast-008-tone"
+          ],
+          "notes": [
+            "Сцена нужна только для показа: в приложении регион ставят на position:fixed и сцену выбрасывают.",
+            "Больше трёх карточек подряд никто не читает — ограничивайте длину messages на стороне вызова.",
+            "Задержки появления заданы через nth-child и рассчитаны на три карточки; для длинного списка их лучше убрать.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "corner",
+            "label": "Угол",
+            "type": "select",
+            "default": "bottom-right",
+            "options": ["top-left", "top-right", "bottom-left", "bottom-right"]
+          },
+          {
+            "prop": "offset",
+            "label": "Отступ",
+            "type": "text",
+            "default": "1rem",
+            "maxLength": 10
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Not a single toast but a place for them: the corner is one prop, and all four variants come from an offset variable plus two alignment switches.",
+            "ai": {
+              "summary": "A toast region: the corner and the offset are props, laid out by four lines of CSS. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-toast-008-* palette — do not swap it for your theme tokens",
+                "parsing the corner with prefix and suffix attribute selectors: otherwise every corner needs its own rule set",
+                "the column-reverse order in the bottom corners — the newest message must sit at the edge",
+                "role=\"log\" with aria-live=\"polite\" on the stack: that is how a stream of messages is read",
+                "the width formula that subtracts the offset — on a phone the card would otherwise hit both edges",
+                "the stage's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the corner through corner — top-left, top-right, bottom-left or bottom-right",
+                "the distance to the edges through offset",
+                "the stack content through messages",
+                "the dot colour through the --vibeui-toast-008-tone variable"
+              ],
+              "notes": [
+                "The stage exists only for the demo: in an app the region goes on position:fixed and the stage is dropped.",
+                "Nobody reads more than three cards in a row — cap the length of messages at the call site.",
+                "The entry delays use nth-child and assume three cards; for a long list they are better removed.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast008\n  corner=\"top-right\"\n  offset=\"1.5rem\"\n  messages={[\"Draft saved\", \"File uploaded\"]}\n/>"
+            },
+            "controls": {
+              "corner": {
+                "label": "Corner"
+              },
+              "offset": {
+                "label": "Offset",
+                "default": "1rem"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-009",
+      "type": "registry:component",
+      "title": "Message Toast",
+      "description": "Уведомление о личном сообщении, а не о системном событии: инициалы с оттенком из имени, текст в две строки и поле быстрого ответа.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-009/toast-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-009-*. Серверный: хуков нет. Оттенок кружка выводится из имени хешем FNV-1a и кладётся в --vibeui-toast-009-hue, поэтому у каждого собеседника свой цвет без словаря соответствий. Поле ответа — это кнопка, стилизованная под ввод: настоящая форма в уведомлении требует фокус-ловушки, а уведомление живёт несколько секунд. Текст обрезан на двух строках.",
+      "meta": {
+        "tags": ["toast", "message", "avatar", "reply"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast009",
+          "usage": "<Toast009\n  name=\"Артём Северов\"\n  message=\"Посмотри последний макет каталога\"\n  time=\"18:04\"\n  replyLabel=\"Ответить…\"\n/>",
+          "summary": "Уведомление о личном сообщении: инициалы с цветом из имени, текст и кнопка быстрого ответа. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-009-* и не подменять её токенами вашей темы",
+            "вывод оттенка из имени: словарь цветов придётся вести руками и он рассинхронизируется",
+            "поле ответа кнопкой, а не input: настоящая форма в короткоживущем уведомлении требует фокус-ловушки",
+            "имя собеседника в доступной подписи кнопки — «Ответить» без имени в потоке бесполезно",
+            "обрезку сообщения на двух строках: длинное письмо читают в переписке, а не в уведомлении",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "имя собеседника через name и текст через message",
+            "отметку времени через time",
+            "подпись быстрого ответа через replyLabel",
+            "скругление и подложку через переменные --vibeui-toast-009-radius и --vibeui-toast-009-bg"
+          ],
+          "notes": [
+            "Инициалы берутся из первых двух слов имени: односложный ник даст одну букву.",
+            "Оттенок стабилен для одного имени, но два разных имени могут совпасть — это допустимо.",
+            "Нажатие на поле ответа только вызывает onReply: открыть переписку должен вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя",
+            "type": "text",
+            "default": "Артём Северов",
+            "maxLength": 30
+          },
+          {
+            "prop": "replyLabel",
+            "label": "Ответ",
+            "type": "text",
+            "default": "Ответить…",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A toast about a personal message rather than a system event: initials tinted from the name, two lines of text and a quick reply field.",
+            "ai": {
+              "summary": "A direct-message toast: initials coloured from the name, the text and a quick reply button. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-toast-009-* palette — do not swap it for your theme tokens",
+                "deriving the hue from the name: a colour dictionary has to be maintained by hand and drifts",
+                "the reply field as a button, not an input: a real form inside a short-lived toast needs a focus trap",
+                "the sender name in the button label — a bare \"Reply\" is useless in a stream",
+                "the two-line clamp on the message: a long letter is read in the thread, not in a toast",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the sender through name and the copy through message",
+                "the timestamp through time",
+                "the quick reply caption through replyLabel",
+                "the radius and surface through --vibeui-toast-009-radius and --vibeui-toast-009-bg"
+              ],
+              "notes": [
+                "Initials come from the first two words of the name: a single-word handle gives one letter.",
+                "The hue is stable for one name, but two different names may collide — that is acceptable.",
+                "Tapping the reply field only calls onReply: opening the thread is the caller's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast009\n  name=\"Artem Severov\"\n  message=\"Take a look at the latest catalog mockup\"\n  time=\"18:04\"\n  replyLabel=\"Reply…\"\n/>"
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Artem Severov"
+              },
+              "replyLabel": {
+                "label": "Reply",
+                "default": "Reply…"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-010",
+      "type": "registry:component",
+      "title": "Pill Toast",
+      "description": "Подтверждение размером в строку: тёмная пилюля со значком, без заголовка, кнопок и крестика — реплика, а не сообщение.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-010/toast-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-010-*. Серверный: хуков нет. Форма и вес отличают пилюлю от карточек: скругление 9999px, одна строка с многоточием, ширина по содержимому. Появление — короткий подъём с масштабом; правило prefers-reduced-motion выключает его и для самого блока, а не только для потомков. Тон меняет только цвет значка: заливка остаётся тёмной, чтобы пилюля не спорила с интерфейсом.",
+      "meta": {
+        "tags": ["toast", "snackbar", "compact", "confirmation"],
+        "ai": {
+          "export": "Toast010",
+          "usage": "<Toast010 message=\"Ссылка скопирована\" tone=\"success\" glyph=\"✓\" />",
+          "summary": "Компактная пилюля-подтверждение в одну строку: значок и текст, ничего больше. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-010-* и не подменять её токенами вашей темы",
+            "одну строку с многоточием: пилюля рассчитана на реплику, а не на объяснение",
+            "отсутствие кнопок и крестика — действие в пилюле некуда поставить, она уходит сама",
+            "role=\"status\" с aria-live=\"polite\": подтверждение не должно перебивать чтение",
+            "выключение анимации у самого блока в prefers-reduced-motion, а не только у потомков",
+            "тёмную заливку независимо от тона: цветная пилюля спорит с интерфейсом под ней"
+          ],
+          "adapt": [
+            "текст через message и тон через tone",
+            "значок через glyph или убрать его пустой строкой",
+            "предельную ширину через max-width",
+            "цвет значка через переменную --vibeui-toast-010-tone"
+          ],
+          "notes": [
+            "Компонент не исчезает сам: таймер держит вызывающий код.",
+            "Текст длиннее строки обрезается многоточием — для двух строк возьмите карточку, а не пилюлю.",
+            "Значок нарисован символом: своя иконка вставляется вместо содержимого glyph.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "message",
+            "label": "Сообщение",
+            "type": "text",
+            "default": "Ссылка скопирована",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "success",
+            "options": ["neutral", "success", "warning"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A confirmation the size of one line: a dark pill with a glyph, no heading, no buttons, no close — a remark rather than a message.",
+            "ai": {
+              "summary": "A compact one-line confirmation pill: a glyph and text, nothing else. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-toast-010-* palette — do not swap it for your theme tokens",
+                "the single ellipsised line: the pill is built for a remark, not an explanation",
+                "the absence of buttons and a close control — there is nowhere to put an action, the pill leaves on its own",
+                "role=\"status\" with aria-live=\"polite\": a confirmation must not interrupt reading",
+                "disabling the animation on the block itself under prefers-reduced-motion, not only on its children",
+                "the dark fill regardless of tone: a coloured pill fights the interface underneath it"
+              ],
+              "adapt": [
+                "the copy through message and the tone through tone",
+                "the glyph through glyph, or drop it with an empty string",
+                "the maximum width through max-width",
+                "the glyph colour through the --vibeui-toast-010-tone variable"
+              ],
+              "notes": [
+                "The component does not disappear by itself: the caller owns the timer.",
+                "Text longer than the line is ellipsised — for two lines use a card, not a pill.",
+                "The glyph is a character: your own icon replaces the content of glyph.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast010 message=\"Link copied\" tone=\"success\" glyph=\"✓\" />"
+            },
+            "controls": {
+              "message": {
+                "label": "Message",
+                "default": "Link copied"
+              },
+              "tone": {
+                "label": "Tone"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tooltip-002",
+      "type": "registry:component",
+      "title": "Native Versus",
+      "description": "Сравнение на одном экране: слева кнопка с нативным title, справа своя подсказка — со стрелкой, мгновенная и доступная с клавиатуры.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tooltip-002/tooltip-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tooltip-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-002-*. Серверный: обе подсказки держатся на :hover и :focus-within, JS не нужен. Левая ячейка намеренно оставлена нативной — атрибут title показывает системную подсказку через секунду с лишним, без стрелки и без реакции на Tab. Правая собрана вручную: хвостик — повёрнутый квадрат того же цвета, открытие продублировано фокусом, связь с кнопкой объявлена через aria-describedby.",
+      "meta": {
+        "tags": ["tooltip", "comparison", "accessibility", "native"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Tooltip002",
+          "usage": "<Tooltip002\n  tip=\"Скопировать ссылку\"\n  nativeLabel=\"Нативный title\"\n  customLabel=\"Своя подсказка\"\n/>",
+          "summary": "Демонстрация разницы между атрибутом title и собственной подсказкой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-tooltip-002-* и не подменять её токенами вашей темы",
+            "нативную ячейку без доработок: она и должна вести себя как системная подсказка",
+            "открытие своей подсказки по :focus-within — без него половина пользователей её не увидит",
+            "aria-describedby на правой кнопке: видимая подсказка обязана быть связана с элементом",
+            "хвостик из повёрнутого квадрата с background:inherit — при смене фона он не отвалится",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "текст обеих подсказок через tip",
+            "подписи кнопок через nativeLabel и customLabel",
+            "пояснительные строчки под кнопками",
+            "цвет подсказки через переменную --vibeui-tooltip-002-tip"
+          ],
+          "notes": [
+            "На телефоне нативная ячейка не покажет ничего: это часть демонстрации, а не поломка.",
+            "Задержку системной подсказки задаёт операционная система, из CSS её не изменить.",
+            "Обе подсказки показывают один и тот же текст намеренно — сравнивается механика, а не содержание.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tip",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Скопировать ссылку",
+            "maxLength": 40
+          },
+          {
+            "prop": "nativeLabel",
+            "label": "Левая кнопка",
+            "type": "text",
+            "default": "Нативный title",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A side-by-side comparison: a button with the native title on the left, a custom tooltip on the right — arrowed, instant and reachable from the keyboard.",
+            "ai": {
+              "summary": "A demonstration of the difference between the title attribute and a custom tooltip. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-tooltip-002-* palette — do not swap it for your theme tokens",
+                "the native cell untouched: it is supposed to behave like a system tooltip",
+                "opening the custom tooltip on :focus-within — without it half the users never see it",
+                "aria-describedby on the right button: a visible tooltip must be tied to its element",
+                "the arrow made of a rotated square with background:inherit — it survives a colour change",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the text of both tooltips through tip",
+                "the button captions through nativeLabel and customLabel",
+                "the explanatory captions under the buttons",
+                "the tooltip colour through the --vibeui-tooltip-002-tip variable"
+              ],
+              "notes": [
+                "On a phone the native cell shows nothing: that is part of the demonstration, not a bug.",
+                "The system tooltip delay is set by the operating system and cannot be changed from CSS.",
+                "Both tooltips show the same text on purpose — the mechanics are compared, not the wording.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tooltip002\n  tip=\"Copy link\"\n  nativeLabel=\"Native title\"\n  customLabel=\"Custom tooltip\"\n/>"
+            },
+            "controls": {
+              "tip": {
+                "label": "Tooltip",
+                "default": "Copy link"
+              },
+              "nativeLabel": {
+                "label": "Left button",
+                "default": "Native title"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tooltip-003",
+      "type": "registry:component",
+      "title": "Shortcut Tooltip",
+      "description": "Подсказка, которая заодно учит горячей клавише: название действия слева, сочетание клавишами справа — она становится справочником, а не повтором подписи.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tooltip-003/tooltip-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tooltip-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-003-*. Серверный: открытие держится на :hover и :focus-within. Клавиши нарисованы тегами <kbd> с полупрозрачной заливкой, а не текстом «Ctrl+K»: так их видно как клавиши. На кнопке стоит aria-keyshortcuts, поэтому сочетание доступно и без наведения, а группе клавиш дана словесная подпись через aria-label — иначе скринридер прочитает набор букв.",
+      "meta": {
+        "tags": ["tooltip", "shortcut", "kbd", "toolbar"],
+        "ai": {
+          "export": "Tooltip003",
+          "usage": "<Tooltip003 tip=\"Открыть поиск\" keys={[\"Ctrl\", \"K\"]} />",
+          "summary": "Подсказка с горячей клавишей: действие и сочетание в одной строке, клавиши размечены <kbd>. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-tooltip-003-* и не подменять её токенами вашей темы",
+            "aria-keyshortcuts на кнопке: сочетание должно быть доступно и без наведения",
+            "словесную подпись группы клавиш — иначе вслух читается набор отдельных букв",
+            "теги <kbd> вместо строки «Ctrl+K»: клавиши узнают по форме",
+            "открытие по :focus-within — подсказка обязана появляться и с клавиатуры",
+            "собственную светлую подложку кнопки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "текст действия через tip",
+            "состав сочетания через keys — массив клавиш рисуется по одной",
+            "свой триггер через children вместо кнопки по умолчанию",
+            "цвет клавиш через переменную --vibeui-tooltip-003-key"
+          ],
+          "notes": [
+            "На macOS привычны ⌘ и ⌥: подставляйте их сами, компонент платформу не определяет.",
+            "Сочетание в подсказке должно совпадать с реальным обработчиком — компонент клавиши не слушает.",
+            "Больше трёх клавиш в ряд читаются плохо: длинные аккорды лучше писать словами.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tip",
+            "label": "Действие",
+            "type": "text",
+            "default": "Открыть поиск",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tooltip that also teaches the shortcut: the action on the left, the key combination on the right — it becomes a reference rather than a repeat of the label.",
+            "ai": {
+              "summary": "A tooltip with a keyboard shortcut: action and combination on one line, keys marked up with <kbd>. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-tooltip-003-* palette — do not swap it for your theme tokens",
+                "aria-keyshortcuts on the button: the combination must be available without hovering",
+                "the spoken label on the key group — otherwise a screen reader reads a run of separate letters",
+                "the <kbd> tags instead of a plain \"Ctrl+K\" string: keys are recognised by shape",
+                "opening on :focus-within — the tooltip must appear from the keyboard too",
+                "the button's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the action text through tip",
+                "the combination through keys — the array is drawn one key at a time",
+                "your own trigger through children instead of the default button",
+                "the key colour through the --vibeui-tooltip-003-key variable"
+              ],
+              "notes": [
+                "macOS expects ⌘ and ⌥: substitute them yourself, the component does not detect the platform.",
+                "The combination in the tooltip must match the real handler — the component listens to nothing.",
+                "More than three keys in a row read poorly: long chords are better written out in words.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tooltip003 tip=\"Open search\" keys={[\"Ctrl\", \"K\"]} />"
+            },
+            "controls": {
+              "tip": {
+                "label": "Action",
+                "default": "Open search"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tooltip-004",
+      "type": "registry:component",
+      "title": "Icon Toolbar",
+      "description": "Панель иконок, где подсказка служит единственной подписью: у каждой кнопки своя доступная метка, а видимая подсказка привязана к своей ячейке.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tooltip-004/tooltip-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tooltip-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-004-*. Серверный: открытие держится на :hover и :focus-within, но не у панели, а у ячейки — иначе наведение на панель раскрыло бы все подсказки разом. Панель объявлена role=\"toolbar\", у каждой кнопки есть aria-label, а видимая подсказка помечена aria-hidden, чтобы имя не читалось дважды. Сторона всплытия переключается пропом side.",
+      "meta": {
+        "tags": ["tooltip", "toolbar", "icon", "label"],
+        "ai": {
+          "export": "Tooltip004",
+          "usage": "<Tooltip004\n  side=\"top\"\n  actions={[{ glyph: \"↩\", label: \"Отменить действие\" }]}\n/>",
+          "summary": "Панель иконок-кнопок с подсказками вместо подписей. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-tooltip-004-* и не подменять её токенами вашей темы",
+            "привязку подсказки к ячейке, а не к панели: иначе наведение раскроет все подсказки разом",
+            "aria-label на каждой кнопке — иконка без имени не читается вслух",
+            "aria-hidden на видимой подсказке: иначе имя кнопки прозвучит дважды",
+            "role=\"toolbar\" на панели — так группа кнопок объявляется одним целым",
+            "собственную светлую подложку панели: без неё тёмные значки пропадают на тёмном фоне"
+          ],
+          "adapt": [
+            "состав панели через actions — значок и подпись каждой кнопки",
+            "сторону всплытия через side — top или bottom",
+            "размер кнопок через width и height в правиле button",
+            "цвет подсказки через переменную --vibeui-tooltip-004-tip"
+          ],
+          "notes": [
+            "Значки заданы символами: своя иконка вставляется вместо содержимого glyph.",
+            "Разделитель рисуется перед последней кнопкой; для другой группировки правило придётся переписать.",
+            "На телефоне подсказки не появятся — важные действия дублируйте подписью в другом месте.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "side",
+            "label": "Сторона",
+            "type": "select",
+            "default": "top",
+            "options": ["top", "bottom"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A toolbar of icons where the tooltip is the only caption: every button carries its own accessible name and the visible tip belongs to its cell.",
+            "ai": {
+              "summary": "A toolbar of icon buttons with tooltips instead of captions. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-tooltip-004-* palette — do not swap it for your theme tokens",
+                "binding the tooltip to the cell rather than the toolbar: otherwise hovering opens every tip at once",
+                "the aria-label on each button — an unnamed icon is never read aloud",
+                "aria-hidden on the visible tooltip: otherwise the button name is announced twice",
+                "role=\"toolbar\" on the panel — that is how a group of buttons is announced as one",
+                "the toolbar's own light surface: without it the dark glyphs disappear on a dark background"
+              ],
+              "adapt": [
+                "the toolbar contents through actions — a glyph and a caption per button",
+                "the side the tips appear on through side — top or bottom",
+                "the button size through width and height in the button rule",
+                "the tooltip colour through the --vibeui-tooltip-004-tip variable"
+              ],
+              "notes": [
+                "The glyphs are characters: your own icon replaces the content of glyph.",
+                "The divider is drawn before the last button; a different grouping needs the rule rewritten.",
+                "On a phone the tooltips never appear — duplicate important actions with a caption elsewhere.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tooltip004\n  side=\"top\"\n  actions={[{ glyph: \"↩\", label: \"Undo\" }]}\n/>"
+            },
+            "controls": {
+              "side": {
+                "label": "Side"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tooltip-005",
+      "type": "registry:component",
+      "title": "Wrapped Tooltip",
+      "description": "Подсказка для длинного объяснения: ограниченная ширина, выключка по левому краю и перенос по словам — строка на 400 пикселей не читается.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tooltip-005/tooltip-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tooltip-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-005-*. Серверный: открытие держится на :hover и :focus-within. Предельная ширина живёт в переменной --vibeui-tooltip-005-width и дополнительно ограничена шириной окна, поэтому у края экрана подсказка сжимается, а не уезжает. Перенос собран из white-space:normal, overflow-wrap:anywhere и text-wrap:pretty — последняя строка не остаётся из одного слова. Триггер несёт собственную светлую подложку.",
+      "meta": {
+        "tags": ["tooltip", "long text", "wrapping", "help"],
+        "ai": {
+          "export": "Tooltip005",
+          "usage": "<Tooltip005\n  label=\"Как считается остаток\"\n  tip=\"Остаток — это оплаченный объём минус израсходованный.\"\n  tipWidth=\"17rem\"\n/>",
+          "summary": "Подсказка с длинным текстом: ограниченная ширина, левая выключка и аккуратный перенос. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-tooltip-005-* и не подменять её токенами вашей темы",
+            "ограничение ширины: строка длиннее шестидесяти знаков перестаёт читаться",
+            "выключку по левому краю — центрированный абзац из трёх строк выглядит рваным",
+            "второе ограничение по ширине окна: у края экрана подсказка обязана сжиматься",
+            "открытие по :focus-within — длинное объяснение нужно и тем, кто ходит с клавиатуры",
+            "собственную светлую подложку триггера: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "подпись триггера через label и текст через tip",
+            "предельную ширину через tipWidth",
+            "сторону всплытия, переставив bottom на top в правиле подсказки",
+            "цвет подсказки через переменную --vibeui-tooltip-005-bg"
+          ],
+          "notes": [
+            "Подсказка не перехватывает курсор: выделить текст внутри не получится, для этого нужен поповер.",
+            "Больше четырёх строк — признак того, что объяснению место в справке, а не в подсказке.",
+            "Перенос по любому месту слова спасает от длинных адресов, но рвёт слова: не ставьте туда ссылки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Как считается остаток",
+            "maxLength": 30
+          },
+          {
+            "prop": "tipWidth",
+            "label": "Ширина",
+            "type": "text",
+            "default": "17rem",
+            "maxLength": 10
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tooltip for a long explanation: a capped width, left-aligned text and word wrapping — a 400-pixel single line is unreadable.",
+            "ai": {
+              "summary": "A tooltip with long copy: capped width, left alignment and careful wrapping. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-tooltip-005-* palette — do not swap it for your theme tokens",
+                "the width cap: a line longer than sixty characters stops being readable",
+                "the left alignment — a centred three-line paragraph looks ragged",
+                "the second cap against the viewport width: near the edge the tooltip must shrink",
+                "opening on :focus-within — a long explanation is also needed by keyboard users",
+                "the trigger's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the trigger caption through label and the copy through tip",
+                "the maximum width through tipWidth",
+                "the side it opens on by swapping bottom for top in the tooltip rule",
+                "the tooltip colour through the --vibeui-tooltip-005-bg variable"
+              ],
+              "notes": [
+                "The tooltip does not capture the pointer: text inside cannot be selected, that needs a popover.",
+                "More than four lines is a sign the explanation belongs in help, not in a tooltip.",
+                "Breaking anywhere saves long URLs but splits words: do not put links in there.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tooltip005\n  label=\"How the balance is counted\"\n  tip=\"The balance is the paid volume minus what has been used.\"\n  tipWidth=\"17rem\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "How the balance is counted"
+              },
+              "tipWidth": {
+                "label": "Width",
+                "default": "17rem"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tooltip-006",
+      "type": "registry:component",
+      "title": "Edge Flip",
+      "description": "Подсказка, которая не вылезает за край: у крайних кнопок она прижимается к своей стороне, а стрелка съезжает к триггеру, чтобы связь не потерялась.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tooltip-006/tooltip-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tooltip-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-006-*. Серверный: выравнивание объявлено атрибутом data-align на ячейке, и три правила задают left:0, центр и right:0. Хвостик позиционируется отдельно для каждого варианта, поэтому при переносе подсказки он остаётся под кнопкой. В демонстрации три кнопки расставлены по краям и центру области — так переворот виден без изменения размера окна.",
+      "meta": {
+        "tags": ["tooltip", "flip", "arrow", "edge"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Tooltip006",
+          "usage": "<Tooltip006\n  tip=\"Экспорт в CSV\"\n  labels={[\"У левого края\", \"По центру\", \"У правого края\"]}\n/>",
+          "summary": "Подсказка со стрелкой и переворотом у края области. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-tooltip-006-* и не подменять её токенами вашей темы",
+            "переезд стрелки вместе с подсказкой: прижатая подсказка со стрелкой по центру теряет связь с кнопкой",
+            "три варианта выравнивания через data-align — без них крайние подсказки обрежутся",
+            "открытие по :focus-within у ячейки, а не у всей строки кнопок",
+            "aria-describedby с уникальным идентификатором на каждой кнопке",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "текст подсказок через tip",
+            "подписи кнопок через labels — первые три раскладываются по краям и центру",
+            "сторону всплытия, переставив bottom на top в правиле подсказки",
+            "цвет подсказки через переменную --vibeui-tooltip-006-tip"
+          ],
+          "notes": [
+            "Выравнивание задаётся руками, а не измеряется: настоящее автоопределение края требует JS.",
+            "Больше трёх кнопок компонент не раскладывает — лишние получат центральное выравнивание.",
+            "Ширина центральной подсказки задана явно, потому что отрицательный отступ считается от неё.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tip",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Экспорт в CSV",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tooltip that never overflows: at the outer buttons it hugs its own side while the arrow slides to the trigger so the link is not lost.",
+            "ai": {
+              "summary": "An arrowed tooltip that flips at the edge of its area. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-tooltip-006-* palette — do not swap it for your theme tokens",
+                "moving the arrow with the tooltip: a shifted tip with a centred arrow loses its link to the button",
+                "the three alignment variants through data-align — without them the outer tips get clipped",
+                "opening on :focus-within of the cell, not of the whole button row",
+                "aria-describedby with a unique id on every button",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the tooltip copy through tip",
+                "the button captions through labels — the first three are laid out at the edges and centre",
+                "the side it opens on by swapping bottom for top in the tooltip rule",
+                "the tooltip colour through the --vibeui-tooltip-006-tip variable"
+              ],
+              "notes": [
+                "Alignment is declared, not measured: real edge detection needs JS.",
+                "The component lays out at most three buttons — extra ones fall back to centre alignment.",
+                "The centre tooltip has an explicit width because the negative offset is computed from it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tooltip006\n  tip=\"Export to CSV\"\n  labels={[\"At the left edge\", \"Centred\", \"At the right edge\"]}\n/>"
+            },
+            "controls": {
+              "tip": {
+                "label": "Tooltip",
+                "default": "Export to CSV"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tooltip-007",
+      "type": "registry:component",
+      "title": "Field Hint",
+      "description": "Подсказка у поля ввода, привязанная к фокусу, а не к наведению: требования к паролю нужны в момент набора, а курсор мыши в этот момент не при делах.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tooltip-007/tooltip-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tooltip-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-007-*. Серверный: подсказка раскрывается правилом :focus-within у обёртки поля, поэтому обработчики не нужны. Она объявлена aria-describedby у input и помечена role=\"note\", то есть читается вслух вместе с полем. Подсказка выведена из потока абсолютным позиционированием: появление не сдвигает форму. Обёртка растянута на ширину поля, поэтому подсказка совпадает с ним по краям.",
+      "meta": {
+        "tags": ["tooltip", "form", "focus", "hint"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Tooltip007",
+          "usage": "<Tooltip007\n  label=\"Новый пароль\"\n  hint=\"От 12 знаков, хотя бы одна цифра.\"\n  name=\"password\"\n/>",
+          "summary": "Подсказка у поля, открывающаяся по фокусу: требования появляются в момент набора. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-tooltip-007-* и не подменять её токенами вашей темы",
+            "открытие по фокусу, а не по наведению: требования нужны во время набора",
+            "aria-describedby на поле — подсказка обязана читаться вместе с ним",
+            "абсолютное позиционирование подсказки: появление не должно сдвигать форму",
+            "видимую рамку фокуса у поля — она остаётся единственным указателем места ввода",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "подпись поля через label и текст требований через hint",
+            "заглушку через placeholder и имя поля через name",
+            "тип поля, если требования относятся не к паролю",
+            "цвет подсказки через переменную --vibeui-tooltip-007-tip"
+          ],
+          "notes": [
+            "Подсказка не проверяет ввод: валидацию делает форма, компонент только объясняет правила.",
+            "Идентификаторы заданы строками — при двух полях на странице их нужно развести.",
+            "Подсказка перекрывает то, что стоит под полем: оставьте под ним запас по высоте.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись поля",
+            "type": "text",
+            "default": "Новый пароль",
+            "maxLength": 24
+          },
+          {
+            "prop": "hint",
+            "label": "Требования",
+            "type": "text",
+            "default": "От 12 знаков, хотя бы одна цифра и один спецсимвол. Пробелы считаются.",
+            "maxLength": 120
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A field hint tied to focus rather than hover: password rules are needed while typing, and the mouse pointer has nothing to do with that moment.",
+            "ai": {
+              "summary": "A field hint that opens on focus: the rules appear while typing. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-tooltip-007-* palette — do not swap it for your theme tokens",
+                "opening on focus rather than hover: the rules are needed while typing",
+                "aria-describedby on the field — the hint must be read together with it",
+                "the absolute positioning of the hint: its appearance must not shift the form",
+                "the visible focus ring on the field — it stays the only marker of where you are typing",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the field caption through label and the rules through hint",
+                "the placeholder through placeholder and the field name through name",
+                "the input type if the rules are not about a password",
+                "the hint colour through the --vibeui-tooltip-007-tip variable"
+              ],
+              "notes": [
+                "The hint validates nothing: the form does the checking, the component only states the rules.",
+                "The ids are literal strings — with two fields on a page they have to be made unique.",
+                "The hint covers whatever sits below the field: leave some vertical room under it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tooltip007\n  label=\"New password\"\n  hint=\"At least 12 characters and one digit.\"\n  name=\"password\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Field caption",
+                "default": "New password"
+              },
+              "hint": {
+                "label": "Rules",
+                "default": "At least 12 characters, one digit and one symbol. Spaces count."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tooltip-008",
+      "type": "registry:component",
+      "title": "Term Underline",
+      "description": "Объяснение термина прямо в тексте: слово подчёркнуто пунктиром и остаётся в строке, а подсказка выезжает поверх и ничего не сдвигает.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tooltip-008/tooltip-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tooltip-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-008-*. Серверный: открытие держится на :hover и :focus-visible самого слова. Термин остаётся строчным элементом с tabIndex=0 — не кнопка и не ссылка, поэтому набор текста не рвётся, но фокус с клавиатуры на нём есть. Подсказка набрана гротеском внутри серифного абзаца: так она читается как выноска, а не как часть текста. Подчёркивание пунктиром сделано свойством text-decoration, а не рамкой.",
+      "meta": {
+        "tags": ["tooltip", "glossary", "inline", "typography"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Tooltip008",
+          "usage": "<Tooltip008\n  before=\"Мы платим за трафик по модели \"\n  term=\"95-й перцентиль\"\n  definition=\"Пять процентов самых высоких замеров отбрасываются.\"\n  after=\", поэтому ночной бэкап не влияет на счёт.\"\n/>",
+          "summary": "Термин в тексте на пунктирном подчёркивании с всплывающим объяснением. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-tooltip-008-* и не подменять её токенами вашей темы",
+            "термин строчным элементом: кнопка или ссылка в середине абзаца рвёт набор",
+            "tabIndex=0 вместе с aria-describedby — иначе объяснение недоступно с клавиатуры",
+            "пунктир через text-decoration, а не рамкой: рамка не переносится вместе со словом",
+            "гротеск в подсказке внутри серифного абзаца — так выноска отличается от текста",
+            "собственную светлую подложку абзаца: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "текст вокруг через before и after",
+            "само слово через term и объяснение через definition",
+            "гарнитуру абзаца через переменную --vibeui-tooltip-008-font",
+            "цвет термина через переменную --vibeui-tooltip-008-mark"
+          ],
+          "notes": [
+            "Если термин переносится на другую строку, подсказка встанет по первой части слова.",
+            "Курсор help — единственный намёк для мыши: не убирайте его вместе с пунктиром.",
+            "На телефоне подсказка появится по нажатию за счёт фокуса, но закрыть её придётся нажатием мимо.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "term",
+            "label": "Термин",
+            "type": "text",
+            "default": "95-й перцентиль",
+            "maxLength": 30
+          },
+          {
+            "prop": "definition",
+            "label": "Объяснение",
+            "type": "text",
+            "default": "Из всех замеров за месяц отбрасываются пять процентов самых высоких, и счёт выставляется по следующему значению.",
+            "maxLength": 200
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A term explained inside the text: the word carries a dotted underline and stays in the line, while the tooltip floats above without shifting anything.",
+            "ai": {
+              "summary": "A dotted-underlined term in running text with a pop-up explanation. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-tooltip-008-* palette — do not swap it for your theme tokens",
+                "the term as an inline element: a button or link mid-paragraph breaks the setting",
+                "tabIndex=0 together with aria-describedby — otherwise the explanation is unreachable by keyboard",
+                "the dotted rule via text-decoration rather than a border: a border does not follow a wrapped word",
+                "the sans-serif tooltip inside a serif paragraph — that is what makes it read as an aside",
+                "the paragraph's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the surrounding copy through before and after",
+                "the word itself through term and the explanation through definition",
+                "the paragraph typeface through the --vibeui-tooltip-008-font variable",
+                "the term colour through the --vibeui-tooltip-008-mark variable"
+              ],
+              "notes": [
+                "If the term wraps to the next line, the tooltip anchors to the first fragment of the word.",
+                "The help cursor is the only hint for a mouse: do not remove it along with the dotted rule.",
+                "On a phone the tooltip opens on tap through focus, but closing it needs a tap elsewhere.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tooltip008\n  before=\"We are billed on the \"\n  term=\"95th percentile\"\n  definition=\"The top five percent of samples are dropped.\"\n  after=\", so the nightly backup does not affect the bill.\"\n/>"
+            },
+            "controls": {
+              "term": {
+                "label": "Term",
+                "default": "95th percentile"
+              },
+              "definition": {
+                "label": "Explanation",
+                "default": "The top five percent of the month's samples are dropped and the bill uses the next value."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tooltip-009",
+      "type": "registry:component",
+      "title": "Delayed Tooltip",
+      "description": "Подсказка появляется с задержкой, а прячется мгновенно: пролёт курсора по строке кнопок не устраивает мигание подсказок.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tooltip-009/tooltip-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tooltip-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-009-*. Серверный: задержка стоит только в правиле открытого состояния через transition-delay, а базовое правило обнуляет её — поэтому появление ждёт, а исчезновение происходит сразу. Величина задержки живёт в --vibeui-tooltip-009-delay и приходит пропом delay, так что таймеры на JS не нужны. Подсказки привязаны к своим ячейкам, поэтому наведение на соседа не раскрывает всю строку.",
+      "meta": {
+        "tags": ["tooltip", "delay", "hover intent", "row"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Tooltip009",
+          "usage": "<Tooltip009\n  tip=\"Действие над выбранной строкой\"\n  delay={0.5}\n  labels={[\"Копировать\", \"Дублировать\"]}\n/>",
+          "summary": "Подсказка с задержкой появления и мгновенным скрытием на одном transition-delay. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-tooltip-009-* и не подменять её токенами вашей темы",
+            "задержку только в открытом состоянии: если поставить её в базовом правиле, подсказка будет ещё и гаснуть с опозданием",
+            "нулевую задержку в базовом правиле — она и есть механизм мгновенного скрытия",
+            "привязку подсказки к ячейке, а не к строке кнопок",
+            "открытие по :focus-within — с клавиатуры подсказка обязана появляться сразу",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "величину задержки через delay",
+            "текст подсказок через tip",
+            "подписи кнопок через labels",
+            "цвет подсказки через переменную --vibeui-tooltip-009-tip"
+          ],
+          "notes": [
+            "Задержка больше секунды воспринимается как поломка: разумный диапазон — от 0,3 до 0,7 секунды.",
+            "С клавиатуры задержка тоже работает; если это мешает, вынесите :focus-within в отдельное правило без transition-delay.",
+            "Все кнопки в строке показывают один текст — в реальном интерфейсе подпись у каждой своя.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "delay",
+            "label": "Задержка, с",
+            "type": "number",
+            "default": 0.5,
+            "min": 0,
+            "max": 2
+          },
+          {
+            "prop": "tip",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Действие над выбранной строкой",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The tooltip opens after a delay and hides instantly: sweeping the pointer across a row of buttons no longer sets off a flicker of tips.",
+            "ai": {
+              "summary": "A tooltip with an opening delay and instant hide, built on a single transition-delay. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-tooltip-009-* palette — do not swap it for your theme tokens",
+                "the delay only in the open state: put it in the base rule and the tooltip also fades out late",
+                "the zero delay in the base rule — that is the instant-hide mechanism itself",
+                "binding the tooltip to the cell rather than the button row",
+                "opening on :focus-within — from the keyboard the tooltip must appear at once",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the delay length through delay",
+                "the tooltip copy through tip",
+                "the button captions through labels",
+                "the tooltip colour through the --vibeui-tooltip-009-tip variable"
+              ],
+              "notes": [
+                "A delay over a second reads as a bug: 0.3 to 0.7 seconds is the sane range.",
+                "The delay also applies to keyboard focus; if that bothers you, split :focus-within into a rule without transition-delay.",
+                "Every button in the row shows the same text — in a real interface each has its own.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tooltip009\n  tip=\"Acts on the selected row\"\n  delay={0.5}\n  labels={[\"Copy\", \"Duplicate\"]}\n/>"
+            },
+            "controls": {
+              "delay": {
+                "label": "Delay, s"
+              },
+              "tip": {
+                "label": "Tooltip",
+                "default": "Acts on the selected row"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "banner-002",
+      "type": "registry:component",
+      "title": "Update Banner",
+      "description": "Полоса «вышла новая версия» с одним честным действием — перезагрузить страницу; номер версии рядом, чтобы сообщение не читалось как реклама.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "banner-002/banner-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/banner-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-002-*. Серверный: хуков нет. Раскладка считается от собственной ширины через container-type:inline-size на корне и правило @container на внутреннем shell — контейнерный запрос не действует на сам контейнер. Пульсирующая точка сделана расширяющимся кольцом в ::after с медленным циклом: обновление можно отложить, тревожить не нужно. Полоса объявлена role=\"status\" с aria-live=\"polite\".",
+      "meta": {
+        "tags": ["banner", "update", "version", "reload"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Banner002",
+          "usage": "<Banner002\n  message=\"Вышла новая версия приложения.\"\n  version=\"2.8.0\"\n  actionLabel=\"Перезагрузить\"\n/>",
+          "summary": "Полоса обновления: сообщение, номер версии и кнопка перезагрузки. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-banner-002-* и не подменять её токенами вашей темы",
+            "медленный пульс: быстрая мигающая точка читается как авария, а обновление можно отложить",
+            "правило @container на внутреннем shell — контейнерный запрос не применяется к самому контейнеру",
+            "role=\"status\" с aria-live=\"polite\": обновление не должно перебивать текущее чтение",
+            "номер версии рядом с текстом — без него полоса выглядит рекламой",
+            "собственную светлую подложку полосы: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "текст через message и номер через version",
+            "подпись кнопки через actionLabel",
+            "ширину полосы через max-width на корне",
+            "акцент через переменную --vibeui-banner-002-accent"
+          ],
+          "notes": [
+            "Компонент не перезагружает страницу сам: onReload вызывает вызывающий код.",
+            "Полоса не решает, когда появиться — сравнение версий делает приложение.",
+            "На узкой ширине кнопка растягивается на всю строку: проверьте текст, длинная подпись переносится.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "version",
+            "label": "Версия",
+            "type": "text",
+            "default": "2.8.0",
+            "maxLength": 12
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Перезагрузить",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A «new version is out» bar with one honest action — reload the page; the version number sits beside it so the message does not read as an ad.",
+            "ai": {
+              "summary": "An update bar: a message, a version number and a reload button. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-banner-002-* palette — do not swap it for your theme tokens",
+                "the slow pulse: a fast blinking dot reads as an outage, while an update can wait",
+                "the @container rule on the inner shell — a container query never applies to the container itself",
+                "role=\"status\" with aria-live=\"polite\": an update must not interrupt current reading",
+                "the version number next to the copy — without it the bar looks like marketing",
+                "the bar's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the copy through message and the number through version",
+                "the button caption through actionLabel",
+                "the bar width through max-width on the root",
+                "the accent through the --vibeui-banner-002-accent variable"
+              ],
+              "notes": [
+                "The component does not reload the page: onReload is called by the caller.",
+                "The bar does not decide when to appear — the app compares the versions.",
+                "At narrow widths the button spans the row: check the caption, a long one wraps.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Banner002\n  message=\"A new version of the app is out.\"\n  version=\"2.8.0\"\n  actionLabel=\"Reload\"\n/>"
+            },
+            "controls": {
+              "version": {
+                "label": "Version",
+                "default": "2.8.0"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Reload"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "banner-003",
+      "type": "registry:component",
+      "title": "Consent Banner",
+      "description": "Согласие на cookie, где отказ — такая же кнопка, как согласие: одинаковый размер и вес, разница только в заливке.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "banner-003/banner-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/banner-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-003-*. Серверный: хуков нет. Обе кнопки описаны одним правилом и различаются только заливкой, поэтому отказ невозможно случайно ослабить — тёмная кнопка «Принять» против серой ссылки «Отказаться» и есть тёмный паттерн. «Настроить» стоит третьим и отодвинуто margin-left:auto, чтобы не притворяться отказом. На узкой ширине через @container обе кнопки растягиваются на всю строку и остаются равными.",
+      "meta": {
+        "tags": ["banner", "cookie", "consent", "privacy"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Banner003",
+          "usage": "<Banner003\n  title=\"Cookie и статистика\"\n  acceptLabel=\"Принять все\"\n  rejectLabel=\"Только необходимые\"\n/>",
+          "summary": "Полоса согласия на cookie с равновесным отказом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-banner-003-* и не подменять её токенами вашей темы",
+            "равный размер и вес кнопок согласия и отказа — разный вес и есть тёмный паттерн",
+            "порядок «принять, отказаться, настроить»: настройки не должны стоять на месте отказа",
+            "честный текст про то, что без необязательных файлов сайт работает так же",
+            "растяжение обеих кнопок на узкой ширине — иначе на телефоне отказ окажется мельче",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "заголовок через title и объяснение через text",
+            "подписи через acceptLabel, rejectLabel и settingsLabel",
+            "ширину карточки через max-width на корне",
+            "акцент через переменную --vibeui-banner-003-accent"
+          ],
+          "notes": [
+            "Компонент ничего не сохраняет: решение пользователя записывает вызывающий код.",
+            "Пустая строка в settingsLabel убирает третью кнопку, две первые остаются равными.",
+            "Юридический текст в объяснение не влезет — ведите его отдельной страницей и ссылкой.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "acceptLabel",
+            "label": "Согласие",
+            "type": "text",
+            "default": "Принять все",
+            "maxLength": 24
+          },
+          {
+            "prop": "rejectLabel",
+            "label": "Отказ",
+            "type": "text",
+            "default": "Только необходимые",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A cookie consent bar where refusal is the same button as consent: same size, same weight, only the fill differs.",
+            "ai": {
+              "summary": "A cookie consent bar with an equally weighted refusal. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-banner-003-* palette — do not swap it for your theme tokens",
+                "the equal size and weight of accept and reject — unequal weight is the dark pattern itself",
+                "the order «accept, reject, settings»: settings must not stand where refusal belongs",
+                "the honest line saying the site works the same without the optional files",
+                "both buttons spanning the row at narrow widths — otherwise refusal ends up smaller on a phone",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the heading through title and the explanation through text",
+                "the captions through acceptLabel, rejectLabel and settingsLabel",
+                "the card width through max-width on the root",
+                "the accent through the --vibeui-banner-003-accent variable"
+              ],
+              "notes": [
+                "The component stores nothing: the caller records the user's decision.",
+                "An empty settingsLabel removes the third button and leaves the first two equal.",
+                "Legal text will not fit in the explanation — keep it on its own page behind a link.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Banner003\n  title=\"Cookies and analytics\"\n  acceptLabel=\"Accept all\"\n  rejectLabel=\"Essential only\"\n/>"
+            },
+            "controls": {
+              "acceptLabel": {
+                "label": "Accept",
+                "default": "Accept all"
+              },
+              "rejectLabel": {
+                "label": "Reject",
+                "default": "Essential only"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "banner-004",
+      "type": "registry:component",
+      "title": "Staging Banner",
+      "description": "Полоса тестового режима: косая штриховка, моноширинная метка и имя окружения — её невозможно спутать с боевым интерфейсом даже на скриншоте.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "banner-004/banner-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/banner-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-004-*. Серверный: хуков нет. Штриховка нарисована repeating-linear-gradient, а не картинкой, поэтому масштабируется без потерь. Раскладка считается от собственной ширины: container-type:inline-size на корне, @container на внутреннем shell. На узкой ширине штриховка и метка окружения скрываются — остаётся главное. Полоса объявлена role=\"note\" с доступным именем, включающим окружение.",
+      "meta": {
+        "tags": ["banner", "staging", "environment", "warning"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Banner004",
+          "usage": "<Banner004\n  label=\"Тестовый режим\"\n  note=\"Платежи не проходят, письма не уходят.\"\n  environment=\"staging\"\n/>",
+          "summary": "Полоса тестового режима со штриховкой и именем окружения. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-banner-004-* и не подменять её токенами вашей темы",
+            "непохожесть на продуктовый интерфейс: штриховка и моноширинный шрифт — это и есть сигнал",
+            "имя окружения в доступной подписи — на скриншоте видно, а вслух иначе не прочитается",
+            "объяснение последствий рядом с меткой: «тестовый режим» сам по себе ничего не говорит",
+            "правило @container на внутреннем shell — контейнерный запрос не применяется к самому контейнеру",
+            "собственную светлую подложку полосы: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "метку через label и объяснение через note",
+            "имя окружения через environment",
+            "шаг штриховки в правиле tape",
+            "цвет полос через переменную --vibeui-banner-004-stripe"
+          ],
+          "notes": [
+            "Полоса не определяет окружение сама: имя приходит из переменных сборки.",
+            "На узкой ширине штриховка и метка окружения скрываются — не кладите в них уникальные сведения.",
+            "Жёлтый в этой палитре намеренно спокойный: красная полоса на каждом экране перестаёт работать через день.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Метка",
+            "type": "text",
+            "default": "Тестовый режим",
+            "maxLength": 24
+          },
+          {
+            "prop": "environment",
+            "label": "Окружение",
+            "type": "text",
+            "default": "staging",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A staging bar: diagonal hatching, a monospaced label and the environment name — impossible to mistake for production, even in a screenshot.",
+            "ai": {
+              "summary": "A test-mode bar with hatching and the environment name. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-banner-004-* palette — do not swap it for your theme tokens",
+                "the deliberate mismatch with the product UI: the hatching and monospace are the signal",
+                "the environment name in the accessible label — visible in a screenshot, otherwise never spoken",
+                "the consequences next to the label: \"test mode\" on its own says nothing",
+                "the @container rule on the inner shell — a container query never applies to the container itself",
+                "the bar's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the label through label and the explanation through note",
+                "the environment name through environment",
+                "the hatching pitch in the tape rule",
+                "the stripe colour through the --vibeui-banner-004-stripe variable"
+              ],
+              "notes": [
+                "The bar does not detect the environment: the name comes from build variables.",
+                "At narrow widths the hatching and the environment chip hide — do not put unique facts there.",
+                "The yellow here is deliberately calm: a red bar on every screen stops working within a day.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Banner004\n  label=\"Test mode\"\n  note=\"Payments do not go through, emails are not sent.\"\n  environment=\"staging\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Test mode"
+              },
+              "environment": {
+                "label": "Environment",
+                "default": "staging"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "banner-005",
+      "type": "registry:component",
+      "title": "Quota Banner",
+      "description": "Полоса тарифного лимита с цифрой вместо страшилки: заполнение считается из двух чисел, а цвет переключается сам, когда остаётся меньше десятой части.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "banner-005/banner-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/banner-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-005-*. Серверный: доля считается из used и limit, кладётся в --vibeui-banner-005-ratio, а ширину полосы выводит calc. Состояние (calm, tight, over) объявлено атрибутом data-state и переопределяет один тон — отдельных наборов правил под каждое состояние нет. Полоса размечена role=\"progressbar\" с aria-valuenow. Раскладка считается от собственной ширины через @container на внутреннем shell.",
+      "meta": {
+        "tags": ["banner", "quota", "plan", "upgrade"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Banner005",
+          "usage": "<Banner005\n  used={9200}\n  limit={10000}\n  unit=\"запросов\"\n  actionLabel=\"Повысить тариф\"\n/>",
+          "summary": "Полоса тарифного лимита: доля из двух чисел, самопереключающийся тон и кнопка апгрейда. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-banner-005-* и не подменять её токенами вашей темы",
+            "цифры рядом с полосой: «почти закончилось» без чисел не даёт принять решение",
+            "переключение тона по доле, а не отдельные наборы правил на каждое состояние",
+            "role=\"progressbar\" с aria-valuenow — доля должна читаться вслух",
+            "табличные цифры у счётчика: иначе числа прыгают при каждом обновлении",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "числа через used и limit, единицу измерения через unit",
+            "название тарифа через planLabel",
+            "подпись кнопки через actionLabel",
+            "спокойный тон через переменную --vibeui-banner-005-tone"
+          ],
+          "notes": [
+            "Доля зажимается сотней: перерасход показывается полной полосой и отдельным текстом.",
+            "Границы состояний заданы в коде: 90 процентов и исчерпание — меняйте их вместе с текстом.",
+            "Числа форматируются русской локалью: для другой локали передайте уже отформатированные строки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "used",
+            "label": "Израсходовано",
+            "type": "number",
+            "default": 9200,
+            "min": 0,
+            "max": 20000
+          },
+          {
+            "prop": "limit",
+            "label": "Лимит",
+            "type": "number",
+            "default": 10000,
+            "min": 1,
+            "max": 20000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A plan-limit bar with a number instead of a scare: the fill is computed from two figures and the colour switches itself once less than a tenth is left.",
+            "ai": {
+              "summary": "A plan-limit bar: a ratio from two numbers, a self-switching tone and an upgrade button. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-banner-005-* palette — do not swap it for your theme tokens",
+                "the figures next to the bar: \"almost out\" without numbers cannot support a decision",
+                "switching the tone by ratio rather than writing a rule set per state",
+                "role=\"progressbar\" with aria-valuenow — the ratio has to be announced",
+                "tabular figures on the counter: otherwise the numbers jump on every update",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the figures through used and limit, the unit through unit",
+                "the plan name through planLabel",
+                "the button caption through actionLabel",
+                "the calm tone through the --vibeui-banner-005-tone variable"
+              ],
+              "notes": [
+                "The ratio is capped at a hundred: overuse shows as a full bar plus separate copy.",
+                "The thresholds live in the code: 90 percent and exhaustion — change them together with the wording.",
+                "Numbers are formatted with the Russian locale: for another locale pass pre-formatted strings.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Banner005\n  used={9200}\n  limit={10000}\n  unit=\"requests\"\n  actionLabel=\"Upgrade plan\"\n/>"
+            },
+            "controls": {
+              "used": {
+                "label": "Used"
+              },
+              "limit": {
+                "label": "Limit"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "banner-006",
+      "type": "registry:component",
+      "title": "Offline Banner",
+      "description": "Полоса «нет сети», которая объясняет последствия: не просто «офлайн», а что произойдёт с набранным текстом, пока соединения нет.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "banner-006/banner-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/banner-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-006-*. Серверный: хуков нет. Индикатор — три чёрточки разной высоты, они гаснут по очереди через animation-delay, а последняя приглушена постоянно: оборванный сигнал читается по форме, а не только по цвету. Полоса тёмная и объявлена role=\"status\" с aria-live=\"polite\". Раскладка считается от собственной ширины: @container на внутреннем shell растягивает кнопку на узком экране.",
+      "meta": {
+        "tags": ["banner", "offline", "network", "retry"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Banner006",
+          "usage": "<Banner006\n  message=\"Нет соединения с сервером\"\n  detail=\"Изменения сохраняются в браузере.\"\n  retryLabel=\"Проверить сеть\"\n/>",
+          "summary": "Полоса офлайн-состояния: индикатор сигнала, объяснение последствий и повтор. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-banner-006-* и не подменять её токенами вашей темы",
+            "вторую строку с последствиями: «нет сети» без неё оставляет человека в панике за свой текст",
+            "форму индикатора: оборванный сигнал должен читаться и без цвета",
+            "role=\"status\" с aria-live=\"polite\" — потеря сети объявляется, но не перебивает ввод",
+            "тёмную подложку: полоса обязана отличаться от обычных сообщений интерфейса",
+            "правило @container на внутреннем shell — контейнерный запрос не применяется к самому контейнеру"
+          ],
+          "adapt": [
+            "первую строку через message и вторую через detail",
+            "подпись действия через retryLabel",
+            "цвет индикатора через переменную --vibeui-banner-006-tone",
+            "ширину полосы через max-width на корне"
+          ],
+          "notes": [
+            "Компонент не следит за сетью: показывать и прятать полосу решает приложение.",
+            "Обещание «сохраняется в браузере» должно быть правдой — иначе текст лучше переписать.",
+            "Кнопка только вызывает onRetry: повторный запрос делает вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "message",
+            "label": "Сообщение",
+            "type": "text",
+            "default": "Нет соединения с сервером",
+            "maxLength": 40
+          },
+          {
+            "prop": "retryLabel",
+            "label": "Повтор",
+            "type": "text",
+            "default": "Проверить сеть",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An offline bar that explains the consequences: not just «offline», but what happens to the text you already typed.",
+            "ai": {
+              "summary": "An offline bar: a signal indicator, the consequences and a retry action. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-banner-006-* palette — do not swap it for your theme tokens",
+                "the second line about consequences: \"no connection\" alone leaves people fearing for their text",
+                "the shape of the indicator: a broken signal must read without colour",
+                "role=\"status\" with aria-live=\"polite\" — losing the network is announced but does not interrupt typing",
+                "the dark surface: the bar has to look different from ordinary interface messages",
+                "the @container rule on the inner shell — a container query never applies to the container itself"
+              ],
+              "adapt": [
+                "the first line through message and the second through detail",
+                "the action caption through retryLabel",
+                "the indicator colour through the --vibeui-banner-006-tone variable",
+                "the bar width through max-width on the root"
+              ],
+              "notes": [
+                "The component does not watch the network: the app decides when to show and hide the bar.",
+                "The promise \"saved in the browser\" must be true — otherwise rewrite the copy.",
+                "The button only calls onRetry: the retry request is the caller's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Banner006\n  message=\"No connection to the server\"\n  detail=\"Changes are kept in the browser.\"\n  retryLabel=\"Check network\"\n/>"
+            },
+            "controls": {
+              "message": {
+                "label": "Message",
+                "default": "No connection to the server"
+              },
+              "retryLabel": {
+                "label": "Retry",
+                "default": "Check network"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "banner-007",
+      "type": "registry:component",
+      "title": "Maintenance Notice",
+      "description": "Полоса плановых работ, где главный герой — время: окно недоступности вынесено в отдельный блок и размечено тегом time.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "banner-007/banner-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/banner-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-007-*. Серверный: хуков нет. Окно недоступности вынесено в отдельный блок и обёрнуто тегом <time> с машиночитаемым datetime, поэтому его понимает не только человек. Доступное имя полосы собирается из заголовка, даты и границ окна — вслух звучит вся суть без чтения абзаца. Раскладка считается от собственной ширины: на узком экране блок времени встаёт над текстом через @container.",
+      "meta": {
+        "tags": ["banner", "maintenance", "schedule", "time"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Banner007",
+          "usage": "<Banner007\n  title=\"Плановые работы с базой данных\"\n  date=\"14 сентября\"\n  from=\"02:00\"\n  to=\"04:30\"\n/>",
+          "summary": "Полоса плановых работ с окном недоступности в теге time. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-banner-007-* и не подменять её токенами вашей темы",
+            "тег <time> с машиночитаемым datetime — иначе дату понимает только человек",
+            "вынесенное окно недоступности: время здесь важнее заголовка",
+            "доступное имя полосы с датой и границами окна — оно звучит вместо чтения абзаца",
+            "перечисление того, что перестанет работать: «возможны перебои» никому не помогает",
+            "собственную светлую подложку полосы: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "заголовок через title и подробности через note",
+            "дату через date, границы окна через from и to",
+            "машиночитаемое значение через datetime",
+            "акцент через переменную --vibeui-banner-007-accent"
+          ],
+          "notes": [
+            "Часовой пояс компонент не подставляет: указывайте его прямо в date или note.",
+            "Значение datetime должно совпадать с показанным временем, иначе разметка врёт.",
+            "Полоса не исчезает после окончания работ — снимать её должно приложение.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "from",
+            "label": "Начало",
+            "type": "text",
+            "default": "02:00",
+            "maxLength": 8
+          },
+          {
+            "prop": "to",
+            "label": "Конец",
+            "type": "text",
+            "default": "04:30",
+            "maxLength": 8
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A scheduled-maintenance bar where time is the hero: the outage window sits in its own block and is marked up with a time tag.",
+            "ai": {
+              "summary": "A scheduled-maintenance bar with the outage window in a time tag. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-banner-007-* palette — do not swap it for your theme tokens",
+                "the <time> tag with a machine-readable datetime — otherwise only a human understands the date",
+                "the outage window pulled out on its own: here the time matters more than the heading",
+                "the accessible name carrying the date and the window — it is spoken instead of the paragraph",
+                "listing what will stop working: \"there may be disruptions\" helps nobody",
+                "the bar's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the heading through title and the detail through note",
+                "the date through date and the window through from and to",
+                "the machine-readable value through datetime",
+                "the accent through the --vibeui-banner-007-accent variable"
+              ],
+              "notes": [
+                "The component does not add a time zone: state it inside date or note.",
+                "The datetime value must match the displayed time, otherwise the markup lies.",
+                "The bar does not disappear when the work ends — the app has to remove it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Banner007\n  title=\"Scheduled database maintenance\"\n  date=\"14 September\"\n  from=\"02:00\"\n  to=\"04:30\"\n/>"
+            },
+            "controls": {
+              "from": {
+                "label": "From",
+                "default": "02:00"
+              },
+              "to": {
+                "label": "To",
+                "default": "04:30"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "banner-008",
+      "type": "registry:component",
+      "title": "Promo Banner",
+      "description": "Закрываемая полоса акции без единой строки JS: крестик — это label к спрятанному чекбоксу, а :has(:checked) убирает полосу целиком.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "banner-008/banner-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/banner-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-008-*. Серверный: состояние закрытия живёт в DOM — визуально скрытый чекбокс плюс правило [data-vibeui-block]:has([data-part=\"switch\"]:checked){display:none}. Крестик оформлен тегом <label>, поэтому нажатие переключает чекбокс без обработчика. Чекбокс спрятан clip-path, а не display:none, иначе он потерял бы фокус. Промокод набран моноширинным шрифтом на пунктирной рамке: его переписывают глазами.",
+      "meta": {
+        "tags": ["banner", "promo", "dismiss", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Banner008",
+          "usage": "<Banner008\n  message=\"Годовая подписка на 30% дешевле.\"\n  code=\"AUTUMN30\"\n  actionLabel=\"Забрать скидку\"\n/>",
+          "summary": "Закрываемая полоса акции: закрытие работает без JS через чекбокс и :has(). Ноль зависимостей, один файл, клиентского состояния нет.",
+          "preserve": [
+            "локальную палитру --vibeui-banner-008-* и не подменять её токенами вашей темы",
+            "скрытие чекбокса через clip-path, а не display:none — иначе он выпадет из порядка фокуса",
+            "связку label и чекбокса по id: без неё крестик перестаёт закрывать полосу",
+            "правило :has(:checked) на корне — это и есть механизм закрытия без JS",
+            "моноширинный промокод на пунктирной рамке: его переписывают глазами, а не копируют",
+            "уникальный id при двух полосах на странице — иначе они закроются вместе"
+          ],
+          "adapt": [
+            "текст через message и промокод через code",
+            "подпись кнопки через actionLabel и адрес ссылки",
+            "идентификатор чекбокса через id",
+            "градиент через переменные --vibeui-banner-008-from и --vibeui-banner-008-to"
+          ],
+          "notes": [
+            "Закрытие не запоминается между заходами: чтобы полоса не возвращалась, состояние придётся хранить самому.",
+            "Селектор :has() поддерживается современными браузерами; в старых полоса просто не закроется.",
+            "Крестик помечен aria-hidden — доступное имя несёт сам чекбокс, иначе действие прозвучит дважды.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "code",
+            "label": "Промокод",
+            "type": "text",
+            "default": "AUTUMN30",
+            "maxLength": 16
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Забрать скидку",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dismissible promo bar with no JS at all: the close control is a label for a hidden checkbox, and :has(:checked) removes the whole bar.",
+            "ai": {
+              "summary": "A dismissible promo bar: closing works without JS through a checkbox and :has(). Zero dependencies, one file, no client state.",
+              "preserve": [
+                "the local --vibeui-banner-008-* palette — do not swap it for your theme tokens",
+                "hiding the checkbox with clip-path rather than display:none — otherwise it leaves the focus order",
+                "the label-to-checkbox link by id: without it the close control stops working",
+                "the :has(:checked) rule on the root — that is the JS-free dismissal mechanism",
+                "the monospaced code on a dashed border: people retype it by eye rather than copy it",
+                "a unique id when two bars share a page — otherwise they close together"
+              ],
+              "adapt": [
+                "the copy through message and the coupon through code",
+                "the button caption through actionLabel and the link target",
+                "the checkbox identifier through id",
+                "the gradient through --vibeui-banner-008-from and --vibeui-banner-008-to"
+              ],
+              "notes": [
+                "Dismissal is not remembered between visits: to keep the bar away you have to store that yourself.",
+                "The :has() selector works in current browsers; in old ones the bar simply will not close.",
+                "The close label is aria-hidden — the checkbox carries the accessible name, otherwise the action is announced twice.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Banner008\n  message=\"Annual plans are 30% off.\"\n  code=\"AUTUMN30\"\n  actionLabel=\"Get the discount\"\n/>"
+            },
+            "controls": {
+              "code": {
+                "label": "Coupon",
+                "default": "AUTUMN30"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Get the discount"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "popover-002",
+      "type": "registry:component",
+      "title": "Quick Add",
+      "description": "Быстрое действие без ухода со страницы: в поповере живёт настоящая форма из поля и списка, а отправка закрывает панель штатным popovertargetaction.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "popover-002/popover-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/popover-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-002-*. Серверный: слой, Escape и клик вне достаются от HTML popover, идентификаторы разводит useId. Раскладка панели объявлена только в :popover-open, иначе display перебил бы встроенный display:none. Позиционирование сделано CSS anchor positioning с откатом на absolute под @supports not. Кнопка отправки закрывает панель через popovertargetaction=\"hide\", поэтому обработчик закрытия не нужен.",
+      "meta": {
+        "tags": ["popover", "form", "quick add", "anchor"],
+        "ai": {
+          "export": "Popover002",
+          "usage": "<Popover002\n  label=\"Новая задача\"\n  fieldLabel=\"Что сделать\"\n  submitLabel=\"Добавить\"\n  lists={[\"Входящие\", \"На неделю\"]}\n/>",
+          "summary": "Поповер с формой быстрого действия: поле, список и отправка. Ноль зависимостей, один файл, состояние держит браузер.",
+          "preserve": [
+            "локальную палитру --vibeui-popover-002-* и не подменять её токенами вашей темы",
+            "раскладку панели только в правиле :popover-open — display в обычном правиле перебивает браузерный display:none, и панель висит открытой всегда",
+            "закрытие через popovertargetaction: своё закрытие пришлось бы синхронизировать с Escape и кликом вне",
+            "откат позиционирования под @supports not (anchor-name) — без него панель уедет в старых браузерах",
+            "подписи полей через label и htmlFor: поповер с формой обязан оставаться заполняемым с клавиатуры",
+            "собственную светлую подложку панели: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "подпись кнопки через label и подпись поля через fieldLabel",
+            "заглушку через placeholder и подпись отправки через submitLabel",
+            "состав выпадающего списка через lists",
+            "акцент через переменную --vibeui-popover-002-accent"
+          ],
+          "notes": [
+            "Форма ничего не отправляет: обработчик submit вешает вызывающий код.",
+            "Внутри поповера намеренно два поля — третье превращает панель в диалог, которому нужен свой заголовок.",
+            "Панель закрывается кликом вне: незавершённый ввод при этом теряется, предупредите пользователя или сохраняйте черновик.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Новая задача",
+            "maxLength": 24
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Отправка",
+            "type": "text",
+            "default": "Добавить",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A quick action without leaving the page: the popover holds a real two-field form, and submitting closes the panel through the native popovertargetaction.",
+            "ai": {
+              "summary": "A popover with a quick-action form: a field, a list and a submit. Zero dependencies, one file, the browser owns the state.",
+              "preserve": [
+                "the local --vibeui-popover-002-* palette — do not swap it for your theme tokens",
+                "the panel layout only inside the :popover-open rule — display in the plain rule overrides the browser's display:none and the panel stays open forever",
+                "closing through popovertargetaction: a custom close would have to be kept in sync with Escape and outside clicks",
+                "the positioning fallback under @supports not (anchor-name) — without it the panel drifts in older browsers",
+                "the field labels with htmlFor: a popover with a form must stay fillable from the keyboard",
+                "the panel's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the button caption through label and the field caption through fieldLabel",
+                "the placeholder through placeholder and the submit caption through submitLabel",
+                "the dropdown contents through lists",
+                "the accent through the --vibeui-popover-002-accent variable"
+              ],
+              "notes": [
+                "The form submits nothing: the caller attaches the submit handler.",
+                "Two fields is deliberate — a third turns the panel into a dialog that needs its own heading.",
+                "An outside click closes the panel and discards unfinished input: warn the user or keep a draft.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Popover002\n  label=\"New task\"\n  fieldLabel=\"What to do\"\n  submitLabel=\"Add\"\n  lists={[\"Inbox\", \"This week\"]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Button",
+                "default": "New task"
+              },
+              "submitLabel": {
+                "label": "Submit",
+                "default": "Add"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "popover-003",
+      "type": "registry:component",
+      "title": "Confirm Popover",
+      "description": "Подтверждение у самой кнопки вместо модального окна на весь экран: вопрос называет последствие, а отмена стоит первой.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "popover-003/popover-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/popover-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-003-*. Серверный: панель на HTML popover, идентификаторы разводит useId. Раскладка объявлена только в :popover-open — display в обычном правиле сломал бы закрытие. Панель центрируется относительно кнопки через left:anchor(center) и translate, под @supports not есть откат. Обе кнопки закрывают панель штатным popovertargetaction, подтверждение дополнительно вызывает onConfirm.",
+      "meta": {
+        "tags": ["popover", "confirm", "danger", "inline"],
+        "ai": {
+          "export": "Popover003",
+          "usage": "<Popover003\n  label=\"Удалить папку\"\n  title=\"Удалить «Архив 2024»?\"\n  confirmLabel=\"Удалить\"\n  cancelLabel=\"Отмена\"\n/>",
+          "summary": "Поповер подтверждения рядом с кнопкой: последствие названо числом, отмена первой. Ноль зависимостей, один файл, состояние держит браузер.",
+          "preserve": [
+            "локальную палитру --vibeui-popover-003-* и не подменять её токенами вашей темы",
+            "раскладку панели только в правиле :popover-open — display в обычном правиле перебивает браузерный display:none, и панель висит открытой всегда",
+            "порядок кнопок «отмена, потом подтверждение»: случайный Enter не должен удалять данные",
+            "названное последствие вместо «вы уверены?» — число файлов помогает решить, а вопрос нет",
+            "закрытие обеих кнопок через popovertargetaction: панель не должна оставаться после действия",
+            "собственную светлую подложку панели: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "подпись кнопки через label, вопрос через title и последствия через text",
+            "подписи через confirmLabel и cancelLabel",
+            "тон опасности через переменную --vibeui-popover-003-danger",
+            "ширину панели через width в правиле панели"
+          ],
+          "notes": [
+            "Компонент ничего не удаляет: onConfirm вызывает вызывающий код.",
+            "Необратимое действие лучше подтверждать диалогом с вводом имени, а не поповером.",
+            "Панель закрывается кликом вне — это равно отмене, и так и должно быть.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "confirmLabel",
+            "label": "Подтверждение",
+            "type": "text",
+            "default": "Удалить",
+            "maxLength": 20
+          },
+          {
+            "prop": "cancelLabel",
+            "label": "Отмена",
+            "type": "text",
+            "default": "Отмена",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Confirmation right at the button instead of a full-screen modal: the question names the consequence and cancel comes first.",
+            "ai": {
+              "summary": "A confirmation popover next to the button: the consequence is a number, cancel comes first. Zero dependencies, one file, the browser owns the state.",
+              "preserve": [
+                "the local --vibeui-popover-003-* palette — do not swap it for your theme tokens",
+                "the panel layout only inside the :popover-open rule — display in the plain rule overrides the browser's display:none and the panel stays open forever",
+                "the button order «cancel, then confirm»: a stray Enter must not delete data",
+                "the named consequence instead of \"are you sure?\" — a file count helps decide, a question does not",
+                "closing both buttons through popovertargetaction: the panel must not linger after the action",
+                "the panel's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the trigger caption through label, the question through title and the consequence through text",
+                "the captions through confirmLabel and cancelLabel",
+                "the danger tone through the --vibeui-popover-003-danger variable",
+                "the panel width through width in the panel rule"
+              ],
+              "notes": [
+                "The component deletes nothing: onConfirm is called by the caller.",
+                "An irreversible action is better confirmed by a dialog asking for the name, not a popover.",
+                "An outside click closes the panel — that equals cancel, and it should.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Popover003\n  label=\"Delete folder\"\n  title=\"Delete «Archive 2024»?\"\n  confirmLabel=\"Delete\"\n  cancelLabel=\"Cancel\"\n/>"
+            },
+            "controls": {
+              "confirmLabel": {
+                "label": "Confirm",
+                "default": "Delete"
+              },
+              "cancelLabel": {
+                "label": "Cancel",
+                "default": "Cancel"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "popover-004",
+      "type": "registry:component",
+      "title": "List Settings",
+      "description": "Настройки списка там, где сам список: сортировка радиокнопками и видимость колонок чекбоксами, обе группы размечены fieldset с legend.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "popover-004/popover-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/popover-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-004-*. Серверный: панель на HTML popover, имена групп разводит useId. Раскладка объявлена только в :popover-open. Заголовки групп сделаны настоящими legend, а не div — иначе назначение группы не объявляется. Legend с float:left заставляет следующих детей обтекать, поэтому у контейнера пунктов стоит clear:both. Панель прижата к правому краю кнопки через right:anchor(right) с откатом под @supports not.",
+      "meta": {
+        "tags": ["popover", "settings", "fieldset", "columns"],
+        "ai": {
+          "export": "Popover004",
+          "usage": "<Popover004\n  label=\"Вид списка\"\n  sorts={[\"По дате\", \"По названию\"]}\n  columns={[\"Автор\", \"Размер\"]}\n/>",
+          "summary": "Поповер настроек списка: сортировка радиокнопками, колонки чекбоксами. Ноль зависимостей, один файл, состояние держит браузер.",
+          "preserve": [
+            "локальную палитру --vibeui-popover-004-* и не подменять её токенами вашей темы",
+            "раскладку панели только в правиле :popover-open — display в обычном правиле перебивает браузерный display:none, и панель висит открытой всегда",
+            "fieldset с legend вместо div с заголовком — иначе назначение группы не объявляется вслух",
+            "clear:both у контейнера пунктов: legend с float:left заставляет следующих детей обтекать",
+            "радиокнопки для сортировки и чекбоксы для колонок — тип управления сообщает правило выбора",
+            "собственную светлую подложку панели: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "подпись кнопки через label",
+            "варианты сортировки через sorts",
+            "список колонок через columns",
+            "акцент через переменную --vibeui-popover-004-accent"
+          ],
+          "notes": [
+            "Значения не поднимаются наверх: обработчик изменения вешает вызывающий код.",
+            "По умолчанию включены первые две колонки — при другом наборе поправьте условие.",
+            "Настройки применяются сразу, кнопки «Применить» нет: если применение дорогое, добавьте её.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Вид списка",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "List settings where the list is: sorting as radio buttons and column visibility as checkboxes, both marked up as a fieldset with a legend.",
+            "ai": {
+              "summary": "A list-settings popover: sorting by radios, columns by checkboxes. Zero dependencies, one file, the browser owns the state.",
+              "preserve": [
+                "the local --vibeui-popover-004-* palette — do not swap it for your theme tokens",
+                "the panel layout only inside the :popover-open rule — display in the plain rule overrides the browser's display:none and the panel stays open forever",
+                "the fieldset with a legend instead of a div with a heading — otherwise the group purpose is never announced",
+                "clear:both on the options container: a floated legend makes the following children wrap around it",
+                "radios for sorting and checkboxes for columns — the control type states the selection rule",
+                "the panel's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the trigger caption through label",
+                "the sorting options through sorts",
+                "the column list through columns",
+                "the accent through the --vibeui-popover-004-accent variable"
+              ],
+              "notes": [
+                "The values are not lifted up: the caller attaches the change handler.",
+                "The first two columns are checked by default — adjust the condition for another set.",
+                "Settings apply immediately, there is no \"Apply\" button: add one if applying is expensive.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Popover004\n  label=\"List view\"\n  sorts={[\"By date\", \"By name\"]}\n  columns={[\"Author\", \"Size\"]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Button",
+                "default": "List view"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "popover-005",
+      "type": "registry:component",
+      "title": "Colour Picker",
+      "description": "Выбор цвета метки, где цвет — это радиокнопка, а не div с обработчиком: выбор работает стрелками, попадает в форму и не требует ни строчки JS.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "popover-005/popover-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/popover-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-005-*. Серверный: панель на HTML popover, имя группы разводит useId. Раскладка объявлена только в :popover-open. Кружки — это label с визуально скрытым radio внутри; выбранный обведён кольцом через :has(input:checked), а фокус ловится через :has(input:focus-visible). Цвет каждого кружка приходит в собственной переменной --vibeui-popover-005-swatch. Legend с float:left требует clear:both у сетки.",
+      "meta": {
+        "tags": ["popover", "color", "radio", "swatches"],
+        "ai": {
+          "export": "Popover005",
+          "usage": "<Popover005\n  label=\"Цвет метки\"\n  selected=\"Синий\"\n  swatches={[{ name: \"Синий\", value: \"oklch(0.6 0.17 255)\" }]}\n/>",
+          "summary": "Поповер выбора цвета: сетка кружков на спрятанных радиокнопках. Ноль зависимостей, один файл, состояние держит браузер.",
+          "preserve": [
+            "локальную палитру --vibeui-popover-005-* и не подменять её токенами вашей темы",
+            "раскладку панели только в правиле :popover-open — display в обычном правиле перебивает браузерный display:none, и панель висит открытой всегда",
+            "радиокнопки вместо div с обработчиком: только так выбор работает стрелками и попадает в форму",
+            "скрытие radio через clip-path, а не display:none — иначе кружки выпадут из порядка фокуса",
+            "название цвета в подписи каждого кружка: по одному оттенку цвет не назовёшь вслух",
+            "clear:both у сетки: legend с float:left заставляет следующих детей обтекать"
+          ],
+          "adapt": [
+            "подпись кнопки через label и выбранный цвет через selected",
+            "набор оттенков через swatches",
+            "число колонок в правиле сетки",
+            "акцент фокуса через переменную --vibeui-popover-005-accent"
+          ],
+          "notes": [
+            "Выбор не поднимается наверх: обработчик изменения вешает вызывающий код.",
+            "Кольцо выбранного кружка держится на :has(): в старых браузерах оно просто не появится.",
+            "Десять оттенков в двух рядах — потолок читаемости, длинную палитру лучше делить на разделы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Цвет метки",
+            "maxLength": 24
+          },
+          {
+            "prop": "selected",
+            "label": "Выбран",
+            "type": "select",
+            "default": "Синий",
+            "options": [
+              "Графит",
+              "Синий",
+              "Бирюзовый",
+              "Зелёный",
+              "Жёлтый",
+              "Оранжевый",
+              "Красный",
+              "Розовый",
+              "Фиолетовый",
+              "Лавандовый"
+            ]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A label colour picker where a colour is a radio button, not a div with a handler: arrow keys work, the value reaches the form, and no JS is needed.",
+            "ai": {
+              "summary": "A colour popover: a grid of swatches built on hidden radio buttons. Zero dependencies, one file, the browser owns the state.",
+              "preserve": [
+                "the local --vibeui-popover-005-* palette — do not swap it for your theme tokens",
+                "the panel layout only inside the :popover-open rule — display in the plain rule overrides the browser's display:none and the panel stays open forever",
+                "radio buttons instead of divs with handlers: only then do arrow keys work and the value reach the form",
+                "hiding the radio with clip-path rather than display:none — otherwise the swatches leave the focus order",
+                "the colour name in every swatch label: a single hue cannot be spoken aloud",
+                "clear:both on the grid: a floated legend makes the following children wrap around it"
+              ],
+              "adapt": [
+                "the trigger caption through label and the current colour through selected",
+                "the palette through swatches",
+                "the number of columns in the grid rule",
+                "the focus accent through the --vibeui-popover-005-accent variable"
+              ],
+              "notes": [
+                "The selection is not lifted up: the caller attaches the change handler.",
+                "The ring on the selected swatch relies on :has(): in older browsers it simply will not appear.",
+                "Ten swatches in two rows is the readability ceiling; a long palette is better split into sections.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Popover005\n  label=\"Label colour\"\n  selected=\"Синий\"\n  swatches={[{ name: \"Синий\", value: \"oklch(0.6 0.17 255)\" }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Button",
+                "default": "Label colour"
+              },
+              "selected": {
+                "label": "Selected"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "popover-006",
+      "type": "registry:component",
+      "title": "Inline Help",
+      "description": "Справка внутри строки текста: в отличие от подсказки, внутрь можно войти мышью и Tab — там живёт ссылка на документацию.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "popover-006/popover-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/popover-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-006-*. Серверный: карточка на HTML popover, идентификатор разводит useId. Раскладка объявлена только в :popover-open. Карточка сделана строчным элементом со свойством popover, поэтому она остаётся допустимым содержимым абзаца; заголовок и текст внутри — тоже строчные с display:block. Позиционирование через anchor positioning с откатом под @supports not. Триггер — кнопка, стилизованная под слово в тексте.",
+      "meta": {
+        "tags": ["popover", "help", "inline", "link"],
+        "ai": {
+          "export": "Popover006",
+          "usage": "<Popover006\n  term=\"холодный старт\"\n  title=\"Что такое холодный старт\"\n  linkLabel=\"Как его избежать\"\n  href=\"/docs/cold-start\"\n/>",
+          "summary": "Поповер справки в строке текста: объяснение и ссылка на документацию внутри. Ноль зависимостей, один файл, состояние держит браузер.",
+          "preserve": [
+            "локальную палитру --vibeui-popover-006-* и не подменять её токенами вашей темы",
+            "раскладку панели только в правиле :popover-open — display в обычном правиле перебивает браузерный display:none, и панель висит открытой всегда",
+            "поповер вместо подсказки: внутрь ведёт ссылка, а до подсказки курсор не довести",
+            "строчные элементы внутри карточки — блочные теги внутри абзаца ломают разметку",
+            "кнопку в роли триггера: слово с обработчиком на span не нажимается с клавиатуры",
+            "собственную светлую подложку абзаца: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "слово через term, заголовок через title и объяснение через text",
+            "подпись ссылки через linkLabel и адрес через href",
+            "текст вокруг термина прямо в разметке",
+            "акцент через переменную --vibeui-popover-006-accent"
+          ],
+          "notes": [
+            "Карточка не закрывается по уходу курсора — это осознанно: иначе до ссылки не дойти.",
+            "Если термин переносится на другую строку, карточка встанет по первой части слова.",
+            "Escape и клик вне закрывают карточку сами: свой обработчик закрытия не нужен.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "term",
+            "label": "Слово",
+            "type": "text",
+            "default": "холодный старт",
+            "maxLength": 30
+          },
+          {
+            "prop": "linkLabel",
+            "label": "Ссылка",
+            "type": "text",
+            "default": "Как его избежать",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Help inside a line of text: unlike a tooltip you can enter it with the mouse and with Tab — there is a link to the documentation in there.",
+            "ai": {
+              "summary": "An inline help popover: an explanation and a documentation link inside. Zero dependencies, one file, the browser owns the state.",
+              "preserve": [
+                "the local --vibeui-popover-006-* palette — do not swap it for your theme tokens",
+                "the panel layout only inside the :popover-open rule — display in the plain rule overrides the browser's display:none and the panel stays open forever",
+                "a popover rather than a tooltip: there is a link inside, and a tooltip cannot be reached by the pointer",
+                "the inline elements inside the card — block tags inside a paragraph break the markup",
+                "the button as the trigger: a span with a handler cannot be activated from the keyboard",
+                "the paragraph's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the word through term, the heading through title and the explanation through text",
+                "the link caption through linkLabel and the target through href",
+                "the copy around the term directly in the markup",
+                "the accent through the --vibeui-popover-006-accent variable"
+              ],
+              "notes": [
+                "The card does not close when the pointer leaves — deliberately: otherwise the link is unreachable.",
+                "If the term wraps to the next line, the card anchors to the first fragment of the word.",
+                "Escape and outside clicks close the card on their own: no custom close handler is needed.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Popover006\n  term=\"cold start\"\n  title=\"What a cold start is\"\n  linkLabel=\"How to avoid it\"\n  href=\"/docs/cold-start\"\n/>"
+            },
+            "controls": {
+              "term": {
+                "label": "Word",
+                "default": "cold start"
+              },
+              "linkLabel": {
+                "label": "Link",
+                "default": "How to avoid it"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "popover-007",
+      "type": "registry:component",
+      "title": "Notification Bell",
+      "description": "Колокольчик со счётчиком и списком внутри: непрочитанное помечено точкой и весом, а строки — настоящие ссылки, по которым ходят с клавиатуры.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "popover-007/popover-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/popover-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-007-*. Серверный: панель на HTML popover, идентификатор разводит useId. Раскладка объявлена только в :popover-open. Значок-счётчик обведён рамкой цвета подложки, поэтому читается на любой кнопке. Прочитанные строки отличаются весом и цветом, а не только точкой. Список ограничен по высоте и прокручивается, панель прижата к правому краю кнопки через right:anchor(right) с откатом под @supports not.",
+      "meta": {
+        "tags": ["popover", "notifications", "badge", "list"],
+        "ai": {
+          "export": "Popover007",
+          "usage": "<Popover007\n  count={2}\n  items={[{ title: \"Сборка 412 прошла\", meta: \"конвейер\", unread: true }]}\n  footerLabel=\"Все уведомления\"\n/>",
+          "summary": "Поповер уведомлений: значок со счётчиком и список ссылок внутри. Ноль зависимостей, один файл, состояние держит браузер.",
+          "preserve": [
+            "локальную палитру --vibeui-popover-007-* и не подменять её токенами вашей темы",
+            "раскладку панели только в правиле :popover-open — display в обычном правиле перебивает браузерный display:none, и панель висит открытой всегда",
+            "различие прочитанного по весу и цвету, а не только по точке: цвет один не читается",
+            "число непрочитанных в доступной подписи кнопки — значок вслух не звучит",
+            "список настоящими ссылками в <ul>: по div с обработчиком не пройти клавиатурой",
+            "ограничение высоты списка с прокруткой — иначе панель вырастет за экран"
+          ],
+          "adapt": [
+            "число на значке через count и содержимое через items",
+            "подпись подвала через footerLabel",
+            "высоту списка через max-height в правиле списка",
+            "цвет значка через переменную --vibeui-popover-007-accent"
+          ],
+          "notes": [
+            "Число больше 99 показывается как «99+», сама панель длину списка не ограничивает.",
+            "Компонент не помечает уведомления прочитанными: это делает вызывающий код.",
+            "Ссылки ведут на заглушки — подставьте настоящие адреса, иначе панель бесполезна.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "count",
+            "label": "Непрочитанных",
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 99
+          },
+          {
+            "prop": "footerLabel",
+            "label": "Подвал",
+            "type": "text",
+            "default": "Все уведомления",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A bell with a counter and a list inside: unread rows are marked by a dot and by weight, and the rows are real links you can walk with the keyboard.",
+            "ai": {
+              "summary": "A notifications popover: a badge with a counter and a list of links inside. Zero dependencies, one file, the browser owns the state.",
+              "preserve": [
+                "the local --vibeui-popover-007-* palette — do not swap it for your theme tokens",
+                "the panel layout only inside the :popover-open rule — display in the plain rule overrides the browser's display:none and the panel stays open forever",
+                "marking read state by weight and colour, not only by a dot: colour alone is not readable",
+                "the unread count in the button's accessible name — a badge is never spoken",
+                "the list as real links inside a <ul>: divs with handlers cannot be walked by keyboard",
+                "the height cap with scrolling on the list — otherwise the panel grows past the screen"
+              ],
+              "adapt": [
+                "the badge number through count and the contents through items",
+                "the footer caption through footerLabel",
+                "the list height through max-height in the list rule",
+                "the badge colour through the --vibeui-popover-007-accent variable"
+              ],
+              "notes": [
+                "Anything above 99 shows as \"99+\"; the panel itself does not cap the list length.",
+                "The component does not mark anything as read: the caller does that.",
+                "The links point at placeholders — put real targets in, otherwise the panel is useless.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Popover007\n  count={2}\n  items={[{ title: \"Build 412 passed\", meta: \"pipeline\", unread: true }]}\n  footerLabel=\"All notifications\"\n/>"
+            },
+            "controls": {
+              "count": {
+                "label": "Unread"
+              },
+              "footerLabel": {
+                "label": "Footer",
+                "default": "All notifications"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "popover-008",
+      "type": "registry:component",
+      "title": "Nested Popover",
+      "description": "Поповер внутри поповера: кнопка второго уровня лежит внутри первой панели, поэтому браузер считает панели вложенными и не закрывает родителя.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "popover-008/popover-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/popover-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-008-*. Серверный: обе панели на HTML popover, идентификаторы разводит useId. Раскладка обеих объявлена только в :popover-open. Вложенность возникает из того, что кнопка второй панели находится внутри первой: браузер выстраивает стек, Escape закрывает панели по одной изнутри наружу. Вторая панель прицеплена к строке-родителю через собственный anchor-name, у обеих есть откат под @supports not.",
+      "meta": {
+        "tags": ["popover", "nested", "menu", "share"],
+        "ai": {
+          "export": "Popover008",
+          "usage": "<Popover008\n  label=\"Поделиться\"\n  nestedLabel=\"Уровень доступа\"\n  levels={[\"Только чтение\", \"Редактирование\"]}\n/>",
+          "summary": "Поповер с вложенным вторым поповером: родитель остаётся открытым. Ноль зависимостей, один файл, стек держит браузер.",
+          "preserve": [
+            "локальную палитру --vibeui-popover-008-* и не подменять её токенами вашей темы",
+            "раскладку панели только в правиле :popover-open — display в обычном правиле перебивает браузерный display:none, и панель висит открытой всегда",
+            "кнопку второй панели внутри первой: вынесите её наружу — и родитель начнёт закрываться",
+            "разные anchor-name у кнопки и строки-родителя, иначе вторая панель прицепится не туда",
+            "порядок закрытия по Escape изнутри наружу — он достаётся от браузера и его не надо повторять вручную",
+            "собственную светлую подложку панелей: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "подпись кнопки через label и подпись вложенного пункта через nestedLabel",
+            "варианты второго уровня через levels",
+            "состав первой панели прямо в разметке",
+            "акцент через переменную --vibeui-popover-008-accent"
+          ],
+          "notes": [
+            "Третий уровень вложенности работает так же, но пользоваться им тяжело: два уровня — практический потолок.",
+            "Выбор уровня не сохраняется: обработчики вешает вызывающий код.",
+            "В браузерах без anchor positioning вторая панель встаёт под первой, а не сбоку — это осознанный откат.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Поделиться",
+            "maxLength": 24
+          },
+          {
+            "prop": "nestedLabel",
+            "label": "Вложенный пункт",
+            "type": "text",
+            "default": "Уровень доступа",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A popover inside a popover: the second-level button lives inside the first panel, so the browser treats them as nested and keeps the parent open.",
+            "ai": {
+              "summary": "A popover with a nested second popover: the parent stays open. Zero dependencies, one file, the browser owns the stack.",
+              "preserve": [
+                "the local --vibeui-popover-008-* palette — do not swap it for your theme tokens",
+                "the panel layout only inside the :popover-open rule — display in the plain rule overrides the browser's display:none and the panel stays open forever",
+                "the second panel's button inside the first one: move it out and the parent starts closing",
+                "the separate anchor-names on the trigger and the parent row, otherwise the second panel latches onto the wrong element",
+                "the inside-out Escape order — it comes from the browser and does not need reimplementing",
+                "the panels' own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the trigger caption through label and the nested row caption through nestedLabel",
+                "the second-level options through levels",
+                "the contents of the first panel directly in the markup",
+                "the accent through the --vibeui-popover-008-accent variable"
+              ],
+              "notes": [
+                "A third level works the same way but is hard to use: two levels is the practical ceiling.",
+                "The chosen level is not stored: the caller attaches the handlers.",
+                "Without anchor positioning the second panel drops below the first instead of beside it — a deliberate fallback.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Popover008\n  label=\"Share\"\n  nestedLabel=\"Access level\"\n  levels={[\"Read only\", \"Can edit\"]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Button",
+                "default": "Share"
+              },
+              "nestedLabel": {
+                "label": "Nested row",
+                "default": "Access level"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hovercard-002",
+      "type": "registry:component",
+      "title": "Link Preview",
+      "description": "Превью страницы у ссылки: обложка, домен, заголовок и отрывок — вместо скриншота градиент по оттенку домена, чтобы компонент работал без сети.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hovercard-002/hovercard-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hovercard-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-002-*. Серверный: раскрытие держится на :hover и :focus-within обёртки ссылки, а не всего абзаца — иначе карточка вылезала бы при наведении на любой текст. Оттенок обложки выводится из домена хешем FNV-1a и кладётся в --vibeui-hovercard-002-hue. Заголовок обрезан на двух строках, отрывок — на трёх через -webkit-line-clamp. Карточка скрыта visibility, поэтому не ловит курсор в закрытом виде.",
+      "meta": {
+        "tags": ["hovercard", "link", "preview", "article"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hovercard002",
+          "usage": "<Hovercard002\n  anchorText=\"разбор ошибок вёрстки\"\n  title=\"Двенадцать ошибок вёрстки\"\n  domain=\"web.dev.example\"\n  href=\"/blog/layout\"\n/>",
+          "summary": "Карточка превью страницы у ссылки в тексте. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-hovercard-002-* и не подменять её токенами вашей темы",
+            "привязку раскрытия к обёртке ссылки, а не к абзацу: иначе карточка вылезет при наведении на любой текст",
+            "раскрытие по :focus-within — с клавиатуры карточку иначе не увидеть вовсе",
+            "скрытие через visibility, а не только opacity: прозрачная карточка продолжает ловить курсор",
+            "обрезку заголовка и отрывка: длинный текст в карточке превращает её в статью",
+            "собственную светлую подложку абзаца: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "текст ссылки через anchorText и адрес через href",
+            "заголовок через title и отрывок через excerpt",
+            "адрес сайта через domain — от него же считается оттенок обложки",
+            "ширину карточки через width в правиле карточки"
+          ],
+          "notes": [
+            "Обложка нарисована градиентом: настоящий скриншот потребовал бы сети и сломал переносимость.",
+            "Внутри карточки нет ссылок и кнопок — до них не довести курсор через зазор.",
+            "На телефоне карточка не раскроется: сведения о ссылке дублируйте текстом рядом.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "domain",
+            "label": "Домен",
+            "type": "text",
+            "default": "web.dev.example",
+            "maxLength": 30
+          },
+          {
+            "prop": "anchorText",
+            "label": "Текст ссылки",
+            "type": "text",
+            "default": "разбор популярных ошибок вёрстки",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A page preview at a link: cover, domain, title and excerpt — instead of a screenshot a gradient keyed to the domain, so the component works offline.",
+            "ai": {
+              "summary": "A link preview card for a link in running text. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-hovercard-002-* palette — do not swap it for your theme tokens",
+                "binding the reveal to the link wrapper rather than the paragraph: otherwise the card pops up over any text",
+                "opening on :focus-within — from the keyboard the card is otherwise invisible",
+                "hiding with visibility rather than opacity alone: a transparent card still catches the pointer",
+                "the clamps on the title and excerpt: long copy turns the card into an article",
+                "the paragraph's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the link text through anchorText and the target through href",
+                "the title through title and the excerpt through excerpt",
+                "the site address through domain — the cover hue is derived from it",
+                "the card width through width in the card rule"
+              ],
+              "notes": [
+                "The cover is a gradient: a real screenshot would need the network and break portability.",
+                "There are no links or buttons inside the card — the pointer cannot cross the gap to reach them.",
+                "On a phone the card never opens: duplicate the link details in nearby text.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Hovercard002\n  anchorText=\"a review of layout mistakes\"\n  title=\"Twelve layout mistakes\"\n  domain=\"web.dev.example\"\n  href=\"/blog/layout\"\n/>"
+            },
+            "controls": {
+              "domain": {
+                "label": "Domain",
+                "default": "web.dev.example"
+              },
+              "anchorText": {
+                "label": "Link text",
+                "default": "a review of layout mistakes"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hovercard-003",
+      "type": "registry:component",
+      "title": "Product Card",
+      "description": "Карточка товара у названия в тексте: цена и наличие стоят выше отзывов, а дробный рейтинг залит градиентом по звёздам — 4,3 видно как 4,3.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hovercard-003/hovercard-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hovercard-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-003-*. Серверный: раскрытие держится на :hover и :focus-within обёртки ссылки. Рейтинг нарисован строкой из пяти звёзд в ::before, залитой линейным градиентом с точкой перелома calc(rating * 20%) и обрезанной по тексту — дробная оценка показывается честно, без набора полузвёзд. Значение приходит в --vibeui-hovercard-003-rating. Наличие подписано словом, а не только цветом.",
+      "meta": {
+        "tags": ["hovercard", "product", "price", "rating"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hovercard003",
+          "usage": "<Hovercard003\n  name=\"Клавиатура Kite 68\"\n  price=\"8 940 ₽\"\n  oldPrice=\"11 200 ₽\"\n  rating={4.3}\n/>",
+          "summary": "Карточка товара у названия: цена, наличие и дробный рейтинг звёздами. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-hovercard-003-* и не подменять её токенами вашей темы",
+            "порядок «цена, наличие, потом отзывы»: решение принимают по первым двум",
+            "заливку звёзд градиентом: набор полузвёзд врёт про дробную оценку",
+            "подпись наличия словами — зелёный цвет сам по себе ничего не сообщает",
+            "раскрытие по :focus-within, привязанное к обёртке ссылки, а не к абзацу",
+            "собственную светлую подложку абзаца: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "название через name, цены через price и oldPrice",
+            "строку наличия через stock",
+            "оценку через rating и число отзывов через reviews",
+            "цвет звёзд через переменную --vibeui-hovercard-003-star"
+          ],
+          "notes": [
+            "Цены передаются готовыми строками: компонент не форматирует валюту.",
+            "Оценка зажимается в 0–5; значение вне диапазона не сломает заливку.",
+            "Картинки товара нет намеренно — она потребовала бы сети и сломала переносимость.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "price",
+            "label": "Цена",
+            "type": "text",
+            "default": "8 940 ₽",
+            "maxLength": 16
+          },
+          {
+            "prop": "rating",
+            "label": "Оценка",
+            "type": "number",
+            "default": 4.3,
+            "min": 0,
+            "max": 5
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A product card at a name in running text: price and availability sit above reviews, and the fractional rating is painted with a gradient — 4.3 reads as 4.3.",
+            "ai": {
+              "summary": "A product card at a product name: price, availability and a fractional star rating. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-hovercard-003-* palette — do not swap it for your theme tokens",
+                "the order «price, availability, then reviews»: the decision is made on the first two",
+                "the gradient fill on the stars: a set of half-stars misstates a fractional score",
+                "spelling out availability — a green colour on its own communicates nothing",
+                "opening on :focus-within bound to the link wrapper rather than the paragraph",
+                "the paragraph's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the name through name, the prices through price and oldPrice",
+                "the availability line through stock",
+                "the score through rating and the review count through reviews",
+                "the star colour through the --vibeui-hovercard-003-star variable"
+              ],
+              "notes": [
+                "Prices arrive as ready strings: the component does not format currency.",
+                "The score is clamped to 0–5; a value out of range will not break the fill.",
+                "There is deliberately no product photo — it would need the network and break portability.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Hovercard003\n  name=\"Kite 68 keyboard\"\n  price=\"$99\"\n  oldPrice=\"$124\"\n  rating={4.3}\n/>"
+            },
+            "controls": {
+              "price": {
+                "label": "Price",
+                "default": "$99"
+              },
+              "rating": {
+                "label": "Score"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hovercard-004",
+      "type": "registry:component",
+      "title": "Repo Card",
+      "description": "Карточка репозитория у ссылки владелец/имя: владелец набран тонко, имя жирно, язык помечен точкой и словом, а не одной цветной точкой.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hovercard-004/hovercard-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hovercard-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-004-*. Серверный: раскрытие держится на :hover и :focus-within обёртки ссылки. Пара владелец/имя набрана одним размером, но разным весом — так она читается как одно целое и при этом видно, где имя. Цвет языка приходит пропом languageColor и кладётся в --vibeui-hovercard-004-lang. Ссылка в тексте набрана моноширинным шрифтом: путь узнают по форме.",
+      "meta": {
+        "tags": ["hovercard", "repository", "code", "stats"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hovercard004",
+          "usage": "<Hovercard004\n  owner=\"vibeui\"\n  repo=\"registry\"\n  language=\"TypeScript\"\n  stars=\"3.1k\"\n/>",
+          "summary": "Карточка репозитория у ссылки владелец/имя: описание, язык и счётчики. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-hovercard-004-* и не подменять её токенами вашей темы",
+            "разный вес владельца и имени: одинаковый вес превращает путь в кашу",
+            "подпись языка рядом с точкой — цветная точка без слова ничего не говорит",
+            "моноширинную ссылку в тексте: путь узнают по форме до наведения",
+            "раскрытие по :focus-within, привязанное к обёртке ссылки, а не к абзацу",
+            "собственную светлую подложку абзаца: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "путь через owner и repo, описание через about",
+            "язык через language и его цвет через languageColor",
+            "счётчики через stars и forks",
+            "акцент ссылки через переменную --vibeui-hovercard-004-accent"
+          ],
+          "notes": [
+            "Счётчики передаются готовыми строками: сокращение до «3.1k» делает вызывающий код.",
+            "Внутри карточки нет ссылок — до них не довести курсор через зазор.",
+            "Цвет языка задаётся вручную: списка соответствий компонент не ведёт.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "repo",
+            "label": "Репозиторий",
+            "type": "text",
+            "default": "registry",
+            "maxLength": 24
+          },
+          {
+            "prop": "stars",
+            "label": "Звёзды",
+            "type": "text",
+            "default": "3.1k",
+            "maxLength": 10
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A repository card at an owner/name link: the owner set light, the name bold, and the language marked with both a dot and a word rather than a dot alone.",
+            "ai": {
+              "summary": "A repository card at an owner/name link: description, language and counters. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-hovercard-004-* palette — do not swap it for your theme tokens",
+                "the different weights on owner and name: equal weight turns the path into mush",
+                "the language word next to the dot — a coloured dot alone says nothing",
+                "the monospaced link in the text: the path is recognised by shape before hovering",
+                "opening on :focus-within bound to the link wrapper rather than the paragraph",
+                "the paragraph's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the path through owner and repo, the description through about",
+                "the language through language and its colour through languageColor",
+                "the counters through stars and forks",
+                "the link accent through the --vibeui-hovercard-004-accent variable"
+              ],
+              "notes": [
+                "Counters arrive as ready strings: shortening to \"3.1k\" is the caller's job.",
+                "There are no links inside the card — the pointer cannot cross the gap to reach them.",
+                "The language colour is set by hand: the component keeps no lookup table.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Hovercard004\n  owner=\"vibeui\"\n  repo=\"registry\"\n  language=\"TypeScript\"\n  stars=\"3.1k\"\n/>"
+            },
+            "controls": {
+              "repo": {
+                "label": "Repository",
+                "default": "registry"
+              },
+              "stars": {
+                "label": "Stars",
+                "default": "3.1k"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hovercard-005",
+      "type": "registry:component",
+      "title": "Glossary Card",
+      "description": "Словарная статья у сокращения в тексте: расшифровка, раздел, определение и смежные термины — это справочник, а не короткая реплика.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hovercard-005/hovercard-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hovercard-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-005-*. Серверный: раскрытие держится на :hover и :focus-visible самого сокращения внутри обёртки. Сокращение остаётся строчным элементом с tabIndex=0 — не ссылка и не кнопка, поэтому набор текста не рвётся. Карточка помечена ролью tooltip и связана через aria-describedby. Левая грань окрашена акцентом: это признак словарной статьи, а не уведомления.",
+      "meta": {
+        "tags": ["hovercard", "glossary", "term", "definition"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hovercard005",
+          "usage": "<Hovercard005\n  term=\"CDN\"\n  full=\"Content Delivery Network\"\n  category=\"инфраструктура\"\n  related={[\"TTFB\", \"прогрев\"]}\n/>",
+          "summary": "Карточка термина глоссария: расшифровка, раздел, определение и смежные слова. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-hovercard-005-* и не подменять её токенами вашей темы",
+            "сокращение строчным элементом: ссылка или кнопка в середине абзаца рвёт набор",
+            "tabIndex=0 вместе с aria-describedby — иначе статья недоступна с клавиатуры",
+            "расшифровку первой строкой: без неё сокращение остаётся сокращением",
+            "раскрытие по фокусу, привязанное к обёртке слова, а не к абзацу",
+            "собственную светлую подложку абзаца: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "сокращение через term и расшифровку через full",
+            "определение через definition и раздел через category",
+            "список смежных слов через related",
+            "акцент через переменную --vibeui-hovercard-005-accent"
+          ],
+          "notes": [
+            "Смежные термины показаны текстом, а не ссылками: до ссылки в карточке не довести курсор.",
+            "Определение длиннее четырёх строк лучше вынести в справку и оставить в карточке первую фразу.",
+            "Пустой массив related убирает нижнюю строку вместе с разделителем.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "term",
+            "label": "Сокращение",
+            "type": "text",
+            "default": "CDN",
+            "maxLength": 16
+          },
+          {
+            "prop": "category",
+            "label": "Раздел",
+            "type": "text",
+            "default": "инфраструктура",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A glossary entry at an abbreviation in the text: the expansion, the section, the definition and related terms — a reference, not a short remark.",
+            "ai": {
+              "summary": "A glossary card: expansion, section, definition and related words. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-hovercard-005-* palette — do not swap it for your theme tokens",
+                "the abbreviation as an inline element: a link or button mid-paragraph breaks the setting",
+                "tabIndex=0 together with aria-describedby — otherwise the entry is unreachable by keyboard",
+                "the expansion on the first line: without it an abbreviation stays an abbreviation",
+                "opening on focus bound to the word wrapper rather than the paragraph",
+                "the paragraph's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the abbreviation through term and its expansion through full",
+                "the definition through definition and the section through category",
+                "the related words through related",
+                "the accent through the --vibeui-hovercard-005-accent variable"
+              ],
+              "notes": [
+                "Related terms are plain text, not links: a link inside the card is unreachable by pointer.",
+                "A definition longer than four lines belongs in help, with the first sentence left in the card.",
+                "An empty related array removes the bottom row together with its divider.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Hovercard005\n  term=\"CDN\"\n  full=\"Content Delivery Network\"\n  category=\"infrastructure\"\n  related={[\"TTFB\", \"warm-up\"]}\n/>"
+            },
+            "controls": {
+              "term": {
+                "label": "Abbreviation",
+                "default": "CDN"
+              },
+              "category": {
+                "label": "Section",
+                "default": "infrastructure"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hovercard-006",
+      "type": "registry:component",
+      "title": "Event Card",
+      "description": "Карточка события у названия встречи: дата вынесена в отрывной листок календаря, а участники сложены веером с остатком числом.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hovercard-006/hovercard-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hovercard-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-006-*. Серверный: раскрытие держится на :hover и :focus-within обёртки ссылки. Дата собрана из двух полос в отдельном блоке — узнаваемую форму читают быстрее строки. Аватары участников перекрываются отрицательным правым отступом и обведены рамкой цвета подложки, поэтому веер читается как группа; сверх трёх показывается счётчик. Ссылка в тексте подчёркнута внутренней тенью, а не подчёркиванием.",
+      "meta": {
+        "tags": ["hovercard", "calendar", "event", "people"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hovercard006",
+          "usage": "<Hovercard006\n  title=\"Разбор макетов каталога\"\n  day=\"14\"\n  month=\"сен\"\n  time=\"11:00 – 12:00\"\n/>",
+          "summary": "Карточка события календаря: листок с датой, время, место и участники. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-hovercard-006-* и не подменять её токенами вашей темы",
+            "отрывной листок вместо строки с датой: форму узнают быстрее, чем читают",
+            "рамку цвета подложки вокруг аватаров — без неё веер сливается в пятно",
+            "счётчик остальных участников: восемь кружков подряд перестают читаться",
+            "раскрытие по :focus-within, привязанное к обёртке ссылки, а не к абзацу",
+            "собственную светлую подложку абзаца: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "название через title, дату через day и month",
+            "время через time и место через place",
+            "состав участников через people — сверх трёх сворачивается в счётчик",
+            "акцент листка через переменную --vibeui-hovercard-006-accent"
+          ],
+          "notes": [
+            "Дата передаётся строками: часовой пояс и локаль компонент не подставляет.",
+            "Инициалы берутся из первых двух слов имени: односложный ник даст одну букву.",
+            "Внутри карточки нет кнопок — до них не довести курсор через зазор.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "day",
+            "label": "День",
+            "type": "text",
+            "default": "14",
+            "maxLength": 4
+          },
+          {
+            "prop": "time",
+            "label": "Время",
+            "type": "text",
+            "default": "11:00 – 12:00",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An event card at a meeting name: the date sits on a tear-off calendar sheet and the attendees are fanned out with the rest folded into a count.",
+            "ai": {
+              "summary": "A calendar event card: a date sheet, the time, the place and the attendees. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-hovercard-006-* palette — do not swap it for your theme tokens",
+                "the tear-off sheet instead of a date string: the shape is recognised faster than it is read",
+                "the surface-coloured ring around the avatars — without it the fan blurs into a blob",
+                "the count of remaining attendees: eight circles in a row stop being readable",
+                "opening on :focus-within bound to the link wrapper rather than the paragraph",
+                "the paragraph's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the name through title, the date through day and month",
+                "the time through time and the place through place",
+                "the attendees through people — anything past three folds into a count",
+                "the sheet accent through the --vibeui-hovercard-006-accent variable"
+              ],
+              "notes": [
+                "The date arrives as strings: the component adds no time zone or locale.",
+                "Initials come from the first two words of the name: a single-word handle gives one letter.",
+                "There are no buttons inside the card — the pointer cannot cross the gap to reach them.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Hovercard006\n  title=\"Catalog mockup review\"\n  day=\"14\"\n  month=\"sep\"\n  time=\"11:00 – 12:00\"\n/>"
+            },
+            "controls": {
+              "day": {
+                "label": "Day",
+                "default": "14"
+              },
+              "time": {
+                "label": "Time",
+                "default": "11:00 – 12:00"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hovercard-007",
+      "type": "registry:component",
+      "title": "Intent Card",
+      "description": "Карточка с намерением: пока курсор стоит на ссылке, под ней растёт полоска ожидания, и только потом карточка раскрывается — пролёт мышью ничего не открывает.",
+      "categories": ["feedback"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hovercard-007/hovercard-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hovercard-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-007-*. Серверный: задержка стоит только в правиле открытого состояния через transition-delay, а базовое правило обнуляет её, поэтому уход курсора отменяет и полоску, и раскрытие. Полоска — псевдоэлемент ::after ссылки, растянутый scaleX за то же время, что и задержка: ожидание становится видимым. Величина живёт в --vibeui-hovercard-007-delay и приходит пропом delay.",
+      "meta": {
+        "tags": ["hovercard", "delay", "hover intent", "progress"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hovercard007",
+          "usage": "<Hovercard007\n  label=\"тарифы на хранение\"\n  title=\"Хранение файлов\"\n  delay={0.45}\n/>",
+          "summary": "Карточка с задержкой раскрытия и видимой полоской ожидания. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-hovercard-007-* и не подменять её токенами вашей темы",
+            "задержку только в открытом состоянии: в базовом правиле она задержала бы и скрытие",
+            "совпадение длительности полоски с задержкой — иначе индикатор врёт про ожидание",
+            "нулевую задержку в базовом правиле: она и есть отмена при уходе курсора",
+            "раскрытие по :focus-within — с клавиатуры карточку иначе не увидеть",
+            "собственную светлую подложку абзаца: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "величину задержки через delay",
+            "текст ссылки через label",
+            "заголовок через title и объяснение через text",
+            "цвет полоски через переменную --vibeui-hovercard-007-accent"
+          ],
+          "notes": [
+            "Задержка больше секунды воспринимается как поломка: разумный диапазон — от 0,3 до 0,6 секунды.",
+            "При включённом prefers-reduced-motion переходы выключены, и карточка раскрывается сразу.",
+            "Полоска ожидания дублирует смысл задержки; убрав её, оставьте саму задержку.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "delay",
+            "label": "Задержка, с",
+            "type": "number",
+            "default": 0.45,
+            "min": 0,
+            "max": 2
+          },
+          {
+            "prop": "label",
+            "label": "Текст ссылки",
+            "type": "text",
+            "default": "тарифы на хранение",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A card with intent: while the pointer rests on the link a waiting bar grows beneath it, and only then does the card open — a passing sweep opens nothing.",
+            "ai": {
+              "summary": "A hover card with an opening delay and a visible waiting bar. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-hovercard-007-* palette — do not swap it for your theme tokens",
+                "the delay only in the open state: in the base rule it would also delay hiding",
+                "the bar duration matching the delay — otherwise the indicator lies about the wait",
+                "the zero delay in the base rule: that is the cancel-on-leave mechanism",
+                "opening on :focus-within — from the keyboard the card is otherwise invisible",
+                "the paragraph's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the delay length through delay",
+                "the link text through label",
+                "the heading through title and the explanation through text",
+                "the bar colour through the --vibeui-hovercard-007-accent variable"
+              ],
+              "notes": [
+                "A delay over a second reads as a bug: 0.3 to 0.6 seconds is the sane range.",
+                "With prefers-reduced-motion on, the transitions are off and the card opens immediately.",
+                "The waiting bar restates the delay; if you drop it, keep the delay itself.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Hovercard007\n  label=\"storage pricing\"\n  title=\"File storage\"\n  delay={0.45}\n/>"
+            },
+            "controls": {
+              "delay": {
+                "label": "Delay, s"
+              },
+              "label": {
+                "label": "Link text",
+                "default": "storage pricing"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
