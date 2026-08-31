@@ -240,6 +240,66 @@ export const LAZY_PREVIEWS = {
       (module) => module.Solutions006,
     ),
   ),
+  "datagrid-001": dynamic(() =>
+    import("@/registry/components/datagrid/datagrid-001/datagrid-001").then(
+      (module) => module.Datagrid001,
+    ),
+  ),
+  "datagrid-002": dynamic(() =>
+    import("@/registry/components/datagrid/datagrid-002/datagrid-002").then(
+      (module) => module.Datagrid002,
+    ),
+  ),
+  "datagrid-003": dynamic(() =>
+    import("@/registry/components/datagrid/datagrid-003/datagrid-003").then(
+      (module) => module.Datagrid003,
+    ),
+  ),
+  "datagrid-004": dynamic(() =>
+    import("@/registry/components/datagrid/datagrid-004/datagrid-004").then(
+      (module) => module.Datagrid004,
+    ),
+  ),
+  "datagrid-005": dynamic(() =>
+    import("@/registry/components/datagrid/datagrid-005/datagrid-005").then(
+      (module) => module.Datagrid005,
+    ),
+  ),
+  "datagrid-006": dynamic(() =>
+    import("@/registry/components/datagrid/datagrid-006/datagrid-006").then(
+      (module) => module.Datagrid006,
+    ),
+  ),
+  "datagrid-007": dynamic(() =>
+    import("@/registry/components/datagrid/datagrid-007/datagrid-007").then(
+      (module) => module.Datagrid007,
+    ),
+  ),
+  "datagrid-008": dynamic(() =>
+    import("@/registry/components/datagrid/datagrid-008/datagrid-008").then(
+      (module) => module.Datagrid008,
+    ),
+  ),
+  "datagrid-009": dynamic(() =>
+    import("@/registry/components/datagrid/datagrid-009/datagrid-009").then(
+      (module) => module.Datagrid009,
+    ),
+  ),
+  "datagrid-010": dynamic(() =>
+    import("@/registry/components/datagrid/datagrid-010/datagrid-010").then(
+      (module) => module.Datagrid010,
+    ),
+  ),
+  "datagrid-011": dynamic(() =>
+    import("@/registry/components/datagrid/datagrid-011/datagrid-011").then(
+      (module) => module.Datagrid011,
+    ),
+  ),
+  "datagrid-012": dynamic(() =>
+    import("@/registry/components/datagrid/datagrid-012/datagrid-012").then(
+      (module) => module.Datagrid012,
+    ),
+  ),
   "button-001": dynamic(() =>
     import("@/registry/components/buttons/button-001/button-001").then(
       (module) => module.Button001,
@@ -1440,6 +1500,231 @@ export const LAZY_PREVIEWS = {
       (module) => module.Checkbox008,
     ),
   ),
+  "checkbox-009": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-009/checkbox-009").then(
+      (module) => module.Checkbox009,
+    ),
+  ),
+  "checkbox-010": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-010/checkbox-010").then(
+      (module) => module.Checkbox010,
+    ),
+  ),
+  "checkbox-011": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-011/checkbox-011").then(
+      (module) => module.Checkbox011,
+    ),
+  ),
+  "checkbox-012": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-012/checkbox-012").then(
+      (module) => module.Checkbox012,
+    ),
+  ),
+  "checkbox-013": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-013/checkbox-013").then(
+      (module) => module.Checkbox013,
+    ),
+  ),
+  "checkbox-014": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-014/checkbox-014").then(
+      (module) => module.Checkbox014,
+    ),
+  ),
+  "checkbox-015": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-015/checkbox-015").then(
+      (module) => module.Checkbox015,
+    ),
+  ),
+  "checkbox-016": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-016/checkbox-016").then(
+      (module) => module.Checkbox016,
+    ),
+  ),
+  "checkbox-017": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-017/checkbox-017").then(
+      (module) => module.Checkbox017,
+    ),
+  ),
+  "checkbox-018": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-018/checkbox-018").then(
+      (module) => module.Checkbox018,
+    ),
+  ),
+  "checkbox-019": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-019/checkbox-019").then(
+      (module) => module.Checkbox019,
+    ),
+  ),
+  "checkbox-020": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-020/checkbox-020").then(
+      (module) => module.Checkbox020,
+    ),
+  ),
+  "checkbox-021": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-021/checkbox-021").then(
+      (module) => module.Checkbox021,
+    ),
+  ),
+  "checkbox-022": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-022/checkbox-022").then(
+      (module) => module.Checkbox022,
+    ),
+  ),
+  "codeblock-001": dynamic(() =>
+    import("@/registry/components/codeblock/codeblock-001/codeblock-001").then(
+      (module) => module.Codeblock001,
+    ),
+  ),
+  "codeblock-002": dynamic(() =>
+    import("@/registry/components/codeblock/codeblock-002/codeblock-002").then(
+      (module) => module.Codeblock002,
+    ),
+  ),
+  "codeblock-003": dynamic(() =>
+    import("@/registry/components/codeblock/codeblock-003/codeblock-003").then(
+      (module) => module.Codeblock003,
+    ),
+  ),
+  "codeblock-004": dynamic(() =>
+    import("@/registry/components/codeblock/codeblock-004/codeblock-004").then(
+      (module) => module.Codeblock004,
+    ),
+  ),
+  "codeblock-005": dynamic(() =>
+    import("@/registry/components/codeblock/codeblock-005/codeblock-005").then(
+      (module) => module.Codeblock005,
+    ),
+  ),
+  "codeblock-006": dynamic(() =>
+    import("@/registry/components/codeblock/codeblock-006/codeblock-006").then(
+      (module) => module.Codeblock006,
+    ),
+  ),
+  "codeblock-007": dynamic(() =>
+    import("@/registry/components/codeblock/codeblock-007/codeblock-007").then(
+      (module) => module.Codeblock007,
+    ),
+  ),
+  "codeblock-008": dynamic(() =>
+    import("@/registry/components/codeblock/codeblock-008/codeblock-008").then(
+      (module) => module.Codeblock008,
+    ),
+  ),
+  "codeblock-009": dynamic(() =>
+    import("@/registry/components/codeblock/codeblock-009/codeblock-009").then(
+      (module) => module.Codeblock009,
+    ),
+  ),
+  "codeblock-010": dynamic(() =>
+    import("@/registry/components/codeblock/codeblock-010/codeblock-010").then(
+      (module) => module.Codeblock010,
+    ),
+  ),
+  "codeblock-011": dynamic(() =>
+    import("@/registry/components/codeblock/codeblock-011/codeblock-011").then(
+      (module) => module.Codeblock011,
+    ),
+  ),
+  "codeblock-012": dynamic(() =>
+    import("@/registry/components/codeblock/codeblock-012/codeblock-012").then(
+      (module) => module.Codeblock012,
+    ),
+  ),
+  "codeblock-013": dynamic(() =>
+    import("@/registry/components/codeblock/codeblock-013/codeblock-013").then(
+      (module) => module.Codeblock013,
+    ),
+  ),
+  "codeblock-014": dynamic(() =>
+    import("@/registry/components/codeblock/codeblock-014/codeblock-014").then(
+      (module) => module.Codeblock014,
+    ),
+  ),
+  "combobox-001": dynamic(() =>
+    import("@/registry/components/combobox/combobox-001/combobox-001").then(
+      (module) => module.Combobox001,
+    ),
+  ),
+  "combobox-002": dynamic(() =>
+    import("@/registry/components/combobox/combobox-002/combobox-002").then(
+      (module) => module.Combobox002,
+    ),
+  ),
+  "combobox-003": dynamic(() =>
+    import("@/registry/components/combobox/combobox-003/combobox-003").then(
+      (module) => module.Combobox003,
+    ),
+  ),
+  "combobox-004": dynamic(() =>
+    import("@/registry/components/combobox/combobox-004/combobox-004").then(
+      (module) => module.Combobox004,
+    ),
+  ),
+  "combobox-005": dynamic(() =>
+    import("@/registry/components/combobox/combobox-005/combobox-005").then(
+      (module) => module.Combobox005,
+    ),
+  ),
+  "combobox-006": dynamic(() =>
+    import("@/registry/components/combobox/combobox-006/combobox-006").then(
+      (module) => module.Combobox006,
+    ),
+  ),
+  "combobox-007": dynamic(() =>
+    import("@/registry/components/combobox/combobox-007/combobox-007").then(
+      (module) => module.Combobox007,
+    ),
+  ),
+  "combobox-008": dynamic(() =>
+    import("@/registry/components/combobox/combobox-008/combobox-008").then(
+      (module) => module.Combobox008,
+    ),
+  ),
+  "combobox-009": dynamic(() =>
+    import("@/registry/components/combobox/combobox-009/combobox-009").then(
+      (module) => module.Combobox009,
+    ),
+  ),
+  "combobox-010": dynamic(() =>
+    import("@/registry/components/combobox/combobox-010/combobox-010").then(
+      (module) => module.Combobox010,
+    ),
+  ),
+  "combobox-011": dynamic(() =>
+    import("@/registry/components/combobox/combobox-011/combobox-011").then(
+      (module) => module.Combobox011,
+    ),
+  ),
+  "combobox-012": dynamic(() =>
+    import("@/registry/components/combobox/combobox-012/combobox-012").then(
+      (module) => module.Combobox012,
+    ),
+  ),
+  "eventcalendar-001": dynamic(() =>
+    import("@/registry/components/eventcalendar/eventcalendar-001/eventcalendar-001").then(
+      (module) => module.Eventcalendar001,
+    ),
+  ),
+  "eventcalendar-002": dynamic(() =>
+    import("@/registry/components/eventcalendar/eventcalendar-002/eventcalendar-002").then(
+      (module) => module.Eventcalendar002,
+    ),
+  ),
+  "eventcalendar-003": dynamic(() =>
+    import("@/registry/components/eventcalendar/eventcalendar-003/eventcalendar-003").then(
+      (module) => module.Eventcalendar003,
+    ),
+  ),
+  "eventcalendar-004": dynamic(() =>
+    import("@/registry/components/eventcalendar/eventcalendar-004/eventcalendar-004").then(
+      (module) => module.Eventcalendar004,
+    ),
+  ),
+  "eventcalendar-005": dynamic(() =>
+    import("@/registry/components/eventcalendar/eventcalendar-005/eventcalendar-005").then(
+      (module) => module.Eventcalendar005,
+    ),
+  ),
   "dropdown-001": dynamic(() =>
     import("@/registry/components/menu/dropdown-001/dropdown-001").then(
       (module) => module.Dropdown001,
@@ -2008,6 +2293,36 @@ export const LAZY_PREVIEWS = {
   "sparkline-002": dynamic(() =>
     import("@/registry/components/charts/sparkline-002/sparkline-002").then(
       (module) => module.Sparkline002,
+    ),
+  ),
+  "gantt-002": dynamic(() =>
+    import("@/registry/components/charts/gantt-002/gantt-002").then(
+      (module) => module.Gantt002,
+    ),
+  ),
+  "gantt-003": dynamic(() =>
+    import("@/registry/components/charts/gantt-003/gantt-003").then(
+      (module) => module.Gantt003,
+    ),
+  ),
+  "gantt-004": dynamic(() =>
+    import("@/registry/components/charts/gantt-004/gantt-004").then(
+      (module) => module.Gantt004,
+    ),
+  ),
+  "gantt-005": dynamic(() =>
+    import("@/registry/components/charts/gantt-005/gantt-005").then(
+      (module) => module.Gantt005,
+    ),
+  ),
+  "gantt-006": dynamic(() =>
+    import("@/registry/components/charts/gantt-006/gantt-006").then(
+      (module) => module.Gantt006,
+    ),
+  ),
+  "gantt-007": dynamic(() =>
+    import("@/registry/components/charts/gantt-007/gantt-007").then(
+      (module) => module.Gantt007,
     ),
   ),
 } as unknown as Record<string, ComponentType<PreviewProps>>

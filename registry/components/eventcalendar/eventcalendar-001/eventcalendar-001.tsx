@@ -52,8 +52,9 @@ gap:0.5rem;margin:0 0 0.75rem;
 }
 [data-vibeui-block="eventcalendar-001"] [data-part="heading"]{
 margin:0;font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em;
-text-transform:capitalize;
 }
+/* Заглавная только первая буква: capitalize поднимает и «г.» в «март 2026 г.». */
+[data-vibeui-block="eventcalendar-001"] [data-part="heading"]::first-letter{text-transform:uppercase}
 [data-vibeui-block="eventcalendar-001"] [data-part="count"]{
 font-size:0.75rem;color:var(--vibeui-eventcalendar-001-muted);
 font-variant-numeric:tabular-nums;

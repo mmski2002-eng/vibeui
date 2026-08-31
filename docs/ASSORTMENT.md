@@ -66,12 +66,12 @@
 | carousel        |     ? |     8 | сверить         |
 | cascader        |    20 |    12 | добор 8         |
 | chart           |    25 |    25 | закрыто         |
-| checkbox        |    22 |     8 | добор 14        |
-| code-block      |    27 |     1 | добор 26        |
-| combobox        |    20 |     0 | новая категория |
-| data-grid       |    29 |     0 | новая категория |
-| event-calendar  |     5 |     0 | новая категория |
-| gantt           |     7 |     1 | добор 6         |
+| checkbox        |    22 |    22 | закрыто         |
+| code-block      |    27 |    14 | добор 13        |
+| combobox        |    20 |    12 | добор 8         |
+| data-grid       |    29 |    12 | добор 17        |
+| event-calendar  |     5 |     5 | закрыто         |
+| gantt           |     7 |     7 | закрыто         |
 
 Дальше по алфавиту: collapsible, command, context-menu, date-selector,
 dialog, drawer, dropdown-menu, empty, field, file-upload, filters, frame,

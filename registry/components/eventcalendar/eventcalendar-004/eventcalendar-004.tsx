@@ -76,8 +76,10 @@ display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem;
 margin:0;padding:0.375rem 0;
 background:var(--vibeui-eventcalendar-004-bg);
 border-bottom:1px solid var(--vibeui-eventcalendar-004-border);
-font-size:0.75rem;font-weight:700;text-transform:capitalize;
+font-size:0.75rem;font-weight:700;
 }
+/* Заглавная только первая буква: capitalize поднимает и «марта» в «19 марта». */
+[data-vibeui-block="eventcalendar-004"] [data-part="dayhead"]::first-letter{text-transform:uppercase}
 [data-vibeui-block="eventcalendar-004"] [data-part="dayhead"] span{
 font-weight:500;text-transform:none;font-variant-numeric:tabular-nums;
 color:var(--vibeui-eventcalendar-004-muted);

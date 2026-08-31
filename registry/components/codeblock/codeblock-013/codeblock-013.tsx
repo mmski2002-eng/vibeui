@@ -58,11 +58,14 @@ user-select:none;-webkit-user-select:none;
 }
 [data-vibeui-block="codeblock-013"] li:hover{background:oklch(1 0 0 / 6%)}
 [data-vibeui-block="codeblock-013"] li[data-copied="true"]{background:oklch(0.6 0.14 152 / 18%)}
+/* Строка режется многоточием, а не прокручивается: своя полоса прокрутки на
+   каждой строке превращает блок в лестницу, а кнопка копирования уезжает за
+   край. Целиком строка всё равно уходит в буфер. */
 [data-vibeui-block="codeblock-013"] code{
 flex:1 1 auto;min-width:0;
 font-family:var(--vibeui-codeblock-013-mono);
 font-size:0.8125rem;line-height:1.6;
-white-space:pre;overflow-x:auto;
+white-space:pre;overflow:hidden;text-overflow:ellipsis;
 }
 [data-vibeui-block="codeblock-013"] button{
 appearance:none;border:0;cursor:pointer;flex:none;

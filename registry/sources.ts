@@ -16,6 +16,7 @@ import dashboardRegistry from "@/registry/blocks/dashboard/registry.json"
 import commerceRegistry from "@/registry/blocks/commerce/registry.json"
 import authRegistry from "@/registry/blocks/auth/registry.json"
 import solutionsRegistry from "@/registry/blocks/solutions/registry.json"
+import datagridRegistry from "@/registry/components/datagrid/registry.json"
 import buttonsRegistry from "@/registry/components/buttons/registry.json"
 import accordionRegistry from "@/registry/components/accordion/registry.json"
 import alertRegistry from "@/registry/components/alert/registry.json"
@@ -31,6 +32,9 @@ import calendarRegistry from "@/registry/components/calendar/registry.json"
 import cardRegistry from "@/registry/components/card/registry.json"
 import carouselRegistry from "@/registry/components/carousel/registry.json"
 import checkboxRegistry from "@/registry/components/checkbox/registry.json"
+import codeblockRegistry from "@/registry/components/codeblock/registry.json"
+import comboboxRegistry from "@/registry/components/combobox/registry.json"
+import eventcalendarRegistry from "@/registry/components/eventcalendar/registry.json"
 import menuRegistry from "@/registry/components/menu/registry.json"
 import inputsRegistry from "@/registry/components/inputs/registry.json"
 import displayRegistry from "@/registry/components/display/registry.json"
@@ -115,6 +119,11 @@ export const SOURCES = [
     items: solutionsRegistry.items,
   },
   {
+    directory: "registry/components/datagrid",
+    kind: "component",
+    items: datagridRegistry.items,
+  },
+  {
     directory: "registry/components/buttons",
     kind: "component",
     items: buttonsRegistry.items,
@@ -188,6 +197,21 @@ export const SOURCES = [
     directory: "registry/components/checkbox",
     kind: "component",
     items: checkboxRegistry.items,
+  },
+  {
+    directory: "registry/components/codeblock",
+    kind: "component",
+    items: codeblockRegistry.items,
+  },
+  {
+    directory: "registry/components/combobox",
+    kind: "component",
+    items: comboboxRegistry.items,
+  },
+  {
+    directory: "registry/components/eventcalendar",
+    kind: "component",
+    items: eventcalendarRegistry.items,
   },
   {
     directory: "registry/components/menu",

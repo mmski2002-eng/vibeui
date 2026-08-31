@@ -189,7 +189,7 @@ curl -s https://<domain>/r/hero-001.json | head -c 120
 ```bash
 set -e                       # без него рестарт случится и на упавшей сборке
 cd /srv/vibeui
-git checkout -- registry.json   # файл генерируется сборкой и мешает git pull
+git checkout -- .               # сборка генерирует registry.json и registry/*.ts — они мешают git pull
 git pull
 npm ci
 export REGISTRY_BASE_URL="https://<domain>/r"

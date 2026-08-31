@@ -1271,7 +1271,8 @@
             "проявление кнопки по :focus-visible: интерфейс, живущий только на hover, недоступен без мыши",
             "подпись кнопки с номером строки: десять одинаковых «Скопировать» бесполезны для читалки экрана",
             "один индекс на всё состояние: два подсвеченных ответа одновременно врут о том, что в буфере",
-            "тёмную подложку блока — светлый моноширинный текст без неё не читается"
+            "тёмную подложку блока — светлый моноширинный текст без неё не читается",
+            "обрезку строки многоточием: полоса прокрутки на каждой строке превращает блок в лестницу, а в буфер строка всё равно уходит целиком"
           ],
           "adapt": [
             "строки списка массивом lines",
@@ -1312,7 +1313,8 @@
                 "revealing the button on :focus-visible: a hover-only interface is unusable without a mouse",
                 "the button label carrying the line number: ten identical \"Copy\" labels are useless to a screen reader",
                 "one index for the whole state: two highlighted answers at once lie about what is in the clipboard",
-                "the dark block surface — light monospaced text is unreadable without it"
+                "the dark block surface — light monospaced text is unreadable without it",
+                "the ellipsis truncation: a scrollbar on every line turns the block into a staircase, and the full line still reaches the clipboard"
               ],
               "adapt": [
                 "the list rows through the lines array",

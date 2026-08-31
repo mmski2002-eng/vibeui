@@ -48,6 +48,18 @@ import { Solutions003 } from "@/registry/blocks/solutions/solutions-003/solution
 import { Solutions004 } from "@/registry/blocks/solutions/solutions-004/solutions-004"
 import { Solutions005 } from "@/registry/blocks/solutions/solutions-005/solutions-005"
 import { Solutions006 } from "@/registry/blocks/solutions/solutions-006/solutions-006"
+import { Datagrid001 } from "@/registry/components/datagrid/datagrid-001/datagrid-001"
+import { Datagrid002 } from "@/registry/components/datagrid/datagrid-002/datagrid-002"
+import { Datagrid003 } from "@/registry/components/datagrid/datagrid-003/datagrid-003"
+import { Datagrid004 } from "@/registry/components/datagrid/datagrid-004/datagrid-004"
+import { Datagrid005 } from "@/registry/components/datagrid/datagrid-005/datagrid-005"
+import { Datagrid006 } from "@/registry/components/datagrid/datagrid-006/datagrid-006"
+import { Datagrid007 } from "@/registry/components/datagrid/datagrid-007/datagrid-007"
+import { Datagrid008 } from "@/registry/components/datagrid/datagrid-008/datagrid-008"
+import { Datagrid009 } from "@/registry/components/datagrid/datagrid-009/datagrid-009"
+import { Datagrid010 } from "@/registry/components/datagrid/datagrid-010/datagrid-010"
+import { Datagrid011 } from "@/registry/components/datagrid/datagrid-011/datagrid-011"
+import { Datagrid012 } from "@/registry/components/datagrid/datagrid-012/datagrid-012"
 import { Button001 } from "@/registry/components/buttons/button-001/button-001"
 import { Button002 } from "@/registry/components/buttons/button-002/button-002"
 import { Button003 } from "@/registry/components/buttons/button-003/button-003"
@@ -288,6 +300,51 @@ import { Checkbox005 } from "@/registry/components/checkbox/checkbox-005/checkbo
 import { Checkbox006 } from "@/registry/components/checkbox/checkbox-006/checkbox-006"
 import { Checkbox007 } from "@/registry/components/checkbox/checkbox-007/checkbox-007"
 import { Checkbox008 } from "@/registry/components/checkbox/checkbox-008/checkbox-008"
+import { Checkbox009 } from "@/registry/components/checkbox/checkbox-009/checkbox-009"
+import { Checkbox010 } from "@/registry/components/checkbox/checkbox-010/checkbox-010"
+import { Checkbox011 } from "@/registry/components/checkbox/checkbox-011/checkbox-011"
+import { Checkbox012 } from "@/registry/components/checkbox/checkbox-012/checkbox-012"
+import { Checkbox013 } from "@/registry/components/checkbox/checkbox-013/checkbox-013"
+import { Checkbox014 } from "@/registry/components/checkbox/checkbox-014/checkbox-014"
+import { Checkbox015 } from "@/registry/components/checkbox/checkbox-015/checkbox-015"
+import { Checkbox016 } from "@/registry/components/checkbox/checkbox-016/checkbox-016"
+import { Checkbox017 } from "@/registry/components/checkbox/checkbox-017/checkbox-017"
+import { Checkbox018 } from "@/registry/components/checkbox/checkbox-018/checkbox-018"
+import { Checkbox019 } from "@/registry/components/checkbox/checkbox-019/checkbox-019"
+import { Checkbox020 } from "@/registry/components/checkbox/checkbox-020/checkbox-020"
+import { Checkbox021 } from "@/registry/components/checkbox/checkbox-021/checkbox-021"
+import { Checkbox022 } from "@/registry/components/checkbox/checkbox-022/checkbox-022"
+import { Codeblock001 } from "@/registry/components/codeblock/codeblock-001/codeblock-001"
+import { Codeblock002 } from "@/registry/components/codeblock/codeblock-002/codeblock-002"
+import { Codeblock003 } from "@/registry/components/codeblock/codeblock-003/codeblock-003"
+import { Codeblock004 } from "@/registry/components/codeblock/codeblock-004/codeblock-004"
+import { Codeblock005 } from "@/registry/components/codeblock/codeblock-005/codeblock-005"
+import { Codeblock006 } from "@/registry/components/codeblock/codeblock-006/codeblock-006"
+import { Codeblock007 } from "@/registry/components/codeblock/codeblock-007/codeblock-007"
+import { Codeblock008 } from "@/registry/components/codeblock/codeblock-008/codeblock-008"
+import { Codeblock009 } from "@/registry/components/codeblock/codeblock-009/codeblock-009"
+import { Codeblock010 } from "@/registry/components/codeblock/codeblock-010/codeblock-010"
+import { Codeblock011 } from "@/registry/components/codeblock/codeblock-011/codeblock-011"
+import { Codeblock012 } from "@/registry/components/codeblock/codeblock-012/codeblock-012"
+import { Codeblock013 } from "@/registry/components/codeblock/codeblock-013/codeblock-013"
+import { Codeblock014 } from "@/registry/components/codeblock/codeblock-014/codeblock-014"
+import { Combobox001 } from "@/registry/components/combobox/combobox-001/combobox-001"
+import { Combobox002 } from "@/registry/components/combobox/combobox-002/combobox-002"
+import { Combobox003 } from "@/registry/components/combobox/combobox-003/combobox-003"
+import { Combobox004 } from "@/registry/components/combobox/combobox-004/combobox-004"
+import { Combobox005 } from "@/registry/components/combobox/combobox-005/combobox-005"
+import { Combobox006 } from "@/registry/components/combobox/combobox-006/combobox-006"
+import { Combobox007 } from "@/registry/components/combobox/combobox-007/combobox-007"
+import { Combobox008 } from "@/registry/components/combobox/combobox-008/combobox-008"
+import { Combobox009 } from "@/registry/components/combobox/combobox-009/combobox-009"
+import { Combobox010 } from "@/registry/components/combobox/combobox-010/combobox-010"
+import { Combobox011 } from "@/registry/components/combobox/combobox-011/combobox-011"
+import { Combobox012 } from "@/registry/components/combobox/combobox-012/combobox-012"
+import { Eventcalendar001 } from "@/registry/components/eventcalendar/eventcalendar-001/eventcalendar-001"
+import { Eventcalendar002 } from "@/registry/components/eventcalendar/eventcalendar-002/eventcalendar-002"
+import { Eventcalendar003 } from "@/registry/components/eventcalendar/eventcalendar-003/eventcalendar-003"
+import { Eventcalendar004 } from "@/registry/components/eventcalendar/eventcalendar-004/eventcalendar-004"
+import { Eventcalendar005 } from "@/registry/components/eventcalendar/eventcalendar-005/eventcalendar-005"
 import { Dropdown001 } from "@/registry/components/menu/dropdown-001/dropdown-001"
 import { Menu001 } from "@/registry/components/menu/menu-001/menu-001"
 import { Menu002 } from "@/registry/components/menu/menu-002/menu-002"
@@ -402,6 +459,12 @@ import { Chart020 } from "@/registry/components/charts/chart-020/chart-020"
 import { Chart021 } from "@/registry/components/charts/chart-021/chart-021"
 import { Chart022 } from "@/registry/components/charts/chart-022/chart-022"
 import { Sparkline002 } from "@/registry/components/charts/sparkline-002/sparkline-002"
+import { Gantt002 } from "@/registry/components/charts/gantt-002/gantt-002"
+import { Gantt003 } from "@/registry/components/charts/gantt-003/gantt-003"
+import { Gantt004 } from "@/registry/components/charts/gantt-004/gantt-004"
+import { Gantt005 } from "@/registry/components/charts/gantt-005/gantt-005"
+import { Gantt006 } from "@/registry/components/charts/gantt-006/gantt-006"
+import { Gantt007 } from "@/registry/components/charts/gantt-007/gantt-007"
 
 /**
  * Карта slug -> React-компонент. Из неё рендерятся и миниатюра каталога,
@@ -456,6 +519,18 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "solutions-004": Solutions004,
   "solutions-005": Solutions005,
   "solutions-006": Solutions006,
+  "datagrid-001": Datagrid001,
+  "datagrid-002": Datagrid002,
+  "datagrid-003": Datagrid003,
+  "datagrid-004": Datagrid004,
+  "datagrid-005": Datagrid005,
+  "datagrid-006": Datagrid006,
+  "datagrid-007": Datagrid007,
+  "datagrid-008": Datagrid008,
+  "datagrid-009": Datagrid009,
+  "datagrid-010": Datagrid010,
+  "datagrid-011": Datagrid011,
+  "datagrid-012": Datagrid012,
   "button-001": Button001,
   "button-002": Button002,
   "button-003": Button003,
@@ -696,6 +771,51 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "checkbox-006": Checkbox006,
   "checkbox-007": Checkbox007,
   "checkbox-008": Checkbox008,
+  "checkbox-009": Checkbox009,
+  "checkbox-010": Checkbox010,
+  "checkbox-011": Checkbox011,
+  "checkbox-012": Checkbox012,
+  "checkbox-013": Checkbox013,
+  "checkbox-014": Checkbox014,
+  "checkbox-015": Checkbox015,
+  "checkbox-016": Checkbox016,
+  "checkbox-017": Checkbox017,
+  "checkbox-018": Checkbox018,
+  "checkbox-019": Checkbox019,
+  "checkbox-020": Checkbox020,
+  "checkbox-021": Checkbox021,
+  "checkbox-022": Checkbox022,
+  "codeblock-001": Codeblock001,
+  "codeblock-002": Codeblock002,
+  "codeblock-003": Codeblock003,
+  "codeblock-004": Codeblock004,
+  "codeblock-005": Codeblock005,
+  "codeblock-006": Codeblock006,
+  "codeblock-007": Codeblock007,
+  "codeblock-008": Codeblock008,
+  "codeblock-009": Codeblock009,
+  "codeblock-010": Codeblock010,
+  "codeblock-011": Codeblock011,
+  "codeblock-012": Codeblock012,
+  "codeblock-013": Codeblock013,
+  "codeblock-014": Codeblock014,
+  "combobox-001": Combobox001,
+  "combobox-002": Combobox002,
+  "combobox-003": Combobox003,
+  "combobox-004": Combobox004,
+  "combobox-005": Combobox005,
+  "combobox-006": Combobox006,
+  "combobox-007": Combobox007,
+  "combobox-008": Combobox008,
+  "combobox-009": Combobox009,
+  "combobox-010": Combobox010,
+  "combobox-011": Combobox011,
+  "combobox-012": Combobox012,
+  "eventcalendar-001": Eventcalendar001,
+  "eventcalendar-002": Eventcalendar002,
+  "eventcalendar-003": Eventcalendar003,
+  "eventcalendar-004": Eventcalendar004,
+  "eventcalendar-005": Eventcalendar005,
   "dropdown-001": Dropdown001,
   "menu-001": Menu001,
   "menu-002": Menu002,
@@ -810,4 +930,10 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "chart-021": Chart021,
   "chart-022": Chart022,
   "sparkline-002": Sparkline002,
+  "gantt-002": Gantt002,
+  "gantt-003": Gantt003,
+  "gantt-004": Gantt004,
+  "gantt-005": Gantt005,
+  "gantt-006": Gantt006,
+  "gantt-007": Gantt007,
 }
