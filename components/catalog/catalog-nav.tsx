@@ -20,7 +20,17 @@ const IDLE_ITEM = "text-shell-muted hover:text-shell-fg hover:bg-shell-panel "
  * Плоский список фильтров, выведенный из разделов каталога. Типы и категории
  * живут на одной оси: активен всегда ровно один фильтр. Если тип в каталоге
  * один, строка типа не показывается — она дублировала бы «Всё».
+ *
+ * Порядок: «Всё» первым, дальше по алфавиту. Порядок объявления в
+ * `registry/categories.ts` — это очередь работ, и по нему нельзя искать
+ * категорию глазами: она уезжает вниз ровно потому, что сделана позже.
  */
+function byLabel(first: { label: string }, second: { label: string }) {
+  return first.label.localeCompare(second.label, undefined, {
+    sensitivity: "base",
+  })
+}
+
 function buildTabs(
   sections: CatalogNavSection[],
   total: number,
@@ -29,7 +39,7 @@ function buildTabs(
   const showKinds = sections.length > 1
   const tabs: Tab[] = [{ value: "all", label: allLabel, count: total }]
 
-  for (const section of sections) {
+  for (const section of [...sections].sort(byLabel)) {
     if (showKinds) {
       tabs.push({
         value: `kind:${section.kind}`,
@@ -38,7 +48,7 @@ function buildTabs(
       })
     }
 
-    for (const category of section.categories) {
+    for (const category of [...section.categories].sort(byLabel)) {
       tabs.push({
         value: category.slug,
         label: category.label,
