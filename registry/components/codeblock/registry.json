@@ -1447,6 +1447,1347 @@
           }
         }
       }
+    },
+    {
+      "name": "codeblock-015",
+      "type": "registry:component",
+      "title": "File Tree Tabs",
+      "description": "Несколько файлов примера в одном блоке: вкладки стоят колонкой слева, как в редакторе, а переключает их радиогруппа — без единой строки JavaScript.",
+      "categories": ["codeblock"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "codeblock-015/codeblock-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/codeblock-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-codeblock-015-*. Серверный: состояние держит нативная радиогруппа, нужная панель выбирается селектором :has(input[value=...]:checked) по индексу файла, поэтому селекторы не зависят от имён и переживают любой список. Раскладка считается от собственной ширины: до 30rem вкладки лежат строкой сверху, дальше уезжают в колонку слева — правила стоят на внутреннем [data-part=\"shell\"], потому что контейнерный запрос не действует на сам контейнер. Радиокнопки спрятаны clip-path, а не display:none, чтобы остаться в порядке обхода клавиатурой.",
+      "meta": {
+        "tags": ["code", "tabs", "files", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Codeblock015",
+          "usage": "<Codeblock015\n  root=\"src/app\"\n  activeIndex={0}\n  group=\"catalog-files\"\n/>",
+          "summary": "Четыре файла примера с вкладками колонкой слева: состояние на радиогруппе и :has(), раскладка от собственной ширины. Ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-codeblock-015-* и не подменять её токенами вашей темы",
+            "радиогруппу как источник состояния: с useState вкладки перестают работать до гидратации",
+            "выбор панели по индексу, а не по имени файла: переименование иначе гасит панель целиком",
+            "скрытие input через clip-path, а не display:none — иначе вкладки выпадают из обхода клавиатурой",
+            "правила раскладки на внутреннем shell: контейнерный запрос не применяется к самому контейнеру",
+            "тёмную подложку блока — светлый моноширинный текст без неё не читается"
+          ],
+          "adapt": [
+            "список файлов через files",
+            "подпись каталога через root",
+            "файл, открытый сразу, через activeIndex",
+            "имя радиогруппы через group, если на странице несколько таких блоков"
+          ],
+          "notes": [
+            "Панелей поддержано шесть: селекторы выбора перечислены в CSS и дальше не продолжаются.",
+            "Два блока с одинаковым group на одной странице образуют одну радиогруппу и переключают друг друга.",
+            "Кнопки копирования здесь нет намеренно — она вернула бы клиентский JS, ради отсутствия которого блок и сделан.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "root",
+            "label": "Каталог",
+            "type": "text",
+            "default": "src/app",
+            "maxLength": 40
+          },
+          {
+            "prop": "activeIndex",
+            "label": "Открытый файл",
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Several example files in one block: the tabs stand in a column on the left, like in an editor, and a radio group switches them without a single line of JavaScript.",
+            "ai": {
+              "summary": "Four example files with tabs in a left column: state on a radio group and :has(), layout driven by the block's own width. Zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-codeblock-015-* palette — do not swap it for your theme tokens",
+                "the radio group as the source of state: with useState the tabs stop working before hydration",
+                "picking the panel by index rather than by file name: a rename otherwise blanks the panel",
+                "hiding the input with clip-path rather than display:none — otherwise the tabs leave the tab order",
+                "the layout rules on the inner shell: a container query never applies to the container itself",
+                "the dark surface of the block — light monospaced text is unreadable without it"
+              ],
+              "adapt": [
+                "the list of files through files",
+                "the folder caption through root",
+                "the initially open file through activeIndex",
+                "the radio group name through group when a page holds several such blocks"
+              ],
+              "notes": [
+                "Six panels are supported: the selection selectors are spelled out in the CSS and stop there.",
+                "Two blocks sharing the same group on one page form a single radio group and switch each other.",
+                "There is deliberately no copy button — it would bring back the client JS this block exists to avoid.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Codeblock015\n  root=\"src/app\"\n  activeIndex={0}\n  group=\"catalog-files\"\n/>"
+            },
+            "controls": {
+              "root": {
+                "label": "Folder",
+                "default": "src/app"
+              },
+              "activeIndex": {
+                "label": "Open file",
+                "default": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "codeblock-016",
+      "type": "registry:component",
+      "title": "Language Segments",
+      "description": "Один и тот же пример на TypeScript, JavaScript и Python: сегментированный переключатель с бегунком, который переезжает за выбранной кнопкой.",
+      "categories": ["codeblock"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "codeblock-016/codeblock-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/codeblock-016.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-codeblock-016-*. Серверный: состояние держит радиогруппа, панель и положение бегунка выбираются через :has() по значению отмеченной кнопки, поэтому переключение работает до гидратации. Бегунок — отдельный слой под подписями: он не перерисовывается, а переезжает transform'ом, поэтому смена языка читается как одно движение. Ширина бегунка посчитана от трёх сегментов, подписи сокращены до TS, JS и PY, чтобы переключатель не расползался в шапке.",
+      "meta": {
+        "tags": ["code", "tabs", "language", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Codeblock016",
+          "usage": "<Codeblock016\n  title=\"Запрос к API\"\n  defaultLanguage=\"TypeScript\"\n  group=\"api-sample\"\n/>",
+          "summary": "Один пример на трёх языках с сегментированным переключателем: бегунок едет за отмеченной радиокнопкой. Ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-codeblock-016-* и не подменять её токенами вашей темы",
+            "бегунок отдельным слоем: перекрашивание подписей вместо переезда теряет само движение",
+            "радиокнопки как источник состояния: с useState блок перестаёт работать до гидратации",
+            "скрытие input через clip-path, а не display:none — иначе сегменты выпадают из обхода клавиатурой",
+            "совпадение порядка языков и порядка панелей: иначе бегунок встанет не под тем сегментом",
+            "тёмную подложку блока — она несёт контраст для светлого моноширинного текста"
+          ],
+          "adapt": [
+            "заголовок примера через title",
+            "язык, открытый сразу, через defaultLanguage",
+            "имя радиогруппы через group, если на странице несколько таких блоков",
+            "набор языков и их код в константе внутри файла"
+          ],
+          "notes": [
+            "Три сегмента зашиты в ширину бегунка: четвёртый язык требует правки формулы и селекторов.",
+            "Выбор не запоминается между страницами: для этого нужен клиентский стейт и хранилище.",
+            "Примеры пишутся руками и могут разойтись по смыслу — следите, чтобы все три делали одно и то же.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Запрос к API",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultLanguage",
+            "label": "Язык по умолчанию",
+            "type": "select",
+            "default": "TypeScript",
+            "options": ["TypeScript", "JavaScript", "Python"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The same example in TypeScript, JavaScript and Python: a segmented switch whose thumb slides over to the selected button.",
+            "ai": {
+              "summary": "One example in three languages with a segmented switch: the thumb travels to the checked radio button. Zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-codeblock-016-* palette — do not swap it for your theme tokens",
+                "the thumb as a separate layer: recolouring the captions instead of moving it loses the motion itself",
+                "the radio buttons as the source of state: with useState the block stops working before hydration",
+                "hiding the input with clip-path rather than display:none — otherwise the segments leave the tab order",
+                "the order of languages matching the order of panels: otherwise the thumb lands under the wrong segment",
+                "the dark surface of the block — it carries the contrast for the light monospaced text"
+              ],
+              "adapt": [
+                "the example heading through title",
+                "the initially open language through defaultLanguage",
+                "the radio group name through group when a page holds several such blocks",
+                "the set of languages and their code in the constant inside the file"
+              ],
+              "notes": [
+                "Three segments are baked into the thumb width: a fourth language needs the formula and selectors edited.",
+                "The choice is not remembered between pages: that needs client state and storage.",
+                "The samples are written by hand and can drift apart — keep all three doing the same thing.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Codeblock016\n  title=\"Request to the API\"\n  defaultLanguage=\"TypeScript\"\n  group=\"api-sample\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Request to the API"
+              },
+              "defaultLanguage": {
+                "label": "Default language",
+                "default": "TypeScript"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "codeblock-017",
+      "type": "registry:component",
+      "title": "Changed Line",
+      "description": "Листинг с отметкой строки, которую поправили только что: полоса, подложка и короткая вспышка, которая гаснет сама и не превращается в мигалку.",
+      "categories": ["codeblock"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "codeblock-017/codeblock-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/codeblock-017.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-codeblock-017-*. Серверный: хуков нет. Номер строки печатает CSS-счётчик в ::before, отметку изменения — ::after, поэтому ни цифра, ни знак не уезжают в буфер обмена. Изменение помечено тремя независимыми признаками: полосой слева через inset box-shadow, полупрозрачной подложкой и однократной анимацией вспышки. Последний кадр анимации равен цвету подложки, поэтому после её завершения отметка остаётся на месте, а не исчезает.",
+      "meta": {
+        "tags": ["code", "highlight", "changed", "edit"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Codeblock017",
+          "usage": "<Codeblock017\n  path=\"components/cart.tsx\"\n  changedLine={3}\n  agoLabel=\"изменено только что\"\n/>",
+          "summary": "Листинг, в котором помечена последняя изменённая строка: полоса, подложка и однократная вспышка. Ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-codeblock-017-* и не подменять её токенами вашей темы",
+            "однократную вспышку: бесконечная анимация превращает блок в мигалку и мешает читать",
+            "последний кадр вспышки, равный цвету подложки — иначе после анимации отметка пропадёт",
+            "знак в ::after рядом с цветом: одна подложка не читается при дальтонизме и в печати",
+            "номера строк и знак в псевдоэлементах, чтобы они не уезжали в буфер вместе с кодом",
+            "правило prefers-reduced-motion: вспышка — раздражитель для части людей"
+          ],
+          "adapt": [
+            "строки листинга массивом lines",
+            "путь к файлу через path",
+            "номер изменённой строки через changedLine",
+            "подпись времени через agoLabel и оттенок отметки"
+          ],
+          "notes": [
+            "Помечается ровно одна строка: для набора изменений возьмите блок с дифом.",
+            "Вспышка проигрывается один раз при появлении блока; повторить её без клиентского JS нельзя.",
+            "changedLine вне списка строк просто ничего не подсветит — проверять границы приходится вызывающему коду.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "path",
+            "label": "Файл",
+            "type": "text",
+            "default": "components/cart.tsx",
+            "maxLength": 40
+          },
+          {
+            "prop": "changedLine",
+            "label": "Изменённая строка",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 999
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A listing that marks the line edited a moment ago: a bar, a tint and a short flash that fades on its own instead of blinking forever.",
+            "ai": {
+              "summary": "A listing with the last changed line marked: a bar, a tint and a one-shot flash. Zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-codeblock-017-* palette — do not swap it for your theme tokens",
+                "the single-run flash: an endless animation turns the block into a blinker and blocks reading",
+                "the final keyframe equal to the tint colour — otherwise the mark disappears once the animation ends",
+                "the sign in ::after next to the colour: a tint alone is unreadable for colour blindness and in print",
+                "line numbers and the sign in pseudo-elements so they never travel to the clipboard with the code",
+                "the prefers-reduced-motion rule: a flash is an irritant for some people"
+              ],
+              "adapt": [
+                "the listing rows through the lines array",
+                "the file path through path",
+                "the changed line number through changedLine",
+                "the time caption through agoLabel and the mark hue"
+              ],
+              "notes": [
+                "Exactly one line is marked: for a set of changes use a diff block instead.",
+                "The flash plays once when the block appears; replaying it is impossible without client JS.",
+                "A changedLine outside the row list simply highlights nothing: bounds are the caller's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Codeblock017\n  path=\"components/cart.tsx\"\n  changedLine={3}\n  agoLabel=\"changed just now\"\n/>"
+            },
+            "controls": {
+              "path": {
+                "label": "File",
+                "default": "components/cart.tsx"
+              },
+              "changedLine": {
+                "label": "Changed line",
+                "default": 3
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "codeblock-018",
+      "type": "registry:component",
+      "title": "Line Callouts",
+      "description": "Разбор кода с выносками: у размеченных строк появляется кружок с номером, а под листингом стоит легенда, где каждый номер объяснён словами.",
+      "categories": ["codeblock"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "codeblock-018/codeblock-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/codeblock-018.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-codeblock-018-*. Серверный: хуков нет. Кружок с номером печатает ::after через content:attr(data-note), поэтому объяснения не уезжают в буфер вместе с кодом. Номера в легенде считает CSS-счётчик от порядка элементов списка, а номера в коде берутся из той же карты — разойтись они не могут. Пустой строке задан min-height: блочный span без содержимого схлопнулся бы в ноль, и отбивка между кусками кода пропала бы. Блок светлый и несёт собственную подложку.",
+      "meta": {
+        "tags": ["code", "annotation", "docs", "light"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Codeblock018",
+          "usage": "<Codeblock018\n  path=\"middleware.ts\"\n  showLegend={true}\n/>",
+          "summary": "Светлый листинг с выносками: кружок с номером у строки и легенда с пояснениями под кодом. Ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-codeblock-018-* и не подменять её токенами вашей темы",
+            "кружок в ::after: перенесённый в разметку, он уедет в буфер и сломает вставленный код",
+            "нумерацию легенды счётчиком: проставленные руками номера рано или поздно разойдутся с выносками",
+            "min-height у строки — пустая строка иначе схлопнется, и разбивка кода пропадёт",
+            "подложку размеченной строки вместе с кружком: один кружок теряется в длинном листинге",
+            "собственную светлую подложку блока: тёмный код без неё пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "строки листинга массивом lines",
+            "выноски массивом notes с номером строки и текстом",
+            "путь к файлу через path",
+            "показ легенды через showLegend"
+          ],
+          "notes": [
+            "Номер выноски — это её место в notes, а не номер строки: порядок массива и есть нумерация.",
+            "Выноска на несуществующую строку просто не отрисуется в коде, но останется в легенде.",
+            "Длинное пояснение лучше держать в легенде: кружок рассчитан на одну-две цифры.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "path",
+            "label": "Файл",
+            "type": "text",
+            "default": "middleware.ts",
+            "maxLength": 40
+          },
+          {
+            "prop": "showLegend",
+            "label": "Легенда",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A code walkthrough with callouts: marked lines get a numbered circle, and a legend under the listing explains every number in words.",
+            "ai": {
+              "summary": "A light listing with callouts: a numbered circle on the line and a legend with explanations below the code. Zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-codeblock-018-* palette — do not swap it for your theme tokens",
+                "the circle in ::after: moved into the markup it lands in the clipboard and breaks the pasted code",
+                "numbering the legend with a counter: hand-typed numbers eventually drift away from the callouts",
+                "the min-height on a row — an empty line would otherwise collapse and the code loses its spacing",
+                "the tint on a marked row along with the circle: a lone circle gets lost in a long listing",
+                "the block's own light surface: without it the dark code disappears on a dark page"
+              ],
+              "adapt": [
+                "the listing rows through the lines array",
+                "the callouts through the notes array with a line number and a text",
+                "the file path through path",
+                "the legend through showLegend"
+              ],
+              "notes": [
+                "A callout number is its position in notes, not the line number: the array order is the numbering.",
+                "A callout pointing at a missing line simply renders nothing in the code but stays in the legend.",
+                "Keep a long explanation in the legend: the circle is sized for one or two digits.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Codeblock018\n  path=\"middleware.ts\"\n  showLegend={true}\n/>"
+            },
+            "controls": {
+              "path": {
+                "label": "File",
+                "default": "middleware.ts"
+              },
+              "showLegend": {
+                "label": "Legend",
+                "default": true
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "codeblock-019",
+      "type": "registry:component",
+      "title": "Listing Outline",
+      "description": "Длинный листинг, по которому можно ходить: слева оглавление объявлений, справа прокручиваемый код, а строка-цель подсвечивается через :target.",
+      "categories": ["codeblock"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "codeblock-019/codeblock-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/codeblock-019.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-codeblock-019-*. Серверный: переходы — обычные якоря, состояние живёт в адресе страницы, поэтому ссылкой на строку можно поделиться. У строк есть id с префиксом из пропса idPrefix: два блока на странице с одинаковым префиксом сцепили бы якоря. Область кода прокручивается сама и получает tabIndex с role=region, иначе до неё не добраться с клавиатуры; scroll-margin отодвигает строку-цель от края. Раскладка считается от собственной ширины и лежит на внутреннем [data-part=\"shell\"].",
+      "meta": {
+        "tags": ["code", "outline", "anchor", "navigation"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Codeblock019",
+          "usage": "<Codeblock019\n  path=\"app/actions.ts\"\n  maxHeight={14}\n  idPrefix=\"actions\"\n/>",
+          "summary": "Листинг с оглавлением объявлений и переходом по якорям: строка-цель подсвечивается через :target. Ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-codeblock-019-* и не подменять её токенами вашей темы",
+            "уникальный idPrefix на каждый блок: одинаковые id сцепляют якоря двух листингов",
+            ":target как источник подсветки — состояние в адресе даёт ссылку на конкретную строку",
+            "tabIndex и role=region на области прокрутки: без них с клавиатуры код не прокрутить",
+            "scroll-margin у строк: без него цель встаёт вплотную к краю и читается как обрезанная",
+            "правила раскладки на внутреннем shell: контейнерный запрос не применяется к самому контейнеру"
+          ],
+          "adapt": [
+            "строки листинга массивом lines и оглавление массивом outline",
+            "путь к файлу через path",
+            "высоту области прокрутки через maxHeight",
+            "префикс якорей через idPrefix"
+          ],
+          "notes": [
+            "Переход по якорю меняет адрес страницы — это плата за возможность поделиться ссылкой на строку.",
+            "Плавную прокрутку снимает prefers-reduced-motion: переход становится мгновенным, и это правильно.",
+            "Оглавление ведётся руками и может разойтись с кодом: номера строк оно не проверяет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "path",
+            "label": "Файл",
+            "type": "text",
+            "default": "app/actions.ts",
+            "maxLength": 40
+          },
+          {
+            "prop": "maxHeight",
+            "label": "Высота, rem",
+            "type": "number",
+            "default": 14,
+            "min": 6,
+            "max": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A long listing you can walk through: the outline of declarations on the left, scrollable code on the right, and the target row highlighted through :target.",
+            "ai": {
+              "summary": "A listing with an outline of declarations and anchor navigation: the target row lights up through :target. Zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-codeblock-019-* palette — do not swap it for your theme tokens",
+                "a unique idPrefix per block: identical ids wire the anchors of two listings together",
+                ":target as the source of the highlight — state in the address gives a shareable link to a line",
+                "tabIndex and role=region on the scroller: without them the code cannot be scrolled by keyboard",
+                "scroll-margin on the rows: without it the target sits flush to the edge and reads as clipped",
+                "the layout rules on the inner shell: a container query never applies to the container itself"
+              ],
+              "adapt": [
+                "the listing rows through the lines array and the outline through the outline array",
+                "the file path through path",
+                "the height of the scroll area through maxHeight",
+                "the anchor prefix through idPrefix"
+              ],
+              "notes": [
+                "Following an anchor changes the page address — the price of a shareable link to a line.",
+                "prefers-reduced-motion drops the smooth scroll: the jump becomes instant, which is right.",
+                "The outline is written by hand and can drift from the code: it never checks the line numbers.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Codeblock019\n  path=\"app/actions.ts\"\n  maxHeight={14}\n  idPrefix=\"actions\"\n/>"
+            },
+            "controls": {
+              "path": {
+                "label": "File",
+                "default": "app/actions.ts"
+              },
+              "maxHeight": {
+                "label": "Height, rem",
+                "default": 14
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "codeblock-020",
+      "type": "registry:component",
+      "title": "Version Stamp",
+      "description": "У примера кода есть срок годности: версия и дата проверки стоят в шапке, а признак устаревания перекрашивает штамп и меняет подпись в подвале.",
+      "categories": ["codeblock"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "codeblock-020/codeblock-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/codeblock-020.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-codeblock-020-*. Серверный: хуков нет. Признак stale живёт на корне как data-атрибут, и от него зависят и цвет штампа, и значок в подвале, и текст подписи — рассинхронизировать их нельзя. Дата выводится тегом time с машиночитаемым dateTime, поэтому её понимают и парсеры, и читалки экрана. Штамп версии сделан значком с точкой в псевдоэлементе, а окружение вынесено вправо моноширинной подписью.",
+      "meta": {
+        "tags": ["code", "version", "date", "freshness"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Codeblock020",
+          "usage": "<Codeblock020\n  version=\"v2.4.0\"\n  date=\"2026-08-14\"\n  dateLabel=\"14 августа 2026\"\n  runtime=\"next@16\"\n  stale={false}\n/>",
+          "summary": "Блок кода со штампом версии, датой проверки и подписью об актуальности: устаревание перекрашивает штамп и меняет текст. Ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-codeblock-020-* и не подменять её токенами вашей темы",
+            "один источник состояния: и штамп, и подпись красятся признаком stale, иначе блок соврёт",
+            "машиночитаемый dateTime у тега time — видимая дата без него бесполезна для парсеров",
+            "дату рядом с версией: версия без даты не говорит, насколько давно это проверяли",
+            "подпись в подвале: цвет штампа сам по себе не объясняет, что делать читателю",
+            "тёмную подложку блока — светлый моноширинный текст без неё не читается"
+          ],
+          "adapt": [
+            "код примера через code",
+            "версию через version",
+            "дату через date и её подпись через dateLabel",
+            "признак устаревания через stale и окружение через runtime"
+          ],
+          "notes": [
+            "dateLabel не выводится из date: человекочитаемая дата задаётся отдельно, чтобы не тащить локали.",
+            "Компонент не сравнивает даты сам — stale ставит вызывающий код, который знает про релизы.",
+            "Штамп рассчитан на короткую версию: длинная строка вроде хеша коммита ломает шапку.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "version",
+            "label": "Версия",
+            "type": "text",
+            "default": "v2.4.0",
+            "maxLength": 20
+          },
+          {
+            "prop": "stale",
+            "label": "Устарело",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A code sample with a shelf life: the version and the check date sit in the header, and a stale flag repaints the stamp and rewrites the footer note.",
+            "ai": {
+              "summary": "A code block with a version stamp, a check date and a freshness note: going stale repaints the stamp and changes the text. Zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-codeblock-020-* palette — do not swap it for your theme tokens",
+                "one source of state: both the stamp and the note are painted by stale, or the block lies",
+                "the machine-readable dateTime on the time element — a visible date alone is useless to parsers",
+                "the date next to the version: a version without a date says nothing about how old the check is",
+                "the footer note: the stamp colour alone does not tell the reader what to do",
+                "the dark surface of the block — light monospaced text is unreadable without it"
+              ],
+              "adapt": [
+                "the sample code through code",
+                "the version through version",
+                "the date through date and its caption through dateLabel",
+                "the stale flag through stale and the runtime through runtime"
+              ],
+              "notes": [
+                "dateLabel is not derived from date: the human date is set separately to avoid dragging in locales.",
+                "The component never compares dates itself — stale is set by the caller who knows the releases.",
+                "The stamp is sized for a short version: a long string such as a commit hash breaks the header.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Codeblock020\n  version=\"v2.4.0\"\n  date=\"2026-08-14\"\n  dateLabel=\"14 August 2026\"\n  runtime=\"next@16\"\n  stale={false}\n/>"
+            },
+            "controls": {
+              "version": {
+                "label": "Version",
+                "default": "v2.4.0"
+              },
+              "stale": {
+                "label": "Stale",
+                "default": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "codeblock-021",
+      "type": "registry:component",
+      "title": "JSON Tree",
+      "description": "JSON с раскрытием вложенных узлов: каждый объект и массив — нативный details, а свёрнутая ветка показывает, сколько в ней полей.",
+      "categories": ["codeblock"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "codeblock-021/codeblock-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/codeblock-021.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-codeblock-021-*. Серверный: раскрытие делает нативный details, состояние дерева в JS не хранится. Узлы рисует рекурсивная внутренняя функция: примитив становится строкой с токеном по типу значения, объект и массив — details с summary, счётчиком полей и хвостовой скобкой, которая видна только в свёрнутом виде. Запятые выводятся из позиции элемента, поэтому дерево всегда выглядит валидным JSON. Начальная глубина раскрытия задаётся пропсом openDepth и сравнивается с уровнем узла.",
+      "meta": {
+        "tags": ["json", "tree", "details", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Codeblock021",
+          "usage": "<Codeblock021\n  rootLabel=\"response\"\n  openDepth={2}\n/>",
+          "summary": "Светлое JSON-дерево с раскрытием узлов через нативный details: свёрнутая ветка показывает число полей. Ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-codeblock-021-* и не подменять её токенами вашей темы",
+            "нативный details: он даёт раскрытие, поиск по странице и работу без JS бесплатно",
+            "счётчик полей у свёрнутого узла — иначе закрытая ветка неотличима от пустой",
+            "хвостовую скобку в summary: свёрнутый узел обязан выглядеть законченным JSON",
+            "запятые, выведенные из позиции элемента, а не проставленные руками",
+            "собственную светлую подложку: тёмный текст без неё исчезает на тёмной странице"
+          ],
+          "adapt": [
+            "данные через data",
+            "подпись файла через rootLabel",
+            "начальную глубину раскрытия через openDepth",
+            "цвета токенов для строк, чисел и логических значений"
+          ],
+          "notes": [
+            "Отступ вложенности фиксированный: очень глубокое дерево уезжает в горизонтальную прокрутку.",
+            "Данные обязаны быть деревом: циклическая ссылка уронит рекурсию бесконечным раскрытием.",
+            "Плавную анимацию раскрытия details без JS не сделать — узел открывается мгновенно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "rootLabel",
+            "label": "Имя ответа",
+            "type": "text",
+            "default": "response",
+            "maxLength": 24
+          },
+          {
+            "prop": "openDepth",
+            "label": "Глубина раскрытия",
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 5
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "JSON with expandable nested nodes: every object and array is a native details element, and a collapsed branch shows how many fields it holds.",
+            "ai": {
+              "summary": "A light JSON tree expanded through native details: a collapsed branch shows its field count. Zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-codeblock-021-* palette — do not swap it for your theme tokens",
+                "the native details: it gives expansion, find-in-page and no-JS behaviour for free",
+                "the field counter on a collapsed node — otherwise a closed branch looks like an empty one",
+                "the trailing brace in the summary: a collapsed node has to look like finished JSON",
+                "the commas derived from the element position rather than typed by hand",
+                "the block's own light surface: without it the dark text vanishes on a dark page"
+              ],
+              "adapt": [
+                "the payload through data",
+                "the file caption through rootLabel",
+                "the initial expansion depth through openDepth",
+                "the token colours for strings, numbers and booleans"
+              ],
+              "notes": [
+                "The nesting indent is fixed: a very deep tree drifts into horizontal scrolling.",
+                "The payload has to be a tree: a cyclic reference sends the recursion into an endless expansion.",
+                "A smooth expansion animation for details is impossible without JS — the node opens instantly.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Codeblock021\n  rootLabel=\"response\"\n  openDepth={2}\n/>"
+            },
+            "controls": {
+              "rootLabel": {
+                "label": "Payload name",
+                "default": "response"
+              },
+              "openDepth": {
+                "label": "Expanded depth",
+                "default": 2
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "codeblock-022",
+      "type": "registry:component",
+      "title": "Masked Env",
+      "description": "Список переменных окружения со скрытыми значениями: строка открывается своим переключателем или общим в шапке, и всё это без клиентского JS.",
+      "categories": ["codeblock"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "codeblock-022/codeblock-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/codeblock-022.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-codeblock-022-*. Серверный: состояние держат нативные чекбоксы, а показ значения включают два независимых селектора :has() — на строке и на всём блоке от общего переключателя в шапке. Область видимости переменной выводится из её имени: ключи с префиксом NEXT_PUBLIC_ получают другой значок, поэтому подпись не может разойтись с реальностью. Чекбоксы спрятаны clip-path, у каждого есть визуально скрытая подпись с именем ключа для читалки экрана.",
+      "meta": {
+        "tags": ["env", "secrets", "toggle", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Codeblock022",
+          "usage": "<Codeblock022\n  file=\".env.local\"\n  revealAll={false}\n/>",
+          "summary": "Переменные окружения со скрытыми значениями: раскрытие построчно или сразу всё, состояние на чекбоксах и :has(). Ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-codeblock-022-* и не подменять её токенами вашей темы",
+            "вывод области видимости из имени ключа: проставленный руками значок рано или поздно соврёт",
+            "два независимых источника раскрытия: общий переключатель и переключатель строки",
+            "скрытие чекбоксов через clip-path, а не display:none — иначе они выпадают из обхода клавиатурой",
+            "подпись в подвале про визуальность маскировки: без неё блок выглядит защитой, которой не является",
+            "тёмную подложку блока — светлый моноширинный текст без неё не читается"
+          ],
+          "adapt": [
+            "список переменных через variables",
+            "имя файла через file",
+            "открытые значения сразу через revealAll",
+            "цвета значков области видимости и маски"
+          ],
+          "notes": [
+            "Маскировка визуальная: значения лежат в разметке страницы, настоящие секреты сюда не кладут.",
+            "Общий переключатель перекрывает строчные: чтобы вернуться к построчному режиму, его нужно снять.",
+            "Длинное значение режется многоточием — целиком оно видно только в исходном коде страницы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "file",
+            "label": "Файл",
+            "type": "text",
+            "default": ".env.local",
+            "maxLength": 32
+          },
+          {
+            "prop": "revealAll",
+            "label": "Показать всё",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A list of environment variables with hidden values: a row opens by its own toggle or by the master one in the header, and all of it without client JS.",
+            "ai": {
+              "summary": "Environment variables with masked values: reveal them row by row or all at once, state on checkboxes and :has(). Zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-codeblock-022-* palette — do not swap it for your theme tokens",
+                "deriving the scope badge from the key name: a hand-set badge eventually lies",
+                "the two independent sources of reveal: the master toggle and the per-row toggle",
+                "hiding the checkboxes with clip-path rather than display:none — otherwise they leave the tab order",
+                "the footer note about the masking being visual: without it the block looks like protection it is not",
+                "the dark surface of the block — light monospaced text is unreadable without it"
+              ],
+              "adapt": [
+                "the list of variables through variables",
+                "the file name through file",
+                "showing every value at once through revealAll",
+                "the colours of the scope badge and the mask"
+              ],
+              "notes": [
+                "The masking is visual: the values sit in the page markup, so real secrets never go here.",
+                "The master toggle overrides the per-row ones: uncheck it to get the row behaviour back.",
+                "A long value is truncated with an ellipsis — in full it is only visible in the page source.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Codeblock022\n  file=\".env.local\"\n  revealAll={false}\n/>"
+            },
+            "controls": {
+              "file": {
+                "label": "File",
+                "default": ".env.local"
+              },
+              "revealAll": {
+                "label": "Reveal all",
+                "default": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "codeblock-023",
+      "type": "registry:component",
+      "title": "Prompt Free Copy",
+      "description": "Последовательность команд с копированием без приглашения: символ доллара нарисован стилями, поэтому в буфер уходят только сами команды.",
+      "categories": ["codeblock"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "codeblock-023/codeblock-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/codeblock-023.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-codeblock-023-*. Клиентский: директива \"use client\" нужна для navigator.clipboard и отметки о копировании. Приглашение печатает ::before у каждой строки и помечено user-select:none, поэтому его нет ни в тексте, ни в буфере: кнопка склеивает команды переводом строки и отдаёт готовый к вставке кусок. Таймер отката снимается в useEffect при размонтировании, а при отказе буфера обмена состояние не меняется — ложное «Скопировано» хуже молчания.",
+      "meta": {
+        "tags": ["terminal", "copy", "commands", "clipboard"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Codeblock023",
+          "usage": "<Codeblock023\n  title=\"Установка\"\n  label=\"Скопировать без $\"\n  doneLabel=\"Скопировано\"\n/>",
+          "summary": "Список команд терминала с одной кнопкой копирования: приглашение живёт в CSS и в буфер не попадает. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-codeblock-023-* и не подменять её токенами вашей темы",
+            "приглашение только в CSS: перенесённое в текст, оно уедет в буфер и сломает вставку",
+            "user-select:none на приглашении — иначе выделение мышью снова захватывает доллар",
+            "молчание при отказе буфера обмена: ложное «Скопировано» хуже отсутствия ответа",
+            "снятие таймера при размонтировании, иначе состояние обновляется у мёртвого компонента",
+            "тёмную подложку блока — она делает список терминалом, а не абзацем кода"
+          ],
+          "adapt": [
+            "команды массивом commands",
+            "заголовок блока через title",
+            "подписи кнопки через label и doneLabel",
+            "цвет приглашения и ширину блока"
+          ],
+          "notes": [
+            "navigator.clipboard работает только в защищённом контексте: по http кнопка промолчит.",
+            "Команды копируются одним куском с переводами строк — вставка в терминал выполнит их подряд.",
+            "Блок не проверяет команды: ответственность за то, что вставят пользователю, остаётся на авторе.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Установка",
+            "maxLength": 32
+          },
+          {
+            "prop": "label",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Скопировать без $",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A sequence of commands with copying that skips the prompt: the dollar sign is drawn by styles, so only the commands themselves reach the clipboard.",
+            "ai": {
+              "summary": "A list of terminal commands with one copy button: the prompt lives in CSS and never reaches the clipboard. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-codeblock-023-* palette — do not swap it for your theme tokens",
+                "the prompt in CSS only: moved into the text it lands in the clipboard and breaks the paste",
+                "user-select:none on the prompt — otherwise a mouse selection grabs the dollar again",
+                "the silence when the clipboard is refused: a false \"Copied\" is worse than no answer",
+                "clearing the timer on unmount, otherwise state updates land on a dead component",
+                "the dark surface of the block — it makes the list a terminal, not a paragraph of code"
+              ],
+              "adapt": [
+                "the commands through the commands array",
+                "the block heading through title",
+                "the button captions through label and doneLabel",
+                "the prompt colour and the block width"
+              ],
+              "notes": [
+                "navigator.clipboard needs a secure context: over http the button stays silent.",
+                "The commands are copied as one chunk with newlines — a terminal paste runs them one after another.",
+                "The block never checks the commands: what users paste stays the author's responsibility.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Codeblock023\n  title=\"Install\"\n  label=\"Copy without $\"\n  doneLabel=\"Copied\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Install"
+              },
+              "label": {
+                "label": "Button caption",
+                "default": "Copy without $"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "codeblock-024",
+      "type": "registry:component",
+      "title": "Split Compare",
+      "description": "Две версии файла рядом: было слева, стало справа, строка напротив строки, а пустое место — явная заглушка, а не потерянный кусок кода.",
+      "categories": ["codeblock"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "codeblock-024/codeblock-024.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/codeblock-024.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-codeblock-024-*. Серверный: хуков нет. Панели получают один и тот же массив rows, поэтому строки всегда стоят напротив друг друга; отсутствующая строка рисуется заглушкой с другой подложкой, и счётчик номеров её пропускает — нумерация остаётся верной для каждой версии отдельно. Раскладка считается от собственной ширины: до 34rem панели встают друг под друга, дальше делят ширину пополам, и правила лежат на внутреннем [data-part=\"shell\"].",
+      "meta": {
+        "tags": ["diff", "compare", "split", "review"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Codeblock024",
+          "usage": "<Codeblock024\n  path=\"lib/total.ts\"\n  beforeLabel=\"Было\"\n  afterLabel=\"Стало\"\n/>",
+          "summary": "Двухпанельное сравнение версий файла: строки выровнены по горизонтали, пропуски показаны заглушками. Ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-codeblock-024-* и не подменять её токенами вашей темы",
+            "заглушки вместо отсутствующих строк: без них соседняя панель уезжает и сравнение ломается",
+            "знак в подписи панели рядом с цветом: одна подложка не читается при дальтонизме",
+            "счётчик номеров, пропускающий заглушки — иначе нумерация разъезжается с настоящим файлом",
+            "правила раскладки на внутреннем shell: контейнерный запрос не применяется к самому контейнеру",
+            "тёмную подложку блока — светлый моноширинный текст без неё не читается"
+          ],
+          "adapt": [
+            "строки сравнения массивом rows",
+            "путь к файлу через path",
+            "подписи панелей через beforeLabel и afterLabel",
+            "оттенки удаления и добавления под свою палитру"
+          ],
+          "notes": [
+            "Сопоставление строк — забота вызывающего кода: rows приходит уже выровненным парами.",
+            "На узкой ширине панели встают друг под друга, и сравнение из горизонтального становится вертикальным.",
+            "Изменение внутри строки не подсвечивается: помечается вся строка целиком.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "path",
+            "label": "Файл",
+            "type": "text",
+            "default": "lib/total.ts",
+            "maxLength": 40
+          },
+          {
+            "prop": "beforeLabel",
+            "label": "Левая панель",
+            "type": "text",
+            "default": "Было",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Two versions of a file side by side: before on the left, after on the right, line facing line, and an empty slot is an explicit placeholder, not a lost piece of code.",
+            "ai": {
+              "summary": "A two-pane comparison of file versions: rows aligned horizontally, gaps shown as placeholders. Zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-codeblock-024-* palette — do not swap it for your theme tokens",
+                "the placeholders for missing rows: without them the other pane slides up and the comparison breaks",
+                "the sign in the pane caption next to the colour: a tint alone is unreadable for colour blindness",
+                "the counter that skips placeholders — otherwise the numbering drifts from the real file",
+                "the layout rules on the inner shell: a container query never applies to the container itself",
+                "the dark surface of the block — light monospaced text is unreadable without it"
+              ],
+              "adapt": [
+                "the compared rows through the rows array",
+                "the file path through path",
+                "the pane captions through beforeLabel and afterLabel",
+                "the removed and added hues to match your palette"
+              ],
+              "notes": [
+                "Matching the lines is the caller's job: rows arrives already aligned into pairs.",
+                "On a narrow width the panes stack, and the comparison turns from horizontal into vertical.",
+                "A change inside a line is not highlighted: the whole line is marked instead.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Codeblock024\n  path=\"lib/total.ts\"\n  beforeLabel=\"Before\"\n  afterLabel=\"After\"\n/>"
+            },
+            "controls": {
+              "path": {
+                "label": "File",
+                "default": "lib/total.ts"
+              },
+              "beforeLabel": {
+                "label": "Left pane",
+                "default": "Before"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "codeblock-025",
+      "type": "registry:component",
+      "title": "Height Cap",
+      "description": "Блок кода, ограниченный по высоте, а не по числу строк: раскрытие анимируется, обрыв показан маской, состояние держит скрытый чекбокс.",
+      "categories": ["codeblock"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "codeblock-025/codeblock-025.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/codeblock-025.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-codeblock-025-*. Серверный: состояние держит нативный checkbox, корневой селектор :has(input:checked) переводит область кода с высоты свёрнутого блока на предел раскрытия. Обе высоты приходят пропсами и уезжают в CSS-переменные, поэтому анимация max-height идёт между двумя известными значениями, а не до auto. Маска нижнего края включена только в свёрнутом виде, подпись переключателя меняется парой span, спрятанных через :has().",
+      "meta": {
+        "tags": ["code", "collapse", "height", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Codeblock025",
+          "usage": "<Codeblock025\n  path=\"lib/pricing.ts\"\n  collapsedHeight={9}\n  expandedHeight={32}\n/>",
+          "summary": "Блок кода с ограничением высоты и кнопкой раскрытия: анимация max-height, маска обрыва, состояние на чекбоксе. Ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-codeblock-025-* и не подменять её токенами вашей темы",
+            "чекбокс как источник состояния: с useState блок перестаёт работать до гидратации",
+            "маску нижнего края только в свёрнутом виде: в раскрытом она прячет настоящий код",
+            "смену подписи переключателя: «Развернуть» и «Свернуть» — это разные обещания",
+            "обводку фокуса на label, иначе с клавиатуры непонятно, что именно раскрывается",
+            "тёмную подложку блока — светлый моноширинный текст без неё не читается"
+          ],
+          "adapt": [
+            "код блока через code",
+            "путь к файлу через path",
+            "высоту свёрнутого блока через collapsedHeight",
+            "предел раскрытия через expandedHeight"
+          ],
+          "notes": [
+            "Анимация идёт между двумя max-height: на коротком коде раскрытие кажется быстрее, чем на длинном.",
+            "expandedHeight меньше содержимого включает прокрутку внутри блока — это штатное поведение.",
+            "Высота задана в rem и зависит от размера шрифта страницы: в плотной вёрстке подберите её заново.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "path",
+            "label": "Файл",
+            "type": "text",
+            "default": "lib/pricing.ts",
+            "maxLength": 40
+          },
+          {
+            "prop": "collapsedHeight",
+            "label": "Высота свёрнутого, rem",
+            "type": "number",
+            "default": 9,
+            "min": 4,
+            "max": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A code block capped by height rather than by line count: the expansion animates, the cut is shown by a mask, and a hidden checkbox holds the state.",
+            "ai": {
+              "summary": "A code block with a height cap and an expand button: an animated max-height, a fade mask, state on a checkbox. Zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-codeblock-025-* palette — do not swap it for your theme tokens",
+                "the checkbox as the source of state: with useState the block stops working before hydration",
+                "the bottom mask only while collapsed: when open it hides real code",
+                "the changing toggle caption: \"Expand\" and \"Collapse\" are different promises",
+                "the focus ring on the label, or keyboard users cannot tell what is being expanded",
+                "the dark surface of the block — light monospaced text is unreadable without it"
+              ],
+              "adapt": [
+                "the block code through code",
+                "the file path through path",
+                "the collapsed height through collapsedHeight",
+                "the expansion limit through expandedHeight"
+              ],
+              "notes": [
+                "The animation runs between two max-height values: on short code the expansion feels faster.",
+                "An expandedHeight smaller than the content turns on scrolling inside the block — that is normal.",
+                "The height is in rem and follows the page font size: in dense layouts pick it again.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Codeblock025\n  path=\"lib/pricing.ts\"\n  collapsedHeight={9}\n  expandedHeight={32}\n/>"
+            },
+            "controls": {
+              "path": {
+                "label": "File",
+                "default": "lib/pricing.ts"
+              },
+              "collapsedHeight": {
+                "label": "Collapsed height, rem",
+                "default": 9
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "codeblock-026",
+      "type": "registry:component",
+      "title": "Read Only File",
+      "description": "Листинг сгенерированного файла: замок в шапке, косая штриховка поверх кода и подпись, куда вносить правки вместо него.",
+      "categories": ["codeblock"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "codeblock-026/codeblock-026.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/codeblock-026.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-codeblock-026-*. Серверный: хуков нет. Штриховка лежит отдельным слоем в ::after с pointer-events:none — приглушать сам текст нельзя, его читают, а выделять мышью он обязан оставаться. Запрет на правку заявлен трижды: значком с замком в шапке, штриховкой и подписью под кодом, где названо настоящее место правки. Блок светлый и несёт собственную подложку, чтобы тёмный код читался на любом фоне страницы.",
+      "meta": {
+        "tags": ["code", "readonly", "generated", "light"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Codeblock026",
+          "usage": "<Codeblock026\n  path=\"registry/index.ts\"\n  reason=\"Файл собирает команда npm run indexes\"\n  editInstead=\"registry/components/*/registry.json\"\n/>",
+          "summary": "Светлый листинг сгенерированного файла с пометкой «только для чтения»: замок, штриховка и указание настоящего места правки. Ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-codeblock-026-* и не подменять её токенами вашей темы",
+            "штриховку отдельным слоем: приглушать текст нельзя — его всё равно читают",
+            "pointer-events:none у слоя штриховки, иначе код перестаёт выделяться мышью",
+            "три сигнала подряд — замок, штриховка и подпись: один читатель всегда пропускает",
+            "указание настоящего места правки: запрет без альтернативы просто раздражает",
+            "собственную светлую подложку блока: тёмный код без неё пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "код файла через code",
+            "путь к файлу через path",
+            "причину запрета через reason",
+            "настоящее место правки через editInstead"
+          ],
+          "notes": [
+            "Блок ничего не запрещает технически: это предупреждение для человека, а не защита файла.",
+            "Штриховка добавляет шума — для длинного листинга её шаг стоит увеличить.",
+            "Кнопки копирования здесь нет намеренно: копировать сгенерированный файл незачем.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "path",
+            "label": "Файл",
+            "type": "text",
+            "default": "registry/index.ts",
+            "maxLength": 40
+          },
+          {
+            "prop": "reason",
+            "label": "Причина запрета",
+            "type": "text",
+            "default": "Файл собирает команда npm run indexes",
+            "maxLength": 80
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A listing of a generated file: a lock in the header, a diagonal hatch over the code and a note pointing at where the edits actually belong.",
+            "ai": {
+              "summary": "A light listing of a generated file marked read-only: a lock, a hatch and a pointer to the real place to edit. Zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-codeblock-026-* palette — do not swap it for your theme tokens",
+                "the hatch as a separate layer: dimming the text is wrong — people still read it",
+                "pointer-events:none on the hatch layer, otherwise the code can no longer be selected",
+                "the three cues in a row — lock, hatch and note: one of them is always missed",
+                "the pointer to the real place to edit: a ban without an alternative is just annoying",
+                "the block's own light surface: without it the dark code disappears on a dark page"
+              ],
+              "adapt": [
+                "the file code through code",
+                "the file path through path",
+                "the reason for the ban through reason",
+                "the real place to edit through editInstead"
+              ],
+              "notes": [
+                "The block enforces nothing: it is a warning for a human, not protection for the file.",
+                "The hatch adds noise — for a long listing widen its step.",
+                "There is deliberately no copy button: copying a generated file makes no sense.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Codeblock026\n  path=\"registry/index.ts\"\n  reason=\"The file is built by npm run indexes\"\n  editInstead=\"registry/components/*/registry.json\"\n/>"
+            },
+            "controls": {
+              "path": {
+                "label": "File",
+                "default": "registry/index.ts"
+              },
+              "reason": {
+                "label": "Reason",
+                "default": "The file is built by npm run indexes"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "codeblock-027",
+      "type": "registry:component",
+      "title": "Runtime Trace",
+      "description": "Ошибка выполнения со стеком: свой код показан целиком и с выдержкой из строки, а кадры из node_modules свёрнуты в details.",
+      "categories": ["codeblock"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "codeblock-027/codeblock-027.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/codeblock-027.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-codeblock-027-*. Серверный: свёртку чужих кадров делает нативный details, состояния в JS нет. Кадры делятся по признаку vendor в данных, а не разбором пути: имя каталога — ненадёжный признак, и решение остаётся за вызывающим кодом. Выдержка из исходника показывается только у первого кадра, потому что остальные строки чинить нечем; шапка отбита красной полосой слева, тип ошибки и её текст разведены по строкам.",
+      "meta": {
+        "tags": ["error", "stack", "trace", "debug"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Codeblock027",
+          "usage": "<Codeblock027\n  errorName=\"TypeError\"\n  message=\"Cannot read properties of undefined (reading 'price')\"\n/>",
+          "summary": "Ошибка выполнения со стеком: свои кадры раскрыты и с выдержкой из кода, чужие свёрнуты в details. Ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-codeblock-027-* и не подменять её токенами вашей темы",
+            "разделение своих и чужих кадров: пятнадцать строк из node_modules прячут то, что чинить",
+            "выдержку из исходника только у первого кадра — иначе стек превращается в листинг",
+            "нативный details для чужих кадров: он даёт свёртку и поиск по странице без JS",
+            "красную полосу и отдельную строку с типом ошибки: текст без типа не гуглится",
+            "тёмную подложку блока — она делает красный цвет ошибкой, а не ссылкой"
+          ],
+          "adapt": [
+            "кадры стека массивом frames",
+            "тип ошибки через errorName",
+            "текст ошибки через message",
+            "оттенок ошибки и ширину блока"
+          ],
+          "notes": [
+            "Признак vendor проставляется в данных: компонент не разбирает путь и не угадывает чужой код.",
+            "Порядок кадров идёт от места ошибки к корню — переставлять его нельзя, читается он именно так.",
+            "role=alert здесь намеренно не стоит: это разбор ошибки в документации, а не живое уведомление.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "errorName",
+            "label": "Тип ошибки",
+            "type": "text",
+            "default": "TypeError",
+            "maxLength": 24
+          },
+          {
+            "prop": "message",
+            "label": "Текст ошибки",
+            "type": "text",
+            "default": "Cannot read properties of undefined (reading 'price')",
+            "maxLength": 80
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A runtime error with its stack: your own code is shown in full with an excerpt of the failing line, while node_modules frames are folded into details.",
+            "ai": {
+              "summary": "A runtime error with its stack: own frames expanded with a source excerpt, vendor frames folded into details. Zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-codeblock-027-* palette — do not swap it for your theme tokens",
+                "the split between own and vendor frames: fifteen node_modules lines hide what to fix",
+                "the source excerpt on the first frame only — otherwise the stack turns into a listing",
+                "the native details for vendor frames: it gives folding and find-in-page without JS",
+                "the red bar and the separate line with the error type: a message without a type is unsearchable",
+                "the dark surface of the block — it makes the red read as an error, not as a link"
+              ],
+              "adapt": [
+                "the stack frames through the frames array",
+                "the error type through errorName",
+                "the error text through message",
+                "the error hue and the block width"
+              ],
+              "notes": [
+                "The vendor flag is set in the data: the component never parses paths or guesses foreign code.",
+                "Frames run from the failure site up to the root — that order is how a stack is read, keep it.",
+                "role=alert is deliberately absent: this is an error walkthrough in docs, not a live notification.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Codeblock027\n  errorName=\"TypeError\"\n  message=\"Cannot read properties of undefined (reading 'price')\"\n/>"
+            },
+            "controls": {
+              "errorName": {
+                "label": "Error type",
+                "default": "TypeError"
+              },
+              "message": {
+                "label": "Error text",
+                "default": "Cannot read properties of undefined (reading 'price')"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
