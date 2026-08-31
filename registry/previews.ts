@@ -120,6 +120,13 @@ import { Alertdialog004 } from "@/registry/components/alertdialog/alertdialog-00
 import { Alertdialog005 } from "@/registry/components/alertdialog/alertdialog-005/alertdialog-005"
 import { Alertdialog006 } from "@/registry/components/alertdialog/alertdialog-006/alertdialog-006"
 import { Alertdialog007 } from "@/registry/components/alertdialog/alertdialog-007/alertdialog-007"
+import { Alertdialog008 } from "@/registry/components/alertdialog/alertdialog-008/alertdialog-008"
+import { Alertdialog009 } from "@/registry/components/alertdialog/alertdialog-009/alertdialog-009"
+import { Alertdialog010 } from "@/registry/components/alertdialog/alertdialog-010/alertdialog-010"
+import { Alertdialog011 } from "@/registry/components/alertdialog/alertdialog-011/alertdialog-011"
+import { Alertdialog012 } from "@/registry/components/alertdialog/alertdialog-012/alertdialog-012"
+import { Alertdialog013 } from "@/registry/components/alertdialog/alertdialog-013/alertdialog-013"
+import { Alertdialog014 } from "@/registry/components/alertdialog/alertdialog-014/alertdialog-014"
 import { Aspect001 } from "@/registry/components/aspect/aspect-001/aspect-001"
 import { Aspect002 } from "@/registry/components/aspect/aspect-002/aspect-002"
 import { Aspect003 } from "@/registry/components/aspect/aspect-003/aspect-003"
@@ -427,6 +434,13 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "alertdialog-005": Alertdialog005,
   "alertdialog-006": Alertdialog006,
   "alertdialog-007": Alertdialog007,
+  "alertdialog-008": Alertdialog008,
+  "alertdialog-009": Alertdialog009,
+  "alertdialog-010": Alertdialog010,
+  "alertdialog-011": Alertdialog011,
+  "alertdialog-012": Alertdialog012,
+  "alertdialog-013": Alertdialog013,
+  "alertdialog-014": Alertdialog014,
   "aspect-001": Aspect001,
   "aspect-002": Aspect002,
   "aspect-003": Aspect003,

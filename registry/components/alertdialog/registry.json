@@ -700,6 +700,709 @@
           }
         }
       }
+    },
+    {
+      "name": "alertdialog-008",
+      "type": "registry:component",
+      "title": "Permission Request",
+      "description": "Запрос разрешения до системного окна: браузер спрашивает один раз, поэтому сначала объясняют зачем.",
+      "categories": ["alertdialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alertdialog-008/alertdialog-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alertdialog-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-008-*. Клиентский: \"use client\" ради открытия окна. Окно объясняет назначение доступа до вызова системного запроса, отказ вынесен полноценной кнопкой, а «никогда не спрашивать» стоит третьим тихим вариантом.",
+      "meta": {
+        "tags": ["alert-dialog", "permission", "notifications", "consent"],
+        "ai": {
+          "export": "Alertdialog008",
+          "usage": "<Alertdialog008 title=\"Присылать уведомления?\" uses={[\"письмо об упавшей сборке\"]} />",
+          "summary": "Запрос разрешения: значок, объяснение, список поводов для уведомлений и три исхода — разрешить, не сейчас, никогда. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-alertdialog-008-* и не подменять её токенами вашей темы",
+            "объяснение до системного окна: браузер спрашивает один раз и навсегда",
+            "лёгкий отказ полноценной кнопкой — тяжёлый ведёт к запрету навсегда",
+            "список конкретных поводов вместо общего «будем присылать полезное»",
+            "предупреждение о необратимости системного запрета",
+            "фокус на «не сейчас», а не на «разрешить»"
+          ],
+          "adapt": [
+            "title, reason и список uses",
+            "подписи allow, later, deny и confirm",
+            "акцент через проп accent",
+            "значок в шапке"
+          ],
+          "notes": [
+            "Системный запрос вызывает вызывающий код — окно только готовит к нему.",
+            "Не показывайте окно на первом экране: разрешение просят после первой пользы.",
+            "«Никогда не спрашивать» должно действительно запоминаться, иначе это обман.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Вопрос",
+            "type": "text",
+            "default": "Присылать уведомления?",
+            "maxLength": 32
+          },
+          {
+            "prop": "allow",
+            "label": "Разрешить",
+            "type": "text",
+            "default": "Разрешить",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A permission primer before the system prompt: the browser asks once, so explain the why first.",
+            "ai": {
+              "summary": "A permission request: an icon, the reasoning, a list of concrete triggers and three outcomes — allow, not now, never. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-alertdialog-008-* palette — do not swap it for your theme tokens",
+                "the explanation before the system prompt: the browser asks once and for good",
+                "an easy refusal as a real button — a hard one leads to a permanent block",
+                "the list of concrete triggers instead of \"we'll send useful things\"",
+                "the warning that a system denial is irreversible",
+                "focus on \"not now\" rather than \"allow\""
+              ],
+              "adapt": [
+                "title, reason and the uses list",
+                "the allow, later, deny and confirm labels",
+                "the accent through the accent prop",
+                "the header glyph"
+              ],
+              "notes": [
+                "The system prompt is triggered by the caller — this dialog only prepares for it.",
+                "Do not show it on the first screen: ask after the first benefit is delivered.",
+                "\"Never ask\" must truly be remembered, otherwise it is a lie.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alertdialog008 title=\"Send notifications?\" uses={[\"an email when a build fails\"]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Question",
+                "default": "Send notifications?"
+              },
+              "allow": {
+                "label": "Allow",
+                "default": "Allow"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alertdialog-009",
+      "type": "registry:component",
+      "title": "Sign Out Everywhere",
+      "description": "Выход со всех устройств: список сессий с местом и временем, а текущая помечена — иначе неясно, что потеряется.",
+      "categories": ["alertdialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alertdialog-009/alertdialog-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alertdialog-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-009-*. Клиентский: \"use client\" ради открытия окна. Сессии выведены списком с устройством, местом и последним входом; текущая помечена рамкой и подписью, число сессий подставлено в кнопку.",
+      "meta": {
+        "tags": ["alert-dialog", "sessions", "security", "signout"],
+        "ai": {
+          "export": "Alertdialog009",
+          "usage": "<Alertdialog009 sessions={[{ device: \"Chrome, Windows\", place: \"Москва\", seen: \"сейчас\", current: true }]} />",
+          "summary": "Завершение всех сеансов: список устройств с местом и временем входа, пометка текущего и число в кнопке. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-alertdialog-009-* и не подменять её токенами вашей темы",
+            "список сессий: без него неизвестно, что уйдёт вместе с чужим входом",
+            "пометку текущей сессии — «выйти везде» иначе читается как «кроме этой»",
+            "место и время последнего входа: подозрительный вход опознают по ним",
+            "число сессий в подписи кнопки",
+            "прокрутку списка при большом числе устройств"
+          ],
+          "adapt": [
+            "массив sessions",
+            "title, text, confirm и подписи кнопок",
+            "высоту списка",
+            "цвет опасного действия"
+          ],
+          "notes": [
+            "Смену пароля предлагайте рядом: чужой вход обычно означает утёкший пароль.",
+            "Ключи доступа проектов живут отдельно от сессий — скажите это прямо.",
+            "Список приходит с сервера: устаревшие сессии вводят в заблуждение.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Вопрос",
+            "type": "text",
+            "default": "Завершить все сеансы?",
+            "maxLength": 32
+          },
+          {
+            "prop": "confirm",
+            "label": "Действие",
+            "type": "text",
+            "default": "Завершить все",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Sign out everywhere: sessions listed with place and time, the current one flagged — otherwise the loss is unclear.",
+            "ai": {
+              "summary": "Ending all sessions: devices with place and last seen, the current one flagged and the count in the button. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-alertdialog-009-* palette — do not swap it for your theme tokens",
+                "the session list: without it nobody knows what goes along with the intruder",
+                "flagging the current session — \"sign out everywhere\" otherwise reads as \"except here\"",
+                "the place and last-seen time: that is how a suspicious login is spotted",
+                "the session count in the button label",
+                "scrolling the list when there are many devices"
+              ],
+              "adapt": [
+                "the sessions array",
+                "title, text, confirm and the button labels",
+                "the list height",
+                "the destructive colour"
+              ],
+              "notes": [
+                "Offer a password change nearby: a foreign login usually means a leaked password.",
+                "Project access keys live apart from sessions — say so plainly.",
+                "The list comes from the server: stale sessions mislead.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alertdialog009 sessions={[{ device: \"Chrome, Windows\", place: \"Moscow\", seen: \"now\", current: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Question",
+                "default": "End all sessions?"
+              },
+              "confirm": {
+                "label": "Action",
+                "default": "End all"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alertdialog-010",
+      "type": "registry:component",
+      "title": "Downgrade Plan",
+      "description": "Понижение тарифа: два списка рядом — что пропадёт и что останется, потому что страх потерять всё держит на дорогом тарифе.",
+      "categories": ["alertdialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alertdialog-010/alertdialog-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alertdialog-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-010-*. Клиентский: \"use client\" ради открытия окна. Списки потерь и сохранённого раскладываются в две колонки контейнерным запросом, дата вступления в силу вынесена отдельной строкой.",
+      "meta": {
+        "tags": ["alert-dialog", "billing", "downgrade", "plan"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Alertdialog010",
+          "usage": "<Alertdialog010 fromPlan=\"Команда\" toPlan=\"Старт\" losses={[\"7 мест из 10\"]} keeps={[\"все проекты\"]} />",
+          "summary": "Понижение тарифа: переход между тарифами, колонки «пропадёт» и «останется», дата вступления в силу. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-alertdialog-010-* и не подменять её токенами вашей темы",
+            "список сохранённого рядом с потерями: без него понижение выглядит как потеря всего",
+            "дату вступления в силу — списание уже прошло, тариф меняется в конце периода",
+            "знаки «−» и «✓» рядом с цветом: колонки должны различаться без него",
+            "конкретику в потерях: «7 мест из 10», а не «часть возможностей»",
+            "контейнерные запросы вместо медиазапросов"
+          ],
+          "adapt": [
+            "fromPlan, toPlan и оба списка",
+            "текст when о дате перехода",
+            "подписи кнопок confirm и cancel",
+            "ширину окна"
+          ],
+          "notes": [
+            "Не прячьте потери за ссылкой «подробнее»: их читают ровно один раз, здесь.",
+            "Понижение не должно удалять данные сразу — иначе это уже удаление, а не смена тарифа.",
+            "Смену тарифа выполняет вызывающий код: окно собирает решение.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "toPlan",
+            "label": "Новый тариф",
+            "type": "text",
+            "default": "Старт",
+            "maxLength": 20
+          },
+          {
+            "prop": "confirm",
+            "label": "Действие",
+            "type": "text",
+            "default": "Понизить тариф",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A plan downgrade: two columns side by side — what goes and what stays, because fear of losing everything keeps people overpaying.",
+            "ai": {
+              "summary": "Plan downgrade: the plan transition, \"lost\" and \"kept\" columns and the effective date. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-alertdialog-010-* palette — do not swap it for your theme tokens",
+                "the kept list beside the losses: without it a downgrade looks like losing everything",
+                "the effective date — the charge already happened, the plan changes at period end",
+                "the − and ✓ signs alongside colour: the columns must differ without it",
+                "specifics in the losses: \"7 of 10 seats\", not \"some features\"",
+                "container queries instead of media queries"
+              ],
+              "adapt": [
+                "fromPlan, toPlan and both lists",
+                "the when text about the effective date",
+                "the confirm and cancel button labels",
+                "the dialog width"
+              ],
+              "notes": [
+                "Do not hide the losses behind a \"learn more\" link: they get read once, right here.",
+                "A downgrade must not delete data immediately — that would be deletion, not a plan change.",
+                "The plan change belongs to the caller: the dialog collects the decision.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alertdialog010 fromPlan=\"Team\" toPlan=\"Starter\" losses={[\"7 of 10 seats\"]} keeps={[\"all projects\"]} />"
+            },
+            "controls": {
+              "toPlan": {
+                "label": "New plan",
+                "default": "Starter"
+              },
+              "confirm": {
+                "label": "Action",
+                "default": "Downgrade"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alertdialog-011",
+      "type": "registry:component",
+      "title": "Version Conflict",
+      "description": "Конфликт версий: обе правки настоящие, поэтому это выбор радиокнопками, а не «вы уверены», и ничего не выбрано заранее.",
+      "categories": ["alertdialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alertdialog-011/alertdialog-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alertdialog-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-011-*. Клиентский: \"use client\" ради выбора версии. Оба варианта выведены радиокнопками с автором и временем правки, кнопка сохранения ждёт выбора, а отмена ведёт к сравнению версий.",
+      "meta": {
+        "tags": ["alert-dialog", "conflict", "versions", "collaboration"],
+        "ai": {
+          "export": "Alertdialog011",
+          "usage": "<Alertdialog011 mineLabel=\"Оставить мою версию\" theirsLabel=\"Взять версию Ильи\" />",
+          "summary": "Конфликт правок: две версии с автором и временем, выбор радиокнопками и кнопка, ждущая решения. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-alertdialog-011-* и не подменять её токенами вашей темы",
+            "выбор вместо подтверждения: обе версии настоящие",
+            "невыбранное состояние по умолчанию — заранее отмеченный вариант стирает чужую работу",
+            "автора и время правки у каждого варианта",
+            "напоминание, что проигравшая версия уходит в историю, а не исчезает",
+            "выход на сравнение версий вместо простой отмены"
+          ],
+          "adapt": [
+            "подписи вариантов и подсказки к ним",
+            "title, text, confirm и cancel",
+            "акцент через проп accent",
+            "ширину окна"
+          ],
+          "notes": [
+            "Слияние правок этот блок не делает: он только фиксирует выбор.",
+            "Не пишите «ваши изменения будут потеряны», если версия сохраняется в истории.",
+            "Показывайте окно до сохранения, а не после: после конфликт уже разрешён молча.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Блок изменён другим участником",
+            "maxLength": 36
+          },
+          {
+            "prop": "cancel",
+            "label": "Отмена",
+            "type": "text",
+            "default": "Сравнить версии",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A version conflict: both edits are real, so this is a radio choice rather than a \"are you sure\", with nothing preselected.",
+            "ai": {
+              "summary": "An edit conflict: two versions with author and time, a radio choice and a button waiting for the decision. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-alertdialog-011-* palette — do not swap it for your theme tokens",
+                "a choice instead of a confirmation: both versions are real",
+                "nothing preselected — a default choice erases someone's work by inattention",
+                "the author and edit time on each option",
+                "the reminder that the losing version goes to history rather than vanishing",
+                "the exit to a version comparison instead of a plain cancel"
+              ],
+              "adapt": [
+                "the option labels and their hints",
+                "title, text, confirm and cancel",
+                "the accent through the accent prop",
+                "the dialog width"
+              ],
+              "notes": [
+                "This block does not merge edits: it only records the choice.",
+                "Do not say \"your changes will be lost\" if the version is kept in history.",
+                "Show it before saving, not after: afterwards the conflict was resolved silently.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alertdialog011 mineLabel=\"Keep my version\" theirsLabel=\"Take Ilya's version\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Edited by someone else"
+              },
+              "cancel": {
+                "label": "Cancel",
+                "default": "Compare versions"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alertdialog-012",
+      "type": "registry:component",
+      "title": "Charge Confirm",
+      "description": "Подтверждение списания: сумма крупно и в кнопке, карта названа здесь же, а условия возврата — до нажатия.",
+      "categories": ["alertdialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alertdialog-012/alertdialog-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alertdialog-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-012-*. Клиентский: \"use client\" ради открытия окна. Сумма набрана крупно табличными цифрами и повторена в кнопке, разбор суммы выведен списком определений, способ оплаты и условия возврата стоят до кнопок.",
+      "meta": {
+        "tags": ["alert-dialog", "payment", "charge", "billing"],
+        "ai": {
+          "export": "Alertdialog012",
+          "usage": "<Alertdialog012 amount=\"99 200 ₽\" card=\"Visa · 6411\" lines={[{ label: \"Тариф\", value: \"124 000 ₽\" }]} />",
+          "summary": "Подтверждение оплаты: крупная сумма, разбор по строкам, способ оплаты, условия возврата и сумма в кнопке. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-alertdialog-012-* и не подменять её токенами вашей темы",
+            "сумму в подписи кнопки: «Оплатить» без числа заставляет прокручивать назад",
+            "название карты в окне — списание с неожиданной карты выясняется из выписки",
+            "разбор суммы строками: ровный итог без НДС и скидки выглядит подозрительно",
+            "условия возврата до кнопки, а не в письме после оплаты",
+            "табличные цифры в сумме и разборе"
+          ],
+          "adapt": [
+            "amount, card и массив lines",
+            "title, note, confirm и подписи кнопок",
+            "акцент через проп accent",
+            "ширину окна"
+          ],
+          "notes": [
+            "Реквизиты карты показывайте маской: полный номер не нужен даже владельцу.",
+            "Сумму считайте на сервере — расхождение с биллингом обнаружится в выписке.",
+            "Двойное нажатие должно быть защищено на стороне запроса, а не только видом кнопки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "amount",
+            "label": "Сумма",
+            "type": "text",
+            "default": "99 200 ₽",
+            "maxLength": 16
+          },
+          {
+            "prop": "card",
+            "label": "Карта",
+            "type": "text",
+            "default": "Visa · 6411",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A charge confirmation: the amount large and inside the button, the card named right here, refund terms before the click.",
+            "ai": {
+              "summary": "Payment confirmation: a large amount, a line-by-line breakdown, the payment method, refund terms and the amount in the button. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-alertdialog-012-* palette — do not swap it for your theme tokens",
+                "the amount inside the button label: a bare \"Pay\" sends people scrolling back",
+                "the card named in the dialog — an unexpected charge otherwise shows up in the statement",
+                "the line-by-line breakdown: a suspiciously round total hides tax and discounts",
+                "refund terms before the button, not in the email afterwards",
+                "tabular figures in the amount and the breakdown"
+              ],
+              "adapt": [
+                "amount, card and the lines array",
+                "title, note, confirm and the button labels",
+                "the accent through the accent prop",
+                "the dialog width"
+              ],
+              "notes": [
+                "Show the card masked: even the owner does not need the full number.",
+                "Compute the amount on the server — a mismatch surfaces in the statement.",
+                "Guard against double submission in the request, not just in the button's look.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alertdialog012 amount=\"$992\" card=\"Visa · 6411\" lines={[{ label: \"Plan\", value: \"$1,240\" }]} />"
+            },
+            "controls": {
+              "amount": {
+                "label": "Amount",
+                "default": "$992"
+              },
+              "card": {
+                "label": "Card",
+                "default": "Visa · 6411"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alertdialog-013",
+      "type": "registry:component",
+      "title": "Block Member",
+      "description": "Блокировка участника: причина обязательна и записывается в историю — заблокированный спросит «за что» позже.",
+      "categories": ["alertdialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alertdialog-013/alertdialog-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alertdialog-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-013-*. Клиентский: \"use client\" ради выбора причины. Причина — нативный select с пустым первым пунктом, кнопка ждёт выбора, комментарий связан с пояснением через aria-describedby.",
+      "meta": {
+        "tags": ["alert-dialog", "moderation", "team", "reason"],
+        "ai": {
+          "export": "Alertdialog013",
+          "usage": "<Alertdialog013 person=\"Ким Сон\" reasons={[\"Нарушение правил\"]} />",
+          "summary": "Блокировка участника: карточка человека, выбор причины, комментарий и предупреждение, что запись попадёт в историю. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-alertdialog-013-* и не подменять её токенами вашей темы",
+            "обязательную причину: ответ на «за что» нужен через месяц, а помнить его никто не будет",
+            "пустой первый пункт списка — случайно выбрать первую причину нельзя",
+            "предупреждение, что причина попадёт в историю, рядом с полем",
+            "имя и последствия блокировки в самом окне",
+            "кнопку, выключенную до выбора причины"
+          ],
+          "adapt": [
+            "person и список reasons",
+            "title, noteLabel, confirm и подписи кнопок",
+            "поле комментария",
+            "цвет опасного действия"
+          ],
+          "notes": [
+            "Блокировка и удаление участника — разные действия: у второго свои последствия.",
+            "Не показывайте заблокированному внутренний комментарий: он писался для команды.",
+            "Само действие выполняет вызывающий код, окно собирает решение и причину.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "person",
+            "label": "Участник",
+            "type": "text",
+            "default": "Ким Сон",
+            "maxLength": 24
+          },
+          {
+            "prop": "confirm",
+            "label": "Действие",
+            "type": "text",
+            "default": "Заблокировать",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Blocking a member: the reason is mandatory and goes into history — the blocked person will ask \"why\" later.",
+            "ai": {
+              "summary": "Blocking a member: the person card, a reason select, a comment and a warning that it all lands in history. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-alertdialog-013-* palette — do not swap it for your theme tokens",
+                "the mandatory reason: the answer to \"why\" is needed a month later, and nobody remembers",
+                "the empty first option — the first reason must not be picked by accident",
+                "the warning about history right next to the field",
+                "the person's name and the consequences inside the dialog",
+                "the button disabled until a reason is chosen"
+              ],
+              "adapt": [
+                "person and the reasons list",
+                "title, noteLabel, confirm and the button labels",
+                "the comment field",
+                "the destructive colour"
+              ],
+              "notes": [
+                "Blocking and removing a member differ: the latter has its own consequences.",
+                "Never show the internal comment to the blocked person: it was written for the team.",
+                "The action belongs to the caller; the dialog collects the decision and the reason.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alertdialog013 person=\"Kim Son\" reasons={[\"Policy violation\"]} />"
+            },
+            "controls": {
+              "person": {
+                "label": "Member",
+                "default": "Kim Son"
+              },
+              "confirm": {
+                "label": "Action",
+                "default": "Block"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alertdialog-014",
+      "type": "registry:component",
+      "title": "Muteable Confirm",
+      "description": "Подтверждение, которое можно отключить: галочка про следующий раз, и сразу сказано, где вернуть его обратно.",
+      "categories": ["alertdialog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "alertdialog-014/alertdialog-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/alertdialog-014.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-014-*. Клиентский: \"use client\" ради состояния галочки и отключения. После отключения рядом с кнопкой появляется строка с возвратом подтверждения, поэтому решение обратимо в один клик.",
+      "meta": {
+        "tags": ["alert-dialog", "confirm", "preferences", "reversible"],
+        "ai": {
+          "export": "Alertdialog014",
+          "usage": "<Alertdialog014 rememberLabel=\"Больше не спрашивать\" confirm=\"В архив\" />",
+          "summary": "Подтверждение с галочкой «больше не спрашивать» и видимым способом вернуть его обратно. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-alertdialog-014-* и не подменять её токенами вашей темы",
+            "галочку только для обратимых действий: для удаления она превращает защиту в формальность",
+            "указание, где вернуть подтверждение — без него отключать страшно",
+            "видимый способ включить подтверждение обратно после отключения",
+            "выключенную галочку по умолчанию",
+            "подпись, объясняющую, что галочка про следующий раз, а не про текущий"
+          ],
+          "adapt": [
+            "rememberLabel и rememberHint",
+            "title, text, confirm и подписи кнопок",
+            "акцент через проп accent",
+            "хранение выбора в вашем состоянии"
+          ],
+          "notes": [
+            "Выбор живёт внутри компонента: сохранение в профиле делает вызывающий код.",
+            "Никогда не давайте отключать подтверждение необратимого действия.",
+            "Если подтверждение отключено, действие должно быть отменяемым хотя бы несколько секунд.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Вопрос",
+            "type": "text",
+            "default": "Отправить в архив?",
+            "maxLength": 32
+          },
+          {
+            "prop": "confirm",
+            "label": "Действие",
+            "type": "text",
+            "default": "В архив",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A confirmation you can switch off: the checkbox is about next time, and where to switch it back on is stated right away.",
+            "ai": {
+              "summary": "A confirmation with a \"don't ask again\" checkbox and a visible way to bring it back. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-alertdialog-014-* palette — do not swap it for your theme tokens",
+                "the checkbox only for reversible actions: for deletion it turns protection into a formality",
+                "telling where the confirmation can be restored — otherwise switching it off feels risky",
+                "the visible way to re-enable it after muting",
+                "the checkbox unchecked by default",
+                "the wording that the checkbox is about next time, not this one"
+              ],
+              "adapt": [
+                "rememberLabel and rememberHint",
+                "title, text, confirm and the button labels",
+                "the accent through the accent prop",
+                "persisting the choice in your own state"
+              ],
+              "notes": [
+                "The choice lives inside the component: persisting it to a profile is the caller's job.",
+                "Never allow muting a confirmation for an irreversible action.",
+                "With the confirmation muted, the action must stay undoable for at least a few seconds.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Alertdialog014 rememberLabel=\"Don't ask again\" confirm=\"Archive\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Question",
+                "default": "Move to archive?"
+              },
+              "confirm": {
+                "label": "Action",
+                "default": "Archive"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

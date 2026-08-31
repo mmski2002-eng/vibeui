@@ -289,8 +289,8 @@ Complete:
   темы проекта-хозяина, переменные без префикса `--vibeui-`, анимация без
   `prefers-reduced-motion`. Публикуемые `/r/*.json` при переходе не
   изменились ни на байт. Подробности — [PIPELINE.md](PIPELINE.md).
-- **Наполнение каталога волнами.** 298 items в 34 реестрах: компоненты —
-  `buttons` (20), `accordion` (11), `alert` (20), `dialog` (14), `alertdialog` (7), `aspect` (8),
+- **Наполнение каталога волнами.** 305 items в 34 реестрах: компоненты —
+  `buttons` (20), `accordion` (11), `alert` (20), `dialog` (14), `alertdialog` (14), `aspect` (8),
   `autocomplete` (12), `avatar` (12), `badge` (12), `breadcrumb` (12),
   `calendar` (10), `card` (10), `carousel` (8), `checkbox` (8), `menu` (8),
   `inputs` (22), `display` (15),
