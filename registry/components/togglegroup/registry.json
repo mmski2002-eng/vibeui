@@ -1,0 +1,779 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "togglegroup-001",
+      "type": "registry:component",
+      "title": "Align Group",
+      "description": "Группа кнопок-тумблеров с одиночным выбором: выравнивание применяется к образцу сразу, а внутри группы работает roving tabindex.",
+      "categories": ["togglegroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "togglegroup-001/togglegroup-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/togglegroup-001.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-001-*. Клиентский: useState и useRef на список кнопок. Разница с категорией buttongroup принципиальная: там кнопки сцеплены как действия («Сохранить», «Отменить»), здесь каждая кнопка объявляет состояние через aria-pressed, и ровно одна из них нажата. Контейнер помечен role=\"group\" с aria-label. Фокус ходит по roving tabindex: у нажатой кнопки tabIndex=0, у остальных −1, стрелки переносят фокус с заворотом, Home и End — к краям; выбор делают Enter и пробел, поэтому проход стрелками ничего не меняет случайно.",
+      "meta": {
+        "tags": ["togglegroup", "aria-pressed", "align", "roving-tabindex"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Togglegroup001",
+          "usage": "<Togglegroup001\n  label=\"Выравнивание текста\"\n  defaultValue=\"left\"\n  onChange={(value) => console.log(value)}\n/>",
+          "summary": "Группа тумблеров с одиночным выбором и roving tabindex: состояние в aria-pressed, образец выравнивается сразу. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-togglegroup-001-* и не подменять её токенами вашей темы",
+            "aria-pressed на каждой кнопке: это группа состояний, а не сцепка действий",
+            "roving tabindex: девять кнопок подряд в табе — это девять лишних остановок",
+            "выбор по Enter и пробелу, а не по переходу стрелкой: иначе состояние меняется вслепую",
+            "role=\"group\" с именем: без имени группа звучит как набор случайных кнопок",
+            "собственную светлую подложку панели: тёмный текст обязан нести свой фон"
+          ],
+          "adapt": [
+            "имя группы через label",
+            "начальное значение через defaultValue",
+            "текст образца через text",
+            "цвет выбранной кнопки через accent"
+          ],
+          "notes": [
+            "Если значение должно уехать на сервер вместе с формой — берите radio, а не эту группу.",
+            "Иконки декоративные: имя кнопке даёт aria-label, и без него значок безымянный.",
+            "Список вариантов зашит в файл: добавляя пятый, проверьте ширину на телефоне.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultValue",
+            "label": "Выравнивание",
+            "type": "select",
+            "default": "left",
+            "options": ["left", "center", "right", "justify"]
+          },
+          {
+            "prop": "label",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "Выравнивание текста",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A single-select group of toggle buttons: the alignment applies to the sample at once and focus moves inside the group with a roving tabindex.",
+            "ai": {
+              "summary": "A single-select toggle group with a roving tabindex: state lives in aria-pressed and the sample realigns instantly. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-togglegroup-001-* palette — do not swap it for your theme tokens",
+                "aria-pressed on every button: this is a group of states, not a chain of actions",
+                "the roving tabindex: nine buttons in the tab order are nine extra stops",
+                "selection on Enter and Space rather than on arrow movement: otherwise state changes blindly",
+                "role=\"group\" with a name: unnamed, the group sounds like random buttons",
+                "the panel's own light surface: dark text must bring its own background"
+              ],
+              "adapt": [
+                "the group name through label",
+                "the initial value through defaultValue",
+                "the sample copy through text",
+                "the selected colour through accent"
+              ],
+              "notes": [
+                "If the value must be submitted with a form, use radios instead of this group.",
+                "The icons are decorative: the name comes from aria-label, without it the icon is nameless.",
+                "The option list is baked into the file: adding a fifth one, check the width on a phone.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Togglegroup001\n  label=\"Text alignment\"\n  defaultValue=\"left\"\n  onChange={(value) => console.log(value)}\n/>"
+            },
+            "controls": {
+              "defaultValue": { "label": "Alignment" },
+              "label": { "label": "Group name", "default": "Text alignment" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "togglegroup-002",
+      "type": "registry:component",
+      "title": "Format Group",
+      "description": "Группа тумблеров с множественным выбором: начертания складываются, поэтому нажатых кнопок может быть сколько угодно, а образец меняется сразу.",
+      "categories": ["togglegroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "togglegroup-002/togglegroup-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/togglegroup-002.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-002-*. Клиентский: useState хранит массив выбранных идентификаторов. Множественность — это и есть причина, по которой здесь aria-pressed, а не radio: три состояния включаются независимо. Подсветка не выбирает «одну активную», а следует за собственным aria-pressed каждой кнопки; образец получает начертания через data-bold, data-italic и data-underline на корне. Отличие от buttongroup: там кнопки выполняют действия и после нажатия ничего не помнят, здесь нажатие — это включённое состояние.",
+      "meta": {
+        "tags": ["togglegroup", "multiple", "formatting", "aria-pressed"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Togglegroup002",
+          "usage": "<Togglegroup002\n  label=\"Начертание текста\"\n  defaultValue={[\"bold\"]}\n  onChange={(value) => console.log(value)}\n/>",
+          "summary": "Группа тумблеров с множественным выбором: три начертания включаются независимо и сразу применяются к образцу. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-togglegroup-002-* и не подменять её токенами вашей темы",
+            "независимое aria-pressed у каждой кнопки: одиночный выбор здесь был бы враньём",
+            "счётчик выбранного: при трёх кнопках он лишний, при десяти — единственная опора",
+            "мгновенное применение к образцу — группа управляет видом, а не заполняет форму",
+            "видимую обводку фокуса на каждой кнопке",
+            "собственную светлую подложку панели: тёмный текст обязан нести свой фон"
+          ],
+          "adapt": [
+            "имя группы через label",
+            "начальный набор через defaultValue",
+            "текст образца через text",
+            "цвет нажатых кнопок через accent"
+          ],
+          "notes": [
+            "onChange отдаёт массив идентификаторов, а не строку: порядок в нём — порядок нажатий.",
+            "Для взаимоисключающих вариантов возьмите группу с одиночным выбором, здесь их нет.",
+            "Три одновременных начертания читаются плохо — это дело редактора, а не компонента.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "Начертание текста",
+            "maxLength": 24
+          },
+          {
+            "prop": "text",
+            "label": "Образец",
+            "type": "text",
+            "default": "Множественный выбор: жирный, курсив и подчёркивание включаются независимо друг от друга.",
+            "maxLength": 140
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A multi-select toggle group: type styles stack, so any number of buttons can be pressed at once and the sample updates immediately.",
+            "ai": {
+              "summary": "A multi-select toggle group: three type styles switch on independently and apply to the sample at once. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-togglegroup-002-* palette — do not swap it for your theme tokens",
+                "independent aria-pressed on every button: single selection here would be a lie",
+                "the counter of selected items: pointless with three buttons, essential with ten",
+                "the instant effect on the sample — the group drives the view, it does not fill a form",
+                "the visible focus ring on every button",
+                "the panel's own light surface: dark text must bring its own background"
+              ],
+              "adapt": [
+                "the group name through label",
+                "the initial set through defaultValue",
+                "the sample copy through text",
+                "the pressed colour through accent"
+              ],
+              "notes": [
+                "onChange returns an array of ids, not a string: their order is the order of presses.",
+                "For mutually exclusive options use a single-select group; there is none here.",
+                "Three type styles at once read badly — that is the editor's problem, not the component's.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Togglegroup002\n  label=\"Text style\"\n  defaultValue={[\"bold\"]}\n  onChange={(value) => console.log(value)}\n/>"
+            },
+            "controls": {
+              "label": { "label": "Group name", "default": "Text style" },
+              "text": {
+                "label": "Sample",
+                "default": "Multiple selection: bold, italic and underline switch on independently of each other."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "togglegroup-003",
+      "type": "registry:component",
+      "title": "List View Group",
+      "description": "Группа выбора вида вместе со списком, которым она управляет: связь объявлена через aria-controls, а три вида — это три набора правил над одной разметкой.",
+      "categories": ["togglegroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "togglegroup-003/togglegroup-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/togglegroup-003.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-003-*. Клиентский: useState и useId. Группа не абстрактная: она отдаёт aria-controls на конкретный список и меняет его вид атрибутом data-view на корне. Список при этом не пересобирается — меняются только правила раскладки, поэтому переключение не теряет прокрутку и фокус внутри. Это togglegroup, а не buttongroup: кнопка не запускает действие, а объявляет состояние вида через aria-pressed, и ровно одно из трёх состояний включено.",
+      "meta": {
+        "tags": ["togglegroup", "view", "aria-controls", "layout"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Togglegroup003",
+          "usage": "<Togglegroup003\n  label=\"Вид списка\"\n  defaultValue=\"list\"\n  items={[\"Бриф\", \"Смета\", \"Договор\"]}\n/>",
+          "summary": "Переключатель вида списка вместе с самим списком: aria-controls связывает их, вид меняется правилами над одной разметкой. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-togglegroup-003-* и не подменять её токенами вашей темы",
+            "aria-controls на список: связь кнопок с областью не должна существовать только в дизайне",
+            "неизменную разметку списка: пересборка теряет прокрутку и фокус",
+            "aria-pressed как объявление состояния вида, а не как подсветку активной кнопки",
+            "role=\"group\" с именем — иначе три кнопки звучат как случайные",
+            "собственную светлую подложку панели: тёмный текст обязан нести свой фон"
+          ],
+          "adapt": [
+            "имя группы через label",
+            "начальный вид через defaultValue",
+            "содержимое списка через items",
+            "цвет выбранной кнопки через accent"
+          ],
+          "notes": [
+            "Виды описаны CSS-правилами по data-view: добавляя четвёртый, добавьте и набор правил.",
+            "В компактном виде подписи обрезаются многоточием — это осознанная плата за плотность.",
+            "Состояние живёт в памяти вкладки: чтобы вид пережил перезагрузку, храните его снаружи.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultValue",
+            "label": "Вид",
+            "type": "select",
+            "default": "list",
+            "options": ["list", "grid", "compact"]
+          },
+          {
+            "prop": "label",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "Вид списка",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A view switcher together with the list it controls: the link is declared through aria-controls, and the three views are three rule sets over one piece of markup.",
+            "ai": {
+              "summary": "A list-view switcher together with the list itself: aria-controls ties them, and the view changes through rules over one markup. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-togglegroup-003-* palette — do not swap it for your theme tokens",
+                "aria-controls on the list: the link between buttons and region must not exist only in the design",
+                "the unchanged list markup: rebuilding it loses scroll position and focus",
+                "aria-pressed as a declaration of the view state, not as a highlight of the active button",
+                "role=\"group\" with a name — otherwise the three buttons sound random",
+                "the panel's own light surface: dark text must bring its own background"
+              ],
+              "adapt": [
+                "the group name through label",
+                "the initial view through defaultValue",
+                "the list contents through items",
+                "the selected colour through accent"
+              ],
+              "notes": [
+                "Views are described by CSS rules keyed on data-view: adding a fourth one means adding its rules.",
+                "In the compact view captions are truncated with an ellipsis — that is the price of density.",
+                "The state lives in the tab's memory: to survive a reload, keep it outside the component.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Togglegroup003\n  label=\"List view\"\n  defaultValue=\"list\"\n  items={[\"Brief\", \"Estimate\", \"Contract\"]}\n/>"
+            },
+            "controls": {
+              "defaultValue": { "label": "View" },
+              "label": { "label": "Group name", "default": "List view" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "togglegroup-004",
+      "type": "registry:component",
+      "title": "Weekday Filter",
+      "description": "Фильтр по дням недели множественным выбором: семь кружков-тумблеров, живая строка итога и отдельная кнопка-действие «Только будни».",
+      "categories": ["togglegroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "togglegroup-004/togglegroup-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/togglegroup-004.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-004-*. Клиентский: useState с массивом идентификаторов. Кружок — это toggle: нажат или нет, третьего не дано, поэтому у каждого aria-pressed и полное имя дня в aria-label (две буквы «Пн» без расшифровки звучат плохо). Рядом стоит «Только будни» — это не тумблер, а действие над выбором, и выглядит оно текстовой кнопкой: разница между состоянием и действием обязана читаться глазами. Выходные красятся своим цветом лишь в нажатом виде, чтобы спокойный ряд не рябил.",
+      "meta": {
+        "tags": ["togglegroup", "weekdays", "filter", "multiple"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Togglegroup004",
+          "usage": "<Togglegroup004\n  label=\"Дни доставки\"\n  hint=\"Курьер приезжает только в отмеченные дни.\"\n  defaultValue={[\"mon\", \"wed\", \"fri\"]}\n/>",
+          "summary": "Множественный выбор дней недели кружками-тумблерами с живым итогом и быстрой установкой будней. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-togglegroup-004-* и не подменять её токенами вашей темы",
+            "полные имена дней в aria-label: «Пн» на слух не расшифровывается",
+            "aria-pressed на кружках — это состояние выбора, а не запуск действия",
+            "разный вид у тумблеров и у кнопки «Только будни»: действие не должно выглядеть состоянием",
+            "строку итога с числом и перечнем — по семи кружкам выбор быстро не считывается",
+            "собственную светлую подложку панели: тёмный текст обязан нести свой фон"
+          ],
+          "adapt": [
+            "имя группы через label",
+            "пояснение под группой через hint",
+            "начальный набор дней через defaultValue",
+            "цвет отмеченных будней через accent"
+          ],
+          "notes": [
+            "Пустой выбор разрешён и честно объявлен строкой: если он недопустим, добавьте проверку снаружи.",
+            "Идентификаторы дней — латиницей (mon…sun), подписи русские: не путайте их местами.",
+            "Кнопка «Только будни» перезаписывает выбор целиком, а не добавляет к нему.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "Дни доставки",
+            "maxLength": 24
+          },
+          {
+            "prop": "hint",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Курьер приезжает только в отмеченные дни.",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A multi-select weekday filter: seven round toggles, a live summary line and a separate \"Weekdays only\" action button.",
+            "ai": {
+              "summary": "Multi-select weekday picking with round toggles, a live summary and a quick weekdays preset. One file, zero dependencies, client component.",
+              "preserve": [
+                "the local --vibeui-togglegroup-004-* palette — do not swap it for your theme tokens",
+                "full day names in aria-label: \"Mo\" does not decode by ear",
+                "aria-pressed on the circles — this is selection state, not an action trigger",
+                "the different look of the toggles and the \"Weekdays only\" button: an action must not look like a state",
+                "the summary line with a count and a list — seven circles are not read at a glance",
+                "the panel's own light surface: dark text must bring its own background"
+              ],
+              "adapt": [
+                "the group name through label",
+                "the note under the group through hint",
+                "the initial set of days through defaultValue",
+                "the colour of selected weekdays through accent"
+              ],
+              "notes": [
+                "An empty selection is allowed and stated honestly: if it is invalid, validate outside.",
+                "Day ids are latin (mon…sun) while captions are localised: do not mix them up.",
+                "The \"Weekdays only\" button overwrites the whole selection rather than adding to it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Togglegroup004\n  label=\"Delivery days\"\n  hint=\"The courier comes only on the selected days.\"\n  defaultValue={[\"mon\", \"wed\", \"fri\"]}\n/>"
+            },
+            "controls": {
+              "label": { "label": "Group name", "default": "Delivery days" },
+              "hint": {
+                "label": "Note",
+                "default": "The courier comes only on the selected days."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "togglegroup-005",
+      "type": "registry:component",
+      "title": "Size Picker",
+      "description": "Выбор размера одиночным тумблером: закончившиеся размеры остаются в ряду перечёркнутыми и объясняют отказ, а не исчезают из списка.",
+      "categories": ["togglegroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "togglegroup-005/togglegroup-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/togglegroup-005.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-005-*. Клиентский: useState на выбранный размер и на последний отказ. Недоступные размеры помечены aria-disabled, а не атрибутом disabled: такой пункт остаётся в порядке обхода, его можно прочитать и он умеет ответить, почему не работает. Отсутствие показано двумя признаками — приглушением и косой чертой через ::after, — потому что цвет один не различают. Это togglegroup: aria-pressed объявляет состояние выбора, ровно одно из шести, и значение никуда не отправляется само.",
+      "meta": {
+        "tags": ["togglegroup", "size", "commerce", "aria-disabled"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Togglegroup005",
+          "usage": "<Togglegroup005\n  label=\"Размер\"\n  defaultValue=\"M\"\n  sizes={[{ id: \"S\" }, { id: \"M\" }, { id: \"L\", available: false }]}\n/>",
+          "summary": "Одиночный выбор размера тумблерами: недоступные размеры остаются в ряду, помечены aria-disabled и объясняют отказ. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-togglegroup-005-* и не подменять её токенами вашей темы",
+            "aria-disabled вместо disabled: пункт обязан оставаться читаемым и объяснимым",
+            "закончившиеся размеры в ряду — убранный размер читается как несуществующий",
+            "два признака недоступности: приглушение и перечёркивание, а не только цвет",
+            "aria-pressed на выбранном размере — это состояние, а не нажатая кнопка действия",
+            "собственную светлую подложку панели: тёмный текст обязан нести свой фон"
+          ],
+          "adapt": [
+            "имя группы через label",
+            "выбранный размер через defaultValue",
+            "перечень и наличие через sizes",
+            "цвет выбранного размера через accent"
+          ],
+          "notes": [
+            "aria-disabled не отключает нажатие — обработчик обязан сам отказать, как здесь.",
+            "Значение не уходит в форму: для отправки продублируйте его скрытым полем.",
+            "Имя недоступного размера содержит слово «закончился»: не убирайте его, оно и есть объяснение.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultValue",
+            "label": "Размер",
+            "type": "select",
+            "default": "M",
+            "options": ["XS", "S", "M", "L", "XL", "XXL"]
+          },
+          {
+            "prop": "label",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "Размер",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A single-select size picker: sold-out sizes stay in the row struck through and explain the refusal instead of vanishing from the list.",
+            "ai": {
+              "summary": "Single-select size picking with toggles: unavailable sizes stay in the row, are marked aria-disabled and explain the refusal. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-togglegroup-005-* palette — do not swap it for your theme tokens",
+                "aria-disabled instead of disabled: the option must stay readable and able to explain itself",
+                "sold-out sizes kept in the row — a removed size reads as a size that never existed",
+                "two cues for unavailability: dimming and a strike-through, not colour alone",
+                "aria-pressed on the chosen size — this is a state, not a pressed action button",
+                "the panel's own light surface: dark text must bring its own background"
+              ],
+              "adapt": [
+                "the group name through label",
+                "the selected size through defaultValue",
+                "the list and stock through sizes",
+                "the selected colour through accent"
+              ],
+              "notes": [
+                "aria-disabled does not block clicks — the handler must refuse them itself, as it does here.",
+                "The value is not submitted with a form: mirror it into a hidden field if you need that.",
+                "The unavailable size's name carries the words \"sold out\": that phrase is the explanation.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Togglegroup005\n  label=\"Size\"\n  defaultValue=\"M\"\n  sizes={[{ id: \"S\" }, { id: \"M\" }, { id: \"L\", available: false }]}\n/>"
+            },
+            "controls": {
+              "defaultValue": { "label": "Size" },
+              "label": { "label": "Group name", "default": "Size" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "togglegroup-006",
+      "type": "registry:component",
+      "title": "Channel Group",
+      "description": "Множественный выбор каналов уведомлений широкими карточками-тумблерами: пояснение под названием привязано через aria-describedby, а не вложено в имя кнопки.",
+      "categories": ["togglegroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "togglegroup-006/togglegroup-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/togglegroup-006.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-006-*. Клиентский: useState на массив и useId для идентификаторов пояснений. Каждая карточка — кнопка с коротким aria-label и aria-describedby на своё пояснение: имя остаётся коротким, а подробность приходит отдельной репликой. Выбор рисуется вложенной обводкой box-shadow inset, а не утолщением рамки: толщина границы меняла бы внутренний размер и сетка дёргалась бы на каждый клик. Раскладка — auto-fit minmax, поэтому карточки сами перестраиваются от ширины панели.",
+      "meta": {
+        "tags": ["togglegroup", "cards", "notifications", "multiple"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Togglegroup006",
+          "usage": "<Togglegroup006\n  label=\"Куда присылать уведомления\"\n  emptyNote=\"Ни один канал не выбран — уведомления не придут.\"\n  defaultValue={[\"push\", \"email\"]}\n/>",
+          "summary": "Множественный выбор каналов карточками-тумблерами: короткое имя плюс описание через aria-describedby, выбор рисуется вложенной обводкой. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-togglegroup-006-* и не подменять её токенами вашей темы",
+            "aria-describedby на пояснение: внутри имени оно превращает кнопку в абзац",
+            "вложенную обводку вместо толстой рамки — иначе карточки дёргаются при выборе",
+            "галочку в квадрате как второй признак выбора помимо цвета",
+            "строку итога, которая честно объявляет пустой выбор",
+            "собственную светлую подложку панели: тёмный текст обязан нести свой фон"
+          ],
+          "adapt": [
+            "имя группы через label",
+            "текст про пустой выбор через emptyNote",
+            "начальный набор каналов через defaultValue",
+            "цвет выбранных карточек через accent"
+          ],
+          "notes": [
+            "Каналы зашиты в файл: их описания — часть смысла, не заменяйте их одним словом.",
+            "Пустой выбор возможен и объявлен строкой: если он недопустим, проверяйте снаружи.",
+            "Карточки перестраиваются от ширины панели, а не от ширины окна — в узкой колонке это одна колонка.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "Куда присылать уведомления",
+            "maxLength": 40
+          },
+          {
+            "prop": "emptyNote",
+            "label": "Текст пустого выбора",
+            "type": "text",
+            "default": "Ни один канал не выбран — уведомления не придут.",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Multi-select notification channels as wide toggle cards: the note under each name is attached with aria-describedby instead of being folded into the button name.",
+            "ai": {
+              "summary": "Multi-select channels as toggle cards: a short name plus a description via aria-describedby, selection drawn as an inset ring. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-togglegroup-006-* palette — do not swap it for your theme tokens",
+                "aria-describedby for the note: folded into the name it turns the button into a paragraph",
+                "the inset ring instead of a thicker border — otherwise the cards jump on selection",
+                "the tick in the square as a second cue for selection beyond colour",
+                "the summary line that states an empty selection honestly",
+                "the panel's own light surface: dark text must bring its own background"
+              ],
+              "adapt": [
+                "the group name through label",
+                "the empty-selection copy through emptyNote",
+                "the initial set of channels through defaultValue",
+                "the selected card colour through accent"
+              ],
+              "notes": [
+                "The channels are baked into the file: their descriptions carry meaning, do not shrink them to one word.",
+                "An empty selection is possible and stated in the summary: validate outside if it is invalid.",
+                "Cards reflow by the panel's width, not the window's — inside a narrow column that means one column.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Togglegroup006\n  label=\"Where to send notifications\"\n  emptyNote=\"No channel selected — nothing will be sent.\"\n  defaultValue={[\"push\", \"email\"]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Group name",
+                "default": "Where to send notifications"
+              },
+              "emptyNote": {
+                "label": "Empty selection copy",
+                "default": "No channel selected — nothing will be sent."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "togglegroup-007",
+      "type": "registry:component",
+      "title": "Format Toolbar",
+      "description": "Панель форматирования из двух групп-тумблеров с настоящими разделителями: слева множественный выбор начертаний, справа одиночный выбор выравнивания.",
+      "categories": ["togglegroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "togglegroup-007/togglegroup-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/togglegroup-007.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-007-*. Клиентский: useState на выравнивание, на набор начертаний и на активный индекс, useRef на список кнопок. Корень — role=\"toolbar\" с aria-orientation, внутри три role=\"group\" со своими именами, между ними role=\"separator\": панель из восьми значков подряд неразличима на слух, а разделитель режет её на смысловые куски. Фокус ходит по всей панели roving tabindex'ом — стрелки, Home и End, — а поведение внутри групп разное: слева состояния складываются, справа взаимно исключаются.",
+      "meta": {
+        "tags": ["togglegroup", "toolbar", "separator", "roving-tabindex"],
+        "ai": {
+          "export": "Togglegroup007",
+          "usage": "<Togglegroup007\n  label=\"Форматирование\"\n  defaultAlign=\"left\"\n  defaultMarks={[\"bold\"]}\n/>",
+          "summary": "Панель форматирования с разделителями: множественный и одиночный выбор в одной панели, фокус ходит стрелками. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-togglegroup-007-* и не подменять её токенами вашей темы",
+            "role=\"toolbar\" с roving tabindex: восемь остановок в табе — это восемь лишних нажатий",
+            "role=\"separator\" у разделителей, а не просто нарисованную полоску",
+            "имена у каждой группы: без них непонятно, где выбор складывается, а где исключает",
+            "aria-pressed на каждой кнопке — это состояния, а не действия панели",
+            "видимую обводку фокуса: панель значков без неё непроходима с клавиатуры"
+          ],
+          "adapt": [
+            "имя панели через label",
+            "начальное выравнивание через defaultAlign",
+            "начальный набор начертаний через defaultMarks",
+            "цвет нажатых кнопок через accent"
+          ],
+          "notes": [
+            "Панель узкая по смыслу: список инструментов зашит в файл, растить его бесконечно нельзя.",
+            "onChange отдаёт объект { align, marks } — одиночный и множественный выбор вместе.",
+            "Toolbar не заворачивает фокус на другую строку: при переносе панели пересмотрите навигацию.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultAlign",
+            "label": "Выравнивание",
+            "type": "select",
+            "default": "left",
+            "options": ["left", "center", "right"]
+          },
+          {
+            "prop": "label",
+            "label": "Имя панели",
+            "type": "text",
+            "default": "Форматирование",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A formatting toolbar built from two toggle groups with real separators: multi-select type styles on the left, single-select alignment on the right.",
+            "ai": {
+              "summary": "A formatting toolbar with separators: multi-select and single-select in one panel, focus moving by arrow keys. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-togglegroup-007-* palette — do not swap it for your theme tokens",
+                "role=\"toolbar\" with a roving tabindex: eight tab stops are eight extra keystrokes",
+                "role=\"separator\" on the dividers rather than a merely drawn line",
+                "a name on every group: without them it is unclear where selection stacks and where it excludes",
+                "aria-pressed on every button — these are states, not toolbar actions",
+                "the visible focus ring: an icon panel without it cannot be crossed from the keyboard"
+              ],
+              "adapt": [
+                "the toolbar name through label",
+                "the initial alignment through defaultAlign",
+                "the initial type styles through defaultMarks",
+                "the pressed colour through accent"
+              ],
+              "notes": [
+                "The toolbar is deliberately narrow: the tool list is baked into the file and must not grow endlessly.",
+                "onChange returns an object { align, marks } — single and multiple selection together.",
+                "The toolbar does not wrap focus onto a second row: revisit navigation if the panel wraps.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Togglegroup007\n  label=\"Formatting\"\n  defaultAlign=\"left\"\n  defaultMarks={[\"bold\"]}\n/>"
+            },
+            "controls": {
+              "defaultAlign": { "label": "Alignment" },
+              "label": { "label": "Toolbar name", "default": "Formatting" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "togglegroup-008",
+      "type": "registry:component",
+      "title": "Required Group",
+      "description": "Группа с обязательным минимумом: последняя нажатая кнопка помечена замком и aria-disabled и на нажатие отвечает объяснением, а не молчанием.",
+      "categories": ["togglegroup"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "togglegroup-008/togglegroup-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/togglegroup-008.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-008-*. Клиентский: useState на выбор и на последнюю заблокированную кнопку. Правило «хотя бы одно» не прячется: кнопка остаётся нажатой, получает aria-disabled и замок, а при попытке снять — короткое смещение и объяснение в строке. Заранее гасить остальные было бы враньём, они рабочие. Ниже стоит мини-таблица, которая рисуется из выбранных колонок, поэтому смысл выбора виден сразу. Это togglegroup, а не buttongroup: кнопки объявляют состояние видимости колонок.",
+      "meta": {
+        "tags": ["togglegroup", "required", "columns", "validation"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Togglegroup008",
+          "usage": "<Togglegroup008\n  label=\"Колонки таблицы\"\n  minMessage=\"Хотя бы одна колонка должна остаться видимой.\"\n  defaultValue={[\"name\", \"status\", \"sum\"]}\n/>",
+          "summary": "Группа тумблеров с обязательным минимумом: последняя нажатая кнопка не гаснет и объясняет отказ, таблица под ней рисуется из выбранного. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-togglegroup-008-* и не подменять её токенами вашей темы",
+            "aria-disabled только у последней нажатой кнопки: остальные рабочие и гасить их нельзя",
+            "объяснение отказа текстом — без него нажатие выглядит как поломка",
+            "замок как видимый признак: смещение при отказе отключается по prefers-reduced-motion",
+            "таблицу, собранную из выбранных колонок: она показывает смысл выбора",
+            "собственную светлую подложку панели: тёмный текст обязан нести свой фон"
+          ],
+          "adapt": [
+            "имя группы через label",
+            "текст отказа через minMessage",
+            "начальный набор колонок через defaultValue",
+            "цвет нажатых кнопок через accent"
+          ],
+          "notes": [
+            "Минимум зашит как «хотя бы одна»: для другого порога придётся править условие в коде.",
+            "aria-disabled не блокирует нажатие — отказ выдаёт обработчик, и это правильно.",
+            "Сообщение живёт в строке role=\"status\" и озвучивается при каждом отказе.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "Колонки таблицы",
+            "maxLength": 24
+          },
+          {
+            "prop": "minMessage",
+            "label": "Текст отказа",
+            "type": "text",
+            "default": "Хотя бы одна колонка должна остаться видимой.",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A group with a required minimum: the last pressed button carries a lock and aria-disabled, and answers a press with an explanation rather than silence.",
+            "ai": {
+              "summary": "A toggle group with a required minimum: the last pressed button does not switch off and explains the refusal, and the table below is built from the selection. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-togglegroup-008-* palette — do not swap it for your theme tokens",
+                "aria-disabled only on the last pressed button: the others work and must not be dimmed",
+                "the refusal spelled out in text — without it the press looks like a bug",
+                "the lock as a visible cue: the nudge on refusal is switched off by prefers-reduced-motion",
+                "the table assembled from the selected columns: it shows what the choice means",
+                "the panel's own light surface: dark text must bring its own background"
+              ],
+              "adapt": [
+                "the group name through label",
+                "the refusal copy through minMessage",
+                "the initial set of columns through defaultValue",
+                "the pressed colour through accent"
+              ],
+              "notes": [
+                "The minimum is hard-coded as \"at least one\": another threshold means editing the condition.",
+                "aria-disabled does not block the click — the handler refuses it, and that is correct.",
+                "The message lives in a role=\"status\" line and is announced on every refusal.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Togglegroup008\n  label=\"Table columns\"\n  minMessage=\"At least one column must stay visible.\"\n  defaultValue={[\"name\", \"status\", \"sum\"]}\n/>"
+            },
+            "controls": {
+              "label": { "label": "Group name", "default": "Table columns" },
+              "minMessage": {
+                "label": "Refusal copy",
+                "default": "At least one column must stay visible."
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
