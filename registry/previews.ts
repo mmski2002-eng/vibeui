@@ -609,6 +609,10 @@ import { Tabs003 } from "@/registry/components/navigation/tabs-003/tabs-003"
 import { Tabs004 } from "@/registry/components/navigation/tabs-004/tabs-004"
 import { Tabs005 } from "@/registry/components/navigation/tabs-005/tabs-005"
 import { Tabs006 } from "@/registry/components/navigation/tabs-006/tabs-006"
+import { Tabs007 } from "@/registry/components/navigation/tabs-007/tabs-007"
+import { Tabs008 } from "@/registry/components/navigation/tabs-008/tabs-008"
+import { Tabs009 } from "@/registry/components/navigation/tabs-009/tabs-009"
+import { Tabs010 } from "@/registry/components/navigation/tabs-010/tabs-010"
 import { Table001 } from "@/registry/components/tables/table-001/table-001"
 import { Table002 } from "@/registry/components/tables/table-002/table-002"
 import { Table003 } from "@/registry/components/tables/table-003/table-003"
@@ -1265,6 +1269,10 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "tabs-004": Tabs004,
   "tabs-005": Tabs005,
   "tabs-006": Tabs006,
+  "tabs-007": Tabs007,
+  "tabs-008": Tabs008,
+  "tabs-009": Tabs009,
+  "tabs-010": Tabs010,
   "table-001": Table001,
   "table-002": Table002,
   "table-003": Table003,

@@ -2240,6 +2240,11 @@ export const LAZY_PREVIEWS = {
       (module) => module.Otp006,
     ),
   ),
+  "otp-007": dynamic(() =>
+    import("@/registry/components/inputs/otp-007/otp-007").then(
+      (module) => module.Otp007,
+    ),
+  ),
   "skeleton-001": dynamic(() =>
     import("@/registry/components/display/skeleton-001/skeleton-001").then(
       (module) => module.Skeleton001,
@@ -3038,6 +3043,26 @@ export const LAZY_PREVIEWS = {
   "tabs-006": dynamic(() =>
     import("@/registry/components/navigation/tabs-006/tabs-006").then(
       (module) => module.Tabs006,
+    ),
+  ),
+  "tabs-007": dynamic(() =>
+    import("@/registry/components/navigation/tabs-007/tabs-007").then(
+      (module) => module.Tabs007,
+    ),
+  ),
+  "tabs-008": dynamic(() =>
+    import("@/registry/components/navigation/tabs-008/tabs-008").then(
+      (module) => module.Tabs008,
+    ),
+  ),
+  "tabs-009": dynamic(() =>
+    import("@/registry/components/navigation/tabs-009/tabs-009").then(
+      (module) => module.Tabs009,
+    ),
+  ),
+  "tabs-010": dynamic(() =>
+    import("@/registry/components/navigation/tabs-010/tabs-010").then(
+      (module) => module.Tabs010,
     ),
   ),
   "table-001": dynamic(() =>

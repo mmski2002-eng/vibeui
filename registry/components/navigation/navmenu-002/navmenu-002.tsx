@@ -58,12 +58,15 @@ font:inherit;font-size:0.875rem;color:inherit;
 [data-vibeui-block="navmenu-002"] [data-part="panel"]{
 position:fixed;inset:auto;margin:0;
 width:min(38rem,92vw);padding:0.75rem;box-sizing:border-box;
-display:grid;grid-template-columns:minmax(10rem,1fr) minmax(11rem,1.1fr);gap:0.75rem;
+gap:0.75rem;
 background:var(--vibeui-navmenu-002-bg);color:var(--vibeui-navmenu-002-fg);
 border:1px solid var(--vibeui-navmenu-002-border);border-radius:0.875rem;
 font-family:var(--vibeui-navmenu-002-font);
 box-shadow:0 24px 48px -24px oklch(0.2 0.03 265 / 40%);
 }
+/* Раскладка только для открытой панели: display на элементе с popover
+   перебивает display:none из стилей браузера, и панель видна всегда. */
+[data-vibeui-block="navmenu-002"] [data-part="panel"]:popover-open{display:grid;grid-template-columns:minmax(10rem,1fr) minmax(11rem,1.1fr);}
 @supports (anchor-name: --a){
 [data-vibeui-block="navmenu-002"] [data-part="panel"]{
 position-anchor:--vibeui-navmenu-002-bar;

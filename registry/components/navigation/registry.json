@@ -3662,7 +3662,8 @@
             "приоритет в панели: одинаково оформленные пункты не подсказывают, с чего начать",
             "popover=\"auto\": Escape и клик мимо достаются от браузера",
             "фон промо из градиента вместо картинки — компонент обязан оставаться одним файлом без ассетов",
-            "метку «Новое» отдельным элементом, а не припиской к заголовку: приписку не видно при беглом чтении"
+            "метку «Новое» отдельным элементом, а не припиской к заголовку: приписку не видно при беглом чтении",
+            "раскладку панели только в :popover-open — display на элементе с popover перебивает display:none из стилей браузера, и панель перестаёт закрываться"
           ],
           "adapt": [
             "массив links и подписи panelLabel, promoTitle, promoText, promoAction",
@@ -3704,7 +3705,8 @@
                 "the priority inside the panel: identically styled items never suggest where to start",
                 "popover=\"auto\": Escape and outside clicks come from the browser",
                 "the gradient promo background instead of an image — the component has to stay one file with no assets",
-                "the \"New\" badge as its own element rather than an addition to the heading: an addition goes unseen when scanning"
+                "the \"New\" badge as its own element rather than an addition to the heading: an addition goes unseen when scanning",
+                "the panel layout scoped to :popover-open — a display on a popover element overrides the browser display:none and the panel stops closing"
               ],
               "adapt": [
                 "the links array and the panelLabel, promoTitle, promoText and promoAction captions",
@@ -3958,7 +3960,8 @@
             "правило с двойным :not(:has(...)), показывающее первое превью: без него панель открывается пустой",
             "область превью помеченной aria-hidden: картинка дублирует подпись ссылки и скринридеру не нужна",
             "фиксированную высоту области превью — иначе панель прыгает при переходе между строками",
-            "правила на шесть строк: их число ограничено сверху, потому что каждая требует своей пары селекторов"
+            "правила на шесть строк: их число ограничено сверху, потому что каждая требует своей пары селекторов",
+            "раскладку панели только в :popover-open — display на элементе с popover перебивает display:none из стилей браузера, и панель перестаёт закрываться"
           ],
           "adapt": [
             "массив entries: ссылки, пояснения и подписи превью",
@@ -3999,7 +4002,8 @@
                 "the double :not(:has(...)) rule that shows the first preview: without it the panel opens empty",
                 "the preview area marked aria-hidden: the picture repeats the link label and a screen reader does not need it",
                 "the fixed preview height — otherwise the panel jumps as you move between rows",
-                "the rules written for six rows: the count is capped because each row needs its own pair of selectors"
+                "the rules written for six rows: the count is capped because each row needs its own pair of selectors",
+                "the panel layout scoped to :popover-open — a display on a popover element overrides the browser display:none and the panel stops closing"
               ],
               "adapt": [
                 "the entries array: links, hints and preview captions",
