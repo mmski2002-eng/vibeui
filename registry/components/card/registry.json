@@ -1173,6 +1173,1241 @@
           "width": "full"
         }
       }
+    },
+    {
+      "name": "card-011",
+      "type": "registry:component",
+      "title": "Bookmark Card",
+      "description": "Карточка-закладка на внешний материал: домен виден до перехода, кликается вся площадь, а ссылка в разметке остаётся одна.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-011/card-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-011-*. Серверный: хуков нет. Ссылка заголовка растянута псевдоэлементом ::after на всю карточку, поэтому цель нажатия — вся площадь, а в списке ссылок остаётся одна запись на карточку. Обводку фокуса карточка берёт на себя через :has(a:focus-visible). Оттенок буквенного знака выводится из домена по FNV-1a, поэтому один источник всегда одного цвета. Внешняя ссылка получает target и rel, а предупреждение о новой вкладке уезжает в визуально скрытый текст.",
+      "meta": {
+        "tags": ["card", "link", "bookmark", "external"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Card011",
+          "usage": "<Card011\n  title=\"Что такое container queries\"\n  description=\"Разбор на примерах.\"\n  url=\"web.dev\"\n  href=\"https://web.dev\"\n/>",
+          "summary": "Карточка-закладка на внешний материал: буквенный знак источника, домен текстом, заголовок-ссылка на всю площадь и описание в две строки. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-011-* и не подменять её токенами вашей темы (bg-card, text-muted-foreground и подобными)",
+            "домен видимым текстом, а не только буквенным знаком: перед уходом с сайта человек обязан видеть, куда именно он уходит",
+            "приём с одной ссылкой: position:relative у карточки и ::after у заголовка — три ссылки на карточку превращают список в кашу для скринридера",
+            "визуально скрытое «откроется в новой вкладке»: смена вкладки без предупреждения дезориентирует",
+            "обводку фокуса на всей карточке через :has(a:focus-visible), а не подчёркивание одного заголовка",
+            "оттенок знака из домена: один источник всегда одного цвета, и его узнают в списке"
+          ],
+          "adapt": [
+            "тексты title и description",
+            "домен через url — он же красит буквенный знак",
+            "адрес через href и признак внешней ссылки external",
+            "акцент через проп accent — цвет стрелки и рамки при наведении"
+          ],
+          "notes": [
+            "Растянутая ссылка ломает выделение текста внутри карточки: это плата за большую цель нажатия.",
+            "Вторая ссылка или кнопка окажется под невидимым слоем ::after — поднимайте её через position:relative и z-index.",
+            "url — это подпись, а не источник href: компонент ничего из адреса не разбирает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что такое container queries и когда они нужны",
+            "maxLength": 60
+          },
+          {
+            "prop": "url",
+            "label": "Домен",
+            "type": "text",
+            "default": "web.dev",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A bookmark card for an outside link: the domain is visible before the click, the whole surface is the target, and the markup still holds one link.",
+            "ai": {
+              "summary": "A bookmark card for an outside link: a letter mark for the source, the domain in plain text, a title link covering the whole surface and a two-line description. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-011-* palette — do not swap it for your theme tokens (bg-card, text-muted-foreground and the like)",
+                "the domain as visible text, not just a letter mark: before leaving the site a reader must see where they are going",
+                "the single-link technique: position:relative on the card and ::after on the title — three links per card turn the list to mush in a screen reader",
+                "the visually hidden \"opens in a new tab\": an unannounced tab switch disorients",
+                "the focus ring on the whole card via :has(a:focus-visible) rather than an underline on the title alone",
+                "the domain-derived hue of the mark: one source keeps one colour and gets recognised in a list"
+              ],
+              "adapt": [
+                "the title and description copy",
+                "the domain through url — it also colours the letter mark",
+                "the destination through href and the external flag",
+                "the accent through the accent prop — the arrow and the hover border"
+              ],
+              "notes": [
+                "A stretched link breaks text selection inside the card: that is the price of a large tap target.",
+                "A second link or button ends up under the invisible ::after layer — lift it with position:relative and z-index.",
+                "url is a caption, not the source of href: the component parses nothing out of the address.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card011\n  title=\"What container queries are for\"\n  description=\"A walk-through with examples.\"\n  url=\"web.dev\"\n  href=\"https://web.dev\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What container queries are and when to use them"
+              },
+              "url": {
+                "label": "Domain",
+                "default": "web.dev"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-012",
+      "type": "registry:component",
+      "title": "Ratio Media Card",
+      "description": "Карточка с кадром сверху и жёстким соотношением сторон: место под картинку занято до её загрузки, поэтому текст под кадром не прыгает.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-012/card-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-012-*. Серверный: хуков нет. Кадр держит пропорцию через aspect-ratio, значение приходит из data-ratio и переменной, поэтому четыре соотношения живут без дублирования правил. Плашка и длительность лежат поверх кадра на полупрозрачных подложках, а не рядом с ним. Пустой кадр залит градиентами — картинка не обязательна; переданный <img> получает object-fit:cover и заполняет кадр без искажений.",
+      "meta": {
+        "tags": ["card", "media", "aspect-ratio", "grid"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Card012",
+          "usage": "<Card012\n  ratio=\"16/9\"\n  badge=\"Видео\"\n  duration=\"12:40\"\n  title=\"Сборка каталога\"\n  media={<img src=\"/cover.jpg\" alt=\"\" />}\n/>",
+          "summary": "Карточка с медиа сверху: кадр с фиксированным соотношением сторон, плашка и длительность поверх него, заголовок и описание под ним. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-012-* и не подменять её токенами вашей темы",
+            "aspect-ratio у кадра: без него страница дёргается в момент загрузки картинки, и это видно на любом медленном соединении",
+            "object-fit:cover у вложенного <img>: растянутая по обеим осям картинка выглядит браком",
+            "плашку и длительность на непрозрачных подложках — поверх светлого кадра белый текст исчезает",
+            "обрезку заголовка и описания двумя строками: в сетке карточки обязаны быть одной высоты",
+            "светлую подложку самой карточки: тёмный текст на тёмном фоне витрины не читается"
+          ],
+          "adapt": [
+            "тексты title, description и содержимое meta",
+            "соотношение сторон через ratio",
+            "плашку badge и подпись duration — обе можно убрать пустой строкой",
+            "акцент через проп accent — цвет градиента-заглушки"
+          ],
+          "notes": [
+            "Кадр по умолчанию пустой: передайте <img> или <video> в media, CSS для них уже готов.",
+            "Соотношение 1/1 в узкой колонке съедает половину экрана — для мобильной ленты берите 16/9.",
+            "Плашка перекрывает верхний левый угол картинки: важное содержимое кадра туда лучше не помещать.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "ratio",
+            "label": "Соотношение",
+            "type": "select",
+            "default": "16/9",
+            "options": ["16/9", "4/3", "3/2", "1/1"]
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Сборка каталога на container queries",
+            "maxLength": 60
+          },
+          {
+            "prop": "duration",
+            "label": "Длительность",
+            "type": "text",
+            "default": "12:40",
+            "maxLength": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A card with media on top at a locked aspect ratio: the space is reserved before the image loads, so the text below never jumps.",
+            "ai": {
+              "summary": "A card with media on top: a frame at a fixed aspect ratio, a badge and a duration over it, a title and a description below. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-012-* palette — do not swap it for your theme tokens",
+                "aspect-ratio on the frame: without it the page jumps as the image arrives, visible on any slow connection",
+                "object-fit:cover on a nested <img>: an image stretched on both axes looks broken",
+                "the badge and duration on opaque backings — white text vanishes over a light frame",
+                "clamping the title and description to two lines: cards in a grid must share one height",
+                "the card's own light surface: dark text on the dark showcase background is unreadable"
+              ],
+              "adapt": [
+                "the title and description copy and the meta content",
+                "the aspect ratio through ratio",
+                "the badge and the duration caption — both drop out on an empty string",
+                "the accent through the accent prop — the placeholder gradient"
+              ],
+              "notes": [
+                "The frame is empty by default: pass an <img> or <video> as media, the CSS is ready.",
+                "A 1/1 ratio eats half the screen in a narrow column — use 16/9 for a mobile feed.",
+                "The badge covers the top-left corner of the picture: keep important detail out of it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card012\n  ratio=\"16/9\"\n  badge=\"Video\"\n  duration=\"12:40\"\n  title=\"Building the catalog\"\n  media={<img src=\"/cover.jpg\" alt=\"\" />}\n/>"
+            },
+            "controls": {
+              "ratio": {
+                "label": "Aspect ratio"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Building a catalog with container queries"
+              },
+              "duration": {
+                "label": "Duration",
+                "default": "12:40"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-013",
+      "type": "registry:component",
+      "title": "Adaptive Layout Card",
+      "description": "Карточка, которая сама решает, быть ей строкой или плиткой: в узкой колонке кадр сверху, в широкой — слева. Считает по своей ширине, а не по окну.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-013/card-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-013-*. Серверный: хуков нет. Корень объявлен container-type:inline-size, а вся раскладка лежит на внутреннем [data-part=\"shell\"] — контейнерный запрос действует на потомков, но не на сам контейнер, и правило на корне молча ничего бы не изменило. Порогов два: на 30rem карточка становится горизонтальной, на 44rem кадр сужается, а описание ужимается до двух строк.",
+      "meta": {
+        "tags": ["card", "container-query", "responsive", "layout"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Card013",
+          "usage": "<Card013\n  eyebrow=\"Курс\"\n  title=\"Раскладка без медиазапросов\"\n  meta=\"6 занятий · 3 часа\"\n  actionLabel=\"Начать\"\n/>",
+          "summary": "Карточка на две раскладки: вертикальная в узком месте, горизонтальная в широком. Переключение делает @container по собственной ширине карточки. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-013-* и не подменять её токенами вашей темы",
+            "раскладку на внутреннем shell, а не на корне: @container действует только на потомков контейнера, и правило на самом корне не сработает",
+            "container-type:inline-size у корня — без него оба запроса просто не выполняются",
+            "@container вместо медиазапроса: одна и та же карточка живёт в сайдбаре и в основной колонке, и ширина окна о ней ничего не знает",
+            "min-width:0 у текстовой колонки в горизонтальном режиме, иначе длинное слово растянет флекс-строку",
+            "порог в 30rem, привязанный к моменту, когда кадр и три строки текста перестают мешать друг другу"
+          ],
+          "adapt": [
+            "тексты title, description, eyebrow и подпись meta",
+            "подпись кнопки через actionLabel",
+            "акцент через проп accent — надзаголовок, кадр и кнопка",
+            "пороги @container под свою сетку: 30rem и 44rem — не догма"
+          ],
+          "notes": [
+            "Контейнерный запрос считает ширину карточки, а не окна: в узком сайдбаре она останется вертикальной на любом мониторе.",
+            "Кадр пустой: положите <img> внутрь [data-part=\"media\"], пропорция и ширина уже заданы.",
+            "В горизонтальном режиме кадр тянется на высоту текста — очень длинное описание сделает его вытянутым.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Курс: раскладка без медиазапросов",
+            "maxLength": 60
+          },
+          {
+            "prop": "meta",
+            "label": "Подпись",
+            "type": "text",
+            "default": "6 занятий · 3 часа",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A card that decides for itself whether to be a row or a tile: the frame sits on top in a narrow column and to the left in a wide one, measured against its own width.",
+            "ai": {
+              "summary": "One card in two layouts: vertical in a tight spot, horizontal in a wide one. The switch is an @container query on the card's own width. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-013-* palette — do not swap it for your theme tokens",
+                "the layout on the inner shell rather than the root: @container applies to descendants only, and a rule on the container itself silently does nothing",
+                "container-type:inline-size on the root — without it neither query ever runs",
+                "@container instead of a media query: the same card lives in a sidebar and in the main column, and the window width knows nothing about it",
+                "min-width:0 on the text column in row mode, or one long word stretches the flex line",
+                "the 30rem threshold, tied to the point where the frame and three lines of text stop crowding each other"
+              ],
+              "adapt": [
+                "the title, description and eyebrow copy and the meta caption",
+                "the button text through actionLabel",
+                "the accent through the accent prop — eyebrow, frame and button",
+                "the @container thresholds for your grid: 30rem and 44rem are not sacred"
+              ],
+              "notes": [
+                "The container query measures the card, not the window: in a narrow sidebar it stays vertical on any monitor.",
+                "The frame is empty: put an <img> inside [data-part=\"media\"], the ratio and width are set.",
+                "In row mode the frame stretches to the text height — a very long description makes it tall and thin.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card013\n  eyebrow=\"Course\"\n  title=\"Layout without media queries\"\n  meta=\"6 lessons · 3 hours\"\n  actionLabel=\"Start\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Course: layout without media queries"
+              },
+              "meta": {
+                "label": "Caption",
+                "default": "6 lessons · 3 hours"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-014",
+      "type": "registry:component",
+      "title": "Delta Tile",
+      "description": "Плитка показателя, где главное — изменение: знак, процент и абсолютная величина рядом с базой сравнения, потому что «+12 %» без базы ничего не значит.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-014/card-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-014.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-014-*. Серверный: хуков нет. Направление и тон вычисляются один раз и уезжают в data-direction и data-tone, поэтому цвет и поворот стрелки живут в CSS, а не в разметке. Проп invert переворачивает трактовку для метрик, где рост — плохая новость. Слово «рост»/«снижение» продублировано визуально скрытым текстом: стрелка вслух не читается.",
+      "meta": {
+        "tags": ["card", "metric", "delta", "dashboard"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Card014",
+          "usage": "<Card014\n  label=\"Выручка за неделю\"\n  value=\"1 284 000 ₽\"\n  delta={12.4}\n  deltaValue=\"+164 000 ₽\"\n  baseline=\"против прошлой недели\"\n/>",
+          "summary": "Плитка показателя: крупное значение, плашка изменения со знаком и стрелкой, а под чертой — база сравнения и абсолютная дельта. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-014-* и не подменять её токенами вашей темы",
+            "базу сравнения рядом с процентом: «+12 %» без ответа на вопрос «к чему» — не число, а настроение",
+            "знак и стрелку в дополнение к цвету: в чёрно-белой печати и при дальтонизме цвет исчезает",
+            "проп invert: рост оттока и рост выручки красятся по-разному, иначе плитка врёт",
+            "нейтральный тон при нулевом изменении — зелёный ноль читается как рост",
+            "табличные цифры у значения и дельты, чтобы ряд плиток не дрожал по ширине"
+          ],
+          "adapt": [
+            "тексты label, value, deltaValue и baseline",
+            "величину изменения через delta — знак решает всё остальное",
+            "трактовку направления через invert",
+            "акцент через проп accent — цвет положительной дельты"
+          ],
+          "notes": [
+            "Значения приходят готовыми строками: компонент ничего не считает и не форматирует, кроме процента.",
+            "Процент выводится через toLocaleString('ru-RU') — для другой локали поправьте вызов или передайте готовую строку.",
+            "Плитка не показывает историю: если нужен тренд, ставьте рядом карточку со столбиками.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Показатель",
+            "type": "text",
+            "default": "Выручка за неделю",
+            "maxLength": 30
+          },
+          {
+            "prop": "delta",
+            "label": "Изменение, %",
+            "type": "number",
+            "default": 12.4,
+            "min": -100,
+            "max": 100
+          },
+          {
+            "prop": "invert",
+            "label": "Рост — плохо",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A metric tile built around the change: sign, percent and absolute value beside the comparison baseline, because \"+12%\" on its own says nothing.",
+            "ai": {
+              "summary": "A metric tile: a large value, a change chip with a sign and an arrow, and below the rule the comparison baseline and the absolute delta. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-014-* palette — do not swap it for your theme tokens",
+                "the baseline next to the percent: \"+12%\" without an answer to \"against what\" is a mood, not a number",
+                "the sign and the arrow alongside colour: in print and for colour-blind readers the colour is gone",
+                "the invert prop: rising churn and rising revenue must colour differently or the tile lies",
+                "the neutral tone at zero change — a green zero reads as growth",
+                "tabular figures on the value and the delta so a row of tiles does not shiver"
+              ],
+              "adapt": [
+                "the label, value, deltaValue and baseline copy",
+                "the change through delta — the sign decides everything else",
+                "the reading of direction through invert",
+                "the accent through the accent prop — the colour of a positive delta"
+              ],
+              "notes": [
+                "Values arrive as ready strings: the component computes and formats nothing but the percent.",
+                "The percent goes through toLocaleString('ru-RU') — change the call or pass a ready string for another locale.",
+                "The tile shows no history: if you need a trend, put a sparkline card beside it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card014\n  label=\"Revenue this week\"\n  value=\"$14,200\"\n  delta={12.4}\n  deltaValue=\"+$1,800\"\n  baseline=\"against last week\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Metric",
+                "default": "Revenue this week"
+              },
+              "delta": {
+                "label": "Change, %"
+              },
+              "invert": {
+                "label": "Growth is bad"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-015",
+      "type": "registry:component",
+      "title": "Checklist Card",
+      "description": "Карточка задачи с видимым чек-листом: прогресс собран из сегментов — по одному на пункт, поэтому «сколько осталось» видно и без чтения подписи.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-015/card-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-015-*. Серверный: хуков нет. Прогресс — не полоса, а ряд равных сегментов по числу пунктов, объявленный role=\"progressbar\" с aria-valuemax по длине списка. Пункты — обычный ul; состояние живёт в data-done, поэтому галочка, цвет рамки и зачёркивание переключаются одним атрибутом. Слова «выполнено»/«не выполнено» уезжают в визуально скрытый текст: зачёркивание вслух не читается.",
+      "meta": {
+        "tags": ["card", "checklist", "progress", "task"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Card015",
+          "usage": "<Card015\n  title=\"Волна карточек в каталог\"\n  items={[{ text: \"Написать metadata\", done: true }, { text: \"Прогнать lint\" }]}\n  meta=\"Срок: до пятницы\"\n/>",
+          "summary": "Карточка задачи с чек-листом: заголовок, счётчик, сегментный прогресс по числу пунктов и сами пункты с галочками. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-015-* и не подменять её токенами вашей темы",
+            "сегменты вместо сплошной полосы: один сегмент — один пункт, и остаток виден без чтения счётчика",
+            "role=\"progressbar\" с aria-valuemax по длине списка — ряд цветных полосок для скринридера иначе не существует",
+            "визуально скрытые слова «выполнено» и «не выполнено»: зачёркивание и галочка вслух не читаются",
+            "счётчик «3 из 5» рядом с заголовком: по длине заливки никто не назовёт число",
+            "порядок пунктов: чек-лист — это план, а не множество, и перестановка меняет смысл"
+          ],
+          "adapt": [
+            "заголовок через title и подпись meta",
+            "массив items — текст пункта и признак done",
+            "режим showDone: скрыть выполненное и оставить только то, что впереди",
+            "акцент через проп accent — цвет заливки сегментов и галочек"
+          ],
+          "notes": [
+            "Счётчик и сегменты считаются от всего массива items, а не от видимой части: при showDone={false} прогресс остаётся честным.",
+            "Больше восьми пунктов превращают карточку в страницу — ведите на отдельный экран задачи.",
+            "Пункты не переключаются: чек-лист здесь отображает состояние, а обработку кликов вешает вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Задача",
+            "type": "text",
+            "default": "Волна карточек в каталог",
+            "maxLength": 40
+          },
+          {
+            "prop": "showDone",
+            "label": "Показывать выполненные",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A task card with the checklist in plain sight: progress is a row of segments, one per item, so the remainder reads without the caption.",
+            "ai": {
+              "summary": "A task card with a checklist: a title, a counter, segmented progress with one segment per item, and the items themselves with ticks. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-015-* palette — do not swap it for your theme tokens",
+                "segments instead of a solid bar: one segment is one item, and the remainder shows without reading the counter",
+                "role=\"progressbar\" with aria-valuemax from the list length — a row of coloured strips does not exist for a screen reader otherwise",
+                "the visually hidden \"done\" and \"not done\": strike-through and a tick are silent",
+                "the \"3 of 5\" counter beside the title: nobody reads a number off a fill length",
+                "the order of the items: a checklist is a plan, not a set, and reordering changes the meaning"
+              ],
+              "adapt": [
+                "the heading through title and the meta caption",
+                "the items array — the item text and its done flag",
+                "the showDone mode: hide what is finished and keep only what is ahead",
+                "the accent through the accent prop — the segment fill and the ticks"
+              ],
+              "notes": [
+                "The counter and the segments count the whole items array, not the visible part: with showDone={false} the progress stays honest.",
+                "More than eight items turn the card into a page — link to the task screen instead.",
+                "The items do not toggle: the checklist here shows state, and click handling belongs to the caller.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card015\n  title=\"Catalog card wave\"\n  items={[{ text: \"Write the metadata\", done: true }, { text: \"Run lint\" }]}\n  meta=\"Due Friday\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Task",
+                "default": "Catalog card wave"
+              },
+              "showDone": {
+                "label": "Show finished items"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-016",
+      "type": "registry:component",
+      "title": "File Row Card",
+      "description": "Карточка файла для списка: значок-лист с расширением, имя в одну строку и ряд фактов через точку — тип, размер, дата.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-016/card-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-016.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-016-*. Серверный: хуков нет. Значок — не иконка формата, а «уголок листа»: одна фигура на clip-path плюс псевдоэлемент загнутого угла, цвет приходит из data-kind через одну переменную. Расширение вырезается из имени и печатается на значке, поэтому обрезанное многоточием имя не теряет тип. Факты выложены рядом с разделителями на ::before, а не тремя строками: в списке из сорока файлов высота строки дороже подробностей.",
+      "meta": {
+        "tags": ["card", "file", "list", "download"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Card016",
+          "usage": "<Card016\n  name=\"Каталог компонентов.pdf\"\n  kind=\"pdf\"\n  size=\"2,4 МБ\"\n  updated=\"вчера, 18:40\"\n/>",
+          "summary": "Карточка файла: значок с расширением и цветом типа, имя-ссылка в одну строку, ряд фактов и кнопка скачивания. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-016-* и не подменять её токенами вашей темы",
+            "расширение на значке: имя обрезается многоточием, и без значка тип файла теряется совсем",
+            "цвет типа через одну переменную и data-kind — так новый тип добавляется одной строкой CSS",
+            "тип, размер и дату одним рядом: в списке из сорока файлов высота строки дороже подробностей",
+            "aria-label у кнопки скачивания — голая иконка стрелки вслух не читается",
+            "атрибут title у имени: полное имя обязано быть доступно, когда строка обрезана"
+          ],
+          "adapt": [
+            "имя файла через name — из него же берётся расширение для значка",
+            "тип через kind, размер через size и дату через updated",
+            "подпись кнопки через actionLabel и адрес через href",
+            "акцент через проп accent — он перекрывает цвет типа"
+          ],
+          "notes": [
+            "Размер приходит готовой строкой: перевод байтов в мегабайты делает вызывающий код.",
+            "Расширение берётся из name текстом — файл без точки в имени получит подпись «файл».",
+            "Кнопка ничего не скачивает: обработчик или ссылку на файл подставляет вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя файла",
+            "type": "text",
+            "default": "Каталог компонентов, версия 4.pdf",
+            "maxLength": 50
+          },
+          {
+            "prop": "kind",
+            "label": "Тип",
+            "type": "select",
+            "default": "pdf",
+            "options": ["pdf", "doc", "sheet", "image", "archive", "code"]
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "text",
+            "default": "2,4 МБ",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A file card for a list: a sheet glyph carrying the extension, the name on one line, and a row of facts separated by dots — type, size, date.",
+            "ai": {
+              "summary": "A file card: a glyph with the extension and the type colour, the name as a one-line link, a row of facts and a download button. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-016-* palette — do not swap it for your theme tokens",
+                "the extension on the glyph: the name is ellipsised, and without the glyph the file type is lost entirely",
+                "the type colour through one variable and data-kind — a new type is then one CSS line",
+                "type, size and date on one row: in a list of forty files the row height beats the detail",
+                "the aria-label on the download button — a bare arrow is silent",
+                "the title attribute on the name: the full name must stay reachable when the line is cut"
+              ],
+              "adapt": [
+                "the file name through name — the glyph's extension comes from it too",
+                "the type through kind, the size through size and the date through updated",
+                "the button text through actionLabel and the destination through href",
+                "the accent through the accent prop — it overrides the type colour"
+              ],
+              "notes": [
+                "The size arrives as a ready string: turning bytes into megabytes is the caller's job.",
+                "The extension is read out of name as text — a file with no dot gets the caption \"file\".",
+                "The button downloads nothing: the handler or the file link belongs to the caller.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card016\n  name=\"Component catalog.pdf\"\n  kind=\"pdf\"\n  size=\"2.4 MB\"\n  updated=\"yesterday, 18:40\"\n/>"
+            },
+            "controls": {
+              "name": {
+                "label": "File name",
+                "default": "Component catalog, v4.pdf"
+              },
+              "kind": {
+                "label": "Type"
+              },
+              "size": {
+                "label": "Size",
+                "default": "2.4 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-017",
+      "type": "registry:component",
+      "title": "Quote Card",
+      "description": "Карточка отзыва на figure и blockquote: автор связан с цитатой разметкой, а не соседством, а оценка продублирована числом.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-017/card-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-017.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-017-*. Серверный: хуков нет. Разметка — figure с blockquote и figcaption: связь автора с цитатой описана стандартом, а не близостью в вёрстке. Декоративная кавычка нарисована псевдоэлементом и потому отсутствует в дереве доступности. Звёзды вырезаны clip-path и помечены aria-hidden, а оценка продублирована визуально скрытой строкой «Оценка 5 из 5». Оттенок кружка с инициалами считается из имени по FNV-1a.",
+      "meta": {
+        "tags": ["card", "testimonial", "quote", "rating"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Card017",
+          "usage": "<Card017\n  quote=\"Отдали агенту три блока и получили страницу за вечер.\"\n  author=\"Ольга Терентьева\"\n  role=\"Продакт, «Ранняя птица»\"\n  rating={5}\n/>",
+          "summary": "Карточка отзыва: оценка звёздами, цитата в blockquote и подпись с инициалами, именем, ролью и источником. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-017-* и не подменять её токенами вашей темы",
+            "разметку figure + blockquote + figcaption: связь автора с цитатой обязана быть в разметке, а не в вёрстке",
+            "визуально скрытую строку «Оценка N из 5»: закрашенные фигуры вслух не читаются",
+            "кавычку псевдоэлементом, а не символом в тексте — иначе скринридер прочитает её вслух как мусор",
+            "роль и компанию рядом с именем: отзыв без должности автора ничего не весит",
+            "оттенок кружка из имени: один человек всегда одного цвета в списке отзывов"
+          ],
+          "adapt": [
+            "текст цитаты через quote, имя через author и должность через role",
+            "оценку через rating — ноль убирает ряд звёзд целиком",
+            "подпись источника через source",
+            "акцент через проп accent — цвет декоративной кавычки"
+          ],
+          "notes": [
+            "Цитата приходит без кавычек: открывающую рисует CSS, вторая в тексте будет выглядеть ошибкой.",
+            "Отзыв длиннее трёх строк перестают читать: сокращайте до одной мысли.",
+            "Инициалы собираются из первых двух слов имени — для одного слова получится одна буква.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "quote",
+            "label": "Цитата",
+            "type": "text",
+            "default": "Отдали агенту три блока из каталога и получили рабочую страницу за вечер.",
+            "maxLength": 160
+          },
+          {
+            "prop": "author",
+            "label": "Автор",
+            "type": "text",
+            "default": "Ольга Терентьева",
+            "maxLength": 30
+          },
+          {
+            "prop": "rating",
+            "label": "Оценка",
+            "type": "number",
+            "default": 5,
+            "min": 0,
+            "max": 5
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A testimonial card on figure and blockquote: the author is tied to the quote by the markup, not by proximity, and the rating is spelled out as a number.",
+            "ai": {
+              "summary": "A testimonial card: a star rating, the quote in a blockquote and a caption with initials, name, role and source. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-017-* palette — do not swap it for your theme tokens",
+                "the figure + blockquote + figcaption markup: the link between author and quote belongs in the markup, not the layout",
+                "the visually hidden \"Rated N out of 5\": filled shapes are silent",
+                "the quote mark as a pseudo-element rather than a character in the text — otherwise a screen reader reads it aloud as noise",
+                "the role and company beside the name: a testimonial without the author's job carries no weight",
+                "the name-derived hue of the circle: one person keeps one colour across a wall of testimonials"
+              ],
+              "adapt": [
+                "the quote text through quote, the name through author and the job through role",
+                "the score through rating — zero removes the star row entirely",
+                "the source caption through source",
+                "the accent through the accent prop — the colour of the decorative quote mark"
+              ],
+              "notes": [
+                "The quote arrives without quotation marks: CSS draws the opening one, a second in the text looks like a bug.",
+                "A testimonial longer than three lines stops being read: cut it to one thought.",
+                "Initials come from the first two words of the name — a single word yields a single letter.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card017\n  quote=\"We handed the agent three blocks and had a page by the evening.\"\n  author=\"Olga Terentyeva\"\n  role=\"Product, Early Bird\"\n  rating={5}\n/>"
+            },
+            "controls": {
+              "quote": {
+                "label": "Quote",
+                "default": "We handed the agent three catalog blocks and had a working page by the evening."
+              },
+              "author": {
+                "label": "Author",
+                "default": "Olga Terentyeva"
+              },
+              "rating": {
+                "label": "Rating"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-018",
+      "type": "registry:component",
+      "title": "Featured Plan Card",
+      "description": "Карточка тарифа с рекомендованным состоянием: выделение — флаг featured, а не отдельный компонент, поэтому соседние тарифы не разъезжаются по вёрстке.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-018/card-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-018.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-018-*. Серверный: хуков нет. Выделение включается атрибутом data-featured и меняет три вещи сразу: рамку, лёгкую подложку-градиент и заливку кнопки; лента лежит на absolute поверх верхней границы. Подложка выделенного варианта остаётся светлой намеренно — тёмная карточка в ряду светлых читается как отключённая, а не как главная. Список возможностей — ul с галочкой на inline-SVG.",
+      "meta": {
+        "tags": ["card", "pricing", "plan", "featured"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Card018",
+          "usage": "<Card018\n  name=\"Команда\"\n  price=\"1 900 ₽\"\n  period=\"в месяц\"\n  featured\n  ribbon=\"Чаще всего берут\"\n/>",
+          "summary": "Карточка тарифа: название, цена с периодом, короткое пояснение, список возможностей, кнопка и мелкая строка условий. Флаг featured добавляет ленту, акцентную рамку и заливку кнопки. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-018-* и не подменять её токенами вашей темы",
+            "выделение флагом внутри одной разметки: отдельный компонент под «рекомендуем» неизбежно разъедется с соседями по высоте и отступам",
+            "три признака выделения сразу — рамка, подложка и кнопка: одну рамку в ряду карточек легко не заметить",
+            "светлую подложку у выделенного варианта: тёмная карточка среди светлых читается как отключённая, а не как главная",
+            "цену табличными цифрами и период отдельным словом рядом с ней",
+            "строку условий под кнопкой: тариф без ответа на «а как отменить» вызывает недоверие"
+          ],
+          "adapt": [
+            "название через name, цену через price и период через period",
+            "пояснение через tagline и список features",
+            "признак featured и надпись на ленте через ribbon",
+            "подпись кнопки через actionLabel, строку условий через note и акцент через проп accent"
+          ],
+          "notes": [
+            "Выделенным должен быть ровно один тариф в ряду: два «рекомендуем» отменяют друг друга.",
+            "Больше пяти пунктов в списке никто не сравнивает — остальное уводите в таблицу под тарифами.",
+            "Лента вылезает за верхнюю границу карточки: контейнер с overflow:hidden её обрежет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Тариф",
+            "type": "text",
+            "default": "Команда",
+            "maxLength": 20
+          },
+          {
+            "prop": "price",
+            "label": "Цена",
+            "type": "text",
+            "default": "1 900 ₽",
+            "maxLength": 16
+          },
+          {
+            "prop": "featured",
+            "label": "Рекомендуем",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A pricing card with a recommended state: the highlight is a featured flag rather than a separate component, so neighbouring plans never drift apart.",
+            "ai": {
+              "summary": "A pricing card: name, price with a period, a short line, a feature list, a button and a small terms line. The featured flag adds a ribbon, an accent border and a filled button. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-018-* palette — do not swap it for your theme tokens",
+                "the highlight as a flag inside one markup: a separate \"recommended\" component inevitably drifts from its neighbours in height and spacing",
+                "all three highlight signals — border, backing and button: a border alone is easy to miss in a row of cards",
+                "the light backing on the featured variant: a dark card among light ones reads as disabled, not as primary",
+                "the price in tabular figures with the period as a separate word beside it",
+                "the terms line under the button: a plan with no answer to \"how do I cancel\" breeds distrust"
+              ],
+              "adapt": [
+                "the name through name, the price through price and the period through period",
+                "the explanation through tagline and the features list",
+                "the featured flag and the ribbon wording through ribbon",
+                "the button text through actionLabel, the terms line through note and the accent through the accent prop"
+              ],
+              "notes": [
+                "Exactly one plan in a row should be featured: two \"recommended\" cancel each other out.",
+                "Nobody compares more than five bullet points — push the rest into a table below the plans.",
+                "The ribbon overhangs the top edge: a container with overflow:hidden will clip it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card018\n  name=\"Team\"\n  price=\"$29\"\n  period=\"per month\"\n  featured\n  ribbon=\"Most popular\"\n/>"
+            },
+            "controls": {
+              "name": {
+                "label": "Plan",
+                "default": "Team"
+              },
+              "price": {
+                "label": "Price",
+                "default": "$29"
+              },
+              "featured": {
+                "label": "Recommended"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-019",
+      "type": "registry:component",
+      "title": "Empty State Card",
+      "description": "Пустое состояние с ровно одним выходом: рисунок из трёх листов, объяснение и одна кнопка. Подсказка внизу — текст, а не вторая кнопка.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-019/card-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-019.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-019-*. Серверный: хуков нет. Рисунок собран из трёх пустых «листов» на обычных span с поворотами transform — картинка не нужна, иконочный шрифт тоже. Весь блок помечен aria-hidden, потому что смысл несёт текст. Действие ровно одно, а альтернатива дана строкой текста: две равные кнопки в пустом состоянии превращают выход в вопрос.",
+      "meta": {
+        "tags": ["card", "empty-state", "onboarding", "cta"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Card019",
+          "usage": "<Card019\n  title=\"Здесь пока нет проектов\"\n  description=\"Создайте первый — остальное появится внутри него.\"\n  actionLabel=\"Создать проект\"\n  hint=\"Или перенесите существующий.\"\n/>",
+          "summary": "Пустое состояние: рисунок из трёх листов, заголовок, объяснение, одна кнопка и тихая подсказка под ней. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-019-* и не подменять её токенами вашей темы",
+            "ровно одно действие: две равные кнопки в пустом состоянии превращают выход в вопрос",
+            "подсказку текстом, а не второй кнопкой — она альтернатива, а не равный путь",
+            "объяснение, что появится после нажатия: «пусто» без причины читается как ошибка загрузки",
+            "aria-hidden у рисунка: три пустых прямоугольника вслух не значат ничего",
+            "светлую подложку и рамку: тёмный текст на тёмном фоне витрины не читается"
+          ],
+          "adapt": [
+            "заголовок через title и объяснение через description",
+            "подпись кнопки через actionLabel",
+            "текст подсказки через hint — его можно убрать пустой строкой",
+            "акцент через проп accent — цвет кнопки и верхнего листа рисунка"
+          ],
+          "notes": [
+            "Пустое состояние из-за прав доступа и пустое состояние из-за отсутствия данных — разные тексты: не подставляйте один на оба случая.",
+            "Если данные не пришли из-за ошибки, это не пустое состояние: там нужны причина и повтор запроса.",
+            "Рисунок нарисован тремя листами и не масштабируется вместе с текстом: очень крупный кегль его перерастёт.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Здесь пока нет проектов",
+            "maxLength": 40
+          },
+          {
+            "prop": "description",
+            "label": "Объяснение",
+            "type": "text",
+            "default": "Проект хранит страницы, блоки и общую тему. Создайте первый — остальное появится внутри него.",
+            "maxLength": 140
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An empty state with exactly one way out: a three-sheet drawing, an explanation and a single button. The hint below is text, not a second button.",
+            "ai": {
+              "summary": "An empty state: a three-sheet drawing, a heading, an explanation, one button and a quiet hint beneath it. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-019-* palette — do not swap it for your theme tokens",
+                "exactly one action: two equal buttons in an empty state turn the way out into a question",
+                "the hint as text rather than a second button — it is an alternative, not an equal path",
+                "the explanation of what appears after the click: \"empty\" with no reason reads as a failed load",
+                "aria-hidden on the drawing: three blank rectangles mean nothing aloud",
+                "the light surface and border: dark text on the dark showcase background is unreadable"
+              ],
+              "adapt": [
+                "the heading through title and the explanation through description",
+                "the button text through actionLabel",
+                "the hint copy through hint — an empty string removes it",
+                "the accent through the accent prop — the button and the top sheet of the drawing"
+              ],
+              "notes": [
+                "An empty state caused by permissions and one caused by no data need different copy: do not reuse one for both.",
+                "If the data failed to load, this is not an empty state: that needs a reason and a retry.",
+                "The drawing is three sheets and does not scale with the text: a very large type size outgrows it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card019\n  title=\"No projects yet\"\n  description=\"Create the first one — everything else lives inside it.\"\n  actionLabel=\"Create a project\"\n  hint=\"Or import an existing one.\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "No projects yet"
+              },
+              "description": {
+                "label": "Explanation",
+                "default": "A project holds pages, blocks and a shared theme. Create the first one and the rest appears inside it."
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-020",
+      "type": "registry:component",
+      "title": "Timed Alert Card",
+      "description": "Системное уведомление с важностью и меткой времени: «12 мин назад» лежит в <time datetime>, поэтому для машин это точная дата, а не фраза.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-020/card-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-020.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-020-*. Серверный: хуков нет. Важность приходит атрибутом data-severity и через одну переменную красит рельс на ::before, кружок значка и ссылку действия; форма значка выбирается по той же важности из карты путей SVG. Слово важности продублировано визуально скрытым текстом перед заголовком — цветной рельс вслух не читается. Время выводится тегом <time> с машиночитаемым datetime.",
+      "meta": {
+        "tags": ["card", "notification", "alert", "time"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Card020",
+          "usage": "<Card020\n  severity=\"success\"\n  title=\"Сборка каталога завершена\"\n  message=\"Реестр обновлён.\"\n  time=\"12 мин назад\"\n  dateTime=\"2026-03-18T09:41:00+03:00\"\n/>",
+          "summary": "Карточка системного уведомления: цветной рельс важности, значок, заголовок, метка времени в <time>, текст, одна ссылка-действие и крестик. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-020-* и не подменять её токенами вашей темы",
+            "тег <time> с машиночитаемым datetime: «12 мин назад» через час станет враньём, а атрибут останется точным",
+            "визуально скрытое слово важности перед заголовком — цветной рельс и значок вслух не читаются",
+            "три признака важности сразу: рельс, форма значка и слово, потому что цвет теряется при дальтонизме",
+            "aria-label у крестика: голая иконка не говорит, что именно она закроет",
+            "одно действие ссылкой: уведомление — это указатель, а решения принимают на странице"
+          ],
+          "adapt": [
+            "заголовок через title и текст через message",
+            "важность через severity и метку времени через time вместе с dateTime",
+            "подпись действия через actionLabel, адрес через href и подпись крестика через dismissLabel",
+            "акцент через проп accent — он перекрывает цвет важности"
+          ],
+          "notes": [
+            "Компонент ничего не пересчитывает: «12 мин назад» вычисляет вызывающий код, здесь это просто строка.",
+            "Крестик не скрывает карточку: обработчик и состояние списка живут снаружи.",
+            "Важность error не заменяет диалог подтверждения: необратимое действие подтверждают до, а не после.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "severity",
+            "label": "Важность",
+            "type": "select",
+            "default": "success",
+            "options": ["info", "success", "warning", "error"]
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Сборка каталога завершена",
+            "maxLength": 40
+          },
+          {
+            "prop": "time",
+            "label": "Время",
+            "type": "text",
+            "default": "12 мин назад",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A system notification with a severity and a timestamp: \"12 min ago\" sits inside <time datetime>, so machines still read an exact date.",
+            "ai": {
+              "summary": "A system notification card: a coloured severity rail, an icon, a heading, a timestamp in <time>, the message, one action link and a close button. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-020-* palette — do not swap it for your theme tokens",
+                "the <time> tag with a machine-readable datetime: \"12 min ago\" becomes a lie within the hour, the attribute stays exact",
+                "the visually hidden severity word before the heading — a coloured rail and an icon are silent",
+                "all three severity signals: the rail, the icon shape and the word, because colour is lost to colour blindness",
+                "the aria-label on the close button: a bare icon does not say what it closes",
+                "a single action as a link: a notification is a signpost, decisions happen on the page"
+              ],
+              "adapt": [
+                "the heading through title and the body through message",
+                "the severity through severity and the timestamp through time together with dateTime",
+                "the action text through actionLabel, the destination through href and the close label through dismissLabel",
+                "the accent through the accent prop — it overrides the severity colour"
+              ],
+              "notes": [
+                "The component computes nothing: \"12 min ago\" is produced by the caller, here it is just a string.",
+                "The close button does not hide the card: the handler and the list state live outside.",
+                "An error severity is no substitute for a confirmation dialog: irreversible actions are confirmed before, not after.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card020\n  severity=\"success\"\n  title=\"Catalog build finished\"\n  message=\"The registry is up to date.\"\n  time=\"12 min ago\"\n  dateTime=\"2026-03-18T09:41:00+03:00\"\n/>"
+            },
+            "controls": {
+              "severity": {
+                "label": "Severity"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Catalog build finished"
+              },
+              "time": {
+                "label": "Time",
+                "default": "12 min ago"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "card-021",
+      "type": "registry:component",
+      "title": "Feed Skeleton",
+      "description": "Заглушка ленты комментариев: строки с аватаром и двумя строками текста, блик волной по строкам, а в prefers-reduced-motion — ровная заливка.",
+      "categories": ["card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-021/card-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-021.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-021-*. Серверный: хуков нет. Блик — один @keyframes, двигающий background-position по градиенту шириной 300 %; задержка задана по nth-child строки, поэтому движение читается волной, а не синхронным миганием. В prefers-reduced-motion анимация снимается целиком, а фигуры заливаются ровным тоном — половинчатое замедление тут не помогает. Корень объявлен role=\"status\" с aria-busy, подпись уходит в визуально скрытый текст, а сами фигуры помечены aria-hidden.",
+      "meta": {
+        "tags": ["card", "skeleton", "loading", "feed"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Card021",
+          "usage": "<Card021 label=\"Загружаются комментарии\" rows={3} avatar />",
+          "summary": "Заглушка ленты: строки с кружком аватара, короткой строкой имени и двумя строками текста, по которым волной идёт блик. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-card-021-* и не подменять её токенами вашей темы (bg-muted, animate-pulse и подобными)",
+            "правило prefers-reduced-motion, снимающее блик целиком: пульсация на экране — частая причина недомогания, и замедление её не лечит",
+            "role=\"status\" с aria-busy и подписью: без них загрузка для скринридера просто не существует",
+            "aria-hidden у самих фигур — иначе скринридер зачитает пустые прямоугольники",
+            "разную длину строк: одинаковые читаются как таблица, а не как текст",
+            "совпадение метрик с настоящей строкой ленты: иначе содержимое прыгнет в момент загрузки"
+          ],
+          "adapt": [
+            "подпись загрузки через label",
+            "число строк через rows — столько же, сколько ожидается данных",
+            "кружок аватара через avatar",
+            "акцент через проп accent — базовый тон фигур"
+          ],
+          "notes": [
+            "Число заглушек должно совпадать с ожидаемым числом строк: шесть перед двумя выглядят ошибкой.",
+            "rows зажат в диапазоне от одного до шести: задержки блика расписаны ровно на шесть строк.",
+            "Если ответ идёт дольше пары секунд, заглушки мало: покажите прогресс или причину задержки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "rows",
+            "label": "Строк",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 6
+          },
+          {
+            "prop": "avatar",
+            "label": "Аватар",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Загружаются комментарии",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A comment feed skeleton: rows with an avatar and two lines of text, a shimmer travelling as a wave, and a flat fill under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A feed skeleton: rows with an avatar circle, a short name line and two text lines, with a shimmer moving across them as a wave. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-card-021-* palette — do not swap it for your theme tokens (bg-muted, animate-pulse and the like)",
+                "the prefers-reduced-motion rule that removes the shimmer entirely: on-screen pulsing is a common cause of discomfort, and slowing it down does not cure that",
+                "role=\"status\" with aria-busy and a label: without them loading simply does not exist for a screen reader",
+                "aria-hidden on the shapes themselves — otherwise a screen reader announces empty rectangles",
+                "the varying line lengths: equal ones read as a table, not as text",
+                "matching the metrics of the real feed row: otherwise the content jumps on arrival"
+              ],
+              "adapt": [
+                "the loading caption through label",
+                "the number of rows through rows — as many as the data you expect",
+                "the avatar circle through avatar",
+                "the accent through the accent prop — the base tone of the shapes"
+              ],
+              "notes": [
+                "The placeholder count should match the expected rows: six before two reads as a bug.",
+                "rows is clamped between one and six: the shimmer delays are written for exactly six rows.",
+                "If the response takes more than a couple of seconds, a skeleton is not enough: show progress or a reason.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card021 label=\"Loading comments\" rows={3} avatar />"
+            },
+            "controls": {
+              "rows": {
+                "label": "Rows"
+              },
+              "avatar": {
+                "label": "Avatar"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Loading comments"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
