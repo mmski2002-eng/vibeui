@@ -180,6 +180,36 @@ export const LAZY_PREVIEWS = {
       (module) => module.Commerce006,
     ),
   ),
+  "auth-001": dynamic(() =>
+    import("@/registry/blocks/auth/auth-001/auth-001").then(
+      (module) => module.Auth001,
+    ),
+  ),
+  "auth-002": dynamic(() =>
+    import("@/registry/blocks/auth/auth-002/auth-002").then(
+      (module) => module.Auth002,
+    ),
+  ),
+  "auth-003": dynamic(() =>
+    import("@/registry/blocks/auth/auth-003/auth-003").then(
+      (module) => module.Auth003,
+    ),
+  ),
+  "auth-004": dynamic(() =>
+    import("@/registry/blocks/auth/auth-004/auth-004").then(
+      (module) => module.Auth004,
+    ),
+  ),
+  "auth-005": dynamic(() =>
+    import("@/registry/blocks/auth/auth-005/auth-005").then(
+      (module) => module.Auth005,
+    ),
+  ),
+  "auth-006": dynamic(() =>
+    import("@/registry/blocks/auth/auth-006/auth-006").then(
+      (module) => module.Auth006,
+    ),
+  ),
   "button-001": dynamic(() =>
     import("@/registry/components/buttons/button-001/button-001").then(
       (module) => module.Button001,
