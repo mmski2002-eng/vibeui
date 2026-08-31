@@ -1,0 +1,179 @@
+import type { CSSProperties } from "react"
+
+export type Pricing011Props = {
+  eyebrow?: string
+  title?: string
+  lede?: string
+  questions?: { question: string; answer: string; open?: boolean }[]
+  contact?: { text: string; label: string; href: string }
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+// Идея блока: вопросы именно о деньгах, а не общий FAQ. Раскрытие построено
+// на <details>/<summary> — работает без JavaScript, ищется браузерным поиском
+// по странице и печатается развёрнутым. Маркер по умолчанию убран и заменён
+// плюсом, который поворачивается в минус через [open]: своя иконка нужна,
+// потому что нативный треугольник в разных браузерах выглядит по-разному.
+// Первый вопрос открыт: пустая гармошка выглядит как список ссылок.
+const STYLES = `
+:where([data-vibeui-block="pricing-011"]){
+--vibeui-pricing-011-bg:oklch(0.99 0.003 265);
+--vibeui-pricing-011-fg:oklch(0.2 0.012 265);
+--vibeui-pricing-011-muted:oklch(0.51 0.012 265);
+--vibeui-pricing-011-card:oklch(1 0 0);
+--vibeui-pricing-011-line:oklch(0.9 0.006 265);
+--vibeui-pricing-011-accent:oklch(0.5 0.16 275);
+--vibeui-pricing-011-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+container-type:inline-size;
+}
+[data-vibeui-block="pricing-011"]{
+box-sizing:border-box;background:var(--vibeui-pricing-011-bg);color:var(--vibeui-pricing-011-fg);
+font-family:var(--vibeui-pricing-011-sans);
+}
+[data-vibeui-block="pricing-011"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-011"] [data-part="shell"]{
+max-width:60rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem;
+display:grid;grid-template-columns:1fr;gap:2rem;align-items:start;
+}
+[data-vibeui-block="pricing-011"] [data-part="eyebrow"]{
+margin:0 0 0.75rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
+color:var(--vibeui-pricing-011-accent);
+}
+[data-vibeui-block="pricing-011"] h2{
+margin:0;max-width:18ch;font-size:clamp(1.5rem,4.2cqi,2.25rem);line-height:1.14;letter-spacing:-0.025em;font-weight:700;text-wrap:balance;
+}
+[data-vibeui-block="pricing-011"] [data-part="lede"]{margin:0.875rem 0 0;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-pricing-011-muted);text-wrap:pretty}
+[data-vibeui-block="pricing-011"] [data-part="contact"]{
+margin:1.5rem 0 0;padding:1rem;border-radius:0.875rem;border:1px solid var(--vibeui-pricing-011-line);
+background:var(--vibeui-pricing-011-card);font-size:0.8125rem;line-height:1.55;color:var(--vibeui-pricing-011-muted);
+}
+[data-vibeui-block="pricing-011"] [data-part="contact"] a{display:inline-block;margin-top:0.5rem;color:var(--vibeui-pricing-011-accent);font-weight:650;text-decoration:none}
+[data-vibeui-block="pricing-011"] [data-part="contact"] a:hover{text-decoration:underline}
+[data-vibeui-block="pricing-011"] [data-part="contact"] a:focus-visible{outline:2px solid var(--vibeui-pricing-011-accent);outline-offset:3px}
+[data-vibeui-block="pricing-011"] [data-part="list"]{
+border:1px solid var(--vibeui-pricing-011-line);border-radius:1rem;background:var(--vibeui-pricing-011-card);overflow:hidden;
+}
+[data-vibeui-block="pricing-011"] details + details{border-top:1px solid var(--vibeui-pricing-011-line)}
+[data-vibeui-block="pricing-011"] summary{
+display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;cursor:pointer;list-style:none;
+padding:1rem 1.125rem;font-size:0.9375rem;font-weight:650;line-height:1.45;
+}
+[data-vibeui-block="pricing-011"] summary::-webkit-details-marker{display:none}
+[data-vibeui-block="pricing-011"] summary:hover{color:var(--vibeui-pricing-011-accent)}
+[data-vibeui-block="pricing-011"] summary:focus-visible{outline:2px solid var(--vibeui-pricing-011-accent);outline-offset:-2px}
+[data-vibeui-block="pricing-011"] [data-part="sign"]{
+position:relative;flex:0 0 auto;margin-top:0.1875rem;width:1.125rem;height:1.125rem;
+color:var(--vibeui-pricing-011-accent);
+}
+[data-vibeui-block="pricing-011"] [data-part="sign"]::before,
+[data-vibeui-block="pricing-011"] [data-part="sign"]::after{
+content:"";position:absolute;left:50%;top:50%;background:currentColor;border-radius:1px;
+transform:translate(-50%,-50%);transition:opacity .16s ease,transform .16s ease;
+}
+[data-vibeui-block="pricing-011"] [data-part="sign"]::before{width:0.875rem;height:2px}
+[data-vibeui-block="pricing-011"] [data-part="sign"]::after{width:2px;height:0.875rem}
+[data-vibeui-block="pricing-011"] details[open] [data-part="sign"]::after{opacity:0;transform:translate(-50%,-50%) rotate(90deg)}
+[data-vibeui-block="pricing-011"] [data-part="answer"]{
+margin:0;padding:0 1.125rem 1.125rem;max-width:52ch;
+font-size:0.875rem;line-height:1.6;color:var(--vibeui-pricing-011-muted);text-wrap:pretty;
+}
+@container (min-width: 34rem){
+[data-vibeui-block="pricing-011"] [data-part="shell"]{padding:5rem 2rem}
+}
+@container (min-width: 54rem){
+[data-vibeui-block="pricing-011"] [data-part="shell"]{grid-template-columns:minmax(0,22rem) minmax(0,1fr);gap:3rem;padding:6rem 2.5rem}
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="pricing-011"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_QUESTIONS = [
+  {
+    question: "Что будет с секциями, если я отменю подписку?",
+    answer:
+      "Всё, что уже установлено в проект, остаётся у вас: это обычные файлы в вашем репозитории. Закрывается только доступ к каталогу и к новым секциям.",
+    open: true,
+  },
+  {
+    question: "Есть ли скидка при годовой оплате?",
+    answer:
+      "Да, годовая оплата стоит как десять месяцев. Разницу возвращаем при отмене пропорционально неиспользованным месяцам.",
+  },
+  {
+    question: "Считается ли доработанная секция отдельной покупкой?",
+    answer:
+      "Нет. Вы можете менять тексты, цвета и раскладку сколько угодно — это ваш файл. Отдельно оплачивается только доступ к каталогу.",
+  },
+  {
+    question: "Можно ли использовать секции в клиентских проектах?",
+    answer:
+      "На тарифах «Команда» и «Агентство» — да, включая передачу исходников клиенту. На личном тарифе секции можно использовать только в своих проектах.",
+  },
+  {
+    question: "Как оплатить с юридического лица?",
+    answer:
+      "Выставляем счёт и присылаем закрывающие документы. Оплата по счёту доступна на тарифах «Команда» и выше.",
+  },
+]
+
+/** Блок частых вопросов о цене: гармошка на <details>, работает без JavaScript. */
+export function Pricing011({
+  eyebrow = "Вопросы о деньгах",
+  title = "Что обычно спрашивают перед оплатой",
+  lede = "Только вопросы про цену, возврат и документы. Общий FAQ по продукту лежит отдельно.",
+  questions = DEFAULT_QUESTIONS,
+  contact = {
+    text: "Не нашли свой вопрос? Ответим письмом за один рабочий день.",
+    label: "billing@vibeui.dev",
+    href: "mailto:billing@vibeui.dev",
+  },
+  accent,
+  className,
+  style,
+}: Pricing011Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-pricing-011-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-pricing-011" precedence="medium">
+        {STYLES}
+      </style>
+      <section
+        data-vibeui-block="pricing-011"
+        className={className}
+        style={palette}
+      >
+        <div data-part="shell">
+          <div>
+            {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
+            <h2>{title}</h2>
+            {lede ? <p data-part="lede">{lede}</p> : null}
+            {contact ? (
+              <div data-part="contact">
+                {contact.text}
+                <br />
+                <a href={contact.href}>{contact.label}</a>
+              </div>
+            ) : null}
+          </div>
+
+          <div data-part="list">
+            {questions.slice(0, 8).map((item) => (
+              <details key={item.question} open={item.open}>
+                <summary>
+                  {item.question}
+                  <span data-part="sign" aria-hidden="true" />
+                </summary>
+                <p data-part="answer">{item.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}

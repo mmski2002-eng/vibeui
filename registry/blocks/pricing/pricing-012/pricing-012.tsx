@@ -1,0 +1,188 @@
+import type { CSSProperties } from "react"
+
+export type Pricing012Props = {
+  eyebrow?: string
+  title?: string
+  lede?: string
+  days?: number
+  daysLabel?: string
+  steps?: { title: string; description: string }[]
+  price?: string
+  period?: string
+  action?: { label: string; href: string }
+  terms?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+// Идея блока: гарантия возврата, изложенная как процедура, а не как штамп.
+// Печать слева нарисована двумя коническими градиентами и обрезана маской —
+// ни картинки, ни шрифтовой иконки. Справа три шага возврата с точными
+// сроками: обещание «вернём деньги» стоит ровно столько, сколько понятно
+// про сроки и способ. Условия выведены отдельным абзацем, а не сноской
+// шестым кеглем: спрятанные условия читаются как подвох.
+const STYLES = `
+:where([data-vibeui-block="pricing-012"]){
+--vibeui-pricing-012-bg:oklch(0.97 0.008 60);
+--vibeui-pricing-012-fg:oklch(0.19 0.014 55);
+--vibeui-pricing-012-muted:oklch(0.5 0.016 55);
+--vibeui-pricing-012-card:oklch(1 0 0);
+--vibeui-pricing-012-line:oklch(0.87 0.012 55);
+--vibeui-pricing-012-accent:oklch(0.5 0.14 50);
+--vibeui-pricing-012-accent-fg:oklch(0.99 0 0);
+--vibeui-pricing-012-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+container-type:inline-size;
+}
+[data-vibeui-block="pricing-012"]{
+box-sizing:border-box;background:var(--vibeui-pricing-012-bg);color:var(--vibeui-pricing-012-fg);
+font-family:var(--vibeui-pricing-012-sans);
+}
+[data-vibeui-block="pricing-012"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-012"] [data-part="shell"]{max-width:60rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem}
+[data-vibeui-block="pricing-012"] [data-part="card"]{
+display:grid;grid-template-columns:1fr;gap:1.75rem;padding:1.75rem;border-radius:1.25rem;
+border:1px solid var(--vibeui-pricing-012-line);background:var(--vibeui-pricing-012-card);
+}
+[data-vibeui-block="pricing-012"] [data-part="seal"]{
+position:relative;width:9rem;height:9rem;border-radius:9999px;display:flex;flex-direction:column;
+align-items:center;justify-content:center;text-align:center;
+background:conic-gradient(from 0deg,var(--vibeui-pricing-012-accent),color-mix(in oklab,var(--vibeui-pricing-012-accent) 55%,white),var(--vibeui-pricing-012-accent));
+color:var(--vibeui-pricing-012-accent-fg);
+}
+[data-vibeui-block="pricing-012"] [data-part="seal"]::before{
+content:"";position:absolute;inset:0.4375rem;border-radius:9999px;border:1px dashed oklch(1 0 0 / 55%);
+}
+[data-vibeui-block="pricing-012"] [data-part="sealnum"]{position:relative;font-size:2.75rem;line-height:1;font-weight:700;letter-spacing:-0.05em;font-variant-numeric:tabular-nums}
+[data-vibeui-block="pricing-012"] [data-part="seallabel"]{position:relative;margin-top:0.25rem;font-size:0.75rem;font-weight:650;letter-spacing:0.06em;text-transform:uppercase}
+[data-vibeui-block="pricing-012"] [data-part="eyebrow"]{
+margin:0 0 0.75rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
+color:var(--vibeui-pricing-012-accent);
+}
+[data-vibeui-block="pricing-012"] h2{margin:0;max-width:22ch;font-size:clamp(1.375rem,3.6cqi,2rem);line-height:1.16;letter-spacing:-0.025em;font-weight:700;text-wrap:balance}
+[data-vibeui-block="pricing-012"] [data-part="lede"]{margin:0.75rem 0 0;max-width:34rem;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-pricing-012-muted);text-wrap:pretty}
+[data-vibeui-block="pricing-012"] ol{list-style:none;margin:1.5rem 0 0;padding:0;display:grid;gap:1rem}
+[data-vibeui-block="pricing-012"] li{display:flex;gap:0.75rem}
+[data-vibeui-block="pricing-012"] [data-part="num"]{
+flex:0 0 auto;width:1.625rem;height:1.625rem;border-radius:9999px;display:flex;align-items:center;justify-content:center;
+background:color-mix(in oklab,var(--vibeui-pricing-012-accent) 14%,transparent);color:var(--vibeui-pricing-012-accent);
+font-size:0.75rem;font-weight:700;font-variant-numeric:tabular-nums;
+}
+[data-vibeui-block="pricing-012"] h3{margin:0.125rem 0 0;font-size:0.9375rem;font-weight:650}
+[data-vibeui-block="pricing-012"] li p{margin:0.25rem 0 0;font-size:0.8125rem;line-height:1.55;color:var(--vibeui-pricing-012-muted)}
+[data-vibeui-block="pricing-012"] [data-part="foot"]{
+display:flex;flex-direction:column;gap:0.875rem;margin-top:1.75rem;padding-top:1.25rem;
+border-top:1px solid var(--vibeui-pricing-012-line);
+}
+[data-vibeui-block="pricing-012"] [data-part="price"]{margin:0;font-size:1.125rem;font-weight:700;font-variant-numeric:tabular-nums}
+[data-vibeui-block="pricing-012"] [data-part="period"]{font-size:0.8125rem;font-weight:500;color:var(--vibeui-pricing-012-muted)}
+[data-vibeui-block="pricing-012"] a{
+display:inline-flex;align-items:center;justify-content:center;height:2.75rem;padding:0 1.5rem;border-radius:0.75rem;
+background:var(--vibeui-pricing-012-accent);color:var(--vibeui-pricing-012-accent-fg);
+font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color .16s ease;
+}
+[data-vibeui-block="pricing-012"] a:hover{background:color-mix(in oklab,var(--vibeui-pricing-012-accent) 86%,black)}
+[data-vibeui-block="pricing-012"] a:focus-visible{outline:2px solid var(--vibeui-pricing-012-accent);outline-offset:3px}
+[data-vibeui-block="pricing-012"] [data-part="terms"]{margin:1.25rem 0 0;font-size:0.75rem;line-height:1.55;color:var(--vibeui-pricing-012-muted)}
+@container (min-width: 34rem){
+[data-vibeui-block="pricing-012"] [data-part="shell"]{padding:5rem 2rem}
+[data-vibeui-block="pricing-012"] [data-part="card"]{padding:2.25rem}
+[data-vibeui-block="pricing-012"] [data-part="foot"]{flex-direction:row;align-items:center;justify-content:space-between}
+}
+@container (min-width: 54rem){
+[data-vibeui-block="pricing-012"] [data-part="card"]{grid-template-columns:auto minmax(0,1fr);gap:2.5rem;align-items:start;padding:2.75rem}
+[data-vibeui-block="pricing-012"] [data-part="shell"]{padding:6rem 2.5rem}
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="pricing-012"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_STEPS = [
+  {
+    title: "Напишите одно письмо",
+    description:
+      "Достаточно строки «прошу вернуть оплату» с адреса, на который оформлена подписка. Причину указывать не нужно.",
+  },
+  {
+    title: "Получите подтверждение за день",
+    description:
+      "Отвечаем в течение одного рабочего дня и сообщаем сумму к возврату.",
+  },
+  {
+    title: "Деньги вернутся за 5–10 дней",
+    description:
+      "Возврат идёт тем же способом, которым была оплата. Срок зависит от банка, а не от нас.",
+  },
+]
+
+/** Блок гарантии возврата: печать слева, три шага процедуры и точные сроки справа. */
+export function Pricing012({
+  eyebrow = "Гарантия",
+  title = "Не подошло — вернём деньги без разговоров",
+  lede = "Гарантия работает как процедура, а не как обещание: ниже написано, что и в какие сроки происходит после вашего письма.",
+  days = 30,
+  daysLabel = "дней на возврат",
+  steps = DEFAULT_STEPS,
+  price = "1 490 ₽",
+  period = "в месяц",
+  action = { label: "Оформить подписку", href: "#" },
+  terms = "Гарантия действует на первую оплату каждого тарифа. Возврат по годовой подписке считается пропорционально неиспользованным месяцам.",
+  accent,
+  className,
+  style,
+}: Pricing012Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-pricing-012-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-pricing-012" precedence="medium">
+        {STYLES}
+      </style>
+      <section
+        data-vibeui-block="pricing-012"
+        className={className}
+        style={palette}
+      >
+        <div data-part="shell">
+          <div data-part="card">
+            <div data-part="seal" aria-hidden="true">
+              <span data-part="sealnum">{days}</span>
+              <span data-part="seallabel">{daysLabel}</span>
+            </div>
+
+            <div>
+              {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
+              <h2>{title}</h2>
+              {lede ? <p data-part="lede">{lede}</p> : null}
+
+              <ol>
+                {steps.slice(0, 4).map((step, index) => (
+                  <li key={step.title}>
+                    <span data-part="num" aria-hidden="true">
+                      {index + 1}
+                    </span>
+                    <div>
+                      <h3>{step.title}</h3>
+                      <p>{step.description}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+
+              <div data-part="foot">
+                <p data-part="price">
+                  {price} <span data-part="period">{period}</span>
+                </p>
+                <a href={action.href}>{action.label}</a>
+              </div>
+
+              {terms ? <p data-part="terms">{terms}</p> : null}
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}

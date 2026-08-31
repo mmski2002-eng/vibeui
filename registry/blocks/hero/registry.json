@@ -260,6 +260,1345 @@
           }
         }
       }
+    },
+    {
+      "name": "hero-004",
+      "type": "registry:block",
+      "title": "Plain Centred Hero",
+      "description": "Спокойный текстовый hero: короткие линейки сверху и снизу, крупный заголовок, подзаголовок и пара кнопок по центру. Ни мокапа, ни картинки — только слова и воздух.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-004/hero-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-004.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра в переменных --vibeui-hero-004-*, светлая бумажная база. Раскладка считается container-запросами от ширины блока: до 34rem кнопки идут столбиком на всю ширину, дальше становятся строкой по центру. Внутренний слой [data-part=\"shell\"] держит max-width и отступы — правила @container не действуют на сам контейнер. Анимаций нет, только transition на кнопках, для него объявлен prefers-reduced-motion.",
+      "meta": {
+        "tags": ["hero", "minimal", "centered", "light"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hero004",
+          "usage": "<Hero004 title=\"Соберите лендинг за вечер\" primary={{ label: \"Начать\", href: \"/signup\" }} />",
+          "summary": "Центрированный текстовый hero без иллюстраций: eyebrow, крупный заголовок, подзаголовок, две кнопки и микроподпись под ними, отбитые короткими линейками. Один файл, ноль зависимостей, собственная светлая палитра.",
+          "preserve": [
+            "отсутствие иллюстрации: весь смысл блока в том, что первый экран держат слова, а не мокап или фотография",
+            "две короткие линейки сверху и снизу — они задают вертикальные границы композиции, без них блок теряет форму",
+            "локальную палитру --vibeui-hero-004-*: блок несёт светлый фон сам и не читает токены темы проекта",
+            "container-запросы вместо медиазапросов окна: кнопки перестраиваются от ширины самого блока, поэтому в узкой колонке вёрстка честная",
+            "поведение кнопок: столбик на узкой ширине, строка от 34rem — растянутая кнопка на телефоне попадает под палец",
+            "семантику: один h1, обе CTA как <a href>, линейки помечены aria-hidden"
+          ],
+          "adapt": [
+            "тексты eyebrow, title, lede и note",
+            "подписи и адреса кнопок primary и secondary",
+            "акцентный цвет через проп accent",
+            "внешние отступы через className и точечные переменные через style"
+          ],
+          "notes": [
+            "Не добавляйте в блок картинку или мокап: для этого есть hero-005 и hero-010, а здесь иллюстрация ломает замысел.",
+            "Не делайте note длиннее строки — это микроподпись под кнопками, а не второй подзаголовок.",
+            "Если меняете accent, проверьте контраст текста на основной кнопке: нужно не меньше 4.5:1.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Соберите лендинг за вечер, а не за спринт",
+            "maxLength": 80
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Запуск открыт",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A calm typographic hero: short rules above and below, a large headline, a subhead and a pair of centred buttons. No mockup, no photo — words and air.",
+            "ai": {
+              "summary": "A centred, illustration-free hero: an eyebrow, a large headline, a subhead, two buttons and a micro-caption beneath them, framed by two short rules. One file, zero dependencies, its own light palette.",
+              "preserve": [
+                "the absence of an illustration: the whole point of the block is that the first screen is carried by words, not by a mockup or a photo",
+                "the two short rules above and below — they set the vertical bounds of the composition; without them the block loses its shape",
+                "the local --vibeui-hero-004-* palette: the block carries its light background itself and never reads your theme tokens",
+                "container queries instead of window media queries: the buttons reflow against the block's own width, so the layout stays honest in a narrow column",
+                "the button behaviour: stacked on a narrow block, in a row from 34rem — a full-width button is what the thumb reaches on a phone",
+                "the semantics: a single h1, both CTAs as <a href>, the rules marked aria-hidden"
+              ],
+              "adapt": [
+                "the eyebrow, title, lede and note copy",
+                "the labels and hrefs of the primary and secondary buttons",
+                "the accent colour through the accent prop",
+                "outer spacing through className and single variables through style"
+              ],
+              "notes": [
+                "Do not add a picture or a mockup: hero-005 and hero-010 exist for that, and here an illustration breaks the idea.",
+                "Keep note to one line — it is a micro-caption under the buttons, not a second subhead.",
+                "If you change accent, check the text contrast on the primary button: 4.5:1 minimum.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Hero004 title=\"Ship a landing page tonight\" primary={{ label: \"Get started\", href: \"/signup\" }} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "Ship a landing page tonight"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Now open"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-005",
+      "type": "registry:block",
+      "title": "Product Shot Hero",
+      "description": "Тёмный hero со снимком продукта: текст по центру, под ним окно приложения во всю ширину, обрезанное нижним краем. Снимок нарисован разметкой, внешних картинок нет.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-005/hero-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-005.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-005-*, тёмная база. Снимок продукта собран из HTML и CSS: шапка с точками, боковой rail, три плитки метрик и лента строк; вся конструкция помечена aria-hidden как декоративная. Нижний край окна растворяется через mask-image с линейным градиентом, а не через наложенную плашку, поэтому работает на любом фоне. Раскладка от ширины блока: rail появляется от 52rem, кнопки становятся строкой от 34rem.",
+      "meta": {
+        "tags": ["hero", "dark", "product", "mockup"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hero005",
+          "usage": "<Hero005 title=\"Покажите продукт, а не обещание\" appName=\"acme — рабочая область\" />",
+          "summary": "Тёмный hero: центрированный текст с двумя CTA и под ним нарисованное окно приложения с метриками и лентой событий, обрезанное маской по нижнему краю. Один файл, ноль зависимостей, ни одного внешнего ассета.",
+          "preserve": [
+            "сам снимок продукта: это часть дизайна блока, а не заглушка — не заменяйте его на <img>, скриншот или готовый dashboard-компонент проекта",
+            "обрезку окна маской по нижнему краю: незаконченное окно читается как «страница продолжается», а плашка поверх такого эффекта не даёт",
+            "тёмную локальную палитру --vibeui-hero-005-*: блок остаётся тёмным независимо от темы проекта",
+            "container-запросы: боковой rail появляется от 52rem ширины блока, кнопки становятся строкой от 34rem — не переписывайте это на медиазапросы окна",
+            "aria-hidden на всём мокапе: цифры в нём декоративные и не должны читаться скринридером как данные",
+            "семантику: один h1, обе CTA как <a href>"
+          ],
+          "adapt": [
+            "тексты title и lede, подписи и адреса CTA primary и secondary",
+            "appName — подпись в шапке нарисованного окна",
+            "содержимое metrics и rows: подписи, значения и строки ленты",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "Не подставляйте в мокап реальные цифры продукта: они не помечены как данные и не обновляются.",
+            "Не добавляйте в окно интерактив — это иллюстрация, любые кнопки внутри будут ловушкой для пользователя.",
+            "Метрик ровно три, строк ленты не больше пяти: остальные обрезаются, чтобы окно не разъезжалось по высоте.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Покажите продукт, а не обещание",
+            "maxLength": 80
+          },
+          {
+            "prop": "appName",
+            "label": "Подпись окна",
+            "type": "text",
+            "default": "vibeui — рабочая область",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dark hero with a product shot: centred copy and, beneath it, a full-width app window cropped by the bottom edge. The shot is drawn in markup — no external images.",
+            "ai": {
+              "summary": "A dark hero: centred copy with two CTAs and, below, a drawn app window with metric tiles and an activity feed, cropped by a mask at the bottom. One file, zero dependencies, not a single external asset.",
+              "preserve": [
+                "the product shot itself: it is part of the design, not a placeholder — do not swap it for an <img>, a screenshot or a dashboard component from the project",
+                "the mask that crops the window at the bottom: an unfinished window reads as «the page continues», and an overlay panel does not give that effect",
+                "the dark local --vibeui-hero-005-* palette: the block stays dark whatever theme the project runs",
+                "the container queries: the side rail appears from 52rem of block width and the buttons form a row from 34rem — do not rewrite them as window media queries",
+                "aria-hidden on the whole mockup: the numbers inside are decorative and must not be read out as data",
+                "the semantics: a single h1, both CTAs as <a href>"
+              ],
+              "adapt": [
+                "the title and lede copy, the labels and hrefs of the primary and secondary CTAs",
+                "appName — the caption in the drawn window's title bar",
+                "the contents of metrics and rows: labels, values and feed lines",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "Do not put real product numbers into the mockup: they are not exposed as data and never update.",
+                "Do not make the window interactive — it is an illustration, and any button inside it is a trap for the user.",
+                "There are exactly three metrics and at most five feed lines: the rest are trimmed so the window keeps its height.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Hero005 title=\"Show the product, not a promise\" appName=\"acme — workspace\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "Show the product, not a promise"
+              },
+              "appName": {
+                "label": "Window caption",
+                "default": "acme — workspace"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-006",
+      "type": "registry:block",
+      "title": "Subscribe Hero",
+      "description": "Hero, у которого главный элемент — поле подписки: email и кнопка в одной рамке с общим фокусным кольцом, под ними согласие, счётчик подписчиков и три коротких факта.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-006/hero-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-006.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-006-*, светлая зелёная база с мягким радиальным свечением сверху. Форма настоящая: <form> с <label> (визуально скрытым через hidden), input type=\"email\" и required — валидацию адреса и автозаполнение даёт браузер. Поле и кнопка лежат в одной рамке, подсветка на :focus-within охватывает обе. От 34rem рамка становится горизонтальной. Обработчика отправки нет: блок серверный, подключите свой action или перехват на уровне страницы.",
+      "meta": {
+        "tags": ["hero", "newsletter", "form", "light"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hero006",
+          "usage": "<Hero006 title=\"Разбираем по одной секции каждую пятницу\" submitLabel=\"Подписаться\" />",
+          "summary": "Светлый hero с формой подписки: бейдж, заголовок, подзаголовок, поле email с кнопкой в общей рамке, текст согласия, строка социального доказательства и три факта о рассылке. Один файл, ноль зависимостей.",
+          "preserve": [
+            "поле ввода как главный элемент экрана: если заменить его на кнопку, блок теряет смысл и повторяет hero-004",
+            "общую рамку поля и кнопки с подсветкой на :focus-within — фокус должен быть виден целиком, а не только на инпуте",
+            "type=\"email\" и required у поля: валидацию адреса и автозаполнение даёт браузер, не заменяйте их своей проверкой на клике",
+            "видимый для скринридера <label>: он скрыт визуально атрибутом hidden, но остаётся в дереве доступности",
+            "текст согласия рядом с формой, а не в подвале страницы: без него подписка выглядит как ловушка",
+            "локальную палитру --vibeui-hero-006-* и container-запрос, который разворачивает поле в строку от 34rem ширины блока"
+          ],
+          "adapt": [
+            "тексты eyebrow, title, lede, consent и proof",
+            "placeholder поля и подпись кнопки submitLabel",
+            "до четырёх пунктов facts под формой",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "У формы нет обработчика: подключите action, серверное действие или собственный перехват отправки.",
+            "Стопка кружков рядом с proof — декоративная и помечена aria-hidden; не подставляйте туда фотографии людей без alt.",
+            "Не убирайте consent: текст согласия — часть обещания, а не украшение.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Разбираем по одной секции каждую пятницу",
+            "maxLength": 80
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Подписаться",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A hero whose main element is a subscribe field: an email input and a button in one frame with a shared focus ring, followed by consent copy, a subscriber count and three short facts.",
+            "ai": {
+              "summary": "A light hero with a subscribe form: a badge, a headline, a subhead, an email field and button in a shared frame, consent copy, a line of social proof and three facts about the newsletter. One file, zero dependencies.",
+              "preserve": [
+                "the input as the main element of the screen: swap it for a button and the block loses its point and repeats hero-004",
+                "the shared frame around field and button with the :focus-within highlight — focus has to be visible as a whole, not only on the input",
+                "type=\"email\" and required on the field: address validation and autofill come from the browser, do not replace them with your own click-time check",
+                "the <label> that screen readers still see: it is visually hidden with the hidden attribute but stays in the accessibility tree",
+                "the consent copy next to the form, not in the page footer: without it the subscription reads as a trap",
+                "the local --vibeui-hero-006-* palette and the container query that turns the field into a row from 34rem of block width"
+              ],
+              "adapt": [
+                "the eyebrow, title, lede, consent and proof copy",
+                "the field placeholder and the submitLabel button caption",
+                "up to four facts items under the form",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "The form has no handler: wire up an action, a server action or your own submit interception.",
+                "The stack of circles next to proof is decorative and aria-hidden; do not drop in photos of people without alt text.",
+                "Do not remove consent: the consent line is part of the promise, not decoration.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Hero006 title=\"One section pulled apart every Friday\" submitLabel=\"Subscribe\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "One section pulled apart every Friday"
+              },
+              "submitLabel": {
+                "label": "Button",
+                "default": "Subscribe"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-007",
+      "type": "registry:block",
+      "title": "Video Poster Hero",
+      "description": "Hero вокруг ролика: нарисованный градиентами постер 16:9 с кнопкой воспроизведения, длительностью и списком глав под ним. Плеер не загружается до перехода по ссылке.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-007/hero-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-007.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-007-*, тёмная фиолетовая база. Постер — не <img>, а фон из conic- и radial-градиентов на самой ссылке; кнопка play нарисована inline SVG. Плеер намеренно не встроен: блок отдаёт ссылку на страницу с роликом, поэтому не грузит iframe и не портит LCP. Список глав — <ul>, от 40rem раскладывается в две колонки container-запросом. Есть transition на hover, для него объявлен prefers-reduced-motion.",
+      "meta": {
+        "tags": ["hero", "video", "dark", "media"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hero007",
+          "usage": "<Hero007 title=\"Посмотрите, как собирается страница\" watchHref=\"/demo\" duration=\"6:24\" />",
+          "summary": "Тёмный hero вокруг видео: заголовок с подзаголовком, крупный постер 16:9 со ссылкой на ролик, кнопкой play и длительностью, под ним оглавление глав с таймкодами. Один файл, ноль зависимостей, ни одной картинки.",
+          "preserve": [
+            "постер как ссылку, а не встроенный плеер: iframe на первом экране портит LCP, а блок обязан оставаться лёгким",
+            "нарисованный градиентами фон постера — это дизайн блока, а не временная заглушка под скриншот",
+            "соотношение 16:9 у постера: при другой пропорции кнопка play перестаёт попадать в оптический центр",
+            "список глав с таймкодами: он превращает ролик из обещания в оглавление и работает как якорная навигация",
+            "локальную палитру --vibeui-hero-007-* и container-запрос, разводящий главы в две колонки от 40rem ширины блока",
+            "aria-label на ссылке-постере: внутри неё есть текст и иконка, и без подписи ссылка читается обрывками"
+          ],
+          "adapt": [
+            "тексты eyebrow, title и lede",
+            "watchLabel и watchHref — подпись и адрес ссылки на ролик",
+            "duration и список chapters с таймкодами",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "Если всё-таки встраиваете плеер, делайте это по клику и оставляйте постер как первый кадр.",
+            "Таймкоды в chapters — обычный текст, блок не связывает их с позицией в ролике; ссылки на моменты добавляйте сами.",
+            "Глав выводится не больше шести: длинное оглавление превращает hero в страницу курса.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Посмотрите, как собирается страница",
+            "maxLength": 80
+          },
+          {
+            "prop": "duration",
+            "label": "Длительность",
+            "type": "text",
+            "default": "6:24",
+            "maxLength": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A hero built around a video: a 16:9 poster drawn with gradients, a play button, a duration badge and a chapter list below. The player only loads once the link is followed.",
+            "ai": {
+              "summary": "A dark video hero: a headline with a subhead, a large 16:9 poster linking to the film with a play button and duration, and a chapter list with timecodes below. One file, zero dependencies, not a single image.",
+              "preserve": [
+                "the poster as a link rather than an embedded player: an iframe on the first screen ruins LCP, and the block has to stay light",
+                "the gradient-drawn poster background — it is the design of the block, not a temporary stand-in for a screenshot",
+                "the 16:9 ratio of the poster: at any other proportion the play button stops landing on the optical centre",
+                "the chapter list with timecodes: it turns the film from a promise into a table of contents and doubles as anchor navigation",
+                "the local --vibeui-hero-007-* palette and the container query that splits the chapters into two columns from 40rem of block width",
+                "the aria-label on the poster link: it wraps both text and an icon, and without a label the link is read in fragments"
+              ],
+              "adapt": [
+                "the eyebrow, title and lede copy",
+                "watchLabel and watchHref — the caption and the address of the film link",
+                "duration and the chapters list with its timecodes",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "If you do embed a player, do it on click and keep the poster as the first frame.",
+                "The timecodes in chapters are plain text; the block does not tie them to a position in the film — add deep links yourself.",
+                "At most six chapters are rendered: a long table of contents turns the hero into a course page.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Hero007 title=\"Watch a page come together\" watchHref=\"/demo\" duration=\"6:24\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "Watch a page come together"
+              },
+              "duration": {
+                "label": "Duration",
+                "default": "6:24"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-008",
+      "type": "registry:block",
+      "title": "Client Logos Hero",
+      "description": "Hero с полосой клиентов внизу: текст и пара кнопок сверху, под линией — сетка текстовых логотипов на отдельной подложке. Логотипы набраны шрифтом, картинок нет.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-008/hero-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-008.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-008-*, белая база и светло-серая подложка у полосы логотипов. Логотипы — текстовые начертания плюс монограмма, вырезанная conic-градиентом через mask-image: чужие файлы и лицензии в блок не попадают. Полоса не бесконечная лента, а сетка: две колонки на узкой ширине, три от 34rem и шесть от 56rem — всё container-запросами от ширины блока. Пониженная непрозрачность логотипов возвращается к единице на hover.",
+      "meta": {
+        "tags": ["hero", "social-proof", "logos", "light"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hero008",
+          "usage": "<Hero008 logosTitle=\"С нами работают\" logos={[\"Контур\", \"Литера\", \"Оптика\"]} />",
+          "summary": "Светлый hero с доказательством внизу: заголовок, подзаголовок и две кнопки-таблетки сверху, под линией — сетка из шести текстовых логотипов клиентов на своей подложке. Один файл, ноль зависимостей.",
+          "preserve": [
+            "полосу логотипов на отдельной подложке под линией: она отделяет обещание от доказательства, и без этой границы блок разваливается",
+            "текстовые начертания вместо картинок: wordmark из системного шрифта не мылится на ретине и не тащит чужие файлы в поставку",
+            "сетку вместо бесконечной ленты: на узкой ширине логотипы честно переносятся, а не уезжают за край без подсказки",
+            "приглушённую непрозрачность логотипов: полноцветный ряд знаков перетягивает внимание с заголовка",
+            "локальную палитру --vibeui-hero-008-* и container-запросы, меняющие число колонок от ширины блока",
+            "семантику: один h1, заголовок полосы как h2, CTA как <a href>"
+          ],
+          "adapt": [
+            "тексты title и lede, подписи и адреса CTA primary и secondary",
+            "logosTitle — подпись над полосой клиентов",
+            "список logos: до шести названий",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "Если нужны настоящие знаки, вставляйте inline SVG вместо текста и держите единый оптический размер, иначе ряд поплывёт.",
+            "Больше шести логотипов не выводится: длинный ряд превращает доказательство в шум.",
+            "Не ставьте в logos названия, на использование которых нет разрешения.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Страницы, которым доверяют отделы маркетинга",
+            "maxLength": 90
+          },
+          {
+            "prop": "logosTitle",
+            "label": "Подпись полосы",
+            "type": "text",
+            "default": "С нами работают",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A hero with a client strip at the bottom: copy and two buttons on top, and below the rule a grid of type-set logos on its own ground. The logos are typography, not images.",
+            "ai": {
+              "summary": "A light hero with proof at the bottom: a headline, a subhead and two pill buttons on top, and below the rule a grid of six type-set client logos on their own ground. One file, zero dependencies.",
+              "preserve": [
+                "the logo strip on its own ground below the rule: it separates the promise from the proof, and without that boundary the block falls apart",
+                "type-set wordmarks instead of images: system-font lettering never blurs on retina and drags no third-party files into the delivery",
+                "the grid instead of an infinite marquee: on a narrow block the logos wrap honestly rather than sliding off the edge unannounced",
+                "the dimmed opacity of the logos: a full-colour row of marks pulls attention away from the headline",
+                "the local --vibeui-hero-008-* palette and the container queries that change the column count against the block's width",
+                "the semantics: a single h1, the strip caption as an h2, CTAs as <a href>"
+              ],
+              "adapt": [
+                "the title and lede copy, the labels and hrefs of the primary and secondary CTAs",
+                "logosTitle — the caption above the client strip",
+                "the logos list: up to six names",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "If you need real marks, drop in inline SVG instead of text and keep one optical size, otherwise the row drifts.",
+                "No more than six logos are rendered: a long row turns proof into noise.",
+                "Do not put names into logos that you have no permission to display.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Hero008 logosTitle=\"Trusted by\" logos={[\"Kontur\", \"Litera\", \"Optika\"]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "Pages marketing teams actually trust"
+              },
+              "logosTitle": {
+                "label": "Strip caption",
+                "default": "Trusted by"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-009",
+      "type": "registry:block",
+      "title": "Metrics Hero",
+      "description": "Hero, который спорит цифрами: узкая колонка текста слева и три крупных счётчика на линиях справа. Единицы измерения вынесены отдельным кеглем, числа выровнены tabular-nums.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-009/hero-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-009.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-009-*, тёплая светлая база. Счётчики размечены как <dl> с парами: значение в <dd>, подпись в <dt>, порядок переставлен через order, поэтому число визуально стоит первым, а в разметке пара остаётся правильной. Числа набраны font-variant-numeric: tabular-nums. От 56rem колонки текста и цифр встают рядом container-запросом, до этого идут друг под другом. Анимаций нет, только transition на кнопке.",
+      "meta": {
+        "tags": ["hero", "metrics", "stats", "light"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hero009",
+          "usage": "<Hero009 eyebrow=\"Цифры за год\" stats={[{ value: \"6\", unit: \"мин\", label: \"До готовой страницы\" }]} />",
+          "summary": "Светлый hero с цифрами: слева eyebrow, заголовок, подзаголовок и кнопка, справа три-четыре крупных показателя с единицами измерения и подписями, разделённые линиями, плюс сноска об источнике данных. Один файл, ноль зависимостей.",
+          "preserve": [
+            "цифры как главный визуальный аргумент: они крупнее заголовка намеренно, иначе блок повторяет обычный текстовый hero",
+            "разметку <dl> с парами значение/подпись и переставленный order — семантика пары важнее визуального порядка",
+            "tabular-nums у чисел: без него разряды пляшут и колонка цифр перестаёт читаться сверху вниз",
+            "единицу измерения отдельным кеглем внутри значения: «12 400 ₽» не должно читаться как одно длинное число",
+            "разделительные линии вместо карточек: цифры живут на линиях, а не в рамках — это отличает блок от плиточных метрик",
+            "сноску footnote под цифрами: показатель без указания периода и способа замера не убеждает"
+          ],
+          "adapt": [
+            "тексты eyebrow, title и lede, подпись и адрес кнопки primary",
+            "массив stats: value, unit и label каждого показателя",
+            "текст footnote под цифрами",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "Показателей выводится не больше четырёх: пятая цифра ломает ритм колонки.",
+            "Не пишите в value длинные фразы — это место под число, подпись живёт в label.",
+            "Цифры статичны: блок ничего не считает и не анимирует, подставляйте готовые значения.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Меньше вёрстки — больше запусков",
+            "maxLength": 80
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Цифры за год",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A hero that argues with numbers: a narrow column of copy on the left and three large counters on rules to the right. Units sit at their own size and the figures are aligned with tabular-nums.",
+            "ai": {
+              "summary": "A light hero built on figures: an eyebrow, headline, subhead and button on the left; three or four large metrics with units, labels and dividing rules on the right, plus a footnote about the data. One file, zero dependencies.",
+              "preserve": [
+                "the figures as the main visual argument: they are deliberately larger than the headline, otherwise the block repeats a plain text hero",
+                "the <dl> markup with value/label pairs and the reordered order — the semantics of the pair matter more than the visual order",
+                "tabular-nums on the figures: without it the digits dance and the column stops reading top to bottom",
+                "the unit at its own size inside the value: «12,400 ₽» must not read as one long number",
+                "dividing rules instead of cards: the figures live on lines, not in boxes — that is what sets this block apart from tiled metrics",
+                "the footnote under the figures: a metric without a period and a method behind it convinces nobody"
+              ],
+              "adapt": [
+                "the eyebrow, title and lede copy, the label and href of the primary button",
+                "the stats array: value, unit and label of every metric",
+                "the footnote copy under the figures",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "At most four metrics are rendered: a fifth figure breaks the rhythm of the column.",
+                "Do not put long phrases into value — it is the slot for a number, the wording belongs in label.",
+                "The figures are static: the block counts and animates nothing, feed it finished values.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Hero009 eyebrow=\"This year\" stats={[{ value: \"6\", unit: \"min\", label: \"To a finished page\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "Less markup, more launches"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "This year"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-010",
+      "type": "registry:block",
+      "title": "Split Image Hero",
+      "description": "Hero пополам без полей: текст с чеклистом в левой половине, изображение во всю высоту секции в правой. Композиция картинки собрана градиентами и clip-path.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-010/hero-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-010.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-010-*, светлая холодная база. Правая половина — <figure> с фоном из двух радиальных и одного линейного градиента, косым срезом на clip-path и двумя окружностями; место под настоящий кадр размечено, достаточно положить <img> в тот же слот. Раскладка: одна колонка до 56rem, две равные от 56rem, при этом figure тянется на всю высоту секции. Подпись изображения — <figcaption> поверх нижнего левого угла.",
+      "meta": {
+        "tags": ["hero", "split", "image", "light"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hero010",
+          "usage": "<Hero010 title=\"Половина страницы — картинка\" imageCaption=\"Фото продукта\" />",
+          "summary": "Светлый hero из двух равных половин: слева eyebrow, заголовок, подзаголовок, чеклист из трёх пунктов и две кнопки; справа изображение во всю высоту секции с подписью в углу. Один файл, ноль зависимостей.",
+          "preserve": [
+            "деление ровно пополам от 56rem: смещение пропорций превращает блок в обычный split с карточкой",
+            "изображение без полей и скруглений, прижатое к краю секции: именно это отличает блок от hero-002 с его окном в рамке",
+            "тягу figure на всю высоту секции: обрезанное по высоте изображение читается как баннер, а не как половина композиции",
+            "чеклист коротким — до четырёх пунктов без описаний: это hero, а не секция возможностей",
+            "локальную палитру --vibeui-hero-010-* и container-запросы, разводящие половины от ширины блока",
+            "семантику: один h1, чеклист как <ul>, CTA как <a href>, декоративные слои aria-hidden"
+          ],
+          "adapt": [
+            "тексты eyebrow, title и lede, подписи и адреса CTA primary и secondary",
+            "до четырёх пунктов bullets в чеклисте",
+            "текст подписи imageCaption в углу изображения",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "Чтобы поставить настоящий кадр, добавьте <img> внутрь figure с object-fit: cover и оставьте декоративные слои или уберите их целиком.",
+            "Не растягивайте figcaption в абзац: это подпись в углу, а не второй подзаголовок.",
+            "На узкой ширине изображение уходит вниз и получает минимальную высоту — не задавайте ему фиксированную.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Половина страницы — картинка, половина — суть",
+            "maxLength": 90
+          },
+          {
+            "prop": "imageCaption",
+            "label": "Подпись кадра",
+            "type": "text",
+            "default": "Место под ваш кадр",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A hero split in half with no gutters: copy and a checklist in the left half, a full-height image in the right. The picture is composed from gradients and clip-path.",
+            "ai": {
+              "summary": "A light hero in two equal halves: an eyebrow, headline, subhead, three-item checklist and two buttons on the left; a full-height image with a corner caption on the right. One file, zero dependencies.",
+              "preserve": [
+                "the exact half-and-half split from 56rem: shifting the proportions turns the block into an ordinary split with a card",
+                "the image without gutters or rounded corners, flush to the section edge: that is what sets this block apart from hero-002 and its framed window",
+                "the figure stretching to the full height of the section: an image cropped by height reads as a banner, not as half of a composition",
+                "the checklist short — up to four items with no descriptions: this is a hero, not a features section",
+                "the local --vibeui-hero-010-* palette and the container queries that split the halves against the block's width",
+                "the semantics: a single h1, the checklist as a <ul>, CTAs as <a href>, decorative layers aria-hidden"
+              ],
+              "adapt": [
+                "the eyebrow, title and lede copy, the labels and hrefs of the primary and secondary CTAs",
+                "up to four bullets in the checklist",
+                "the imageCaption text in the corner of the picture",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "To use a real photo, add an <img> inside the figure with object-fit: cover and either keep the decorative layers or drop them entirely.",
+                "Do not grow figcaption into a paragraph: it is a corner caption, not a second subhead.",
+                "On a narrow block the image moves below the copy and takes a minimum height — do not give it a fixed one.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Hero010 title=\"Half the page is the picture\" imageCaption=\"Product photo\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "Half the page is the picture"
+              },
+              "imageCaption": {
+                "label": "Image caption",
+                "default": "Your photo goes here"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-011",
+      "type": "registry:block",
+      "title": "Grid Glow Hero",
+      "description": "Тёмный hero, где фон и есть дизайн: сетка из повторяющихся градиентов, погашенная радиальной маской, и два цветных пятна поверх. Ни одного лишнего слоя в разметке.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-011/hero-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-011.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-011-*, тёмная фиолетовая база. Сетка и свечение живут в ::before и ::after самой секции с отрицательным z-index и pointer-events: none — в разметке нет ни одного декоративного div. Линии сетки нарисованы двумя repeating-linear-gradient и растворены к краям через mask-image. Акцентная часть заголовка залита градиентом через background-clip: text. Кнопки становятся строкой от 34rem container-запросом.",
+      "meta": {
+        "tags": ["hero", "dark", "gradient", "grid"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hero011",
+          "usage": "<Hero011 title=\"Фон, который делает\" titleAccent=\"половину работы\" />",
+          "summary": "Тёмный центрированный hero: pill с анонсом, крупный заголовок с градиентной второй частью, подзаголовок, две кнопки и строка коротких фактов. Сетка и свечение нарисованы на фоне самой секции. Один файл, ноль зависимостей.",
+          "preserve": [
+            "сетку и свечение как фон самой секции в ::before и ::after: декоративные слои в разметке ловили бы клики и попадали в дерево доступности",
+            "растворение линий сетки маской: сетка, упирающаяся в границу секции, выглядит как обрезанный скриншот",
+            "градиентную заливку акцентной части заголовка через background-clip: text — на неё держится вся цветовая идея блока",
+            "тёмную локальную палитру --vibeui-hero-011-*: блок остаётся тёмным независимо от темы проекта",
+            "pointer-events: none и отрицательный z-index у фоновых слоёв, иначе они перекроют кнопки",
+            "container-запрос, разворачивающий кнопки в строку от 34rem ширины блока"
+          ],
+          "adapt": [
+            "тексты kicker, title, titleAccent и lede",
+            "подписи и адреса CTA primary и secondary",
+            "до четырёх пунктов meta в нижней строке",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "Шаг сетки задан в самих градиентах: меняйте значение 4rem в обоих repeating-linear-gradient сразу, иначе клетка перестанет быть квадратной.",
+            "Градиентный текст не наследует цвет: если заменяете accent, проверьте, что вторая часть заголовка осталась читаемой.",
+            "Не добавляйте поверх фона ещё один слой затемнения — контраст уже посчитан.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Фон, который делает",
+            "maxLength": 60
+          },
+          {
+            "prop": "titleAccent",
+            "label": "Акцент заголовка",
+            "type": "text",
+            "default": "половину работы",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dark hero where the background is the design: a grid of repeating gradients faded by a radial mask, with two colour blooms on top. Not one extra layer in the markup.",
+            "ai": {
+              "summary": "A dark centred hero: an announcement pill, a large headline with a gradient second half, a subhead, two buttons and a row of short facts. The grid and the glow are painted onto the section itself. One file, zero dependencies.",
+              "preserve": [
+                "the grid and glow as the section's own ::before and ::after background: decorative layers in the markup would catch clicks and land in the accessibility tree",
+                "the mask that fades the grid lines out: a grid that runs into the section edge looks like a cropped screenshot",
+                "the gradient fill of the accent half of the headline through background-clip: text — the whole colour idea of the block rests on it",
+                "the dark local --vibeui-hero-011-* palette: the block stays dark whatever theme the project runs",
+                "pointer-events: none and the negative z-index on the background layers, otherwise they cover the buttons",
+                "the container query that turns the buttons into a row from 34rem of block width"
+              ],
+              "adapt": [
+                "the kicker, title, titleAccent and lede copy",
+                "the labels and hrefs of the primary and secondary CTAs",
+                "up to four meta items in the bottom row",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "The grid step lives in the gradients themselves: change the 4rem value in both repeating-linear-gradients at once, or the cell stops being square.",
+                "Gradient text does not inherit colour: if you swap accent, check that the second half of the headline stays readable.",
+                "Do not stack another dimming layer over the background — the contrast is already balanced.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Hero011 title=\"A background that does\" titleAccent=\"half the work\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "A background that does"
+              },
+              "titleAccent": {
+                "label": "Headline accent",
+                "default": "half the work"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-012",
+      "type": "registry:block",
+      "title": "Announcement Hero",
+      "description": "Hero вокруг анонса: кликабельная строка «новое» со стрелкой сверху, заголовок с кнопками и карточка релиза с датой, версией и тремя строками изменений снизу.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-012/hero-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-012.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-012-*, светлая база с моноширинным шрифтом в карточке релиза. Строка анонса — целиком <a>, а не pill со стрелкой-ссылкой: кликабельна вся полоса. Длинный текст анонса обрезается через text-overflow: ellipsis, поэтому строка не переносится и не ломает pill. Карточка релиза выводит до четырёх пунктов. Кнопки становятся строкой от 34rem container-запросом. Есть transition на hover, для него объявлен prefers-reduced-motion.",
+      "meta": {
+        "tags": ["hero", "announcement", "changelog", "light"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hero012",
+          "usage": "<Hero012 badge=\"Новое\" announcement=\"Вышла версия 2.4\" announcementHref=\"/changelog\" />",
+          "summary": "Светлый hero вокруг анонса: кликабельная строка «новое» с бейджем и стрелкой, заголовок, подзаголовок, две кнопки и карточка релиза с версией, датой и списком изменений. Один файл, ноль зависимостей.",
+          "preserve": [
+            "кликабельность всей строки анонса, а не только стрелки: маленькая цель для курсора — главная причина, по которой анонсы не нажимают",
+            "карточку релиза под кнопками: анонс без списка изменений повисает обещанием, и блок теряет свой смысл",
+            "обрезку длинного анонса многоточием: перенос строки внутри pill ломает его форму",
+            "бейдж словами рядом с текстом анонса — цветной точки недостаточно, чтобы объявить новость",
+            "моноширинный шрифт в шапке карточки релиза: версия и дата читаются как техническая запись, а не как заголовок",
+            "локальную палитру --vibeui-hero-012-* и container-запрос, разворачивающий кнопки в строку от 34rem"
+          ],
+          "adapt": [
+            "тексты badge, announcement и адрес announcementHref",
+            "тексты title и lede, подписи и адреса CTA primary и secondary",
+            "объект release: version, date и до четырёх пунктов items",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "Держите announcement коротким: длинный текст обрежется многоточием, и смысл потеряется.",
+            "Пунктов в release.items выводится не больше четырёх — это анонс, а не полный changelog.",
+            "Не превращайте карточку релиза в раскрывающийся список: в hero не место гармошке.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "announcement",
+            "label": "Текст анонса",
+            "type": "text",
+            "default": "Вышла версия 2.4 — 45 секций и новый Copy for AI",
+            "maxLength": 90
+          },
+          {
+            "prop": "badge",
+            "label": "Бейдж",
+            "type": "text",
+            "default": "Новое",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A hero built around an announcement: a clickable «new» line with an arrow on top, the headline with buttons, and a release card with date, version and three change lines below.",
+            "ai": {
+              "summary": "A light announcement hero: a clickable «new» line with a badge and an arrow, a headline, a subhead, two buttons and a release card carrying the version, the date and a change list. One file, zero dependencies.",
+              "preserve": [
+                "the whole announcement line staying clickable, not just the arrow: a tiny cursor target is the main reason announcements go unclicked",
+                "the release card under the buttons: an announcement with no change list hangs as a promise and the block loses its point",
+                "the ellipsis truncation of a long announcement: a line break inside the pill destroys its shape",
+                "the badge spelled out next to the announcement — a coloured dot alone cannot declare news",
+                "the monospace type in the release card header: the version and date read as a technical record, not as a heading",
+                "the local --vibeui-hero-012-* palette and the container query that turns the buttons into a row from 34rem"
+              ],
+              "adapt": [
+                "the badge and announcement copy and the announcementHref address",
+                "the title and lede copy, the labels and hrefs of the primary and secondary CTAs",
+                "the release object: version, date and up to four items",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "Keep announcement short: a long line is truncated with an ellipsis and the meaning goes with it.",
+                "At most four release.items are rendered — this is an announcement, not a full changelog.",
+                "Do not turn the release card into a disclosure: a hero is no place for an accordion.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Hero012 badge=\"New\" announcement=\"Version 2.4 is out\" announcementHref=\"/changelog\" />"
+            },
+            "controls": {
+              "announcement": {
+                "label": "Announcement",
+                "default": "Version 2.4 is out — 45 sections and a new Copy for AI"
+              },
+              "badge": {
+                "label": "Badge",
+                "default": "New"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-013",
+      "type": "registry:block",
+      "title": "Catalog Search Hero",
+      "description": "Hero каталога, где вход в продукт — строка поиска: форма GET с полем и кнопкой, счётчик найденного под ней и популярные запросы ссылками.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-013/hero-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-013.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-013-*, светлая холодная база с вертикальным градиентом. Форма помечена role=\"search\", метод GET, поле type=\"search\" с именем q — без JavaScript она работает как обычный поиск, с JavaScript её легко перехватить. Поле и кнопка лежат в одной pill-рамке, подсветка на :focus-within охватывает обе. Популярные запросы — <nav> со списком ссылок с готовым query-параметром: это и подсказки, и внутренняя перелинковка.",
+      "meta": {
+        "tags": ["hero", "search", "catalog", "light"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hero013",
+          "usage": "<Hero013 placeholder=\"Например: тарифы с переключателем\" popular={[\"hero\", \"тарифы\"]} />",
+          "summary": "Светлый hero с поиском: заголовок, подзаголовок, строка поиска с кнопкой в общей рамке, счётчик найденного и до шести популярных запросов ссылками-таблетками. Один файл, ноль зависимостей.",
+          "preserve": [
+            "форму как <form role=\"search\"> с методом GET и полем name=\"q\": без JavaScript блок обязан оставаться рабочим поиском",
+            "поле и кнопку в одной рамке с подсветкой на :focus-within — фокус должен быть виден целиком",
+            "популярные запросы ссылками, а не кнопками: они ведут на страницы выдачи и работают как внутренняя перелинковка",
+            "счётчик под полем: он отвечает на вопрос «а есть ли вообще что искать» до первого запроса",
+            "type=\"search\" у поля: браузер даёт крестик очистки и правильную клавиатуру на телефоне",
+            "локальную палитру --vibeui-hero-013-* и скрытый <label>, остающийся в дереве доступности"
+          ],
+          "adapt": [
+            "тексты title и lede, значение placeholder и подпись кнопки submitLabel",
+            "текст counter под строкой поиска",
+            "popularTitle и до шести запросов в списке popular",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "Адрес формы задан как action=\"#\": подставьте реальный путь страницы выдачи.",
+            "Ссылки популярных запросов ведут на якорь с query-параметром — замените их на маршруты своего каталога.",
+            "Больше шести запросов не выводится: длинный ряд подсказок конкурирует с полем.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Найдите секцию по названию, а не листайте каталог",
+            "maxLength": 90
+          },
+          {
+            "prop": "placeholder",
+            "label": "Подсказка поля",
+            "type": "text",
+            "default": "Например: тарифы с переключателем",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A catalog hero whose door into the product is a search field: a GET form with an input and a button, a result counter beneath it and popular queries as links.",
+            "ai": {
+              "summary": "A light search hero: a headline, a subhead, a search field and button in a shared frame, a result counter and up to six popular queries as pill links. One file, zero dependencies.",
+              "preserve": [
+                "the form as <form role=\"search\"> with method GET and a field named q: with JavaScript off the block must still be a working search",
+                "the field and button in one frame with the :focus-within highlight — focus has to be visible as a whole",
+                "popular queries as links rather than buttons: they point at result pages and double as internal linking",
+                "the counter under the field: it answers «is there anything to search at all» before the first query",
+                "type=\"search\" on the field: the browser gives a clear button and the right keyboard on a phone",
+                "the local --vibeui-hero-013-* palette and the hidden <label> that stays in the accessibility tree"
+              ],
+              "adapt": [
+                "the title and lede copy, the placeholder value and the submitLabel button caption",
+                "the counter text under the search line",
+                "popularTitle and up to six queries in the popular list",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "The form action is set to \"#\": point it at the real results page.",
+                "The popular query links point at an anchor with a query parameter — swap them for your own catalog routes.",
+                "No more than six queries are rendered: a long row of hints competes with the field.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Hero013 placeholder=\"Try: pricing with a toggle\" popular={[\"hero\", \"pricing\"]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "Search the catalog instead of scrolling it"
+              },
+              "placeholder": {
+                "label": "Field placeholder",
+                "default": "Try: pricing with a toggle"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-014",
+      "type": "registry:block",
+      "title": "Event Countdown Hero",
+      "description": "Hero мероприятия: тип события, заголовок, дата в <time>, место и четыре плитки обратного отсчёта. Значения приходят пропсами и не тикают на сервере.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-014/hero-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-014.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-014-*, тёмная база с тёплым акцентом и радиальным свечением в углу. Дата размечена как <time datetime>, поэтому её понимает не только человек. Плитки отсчёта — <ul> с aria-label, числа набраны tabular-nums, чтобы не прыгать при смене значения. Отсчёт статичен: живой таймер — это клиентский слой, а секция обязана попадать в кэш страницы. От 56rem текст и плитки встают в две колонки container-запросом.",
+      "meta": {
+        "tags": ["hero", "event", "countdown", "dark"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hero014",
+          "usage": "<Hero014 kind=\"Онлайн-конференция\" date=\"26 сентября, 11:00 МСК\" dateTime=\"2026-09-26T11:00:00+03:00\" />",
+          "summary": "Тёмный hero мероприятия: бейдж типа события, заголовок, подзаголовок, дата в <time> с местом проведения, две кнопки, строка о числе мест и четыре плитки обратного отсчёта. Один файл, ноль зависимостей.",
+          "preserve": [
+            "дату в <time datetime>: машиночитаемая дата нужна и поисковику, и календарю, и это дешевле любого микроформата",
+            "статичность отсчёта: секция серверная и кэшируемая, живой таймер добавляют отдельным клиентским слоем",
+            "tabular-nums у чисел отсчёта: без него цифры прыгают по ширине при каждой смене значения",
+            "четыре плитки и их порядок: дни, часы, минуты, секунды — привычная последовательность, менять её нельзя",
+            "aria-label у списка отсчёта: набор чисел без подписи читается скринридером как бессмыслица",
+            "тёмную локальную палитру --vibeui-hero-014-* и container-запрос, разводящий текст и отсчёт в две колонки от 56rem"
+          ],
+          "adapt": [
+            "тексты kind, title, lede, place и seats",
+            "date и dateTime — человеческую и машиночитаемую формы даты",
+            "значения и подписи в массиве countdown",
+            "подписи и адреса CTA primary и secondary, акцентный цвет через проп accent"
+          ],
+          "notes": [
+            "Чтобы отсчёт шёл, оберните блок клиентским компонентом и передавайте пересчитанный countdown пропом.",
+            "dateTime обязан быть валидным ISO-значением с таймзоной, иначе машиночитаемая дата бесполезна.",
+            "Плиток ровно четыре: пятая ломает сетку и не помещается в две колонки на широкой ширине.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вайбкодинг-день: собираем продукт за восемь часов",
+            "maxLength": 90
+          },
+          {
+            "prop": "kind",
+            "label": "Тип события",
+            "type": "text",
+            "default": "Онлайн-конференция",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An event hero: the event type, a headline, the date in a <time> element, the venue and four countdown tiles. The values come in as props and do not tick on the server.",
+            "ai": {
+              "summary": "A dark event hero: an event-type badge, a headline, a subhead, the date in <time> with the venue, two buttons, a seats line and four countdown tiles. One file, zero dependencies.",
+              "preserve": [
+                "the date inside <time datetime>: a machine-readable date serves search engines and calendars alike, and costs less than any microformat",
+                "the countdown staying static: the section is server-rendered and cacheable, a live timer belongs in a separate client layer",
+                "tabular-nums on the countdown figures: without it the digits jump in width on every change",
+                "the four tiles and their order — days, hours, minutes, seconds — a familiar sequence that must not be reshuffled",
+                "the aria-label on the countdown list: a set of numbers with no label is read out as nonsense",
+                "the dark local --vibeui-hero-014-* palette and the container query that splits copy and countdown into two columns from 56rem"
+              ],
+              "adapt": [
+                "the kind, title, lede, place and seats copy",
+                "date and dateTime — the human and machine-readable forms of the date",
+                "the values and labels in the countdown array",
+                "the labels and hrefs of the primary and secondary CTAs, and the accent colour through the accent prop"
+              ],
+              "notes": [
+                "To make the countdown run, wrap the block in a client component and feed a recalculated countdown prop.",
+                "dateTime must be a valid ISO value with a timezone, otherwise the machine-readable date is useless.",
+                "There are exactly four tiles: a fifth breaks the grid and does not fit the two-column layout on a wide block.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Hero014 kind=\"Online conference\" date=\"26 September, 11:00\" dateTime=\"2026-09-26T11:00:00+03:00\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "Vibecoding day: a product in eight hours"
+              },
+              "kind": {
+                "label": "Event type",
+                "default": "Online conference"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-015",
+      "type": "registry:block",
+      "title": "Editorial Text Hero",
+      "description": "Минималистичный текстовый hero студийного сайта: крупный serif-заголовок с курсивным акцентом, одна подчёркивающаяся ссылка и выходные данные мелким кеглем внизу.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-015/hero-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-015.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-015-*, бумажная тёплая база. Пара шрифтов системная: serif для заголовка, sans для остального — веб-шрифты не подключаются. Подчёркивание ссылки растёт из нуля через background-size у линейного градиента, а не через border: линия остаётся на месте и не сдвигает текст. Выходные данные — <dl> с парами, от 34rem раскладываются в три колонки container-запросом. Из движения только transition подчёркивания, для него объявлен prefers-reduced-motion.",
+      "meta": {
+        "tags": ["hero", "editorial", "serif", "minimal"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hero015",
+          "usage": "<Hero015 studio=\"Студия «Верста»\" link={{ label: \"Смотреть работы\", href: \"/works\" }} />",
+          "summary": "Светлый минималистичный hero: название студии над линией, крупный serif-заголовок с курсивным акцентом, подзаголовок, одна текстовая ссылка с растущим подчёркиванием и три пары выходных данных внизу. Один файл, ноль зависимостей.",
+          "preserve": [
+            "отсутствие кнопок: единственное действие — текстовая ссылка, и именно этим блок отличается от остальных hero каталога",
+            "системную пару шрифтов serif плюс sans: веб-шрифт здесь не нужен, а замена serif на sans убивает весь замысел",
+            "подчёркивание через background-size, а не border: линия растёт на месте и не двигает текст по вертикали",
+            "курсивный акцент внутри заголовка — единственное цветное пятно в блоке",
+            "выходные данные внизу как <dl> с парами: это подпись под работой, а не список возможностей",
+            "локальную палитру --vibeui-hero-015-* и container-запрос, раскладывающий пары в три колонки от 34rem"
+          ],
+          "adapt": [
+            "тексты studio, title и lede",
+            "подпись и адрес ссылки link",
+            "до трёх пар index в выходных данных",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "Курсивная часть заголовка задана прямо в разметке через <em>: чтобы поменять её текст, правьте JSX, а не только проп title.",
+            "Не добавляйте в блок кнопку — она сразу превращает редакционный hero в обычный маркетинговый.",
+            "Пар в index выводится не больше трёх: четвёртая ломает трёхколоночную раскладку.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Мы делаем интерфейсы, которые",
+            "maxLength": 70
+          },
+          {
+            "prop": "studio",
+            "label": "Название студии",
+            "type": "text",
+            "default": "Студия «Верста»",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A minimal typographic hero for a studio site: a large serif headline with an italic accent, one link with a growing underline and small-print colophon at the bottom.",
+            "ai": {
+              "summary": "A light minimal hero: the studio name above a rule, a large serif headline with an italic accent, a subhead, one text link with a growing underline and three colophon pairs below. One file, zero dependencies.",
+              "preserve": [
+                "the absence of buttons: the only action is a text link, and that is exactly what sets this block apart from every other hero in the catalog",
+                "the system serif-plus-sans pairing: no web font is needed here, and moving the headline to sans kills the whole idea",
+                "the underline built on background-size rather than a border: the line grows in place and never shifts the text vertically",
+                "the italic accent inside the headline — the only spot of colour in the block",
+                "the colophon at the bottom as a <dl> of pairs: it is a caption under the work, not a feature list",
+                "the local --vibeui-hero-015-* palette and the container query that lays the pairs into three columns from 34rem"
+              ],
+              "adapt": [
+                "the studio, title and lede copy",
+                "the label and href of the link",
+                "up to three index pairs in the colophon",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "The italic half of the headline sits directly in the markup as an <em>: to change its wording edit the JSX, not only the title prop.",
+                "Do not add a button — it instantly turns an editorial hero into an ordinary marketing one.",
+                "At most three index pairs are rendered: a fourth breaks the three-column layout.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Hero015 studio=\"Versta Studio\" link={{ label: \"See the work\", href: \"/works\" }} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "We build interfaces that"
+              },
+              "studio": {
+                "label": "Studio name",
+                "default": "Versta Studio"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-016",
+      "type": "registry:block",
+      "title": "Two Paths Hero",
+      "description": "Hero с развилкой вместо одной кнопки: две равные карточки-пути, у каждой свой список из трёх пунктов и своя ссылка. Ни один путь не выделен цветом.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-016/hero-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-016.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-016-*, светлая нейтральная база. Карточка кликабельна целиком за счёт растянутой псевдоссылки ::after у <a>, но в дереве доступности на путь приходится одна ссылка, а не три. Фокус-кольцо рисуется на карточке через :focus-within, поэтому клавиатурная навигация видна, хотя сама ссылка выглядит обычным текстом. Иконки — inline SVG, разные для двух путей. От 40rem карточки встают в две колонки container-запросом.",
+      "meta": {
+        "tags": ["hero", "choice", "cards", "light"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hero016",
+          "usage": "<Hero016 title=\"Соберёте сами или доверите нам?\" eyebrow=\"Два способа начать\" />",
+          "summary": "Светлый hero-развилка: eyebrow, заголовок-вопрос, подзаголовок и две равные карточки-пути с иконкой, описанием, тремя пунктами и ссылкой в каждой, плюс сноска внизу. Один файл, ноль зависимостей.",
+          "preserve": [
+            "равенство двух путей: как только один выделяется цветом или размером, развилка превращается в тариф с рекомендованным вариантом",
+            "растянутую псевдоссылку ::after: кликабельна вся карточка, но в дереве доступности остаётся одна ссылка на путь",
+            "фокус-кольцо на карточке через :focus-within: без него клавиатурная навигация по развилке невидима",
+            "ровно два пути: третий вариант превращает выбор в тарифную сетку и требует другой секции",
+            "по три пункта в каждом пути: списки должны быть одинаковой длины, иначе карточки визуально спорят",
+            "локальную палитру --vibeui-hero-016-* и container-запрос, разводящий карточки в две колонки от 40rem"
+          ],
+          "adapt": [
+            "тексты eyebrow, title, lede и footnote",
+            "содержимое обоих путей paths: title, description, points и адрес href",
+            "подпись действия action в каждой карточке",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "Тип paths фиксирует ровно два элемента: массив другой длины TypeScript не пропустит.",
+            "Иконки выбираются по индексу пути и заданы в разметке: чтобы поменять их, правьте JSX.",
+            "Не вкладывайте внутрь карточки вторую ссылку — растянутая псевдоссылка перекроет её и клик уйдёт не туда.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Соберёте сами или доверите нам?",
+            "maxLength": 70
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Два способа начать",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A hero with a fork instead of a single button: two equal path cards, each with its own three-item list and its own link. Neither path is picked out in colour.",
+            "ai": {
+              "summary": "A light fork hero: an eyebrow, a question headline, a subhead and two equal path cards — icon, description, three points and a link in each — plus a footnote below. One file, zero dependencies.",
+              "preserve": [
+                "the equality of the two paths: the moment one is picked out by colour or size, the fork turns into a pricing table with a recommended plan",
+                "the stretched ::after pseudo-link: the whole card is clickable, yet the accessibility tree still holds one link per path",
+                "the focus ring on the card through :focus-within: without it keyboard navigation across the fork is invisible",
+                "exactly two paths: a third option turns the choice into a pricing grid and calls for a different section",
+                "three points per path: the lists have to be the same length, otherwise the cards visually argue",
+                "the local --vibeui-hero-016-* palette and the container query that splits the cards into two columns from 40rem"
+              ],
+              "adapt": [
+                "the eyebrow, title, lede and footnote copy",
+                "the contents of both paths: title, description, points and the href",
+                "the action caption in each card",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "The paths type pins exactly two entries: TypeScript will reject an array of any other length.",
+                "The icons are chosen by path index and live in the markup: edit the JSX to change them.",
+                "Do not nest a second link inside a card — the stretched pseudo-link covers it and the click goes elsewhere.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Hero016 title=\"Build it yourself or hand it over?\" eyebrow=\"Two ways to start\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "Build it yourself or hand it over?"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Two ways to start"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

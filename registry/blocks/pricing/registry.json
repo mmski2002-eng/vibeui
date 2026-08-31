@@ -97,6 +97,1867 @@
           }
         }
       }
+    },
+    {
+      "name": "pricing-002",
+      "type": "registry:block",
+      "title": "Recommended Trio",
+      "description": "Три тарифа с выделенным рекомендованным: он поднят над соседями и несёт бейдж словами, а не только цветную рамку. Кнопки прижаты к низу карточек.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-002/pricing-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-002.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-002-*, светлая база. Рекомендованный тариф помечается атрибутом data-featured: он получает толстую акцентную рамку, тень и бейдж, а на широкой ширине ещё и увеличенные вертикальные отступы. Карточки — flex-колонки, кнопка прижата к низу через margin-top:auto, поэтому нижний край ряда ровный при разном числе пунктов. Раскладка: столбец до 58rem, три колонки от 58rem container-запросом.",
+      "meta": {
+        "tags": ["pricing", "plans", "featured", "light"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing002",
+          "usage": "<Pricing002 plans={[{ name: \"Команда\", price: \"1 490 ₽\", period: \"в месяц\", description: \"Для команд.\", features: [\"До пяти участников\"], action: { label: \"Попробовать\", href: \"#\" }, featured: true, badge: \"Рекомендуем\" }]} />",
+          "summary": "Светлая секция тарифов: центрированная шапка и три карточки с названием, описанием, ценой, списком возможностей и кнопкой. Рекомендованный выделен рамкой, тенью и бейджем со словом. Один файл, ноль зависимостей.",
+          "preserve": [
+            "бейдж словами у рекомендованного тарифа: цветной рамки мало — она не читается дальтоником и исчезает при печати",
+            "кнопку, прижатую к низу через margin-top:auto: без неё нижний край ряда пляшет при разном числе пунктов",
+            "три тарифа: четвёртая колонка не помещается в раскладку и делает выбор мучительным",
+            "локальную палитру --vibeui-pricing-002-*: блок несёт свой светлый фон и не читает токены темы проекта",
+            "container-запрос, разводящий тарифы в три колонки от 58rem ширины блока, а не от ширины окна",
+            "семантику: список тарифов как <ul>, название тарифа как h3, кнопка как <a href>"
+          ],
+          "adapt": [
+            "тексты eyebrow, title и lede в шапке и note под тарифами",
+            "массив plans: name, price, period, description, до шести features и кнопку action",
+            "флаг featured и текст badge у рекомендованного тарифа",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "Возможностей в тарифе выводится не больше шести: длинный список превращает карточку в таблицу.",
+            "Выделяйте featured ровно у одного тарифа: два рекомендованных сводят подсказку на нет.",
+            "Цена — строка, а не число: блок ничего не форматирует и не пересчитывает валюту.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Платите за скорость, а не за количество компонентов",
+            "maxLength": 90
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Тарифы",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Three plans with the recommended one singled out: it sits above its neighbours and carries a badge spelled out in words, not just a coloured border. The buttons are pinned to the bottom.",
+            "ai": {
+              "summary": "A light pricing section: a centred header and three cards with a name, a description, a price, a feature list and a button. The recommended plan is marked by a border, a shadow and a worded badge. One file, zero dependencies.",
+              "preserve": [
+                "the worded badge on the recommended plan: a coloured border alone fails colour-blind readers and disappears in print",
+                "the button pinned to the bottom with margin-top:auto: without it the bottom edge of the row dances with the item count",
+                "three plans: a fourth column does not fit the layout and makes the choice painful",
+                "the local --vibeui-pricing-002-* palette: the block carries its own light background and never reads your theme tokens",
+                "the container query that splits the plans into three columns from 58rem of block width, not the window's",
+                "the semantics: the plan list as a <ul>, each plan name as an h3, the button as an <a href>"
+              ],
+              "adapt": [
+                "the eyebrow, title and lede copy in the header and the note under the plans",
+                "the plans array: name, price, period, description, up to six features and the action button",
+                "the featured flag and the badge text on the recommended plan",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "At most six features per plan are rendered: a long list turns the card into a table.",
+                "Mark exactly one plan as featured: two recommendations cancel the hint out.",
+                "The price is a string, not a number: the block formats nothing and converts no currency.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing002 plans={[{ name: \"Team\", price: \"$19\", period: \"per month\", description: \"For teams.\", features: [\"Up to five seats\"], action: { label: \"Start trial\", href: \"#\" }, featured: true, badge: \"Recommended\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Pay for speed, not for the component count"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Pricing"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-003",
+      "type": "registry:block",
+      "title": "Period Switch Pricing",
+      "description": "Тарифы с переключателем месяц/год: состояние держат две радиокнопки, цены переключаются селектором :has() — без единой строки JavaScript.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-003/pricing-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-003.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-003-*, светлая зелёная база. Обе цены лежат в разметке, лишняя скрыта через display:none; выбор делается правилом вида [data-vibeui-block=\"pricing-003\"]:has([data-part=\"periodyear\"]:checked). Радиокнопки уводятся с экрана, но остаются в потоке фокуса, кольцо рисуется на подписи. Скидка подписана бейджем прямо в переключателе. Раскладка: столбец до 56rem, три колонки от 56rem container-запросом.",
+      "meta": {
+        "tags": ["pricing", "toggle", "no-js", "annual"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing003",
+          "usage": "<Pricing003 monthLabel=\"Помесячно\" yearLabel=\"За год\" saveLabel=\"−17 %\" />",
+          "summary": "Светлая секция тарифов с переключателем периода: заголовок, pill-переключатель месяц/год с бейджем скидки и три карточки, в которых цена и подпись о годовой оплате меняются на CSS. Один файл, ноль зависимостей.",
+          "preserve": [
+            "переключение на радиокнопках и :has() вместо скрипта: секция остаётся серверной и работает до гидратации",
+            "обе цены в разметке: это сознательный размен — разметка тяжелее, зато цена не «прыгает» после гидратации",
+            "радиокнопки в потоке фокуса: display:none у них сломал бы переключение с клавиатуры",
+            "бейдж скидки прямо в переключателе: скидка, спрятанная в сноску, не влияет на выбор периода",
+            "локальную палитру --vibeui-pricing-003-* и container-запрос, разводящий тарифы от 56rem ширины блока",
+            "семантику: переключатель как группа с aria-label, тарифы как <ul>, кнопки как <a href>"
+          ],
+          "adapt": [
+            "тексты title и lede над переключателем",
+            "подписи monthLabel, yearLabel и бейдж saveLabel",
+            "массив plans: name, monthly, yearly, yearlyNote, до шести features и кнопку action",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "Имя радиогруппы и id заданы строками с префиксом блока: два экземпляра на одной странице будут переключаться вместе.",
+            "Значения monthly и yearly — готовые строки: блок ничего не пересчитывает и не делит на двенадцать.",
+            "Подпись yearlyNote видна только в годовом режиме — не дублируйте в ней цену, она уже рядом.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Годовая оплата дешевле на два месяца",
+            "maxLength": 80
+          },
+          {
+            "prop": "saveLabel",
+            "label": "Бейдж скидки",
+            "type": "text",
+            "default": "−17 %",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Plans with a monthly/annual switch: two radio buttons hold the state and the prices swap through the :has() selector — without a line of JavaScript.",
+            "ai": {
+              "summary": "A light pricing section with a period switch: a headline, a monthly/annual pill switch with a discount badge and three cards whose price and annual note swap in CSS. One file, zero dependencies.",
+              "preserve": [
+                "the radio-and-:has() switching instead of a script: the section stays server-rendered and works before hydration",
+                "both prices living in the markup: it is a deliberate trade — heavier markup, but the price never jumps after hydration",
+                "the radio buttons staying in the focus order: display:none on them would break keyboard switching",
+                "the discount badge inside the switch itself: a discount hidden in a footnote does not affect the choice of period",
+                "the local --vibeui-pricing-003-* palette and the container query that splits the plans from 56rem of block width",
+                "the semantics: the switch as a group with an aria-label, the plans as a <ul>, the buttons as <a href>"
+              ],
+              "adapt": [
+                "the title and lede copy above the switch",
+                "the monthLabel and yearLabel captions and the saveLabel badge",
+                "the plans array: name, monthly, yearly, yearlyNote, up to six features and the action button",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "The radio group name and the ids are block-prefixed strings: two instances on one page switch together.",
+                "monthly and yearly are finished strings: the block recalculates nothing and divides by nothing.",
+                "The yearlyNote caption only shows in annual mode — do not repeat the price in it, it is already next to it.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing003 monthLabel=\"Monthly\" yearLabel=\"Annual\" saveLabel=\"−17%\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Annual billing saves you two months"
+              },
+              "saveLabel": {
+                "label": "Discount badge",
+                "default": "−17%"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-004",
+      "type": "registry:block",
+      "title": "Plan Comparison Table",
+      "description": "Полная таблица сравнения тарифов: строки сгруппированы по разделам, шапка с ценами и кнопками залипает при прокрутке, на узкой ширине таблица прокручивается вбок.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-004/pricing-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-004.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-004-*, белая база. Разметка — настоящая таблица с несколькими <tbody>: заголовок раздела вынесен в <th scope=\"colgroup\"> с colspan, поэтому скринридер объявляет и раздел, и колонку. Шапка с ценами держится на position:sticky, иначе на длинной таблице теряется, какая колонка чья. Обёртка со overflow-x:auto и min-width:40rem у таблицы. Значение true рисуется словом «Есть», false — прочерком.",
+      "meta": {
+        "tags": ["pricing", "comparison", "table", "grouped"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing004",
+          "usage": "<Pricing004 plans={[{ name: \"Команда\", price: \"1 490 ₽ / мес\", href: \"#\", featured: true }]} groups={[{ title: \"Каталог\", rows: [{ feature: \"Секций\", values: [\"10\", \"Все\", \"Все\"] }] }]} />",
+          "summary": "Светлая секция сравнения тарифов: заголовок и таблица из трёх колонок с ценами и кнопками в залипающей шапке, строки разбиты на три раздела по три признака. Один файл, ноль зависимостей.",
+          "preserve": [
+            "залипающую шапку с ценами: на таблице в девять строк пользователь иначе забывает, какая колонка чья",
+            "группировку строк через отдельные <tbody> с заголовком в th scope=\"colgroup\": без неё девять признаков подряд не читаются",
+            "настоящую разметку таблицы со scope у заголовков: сетка из div'ов оставляет скринридер без контекста",
+            "горизонтальную прокрутку вместо разбиения на карточки: сравнение, разложенное по карточкам, перестаёт быть сравнением",
+            "слово вместо голого значка в ячейках со значением true: галочка без подписи не читается при печати",
+            "локальную палитру --vibeui-pricing-004-* и кнопку «Выбрать» в каждой колонке — таблица должна заканчиваться действием"
+          ],
+          "adapt": [
+            "тексты eyebrow и title над таблицей",
+            "массив plans: name, price, href и флаг featured у колонок",
+            "массив groups: заголовок раздела и строки rows со значениями values",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "Порядок значений в values обязан совпадать с порядком колонок в plans: блок сопоставляет их по индексу.",
+            "Колонок рассчитано три: четвёртая потребует правки min-width и, скорее всего, сломает залипающую шапку на телефоне.",
+            "Значение может быть строкой, true или false — смешивайте осознанно, иначе колонка выглядит разнобоем.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что именно меняется при переходе на следующий тариф",
+            "maxLength": 90
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Сравнение",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A full plan comparison table: rows grouped into sections, a sticky header with prices and buttons, and side-scrolling on a narrow block.",
+            "ai": {
+              "summary": "A light plan comparison section: a headline and a three-column table with prices and buttons in a sticky header, its rows split into three sections of three criteria. One file, zero dependencies.",
+              "preserve": [
+                "the sticky price header: across nine rows the reader otherwise forgets which column is which",
+                "the row grouping through separate <tbody> elements with a th scope=\"colgroup\" heading: without it nine criteria in a row do not get read",
+                "the real table markup with scope on the headers: a grid of divs leaves screen readers without context",
+                "horizontal scrolling instead of a card breakdown: a comparison split into cards stops being a comparison",
+                "the word instead of a bare glyph in true cells: a tick with no caption does not survive print",
+                "the local --vibeui-pricing-004-* palette and the «choose» button in every column — a table has to end in an action"
+              ],
+              "adapt": [
+                "the eyebrow and title copy above the table",
+                "the plans array: name, price, href and the featured flag of each column",
+                "the groups array: the section heading and the rows with their values",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "The order of values must match the order of plans: the block pairs them by index.",
+                "The layout is sized for three columns: a fourth needs the min-width adjusting and will most likely break the sticky header on a phone.",
+                "A value may be a string, true or false — mix them deliberately or the column looks ragged.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing004 plans={[{ name: \"Team\", price: \"$19/mo\", href: \"#\", featured: true }]} groups={[{ title: \"Catalog\", rows: [{ feature: \"Sections\", values: [\"10\", \"All\", \"All\"] }] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "What actually changes when you move up a plan"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Comparison"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-005",
+      "type": "registry:block",
+      "title": "Single Plan Panel",
+      "description": "Один тариф и всё, что в него входит: цена со старой ценой слева, полный перечень в две колонки справа. Выбирать не из чего, и секция этим пользуется.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-005/pricing-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-005.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-005-*, тёмная фиолетовая база с тёплым акцентом. Старая цена размечена как <s>: это не оформление, а семантика — скринридер объявит её как удалённую. Перечень длинный намеренно: у одного тарифа список входящего заменяет сравнение с соседями, поэтому он занимает большую долю карточки и раскладывается в две колонки от 34rem. Раскладка карточки: один столбец до 56rem, две колонки от 56rem container-запросом.",
+      "meta": {
+        "tags": ["pricing", "single", "dark", "included"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing005",
+          "usage": "<Pricing005 price=\"9 900 ₽\" period=\"в год\" oldPrice=\"14 900 ₽\" included={[\"Все секции каталога\"]} />",
+          "summary": "Тёмная секция с одним тарифом: слева eyebrow, заголовок, описание, цена со старой ценой и две кнопки с гарантией, справа перечень из десяти пунктов в две колонки. Один файл, ноль зависимостей.",
+          "preserve": [
+            "единственный тариф без соседей: как только появляется второй, теряется приём — длинный перечень вместо сравнения",
+            "старую цену в <s>: скринридер обязан объявить её как удалённую, а не прочитать как вторую цену",
+            "длинный перечень входящего в две колонки: он и есть замена сравнительной таблицы",
+            "строку о гарантии рядом с кнопками: обещание возврата работает в момент решения, а не в подвале страницы",
+            "тёмную локальную палитру --vibeui-pricing-005-* и container-запрос, разводящий карточку от 56rem",
+            "семантику: перечень как <ul>, заголовок перечня как h3, обе CTA как <a href>"
+          ],
+          "adapt": [
+            "тексты eyebrow, title, lede и guarantee",
+            "значения price, period и oldPrice",
+            "includedTitle и список included до десяти пунктов",
+            "подписи и адреса CTA action и secondary, акцентный цвет через проп accent"
+          ],
+          "notes": [
+            "Пунктов перечня выводится не больше десяти: длинный список перестаёт читаться и требует группировки, как в pricing-018.",
+            "oldPrice необязательна: без неё строка цены остаётся корректной, но не убирайте её ради «честности», если скидка настоящая.",
+            "Цена — строка, блок ничего не форматирует и не пересчитывает валюту.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "price",
+            "label": "Цена",
+            "type": "text",
+            "default": "9 900 ₽",
+            "maxLength": 24
+          },
+          {
+            "prop": "period",
+            "label": "Период",
+            "type": "text",
+            "default": "в год",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "One plan and everything in it: the price with a struck-through old price on the left, the full list in two columns on the right. There is nothing to choose between, and the section uses that.",
+            "ai": {
+              "summary": "A dark single-plan section: an eyebrow, headline, description, a price with an old price and two buttons with a guarantee on the left; a ten-item list in two columns on the right. One file, zero dependencies.",
+              "preserve": [
+                "the single plan with no neighbours: the moment a second appears, the device — a long list instead of a comparison — is lost",
+                "the old price inside <s>: a screen reader has to announce it as deleted, not read it as a second price",
+                "the long two-column list of what is included: it is the replacement for a comparison table",
+                "the guarantee line next to the buttons: a refund promise works at the moment of decision, not in the page footer",
+                "the dark local --vibeui-pricing-005-* palette and the container query that splits the card from 56rem",
+                "the semantics: the list as a <ul>, its heading as an h3, both CTAs as <a href>"
+              ],
+              "adapt": [
+                "the eyebrow, title, lede and guarantee copy",
+                "the price, period and oldPrice values",
+                "includedTitle and the included list of up to ten items",
+                "the labels and hrefs of the action and secondary CTAs, and the accent colour through the accent prop"
+              ],
+              "notes": [
+                "At most ten list items are rendered: a longer list stops being read and needs grouping, as in pricing-018.",
+                "oldPrice is optional: the price line stays correct without it, but do not drop it for «honesty» if the discount is real.",
+                "The price is a string; the block formats nothing and converts no currency.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing005 price=\"$119\" period=\"per year\" oldPrice=\"$179\" included={[\"Every section in the catalog\"]} />"
+            },
+            "controls": {
+              "price": {
+                "label": "Price",
+                "default": "$119"
+              },
+              "period": {
+                "label": "Period",
+                "default": "per year"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-006",
+      "type": "registry:block",
+      "title": "Volume Calculator",
+      "description": "Калькулятор цены по объёму: ползунок, ступенчатый тариф и живой итог. Сумма складывается по ступеням, поэтому следующая тысяча стоит дешевле предыдущей.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-006/pricing-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-006.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент (\"use client\"): без состояния ползунок остаётся декорацией. Один файл, ноль зависимостей, палитра --vibeui-pricing-006-*, светлая база. Ступени заданы массивом «до скольки — почём», итог считается последовательно по ступеням, а не одной ставкой на весь объём: так работают реальные объёмные тарифы и не возникает скачка цены на границе. Значение объявляется через aria-live, активная ступень подсвечивается. Ползунок — нативный input type=range со стилизованными треком и бегунком для WebKit и Gecko.",
+      "meta": {
+        "tags": ["pricing", "calculator", "slider", "client"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing006",
+          "usage": "<Pricing006 base={990} tiers={[{ upTo: 10000, perUnit: 0.9 }]} defaultVolume={25000} />",
+          "summary": "Светлая секция с калькулятором: ползунок объёма, подписи границ диапазона, список ступеней тарифа с подсветкой активной и панель итога с суммой, пояснением и кнопкой. Один файл, ноль зависимостей.",
+          "preserve": [
+            "\"use client\" в начале файла: секция считает сумму на месте, и без состояния ползунок бессмысленен",
+            "ступенчатый расчёт вместо одной ставки: одна ставка на весь объём даёт скачок цены на границе ступени и выглядит как обман",
+            "aria-live у итога: пересчёт должен быть слышен, а не только виден",
+            "нативный input type=range: перетаскивание, стрелки клавиатуры и поддержка тачскрина достаются от браузера",
+            "подсветку активной ступени в списке: без неё непонятно, по какой ставке считается текущий объём",
+            "локальную палитру --vibeui-pricing-006-* и container-запрос, разводящий карточку в две колонки от 52rem"
+          ],
+          "adapt": [
+            "тексты eyebrow и title, подписи unitLabel и unitOne",
+            "границы min, max, шаг step и стартовое значение defaultVolume",
+            "абонплату base и массив ступеней tiers",
+            "подпись и адрес кнопки action, текст note и акцентный цвет через проп accent"
+          ],
+          "notes": [
+            "Последняя ступень должна иметь upTo: Number.POSITIVE_INFINITY, иначе объём сверх неё не будет посчитан.",
+            "Ступени обязаны идти по возрастанию upTo: расчёт идёт последовательно и не сортирует массив.",
+            "Числа форматируются через Intl с локалью ru-RU — для другой локали правьте константы в файле.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Посчитайте цену под свой объём",
+            "maxLength": 80
+          },
+          {
+            "prop": "defaultVolume",
+            "label": "Стартовый объём",
+            "type": "number",
+            "default": 25000,
+            "min": 1000,
+            "max": 200000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A volume price calculator: a slider, a tiered rate and a live total. The sum is accumulated tier by tier, so the next thousand costs less than the last.",
+            "ai": {
+              "summary": "A light calculator section: a volume slider, range bounds, a list of rate tiers with the active one highlighted, and a total panel with the sum, an explanation and a button. One file, zero dependencies.",
+              "preserve": [
+                "\"use client\" at the top of the file: the section computes the sum in place, and without state the slider is decoration",
+                "the tiered calculation instead of a single rate: one rate across the whole volume creates a price jump at the tier boundary and reads as a trick",
+                "aria-live on the total: the recalculation has to be heard, not only seen",
+                "the native input type=range: dragging, arrow keys and touch support all come from the browser",
+                "the highlight on the active tier: without it there is no telling which rate the current volume is charged at",
+                "the local --vibeui-pricing-006-* palette and the container query that splits the card into two columns from 52rem"
+              ],
+              "adapt": [
+                "the eyebrow and title copy and the unitLabel and unitOne captions",
+                "the min and max bounds, the step and the starting defaultVolume",
+                "the base fee and the tiers array",
+                "the label and href of the action button, the note copy and the accent colour through the accent prop"
+              ],
+              "notes": [
+                "The last tier must carry upTo: Number.POSITIVE_INFINITY, otherwise volume beyond it is never charged.",
+                "The tiers must ascend by upTo: the calculation runs sequentially and does not sort the array.",
+                "Numbers are formatted through Intl with the ru-RU locale — edit the constants in the file for another locale.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing006 base={990} tiers={[{ upTo: 10000, perUnit: 0.9 }]} defaultVolume={25000} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Price it against your own volume"
+              },
+              "defaultVolume": {
+                "label": "Starting volume",
+                "default": 25000
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-007",
+      "type": "registry:block",
+      "title": "Enterprise Contact",
+      "description": "Корпоративный тариф без цены, зато с формой: слева четыре аргумента за договор, справа короткая форма из четырёх полей и прямой адрес почты.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-007/pricing-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-007.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-007-*, светлая холодная база. Полей ровно столько, сколько нужно менеджеру для первого ответа: имя, рабочая почта, размер команды и задача. Размер команды — <select>, а не свободный текст: это единственное поле, по которому заявку сортируют. У всех полей есть <label> и id, подсветка на :focus-visible. Обработчика отправки нет: блок серверный, подключите action или серверное действие. От 34rem имя и почта встают в пару, от 56rem форма уходит в правую колонку.",
+      "meta": {
+        "tags": ["pricing", "enterprise", "contact", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing007",
+          "usage": "<Pricing007 formTitle=\"Оставьте заявку\" sizes={[\"до 10 человек\", \"10–50 человек\"]} />",
+          "summary": "Светлая корпоративная секция: слева заголовок, описание и четыре аргумента с маркерами плюс прямой адрес почты, справа форма из имени, рабочей почты, размера команды и задачи. Один файл, ноль зависимостей.",
+          "preserve": [
+            "четыре поля и не больше: каждое лишнее поле в корпоративной форме стоит процентов конверсии",
+            "размер команды как <select>: это единственное поле, по которому заявку сортируют, и свободный текст здесь бесполезен",
+            "прямой адрес почты рядом с формой: часть людей никогда не заполнит форму и просто напишет письмо",
+            "отсутствие цены: у корпоративного тарифа она считается под задачу, и подставленная сумма обесценивает разговор",
+            "<label> у каждого поля и подсветку на :focus-visible: форма без подписей недоступна с клавиатуры и со скринридером",
+            "локальную палитру --vibeui-pricing-007-* и container-запросы, собирающие пару полей от 34rem и две колонки от 56rem"
+          ],
+          "adapt": [
+            "тексты eyebrow, title, lede и privacy",
+            "массив points: заголовок и описание каждого аргумента",
+            "formTitle, submitLabel и список вариантов sizes в поле размера команды",
+            "объект contact с прямым адресом и акцентный цвет через проп accent"
+          ],
+          "notes": [
+            "У формы нет обработчика: подключите action, серверное действие или собственный перехват отправки.",
+            "Первый пункт списка размеров — заглушка с пустым значением и disabled: не удаляйте её, иначе поле будет выглядеть заполненным.",
+            "Аргументов выводится ровно четыре: пятый ломает вертикальный ритм левой колонки.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Цену считаем под задачу, а не по прайсу",
+            "maxLength": 80
+          },
+          {
+            "prop": "formTitle",
+            "label": "Заголовок формы",
+            "type": "text",
+            "default": "Оставьте заявку",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An enterprise plan with no price but with a form: four arguments for a contract on the left, a short four-field form and a direct email address on the right.",
+            "ai": {
+              "summary": "A light enterprise section: a headline, a description and four bulleted arguments plus a direct email on the left; a form asking for name, work email, team size and task on the right. One file, zero dependencies.",
+              "preserve": [
+                "four fields and no more: every extra field in an enterprise form costs conversion points",
+                "team size as a <select>: it is the one field the request gets sorted by, and free text is useless there",
+                "the direct email next to the form: some people will never fill a form and simply write a letter",
+                "the absence of a price: an enterprise plan is quoted against the task, and a printed figure cheapens the conversation",
+                "a <label> on every field and the :focus-visible highlight: a form without labels is unusable by keyboard and screen reader",
+                "the local --vibeui-pricing-007-* palette and the container queries that pair the fields from 34rem and split the columns from 56rem"
+              ],
+              "adapt": [
+                "the eyebrow, title, lede and privacy copy",
+                "the points array: the heading and description of every argument",
+                "formTitle, submitLabel and the sizes options in the team-size field",
+                "the contact object with the direct address and the accent colour through the accent prop"
+              ],
+              "notes": [
+                "The form has no handler: wire up an action, a server action or your own submit interception.",
+                "The first option in the size list is a disabled empty placeholder: do not remove it or the field will look pre-filled.",
+                "Exactly four arguments are rendered: a fifth breaks the vertical rhythm of the left column.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing007 formTitle=\"Tell us about the project\" sizes={[\"under 10 people\", \"10–50 people\"]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "We quote against the task, not against a price list"
+              },
+              "formTitle": {
+                "label": "Form heading",
+                "default": "Tell us about the project"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-008",
+      "type": "registry:block",
+      "title": "Free Versus Paid",
+      "description": "Бесплатный тариф рядом с платным: светлая карточка против тёмной. В платной список делится на «всё из бесплатного» и «и сверх того», без повторов.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-008/pricing-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-008.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-008-*, светлая база с тёмной платной карточкой. Платная карточка помечается атрибутом data-paid и переопределяет фон, цвета подписей и стиль кнопки. Список платного разбит на две части заголовком-разделителем: повторять общие пункты во второй колонке значит заставлять сравнивать строки глазами. Кнопки прижаты к низу через margin-top:auto. Раскладка: столбец до 48rem, две колонки от 48rem container-запросом.",
+      "meta": {
+        "tags": ["pricing", "free", "two-plans", "contrast"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing008",
+          "usage": "<Pricing008 free={{ name: \"Бесплатно\", price: \"0 ₽\", caption: \"Для одного лендинга.\", features: [\"10 секций\"], action: { label: \"Начать\", href: \"#\" } }} />",
+          "summary": "Светлая секция из двух тарифов: слева бесплатный на белой карточке, справа платный на тёмной с разделённым списком «всё из бесплатного» и «и сверх того». Один файл, ноль зависимостей.",
+          "preserve": [
+            "контраст материала между карточками: светлая против тёмной работает быстрее, чем цветная рамка вокруг платной",
+            "разделение списка платного на «всё из бесплатного» и «и сверх того»: повтор общих пунктов заставляет сравнивать строки глазами",
+            "ровно два тарифа: третий превращает блок в обычную сетку и требует pricing-002",
+            "кнопки, прижатые к низу через margin-top:auto: карточки должны заканчиваться на одной линии",
+            "локальную палитру --vibeui-pricing-008-* с отдельными переменными для тёмной карточки",
+            "container-запрос, разводящий карточки в две колонки от 48rem ширины блока"
+          ],
+          "adapt": [
+            "тексты title и lede в шапке и note под карточками",
+            "объект free: name, price, caption, features и кнопку action",
+            "объект paid: name, price, period, caption, features, extra и кнопку action",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "В free.features выводится до шести пунктов, в paid.features — до трёх, в paid.extra — до шести.",
+            "Не дублируйте в extra пункты бесплатного тарифа: первая часть списка уже сказала, что они включены.",
+            "Заголовок-разделитель «И сверх того» задан в разметке: чтобы поменять формулировку, правьте JSX.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Два варианта, между которыми легко выбрать",
+            "maxLength": 80
+          },
+          {
+            "prop": "note",
+            "label": "Примечание",
+            "type": "text",
+            "default": "Перейти с бесплатного на платный можно в любой момент — установленные секции остаются вашими.",
+            "maxLength": 160
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A free plan next to a paid one: a light card against a dark one. The paid list is split into «everything in free» and «and beyond that», with no repeats.",
+            "ai": {
+              "summary": "A light two-plan section: the free plan on a white card, the paid plan on a dark one with its list split into «everything in free» and «and beyond that». One file, zero dependencies.",
+              "preserve": [
+                "the contrast of material between the cards: light against dark reads faster than a coloured border on the paid one",
+                "splitting the paid list into «everything in free» and «and beyond that»: repeating shared items forces line-by-line comparison",
+                "exactly two plans: a third turns the block into an ordinary grid and calls for pricing-002",
+                "the buttons pinned to the bottom with margin-top:auto: the cards have to end on one line",
+                "the local --vibeui-pricing-008-* palette with its separate variables for the dark card",
+                "the container query that splits the cards into two columns from 48rem of block width"
+              ],
+              "adapt": [
+                "the title and lede copy in the header and the note under the cards",
+                "the free object: name, price, caption, features and the action button",
+                "the paid object: name, price, period, caption, features, extra and the action button",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "free.features renders up to six items, paid.features up to three and paid.extra up to six.",
+                "Do not repeat free-plan items inside extra: the first half of the list has already said they are included.",
+                "The «and beyond that» divider caption lives in the markup: edit the JSX to reword it.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing008 free={{ name: \"Free\", price: \"$0\", caption: \"For one landing page.\", features: [\"10 sections\"], action: { label: \"Start\", href: \"#\" } }} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Two options, an easy choice"
+              },
+              "note": {
+                "label": "Note",
+                "default": "You can move from free to paid at any time — the sections you installed stay yours."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-009",
+      "type": "registry:block",
+      "title": "Currency Picker Pricing",
+      "description": "Тарифы с выбором валюты: три суммы лежат в разметке, лишние скрыты селектором :has(). Цены округлены под рынок, а не пересчитаны по курсу.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-009/pricing-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-009.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-009-*, светлая бирюзовая база. Три радиокнопки задают валюту, нужная сумма показывается правилом вида [data-vibeui-block=\"pricing-009\"]:has([data-cur=\"usd\"]:checked) [data-amount=\"usd\"]. Инпуты уводятся с экрана, но остаются в потоке фокуса, кольцо рисуется на подписи. Все три суммы прописаны в данных вручную: локальная цена всегда округлена под рынок, а не получена умножением. Раскладка: столбец, три колонки от 56rem container-запросом.",
+      "meta": {
+        "tags": ["pricing", "currency", "no-js", "international"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing009",
+          "usage": "<Pricing009 plans={[{ name: \"Команда\", description: \"Для команд.\", amounts: { rub: \"1 490 ₽\", usd: \"$19\", eur: \"€18\" }, features: [\"До пяти участников\"], action: { label: \"Попробовать\", href: \"#\" } }]} />",
+          "summary": "Светлая секция тарифов с переключателем валюты: заголовок с описанием, переключатель на три валюты и три карточки, в которых сумма меняется на CSS. Один файл, ноль зависимостей.",
+          "preserve": [
+            "три суммы в разметке и переключение на :has(): цена не «прыгает» после гидратации и видна при выключенном JavaScript",
+            "ручные суммы вместо пересчёта по курсу: локальная цена округляется под рынок, а умножение даёт нечитаемые «1 487 ₽»",
+            "радиокнопки в потоке фокуса: display:none у них сломал бы переключение с клавиатуры",
+            "подпись валюты со знаком и кодом: один знак «$» не различает доллары разных стран",
+            "локальную палитру --vibeui-pricing-009-* и container-запросы, собирающие шапку в строку от 34rem и тарифы в три колонки от 56rem",
+            "примечание под тарифами о валюте списания: без него выбор валюты выглядит как справочная конвертация"
+          ],
+          "adapt": [
+            "тексты title, lede и note, подпись currencyLabel у переключателя",
+            "массив plans: name, description, объект amounts с тремя суммами и до пяти features",
+            "подписи и адреса кнопок action у тарифов",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "Набор валют зафиксирован в константе CURRENCIES и в селекторах: добавление четвёртой требует правки и того, и другого.",
+            "Имя радиогруппы и id заданы строками с префиксом блока: два экземпляра на одной странице будут переключаться вместе.",
+            "Объект amounts обязан содержать все три ключа, иначе в одном из режимов цена исчезнет.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Цена в вашей валюте, без пересчёта по курсу",
+            "maxLength": 80
+          },
+          {
+            "prop": "currencyLabel",
+            "label": "Подпись переключателя",
+            "type": "text",
+            "default": "Валюта",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Plans with a currency picker: all three amounts live in the markup and the extras are hidden with :has(). The prices are rounded per market, not converted at a rate.",
+            "ai": {
+              "summary": "A light pricing section with a currency switch: a headline with a description, a three-currency switch and three cards whose amount swaps in CSS. One file, zero dependencies.",
+              "preserve": [
+                "the three amounts in the markup and the :has() switching: the price never jumps after hydration and shows with JavaScript off",
+                "hand-written amounts instead of rate conversion: a local price is rounded to its market, while multiplication yields unreadable figures",
+                "the radio buttons staying in the focus order: display:none on them would break keyboard switching",
+                "the currency label carrying both symbol and code: a lone «$» does not distinguish dollars of different countries",
+                "the local --vibeui-pricing-009-* palette and the container queries that line up the header from 34rem and the plans from 56rem",
+                "the note under the plans about the billing currency: without it the picker reads as a reference conversion"
+              ],
+              "adapt": [
+                "the title, lede and note copy and the currencyLabel caption on the switch",
+                "the plans array: name, description, the amounts object with three sums and up to five features",
+                "the labels and hrefs of the plan action buttons",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "The currency set is pinned in the CURRENCIES constant and in the selectors: a fourth needs both edited.",
+                "The radio group name and the ids are block-prefixed strings: two instances on one page switch together.",
+                "The amounts object must carry all three keys, otherwise the price vanishes in one of the modes.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing009 plans={[{ name: \"Team\", description: \"For teams.\", amounts: { rub: \"1 490 ₽\", usd: \"$19\", eur: \"€18\" }, features: [\"Up to five seats\"], action: { label: \"Start\", href: \"#\" } }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Priced in your currency, not converted at a rate"
+              },
+              "currencyLabel": {
+                "label": "Switch label",
+                "default": "Currency"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-010",
+      "type": "registry:block",
+      "title": "Trial Timeline",
+      "description": "Тариф с пробным периодом: слева число дней и цена после, справа лента событий — что произойдёт сегодня, за три дня до конца и в день окончания.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-010/pricing-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-010.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-010-*, светлая зелёная база. Лента событий размечена как <ol>: порядок дней важен и должен читаться голосом, а не только цветными точками. Соединительная линия — ::before у события, у последнего скрыта. Главный страх пробного периода — «забуду отменить и спишут», поэтому ответ на него стоит прямо в ленте и продублирован тремя короткими гарантиями под кнопкой. Раскладка: столбец до 56rem, две колонки от 56rem container-запросом.",
+      "meta": {
+        "tags": ["pricing", "trial", "timeline", "light"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing010",
+          "usage": "<Pricing010 trialDays={14} price=\"1 490 ₽\" timeline={[{ day: \"Сегодня\", title: \"Открывается каталог\", description: \"Карта не нужна.\" }]} />",
+          "summary": "Светлая секция пробного периода: слева бейдж с числом дней, цена после окончания, кнопка и три гарантии; справа лента из трёх событий с датами и описаниями. Один файл, ноль зависимостей.",
+          "preserve": [
+            "ленту событий вместо списка возможностей: пробный период продаётся спокойствием, а не набором функций",
+            "событие об окончании с явным «списания не будет»: это главный страх пользователя, и прятать ответ в мелкий шрифт нельзя",
+            "разметку <ol> для ленты: порядок дней и есть содержание",
+            "цену после окончания рядом с числом дней: пробный период без указания следующей цены выглядит уловкой",
+            "локальную палитру --vibeui-pricing-010-* и container-запрос, разводящий колонки от 56rem ширины блока",
+            "три коротких гарантии под кнопкой: они дублируют ленту в момент решения"
+          ],
+          "adapt": [
+            "тексты eyebrow, title и lede",
+            "число trialDays, значения price и period",
+            "массив timeline: day, title и description каждого события",
+            "список reassurance, кнопку action и акцентный цвет через проп accent"
+          ],
+          "notes": [
+            "Событий выводится не больше четырёх: длинная лента превращает секцию в инструкцию.",
+            "Даты в day — обычный текст: блок ничего не считает от trialDays и не связывает их между собой.",
+            "Если у вас всё-таки есть автосписание, перепишите последнее событие честно — иначе секция обещает то, чего нет.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Четырнадцать дней, о которых нечего беспокоиться",
+            "maxLength": 90
+          },
+          {
+            "prop": "trialDays",
+            "label": "Дней пробного периода",
+            "type": "number",
+            "default": 14,
+            "min": 1,
+            "max": 90
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A plan with a trial: the number of days and the price afterwards on the left, a timeline on the right — what happens today, three days before the end and on the final day.",
+            "ai": {
+              "summary": "A light trial section: a day-count badge, the price after the trial, a button and three reassurances on the left; a three-event timeline with dates and descriptions on the right. One file, zero dependencies.",
+              "preserve": [
+                "the timeline instead of a feature list: a trial is sold on peace of mind, not on a set of functions",
+                "the closing event stating plainly that nothing will be charged: this is the user's main fear and the answer must not hide in fine print",
+                "the <ol> markup for the timeline: the order of the days is the content",
+                "the after-trial price next to the day count: a trial that never names the next price looks like a trap",
+                "the local --vibeui-pricing-010-* palette and the container query that splits the columns from 56rem of block width",
+                "the three short reassurances under the button: they echo the timeline at the moment of decision"
+              ],
+              "adapt": [
+                "the eyebrow, title and lede copy",
+                "the trialDays number and the price and period values",
+                "the timeline array: day, title and description of every event",
+                "the reassurance list, the action button and the accent colour through the accent prop"
+              ],
+              "notes": [
+                "At most four events are rendered: a long timeline turns the section into a manual.",
+                "The dates in day are plain text: the block computes nothing from trialDays and ties them to nothing.",
+                "If you do charge automatically, rewrite the last event honestly — otherwise the section promises what does not exist.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing010 trialDays={14} price=\"$19\" timeline={[{ day: \"Today\", title: \"The catalog opens\", description: \"No card needed.\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Fourteen days with nothing to worry about"
+              },
+              "trialDays": {
+                "label": "Trial days",
+                "default": 14
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-011",
+      "type": "registry:block",
+      "title": "Billing FAQ",
+      "description": "Частые вопросы именно о деньгах: гармошка на <details>, работает без JavaScript, ищется поиском по странице и печатается развёрнутой.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-011/pricing-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-011.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-011-*, светлая база. Раскрытие построено на <details>/<summary>: без скрипта, с поддержкой браузерного поиска по странице и корректной печатью. Нативный маркер убран через list-style:none и ::-webkit-details-marker, вместо него плюс из двух псевдоэлементов, который превращается в минус по [open]. Первый вопрос открыт: пустая гармошка выглядит как список ссылок. Раскладка: столбец до 54rem, две колонки от 54rem container-запросом.",
+      "meta": {
+        "tags": ["pricing", "faq", "details", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing011",
+          "usage": "<Pricing011 questions={[{ question: \"Что будет при отмене?\", answer: \"Установленное остаётся у вас.\", open: true }]} />",
+          "summary": "Светлая секция вопросов о цене: слева заголовок с описанием и карточка с прямым адресом почты, справа гармошка из пяти вопросов на <details> с собственным маркером-плюсом. Один файл, ноль зависимостей.",
+          "preserve": [
+            "<details>/<summary> вместо самодельной гармошки: браузерный поиск по странице находит текст в закрытых блоках, а скриптовая гармошка — нет",
+            "собственный маркер-плюс: нативный треугольник выглядит по-разному в разных браузерах и ломает ритм списка",
+            "первый вопрос открытым: закрытая гармошка читается как список ссылок и не показывает, что внутри ответы",
+            "тематику блока — только деньги: смешивать сюда продуктовые вопросы значит потерять смысл секции",
+            "карточку с прямым адресом: вопрос, которого нет в списке, должен куда-то вести",
+            "локальную палитру --vibeui-pricing-011-* и container-запрос, разводящий колонки от 54rem ширины блока"
+          ],
+          "adapt": [
+            "тексты eyebrow, title и lede в левой колонке",
+            "массив questions: вопрос, ответ и флаг open у первого",
+            "объект contact: текст, подпись и адрес ссылки",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "Вопросов выводится не больше восьми: длинный FAQ на странице тарифов отпугивает сильнее, чем отсутствие ответов.",
+            "Флаг open ставьте ровно одному вопросу: несколько раскрытых блоков растягивают секцию на два экрана.",
+            "Ответ — один абзац: списки и подзаголовки внутри превращают FAQ в документацию.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что обычно спрашивают перед оплатой",
+            "maxLength": 80
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Вопросы о деньгах",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Frequently asked questions about money specifically: a <details> accordion that works without JavaScript, is found by in-page search and prints expanded.",
+            "ai": {
+              "summary": "A light pricing-FAQ section: a headline with a description and a direct-email card on the left; a five-question <details> accordion with its own plus marker on the right. One file, zero dependencies.",
+              "preserve": [
+                "<details>/<summary> instead of a hand-rolled accordion: in-page search finds text inside closed blocks, a scripted accordion hides it",
+                "the custom plus marker: the native triangle looks different in every browser and breaks the rhythm of the list",
+                "the first question open: a closed accordion reads as a list of links and never shows that answers live inside",
+                "the money-only scope of the block: mixing product questions in loses the point of the section",
+                "the direct-email card: a question that is not on the list has to lead somewhere",
+                "the local --vibeui-pricing-011-* palette and the container query that splits the columns from 54rem of block width"
+              ],
+              "adapt": [
+                "the eyebrow, title and lede copy in the left column",
+                "the questions array: the question, the answer and the open flag on the first one",
+                "the contact object: its text, caption and link address",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "At most eight questions are rendered: a long FAQ on a pricing page scares people more than missing answers.",
+                "Set open on exactly one question: several expanded blocks stretch the section across two screens.",
+                "An answer is one paragraph: lists and subheadings inside turn the FAQ into documentation.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing011 questions={[{ question: \"What happens if I cancel?\", answer: \"What you installed stays yours.\", open: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "What people ask before paying"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Money questions"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-012",
+      "type": "registry:block",
+      "title": "Refund Guarantee",
+      "description": "Гарантия возврата как процедура, а не штамп: печать с числом дней слева, три шага возврата с точными сроками справа и условия отдельным абзацем.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-012/pricing-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-012.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-012-*, тёплая светлая база. Печать нарисована коническим градиентом с пунктирным внутренним кольцом на ::before — ни картинки, ни шрифтовой иконки. Шаги размечены как <ol> с нумерованными кружками. Условия вынесены отдельным абзацем нормального кегля, а не сноской шестым: спрятанные условия читаются как подвох. Раскладка: столбец до 54rem, печать и текст в две колонки от 54rem container-запросом.",
+      "meta": {
+        "tags": ["pricing", "guarantee", "refund", "trust"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing012",
+          "usage": "<Pricing012 days={30} daysLabel=\"дней на возврат\" price=\"1 490 ₽\" />",
+          "summary": "Светлая секция гарантии: круглая печать с числом дней, заголовок с описанием, три шага процедуры возврата с точными сроками, цена с кнопкой и абзац условий. Один файл, ноль зависимостей.",
+          "preserve": [
+            "изложение гарантии как процедуры: обещание «вернём деньги» стоит ровно столько, сколько понятно про сроки и способ",
+            "точные сроки в шагах: «за один рабочий день» и «5–10 дней» — это и есть содержание гарантии",
+            "условия отдельным абзацем нормального кегля: сноска шестым кеглем читается как попытка спрятать оговорку",
+            "печать, нарисованную градиентом: она держит композицию слева и не требует ни картинки, ни иконочного шрифта",
+            "локальную палитру --vibeui-pricing-012-* и container-запросы, собирающие подвал в строку от 34rem и колонки от 54rem",
+            "семантику: шаги как <ol>, печать помечена aria-hidden, кнопка как <a href>"
+          ],
+          "adapt": [
+            "тексты eyebrow, title, lede и terms",
+            "число days и подпись daysLabel на печати",
+            "массив steps: заголовок и описание каждого шага",
+            "значения price и period, кнопку action и акцентный цвет через проп accent"
+          ],
+          "notes": [
+            "Шагов выводится не больше четырёх: длинная процедура выглядит как препятствие, а не как гарантия.",
+            "Не пишите в terms условий, которых нет в договоре: этот абзац читают внимательнее заголовка.",
+            "Печать помечена aria-hidden: число дней обязано повторяться в тексте заголовка или описания.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "days",
+            "label": "Дней на возврат",
+            "type": "number",
+            "default": 30,
+            "min": 1,
+            "max": 365
+          },
+          {
+            "prop": "daysLabel",
+            "label": "Подпись печати",
+            "type": "text",
+            "default": "дней на возврат",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A refund guarantee written as a procedure, not a stamp: a day-count seal on the left, three refund steps with exact timings on the right and the terms in their own paragraph.",
+            "ai": {
+              "summary": "A light guarantee section: a round day-count seal, a headline with a description, three steps of the refund procedure with exact timings, a price with a button and a terms paragraph. One file, zero dependencies.",
+              "preserve": [
+                "stating the guarantee as a procedure: «we refund you» is worth exactly as much as the clarity about timings and method",
+                "the exact timings in the steps: «within one working day» and «5–10 days» are the substance of the guarantee",
+                "the terms as their own paragraph at normal size: fine print reads as an attempt to hide a caveat",
+                "the gradient-drawn seal: it anchors the left of the composition without an image or an icon font",
+                "the local --vibeui-pricing-012-* palette and the container queries that line up the footer from 34rem and the columns from 54rem",
+                "the semantics: the steps as an <ol>, the seal aria-hidden, the button as an <a href>"
+              ],
+              "adapt": [
+                "the eyebrow, title, lede and terms copy",
+                "the days number and the daysLabel caption on the seal",
+                "the steps array: the heading and description of every step",
+                "the price and period values, the action button and the accent colour through the accent prop"
+              ],
+              "notes": [
+                "At most four steps are rendered: a long procedure reads as an obstacle rather than a guarantee.",
+                "Do not put terms into the paragraph that are not in the contract: this paragraph gets read more carefully than the headline.",
+                "The seal is aria-hidden: the day count has to be repeated in the heading or the description.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing012 days={30} daysLabel=\"days to refund\" price=\"$19\" />"
+            },
+            "controls": {
+              "days": {
+                "label": "Refund days",
+                "default": 30
+              },
+              "daysLabel": {
+                "label": "Seal caption",
+                "default": "days to refund"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-013",
+      "type": "registry:block",
+      "title": "Per Seat Pricing",
+      "description": "Тариф для команд с ценой за место: счётчик участников на кнопках и <output>, живой пересчёт счёта и явное указание, сколько мест входит в тариф.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-013/pricing-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-013.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент (\"use client\"): без состояния счётчик мест бессмысленен. Один файл, ноль зависимостей, палитра --vibeui-pricing-013-*, светлая база. Число мест меняется парой кнопок, а не текстовым полем со стрелками: значение нельзя испортить вставкой из буфера, а <output> с aria-live объявляет пересчёт голосом. Кнопки блокируются на границах диапазона, а не молча игнорируют нажатие. Счёт справа показывает включённые места, дополнительные и итог. Раскладка: столбец до 52rem, две колонки от 52rem container-запросом.",
+      "meta": {
+        "tags": ["pricing", "seats", "team", "client"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing013",
+          "usage": "<Pricing013 perSeat={390} includedSeats={3} defaultSeats={8} maxSeats={50} />",
+          "summary": "Светлая секция тарифа за место: слева счётчик участников с подсказкой о включённых местах и список возможностей, справа счёт с разбивкой и итогом плюс кнопка. Один файл, ноль зависимостей.",
+          "preserve": [
+            "\"use client\" в начале файла: счётчик и пересчёт счёта работают только с состоянием",
+            "счётчик на кнопках с <output> вместо текстового поля: значение нельзя испортить вставкой, а aria-live объявляет пересчёт",
+            "блокировку кнопок на границах диапазона: заблокированная кнопка объясняет предел, а молча проигнорированное нажатие — нет",
+            "явное указание включённых мест: тариф «за место» без базы читается как обман при первом же счёте",
+            "разбивку счёта на включённое и дополнительное: итог без строк выглядит взятым с потолка",
+            "локальную палитру --vibeui-pricing-013-* и container-запрос, разводящий карточку от 52rem ширины блока"
+          ],
+          "adapt": [
+            "тексты eyebrow, title, lede и note",
+            "цену perSeat, валюту currency и число includedSeats",
+            "границы minSeats и maxSeats и стартовое значение defaultSeats",
+            "список features, кнопку action и акцентный цвет через проп accent"
+          ],
+          "notes": [
+            "Возможностей выводится не больше пяти: список не должен перевешивать счётчик.",
+            "Цена считается как (мест − включено) × perSeat: скидок за объём здесь нет, для них есть pricing-006.",
+            "Числа форматируются через Intl с локалью ru-RU — для другой локали правьте константу в файле.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "perSeat",
+            "label": "Цена за место",
+            "type": "number",
+            "default": 390,
+            "min": 0,
+            "max": 100000
+          },
+          {
+            "prop": "includedSeats",
+            "label": "Мест в тарифе",
+            "type": "number",
+            "default": 3,
+            "min": 0,
+            "max": 50
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A per-seat team plan: a seat stepper built from buttons and an <output>, a live bill recalculation and an explicit count of the seats already included.",
+            "ai": {
+              "summary": "A light per-seat section: a seat stepper with an included-seats hint and a feature list on the left; an itemised bill with a total and a button on the right. One file, zero dependencies.",
+              "preserve": [
+                "\"use client\" at the top of the file: the stepper and the bill only work with state",
+                "the button stepper with an <output> instead of a text field: the value cannot be broken by pasting, and aria-live announces the recalculation",
+                "the buttons disabling at the range bounds: a disabled button explains the limit, a silently ignored click does not",
+                "the explicit count of included seats: a per-seat plan with no base reads as a trick on the very first invoice",
+                "the bill split into included and additional: a total with no lines looks made up",
+                "the local --vibeui-pricing-013-* palette and the container query that splits the card from 52rem of block width"
+              ],
+              "adapt": [
+                "the eyebrow, title, lede and note copy",
+                "the perSeat price, the currency and the includedSeats count",
+                "the minSeats and maxSeats bounds and the starting defaultSeats",
+                "the features list, the action button and the accent colour through the accent prop"
+              ],
+              "notes": [
+                "At most five features are rendered: the list must not outweigh the stepper.",
+                "The price is (seats − included) × perSeat: there are no volume discounts here, pricing-006 covers those.",
+                "Numbers are formatted through Intl with the ru-RU locale — edit the constant in the file for another locale.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing013 perSeat={5} includedSeats={3} defaultSeats={8} maxSeats={50} />"
+            },
+            "controls": {
+              "perSeat": {
+                "label": "Price per seat",
+                "default": 390
+              },
+              "includedSeats": {
+                "label": "Seats included",
+                "default": 3
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-014",
+      "type": "registry:block",
+      "title": "Add-ons Builder",
+      "description": "Конструктор тарифа на чекбоксах: цена каждой допуслуги стоит в её строке, итог складывается на месте и объявляется голосом.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-014/pricing-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-014.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент (\"use client\"): сумма считается на месте. Один файл, ноль зависимостей, палитра --vibeui-pricing-014-*, светлая база. Чекбоксы настоящие, а не квадратики на div: пробел, состояние и группировка достаются от браузера, а своя галочка рисуется псевдоэлементом поверх через :has(input:checked). Строки допуслуг — <label>, поэтому кликабельны целиком. Правая панель повторяет выбранное построчно и подводит итог с aria-live. Раскладка: столбец до 52rem, две колонки от 52rem container-запросом.",
+      "meta": {
+        "tags": ["pricing", "addons", "checkbox", "client"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing014",
+          "usage": "<Pricing014 basePrice={1490} addons={[{ id: \"seats\", title: \"Дополнительные места\", description: \"Пять мест сверх тарифа.\", price: 990, preselected: true }]} />",
+          "summary": "Светлая секция-конструктор: слева базовый тариф и до шести допуслуг чекбоксами с ценой в строке, справа панель со списком выбранного и итогом. Один файл, ноль зависимостей.",
+          "preserve": [
+            "\"use client\" в начале файла: без состояния чекбоксы не пересчитывают итог",
+            "настоящие input type=checkbox: пробел, состояние и объявление скринридером достаются от браузера, а не имитируются",
+            "цену допуслуги в той же строке, что и название: цена, спрятанная в подсказку, заставляет включать услугу вслепую",
+            "строку допуслуги как <label>: кликабельна вся строка, а не только квадратик",
+            "панель итога, повторяющую выбранное построчно: сумма без расшифровки выглядит взятой с потолка",
+            "aria-live у итога и локальную палитру --vibeui-pricing-014-*"
+          ],
+          "adapt": [
+            "тексты eyebrow, title и note",
+            "baseName и basePrice базового тарифа, валюту currency",
+            "массив addons: id, title, description, price и флаг preselected",
+            "кнопку action и акцентный цвет через проп accent"
+          ],
+          "notes": [
+            "Допуслуг выводится не больше шести: длинный конструктор превращается в форму заказа.",
+            "id допуслуги обязан быть уникальным: по нему хранится выбор, дубли ломают переключение.",
+            "Числа форматируются через Intl с локалью ru-RU — для другой локали правьте константу в файле.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "База плюс то, что действительно нужно",
+            "maxLength": 80
+          },
+          {
+            "prop": "basePrice",
+            "label": "Цена базы",
+            "type": "number",
+            "default": 1490,
+            "min": 0,
+            "max": 1000000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A plan builder on checkboxes: every add-on carries its price in its own row, and the total adds up in place and is announced aloud.",
+            "ai": {
+              "summary": "A light builder section: the base plan and up to six add-on checkboxes with in-row prices on the left; a summary panel listing the selection and the total on the right. One file, zero dependencies.",
+              "preserve": [
+                "\"use client\" at the top of the file: without state the checkboxes never recalculate the total",
+                "real input type=checkbox elements: the spacebar, the state and the screen-reader announcement come from the browser rather than being faked",
+                "the add-on price in the same row as its name: a price hidden in a tooltip forces people to opt in blind",
+                "the add-on row as a <label>: the whole row is clickable, not just the square",
+                "the summary panel echoing the selection line by line: a total with no breakdown looks made up",
+                "aria-live on the total and the local --vibeui-pricing-014-* palette"
+              ],
+              "adapt": [
+                "the eyebrow, title and note copy",
+                "the baseName and basePrice of the base plan and the currency",
+                "the addons array: id, title, description, price and the preselected flag",
+                "the action button and the accent colour through the accent prop"
+              ],
+              "notes": [
+                "At most six add-ons are rendered: a long builder turns into an order form.",
+                "Every add-on id must be unique: the selection is keyed by it and duplicates break toggling.",
+                "Numbers are formatted through Intl with the ru-RU locale — edit the constant in the file for another locale.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing014 basePrice={19} addons={[{ id: \"seats\", title: \"Extra seats\", description: \"Five seats above the plan.\", price: 9, preselected: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "The base plus what you actually need"
+              },
+              "basePrice": {
+                "label": "Base price",
+                "default": 1490
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-015",
+      "type": "registry:block",
+      "title": "Receipt Total",
+      "description": "Итог, оформленный как кассовый чек: моноширинные суммы, точечные разделители, скидка и налог отдельными строками до итога, перфорация краёв нарисована маской.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-015/pricing-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-015.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-015-*, бумажная база. Моноширинный шрифт и tabular-nums выстраивают суммы в колонку по разрядам — в чеке это не стилизация, а способ проверить сложение глазами. Позиции размечены как <dl> с парами. Верхний и нижний края вырезаны повторяющимися радиальными градиентами через mask-image с mask-composite: intersect; в браузерах без поддержки composite маска просто не даёт вырезов, и чек остаётся целым. Ширина блока намеренно узкая: чек не должен растягиваться на всю страницу.",
+      "meta": {
+        "tags": ["pricing", "receipt", "invoice", "mono"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing015",
+          "usage": "<Pricing015 documentNumber=\"Счёт № 2026-0418\" total=\"36 525,60 ₽\" taxLabel=\"НДС 20 %\" />",
+          "summary": "Секция-чек: шапка с продавцом, номером и датой, список позиций с уточнениями, подытог, скидка и налог отдельными строками, крупный итог и кнопка оплаты. Один файл, ноль зависимостей.",
+          "preserve": [
+            "моноширинный шрифт и tabular-nums: в чеке это способ проверить сложение глазами, а не декоративный приём",
+            "скидку и налог отдельными строками до итога: «включая НДС» мелким шрифтом порождает споры и возвраты",
+            "перфорацию краёв маской: она делает форму узнаваемой без единой картинки и деградирует безопасно",
+            "узкую максимальную ширину блока: растянутый на всю страницу чек перестаёт читаться как чек",
+            "разметку <dl> для позиций и уточнение под названием позиции",
+            "локальную палитру --vibeui-pricing-015-* и строку о закрывающих документах под кнопкой"
+          ],
+          "adapt": [
+            "merchant, documentNumber и date в шапке чека",
+            "массив lines: title, detail и amount каждой позиции",
+            "подписи и значения subtotal, discount, tax и total",
+            "кнопку action, текст footer и акцентный цвет через проп accent"
+          ],
+          "notes": [
+            "Все суммы — строки: блок ничего не складывает, сходимость подытога, налога и итога на вашей стороне.",
+            "Позиций выводится не больше восьми: длинный чек требует прокрутки и теряет форму.",
+            "Строка скидки скрывается, если передать пустую строку в discount — подписи при этом остаются в пропсах.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "documentNumber",
+            "label": "Номер документа",
+            "type": "text",
+            "default": "Счёт № 2026-0418",
+            "maxLength": 40
+          },
+          {
+            "prop": "total",
+            "label": "Итого",
+            "type": "text",
+            "default": "36 525,60 ₽",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A total laid out as a till receipt: monospaced sums, dotted separators, discount and tax on their own lines before the total, and perforated edges drawn with a mask.",
+            "ai": {
+              "summary": "A receipt section: a header with the merchant, document number and date, a list of line items with details, a subtotal, discount and tax lines, a large total and a pay button. One file, zero dependencies.",
+              "preserve": [
+                "the monospace type and tabular-nums: on a receipt that is how the addition gets checked by eye, not a decorative flourish",
+                "the discount and tax on their own lines before the total: «tax included» in fine print breeds disputes and refunds",
+                "the perforated edges from the mask: they make the shape recognisable without a single image and degrade safely",
+                "the narrow maximum width: a receipt stretched across the page stops reading as a receipt",
+                "the <dl> markup for the line items and the detail line under each item name",
+                "the local --vibeui-pricing-015-* palette and the closing-documents line under the button"
+              ],
+              "adapt": [
+                "the merchant, documentNumber and date in the receipt header",
+                "the lines array: title, detail and amount of every item",
+                "the labels and values of subtotal, discount, tax and total",
+                "the action button, the footer copy and the accent colour through the accent prop"
+              ],
+              "notes": [
+                "Every sum is a string: the block adds nothing up, and making the subtotal, tax and total agree is on you.",
+                "At most eight line items are rendered: a long receipt needs scrolling and loses its shape.",
+                "The discount line disappears if discount is an empty string — the captions stay in the props regardless.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing015 documentNumber=\"Invoice 2026-0418\" total=\"$421.60\" taxLabel=\"VAT 20%\" />"
+            },
+            "controls": {
+              "documentNumber": {
+                "label": "Document number",
+                "default": "Invoice 2026-0418"
+              },
+              "total": {
+                "label": "Total",
+                "default": "$421.60"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-016",
+      "type": "registry:block",
+      "title": "Promo Code Panel",
+      "description": "Поле промокода, которое отвечает сразу: код проверяется на месте, результат объявляется через role=\"status\", старая цена остаётся зачёркнутой рядом с новой.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-016/pricing-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-016.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент (\"use client\"): без состояния поле не проверяет код. Один файл, ноль зависимостей, палитра --vibeui-pricing-016-*, светлая база. Результат проверки объявляется через role=\"status\", а не только подкрашивается зелёным и красным: цвет один не доходит до скринридера и до дальтоника. Ошибочный код не стирается — его оставляют, чтобы человек увидел опечатку. Введённый код приводится к верхнему регистру только при сравнении, а поле отображает его через text-transform. Старая цена размечена как <s>.",
+      "meta": {
+        "tags": ["pricing", "promo", "discount", "client"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing016",
+          "usage": "<Pricing016 price={14880} promos={[{ code: \"VIBE20\", percent: 20, caption: \"Скидка 20 %\" }]} />",
+          "summary": "Светлая секция промокода: карточка тарифа с ценой, поле кода с кнопкой применения, строка результата проверки, примечание об условиях и кнопка перехода к оплате. Один файл, ноль зависимостей.",
+          "preserve": [
+            "\"use client\" в начале файла: проверка кода и пересчёт цены работают только с состоянием",
+            "role=\"status\" у строки результата: цвет один не доходит до скринридера и до дальтоника",
+            "сохранение введённого кода после ошибки: стёртое поле не даёт увидеть опечатку и заставляет вводить заново",
+            "старую цену в <s> рядом с новой: скидка без исходной суммы не читается как скидка",
+            "нормализацию кода при сравнении: пользователь вводит его как угодно, а сверяется он в верхнем регистре без пробелов",
+            "локальную палитру --vibeui-pricing-016-* и примечание об условиях под полем"
+          ],
+          "adapt": [
+            "тексты eyebrow, title, planName, planCaption и hint",
+            "цену price, валюту currency и период period",
+            "массив promos: code, percent и caption каждого промокода",
+            "placeholder поля, подпись applyLabel, кнопку action и акцентный цвет через проп accent"
+          ],
+          "notes": [
+            "Промокоды лежат в пропсах и видны в разметке страницы: настоящую проверку делайте на сервере.",
+            "Скидка считается округлением до рубля: для копеечной точности правьте формулу в файле.",
+            "Строка результата занимает место всегда: это сделано намеренно, чтобы кнопка не прыгала при проверке.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Есть код — примените его до оплаты",
+            "maxLength": 80
+          },
+          {
+            "prop": "price",
+            "label": "Цена без скидки",
+            "type": "number",
+            "default": 14880,
+            "min": 0,
+            "max": 10000000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A promo code field that answers immediately: the code is checked in place, the result is announced through role=\"status\", and the old price stays struck through beside the new one.",
+            "ai": {
+              "summary": "A light promo section: a plan card with a price, a code field with an apply button, a validation status line, a terms note and a button to checkout. One file, zero dependencies.",
+              "preserve": [
+                "\"use client\" at the top of the file: checking the code and repricing only work with state",
+                "role=\"status\" on the result line: colour alone reaches neither a screen reader nor a colour-blind reader",
+                "keeping the entered code after an error: a cleared field hides the typo and forces a retype",
+                "the old price in <s> beside the new one: a discount without the original sum does not read as a discount",
+                "normalising the code on comparison: people type it however they like and it is matched uppercased and trimmed",
+                "the local --vibeui-pricing-016-* palette and the terms note under the field"
+              ],
+              "adapt": [
+                "the eyebrow, title, planName, planCaption and hint copy",
+                "the price, the currency and the period",
+                "the promos array: code, percent and caption of every promo",
+                "the field placeholder, the applyLabel caption, the action button and the accent colour through the accent prop"
+              ],
+              "notes": [
+                "The promo codes live in props and are visible in the page markup: do the real validation on the server.",
+                "The discount is rounded to whole units: edit the formula in the file for sub-unit precision.",
+                "The status line always occupies its space on purpose, so the button does not jump during validation.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing016 price={190} promos={[{ code: \"VIBE20\", percent: 20, caption: \"20% off\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Got a code? Apply it before you pay"
+              },
+              "price": {
+                "label": "Price before discount",
+                "default": 14880
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-017",
+      "type": "registry:block",
+      "title": "Swipeable Plans",
+      "description": "Тарифы карточками под палец: на узкой ширине горизонтальная лента со scroll-snap и подсказкой о свайпе, от 52rem — обычная сетка в три колонки.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-017/pricing-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-017.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-017-*, светлая база. На узкой ширине карточки лежат в ленте с scroll-snap-type: x mandatory и scroll-padding-left: карточка занимает min(85%, 19rem) и «прилипает» к краю, поэтому пролистывание попадает точно в карточку. Ползунок прокрутки скрыт, зато под лентой стоит подсказка о свайпе. Лента получает tabIndex=0 и role=\"group\": прокручиваемая область обязана быть достижима с клавиатуры. От 52rem лента превращается в grid, snap отключается, подсказка скрывается.",
+      "meta": {
+        "tags": ["pricing", "mobile", "scroll-snap", "cards"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing017",
+          "usage": "<Pricing017 hint=\"Листайте вбок\" plans={[{ name: \"Команда\", price: \"1 490 ₽\", period: \"в месяц\", summary: \"Для команд.\", features: [\"Пять участников\"], action: { label: \"Выбрать\", href: \"#\" } }]} />",
+          "summary": "Светлая секция тарифов, свёрстанная под телефон: заголовок и лента карточек со scroll-snap, подсказка о свайпе под ней, на широкой ширине — сетка в три колонки. Один файл, ноль зависимостей.",
+          "preserve": [
+            "scroll-snap вместе с scroll-padding: без отступа прилипания карточка встаёт вплотную к краю экрана и выглядит обрезанной",
+            "ширину карточки min(85%, 19rem): край следующей карточки обязан выглядывать, иначе непонятно, что лента листается",
+            "tabIndex и role=\"group\" у ленты: скрытый ползунок оставляет клавиатуру без способа прокрутить область",
+            "подсказку о свайпе под лентой: невидимая прокрутка без подсказки читается как обрезанная вёрстка",
+            "превращение ленты в сетку от 52rem с отключением snap: на десктопе горизонтальная прокрутка тарифов раздражает",
+            "локальную палитру --vibeui-pricing-017-* и боковые отступы ленты, равные отступам шапки"
+          ],
+          "adapt": [
+            "тексты eyebrow и title в шапке и подсказку hint под лентой",
+            "массив plans: name, price, period, summary, до пяти features и кнопку action",
+            "флаг featured у выделенного тарифа",
+            "акцентный цвет через проп accent и внешние отступы через className"
+          ],
+          "notes": [
+            "Карточек выводится не больше четырёх: на широкой ширине сетка рассчитана на три колонки.",
+            "Не убирайте скрытие ползунка вместе с подсказкой: без обоих лента выглядит сломанной на разных платформах.",
+            "Боковые отступы ленты заданы в пикселях макета, а не в процентах: при изменении отступов шапки правьте оба места.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Пролистайте и выберите — как в приложении",
+            "maxLength": 80
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка о свайпе",
+            "type": "text",
+            "default": "Листайте вбок, чтобы увидеть все тарифы",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Plan cards built for the thumb: a scroll-snap carousel with a swipe hint on a narrow block, and a plain three-column grid from 52rem.",
+            "ai": {
+              "summary": "A light pricing section laid out for phones: a headline and a scroll-snap card track with a swipe hint below, turning into a three-column grid on a wide block. One file, zero dependencies.",
+              "preserve": [
+                "scroll-snap together with scroll-padding: without the snap inset a card sits flush against the screen edge and looks cropped",
+                "the min(85%, 19rem) card width: the edge of the next card has to peek out, or there is no sign the track scrolls",
+                "tabIndex and role=\"group\" on the track: a hidden scrollbar leaves the keyboard with no way to scroll the region",
+                "the swipe hint under the track: invisible scrolling with no hint reads as broken layout",
+                "the track turning into a grid from 52rem with snap switched off: horizontal scrolling of plans irritates on desktop",
+                "the local --vibeui-pricing-017-* palette and the track's side padding matching the header's"
+              ],
+              "adapt": [
+                "the eyebrow and title copy in the header and the hint under the track",
+                "the plans array: name, price, period, summary, up to five features and the action button",
+                "the featured flag on the highlighted plan",
+                "the accent colour through the accent prop and outer spacing through className"
+              ],
+              "notes": [
+                "At most four cards are rendered: the wide layout is sized for three columns.",
+                "Do not remove the hidden scrollbar together with the hint: without both the track looks broken across platforms.",
+                "The track's side padding is written in layout units rather than percentages: change it alongside the header padding.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing017 hint=\"Swipe for more\" plans={[{ name: \"Team\", price: \"$19\", period: \"per month\", summary: \"For teams.\", features: [\"Five seats\"], action: { label: \"Choose\", href: \"#\" } }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Swipe and pick — like in an app"
+              },
+              "hint": {
+                "label": "Swipe hint",
+                "default": "Swipe sideways to see every plan"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-018",
+      "type": "registry:block",
+      "title": "Everything Included",
+      "description": "Развёрнутый ответ на «что входит»: двенадцать пунктов разложены по трём разделам с подписями, у каждого пункта уточнение об объёме. Цена стоит в липкой колонке.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-018/pricing-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-018.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-018-*, светлая холодная база. Пункты не свалены в один список, а разложены по разделам с подписью, зачем раздел нужен: тридцать строк подряд не читают. У пункта есть уточнение серым — оно снимает вопрос «а это в каком объёме». На широкой ширине левая колонка с ценой и кнопкой становится position:sticky, чтобы длинный перечень не уводил от действия. Раскладка: столбец, пункты в две колонки от 34rem, две колонки секции от 58rem.",
+      "meta": {
+        "tags": ["pricing", "included", "list", "sticky"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing018",
+          "usage": "<Pricing018 price=\"1 490 ₽\" sections={[{ title: \"Каталог\", caption: \"Ради чего оформляют доступ.\", items: [{ title: \"1 080 секций\", detail: \"Все категории\" }] }]} />",
+          "summary": "Светлая секция состава тарифа: слева заголовок, описание и липкая карточка с ценой и кнопкой, справа три раздела по четыре пункта с уточнениями. Один файл, ноль зависимостей.",
+          "preserve": [
+            "разбиение перечня на разделы с подписью: двенадцать пунктов подряд без группировки не читаются",
+            "уточнение под пунктом: оно снимает вопрос «а это в каком объёме», из-за которого пишут в поддержку",
+            "липкую левую колонку с ценой на широкой ширине: длинный перечень не должен уводить от действия",
+            "формулировку «если чего-то нет в списке — этого нет в тарифе»: перечень имеет смысл только как исчерпывающий",
+            "локальную палитру --vibeui-pricing-018-* и container-запросы, собирающие пункты в две колонки от 34rem и секцию от 58rem",
+            "семантику: разделы как <section> с h3, пункты как <ul>, кнопка как <a href>"
+          ],
+          "adapt": [
+            "тексты eyebrow, title и lede в левой колонке",
+            "массив sections: заголовок, подпись caption и до восьми пунктов с уточнением",
+            "значения price и period в карточке покупки",
+            "кнопку action и акцентный цвет через проп accent"
+          ],
+          "notes": [
+            "Разделов выводится не больше четырёх, пунктов в разделе — до восьми: остальное обрезается.",
+            "Не оставляйте раздел без подписи caption: без неё группировка выглядит случайной.",
+            "Липкая колонка работает только на широкой ширине: на телефоне карточка просто идёт первой.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Двенадцать пунктов, а не «и многое другое»",
+            "maxLength": 80
+          },
+          {
+            "prop": "price",
+            "label": "Цена",
+            "type": "text",
+            "default": "1 490 ₽",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A full answer to «what is included»: twelve items grouped into three captioned sections, each item carrying a note about its scope. The price sits in a sticky column.",
+            "ai": {
+              "summary": "A light plan-contents section: a headline, a description and a sticky price card with a button on the left; three sections of four items with scope notes on the right. One file, zero dependencies.",
+              "preserve": [
+                "splitting the list into captioned sections: twelve items in a row without grouping do not get read",
+                "the note under each item: it answers «in what volume?», the question that otherwise reaches support",
+                "the sticky left column with the price on a wide block: a long list must not carry the reader away from the action",
+                "the «if it is not on the list, it is not in the plan» framing: the list only makes sense as an exhaustive one",
+                "the local --vibeui-pricing-018-* palette and the container queries that pair the items from 34rem and split the section from 58rem",
+                "the semantics: the groups as <section> with an h3, the items as a <ul>, the button as an <a href>"
+              ],
+              "adapt": [
+                "the eyebrow, title and lede copy in the left column",
+                "the sections array: heading, caption and up to eight items with their details",
+                "the price and period in the purchase card",
+                "the action button and the accent colour through the accent prop"
+              ],
+              "notes": [
+                "At most four sections and eight items per section are rendered: the rest is trimmed.",
+                "Do not leave a section without its caption: without it the grouping looks arbitrary.",
+                "The sticky column only applies on a wide block: on a phone the card simply comes first.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing018 price=\"$19\" sections={[{ title: \"Catalog\", caption: \"What people subscribe for.\", items: [{ title: \"1,080 sections\", detail: \"Every category\" }] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Twelve items, not «and much more»"
+              },
+              "price": {
+                "label": "Price",
+                "default": "$19"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-019",
+      "type": "registry:block",
+      "title": "Current Plan Upgrade",
+      "description": "Экран биллинга внутри продукта: слева текущий план с расходом лимитов на <progress>, справа предложение апгрейда с разницей в счёте.",
+      "categories": ["pricing"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pricing-019/pricing-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pricing-019.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-019-*, светлая база с градиентной панелью апгрейда. Полоски расхода — нативный <progress> с aria-label, а не div с шириной в процентах: браузер сам объявляет значение и максимум, а число рядом дублирует его текстом. Полоса, перевалившая за 80 %, помечается атрибутом data-high и красится в предупреждающий цвет — именно она и есть аргумент за переход, поэтому апгрейд стоит рядом, а не в письме. Раскладка: столбец до 52rem, две колонки от 52rem.",
+      "meta": {
+        "tags": ["pricing", "billing", "upgrade", "usage"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pricing019",
+          "usage": "<Pricing019 currentName=\"Тариф «Команда»\" usage={[{ label: \"Проекты\", used: 8, limit: 10 }]} upgradeDelta=\"+3 410 ₽ к счёту\" />",
+          "summary": "Светлый экран биллинга: слева карточка текущего плана с датой списания и тремя полосами расхода лимитов, справа градиентная панель апгрейда со списком выгод и кнопкой. Один файл, ноль зависимостей.",
+          "preserve": [
+            "нативный <progress> вместо полоски на div: браузер объявляет значение и максимум, а самодельная полоса недоступна",
+            "число рядом с полосой: полоса без цифры не отвечает на вопрос «сколько именно осталось»",
+            "предупреждающий цвет с порога 80 %: заполненная полоса и есть аргумент за апгрейд, и её нужно видеть",
+            "предложение апгрейда рядом с расходом, а не в письме: решение принимается в момент, когда виден предел",
+            "разницу в счёте словами в панели апгрейда: новая цена без дельты требует считать в уме",
+            "локальную палитру --vibeui-pricing-019-* и container-запрос, разводящий панели от 52rem ширины блока"
+          ],
+          "adapt": [
+            "тексты currentName, currentPrice, currentPeriod, renewLabel и renewDate",
+            "массив usage: label, used, limit и unit каждой строки расхода",
+            "тексты upgradeName, upgradePrice, upgradeDelta и список upgradeGains",
+            "кнопки upgradeAction и manageAction, акцентный цвет через проп accent"
+          ],
+          "notes": [
+            "Строк расхода выводится не больше четырёх, выгод апгрейда — не больше пяти.",
+            "Порог предупреждения зашит как 80 %: чтобы поменять его, правьте условие в JSX.",
+            "Блок ничего не запрашивает и не считает сам: значения used и limit приходят пропсами.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "currentName",
+            "label": "Текущий план",
+            "type": "text",
+            "default": "Тариф «Команда»",
+            "maxLength": 40
+          },
+          {
+            "prop": "upgradeName",
+            "label": "План апгрейда",
+            "type": "text",
+            "default": "Тариф «Агентство»",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A billing screen inside the product: the current plan with usage bars built on <progress> on the left, an upgrade offer with the billing difference on the right.",
+            "ai": {
+              "summary": "A light billing screen: a current-plan card with the renewal date and three usage bars on the left; a gradient upgrade panel with a gains list and a button on the right. One file, zero dependencies.",
+              "preserve": [
+                "the native <progress> instead of a div bar: the browser announces the value and the maximum, while a hand-built bar is inaccessible",
+                "the figure next to the bar: a bar with no number never answers «how much is actually left»",
+                "the warning colour above the 80% threshold: a filling bar is the argument for upgrading and has to be visible",
+                "the upgrade offer next to the usage rather than in an email: the decision is made at the moment the limit shows",
+                "the billing difference spelled out in the upgrade panel: a new price with no delta forces mental arithmetic",
+                "the local --vibeui-pricing-019-* palette and the container query that splits the panels from 52rem of block width"
+              ],
+              "adapt": [
+                "the currentName, currentPrice, currentPeriod, renewLabel and renewDate copy",
+                "the usage array: label, used, limit and unit of every row",
+                "the upgradeName, upgradePrice, upgradeDelta copy and the upgradeGains list",
+                "the upgradeAction and manageAction buttons and the accent colour through the accent prop"
+              ],
+              "notes": [
+                "At most four usage rows and five upgrade gains are rendered.",
+                "The warning threshold is hard-coded at 80%: edit the condition in the JSX to change it.",
+                "The block fetches and computes nothing: the used and limit values arrive as props.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Pricing019 currentName=\"Team plan\" usage={[{ label: \"Projects\", used: 8, limit: 10 }]} upgradeDelta=\"+$40 on your bill\" />"
+            },
+            "controls": {
+              "currentName": {
+                "label": "Current plan",
+                "default": "Team plan"
+              },
+              "upgradeName": {
+                "label": "Upgrade plan",
+                "default": "Agency plan"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
