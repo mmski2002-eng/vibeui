@@ -1081,6 +1081,46 @@ export const LAZY_PREVIEWS = {
       (module) => module.Sidebar001,
     ),
   ),
+  "menubar-001": dynamic(() =>
+    import("@/registry/components/navigation/menubar-001/menubar-001").then(
+      (module) => module.Menubar001,
+    ),
+  ),
+  "command-001": dynamic(() =>
+    import("@/registry/components/navigation/command-001/command-001").then(
+      (module) => module.Command001,
+    ),
+  ),
+  "tabbar-001": dynamic(() =>
+    import("@/registry/components/navigation/tabbar-001/tabbar-001").then(
+      (module) => module.Tabbar001,
+    ),
+  ),
+  "scrollspy-001": dynamic(() =>
+    import("@/registry/components/navigation/scrollspy-001/scrollspy-001").then(
+      (module) => module.Scrollspy001,
+    ),
+  ),
+  "pagination-002": dynamic(() =>
+    import("@/registry/components/navigation/pagination-002/pagination-002").then(
+      (module) => module.Pagination002,
+    ),
+  ),
+  "contextmenu-001": dynamic(() =>
+    import("@/registry/components/navigation/contextmenu-001/contextmenu-001").then(
+      (module) => module.Contextmenu001,
+    ),
+  ),
+  "sidebar-002": dynamic(() =>
+    import("@/registry/components/navigation/sidebar-002/sidebar-002").then(
+      (module) => module.Sidebar002,
+    ),
+  ),
+  "tabs-002": dynamic(() =>
+    import("@/registry/components/navigation/tabs-002/tabs-002").then(
+      (module) => module.Tabs002,
+    ),
+  ),
   "table-001": dynamic(() =>
     import("@/registry/components/tables/table-001/table-001").then(
       (module) => module.Table001,

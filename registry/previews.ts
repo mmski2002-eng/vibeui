@@ -215,6 +215,14 @@ import { Tabs001 } from "@/registry/components/navigation/tabs-001/tabs-001"
 import { Stepper001 } from "@/registry/components/navigation/stepper-001/stepper-001"
 import { Pagination001 } from "@/registry/components/navigation/pagination-001/pagination-001"
 import { Sidebar001 } from "@/registry/components/navigation/sidebar-001/sidebar-001"
+import { Menubar001 } from "@/registry/components/navigation/menubar-001/menubar-001"
+import { Command001 } from "@/registry/components/navigation/command-001/command-001"
+import { Tabbar001 } from "@/registry/components/navigation/tabbar-001/tabbar-001"
+import { Scrollspy001 } from "@/registry/components/navigation/scrollspy-001/scrollspy-001"
+import { Pagination002 } from "@/registry/components/navigation/pagination-002/pagination-002"
+import { Contextmenu001 } from "@/registry/components/navigation/contextmenu-001/contextmenu-001"
+import { Sidebar002 } from "@/registry/components/navigation/sidebar-002/sidebar-002"
+import { Tabs002 } from "@/registry/components/navigation/tabs-002/tabs-002"
 import { Table001 } from "@/registry/components/tables/table-001/table-001"
 import { Table002 } from "@/registry/components/tables/table-002/table-002"
 import { Table003 } from "@/registry/components/tables/table-003/table-003"
@@ -449,6 +457,14 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "stepper-001": Stepper001,
   "pagination-001": Pagination001,
   "sidebar-001": Sidebar001,
+  "menubar-001": Menubar001,
+  "command-001": Command001,
+  "tabbar-001": Tabbar001,
+  "scrollspy-001": Scrollspy001,
+  "pagination-002": Pagination002,
+  "contextmenu-001": Contextmenu001,
+  "sidebar-002": Sidebar002,
+  "tabs-002": Tabs002,
   "table-001": Table001,
   "table-002": Table002,
   "table-003": Table003,

@@ -38,7 +38,7 @@
 | `dialog`     | модальные окна: подтверждения, формы, результаты, мастера                                                                                                                     |   ~14 |    14 |
 | `aspect`     | кадры с заданной пропорцией: обложки, видео, карты, коллажи                                                                                                                   |    ~8 |     8 |
 | `feedback`   | drawer, sheet, popover, tooltip, hover card, toast, empty state                                                                                                               |  ~130 |     4 |
-| `navigation` | breadcrumb, dropdown menu, context menu, menubar, navigation menu, tabs, stepper, command, scrollspy                                                                          |   ~85 |     6 |
+| `navigation` | breadcrumb, dropdown menu, context menu, menubar, navigation menu, tabs, stepper, command, scrollspy                                                                          |   ~85 |    12 |
 | `tables`     | table, data grid, pagination                                                                                                                                                  |   ~60 |     3 |
 | `charts`     | chart (line, bar, area, pie, radial), sparkline                                                                                                                               |   ~55 |     3 |
 | `calendar`   | calendar, event calendar, gantt, kanban, sortable, filters                                                                                                                    |   ~70 |     0 |
@@ -153,10 +153,15 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
     (полоса оставшегося времени), `empty-001` (экран объясняет следующий шаг),
     `tooltip-001` (открывается и с клавиатуры), `banner-001`.
     Дальше: drawer, sheet, hover card, alert dialog.
-18. `navigation` — первая волна закрыта: `tabs-001` (полная клавиатура),
-    `breadcrumb-001` (свёртка середины), `dropdown-001` (popover + якоря,
-    без JS), `stepper-001`, `pagination-001` (ссылки, не кнопки),
-    `sidebar-001`. Дальше: menubar, command, scrollspy, context menu.
+18. `navigation` — 12 items в двух волнах. Первая: `tabs-001` (полная
+    клавиатура), `stepper-001`, `pagination-001` (ссылки, не кнопки),
+    `sidebar-001` (полоса у активного пункта). Вторая: `menubar-001`
+    (строка меню на popover с якорями), `command-001` (палитра в нативном
+    dialog), `tabbar-001` (нижняя панель с safe area), `scrollspy-001`
+    (подсветка на IntersectionObserver), `tabs-002` (вкладки на
+    радиокнопках без JS), `pagination-002` (курсорная, диапазон строк),
+    `contextmenu-001` (правый клик плюс кнопка-дублёр), `sidebar-002`
+    (свёртка одной переменной ширины).
 19. `tables` — первая волна закрыта: `table-001` (данные, липкая шапка),
     `table-002` (сравнение, липкая первая колонка), `table-003` (счёт с
     итогом из строк). Дальше: data grid с сортировкой.
@@ -168,8 +173,7 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
     conic-gradient, рейтинг горизонтальными полосами, полоса долей, график с
     заливкой, полукруглая шкала с целью, воронка с переходами и сравнение
     двух периодов.
-22. Дальше: блоки `dashboard` и `ai`, вторые волны в inputs, navigation
-    и tables.
+22. Дальше: блоки `dashboard` и `ai`, вторые волны в inputs и tables.
 
 Ритм — пачка на категорию: спека всех items категории сразу (иначе выходят
 вариации одного и того же), потом реализация по одному, потом отдельный
