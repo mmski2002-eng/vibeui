@@ -42,6 +42,12 @@ import { Auth003 } from "@/registry/blocks/auth/auth-003/auth-003"
 import { Auth004 } from "@/registry/blocks/auth/auth-004/auth-004"
 import { Auth005 } from "@/registry/blocks/auth/auth-005/auth-005"
 import { Auth006 } from "@/registry/blocks/auth/auth-006/auth-006"
+import { Solutions001 } from "@/registry/blocks/solutions/solutions-001/solutions-001"
+import { Solutions002 } from "@/registry/blocks/solutions/solutions-002/solutions-002"
+import { Solutions003 } from "@/registry/blocks/solutions/solutions-003/solutions-003"
+import { Solutions004 } from "@/registry/blocks/solutions/solutions-004/solutions-004"
+import { Solutions005 } from "@/registry/blocks/solutions/solutions-005/solutions-005"
+import { Solutions006 } from "@/registry/blocks/solutions/solutions-006/solutions-006"
 import { Button001 } from "@/registry/components/buttons/button-001/button-001"
 import { Button002 } from "@/registry/components/buttons/button-002/button-002"
 import { Button003 } from "@/registry/components/buttons/button-003/button-003"
@@ -336,6 +342,12 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "auth-004": Auth004,
   "auth-005": Auth005,
   "auth-006": Auth006,
+  "solutions-001": Solutions001,
+  "solutions-002": Solutions002,
+  "solutions-003": Solutions003,
+  "solutions-004": Solutions004,
+  "solutions-005": Solutions005,
+  "solutions-006": Solutions006,
   "button-001": Button001,
   "button-002": Button002,
   "button-003": Button003,

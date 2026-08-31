@@ -1,0 +1,233 @@
+import type { CSSProperties } from "react"
+
+export type Solutions005Item = {
+  sku: string
+  name: string
+  place: string
+  stock: number
+  min: number
+  incoming?: number
+}
+
+export type Solutions005Props = {
+  title?: string
+  hint?: string
+  items?: Solutions005Item[]
+  order?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+// Весь CSS блока живёт здесь, а не в globals.css проекта.
+//
+// Идея блока: остатки склада. Состояние выводится из остатка и порога, а не
+// приходит готовой меткой: иначе после списания цифра и метка расходятся.
+// Порог показан рядом с остатком — «12 шт.» ничего не значит без «мин. 20».
+// Строка ниже порога помечена формой значка и жирным остатком, а не только
+// цветом. Ожидаемая поставка стоит в той же строке: без неё заказывают то,
+// что уже едет.
+const STYLES = `
+:where([data-vibeui-block="solutions-005"]){
+--vibeui-solutions-005-bg:oklch(1 0 0);
+--vibeui-solutions-005-panel:oklch(0.985 0.002 265);
+--vibeui-solutions-005-fg:oklch(0.22 0.014 265);
+--vibeui-solutions-005-muted:oklch(0.55 0.014 265);
+--vibeui-solutions-005-border:oklch(0.91 0.006 265);
+--vibeui-solutions-005-ok:oklch(0.58 0.14 152);
+--vibeui-solutions-005-low:oklch(0.7 0.15 75);
+--vibeui-solutions-005-out:oklch(0.57 0.19 25);
+--vibeui-solutions-005-accent:oklch(0.55 0.2 262);
+--vibeui-solutions-005-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+--vibeui-solutions-005-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+container-type:inline-size;
+}
+[data-vibeui-block="solutions-005"]{
+box-sizing:border-box;overflow:hidden;
+background:var(--vibeui-solutions-005-bg);
+border:1px solid var(--vibeui-solutions-005-border);border-radius:1rem;
+font-family:var(--vibeui-solutions-005-sans);color:var(--vibeui-solutions-005-fg);
+}
+[data-vibeui-block="solutions-005"] *{box-sizing:border-box}
+[data-vibeui-block="solutions-005"] [data-part="head"]{
+display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0.625rem;
+padding:0.875rem 1rem 0.75rem;
+}
+[data-vibeui-block="solutions-005"] h2{margin:0 0 0.125rem;font-size:1rem;font-weight:700;letter-spacing:-0.01em}
+[data-vibeui-block="solutions-005"] [data-part="hint"]{margin:0;font-size:0.75rem;color:var(--vibeui-solutions-005-muted)}
+[data-vibeui-block="solutions-005"] [data-part="order"]{
+appearance:none;cursor:pointer;height:2.125rem;padding:0 0.875rem;
+border:0;border-radius:0.625rem;
+background:var(--vibeui-solutions-005-accent);color:oklch(1 0 0);
+font:inherit;font-size:0.8125rem;font-weight:650;
+}
+[data-vibeui-block="solutions-005"] [data-part="order"]:focus-visible{outline:2px solid var(--vibeui-solutions-005-accent);outline-offset:2px}
+[data-vibeui-block="solutions-005"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
+[data-vibeui-block="solutions-005"] th,
+[data-vibeui-block="solutions-005"] td{
+padding:0.5rem 1rem;text-align:left;white-space:nowrap;
+border-top:1px solid var(--vibeui-solutions-005-border);
+}
+[data-vibeui-block="solutions-005"] th{
+font-size:0.6875rem;font-weight:600;letter-spacing:0.03em;text-transform:uppercase;
+color:var(--vibeui-solutions-005-muted);background:var(--vibeui-solutions-005-panel);
+}
+[data-vibeui-block="solutions-005"] [data-align="end"]{text-align:right;font-variant-numeric:tabular-nums}
+[data-vibeui-block="solutions-005"] [data-part="sku"]{
+display:block;font-family:var(--vibeui-solutions-005-mono);
+font-size:0.6875rem;color:var(--vibeui-solutions-005-muted);
+}
+/* Порог рядом с остатком: «12 шт.» ничего не значит без «мин. 20». */
+[data-vibeui-block="solutions-005"] [data-part="min"]{
+display:block;font-size:0.6875rem;color:var(--vibeui-solutions-005-muted);
+}
+[data-vibeui-block="solutions-005"] [data-part="stock"]{font-weight:650}
+[data-vibeui-block="solutions-005"] [data-state="low"] [data-part="stock"],
+[data-vibeui-block="solutions-005"] [data-state="out"] [data-part="stock"]{font-weight:700}
+/* Состояние выводится из чисел, а не приходит меткой: цифра и метка не разойдутся. */
+[data-vibeui-block="solutions-005"] [data-part="state"]{
+display:inline-flex;align-items:center;gap:0.375rem;
+font-size:0.6875rem;font-weight:600;color:var(--vibeui-solutions-005-muted);
+}
+[data-vibeui-block="solutions-005"] [data-part="dot"]{
+width:0.5rem;height:0.5rem;border-radius:9999px;background:var(--vibeui-solutions-005-ok);
+}
+[data-vibeui-block="solutions-005"] [data-state="low"] [data-part="dot"]{
+background:none;box-shadow:inset 0 0 0 2px var(--vibeui-solutions-005-low);
+}
+[data-vibeui-block="solutions-005"] [data-state="out"] [data-part="dot"]{
+border-radius:0.125rem;background:var(--vibeui-solutions-005-out);
+}
+[data-vibeui-block="solutions-005"] [data-state="low"] [data-part="state"]{color:var(--vibeui-solutions-005-low)}
+[data-vibeui-block="solutions-005"] [data-state="out"] [data-part="state"]{color:var(--vibeui-solutions-005-out)}
+[data-vibeui-block="solutions-005"] [data-part="incoming"]{font-size:0.6875rem;color:var(--vibeui-solutions-005-muted)}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="solutions-005"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_ITEMS: Solutions005Item[] = [
+  {
+    sku: "VU-1042",
+    name: "Свитшот «Тихий вечер», M",
+    place: "Склад А · стеллаж 4",
+    stock: 128,
+    min: 40,
+  },
+  {
+    sku: "VU-2210",
+    name: "Лампа «Луч», тёплый свет",
+    place: "Склад А · стеллаж 1",
+    stock: 12,
+    min: 20,
+    incoming: 60,
+  },
+  {
+    sku: "VU-3005",
+    name: "Полка «Ступени», дуб",
+    place: "Склад Б · зона выдачи",
+    stock: 0,
+    min: 10,
+    incoming: 24,
+  },
+  {
+    sku: "VU-1180",
+    name: "Кресло «Пикник», серое",
+    place: "Склад Б · стеллаж 7",
+    stock: 34,
+    min: 15,
+  },
+]
+
+function stateOf(item: Solutions005Item) {
+  if (item.stock === 0) return "out"
+  if (item.stock < item.min) return "low"
+  return "ok"
+}
+
+const STATE_LABEL = {
+  ok: "в норме",
+  low: "ниже порога",
+  out: "закончился",
+} as const
+
+/**
+ * Остатки склада: состояние выводится из остатка и порога, а не из метки.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Solutions005({
+  title = "Остатки на складе",
+  hint = "Порог пополнения задан для каждой позиции",
+  items = DEFAULT_ITEMS,
+  order = "Заказать пополнение",
+  accent,
+  className,
+  style,
+}: Solutions005Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-solutions-005-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-solutions-005" precedence="medium">
+        {STYLES}
+      </style>
+      <section
+        data-vibeui-block="solutions-005"
+        className={className}
+        style={palette}
+        aria-label={title}
+      >
+        <header data-part="head">
+          <div>
+            <h2>{title}</h2>
+            <p data-part="hint">{hint}</p>
+          </div>
+          <button type="button" data-part="order">
+            {order}
+          </button>
+        </header>
+
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Позиция</th>
+              <th scope="col">Место</th>
+              <th scope="col" data-align="end">
+                Остаток
+              </th>
+              <th scope="col">Состояние</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item) => {
+              const state = stateOf(item)
+              return (
+                <tr key={item.sku} data-state={state}>
+                  <td>
+                    {item.name}
+                    <span data-part="sku">{item.sku}</span>
+                  </td>
+                  <td>{item.place}</td>
+                  <td data-align="end">
+                    <span data-part="stock">{item.stock} шт.</span>
+                    <span data-part="min">мин. {item.min}</span>
+                  </td>
+                  <td>
+                    <span data-part="state">
+                      <span data-part="dot" aria-hidden="true" />
+                      {STATE_LABEL[state]}
+                    </span>
+                    {item.incoming ? (
+                      <span data-part="incoming"> · едет {item.incoming}</span>
+                    ) : null}
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </section>
+    </>
+  )
+}

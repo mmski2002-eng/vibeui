@@ -15,6 +15,7 @@ import aiRegistry from "@/registry/blocks/ai/registry.json"
 import dashboardRegistry from "@/registry/blocks/dashboard/registry.json"
 import commerceRegistry from "@/registry/blocks/commerce/registry.json"
 import authRegistry from "@/registry/blocks/auth/registry.json"
+import solutionsRegistry from "@/registry/blocks/solutions/registry.json"
 import buttonsRegistry from "@/registry/components/buttons/registry.json"
 import accordionRegistry from "@/registry/components/accordion/registry.json"
 import alertRegistry from "@/registry/components/alert/registry.json"
@@ -105,6 +106,11 @@ export const SOURCES = [
     directory: "registry/blocks/auth",
     kind: "block",
     items: authRegistry.items,
+  },
+  {
+    directory: "registry/blocks/solutions",
+    kind: "block",
+    items: solutionsRegistry.items,
   },
   {
     directory: "registry/components/buttons",
