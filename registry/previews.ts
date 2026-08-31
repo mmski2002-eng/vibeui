@@ -13,6 +13,13 @@ import { Testimonials001 } from "@/registry/blocks/testimonials/testimonials-001
 import { Faq001 } from "@/registry/blocks/faq/faq-001/faq-001"
 import { Cta001 } from "@/registry/blocks/cta/cta-001/cta-001"
 import { Footer001 } from "@/registry/blocks/footer/footer-001/footer-001"
+import { Ai001 } from "@/registry/blocks/ai/ai-001/ai-001"
+import { Ai002 } from "@/registry/blocks/ai/ai-002/ai-002"
+import { Ai003 } from "@/registry/blocks/ai/ai-003/ai-003"
+import { Dashboard001 } from "@/registry/blocks/dashboard/dashboard-001/dashboard-001"
+import { Dashboard002 } from "@/registry/blocks/dashboard/dashboard-002/dashboard-002"
+import { Dashboard003 } from "@/registry/blocks/dashboard/dashboard-003/dashboard-003"
+import { Dashboard004 } from "@/registry/blocks/dashboard/dashboard-004/dashboard-004"
 import { Button001 } from "@/registry/components/buttons/button-001/button-001"
 import { Button002 } from "@/registry/components/buttons/button-002/button-002"
 import { Button003 } from "@/registry/components/buttons/button-003/button-003"
@@ -270,6 +277,13 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "faq-001": Faq001,
   "cta-001": Cta001,
   "footer-001": Footer001,
+  "ai-001": Ai001,
+  "ai-002": Ai002,
+  "ai-003": Ai003,
+  "dashboard-001": Dashboard001,
+  "dashboard-002": Dashboard002,
+  "dashboard-003": Dashboard003,
+  "dashboard-004": Dashboard004,
   "button-001": Button001,
   "button-002": Button002,
   "button-003": Button003,

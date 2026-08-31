@@ -1,0 +1,421 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "dashboard-001",
+      "type": "registry:block",
+      "title": "Overview Panel",
+      "description": "Обзорная панель: показатели, график установок и доли источников — всё без единой библиотеки графиков.",
+      "categories": ["dashboard"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dashboard-001/dashboard-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dashboard-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dashboard-001-*. Серверный: хуков нет. Сетка перестраивается контейнерными запросами по ширине блока, поэтому панель верна и в узкой колонке. График — polyline в SVG с preserveAspectRatio=\"none\": тянется под любую ширину без пересчёта в JS. Доли в таблице нарисованы фоном ячейки.",
+      "meta": {
+        "tags": ["dashboard", "metrics", "chart", "no-deps"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Dashboard001",
+          "usage": "<Dashboard001 title=\"Обзор за неделю\" metrics={[{ label: \"Установок\", value: \"1 284\", delta: \"+18 %\", trend: \"up\" }]} />",
+          "summary": "Панель обзора: три показателя с направлением, график по дням и таблица источников с долями. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-dashboard-001-* и не подменять её токенами вашей темы",
+            "контейнерные запросы вместо медиазапросов: панель живёт и в узкой колонке",
+            "SVG с preserveAspectRatio=\"none\": график тянется без пересчёта в JS",
+            "стрелку и подпись периода у показателя — направление не только цветом",
+            "aria-label у графика: сама кривая скринридеру ничего не говорит",
+            "табличные цифры у значений и долей"
+          ],
+          "adapt": [
+            "массивы metrics, points и rows",
+            "title и period",
+            "акцент через проп accent",
+            "пороги перестроения сетки"
+          ],
+          "notes": [
+            "График рисует одну линию: для нескольких рядов возьмите блок или компонент с легендой.",
+            "Точки не подписаны по одной — это обзор, а не инструмент разбора; для деталей нужна отдельная страница.",
+            "Доли приходят готовыми числами: считайте их до передачи, иначе итог не сойдётся.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Обзор за неделю",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An overview panel: metrics, an installs chart and traffic shares — all without a single charting library.",
+            "ai": {
+              "summary": "An overview panel: three metrics with direction, a daily chart and a source table with shares. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-dashboard-001-* palette — do not swap it for your theme tokens",
+                "container queries instead of media queries: the panel survives a narrow column",
+                "the SVG with preserveAspectRatio=\"none\": the chart stretches without JS math",
+                "the arrow and the period caption on a metric — direction is not colour alone",
+                "the chart's aria-label: the curve itself says nothing to a screen reader",
+                "tabular figures on the values and shares"
+              ],
+              "adapt": [
+                "the metrics, points and rows arrays",
+                "title and period",
+                "the accent through the accent prop",
+                "the grid breakpoints"
+              ],
+              "notes": [
+                "The chart draws one series: for several use a block or component with a legend.",
+                "Individual points are unlabelled — this is an overview, not an analysis tool.",
+                "Shares arrive precomputed: calculate them before passing or the total will not add up.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Dashboard001 title=\"This week\" metrics={[{ label: \"Installs\", value: \"1,284\", delta: \"+18%\", trend: \"up\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "This week"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dashboard-002",
+      "type": "registry:block",
+      "title": "App Shell",
+      "description": "Каркас приложения: шапка, боковая навигация на гриде и область контента, которая на узкой ширине складывается сама.",
+      "categories": ["dashboard"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dashboard-002/dashboard-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dashboard-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dashboard-002-*. Серверный: хуков нет. Сайдбар и контент лежат в одной сетке, поэтому колонка не «плавает» и не требует отступа-компенсации. На узкой ширине навигация складывается в details: состояние держит браузер, своё выдвижное меню потребовало бы состояния и ловушки фокуса.",
+      "meta": {
+        "tags": ["dashboard", "shell", "layout", "sidebar"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Dashboard002",
+          "usage": "<Dashboard002 product=\"VibeUI\" section=\"Компоненты\" activeLabel=\"Компоненты\" />",
+          "summary": "Каркас приложения: шапка с поиском, боковая навигация по группам и область под содержимое раздела. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-dashboard-002-* и не подменять её токенами вашей темы",
+            "грид вместо позиционирования: колонка сайдбара не требует отступа-компенсации",
+            "details на узкой ширине — состояние навигации держит браузер",
+            "aria-current=\"page\" на текущем разделе",
+            "заливку активного пункта, а не один цвет текста",
+            "область контента пустой: каркас задаёт раскладку, а не содержимое"
+          ],
+          "adapt": [
+            "группы и ссылки в nav",
+            "product, section и activeLabel",
+            "ширину колонки сайдбара",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Каркас не липкий: чтобы шапка оставалась на экране, добавьте position:sticky в своём проекте.",
+            "Поиск — просто поле: обработчик и подсказки за вами.",
+            "Свёрнутое состояние навигации не запоминается между страницами.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "section",
+            "label": "Раздел",
+            "type": "text",
+            "default": "Компоненты",
+            "maxLength": 24
+          },
+          {
+            "prop": "activeLabel",
+            "label": "Активный пункт",
+            "type": "select",
+            "default": "Компоненты",
+            "options": [
+              "Обзор",
+              "Компоненты",
+              "Блоки",
+              "Участники",
+              "Настройки"
+            ]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An application shell: a top bar, grid-based side navigation and a content area that folds itself on narrow widths.",
+            "ai": {
+              "summary": "An application shell: a top bar with search, grouped side navigation and a slot for the section's content. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-dashboard-002-* palette — do not swap it for your theme tokens",
+                "the grid instead of positioning: the sidebar column needs no compensating offset",
+                "details on narrow widths — the browser holds the navigation state",
+                "aria-current=\"page\" on the current section",
+                "the filled active item rather than a colour change alone",
+                "the empty content area: a shell defines layout, not content"
+              ],
+              "adapt": [
+                "the nav groups and links",
+                "product, section and activeLabel",
+                "the sidebar column width",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The shell is not sticky: add position:sticky in your project to pin the top bar.",
+                "The search is just an input: the handler and suggestions are yours.",
+                "The collapsed navigation state is not remembered between pages.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Dashboard002 product=\"VibeUI\" section=\"Components\" activeLabel=\"Components\" />"
+            },
+            "controls": {
+              "section": {
+                "label": "Section",
+                "default": "Components"
+              },
+              "activeLabel": {
+                "label": "Active item",
+                "default": "Компоненты"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dashboard-003",
+      "type": "registry:block",
+      "title": "Settings Page",
+      "description": "Страница настроек: оглавление слева, группы полей в fieldset и опасная зона, отделённая рамкой, а не одним цветом.",
+      "categories": ["dashboard"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dashboard-003/dashboard-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dashboard-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dashboard-003-*. Серверный: хуков нет. Каждая группа настроек — fieldset с legend, поэтому раздел объявляется перед полями; легенда прижата float, иначе садится на рамку и обрезается. Переключатели собраны на нативных чекбоксах, опасная зона вынесена в отдельную карточку.",
+      "meta": {
+        "tags": ["dashboard", "settings", "form", "danger"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Dashboard003",
+          "usage": "<Dashboard003 title=\"Настройки проекта\" projectName=\"Каталог VibeUI\" />",
+          "summary": "Настройки: оглавление разделов, поля проекта, переключатели уведомлений, кнопки сохранения и отделённая опасная зона. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-dashboard-003-* и не подменять её токенами вашей темы",
+            "fieldset с legend на каждую группу: раздел объявляется перед полями",
+            "float у легенды — без него она садится на рамку и обрезается",
+            "нативные чекбоксы под переключателями: состояние и клавиатура даром",
+            "опасную зону отдельной карточкой с собственным заголовком",
+            "вторичное оформление опасной кнопки: красная рядом с «Сохранить» нажимается по инерции"
+          ],
+          "adapt": [
+            "title, hint, список sections и activeSection",
+            "поля проекта и массив toggles",
+            "тексты опасной зоны",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Форма ничего не отправляет: обработчик submit добавляется в проекте.",
+            "Удаление обязано спрашивать подтверждение вводом имени — одной кнопки мало.",
+            "Оглавление — ссылки, а не вкладки: разделы настроек должны иметь свои адреса.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Настройки проекта",
+            "maxLength": 32
+          },
+          {
+            "prop": "activeSection",
+            "label": "Раздел",
+            "type": "select",
+            "default": "Общие",
+            "options": ["Общие", "Доступ", "Уведомления", "Оплата"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A settings page: contents on the left, field groups in fieldsets and a danger zone set apart by a border, not by colour alone.",
+            "ai": {
+              "summary": "Settings: a section list, project fields, notification switches, save actions and a separated danger zone. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-dashboard-003-* palette — do not swap it for your theme tokens",
+                "a fieldset with a legend per group: the section is announced before the fields",
+                "the float on the legend — without it it sits on the border and gets clipped",
+                "native checkboxes under the switches: state and keyboard come free",
+                "the danger zone as its own card with its own heading",
+                "the secondary styling of the destructive button: a red one beside Save gets hit by reflex"
+              ],
+              "adapt": [
+                "title, hint, the sections list and activeSection",
+                "the project fields and the toggles array",
+                "the danger zone copy",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The form submits nothing: add the submit handler in your project.",
+                "Deletion must ask for a typed confirmation — one button is not enough.",
+                "The contents are links, not tabs: settings sections deserve their own URLs.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Dashboard003 title=\"Project settings\" projectName=\"VibeUI catalog\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Project settings"
+              },
+              "activeSection": {
+                "label": "Section",
+                "default": "Общие"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "dashboard-004",
+      "type": "registry:block",
+      "title": "Team Members",
+      "description": "Участники проекта: роли, расход мест полосой и цифрой, оттенок аватара считается хешем имени, а не суммой кодов.",
+      "categories": ["dashboard"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dashboard-004/dashboard-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dashboard-004.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dashboard-004-*. Серверный: хуков нет. Оттенок аватара считается хешем FNV-1a по кодам символов и раскладывается на двенадцать секторов: сумма кодов сводит целый алфавит в один цвет. Расход мест показан полосой и цифрой сразу, приглашение помечено формой значка.",
+      "meta": {
+        "tags": ["dashboard", "team", "roles", "seats"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Dashboard004",
+          "usage": "<Dashboard004 seatsUsed={3} seatsTotal={10} members={[{ name: \"Анна Реброва\", email: \"anna@vibeui.ru\", role: \"Владелец\" }]} />",
+          "summary": "Участники: расход мест, список с аватарами, статусом и выбором роли, кнопка приглашения. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-dashboard-004-* и не подменять её токенами вашей темы",
+            "хеш FNV-1a для оттенка: сумма кодов символов красит целый алфавит одним цветом",
+            "полосу и цифру мест вместе: полоса даёт запас, цифра — точность",
+            "role=\"progressbar\" с aria-valuenow у полосы мест",
+            "форму значка у приглашённого — состояние не только цветом",
+            "aria-label у выбора роли: несколько одинаковых списков неразличимы на слух"
+          ],
+          "adapt": [
+            "массив members и список ролей",
+            "seatsUsed и seatsTotal",
+            "title, hint и inviteLabel",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Смена роли ничего не сохраняет: обработчик добавляется в проекте.",
+            "Удаление участника отсутствует намеренно — это действие требует подтверждения и своего экрана.",
+            "Инициалы берутся из первых двух слов имени: для одного слова останется одна буква.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "seatsUsed",
+            "label": "Занято мест",
+            "type": "number",
+            "default": 3,
+            "min": 0,
+            "max": 10
+          },
+          {
+            "prop": "seatsTotal",
+            "label": "Всего мест",
+            "type": "number",
+            "default": 10,
+            "min": 1,
+            "max": 50
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Project members: roles, seat usage as a bar and a figure, and avatar hues from a hash of the name rather than a sum of code points.",
+            "ai": {
+              "summary": "Members: seat usage, a list with avatars, status and a role select, plus an invite button. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-dashboard-004-* palette — do not swap it for your theme tokens",
+                "the FNV-1a hash for the hue: summing code points paints a whole alphabet one colour",
+                "the seat bar and figure together: the bar gives headroom, the figure precision",
+                "role=\"progressbar\" with aria-valuenow on the seat bar",
+                "the badge shape on an invited member — state is not colour alone",
+                "an aria-label on each role select: several identical selects are indistinguishable by ear"
+              ],
+              "adapt": [
+                "the members array and the role list",
+                "seatsUsed and seatsTotal",
+                "title, hint and inviteLabel",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Changing a role saves nothing: add the handler in your project.",
+                "Removing a member is deliberately absent — that action needs confirmation and its own screen.",
+                "Initials come from the first two words: a single-word name yields one letter.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Dashboard004 seatsUsed={3} seatsTotal={10} members={[{ name: \"Anna Rebrova\", email: \"anna@vibeui.ru\", role: \"Owner\" }]} />"
+            },
+            "controls": {
+              "seatsUsed": {
+                "label": "Seats used"
+              },
+              "seatsTotal": {
+                "label": "Seats total"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

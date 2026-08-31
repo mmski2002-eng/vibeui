@@ -1,0 +1,312 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "ai-001",
+      "type": "registry:block",
+      "title": "Assistant Chat",
+      "description": "Окно чата с ассистентом: лента объявлена role=\"log\", Enter отправляет, Shift+Enter переносит строку.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-001/ai-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-001-*. Клиентский: \"use client\" ради поля ввода. Лента объявлена role=\"log\" с aria-live=\"polite\": ответ будет услышан, но не перебьёт набор. Поле растёт вместе с текстом через field-sizing и упирается в потолок, дальше прокручивается.",
+      "meta": {
+        "tags": ["ai", "chat", "assistant", "messages"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai001",
+          "usage": "<Ai001 title=\"Ассистент\" messages={[{ role: \"user\", text: \"Собери лендинг\", time: \"10:41\" }]} onSend={handleSend} />",
+          "summary": "Окно чата: шапка с состоянием, лента реплик, подсказки-кнопки и поле с отправкой по Enter. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-001-* и не подменять её токенами вашей темы",
+            "role=\"log\" с aria-live=\"polite\": ответ услышан, но не перебивает набор",
+            "Enter на отправку и Shift+Enter на перенос — иначе в поле нельзя написать абзац",
+            "потолок высоты поля: растущий абзац иначе выталкивает кнопку за экран",
+            "подпись автора у реплики: сторона и цвет не читаются вслух",
+            "выключенную кнопку отправки на пустом поле"
+          ],
+          "adapt": [
+            "массив messages и подсказки",
+            "title, status и placeholder",
+            "обработчик onSend",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Лента не прокручивается к последней реплике сама: добавьте прокрутку при добавлении сообщения.",
+            "Ожидание ответа блок не показывает — состояние «печатает» добавьте своим сообщением.",
+            "Разметку в ответе блок не разбирает: текст выводится как есть, без markdown.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ассистент каталога",
+            "maxLength": 28
+          },
+          {
+            "prop": "status",
+            "label": "Состояние",
+            "type": "text",
+            "default": "Отвечает обычно за пару секунд",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An assistant chat window: the feed is a role=\"log\", Enter sends and Shift+Enter breaks the line.",
+            "ai": {
+              "summary": "A chat window: a header with status, a message feed, suggestion chips and a composer that sends on Enter. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-ai-001-* palette — do not swap it for your theme tokens",
+                "role=\"log\" with aria-live=\"polite\": the reply is heard without interrupting typing",
+                "Enter to send and Shift+Enter to break — otherwise no paragraph can be written",
+                "the composer's height ceiling: a growing paragraph would push the button off screen",
+                "the author caption on a message: side and colour are not read aloud",
+                "the disabled send button on an empty field"
+              ],
+              "adapt": [
+                "the messages array and the suggestions",
+                "title, status and placeholder",
+                "the onSend handler",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The feed does not auto-scroll to the newest message: scroll it when appending.",
+                "There is no built-in typing indicator — add it as a message of your own.",
+                "Markup in replies is not parsed: the text renders as-is, without markdown.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai001 title=\"Assistant\" messages={[{ role: \"user\", text: \"Build a landing page\", time: \"10:41\" }]} onSend={handleSend} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Catalog assistant"
+              },
+              "status": {
+                "label": "Status",
+                "default": "Usually replies in seconds"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-002",
+      "type": "registry:block",
+      "title": "Prompt Composer",
+      "description": "Панель запроса к модели: пресеты, приложенные файлы и выбор модели рядом с полем, счётчик появляется у предела.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-002/ai-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-002-*. Клиентский: \"use client\" ради поля и счётчика. Настройки лежат в одной рамке с полем и попадают в фокусное кольцо через :focus-within. Счётчик появляется только на подходе к пределу и объявляется aria-live.",
+      "meta": {
+        "tags": ["ai", "prompt", "composer", "model"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai002",
+          "usage": "<Ai002 title=\"Запрос\" models={[\"Быстрая\", \"Точная\"]} limit={600} />",
+          "summary": "Панель запроса: кнопки-пресеты, приложенные файлы, поле, выбор модели и счётчик остатка у предела. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-002-* и не подменять её токенами вашей темы",
+            "настройки рядом с полем: модель выбирают в момент формулировки, а не заранее",
+            "счётчик только у предела — постоянный отвлекает, а внезапная стена пугает",
+            "aria-live у счётчика: предел должен быть услышан",
+            "файлы над полем: их проверяют глазами перед отправкой",
+            ":focus-within на рамке — фокус в поле обводит весь блок ввода"
+          ],
+          "adapt": [
+            "presets, models и attachments",
+            "title, hint и placeholder",
+            "limit — предел длины",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Пресет заменяет начало запроса: если нужно дописывать к тексту, поменяйте обработчик.",
+            "Файлы только показываются: загрузку и удаление добавляет вызывающий код.",
+            "maxLength обрезает вставку молча — предупредите пользователя, если это важно.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Запрос к ассистенту",
+            "maxLength": 28
+          },
+          {
+            "prop": "limit",
+            "label": "Предел",
+            "type": "number",
+            "default": 600,
+            "min": 100,
+            "max": 2000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A prompt panel: presets, attachments and the model select sit beside the field, and the counter appears near the limit.",
+            "ai": {
+              "summary": "A prompt panel: preset buttons, attachments, the field, a model select and a remaining-characters counter near the limit. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-ai-002-* palette — do not swap it for your theme tokens",
+                "the settings beside the field: the model is chosen while phrasing, not beforehand",
+                "the counter only near the limit — a permanent one distracts, a sudden wall alarms",
+                "aria-live on the counter: the limit has to be heard",
+                "the attachments above the field: they get checked before sending",
+                ":focus-within on the frame — focus in the field rings the whole input block"
+              ],
+              "adapt": [
+                "presets, models and attachments",
+                "title, hint and placeholder",
+                "limit — the length cap",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "A preset replaces the start of the prompt: change the handler to append instead.",
+                "Attachments are display-only: uploading and removing belong to the caller.",
+                "maxLength truncates a paste silently — warn the user if that matters.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai002 title=\"Prompt\" models={[\"Fast\", \"Precise\"]} limit={600} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Prompt the assistant"
+              },
+              "limit": {
+                "label": "Limit"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-003",
+      "type": "registry:block",
+      "title": "Agent Run",
+      "description": "Лента шагов агента: состояние передаётся формой значка, подробности каждого шага спрятаны в details.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-003/ai-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-003-*. Серверный: хуков нет. Линия ленты — левый бордюр шага, у последнего он прозрачный. Состояния различаются формой значка: галочка, кольцо, пустой кружок и квадрат. Журнал шага лежит в details, поэтому лента не превращается в стену текста.",
+      "meta": {
+        "tags": ["ai", "agent", "steps", "log"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai003",
+          "usage": "<Ai003 goal=\"Собрать лендинг\" steps={[{ title: \"Разобрал задачу\", state: \"done\" }]} />",
+          "summary": "Ход работы агента: цель, шаги с состоянием и временем, журнал в раскрывающемся блоке, подтверждение и остановка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-003-* и не подменять её токенами вашей темы",
+            "форму значка на каждое состояние: цветом одним состояние не передать",
+            "линию левым бордюром шага — отдельный столбик торчит за последней точкой",
+            "журнал в details: раскрытие держит браузер, лента остаётся читаемой",
+            "нейтральную кнопку остановки рядом с подтверждением",
+            "моноширинный журнал с переносом длинных строк"
+          ],
+          "adapt": [
+            "массив steps и их состояния",
+            "goal и title",
+            "подписи кнопок",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Блок только показывает ход: обновление шагов приходит из вызывающего кода.",
+            "Текущий шаг должен быть один: два кольца читаются как ошибка данных.",
+            "Остановку нельзя прятать за подтверждением — она нужна в момент сомнения.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ход работы агента",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An agent run feed: state is carried by the badge's shape, and each step's log hides inside details.",
+            "ai": {
+              "summary": "An agent run: the goal, steps with state and timing, a collapsible log, plus approve and stop actions. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-ai-003-* palette — do not swap it for your theme tokens",
+                "a distinct badge shape per state: colour alone cannot carry it",
+                "the line as the step's left border — a separate column overshoots the last dot",
+                "the log inside details: the browser holds it open and the feed stays readable",
+                "the neutral stop button beside the approve action",
+                "the monospaced log wrapping long lines"
+              ],
+              "adapt": [
+                "the steps array and their states",
+                "goal and title",
+                "the button labels",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The block only displays progress: step updates come from the caller.",
+                "There should be one running step: two rings read as broken data.",
+                "Stop must not hide behind a confirmation — it is needed at the moment of doubt.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai003 goal=\"Build a landing page\" steps={[{ title: \"Parsed the task\", state: \"done\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Agent run"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

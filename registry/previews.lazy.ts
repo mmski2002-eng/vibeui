@@ -71,6 +71,35 @@ export const LAZY_PREVIEWS = {
       (module) => module.Footer001,
     ),
   ),
+  "ai-001": dynamic(() =>
+    import("@/registry/blocks/ai/ai-001/ai-001").then((module) => module.Ai001),
+  ),
+  "ai-002": dynamic(() =>
+    import("@/registry/blocks/ai/ai-002/ai-002").then((module) => module.Ai002),
+  ),
+  "ai-003": dynamic(() =>
+    import("@/registry/blocks/ai/ai-003/ai-003").then((module) => module.Ai003),
+  ),
+  "dashboard-001": dynamic(() =>
+    import("@/registry/blocks/dashboard/dashboard-001/dashboard-001").then(
+      (module) => module.Dashboard001,
+    ),
+  ),
+  "dashboard-002": dynamic(() =>
+    import("@/registry/blocks/dashboard/dashboard-002/dashboard-002").then(
+      (module) => module.Dashboard002,
+    ),
+  ),
+  "dashboard-003": dynamic(() =>
+    import("@/registry/blocks/dashboard/dashboard-003/dashboard-003").then(
+      (module) => module.Dashboard003,
+    ),
+  ),
+  "dashboard-004": dynamic(() =>
+    import("@/registry/blocks/dashboard/dashboard-004/dashboard-004").then(
+      (module) => module.Dashboard004,
+    ),
+  ),
   "button-001": dynamic(() =>
     import("@/registry/components/buttons/button-001/button-001").then(
       (module) => module.Button001,

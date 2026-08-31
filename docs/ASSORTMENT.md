@@ -55,8 +55,8 @@
 | `faq`          | faq-секции                                                        |    ~6 |     1 |
 | `testimonials` | отзывы, wall of love, review                                      |   ~12 |     1 |
 | `footer`       | подвалы                                                           |    ~8 |     1 |
-| `dashboard`    | app shell, dashboard, settings, profile, filter sidebar, schedule |   ~80 |     0 |
-| `ai`           | чат, ассистент, агентные сценарии                                 |   ~20 |     0 |
+| `dashboard`    | app shell, dashboard, settings, profile, filter sidebar, schedule |   ~80 |     4 |
+| `ai`           | чат, ассистент, агентные сценарии                                 |   ~20 |     3 |
 
 Ещё не заведённые категории блоков, если пойдём в e-commerce и в auth:
 `commerce` (product card, product grid, product detail, shop hero, checkout,
@@ -183,7 +183,14 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
     conic-gradient, рейтинг горизонтальными полосами, полоса долей, график с
     заливкой, полукруглая шкала с целью, воронка с переходами и сравнение
     двух периодов.
-22. Дальше: блоки `dashboard` и `ai`.
+22. `dashboard` — первая волна: `dashboard-001` (обзор с показателями и
+    графиком на SVG), `dashboard-002` (каркас приложения на гриде),
+    `dashboard-003` (настройки с опасной зоной), `dashboard-004`
+    (участники, роли и расход мест).
+23. `ai` — первая волна: `ai-001` (чат с ассистентом), `ai-002` (панель
+    запроса к модели), `ai-003` (лента шагов агента).
+24. Дальше: вторые волны в `dashboard` и `ai`, затем блоки `commerce`
+    и `auth`.
 
 Ритм — пачка на категорию: спека всех items категории сразу (иначе выходят
 вариации одного и того же), потом реализация по одному, потом отдельный

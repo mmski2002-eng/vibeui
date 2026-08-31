@@ -11,6 +11,8 @@ import testimonialsRegistry from "@/registry/blocks/testimonials/registry.json"
 import faqRegistry from "@/registry/blocks/faq/registry.json"
 import ctaRegistry from "@/registry/blocks/cta/registry.json"
 import footerRegistry from "@/registry/blocks/footer/registry.json"
+import aiRegistry from "@/registry/blocks/ai/registry.json"
+import dashboardRegistry from "@/registry/blocks/dashboard/registry.json"
 import buttonsRegistry from "@/registry/components/buttons/registry.json"
 import accordionRegistry from "@/registry/components/accordion/registry.json"
 import alertRegistry from "@/registry/components/alert/registry.json"
@@ -81,6 +83,16 @@ export const SOURCES = [
     directory: "registry/blocks/footer",
     kind: "block",
     items: footerRegistry.items,
+  },
+  {
+    directory: "registry/blocks/ai",
+    kind: "block",
+    items: aiRegistry.items,
+  },
+  {
+    directory: "registry/blocks/dashboard",
+    kind: "block",
+    items: dashboardRegistry.items,
   },
   {
     directory: "registry/components/buttons",
