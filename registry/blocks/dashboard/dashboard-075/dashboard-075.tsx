@@ -1,0 +1,277 @@
+import type { CSSProperties } from "react"
+
+export type Dashboard075Template = {
+  name: string
+  subject: string
+  preview: string
+  locale: string
+  status: "live" | "draft" | "archived"
+  usedIn: string
+  vars: string[]
+  opens?: string
+}
+
+export type Dashboard075Props = {
+  title?: string
+  subtitle?: string
+  templates?: Dashboard075Template[]
+  newLabel?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+// Весь CSS блока живёт здесь, а не в globals.css проекта.
+//
+// Идея блока: шаблон письма узнают по теме и первой строке, а не по служебному
+// имени. Поэтому карточка показывает конверт: тему крупно, превью-строку под
+// ней — ровно то, что увидит человек в почтовом клиенте. Переменные вынесены
+// чипами: незакрытая переменная в теме — самая частая авария рассылки, и её
+// надо видеть до отправки. Статус написан словом, а язык — отдельной меткой:
+// у одного письма бывает три языковые версии, и путать их нельзя. Строка «где
+// используется» показывает, что шаблон нельзя просто удалить.
+const STYLES = `
+:where([data-vibeui-block="dashboard-075"]){
+--vibeui-dashboard-075-bg:oklch(0.985 0.003 60);
+--vibeui-dashboard-075-card:oklch(1 0 0);
+--vibeui-dashboard-075-fg:oklch(0.21 0.014 60);
+--vibeui-dashboard-075-muted:oklch(0.54 0.014 60);
+--vibeui-dashboard-075-border:oklch(0.91 0.006 60);
+--vibeui-dashboard-075-accent:oklch(0.54 0.14 45);
+--vibeui-dashboard-075-soft:oklch(0.965 0.02 45);
+--vibeui-dashboard-075-live:oklch(0.55 0.13 155);
+--vibeui-dashboard-075-draft:oklch(0.68 0.15 72);
+--vibeui-dashboard-075-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+--vibeui-dashboard-075-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+container-type:inline-size;
+}
+[data-vibeui-block="dashboard-075"]{
+box-sizing:border-box;width:100%;
+background:var(--vibeui-dashboard-075-bg);
+color:var(--vibeui-dashboard-075-fg);
+font-family:var(--vibeui-dashboard-075-sans);
+border:1px solid var(--vibeui-dashboard-075-border);border-radius:1rem;padding:1rem;
+}
+[data-vibeui-block="dashboard-075"] *{box-sizing:border-box}
+[data-vibeui-block="dashboard-075"] [data-part="shell"]{display:flex;flex-direction:column;gap:0.8125rem}
+[data-vibeui-block="dashboard-075"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:baseline;gap:0.25rem 0.75rem}
+[data-vibeui-block="dashboard-075"] h2{margin:0;font-size:1.0625rem;font-weight:750;letter-spacing:-0.015em}
+[data-vibeui-block="dashboard-075"] [data-part="sub"]{margin:0;font-size:0.75rem;color:var(--vibeui-dashboard-075-muted);max-width:50ch}
+[data-vibeui-block="dashboard-075"] [data-part="new"]{
+margin-left:auto;appearance:none;border:0;cursor:pointer;font:inherit;
+font-size:0.75rem;font-weight:700;padding:0.4375rem 0.875rem;border-radius:0.5625rem;
+background:var(--vibeui-dashboard-075-accent);color:oklch(1 0 0);
+}
+[data-vibeui-block="dashboard-075"] [data-part="grid"]{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:0.5rem}
+[data-vibeui-block="dashboard-075"] [data-part="card"]{
+display:flex;flex-direction:column;gap:0.4375rem;padding:0.75rem;border-radius:0.875rem;
+background:var(--vibeui-dashboard-075-card);border:1px solid var(--vibeui-dashboard-075-border);
+}
+[data-vibeui-block="dashboard-075"] [data-part="card"][data-status="archived"]{opacity:0.62}
+/* Конверт: то, что человек увидит во «Входящих». */
+[data-vibeui-block="dashboard-075"] [data-part="envelope"]{
+padding:0.5625rem 0.6875rem;border-radius:0.6875rem;
+background:var(--vibeui-dashboard-075-bg);
+border:1px solid var(--vibeui-dashboard-075-border);
+border-left:0.1875rem solid var(--vibeui-dashboard-075-accent);
+}
+[data-vibeui-block="dashboard-075"] [data-part="subject"]{
+margin:0;font-size:0.8125rem;font-weight:750;line-height:1.35;
+}
+[data-vibeui-block="dashboard-075"] [data-part="preview"]{
+margin:0.1875rem 0 0;font-size:0.75rem;color:var(--vibeui-dashboard-075-muted);line-height:1.4;
+display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+[data-vibeui-block="dashboard-075"] [data-part="top"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.3125rem 0.5rem}
+[data-vibeui-block="dashboard-075"] h3{margin:0;font-size:0.75rem;font-weight:750;color:var(--vibeui-dashboard-075-muted)}
+[data-vibeui-block="dashboard-075"] [data-part="status"]{
+font-size:0.5625rem;font-weight:750;text-transform:uppercase;letter-spacing:0.05em;
+padding:0.0625rem 0.375rem;border-radius:0.25rem;background:var(--vibeui-dashboard-075-soft);
+}
+[data-vibeui-block="dashboard-075"] [data-status="live"] [data-part="status"]{
+color:var(--vibeui-dashboard-075-live);
+background:color-mix(in oklab,var(--vibeui-dashboard-075-live) 12%,white);
+}
+[data-vibeui-block="dashboard-075"] [data-status="draft"] [data-part="status"]{
+color:color-mix(in oklab,var(--vibeui-dashboard-075-draft) 78%,black);
+background:color-mix(in oklab,var(--vibeui-dashboard-075-draft) 18%,white);
+}
+[data-vibeui-block="dashboard-075"] [data-part="locale"]{
+margin-left:auto;font-family:var(--vibeui-dashboard-075-mono);font-size:0.625rem;font-weight:700;
+padding:0.0625rem 0.3125rem;border-radius:0.25rem;
+border:1px solid var(--vibeui-dashboard-075-border);color:var(--vibeui-dashboard-075-muted);
+}
+[data-vibeui-block="dashboard-075"] [data-part="vars"]{
+margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:0.25rem;
+}
+[data-vibeui-block="dashboard-075"] [data-part="vars"] li{
+font-family:var(--vibeui-dashboard-075-mono);font-size:0.625rem;
+padding:0.0625rem 0.3125rem;border-radius:0.3125rem;
+background:var(--vibeui-dashboard-075-soft);color:color-mix(in oklab,var(--vibeui-dashboard-075-accent) 85%,black);
+}
+[data-vibeui-block="dashboard-075"] [data-part="foot"]{
+margin:0;font-size:0.6875rem;color:var(--vibeui-dashboard-075-muted);
+display:flex;flex-wrap:wrap;gap:0.25rem 0.625rem;
+}
+[data-vibeui-block="dashboard-075"] [data-part="foot"] b{color:var(--vibeui-dashboard-075-fg);font-weight:700}
+[data-vibeui-block="dashboard-075"] :is(a,button):focus-visible{
+outline:2px solid var(--vibeui-dashboard-075-accent);outline-offset:2px;
+}
+@container (min-width: 40rem){
+[data-vibeui-block="dashboard-075"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@container (min-width: 62rem){
+[data-vibeui-block="dashboard-075"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+`
+
+const DEFAULT_TEMPLATES: Dashboard075Template[] = [
+  {
+    name: "Приветствие после регистрации",
+    subject: "Ирина, ваше рабочее пространство готово",
+    preview:
+      "Мы создали пространство «Северный лес». Первым делом пригласите коллег — вдвоём в системе разбираться вдвое быстрее.",
+    locale: "ru-RU",
+    status: "live",
+    usedIn: "сценарий «Приветствие новому клиенту»",
+    vars: ["{{имя}}", "{{пространство}}", "{{ссылка_входа}}"],
+    opens: "открываемость 62 %",
+  },
+  {
+    name: "Напоминание об оплате",
+    subject: "Подписка «Команда» продлится 28 июня",
+    preview:
+      "Спишем 14 900 ₽ с карты •••• 4417. Если реквизиты изменились, обновите их заранее — за три дня до списания.",
+    locale: "ru-RU",
+    status: "live",
+    usedIn: "биллинг, за 7 дней до списания",
+    vars: ["{{сумма}}", "{{дата}}", "{{карта}}"],
+    opens: "открываемость 71 %",
+  },
+  {
+    name: "Возврат уходящих, письмо 1",
+    subject: "Вас не было три недели — всё в порядке?",
+    preview:
+      "За это время мы добавили сохранённые представления и массовое тегирование. Загляните: настройка займёт пару минут.",
+    locale: "ru-RU",
+    status: "draft",
+    usedIn: "черновик: сценарий «Возврат» пока выключен",
+    vars: ["{{имя}}", "{{последний_вход}}"],
+  },
+  {
+    name: "Welcome after signup",
+    subject: "Irina, your workspace is ready",
+    preview:
+      "We created the “Severny Les” workspace. Invite your teammates first — everything is faster with two pairs of hands.",
+    locale: "en-US",
+    status: "live",
+    usedIn: "сценарий «Приветствие», англоязычные пространства",
+    vars: ["{{name}}", "{{workspace}}", "{{login_url}}"],
+    opens: "открываемость 58 %",
+  },
+  {
+    name: "Приглашение на вебинар 22 мая",
+    subject: "Вебинар «Импорт без боли» — завтра в 11:00",
+    preview:
+      "Покажем сопоставление колонок, правила валидации и разбор типичных ошибок импорта. Запись пришлём всем зарегистрированным.",
+    locale: "ru-RU",
+    status: "archived",
+    usedIn: "разовая рассылка, завершена",
+    vars: ["{{имя}}", "{{ссылка}}"],
+  },
+  {
+    name: "Сброс пароля",
+    subject: "Ссылка для смены пароля действует 30 минут",
+    preview:
+      "Если вы не запрашивали смену пароля, просто удалите это письмо — с аккаунтом ничего не произойдёт.",
+    locale: "ru-RU",
+    status: "live",
+    usedIn: "системное письмо, отключить нельзя",
+    vars: ["{{ссылка}}", "{{срок}}"],
+    opens: "открываемость 88 %",
+  },
+]
+
+const STATUS_LABELS: Record<Dashboard075Template["status"], string> = {
+  live: "работает",
+  draft: "черновик",
+  archived: "в архиве",
+}
+
+/**
+ * Страница шаблонов писем: карточка показывает конверт — тему и превью-строку
+ * так, как их увидит получатель, — плюс переменные чипами, язык и место
+ * использования. Один файл, ноль зависимостей, клиентского JS нет.
+ */
+export function Dashboard075({
+  title = "Шаблоны писем",
+  subtitle = "Превью показывает первые строки письма так, как их покажет почтовый клиент.",
+  templates = DEFAULT_TEMPLATES,
+  newLabel = "Новый шаблон",
+  accent,
+  className,
+  style,
+}: Dashboard075Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-dashboard-075-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-dashboard-075" precedence="medium">
+        {STYLES}
+      </style>
+      <section
+        data-vibeui-block="dashboard-075"
+        className={className}
+        style={palette}
+        aria-label={title}
+      >
+        <div data-part="shell">
+          <div data-part="head">
+            <h2>{title}</h2>
+            <p data-part="sub">{subtitle}</p>
+            <button type="button" data-part="new">
+              {newLabel}
+            </button>
+          </div>
+
+          <ul data-part="grid">
+            {templates.map((template) => (
+              <li
+                key={`${template.name}-${template.locale}`}
+                data-part="card"
+                data-status={template.status}
+              >
+                <div data-part="top">
+                  <h3>{template.name}</h3>
+                  <span data-part="status">
+                    {STATUS_LABELS[template.status]}
+                  </span>
+                  <span data-part="locale">{template.locale}</span>
+                </div>
+
+                <div data-part="envelope">
+                  <p data-part="subject">{template.subject}</p>
+                  <p data-part="preview">{template.preview}</p>
+                </div>
+
+                <ul data-part="vars">
+                  {template.vars.map((variable) => (
+                    <li key={variable}>{variable}</li>
+                  ))}
+                </ul>
+
+                <p data-part="foot">
+                  <span>{template.usedIn}</span>
+                  {template.opens ? <b>{template.opens}</b> : null}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </>
+  )
+}
