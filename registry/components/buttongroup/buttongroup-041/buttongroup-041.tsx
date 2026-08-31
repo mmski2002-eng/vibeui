@@ -1,0 +1,163 @@
+"use client"
+
+import { useState } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Buttongroup041Reaction = {
+  emoji: string
+  name: string
+  count: number
+}
+
+export type Buttongroup041Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children" | "onChange"
+> & {
+  reactions?: Buttongroup041Reaction[]
+  mine?: string[]
+  label?: string
+  onChange?: (name: string, active: boolean) => void
+  accent?: string
+}
+
+// Идея компонента: реакции — не выбор одного из, а набор независимых
+// тумблеров, поэтому каждая пилюля несёт своё aria-pressed. Эмодзи помечен
+// aria-hidden, а имя реакции лежит текстом: скринридер должен сказать
+// «нравится, 12, нажато», а не зачитывать описание символа. Счётчик набран
+// табличными цифрами и имеет минимальную ширину, иначе строка дёргается на
+// каждом нажатии. Пилюли переносятся: реакций со временем становится
+// больше, и фиксированная строка рано или поздно выедет за карточку.
+const STYLES = `
+:where([data-vibeui-block="buttongroup-041"]){
+--vibeui-buttongroup-041-surface:oklch(1 0 0);
+--vibeui-buttongroup-041-fg:oklch(0.25 0.016 265);
+--vibeui-buttongroup-041-muted:oklch(0.55 0.014 265);
+--vibeui-buttongroup-041-border:oklch(0.89 0.008 265);
+--vibeui-buttongroup-041-on:oklch(0.95 0.045 250);
+--vibeui-buttongroup-041-accent:oklch(0.5 0.16 250);
+--vibeui-buttongroup-041-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="buttongroup-041"]{
+box-sizing:border-box;display:flex;flex-wrap:wrap;gap:0.375rem;
+width:100%;max-width:26rem;
+font-family:var(--vibeui-buttongroup-041-font);
+}
+[data-vibeui-block="buttongroup-041"] *{box-sizing:border-box}
+[data-vibeui-block="buttongroup-041"] button{
+appearance:none;cursor:pointer;font:inherit;
+display:inline-flex;align-items:center;gap:0.3125rem;
+height:1.875rem;padding:0 0.5625rem;
+border:1px solid var(--vibeui-buttongroup-041-border);border-radius:9999px;
+background:var(--vibeui-buttongroup-041-surface);
+color:var(--vibeui-buttongroup-041-muted);
+font-size:0.75rem;font-weight:650;line-height:1;
+transition:background-color .16s ease,border-color .16s ease,color .16s ease;
+}
+[data-vibeui-block="buttongroup-041"] [data-part="emoji"]{
+font-size:0.875rem;line-height:1;
+}
+[data-vibeui-block="buttongroup-041"] [data-part="count"]{
+min-width:0.875rem;text-align:center;font-variant-numeric:tabular-nums;
+}
+[data-vibeui-block="buttongroup-041"] [data-part="name"]{
+position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);
+}
+[data-vibeui-block="buttongroup-041"] button:hover{
+border-color:oklch(0.8 0.01 265);color:var(--vibeui-buttongroup-041-fg);
+}
+[data-vibeui-block="buttongroup-041"] button[aria-pressed="true"]{
+background:var(--vibeui-buttongroup-041-on);
+border-color:var(--vibeui-buttongroup-041-accent);
+color:var(--vibeui-buttongroup-041-accent);
+}
+[data-vibeui-block="buttongroup-041"] button:focus-visible{
+outline:2px solid var(--vibeui-buttongroup-041-accent);outline-offset:2px;
+}
+[data-vibeui-block="buttongroup-041"] [data-part="add"]{
+width:1.875rem;padding:0;color:var(--vibeui-buttongroup-041-muted);
+border-style:dashed;
+}
+[data-vibeui-block="buttongroup-041"] [data-part="add"] svg{
+width:0.9375rem;height:0.9375rem;
+stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="buttongroup-041"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_REACTIONS: Buttongroup041Reaction[] = [
+  { emoji: "👍", name: "нравится", count: 12 },
+  { emoji: "🎉", name: "празднование", count: 4 },
+  { emoji: "👀", name: "смотрю", count: 7 },
+  { emoji: "🐛", name: "нашёл ошибку", count: 2 },
+]
+
+/**
+ * Реакции со счётчиками: независимые тумблеры с aria-pressed и переносом строк.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Buttongroup041({
+  reactions = DEFAULT_REACTIONS,
+  mine = ["нравится"],
+  label = "Реакции на запись",
+  onChange,
+  accent,
+  className,
+  style,
+  ...props
+}: Buttongroup041Props) {
+  const [active, setActive] = useState<string[]>(mine)
+
+  const palette = {
+    ...(accent ? { "--vibeui-buttongroup-041-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-buttongroup-041" precedence="medium">
+        {STYLES}
+      </style>
+      <div
+        {...props}
+        data-vibeui-block="buttongroup-041"
+        className={className}
+        style={palette}
+        role="group"
+        aria-label={label}
+      >
+        {reactions.map((reaction) => {
+          const pressed = active.includes(reaction.name)
+
+          return (
+            <button
+              key={reaction.name}
+              type="button"
+              aria-pressed={pressed}
+              onClick={() => {
+                setActive(
+                  pressed
+                    ? active.filter((name) => name !== reaction.name)
+                    : [...active, reaction.name],
+                )
+                onChange?.(reaction.name, !pressed)
+              }}
+            >
+              <span data-part="emoji" aria-hidden="true">
+                {reaction.emoji}
+              </span>
+              <span data-part="name">{reaction.name}</span>
+              <span data-part="count">
+                {reaction.count + (pressed ? 1 : 0)}
+              </span>
+            </button>
+          )
+        })}
+        <button type="button" data-part="add" aria-label="Добавить реакцию">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+        </button>
+      </div>
+    </>
+  )
+}

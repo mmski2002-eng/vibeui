@@ -1,0 +1,170 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Buttongroup056Option = {
+  label: string
+  hint: string
+}
+
+export type Buttongroup056Props = Omit<
+  ComponentPropsWithoutRef<"fieldset">,
+  "children"
+> & {
+  options?: Buttongroup056Option[]
+  defaultValue?: string
+  label?: string
+  name?: string
+  accent?: string
+}
+
+// Идея компонента: подсказка у каждого сегмента, поставленная якорем CSS.
+// Обычно такую подсказку позиционируют абсолютно внутри сегмента — и она
+// обрезается первым же родителем с overflow. Здесь имя якоря выдаётся не
+// всем сегментам сразу, а только тому, на который навели или который в
+// фокусе: anchor-name живёт в правиле :hover / :has(:focus-visible), поэтому
+// в каждый момент якорь ровно один, и общий узел подсказки может встать
+// куда нужно. Всё завёрнуто в @supports: без поддержки якорей подсказка
+// остаётся под группой обычным блоком, а не уезжает в угол экрана.
+const STYLES = `
+:where([data-vibeui-block="buttongroup-056"]){
+--vibeui-buttongroup-056-surface:oklch(1 0 0);
+--vibeui-buttongroup-056-fg:oklch(0.25 0.016 265);
+--vibeui-buttongroup-056-muted:oklch(0.57 0.014 265);
+--vibeui-buttongroup-056-border:oklch(0.89 0.008 265);
+--vibeui-buttongroup-056-on:oklch(0.96 0.03 265);
+--vibeui-buttongroup-056-accent:oklch(0.5 0.16 265);
+--vibeui-buttongroup-056-tip:oklch(0.26 0.02 265);
+--vibeui-buttongroup-056-radius:0.625rem;
+--vibeui-buttongroup-056-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="buttongroup-056"]{
+box-sizing:border-box;display:inline-block;position:relative;
+margin:0;padding:0;border:0;
+font-family:var(--vibeui-buttongroup-056-font);
+}
+[data-vibeui-block="buttongroup-056"] *{box-sizing:border-box}
+[data-vibeui-block="buttongroup-056"] legend{
+position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+overflow:hidden;clip-path:inset(50%);white-space:nowrap;
+}
+[data-vibeui-block="buttongroup-056"] [data-part="track"]{display:flex;isolation:isolate}
+[data-vibeui-block="buttongroup-056"] [data-part="segment"]{
+position:relative;z-index:0;
+display:inline-flex;align-items:center;
+height:2.375rem;padding:0 0.875rem;margin-inline-start:-1px;
+border:1px solid var(--vibeui-buttongroup-056-border);
+background:var(--vibeui-buttongroup-056-surface);
+color:var(--vibeui-buttongroup-056-muted);
+font-size:0.8125rem;font-weight:600;line-height:1;white-space:nowrap;cursor:pointer;
+transition:background-color .16s ease,color .16s ease,border-color .16s ease;
+}
+[data-vibeui-block="buttongroup-056"] [data-part="segment"]:first-child{
+margin-inline-start:0;
+border-start-start-radius:var(--vibeui-buttongroup-056-radius);
+border-end-start-radius:var(--vibeui-buttongroup-056-radius);
+}
+[data-vibeui-block="buttongroup-056"] [data-part="segment"]:last-child{
+border-start-end-radius:var(--vibeui-buttongroup-056-radius);
+border-end-end-radius:var(--vibeui-buttongroup-056-radius);
+}
+[data-vibeui-block="buttongroup-056"] input{
+position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;
+}
+[data-vibeui-block="buttongroup-056"] [data-part="segment"]:hover{color:var(--vibeui-buttongroup-056-fg)}
+[data-vibeui-block="buttongroup-056"] [data-part="segment"]:has(input:checked){
+z-index:1;
+background:var(--vibeui-buttongroup-056-on);
+border-color:var(--vibeui-buttongroup-056-accent);
+color:var(--vibeui-buttongroup-056-accent);
+}
+[data-vibeui-block="buttongroup-056"] [data-part="segment"]:has(input:focus-visible){
+z-index:2;outline:2px solid var(--vibeui-buttongroup-056-accent);outline-offset:1px;
+}
+/* Подсказка живёт у сегмента и объясняет, что именно он отфильтрует. */
+[data-vibeui-block="buttongroup-056"] [data-part="tip"]{
+position:absolute;left:0;top:calc(100% + 0.5rem);z-index:3;
+max-width:15rem;padding:0.375rem 0.5625rem;border-radius:0.5rem;
+background:var(--vibeui-buttongroup-056-tip);
+color:oklch(0.985 0.002 265);
+font-size:0.6875rem;font-weight:600;line-height:1.35;
+opacity:0;translate:0 0.25rem;pointer-events:none;
+transition:opacity .14s ease,translate .14s ease;
+}
+[data-vibeui-block="buttongroup-056"] [data-part="segment"]:hover [data-part="tip"],
+[data-vibeui-block="buttongroup-056"] [data-part="segment"]:has(input:focus-visible) [data-part="tip"]{
+opacity:1;translate:0 0;
+}
+/* Якорь выдаётся только активному сегменту: в каждый момент он ровно один. */
+@supports (anchor-name: --vibeui-buttongroup-056-anchor){
+[data-vibeui-block="buttongroup-056"] [data-part="segment"]:hover,
+[data-vibeui-block="buttongroup-056"] [data-part="segment"]:has(input:focus-visible){
+anchor-name:--vibeui-buttongroup-056-anchor;
+}
+[data-vibeui-block="buttongroup-056"] [data-part="tip"]{
+position:fixed;
+position-anchor:--vibeui-buttongroup-056-anchor;
+position-area:block-end span-inline-end;
+margin-block-start:0.5rem;left:auto;top:auto;
+position-try-fallbacks:flip-block;
+}
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="buttongroup-056"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_OPTIONS: Buttongroup056Option[] = [
+  { label: "Все", hint: "Ничего не отфильтровано: 128 записей" },
+  { label: "Мои", hint: "Записи, где вы автор или ответственный" },
+  { label: "Команда", hint: "Записи вашего отдела, включая чужие черновики" },
+  { label: "Архив", hint: "Закрытые больше 90 дней назад, только чтение" },
+]
+
+/**
+ * Сегменты с подсказкой у каждого: якорь выдаётся активному сегменту.
+ * Один файл, ноль зависимостей, серверный компонент.
+ */
+export function Buttongroup056({
+  options = DEFAULT_OPTIONS,
+  defaultValue = "Мои",
+  label = "Область просмотра",
+  name = "buttongroup-056",
+  accent,
+  className,
+  style,
+  ...props
+}: Buttongroup056Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-buttongroup-056-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-buttongroup-056" precedence="medium">
+        {STYLES}
+      </style>
+      <fieldset
+        {...props}
+        data-vibeui-block="buttongroup-056"
+        className={className}
+        style={palette}
+      >
+        <legend>{label}</legend>
+        <div data-part="track">
+          {options.map((option) => (
+            <label key={option.label} data-part="segment">
+              <input
+                type="radio"
+                name={name}
+                value={option.label}
+                defaultChecked={option.label === defaultValue}
+              />
+              <span>{option.label}</span>
+              <span data-part="tip" aria-hidden="true">
+                {option.hint}
+              </span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+    </>
+  )
+}

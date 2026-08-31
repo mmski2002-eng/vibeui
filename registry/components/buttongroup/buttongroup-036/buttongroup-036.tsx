@@ -1,0 +1,157 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Buttongroup036Method = {
+  id: string
+  label: string
+  hint: string
+}
+
+export type Buttongroup036Props = Omit<
+  ComponentPropsWithoutRef<"fieldset">,
+  "children"
+> & {
+  methods?: Buttongroup036Method[]
+  defaultValue?: string
+  label?: string
+  name?: string
+  accent?: string
+}
+
+// Идея компонента: способ оплаты — решение о деньгах, поэтому кружок radio
+// здесь не прячется, а рисуется. Пользователь должен видеть привычный
+// элемент выбора, а не догадываться о нём по заливке: сомнение «выбрал ли я»
+// на этом шаге стоит дороже красоты. Сам input лежит поверх карточки
+// прозрачным слоем, а видимый кружок собран из span с внутренней точкой на
+// box-shadow. Карточки — grid с auto-fit: на узкой ширине они переносятся,
+// а не сжимаются до нечитаемого.
+const STYLES = `
+:where([data-vibeui-block="buttongroup-036"]){
+--vibeui-buttongroup-036-surface:oklch(1 0 0);
+--vibeui-buttongroup-036-fg:oklch(0.24 0.016 265);
+--vibeui-buttongroup-036-muted:oklch(0.56 0.014 265);
+--vibeui-buttongroup-036-border:oklch(0.89 0.008 265);
+--vibeui-buttongroup-036-on:oklch(0.975 0.02 155);
+--vibeui-buttongroup-036-accent:oklch(0.48 0.13 155);
+--vibeui-buttongroup-036-radius:0.75rem;
+--vibeui-buttongroup-036-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="buttongroup-036"]{
+box-sizing:border-box;display:block;width:100%;max-width:28rem;
+margin:0;padding:0;border:0;
+font-family:var(--vibeui-buttongroup-036-font);
+}
+[data-vibeui-block="buttongroup-036"] *{box-sizing:border-box}
+[data-vibeui-block="buttongroup-036"] legend{
+padding:0;margin:0 0 0.5rem;float:left;width:100%;clear:both;
+color:var(--vibeui-buttongroup-036-fg);
+font-size:0.8125rem;font-weight:650;line-height:1.35;
+}
+[data-vibeui-block="buttongroup-036"] [data-part="track"]{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:0.5rem;clear:both;
+}
+[data-vibeui-block="buttongroup-036"] [data-part="card"]{
+position:relative;
+display:flex;align-items:center;gap:0.5625rem;
+padding:0.625rem 0.75rem;
+border:1px solid var(--vibeui-buttongroup-036-border);
+border-radius:var(--vibeui-buttongroup-036-radius);
+background:var(--vibeui-buttongroup-036-surface);
+cursor:pointer;
+transition:border-color .16s ease,background-color .16s ease,box-shadow .16s ease;
+}
+[data-vibeui-block="buttongroup-036"] input{
+position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;
+}
+/* Видимый кружок выбора: на этом шаге он важнее заливки. */
+[data-vibeui-block="buttongroup-036"] [data-part="dot"]{
+flex:none;width:1.125rem;height:1.125rem;border-radius:9999px;
+border:1.5px solid oklch(0.78 0.01 265);
+background:var(--vibeui-buttongroup-036-surface);
+transition:border-color .16s ease,box-shadow .16s ease;
+}
+[data-vibeui-block="buttongroup-036"] [data-part="text"]{
+display:flex;flex-direction:column;gap:0.0625rem;min-width:0;
+}
+[data-vibeui-block="buttongroup-036"] [data-part="name"]{
+color:var(--vibeui-buttongroup-036-fg);
+font-size:0.8125rem;font-weight:650;line-height:1.25;
+}
+[data-vibeui-block="buttongroup-036"] [data-part="hint"]{
+color:var(--vibeui-buttongroup-036-muted);
+font-size:0.6875rem;line-height:1.3;
+}
+[data-vibeui-block="buttongroup-036"] [data-part="card"]:hover{border-color:oklch(0.78 0.01 265)}
+[data-vibeui-block="buttongroup-036"] [data-part="card"]:has(input:checked){
+background:var(--vibeui-buttongroup-036-on);
+border-color:var(--vibeui-buttongroup-036-accent);
+box-shadow:0 0 0 1px var(--vibeui-buttongroup-036-accent);
+}
+[data-vibeui-block="buttongroup-036"] [data-part="card"]:has(input:checked) [data-part="dot"]{
+border-color:var(--vibeui-buttongroup-036-accent);
+box-shadow:inset 0 0 0 4px var(--vibeui-buttongroup-036-accent);
+}
+[data-vibeui-block="buttongroup-036"] [data-part="card"]:has(input:focus-visible){
+outline:2px solid var(--vibeui-buttongroup-036-accent);outline-offset:2px;
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="buttongroup-036"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_METHODS: Buttongroup036Method[] = [
+  { id: "card", label: "Картой", hint: "Visa, Mastercard, МИР" },
+  { id: "sbp", label: "Через СБП", hint: "по QR-коду, без комиссии" },
+  { id: "invoice", label: "По счёту", hint: "для юридических лиц" },
+  { id: "later", label: "Частями", hint: "4 платежа раз в две недели" },
+]
+
+/**
+ * Выбор способа оплаты карточками с настоящим видимым кружком radio.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Buttongroup036({
+  methods = DEFAULT_METHODS,
+  defaultValue = "sbp",
+  label = "Способ оплаты",
+  name = "buttongroup-036",
+  accent,
+  className,
+  style,
+  ...props
+}: Buttongroup036Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-buttongroup-036-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-buttongroup-036" precedence="medium">
+        {STYLES}
+      </style>
+      <fieldset
+        {...props}
+        data-vibeui-block="buttongroup-036"
+        className={className}
+        style={palette}
+      >
+        <legend>{label}</legend>
+        <div data-part="track">
+          {methods.map((method) => (
+            <label key={method.id} data-part="card">
+              <input
+                type="radio"
+                name={name}
+                value={method.id}
+                defaultChecked={method.id === defaultValue}
+              />
+              <span data-part="dot" aria-hidden="true" />
+              <span data-part="text">
+                <span data-part="name">{method.label}</span>
+                <span data-part="hint">{method.hint}</span>
+              </span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+    </>
+  )
+}

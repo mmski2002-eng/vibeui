@@ -1,0 +1,150 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Buttongroup020Currency = {
+  code: string
+  symbol: string
+  name: string
+}
+
+export type Buttongroup020Props = Omit<
+  ComponentPropsWithoutRef<"fieldset">,
+  "children"
+> & {
+  currencies?: Buttongroup020Currency[]
+  defaultValue?: string
+  label?: string
+  name?: string
+  accent?: string
+}
+
+// Идея компонента: разделители нарисованы не рамками, а просветами. Трек —
+// grid с gap:1px и заливкой цвета границы: сквозь зазоры видно подложку, и
+// линия между сегментами получается ровно одна, без отрицательных отступов
+// и без вычитания радиусов. Приём переживает перенос строки: auto-fit
+// раскладывает валюты в несколько рядов, и сетка сама рисует крест.
+// overflow:hidden на треке обрезает углы сегментов по внешнему радиусу.
+const STYLES = `
+:where([data-vibeui-block="buttongroup-020"]){
+--vibeui-buttongroup-020-surface:oklch(1 0 0);
+--vibeui-buttongroup-020-fg:oklch(0.25 0.016 265);
+--vibeui-buttongroup-020-muted:oklch(0.57 0.014 265);
+--vibeui-buttongroup-020-border:oklch(0.88 0.008 265);
+--vibeui-buttongroup-020-on:oklch(0.965 0.03 250);
+--vibeui-buttongroup-020-accent:oklch(0.5 0.14 250);
+--vibeui-buttongroup-020-radius:0.75rem;
+--vibeui-buttongroup-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="buttongroup-020"]{
+box-sizing:border-box;display:block;width:100%;max-width:24rem;
+margin:0;padding:0;border:0;
+font-family:var(--vibeui-buttongroup-020-font);
+}
+[data-vibeui-block="buttongroup-020"] *{box-sizing:border-box}
+[data-vibeui-block="buttongroup-020"] legend{
+position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+overflow:hidden;clip-path:inset(50%);white-space:nowrap;
+}
+/* Заливка трека видна в зазорах — это и есть разделители. */
+[data-vibeui-block="buttongroup-020"] [data-part="track"]{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(6rem,1fr));
+gap:1px;isolation:isolate;
+border:1px solid var(--vibeui-buttongroup-020-border);
+border-radius:var(--vibeui-buttongroup-020-radius);
+background:var(--vibeui-buttongroup-020-border);
+overflow:hidden;
+}
+[data-vibeui-block="buttongroup-020"] [data-part="segment"]{
+position:relative;z-index:0;
+display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.125rem;
+padding:0.625rem 0.5rem;
+background:var(--vibeui-buttongroup-020-surface);
+color:var(--vibeui-buttongroup-020-muted);
+cursor:pointer;
+transition:background-color .16s ease,color .16s ease;
+}
+[data-vibeui-block="buttongroup-020"] input{
+position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;
+}
+[data-vibeui-block="buttongroup-020"] [data-part="symbol"]{
+font-size:1.125rem;font-weight:700;line-height:1.1;
+font-variant-numeric:tabular-nums;
+}
+[data-vibeui-block="buttongroup-020"] [data-part="code"]{
+font-size:0.6875rem;font-weight:650;letter-spacing:0.06em;line-height:1.2;
+}
+[data-vibeui-block="buttongroup-020"] [data-part="name"]{
+position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);
+}
+[data-vibeui-block="buttongroup-020"] [data-part="segment"]:hover{color:var(--vibeui-buttongroup-020-fg)}
+[data-vibeui-block="buttongroup-020"] [data-part="segment"]:has(input:checked){
+z-index:1;
+background:var(--vibeui-buttongroup-020-on);
+color:var(--vibeui-buttongroup-020-accent);
+box-shadow:inset 0 0 0 1px var(--vibeui-buttongroup-020-accent);
+}
+[data-vibeui-block="buttongroup-020"] [data-part="segment"]:has(input:focus-visible){
+z-index:2;
+outline:2px solid var(--vibeui-buttongroup-020-accent);outline-offset:-2px;
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="buttongroup-020"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_CURRENCIES: Buttongroup020Currency[] = [
+  { code: "RUB", symbol: "₽", name: "российский рубль" },
+  { code: "USD", symbol: "$", name: "доллар США" },
+  { code: "EUR", symbol: "€", name: "евро" },
+  { code: "GBP", symbol: "£", name: "фунт стерлингов" },
+]
+
+/**
+ * Выбор валюты, где разделители — просветы сетки, а не рамки сегментов.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Buttongroup020({
+  currencies = DEFAULT_CURRENCIES,
+  defaultValue = "RUB",
+  label = "Валюта отчёта",
+  name = "buttongroup-020",
+  accent,
+  className,
+  style,
+  ...props
+}: Buttongroup020Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-buttongroup-020-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-buttongroup-020" precedence="medium">
+        {STYLES}
+      </style>
+      <fieldset
+        {...props}
+        data-vibeui-block="buttongroup-020"
+        className={className}
+        style={palette}
+      >
+        <legend>{label}</legend>
+        <div data-part="track">
+          {currencies.map((currency) => (
+            <label key={currency.code} data-part="segment">
+              <input
+                type="radio"
+                name={name}
+                value={currency.code}
+                defaultChecked={currency.code === defaultValue}
+              />
+              <span data-part="symbol" aria-hidden="true">
+                {currency.symbol}
+              </span>
+              <span data-part="code">{currency.code}</span>
+              <span data-part="name">, {currency.name}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+    </>
+  )
+}
