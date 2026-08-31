@@ -602,6 +602,2374 @@
           }
         }
       }
+    },
+    {
+      "name": "auth-007",
+      "type": "registry:block",
+      "title": "Email Password",
+      "description": "Вход почтой и паролем: проверка полей на выходе из них, подсказка о Caps Lock и одна общая ошибка, которая не выдаёт, что именно не подошло.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-007/auth-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-007.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-007-*. Клиентский: \"use client\" ради проверки полей и показа пароля. Валидация запускается по onBlur, а не на каждый символ; Caps Lock ловится через event.getModifierState в onKeyUp; общая плашка ошибки помечена role=\"alert\". Раскладка карточки считается контейнерным запросом от ширины блока.",
+      "meta": {
+        "tags": ["auth", "signin", "form", "validation"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth007",
+          "usage": "<Auth007 title=\"Вход в аккаунт\" submit=\"Войти\" />",
+          "summary": "Форма входа с клиентской проверкой: почта и пароль, ошибки по blur, показ пароля, предупреждение о Caps Lock и общая плашка неудачи. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-007-* и не подменять её токенами вашей темы",
+            "проверку по blur, а не на каждый символ: подчёркивать ошибку в недописанном адресе — раздражение без пользы",
+            "общую формулировку ошибки: раздельные «нет такой почты» и «пароль неверен» превращают форму в перебор адресов",
+            "подсказку о Caps Lock — самую частую причину «пароль не работает», которую не видно в точках",
+            "кнопку показа пароля вместо второго поля повтора",
+            "autoComplete username и current-password: без них менеджеры паролей молчат"
+          ],
+          "adapt": [
+            "title, lead и submit",
+            "тексты forgot, switchText и switchLink",
+            "правило проверки адреса внутри компонента",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: форма ничего не отправляет, проверку данных и защиту от подбора обязан реализовать вызывающий код.",
+            "Клиентская валидация — удобство, а не защита: те же проверки нужны на сервере.",
+            "Не блокируйте вставку в поле пароля: это ломает менеджеры и ничего не даёт.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вход в аккаунт",
+            "maxLength": 24
+          },
+          {
+            "prop": "submit",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Войти",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Email and password sign-in: fields are checked on blur, Caps Lock gets called out, and one shared error never says which half was wrong.",
+            "ai": {
+              "summary": "A sign-in form with client-side checks: email and password, blur validation, a password reveal, a Caps Lock warning and one shared failure notice. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-007-* palette — do not swap it for your theme tokens",
+                "validation on blur rather than on every keystroke: flagging a half-typed address is noise",
+                "the shared error wording: separate \"no such email\" and \"wrong password\" turn the form into an address prober",
+                "the Caps Lock hint — the most common cause of \"my password stopped working\", invisible behind dots",
+                "the reveal button instead of a second confirm field",
+                "autoComplete username and current-password: without them password managers stay silent"
+              ],
+              "adapt": [
+                "title, lead and submit",
+                "the forgot, switchText and switchLink copy",
+                "the address check rule inside the component",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: the form submits nothing — validation and rate limiting are the caller's job.",
+                "Client validation is convenience, not security: the same checks belong on the server.",
+                "Never block pasting into the password field: it breaks managers and protects nothing.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth007 title=\"Sign in\" submit=\"Sign in\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Sign in"
+              },
+              "submit": {
+                "label": "Button",
+                "default": "Sign in"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-008",
+      "type": "registry:block",
+      "title": "Provider First",
+      "description": "Вход через сервисы первым экраном: кнопки провайдеров сверху, разделитель «или», почта запасным путём и метка «в прошлый раз».",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-008/auth-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-008.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-008-*. Серверный: хуков нет. Разделитель собран гридом из двух псевдоэлементов-линий, а не фоном под словом. Отметка последнего провайдера связана с кнопкой через aria-describedby, чтобы её услышал скринридер.",
+      "meta": {
+        "tags": ["auth", "signin", "oauth", "providers"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth008",
+          "usage": "<Auth008 title=\"Войти в VibeUI\" providers={[{ name: \"Продолжить с Google\", mark: \"G\", last: true }]} />",
+          "summary": "Экран входа, где сервисы стоят первыми: список провайдеров, разделитель «или по почте» и одно поле почты под ним. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-008-* и не подменять её токенами вашей темы",
+            "порядок «сервисы сверху»: там, где почти все входят рабочим аккаунтом, форма внизу экономит людям третий пароль",
+            "метку «в прошлый раз» у одного провайдера: без неё люди заводят второй аккаунт на ту же почту через другой сервис",
+            "разделитель гридом, а не фоном под словом: фон рвётся и не тянется по ширине",
+            "aria-describedby, связывающий метку с кнопкой провайдера",
+            "не больше трёх провайдеров: длинный список кнопок вытесняет саму форму"
+          ],
+          "adapt": [
+            "title, lead и текст divider",
+            "список providers и их значки",
+            "подпись submit и текст legal",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: кнопки никуда не ведут, редиректы и обмен токенами обязан реализовать вызывающий код.",
+            "Значки провайдеров здесь текстовые: настоящие логотипы подчиняются брендбукам сервисов.",
+            "Один и тот же адрес из разных сервисов сводите в один аккаунт на сервере.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Войти в VibeUI",
+            "maxLength": 24
+          },
+          {
+            "prop": "submit",
+            "label": "Кнопка формы",
+            "type": "text",
+            "default": "Прислать ссылку для входа",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Providers first: social buttons on top, an \"or\" divider, email as the fallback and a \"last time\" marker on one provider.",
+            "ai": {
+              "summary": "A sign-in screen that leads with providers: a button list, an \"or by email\" divider and a single email field below. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-auth-008-* palette — do not swap it for your theme tokens",
+                "the providers-first order: where nearly everyone uses a work account, the form below saves people a third password",
+                "the \"last time\" marker on one provider: without it people create a second account on the same email",
+                "the divider as a grid rather than a background behind the word: a background tears and does not stretch",
+                "the aria-describedby tying the marker to its provider button",
+                "no more than three providers: a long button stack crowds out the form"
+              ],
+              "adapt": [
+                "title, lead and the divider text",
+                "the providers list and their marks",
+                "the submit label and the legal copy",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: the buttons go nowhere — redirects and token exchange are the caller's job.",
+                "Provider marks are plain text here: real logos are governed by each service's brand rules.",
+                "Merge the same address arriving from different providers into one account on the server.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth008 title=\"Sign in to VibeUI\" providers={[{ name: \"Continue with Google\", mark: \"G\", last: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Sign in to VibeUI"
+              },
+              "submit": {
+                "label": "Form button",
+                "default": "Send a sign-in link"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-009",
+      "type": "registry:block",
+      "title": "Consent Signup",
+      "description": "Регистрация с осознанным согласием: кнопка ждёт обязательной галочки, рассылка выключена по умолчанию, текст условий раскрывается на месте.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-009/auth-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-009.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-009-*. Клиентский: \"use client\" ради связи чекбокса согласия с состоянием кнопки. Полный текст условий лежит в <details>, чтобы не уводить со страницы; строка-подсказка под кнопкой помечена role=\"status\".",
+      "meta": {
+        "tags": ["auth", "signup", "consent", "terms"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth009",
+          "usage": "<Auth009 title=\"Создать аккаунт\" terms=\"Я принимаю условия использования\" />",
+          "summary": "Форма регистрации с блоком согласий: имя, компания, почта, пароль, обязательная галочка условий и отдельная — на письма. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-009-* и не подменять её токенами вашей темы",
+            "выключенную кнопку до обязательной галочки: согласие должно быть действием, а не мелким текстом под кнопкой",
+            "невыбранную по умолчанию галочку рассылки: предвыбранная незаконна в ЕС и просто нечестна",
+            "раскрытие условий на месте через <details>: уход по ссылке теряет заполненную форму",
+            "разделение обязательного и необязательного согласия — одной галочкой на всё пользоваться нельзя",
+            "строку-подсказку под кнопкой: выключенная кнопка без объяснения читается как поломка"
+          ],
+          "adapt": [
+            "title, lead и submit",
+            "тексты terms и marketing",
+            "набор полей формы и текст внутри details",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: форма ничего не отправляет и не хранит, регистрацию обязан реализовать вызывающий код.",
+            "Факт и время согласия сохраняйте на сервере: галочка на клиенте ничего не доказывает.",
+            "Текст условий согласуйте с юристом — формулировки в блоке демонстрационные.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Создать аккаунт",
+            "maxLength": 24
+          },
+          {
+            "prop": "submit",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Создать аккаунт",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Sign-up with deliberate consent: the button waits for the required checkbox, marketing is off by default, and the terms open in place.",
+            "ai": {
+              "summary": "A sign-up form with a consent block: name, company, email, password, a required terms checkbox and a separate one for emails. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-009-* palette — do not swap it for your theme tokens",
+                "the button disabled until the required box is ticked: consent must be an action, not fine print under a button",
+                "the marketing box unchecked by default: a pre-ticked one is unlawful in the EU and simply dishonest",
+                "opening the terms in place via <details>: leaving by link loses the filled-in form",
+                "keeping required and optional consent apart — one checkbox for everything is not consent",
+                "the hint line under the button: a disabled button with no explanation reads as a bug"
+              ],
+              "adapt": [
+                "title, lead and submit",
+                "the terms and marketing copy",
+                "the set of form fields and the text inside details",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: the form stores nothing — registration is the caller's job.",
+                "Record the fact and time of consent on the server: a client-side checkbox proves nothing.",
+                "Have the terms copy reviewed by a lawyer — the wording here is a placeholder.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth009 title=\"Create account\" terms=\"I accept the terms of use\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Create account"
+              },
+              "submit": {
+                "label": "Button",
+                "default": "Create account"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-010",
+      "type": "registry:block",
+      "title": "Reset Steps",
+      "description": "Запрос ссылки на смену пароля рядом с колонкой «что будет дальше»: адрес отправителя, срок жизни ссылки и обратный отсчёт до повтора.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-010/auth-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-010.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-010-*. Клиентский: \"use client\" ради обратного отсчёта на useState и useEffect с setTimeout. Правая колонка со списком шагов скрывается целиком на узкой ширине через контейнерный запрос, номера шагов рисует counter, а не разметка.",
+      "meta": {
+        "tags": ["auth", "reset", "email", "cooldown"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth010",
+          "usage": "<Auth010 title=\"Сбросить пароль\" cooldown={45} />",
+          "summary": "Восстановление пароля в две колонки: форма с почтой слева, объяснение процесса справа, повторная отправка закрыта таймером. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-010-* и не подменять её токенами вашей темы",
+            "колонку «что будет дальше»: без адреса отправителя и срока ссылки задержка письма читается как поломка",
+            "скрытие колонки шагов на узкой ширине вместо сжатия — обрезанный список хуже отсутствующего",
+            "обратный отсчёт на кнопке: пять нажатий подряд дают пять ссылок, из которых рабочая только последняя",
+            "формулировку «если такой адрес зарегистрирован»: иначе форма проверяет чужие почты",
+            "нумерацию шагов счётчиком CSS, а не вручную набранными цифрами"
+          ],
+          "adapt": [
+            "title, lead и submit",
+            "длительность cooldown",
+            "список steps и текст ссылки возврата",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: письма не отправляются, отправку и одноразовость ссылки обязан реализовать вызывающий код.",
+            "Клиентский таймер обходится перезагрузкой страницы — настоящий лимит держите на сервере.",
+            "Не пишите «почта не найдена»: это готовый список действующих адресов.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Сбросить пароль",
+            "maxLength": 24
+          },
+          {
+            "prop": "cooldown",
+            "label": "Пауза до повтора, с",
+            "type": "number",
+            "default": 45,
+            "min": 15,
+            "max": 120
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A reset request beside a \"what happens next\" column: the sender address, the link's lifetime and a countdown before resending.",
+            "ai": {
+              "summary": "A two-column password reset: the email form on the left, the process explained on the right, resending gated by a timer. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-010-* palette — do not swap it for your theme tokens",
+                "the \"what happens next\" column: without the sender and the link's lifetime, a slow email reads as a broken service",
+                "hiding the steps column on narrow widths instead of squeezing it — a cropped list is worse than none",
+                "the countdown on the button: five taps produce five links, only the last of which works",
+                "the \"if the address is registered\" wording: otherwise the form probes other people's emails",
+                "numbering the steps with a CSS counter rather than hand-typed digits"
+              ],
+              "adapt": [
+                "title, lead and submit",
+                "the cooldown duration",
+                "the steps list and the back link copy",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: no email is sent — delivery and single-use links are the caller's job.",
+                "A client timer is defeated by a page reload — keep the real limit on the server.",
+                "Never print \"email not found\": that is a ready list of valid addresses.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth010 title=\"Reset password\" cooldown={45} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Reset password"
+              },
+              "cooldown": {
+                "label": "Resend cooldown, s"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-011",
+      "type": "registry:block",
+      "title": "New Password",
+      "description": "Установка нового пароля: вместо полоски надёжности — четыре именованных требования с отметками и проверка совпадения прямо при вводе.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-011/auth-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-011.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-011-*. Клиентский: \"use client\" ради разбора пароля и сверки повтора. Требования считаются регулярными выражениями с флагом u (поддерживают кириллицу), список помечен aria-live=\"polite\", кнопка выключена, пока не закрыты все требования и не совпал повтор.",
+      "meta": {
+        "tags": ["auth", "password", "strength", "reset"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth011",
+          "usage": "<Auth011 title=\"Новый пароль\" minLength={10} />",
+          "summary": "Экран смены пароля по ссылке: поле пароля с показом, четыре требования с отметками, поле повтора и предупреждение о завершении сессий. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-011-* и не подменять её токенами вашей темы",
+            "именованные требования вместо полоски: полоска говорит «плохо», список говорит, чего не хватает",
+            "поле повтора именно здесь: опечатка в новом пароле отрезает от аккаунта, который только что восстанавливали",
+            "проверку совпадения на лету, а не после отправки",
+            "aria-live у списка требований — иначе отметки видит только зрячий",
+            "строку про завершение других сессий: смена пароля обязана их разлогинить"
+          ],
+          "adapt": [
+            "title, lead и submit",
+            "значение minLength и набор правил",
+            "тексты требований и заключительную заметку",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: пароль никуда не отправляется, проверку и сохранение обязан реализовать вызывающий код.",
+            "Оценка приблизительная: настоящую стойкость считает библиотека вроде zxcvbn на сервере.",
+            "Проверяйте пароль по спискам утечек — правила про цифру и знак этого не заменяют.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Новый пароль",
+            "maxLength": 24
+          },
+          {
+            "prop": "minLength",
+            "label": "Минимальная длина",
+            "type": "number",
+            "default": 10,
+            "min": 8,
+            "max": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Setting a new password: four named requirements with ticks instead of a strength bar, and a match check that runs while you type.",
+            "ai": {
+              "summary": "A password reset screen: a password field with a reveal, four ticked requirements, a repeat field and a warning about ending other sessions. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-011-* palette — do not swap it for your theme tokens",
+                "named requirements instead of a bar: a bar says \"weak\", a list says what is missing",
+                "the repeat field precisely here: a typo in the new password locks out the account just recovered",
+                "checking the match while typing rather than after submission",
+                "aria-live on the requirements list — otherwise only sighted users see the ticks",
+                "the line about ending other sessions: a password change must log them out"
+              ],
+              "adapt": [
+                "title, lead and submit",
+                "the minLength value and the rule set",
+                "the requirement texts and the closing note",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: the password goes nowhere — validation and storage are the caller's job.",
+                "The score is approximate: real strength needs something like zxcvbn on the server.",
+                "Check passwords against breach lists — a digit-and-symbol rule is no substitute.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth011 title=\"New password\" minLength={10} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "New password"
+              },
+              "minLength": {
+                "label": "Minimum length"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-012",
+      "type": "registry:block",
+      "title": "Single Field Code",
+      "description": "Подтверждение почты кодом одним полем с широкой разрядкой вместо клеток: код вставляется и правится как обычный текст, попытки посчитаны.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-012/auth-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-012.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-012-*. Клиентский: \"use client\" ради отсечения нецифр на вводе. Одно поле с letter-spacing и text-indent, компенсирующим разрядку последнего знака; autoComplete=\"one-time-code\" и inputMode=\"numeric\" включают подстановку кода на телефоне.",
+      "meta": {
+        "tags": ["auth", "otp", "email", "verification"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth012",
+          "usage": "<Auth012 length={6} attempts={3} />",
+          "summary": "Подтверждение адреса кодом: одно поле с разрядкой, счётчик оставшихся попыток, повторная отправка и смена адреса. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-012-* и не подменять её токенами вашей темы",
+            "одно поле вместо клеток: клетки ломают автозаполнение, мешают выделить код целиком и плохо переживают физическую клавиатуру",
+            "text-indent, равный letter-spacing: без него разрядка сдвигает центрирование",
+            "autoComplete=\"one-time-code\" и inputMode=\"numeric\": телефон подставит код сам",
+            "счётчик оставшихся попыток: молчаливая блокировка после третьей ошибки читается как поломка сервиса",
+            "ссылку «изменить адрес»: опечатка в почте обнаруживается ровно на этом экране"
+          ],
+          "adapt": [
+            "length — длина кода",
+            "attempts — сколько попыток осталось",
+            "title, email и подпись submit",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: код не сверяется, выдачу, срок жизни и лимит попыток обязан реализовать вызывающий код.",
+            "Автоотправку по последней цифре не добавляйте: она срабатывает на опечатке.",
+            "Счётчик попыток на клиенте — подсказка, а не защита: считайте попытки на сервере.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "length",
+            "label": "Длина кода",
+            "type": "number",
+            "default": 6,
+            "min": 4,
+            "max": 8
+          },
+          {
+            "prop": "attempts",
+            "label": "Осталось попыток",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 5
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Email confirmation in one widely spaced field instead of cells: the code pastes and edits like ordinary text, and attempts are counted.",
+            "ai": {
+              "summary": "Address confirmation by code: a single spaced field, a remaining-attempts counter, a resend and an address change. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-012-* palette — do not swap it for your theme tokens",
+                "one field instead of cells: cells break autofill, resist selecting the whole code and fare badly with a physical keyboard",
+                "the text-indent matching letter-spacing: without it the tracking throws off centring",
+                "autoComplete=\"one-time-code\" and inputMode=\"numeric\": phones fill the code in",
+                "the remaining-attempts counter: a silent lockout after the third mistake reads as a broken service",
+                "the \"change address\" link: an email typo surfaces on exactly this screen"
+              ],
+              "adapt": [
+                "length — the code length",
+                "attempts — how many tries are left",
+                "title, email and the submit label",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: the code is not verified — issuing it, its lifetime and attempt limits are the caller's job.",
+                "Do not auto-submit on the last digit: it fires on a typo.",
+                "A client-side attempt counter is a hint, not protection: count attempts on the server.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth012 length={6} attempts={3} />"
+            },
+            "controls": {
+              "length": {
+                "label": "Code length"
+              },
+              "attempts": {
+                "label": "Attempts left"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-013",
+      "type": "registry:block",
+      "title": "Magic Link",
+      "description": "Вход по одноразовой ссылке: форма запроса с объяснением «как это работает» и экран отправки с предупреждением, что ссылку нельзя пересылать.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-013/auth-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-013.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-013-*. Серверный: хуков нет, состояние приходит пропом state. Оба экрана — запрос и отправка — живут в одном блоке; список «как это работает» на широкой ширине разворачивается в три колонки контейнерным запросом.",
+      "meta": {
+        "tags": ["auth", "passwordless", "magic-link", "email"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth013",
+          "usage": "<Auth013 state=\"sent\" title=\"Вход без пароля\" />",
+          "summary": "Вход по ссылке из письма: форма с почтой, объяснение процесса из трёх шагов и экран «ссылка отправлена». Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-013-* и не подменять её токенами вашей темы",
+            "объяснение «как это работает»: вход без пароля впервые выглядит как фишинг, пока не сказано, почему пароля нет",
+            "предупреждение о пересылке: ссылка внутри письма и есть ключ от аккаунта",
+            "упоминание, что письмо нужно открыть на том же устройстве — ссылка привязана к запросившему браузеру",
+            "срок жизни ссылки прямо в тексте",
+            "оба состояния в одном блоке — переключаются пропом, а не подменой экрана"
+          ],
+          "adapt": [
+            "state — request или sent",
+            "title, lead и submit",
+            "адрес email на экране отправки и тексты шагов",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: письма не отправляются, выпуск и одноразовость ссылки обязан реализовать вызывающий код.",
+            "Ссылка должна сгорать после первого перехода и по времени: иначе письмо в архиве остаётся вечным ключом.",
+            "Не сообщайте, зарегистрирован ли адрес: ответ одинаков в обоих случаях.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "state",
+            "label": "Состояние",
+            "type": "select",
+            "default": "request",
+            "options": ["request", "sent"]
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вход без пароля",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Sign-in by one-time link: a request form that explains how it works, plus a sent screen warning that the link must not be forwarded.",
+            "ai": {
+              "summary": "Sign-in via an emailed link: an email form, a three-step explanation and a \"link sent\" screen. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-auth-013-* palette — do not swap it for your theme tokens",
+                "the \"how it works\" explanation: passwordless sign-in looks like phishing until you say why there is no password",
+                "the forwarding warning: the link inside the email is the key to the account",
+                "the note about opening the email on the same device — the link is bound to the requesting browser",
+                "the link's lifetime spelled out in the text",
+                "both states inside one block — switched by a prop, not a swapped screen"
+              ],
+              "adapt": [
+                "state — request or sent",
+                "title, lead and submit",
+                "the email address on the sent screen and the step texts",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: no email is sent — issuing single-use links is the caller's job.",
+                "The link must expire on first use and by time: otherwise an archived email stays a permanent key.",
+                "Do not reveal whether the address is registered: the answer is identical either way.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth013 state=\"sent\" title=\"Sign in without a password\" />"
+            },
+            "controls": {
+              "state": {
+                "label": "State"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "No-password sign-in"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-014",
+      "type": "registry:block",
+      "title": "Two Factor App",
+      "description": "Второй шаг входа кодом из приложения: доверие браузеру с явным сроком и три запасных пути на случай потерянного телефона.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-014/auth-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-014.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-014-*. Клиентский: \"use client\" ради отсечения нецифр и блокировки кнопки до шести знаков. Тёмная подложка блока даёт карточке контраст; запасные пути — обычные кнопки в списке, а не ссылки в подвале.",
+      "meta": {
+        "tags": ["auth", "2fa", "otp", "security"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth014",
+          "usage": "<Auth014 app=\"Authenticator\" trustDays={30} />",
+          "summary": "Второй фактор: поле шестизначного кода, галочка доверия браузеру на срок и список запасных способов войти. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-014-* и не подменять её токенами вашей темы",
+            "запасные пути на видном месте: телефон теряют, и экран без альтернатив запирает человека снаружи аккаунта",
+            "явный срок в галочке доверия: «запомнить» без срока — обещание, которое интерфейс не выполняет",
+            "метку «шаг 2 из 2»: без неё непонятно, сколько ещё проверок впереди",
+            "autoComplete=\"one-time-code\" и inputMode=\"numeric\"",
+            "выключенную кнопку до полного кода — это дешевле, чем запрос к серверу с четырьмя цифрами"
+          ],
+          "adapt": [
+            "app — название приложения-аутентификатора",
+            "trustDays — срок доверия браузеру",
+            "title, lead и подпись submit",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: код не сверяется, проверку второго фактора обязан реализовать вызывающий код.",
+            "Ограничьте число попыток на сервере: шесть цифр перебираются за минуты.",
+            "Доверенный браузер отмечайте отдельным долгоживущим токеном, а не обычной сессионной кукой.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "app",
+            "label": "Приложение",
+            "type": "text",
+            "default": "Authenticator",
+            "maxLength": 24
+          },
+          {
+            "prop": "trustDays",
+            "label": "Доверять, дней",
+            "type": "number",
+            "default": 30,
+            "min": 1,
+            "max": 90
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The second sign-in step with an authenticator code: browser trust with an explicit term and three fallbacks for a lost phone.",
+            "ai": {
+              "summary": "Second factor: a six-digit code field, a browser-trust checkbox with a term and a list of fallback ways in. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-014-* palette — do not swap it for your theme tokens",
+                "fallbacks in plain sight: phones get lost, and a screen with no alternatives locks people out of their own account",
+                "the explicit term on the trust checkbox: \"remember me\" without a term is a promise the interface does not keep",
+                "the \"step 2 of 2\" marker: without it nobody knows how many checks remain",
+                "autoComplete=\"one-time-code\" and inputMode=\"numeric\"",
+                "the button disabled until the code is complete — cheaper than a server round trip on four digits"
+              ],
+              "adapt": [
+                "app — the authenticator's name",
+                "trustDays — how long the browser stays trusted",
+                "title, lead and the submit label",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: the code is not verified — checking the second factor is the caller's job.",
+                "Limit attempts on the server: six digits are brute-forced in minutes.",
+                "Mark a trusted browser with a separate long-lived token, not the ordinary session cookie.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth014 app=\"Authenticator\" trustDays={30} />"
+            },
+            "controls": {
+              "app": {
+                "label": "App",
+                "default": "Authenticator"
+              },
+              "trustDays": {
+                "label": "Trust for, days"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-015",
+      "type": "registry:block",
+      "title": "Backup Codes",
+      "description": "Экран резервных кодов двухфакторки: сетка кодов, три способа их унести и обязательное подтверждение перед закрытием.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-015/auth-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-015.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-015-*. Клиентский: \"use client\" ради галочки сохранения и отметки «скопировано». Использованные коды помечены data-used и зачёркиваются, а не исчезают; для скринридера к ним добавлена визуально скрытая подпись.",
+      "meta": {
+        "tags": ["auth", "2fa", "backup", "recovery"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth015",
+          "usage": "<Auth015 confirm=\"Я сохранил коды в надёжном месте\" submit=\"Готово\" />",
+          "summary": "Резервные коды: сетка одноразовых кодов, кнопки копирования, скачивания и печати, галочка подтверждения и счётчик оставшихся. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-015-* и не подменять её токенами вашей темы",
+            "обязательную галочку перед кнопкой: экран показывается один раз, и его закрывают не глядя",
+            "три способа унести коды рядом: у людей разные привычки, и один способ теряет часть из них",
+            "зачёркивание использованных кодов вместо удаления: пропавшая строка выглядит как ошибка выдачи",
+            "моноширинный шрифт и дефис в середине: коды переписывают с экрана на бумагу",
+            "предупреждение не хранить коды рядом с паролем от того же аккаунта"
+          ],
+          "adapt": [
+            "массив codes и отметку used у каждого",
+            "тексты confirm и submit",
+            "title, lead и предупреждение",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: коды здесь просто текст, выдачу и списание обязан реализовать вызывающий код.",
+            "Настоящие коды генерируйте на сервере и храните только их хеши.",
+            "Кнопки копирования и скачивания в блоке ничего не делают — обработчики за вызывающим кодом.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "confirm",
+            "label": "Текст галочки",
+            "type": "text",
+            "default": "Я сохранил коды в надёжном месте",
+            "maxLength": 40
+          },
+          {
+            "prop": "submit",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Готово",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The two-factor backup codes screen: a grid of codes, three ways to take them away and a required confirmation before leaving.",
+            "ai": {
+              "summary": "Backup codes: a grid of single-use codes, copy, download and print actions, a confirmation checkbox and a remaining counter. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-015-* palette — do not swap it for your theme tokens",
+                "the required checkbox before the button: this screen appears once and gets dismissed unread",
+                "three ways to take the codes away side by side: habits differ, and a single option loses people",
+                "striking used codes through instead of removing them: a missing row looks like a broken issuance",
+                "the monospace font and the mid-code hyphen: these get copied off the screen onto paper",
+                "the warning not to store the codes beside the password for the same account"
+              ],
+              "adapt": [
+                "the codes array and the used flag on each",
+                "the confirm and submit copy",
+                "title, lead and the warning",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: the codes are plain text — issuing and burning them is the caller's job.",
+                "Generate real codes on the server and store only their hashes.",
+                "The copy and download buttons do nothing here — handlers belong to the caller.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth015 confirm=\"I saved the codes somewhere safe\" submit=\"Done\" />"
+            },
+            "controls": {
+              "confirm": {
+                "label": "Checkbox text",
+                "default": "I saved the codes somewhere safe"
+              },
+              "submit": {
+                "label": "Button",
+                "default": "Done"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-016",
+      "type": "registry:block",
+      "title": "Workspace Picker",
+      "description": "Выбор рабочего пространства после входа: под каждым названием стоит роль, список — настоящая radiogroup, сверху поиск по названию.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-016/auth-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-016.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-016-*. Клиентский: \"use client\" ради фильтра и выбранного значения. Пункты — label с radio внутри, подсветка выбранного держится на :has(input:checked); оттенок аватара считается хешем FNV-1a по названию.",
+      "meta": {
+        "tags": ["auth", "workspace", "tenant", "signin"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth016",
+          "usage": "<Auth016 title=\"Куда войти\" account=\"anna@vibeui.ru\" />",
+          "summary": "Последний шаг входа: список рабочих пространств с ролью и числом участников, поиск по названию и кнопка продолжения. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-016-* и не подменять её токенами вашей темы",
+            "роль под названием: одинаковые названия у клиента и подрядчика встречаются постоянно, а «Владелец» и «Читатель» не спутать",
+            "настоящие radio внутри label: стрелки клавиатуры и скринридер работают без единой строки JS",
+            "поиск сверху: с семи пространств список перестаёт просматриваться глазами",
+            "пустое состояние с подсказкой, что делать, если нужного пространства нет",
+            "хеш FNV-1a для оттенка аватара — цвет должен быть стабильным между заходами"
+          ],
+          "adapt": [
+            "массив workspaces с ролями и планами",
+            "title и адрес account",
+            "подпись submit и текст пустого состояния",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: выбор никуда не отправляется, переключение пространства обязан реализовать вызывающий код.",
+            "Права проверяйте на сервере при каждом запросе: выбор в списке ничего не разрешает.",
+            "Не показывайте пространства, куда человек не приглашён, даже неактивными: это утечка структуры компании.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Куда войти",
+            "maxLength": 24
+          },
+          {
+            "prop": "account",
+            "label": "Аккаунт",
+            "type": "text",
+            "default": "anna@vibeui.ru",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Picking a workspace after sign-in: the role sits under every name, the list is a real radiogroup, and a search box tops it.",
+            "ai": {
+              "summary": "The final sign-in step: a list of workspaces with roles and member counts, a name search and a continue button. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-016-* palette — do not swap it for your theme tokens",
+                "the role under each name: a client and a contractor share workspace names all the time, but \"Owner\" and \"Reader\" cannot be confused",
+                "real radios inside labels: arrow keys and screen readers work with no JS at all",
+                "the search on top: past seven workspaces the list stops being scannable",
+                "the empty state telling people what to do when their workspace is missing",
+                "the FNV-1a hash for the avatar hue — the colour must be stable between visits"
+              ],
+              "adapt": [
+                "the workspaces array with roles and plans",
+                "title and the account address",
+                "the submit label and the empty-state copy",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: the choice goes nowhere — switching workspaces is the caller's job.",
+                "Check permissions on the server for every request: picking from a list authorises nothing.",
+                "Do not list workspaces the person was never invited to, even greyed out: that leaks company structure.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth016 title=\"Where to sign in\" account=\"anna@vibeui.ru\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Where to sign in"
+              },
+              "account": {
+                "label": "Account",
+                "default": "anna@vibeui.ru"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-017",
+      "type": "registry:block",
+      "title": "Invite Banner",
+      "description": "Приглашение в команду широким баннером: стопка аватаров с именами, три числа о проекте и два равноправных ответа вместо ссылки-отказа.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-017/auth-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-017.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-017-*. Серверный: хуков нет. На широкой ширине заголовок и числа встают в строку контейнерным запросом; оттенок каждого аватара считается хешем FNV-1a по имени, стопка помечена aria-hidden и продублирована текстом.",
+      "meta": {
+        "tags": ["auth", "invite", "team", "onboarding"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth017",
+          "usage": "<Auth017 project=\"Каталог «Мера»\" role=\"Редактор\" />",
+          "summary": "Приглашение в проект: кто зовёт, куда, с какой ролью, кто уже в команде, три числа о проекте и кнопки принять/отклонить. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-017-* и не подменять её токенами вашей темы",
+            "имена в стопке аватаров: решение принимают по составу команды, а не по названию проекта",
+            "дублирование стопки текстом — декоративные аватары для скринридера пустое место",
+            "отказ обычной кнопкой рядом: это такой же законный исход, как согласие",
+            "выход «войти другим аккаунтом»: приглашение одноразовое, и принять его не тем пользователем нечем исправить",
+            "срок действия приглашения — иначе протухшая ссылка выглядит поломкой"
+          ],
+          "adapt": [
+            "project, inviter и inviterRole",
+            "role и списки team и stats",
+            "подписи accept и decline",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: кнопки ничего не отправляют, выдачу доступа обязан реализовать вызывающий код.",
+            "Приглашение проверяйте на сервере по токену из ссылки: письмо могли переслать.",
+            "Числа о проекте должны быть настоящими: выдуманная статистика обнаруживается в первый же день.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "project",
+            "label": "Проект",
+            "type": "text",
+            "default": "Каталог «Мера»",
+            "maxLength": 28
+          },
+          {
+            "prop": "role",
+            "label": "Роль",
+            "type": "text",
+            "default": "Редактор",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A team invite as a wide banner: a stack of named avatars, three project numbers and two equal answers instead of a decline link.",
+            "ai": {
+              "summary": "A project invitation: who invites, where, with which role, who is already on the team, three project figures and accept/decline buttons. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-auth-017-* palette — do not swap it for your theme tokens",
+                "the names in the avatar stack: people decide by who is on the team, not by the project's title",
+                "repeating the stack as text — decorative avatars are empty space to a screen reader",
+                "declining as a normal button beside accept: it is as valid an outcome as agreeing",
+                "the \"sign in with another account\" exit: the invite is single-use, and accepting it as the wrong user cannot be undone",
+                "the invitation's expiry — otherwise a stale link looks like a broken service"
+              ],
+              "adapt": [
+                "project, inviter and inviterRole",
+                "role and the team and stats lists",
+                "the accept and decline labels",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: the buttons send nothing — granting access is the caller's job.",
+                "Verify the invitation on the server by the token in the link: the email may have been forwarded.",
+                "The project figures must be real: invented statistics are noticed on day one.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth017 project=\"Mera Catalog\" role=\"Editor\" />"
+            },
+            "controls": {
+              "project": {
+                "label": "Project",
+                "default": "Mera Catalog"
+              },
+              "role": {
+                "label": "Role",
+                "default": "Editor"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-018",
+      "type": "registry:block",
+      "title": "Invited Signup",
+      "description": "Регистрация по приглашению: почта подставлена и заблокирована с объяснением почему, остаются только имя и пароль.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-018/auth-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-018.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-018-*. Серверный: хуков нет. Приглашённый адрес выведен элементом <output> с aria-labelledby вместо заблокированного input: readonly-поле попадает в отправку формы и путает автозаполнение.",
+      "meta": {
+        "tags": ["auth", "signup", "invite", "prefilled"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth018",
+          "usage": "<Auth018 project=\"Каталог «Мера»\" email=\"anna@vibeui.ru\" />",
+          "summary": "Регистрация из приглашения: баннер проекта, показанный, но неизменяемый адрес и два поля — имя и пароль. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-018-* и не подменять её токенами вашей темы",
+            "показанный адрес: скрыть его нельзя — через месяц человек не вспомнит, какую почту вводить при входе",
+            "объяснение, почему адрес нельзя изменить: приглашение выписано именно на него",
+            "ровно два поля: всё остальное про человека уже знает тот, кто приглашал, а длинная форма здесь теряет людей",
+            "ссылку «попросите новое приглашение» — это единственный законный путь сменить адрес",
+            "autoComplete=\"new-password\" и подсказку про менеджер паролей"
+          ],
+          "adapt": [
+            "project, email и имя inviter",
+            "title и подпись submit",
+            "тексты подсказок под полями",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: форма ничего не отправляет, проверку токена приглашения обязан реализовать вызывающий код.",
+            "Адрес берите из токена на сервере, а не из параметра ссылки: параметр правится в адресной строке.",
+            "Не переносите заблокированный адрес в скрытое поле формы — сервер и так знает его по токену.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "project",
+            "label": "Проект",
+            "type": "text",
+            "default": "Каталог «Мера»",
+            "maxLength": 28
+          },
+          {
+            "prop": "email",
+            "label": "Почта из приглашения",
+            "type": "text",
+            "default": "anna@vibeui.ru",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Sign-up from an invitation: the email is filled in and locked with a reason given, leaving only a name and a password.",
+            "ai": {
+              "summary": "Registration from an invite: a project banner, a shown but unchangeable address and two fields — name and password. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-auth-018-* palette — do not swap it for your theme tokens",
+                "showing the address: hiding it means that a month later nobody remembers which email to sign in with",
+                "the explanation of why the address is locked: the invitation was issued to exactly this one",
+                "exactly two fields: whoever invited already knows the rest, and a long form loses people here",
+                "the \"ask for a new invitation\" link — the only legitimate way to change the address",
+                "autoComplete=\"new-password\" and the password-manager hint"
+              ],
+              "adapt": [
+                "project, email and the inviter name",
+                "title and the submit label",
+                "the hint texts under the fields",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: the form submits nothing — validating the invite token is the caller's job.",
+                "Take the address from the server-side token, not from a URL parameter: parameters are edited in the address bar.",
+                "Do not mirror the locked address into a hidden form field — the server already knows it from the token.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth018 project=\"Mera Catalog\" email=\"anna@vibeui.ru\" />"
+            },
+            "controls": {
+              "project": {
+                "label": "Project",
+                "default": "Mera Catalog"
+              },
+              "email": {
+                "label": "Invited email",
+                "default": "anna@vibeui.ru"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-019",
+      "type": "registry:block",
+      "title": "Locked Out",
+      "description": "Временная блокировка после неудачных попыток: живой отсчёт до разблокировки, полоса прогресса и два выхода — сброс пароля и «это были не вы».",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-019/auth-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-019.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-019-*. Клиентский: \"use client\" ради отсчёта на useState и useEffect с setTimeout. Время выводится моноширинным шрифтом с font-variant-numeric:tabular-nums, чтобы цифры не прыгали; полоса помечена role=\"progressbar\" с aria-valuenow.",
+      "meta": {
+        "tags": ["auth", "lockout", "security", "timer"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth019",
+          "usage": "<Auth019 seconds={300} attempts={5} />",
+          "summary": "Экран блокировки входа: сколько попыток было, сколько ждать, полоса прогресса и запасные действия. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-019-* и не подменять её токенами вашей темы",
+            "слово «временно» и видимое время: без них человек считает аккаунт потерянным",
+            "сам отсчёт цифрами: «подождите» без числа провоцирует перезагрузку и новую попытку",
+            "ссылку «это были не вы»: блокировка без неё прячет от владельца аккаунта факт атаки",
+            "tabular-nums на таймере — иначе цифры дёргаются каждую секунду",
+            "выключенную кнопку повтора до конца отсчёта"
+          ],
+          "adapt": [
+            "seconds — длительность блокировки",
+            "attempts — сколько попыток было израсходовано",
+            "title, адрес account и подписи выходов",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: таймер локальный, настоящий счёт попыток и блокировку обязан реализовать вызывающий код.",
+            "Клиентский отсчёт обходится перезагрузкой страницы: запрет должен жить на сервере.",
+            "Не блокируйте по одному только адресу — иначе чужой аккаунт закрывается пятью запросами.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "seconds",
+            "label": "Блокировка, с",
+            "type": "number",
+            "default": 300,
+            "min": 30,
+            "max": 900
+          },
+          {
+            "prop": "attempts",
+            "label": "Было попыток",
+            "type": "number",
+            "default": 5,
+            "min": 3,
+            "max": 10
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A temporary lockout after failed attempts: a live countdown, a progress bar and two exits — reset the password or \"wasn't you?\".",
+            "ai": {
+              "summary": "A sign-in lockout screen: how many attempts were made, how long to wait, a progress bar and fallback actions. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-019-* palette — do not swap it for your theme tokens",
+                "the word \"temporarily\" and a visible time: without them people assume the account is gone",
+                "the countdown in digits: \"please wait\" with no number invites a reload and another attempt",
+                "the \"wasn't you?\" link: a lockout without it hides an ongoing attack from the account owner",
+                "tabular-nums on the timer — otherwise the digits jitter every second",
+                "the retry button disabled until the countdown ends"
+              ],
+              "adapt": [
+                "seconds — how long the lockout lasts",
+                "attempts — how many tries were spent",
+                "title, the account address and the exit labels",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: the timer is local — real attempt counting and lockout are the caller's job.",
+                "A client countdown is defeated by a reload: the ban must live on the server.",
+                "Do not lock by email alone — otherwise anyone can close someone else's account with five requests.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth019 seconds={300} attempts={5} />"
+            },
+            "controls": {
+              "seconds": {
+                "label": "Lockout, s"
+              },
+              "attempts": {
+                "label": "Attempts made"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-020",
+      "type": "registry:block",
+      "title": "Active Sessions",
+      "description": "Выход со всех устройств списком: где открыт аккаунт, откуда и когда, текущий сеанс помечен, общий выход требует второго нажатия.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-020/auth-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-020.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-020-*. Клиентский: \"use client\" ради подтверждения и состояния «завершено». На широкой ширине время сеанса уезжает вправо контейнерным запросом; текущий сеанс помечен data-current и не выключается.",
+      "meta": {
+        "tags": ["auth", "sessions", "devices", "security"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth020",
+          "usage": "<Auth020 title=\"Активные сеансы\" submit=\"Завершить все, кроме текущего\" />",
+          "summary": "Список активных сеансов с устройством, браузером, городом и временем, отметкой текущего и общим выходом за подтверждением. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-020-* и не подменять её токенами вашей темы",
+            "список перед кнопкой: «выйти везде» без списка не отвечает на вопрос, есть ли вообще чужой сеанс",
+            "город и время у каждой строки — по ним и опознаётся лишнее устройство",
+            "неотключаемый текущий сеанс: выкинуть себя из настроек безопасности значит потерять экран, где разбираешься с угрозой",
+            "второе нажатие перед общим выходом: промах стоит всем открытым вкладкам команды",
+            "предупреждение про несохранённые черновики на других устройствах"
+          ],
+          "adapt": [
+            "массив sessions и отметку current",
+            "title, lead и подпись submit",
+            "тексты подтверждения и итогового сообщения",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: сеансы не завершаются, отзыв токенов обязан реализовать вызывающий код.",
+            "Город по IP приблизителен: не подавайте его как факт, иначе люди пугаются собственного VPN.",
+            "После общего выхода стоит попросить сменить пароль: чужая сессия могла быть не единственной.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Активные сеансы",
+            "maxLength": 24
+          },
+          {
+            "prop": "submit",
+            "label": "Кнопка выхода",
+            "type": "text",
+            "default": "Завершить все, кроме текущего",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Signing out everywhere as a list: where the account is open, from where and when, with the current session marked and a two-tap global sign-out.",
+            "ai": {
+              "summary": "A list of active sessions with device, browser, city and time, the current one marked, and a global sign-out behind a confirmation. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-020-* palette — do not swap it for your theme tokens",
+                "the list before the button: \"sign out everywhere\" alone never answers whether a stranger is even logged in",
+                "the city and time on each row — that is how the odd device gets spotted",
+                "the current session left untouchable: throwing yourself out of security settings loses the screen where you are handling the threat",
+                "the second tap before the global sign-out: a mis-tap costs the whole team their open tabs",
+                "the warning about unsaved drafts on the other devices"
+              ],
+              "adapt": [
+                "the sessions array and the current flag",
+                "title, lead and the submit label",
+                "the confirmation and completion copy",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: nothing is terminated — revoking tokens is the caller's job.",
+                "IP-based cities are approximate: do not present them as fact, or people panic at their own VPN.",
+                "After a global sign-out, prompt for a password change: the stranger's session may not have been the only one.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth020 title=\"Active sessions\" submit=\"Sign out everywhere else\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Active sessions"
+              },
+              "submit": {
+                "label": "Sign-out button",
+                "default": "Sign out everywhere else"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-021",
+      "type": "registry:block",
+      "title": "Confirm Identity",
+      "description": "Повторный запрос пароля перед опасным действием: сначала названы последствия списком, и только потом поле — согласие становится осознанным.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-021/auth-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-021.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-021-*. Серверный: хуков нет. Порядок «последствия → поле → кнопки» задан разметкой; на широкой ширине кнопки встают в строку через row-reverse, чтобы подтверждение оказалось справа, оставаясь вторым в DOM.",
+      "meta": {
+        "tags": ["auth", "confirm", "danger", "reauth"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth021",
+          "usage": "<Auth021 action=\"Передать проект другому владельцу\" submit=\"Подтвердить и передать\" />",
+          "summary": "Подтверждение личности перед необратимым действием: заголовок действия, объект, список последствий, поле пароля и две кнопки. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-021-* и не подменять её токенами вашей темы",
+            "порядок «последствия, потом пароль»: одно поле без объяснения воспринимается как придирка, и пароль вводят машинально",
+            "перечисление последствий конкретными числами, а не словом «безвозвратно»",
+            "отмену такой же кнопкой рядом, а не ссылкой в углу",
+            "объяснение, почему пароль спрашивают повторно",
+            "упоминание журнала безопасности: событие должно быть видимым для владельца"
+          ],
+          "adapt": [
+            "action и объект target",
+            "массив effects",
+            "подписи submit и cancel",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: пароль не проверяется, повторную проверку обязан реализовать вызывающий код прямо перед действием.",
+            "Проверяйте пароль на сервере в момент действия, а не «где-то раньше в сессии».",
+            "Для аккаунтов со вторым фактором спрашивайте именно его: пароль мог утечь.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "action",
+            "label": "Действие",
+            "type": "text",
+            "default": "Передать проект другому владельцу",
+            "maxLength": 40
+          },
+          {
+            "prop": "submit",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Подтвердить и передать",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Re-asking for the password before a dangerous action: the consequences are listed first and the field comes second, so consent is deliberate.",
+            "ai": {
+              "summary": "Identity confirmation before an irreversible action: the action, its target, a consequences list, a password field and two buttons. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-auth-021-* palette — do not swap it for your theme tokens",
+                "the consequences-then-password order: a lone field reads as nitpicking and gets filled on autopilot",
+                "listing consequences with concrete numbers rather than the word \"permanently\"",
+                "cancel as an equal button beside confirm, not a link in the corner",
+                "the explanation of why the password is being asked again",
+                "the mention of the security log: the event must be visible to the owner"
+              ],
+              "adapt": [
+                "action and its target",
+                "the effects array",
+                "the submit and cancel labels",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: the password is not verified — re-authentication right before the action is the caller's job.",
+                "Verify the password on the server at the moment of the action, not \"somewhere earlier in the session\".",
+                "For accounts with a second factor, ask for that instead: the password may already have leaked.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth021 action=\"Transfer the project to another owner\" submit=\"Confirm and transfer\" />"
+            },
+            "controls": {
+              "action": {
+                "label": "Action",
+                "default": "Transfer the project"
+              },
+              "submit": {
+                "label": "Button",
+                "default": "Confirm and transfer"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-022",
+      "type": "registry:block",
+      "title": "Session Expired",
+      "description": "«Сессия истекла» окном поверх замороженной страницы: под ним виден размытый макет работы, а рядом с продолжением стоит честный выход.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-022/auth-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-022.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-022-*. Серверный: хуков нет. Размытый слой собран из простых полос с filter:blur и помечен aria-hidden; карточка объявлена role=\"alertdialog\" и связана с заголовком через aria-labelledby.",
+      "meta": {
+        "tags": ["auth", "session", "expired", "modal"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth022",
+          "usage": "<Auth022 title=\"Сессия истекла\" leave=\"Выйти совсем\" />",
+          "summary": "Окно возврата в сессию: значок «требуется вход», сообщение о таймауте, строка про сохранённый черновик, аккаунт, поле пароля и выход. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-022-* и не подменять её токенами вашей темы",
+            "видимый размытый макет под окном: он говорит «вы вернётесь сюда же», чего редирект на страницу входа сказать не может",
+            "aria-hidden на размытом слое — для скринридера это шум, а не содержимое",
+            "строку про сохранённый черновик: главный страх на этом экране — потерянная работа",
+            "кнопку «выйти совсем» рядом, а не мелкой ссылкой: на общем компьютере это правильный исход",
+            "role=\"alertdialog\" и связь с заголовком через aria-labelledby"
+          ],
+          "adapt": [
+            "title, lead и адрес account",
+            "подписи submit и leave",
+            "число полос в размытом слое",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: пароль не проверяется, продление сессии обязан реализовать вызывающий код.",
+            "Срок жизни сессии считает сервер: клиентский таймер расходится с ним при спящем ноутбуке.",
+            "Черновик действительно сохраняйте до показа окна, иначе строка про него — обман.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Сессия истекла",
+            "maxLength": 24
+          },
+          {
+            "prop": "leave",
+            "label": "Кнопка выхода",
+            "type": "text",
+            "default": "Выйти совсем",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A \"session expired\" dialog over frozen work: the blurred page shows through, and a real sign-out sits beside the continue button.",
+            "ai": {
+              "summary": "A return-to-session dialog: a sign-in badge, the timeout message, a saved-draft line, the account, a password field and a sign-out. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-auth-022-* palette — do not swap it for your theme tokens",
+                "the blurred page showing through: it says \"you will land right back here\", which a redirect to a sign-in page cannot",
+                "aria-hidden on the blurred layer — to a screen reader it is noise, not content",
+                "the saved-draft line: the real fear on this screen is lost work",
+                "the \"sign out entirely\" button beside it, not a tiny link: on a shared computer that is the right outcome",
+                "role=\"alertdialog\" and the aria-labelledby link to the heading"
+              ],
+              "adapt": [
+                "title, lead and the account address",
+                "the submit and leave labels",
+                "the number of bars in the blurred layer",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: the password is not checked — extending the session is the caller's job.",
+                "The session lifetime is the server's: a client timer drifts whenever the laptop sleeps.",
+                "Actually save the draft before showing the dialog, or the line about it is a lie.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth022 title=\"Session expired\" leave=\"Sign out entirely\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Session expired"
+              },
+              "leave": {
+                "label": "Sign-out button",
+                "default": "Sign out entirely"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-023",
+      "type": "registry:block",
+      "title": "Two Step Signup",
+      "description": "Регистрация в два шага: сначала доступ, потом профиль, который можно пропустить — аккаунт уже создан на первом шаге.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-023/auth-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-023.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-023-*. Клиентский: \"use client\" ради переключения шагов. Индикатор — список из двух пунктов с data-active и линией-разделителем; на широкой ширине поля профиля встают в две колонки контейнерным запросом.",
+      "meta": {
+        "tags": ["auth", "signup", "steps", "onboarding"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth023",
+          "usage": "<Auth023 title=\"Регистрация\" submit=\"Готово, в каталог\" />",
+          "summary": "Двухшаговая регистрация: почта с паролем на первом шаге, имя, роль и компания на втором, индикатор шагов и кнопка «пропустить». Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-023-* и не подменять её токенами вашей темы",
+            "создание аккаунта уже на первом шаге: брошенный второй шаг не должен отменять регистрацию",
+            "кнопку «пропустить» на втором шаге — без неё разрез превращается в ту же длинную форму",
+            "индикатор из двух шагов: он обещает, что анкета не бесконечная",
+            "возврат на пройденный шаг и запрет прыгать вперёд",
+            "строку внизу, объясняющую, что именно делает каждый шаг"
+          ],
+          "adapt": [
+            "title и подписи firstStep и secondStep",
+            "подпись submit и набор полей второго шага",
+            "тексты пояснений под заголовками",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: ничего не отправляется и не сохраняется, регистрацию обязан реализовать вызывающий код.",
+            "Данные первого шага отправляйте сразу, а не копите до конца: иначе обещание «аккаунт уже создан» ложно.",
+            "Не делайте второй шаг обязательным задним числом — люди уже увидели «пропустить».",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Регистрация",
+            "maxLength": 24
+          },
+          {
+            "prop": "submit",
+            "label": "Кнопка второго шага",
+            "type": "text",
+            "default": "Готово, в каталог",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Sign-up in two steps: access first, profile second — and the profile can be skipped, because the account already exists after step one.",
+            "ai": {
+              "summary": "A two-step sign-up: email and password first, name, role and company second, with a step indicator and a \"skip\" button. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-023-* palette — do not swap it for your theme tokens",
+                "creating the account on step one: abandoning step two must not undo the registration",
+                "the \"skip\" button on step two — without it the split becomes the same long form with scrolling",
+                "the two-step indicator: it promises the questionnaire is finite",
+                "going back to a completed step while forward jumps stay blocked",
+                "the closing line explaining what each step actually does"
+              ],
+              "adapt": [
+                "title and the firstStep and secondStep labels",
+                "the submit label and the second step's fields",
+                "the explanatory copy under the headings",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: nothing is stored — registration is the caller's job.",
+                "Send step one immediately rather than buffering to the end, or the \"your account already exists\" promise is false.",
+                "Do not make step two mandatory after the fact — people already saw \"skip\".",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth023 title=\"Sign up\" submit=\"Done, open the catalog\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Sign up"
+              },
+              "submit": {
+                "label": "Second step button",
+                "default": "Done, open catalog"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-024",
+      "type": "registry:block",
+      "title": "Onboarding Goals",
+      "description": "Онбординг после регистрации: цели карточками с объяснением, на что влияет ответ, ограничение выбора и честное «пропустить».",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-024/auth-024.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-024.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-024-*. Клиентский: \"use client\" ради выбора и предела. Карточки — label с визуально скрытым чекбоксом внутри, подсветка держится на :has(input:checked); после исчерпания лимита остальные чекбоксы получают disabled.",
+      "meta": {
+        "tags": ["auth", "onboarding", "goals", "survey"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth024",
+          "usage": "<Auth024 limit={3} submit=\"Открыть каталог\" />",
+          "summary": "Первый экран после регистрации: шесть целей карточками, счётчик выбранных с пределом, кнопка продолжения и «пропустить». Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-024-* и не подменять её токенами вашей темы",
+            "объяснение под каждой целью, что изменится: опрос без последствий люди заполняют наугад или бросают",
+            "предел выбора: отметивший всё не сообщил ничего",
+            "чекбоксы внутри label: клавиатура и скринридер работают без ролей и обработчиков",
+            "«пропустить» рядом с кнопкой: онбординг, из которого нельзя выйти, воспринимается как платёжная форма",
+            "счётчик с role=\"status\": иначе выключение остальных карточек выглядит поломкой"
+          ],
+          "adapt": [
+            "массив goals с текстами и значками",
+            "limit — сколько целей можно отметить",
+            "title, lead и подпись submit",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: ответы никуда не уходят, их обработку обязан реализовать вызывающий код.",
+            "Если ответы ни на что не влияют, экран лучше убрать: он крадёт первую минуту знакомства.",
+            "Не блокируйте вход до ответа — онбординг обязан быть необязательным.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "limit",
+            "label": "Максимум целей",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 6
+          },
+          {
+            "prop": "submit",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Открыть каталог",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Post-signup onboarding: goals as cards that say what each answer changes, a cap on choices and an honest \"skip\".",
+            "ai": {
+              "summary": "The first screen after signing up: six goal cards, a counter with a cap, a continue button and \"skip\". Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-024-* palette — do not swap it for your theme tokens",
+                "the line under each goal saying what changes: a survey with no consequence gets answered at random or abandoned",
+                "the selection cap: someone who ticks everything has told you nothing",
+                "checkboxes inside labels: keyboard and screen readers work with no roles or handlers",
+                "\"skip\" beside the button: onboarding you cannot leave feels like a payment form",
+                "the counter with role=\"status\": otherwise the other cards going disabled looks like a bug"
+              ],
+              "adapt": [
+                "the goals array with its copy and glyphs",
+                "limit — how many goals can be ticked",
+                "title, lead and the submit label",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: the answers go nowhere — handling them is the caller's job.",
+                "If the answers change nothing, drop the screen: it steals the first minute of the relationship.",
+                "Never gate entry on answering — onboarding has to stay optional.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth024 limit={3} submit=\"Open the catalog\" />"
+            },
+            "controls": {
+              "limit": {
+                "label": "Maximum goals"
+              },
+              "submit": {
+                "label": "Button",
+                "default": "Open the catalog"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-025",
+      "type": "registry:block",
+      "title": "Plan Signup",
+      "description": "Выбор тарифа прямо в регистрации: цена пересчитывается при смене периода, бесплатный вариант стоит первым и выбран по умолчанию.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-025/auth-025.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-025.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-025-*. Клиентский: \"use client\" ради периода и выбранного тарифа. Тарифы — label с radio внутри, подсветка на :has(input:checked); на широкой ширине карточки встают в три колонки, а форма — в две.",
+      "meta": {
+        "tags": ["auth", "signup", "pricing", "plans"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth025",
+          "usage": "<Auth025 yearlyOff={20} submit=\"Создать аккаунт\" />",
+          "summary": "Регистрация с выбором тарифа: переключатель периода, три тарифа радиокарточками с перечнем возможностей и форма из двух полей. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-025-* и не подменять её токенами вашей темы",
+            "бесплатный тариф первым и выбранным по умолчанию: иначе экран читается как платный шлагбаум",
+            "пересчёт цены при смене периода: «−20% при годовой оплате» мелким шрифтом читают единицы, а изменившееся число видят все",
+            "строку «карта не нужна» под кнопкой — это главный страх этого шага",
+            "радиокарточки внутри label: стрелки клавиатуры переключают тарифы без JS",
+            "название выбранного тарифа на кнопке: человек видит, за что подписывается"
+          ],
+          "adapt": [
+            "массив plans с ценами и возможностями",
+            "yearlyOff — скидка за годовую оплату",
+            "title и подпись submit",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: оплата и подписка не подключаются, их обязан реализовать вызывающий код.",
+            "Цены и валюту берите с сервера: захардкоженные числа расходятся с прайсом в первый же месяц.",
+            "Скидку считайте так же, как в биллинге, иначе на счёте окажется другая сумма.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "yearlyOff",
+            "label": "Скидка за год, %",
+            "type": "number",
+            "default": 20,
+            "min": 0,
+            "max": 50
+          },
+          {
+            "prop": "submit",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Создать аккаунт",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Picking a plan inside sign-up: the price recalculates when the period changes, and the free tier comes first, selected by default.",
+            "ai": {
+              "summary": "Sign-up with a plan choice: a period toggle, three radio plan cards with perks and a two-field form. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-025-* palette — do not swap it for your theme tokens",
+                "the free plan first and preselected: otherwise the screen reads as a paywall",
+                "recalculating the price on period change: \"20% off annually\" in fine print is read by nobody, a changed number by everyone",
+                "the \"no card needed\" line under the button — the main fear at this step",
+                "radio cards inside labels: arrow keys switch plans with no JS",
+                "the chosen plan's name on the button: people see what they are subscribing to"
+              ],
+              "adapt": [
+                "the plans array with prices and perks",
+                "yearlyOff — the annual discount",
+                "title and the submit label",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: no payment or subscription is set up — that is the caller's job.",
+                "Take prices and currency from the server: hard-coded numbers drift from the price list within a month.",
+                "Compute the discount exactly as billing does, or the invoice will show a different figure.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth025 yearlyOff={20} submit=\"Create account\" />"
+            },
+            "controls": {
+              "yearlyOff": {
+                "label": "Annual discount, %"
+              },
+              "submit": {
+                "label": "Button",
+                "default": "Create account"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-026",
+      "type": "registry:block",
+      "title": "Phone Code",
+      "description": "Вход по телефону: код страны отдельным списком, цифровая клавиатура на номере, а на втором шаге номер видно рядом с кнопкой «изменить».",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-026/auth-026.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-026.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-026-*. Клиентский: \"use client\" ради двух шагов и очистки ввода. Номер принимает только цифры, пробелы и дефисы; поле кода — одно, с letter-spacing и компенсирующим text-indent.",
+      "meta": {
+        "tags": ["auth", "phone", "sms", "otp"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth026",
+          "usage": "<Auth026 title=\"Вход по номеру\" submit=\"Получить код\" />",
+          "summary": "Вход по номеру телефона: выбор кода страны, поле номера, затем поле кода из SMS с показом набранного номера. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-026-* и не подменять её токенами вашей темы",
+            "отдельный список кодов стран: человек с зарубежным номером иначе не понимает, куда его вводить",
+            "inputMode=\"tel\" на номере — на телефоне это цифровая клавиатура, а не буквенная",
+            "показ набранного номера на втором шаге: главная ошибка такого входа обнаруживается, когда SMS не приходит",
+            "кнопку «изменить номер», сохраняющую уже введённые цифры",
+            "autoComplete=\"one-time-code\" на поле кода"
+          ],
+          "adapt": [
+            "массив countries с кодами и масками",
+            "title, lead и подпись submit",
+            "длину кода и тексты подсказок",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: SMS не отправляются, выдачу и проверку кода обязан реализовать вызывающий код.",
+            "SMS дорогие и перехватываемые: ограничьте частоту отправки и не считайте их сильным вторым фактором.",
+            "Храните номер в формате E.164, а не так, как его набрали в поле.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вход по номеру",
+            "maxLength": 24
+          },
+          {
+            "prop": "submit",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Получить код",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Phone sign-in: the country code is its own select, the number gets a numeric keypad, and step two shows the number beside a \"change\" button.",
+            "ai": {
+              "summary": "Sign-in by phone number: a country-code select, a number field, then an SMS code field showing the number entered. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-026-* palette — do not swap it for your theme tokens",
+                "the separate country-code list: people with foreign numbers otherwise cannot tell where theirs goes",
+                "inputMode=\"tel\" on the number — on a phone that is a numeric keypad, not a letter one",
+                "showing the entered number on step two: the classic mistake here surfaces only when no SMS arrives",
+                "the \"change number\" button that keeps the digits already typed",
+                "autoComplete=\"one-time-code\" on the code field"
+              ],
+              "adapt": [
+                "the countries array with codes and masks",
+                "title, lead and the submit label",
+                "the code length and the hint texts",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: no SMS is sent — issuing and checking the code is the caller's job.",
+                "SMS is costly and interceptable: rate-limit sending and do not treat it as a strong second factor.",
+                "Store the number in E.164 form, not as it was typed into the field.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth026 title=\"Sign in by phone\" submit=\"Send the code\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Sign in by phone"
+              },
+              "submit": {
+                "label": "Button",
+                "default": "Send the code"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-027",
+      "type": "registry:block",
+      "title": "Access Request",
+      "description": "Экран «нет доступа» как рабочий: что закрыто, какое право нужно, кто именно его выдаёт — и поле «зачем» рядом с кнопкой запроса.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-027/auth-027.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-027.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-027-*. Клиентский: \"use client\" ради текста причины и состояния «запрос отправлен». Отправленный запрос заменяет только форму, а не весь экран; оттенок аватара администратора считается хешем FNV-1a по имени.",
+      "meta": {
+        "tags": ["auth", "403", "permissions", "request"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth027",
+          "usage": "<Auth027 needed=\"Право «Читатель приватных блоков»\" submit=\"Запросить доступ\" />",
+          "summary": "Страница отказа с запросом прав: таблица фактов о доступе, список администраторов и форма с причиной. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-027-* и не подменять её токенами вашей темы",
+            "имена тех, кто выдаёт доступ: иначе человек идёт искать нужного собеседника по чатам",
+            "название конкретного права, а не общее «недостаточно прав»",
+            "поле «зачем»: запрос без причины администратор откладывает, потому что не может его оценить",
+            "уточнение, что вход в порядке и дело не в аккаунте — иначе люди начинают заново логиниться",
+            "замену только формы после отправки: подменённый экран прячет уже сделанный запрос"
+          ],
+          "adapt": [
+            "resource и needed",
+            "список admins",
+            "подпись submit и текст подтверждения",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: запрос никуда не отправляется, выдачу прав обязан реализовать вызывающий код.",
+            "Права проверяйте на сервере: скрытая кнопка не защищает адрес страницы.",
+            "Не показывайте на этом экране содержимое, к которому нет доступа, даже размытым.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "needed",
+            "label": "Требуемое право",
+            "type": "text",
+            "default": "Право «Читатель приватных блоков»",
+            "maxLength": 40
+          },
+          {
+            "prop": "submit",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Запросить доступ",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A \"no access\" screen that actually works: what is closed, which permission is needed, who grants it — and a \"why\" field beside the request button.",
+            "ai": {
+              "summary": "A denial page with an access request: a facts table about the permission, a list of administrators and a reason form. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-027-* palette — do not swap it for your theme tokens",
+                "the names of the people who grant access: otherwise the search moves into chat threads",
+                "the specific permission name rather than a generic \"insufficient rights\"",
+                "the \"why\" field: a request with no reason gets postponed because nobody can judge it",
+                "the note that sign-in is fine and the account is not at fault — otherwise people start logging in again",
+                "replacing only the form after sending: a swapped screen hides the request that was just made"
+              ],
+              "adapt": [
+                "resource and needed",
+                "the admins list",
+                "the submit label and the confirmation copy",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: the request goes nowhere — granting permissions is the caller's job.",
+                "Enforce permissions on the server: a hidden button does not protect a URL.",
+                "Never show the inaccessible content on this screen, not even blurred.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth027 needed=\"Private blocks reader\" submit=\"Request access\" />"
+            },
+            "controls": {
+              "needed": {
+                "label": "Required permission",
+                "default": "Private blocks reader"
+              },
+              "submit": {
+                "label": "Button",
+                "default": "Request access"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-028",
+      "type": "registry:block",
+      "title": "Data Consent",
+      "description": "Согласие на обработку данных по целям: переключатели с объяснениями, обязательная категория заблокирована, а «принять всё» и «сохранить выбор» равны по весу.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-028/auth-028.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-028.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-028-*. Клиентский: \"use client\" ради состояния переключателей. Переключатели — обычные чекбоксы с прозрачным input поверх дорожки, вид даёт CSS через :has(input:checked); обязательная цель получает disabled.",
+      "meta": {
+        "tags": ["auth", "consent", "privacy", "gdpr"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth028",
+          "usage": "<Auth028 acceptAll=\"Принять всё\" saveChoice=\"Сохранить выбор\" />",
+          "summary": "Экран согласий: четыре цели обработки с описаниями и переключателями, обязательная заблокирована, две равные кнопки и счётчик выбранного. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-028-* и не подменять её токенами вашей темы",
+            "равные по весу кнопки: оформление, где отказ выглядит серой ссылкой, признано тёмным паттерном",
+            "выключенные по умолчанию необязательные переключатели",
+            "показанную, но заблокированную обязательную цель с объяснением: спрятать её значило бы умолчать о собираемых данных",
+            "описание под каждой целью — «улучшение сервиса» не позволяет принять решение",
+            "прозрачный чекбокс поверх дорожки: переключатель обязан работать с клавиатуры"
+          ],
+          "adapt": [
+            "массив purposes с описаниями и отметкой required",
+            "подписи acceptAll и saveChoice",
+            "title, lead и текст ссылки на политику",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: выбор никуда не сохраняется, запись согласий обязан реализовать вызывающий код.",
+            "Сохраняйте версию политики и время согласия: без них согласие недоказуемо.",
+            "Отзыв согласия должен быть таким же простым, как его выдача.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "acceptAll",
+            "label": "Кнопка «принять всё»",
+            "type": "text",
+            "default": "Принять всё",
+            "maxLength": 20
+          },
+          {
+            "prop": "saveChoice",
+            "label": "Кнопка выбора",
+            "type": "text",
+            "default": "Сохранить выбор",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Data consent by purpose: switches with explanations, the required category locked, and \"accept all\" and \"save choice\" given equal weight.",
+            "ai": {
+              "summary": "A consent screen: four processing purposes with descriptions and switches, the required one locked, two equal buttons and a counter. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-028-* palette — do not swap it for your theme tokens",
+                "buttons of equal weight: making refusal a grey link is a recognised dark pattern",
+                "optional switches off by default",
+                "the required purpose shown but locked with a reason: hiding it would conceal what data is collected",
+                "a description under every purpose — \"to improve the service\" supports no decision",
+                "the transparent checkbox over the track: a switch must work from the keyboard"
+              ],
+              "adapt": [
+                "the purposes array with descriptions and the required flag",
+                "the acceptAll and saveChoice labels",
+                "title, lead and the policy link copy",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: the choice is not stored — recording consent is the caller's job.",
+                "Store the policy version and the time of consent: without them consent is unprovable.",
+                "Withdrawing consent must be as easy as giving it.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth028 acceptAll=\"Accept all\" saveChoice=\"Save my choice\" />"
+            },
+            "controls": {
+              "acceptAll": {
+                "label": "Accept-all button",
+                "default": "Accept all"
+              },
+              "saveChoice": {
+                "label": "Choice button",
+                "default": "Save my choice"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-029",
+      "type": "registry:block",
+      "title": "Delete Account",
+      "description": "Удаление аккаунта двумя колонками: что пропадёт и что останется у сервиса, срок восстановления и подтверждение вводом собственной почты.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-029/auth-029.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-029.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-029-*. Клиентский: \"use client\" ради сверки набранного адреса. Сравнение без учёта регистра, кнопка удаления выключена до совпадения; на широкой ширине колонки последствий встают рядом контейнерным запросом.",
+      "meta": {
+        "tags": ["auth", "delete", "account", "danger"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth029",
+          "usage": "<Auth029 graceDays={30} submit=\"Удалить аккаунт\" />",
+          "summary": "Экран удаления аккаунта: колонка потерь, колонка того, что остаётся у сервиса, срок восстановления, поле подтверждения и предложение заморозки. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-029-* и не подменять её токенами вашей темы",
+            "вторую колонку «что останется у нас»: люди боятся не потерять данные, а оставить их — и молчание об этом останавливает удаление вернее предупреждений",
+            "срок восстановления отдельной строкой: удаление неизвестной обратимости откладывают вместе с подпиской",
+            "ввод собственной почты вместо слова «удалить»: почта не набирается механически и не копируется из соседней строки",
+            "сравнение без учёта регистра — иначе кнопка не включается из-за автозаглавной буквы на телефоне",
+            "предложение заморозки внизу: часть людей приходит сюда за остановкой оплаты, а не за удалением"
+          ],
+          "adapt": [
+            "массивы losses и keeps",
+            "graceDays — срок восстановления",
+            "адрес account и подпись submit",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Это демонстрация интерфейса: ничего не удаляется, удаление и повторную проверку пароля обязан реализовать вызывающий код.",
+            "Список «что останется» должен совпадать с настоящей политикой хранения, иначе это обман.",
+            "Владельца единственного проекта не удаляйте молча: сначала попросите передать владение.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "graceDays",
+            "label": "Срок восстановления, дней",
+            "type": "number",
+            "default": 30,
+            "min": 0,
+            "max": 90
+          },
+          {
+            "prop": "submit",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Удалить аккаунт",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Account deletion in two columns: what disappears and what the service keeps, the recovery window and a confirmation typed as your own email.",
+            "ai": {
+              "summary": "An account deletion screen: a losses column, a what-we-keep column, the recovery window, a confirmation field and a freeze offer. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-029-* palette — do not swap it for your theme tokens",
+                "the second \"what we keep\" column: people fear leaving data behind more than losing it, and silence here stops deletions better than warnings",
+                "the recovery window on its own line: a deletion of unknown reversibility gets postponed along with the subscription",
+                "typing your own email instead of the word \"delete\": an email is not typed on autopilot nor copied from the line above",
+                "the case-insensitive comparison — otherwise a phone's auto-capital keeps the button disabled",
+                "the freeze offer at the bottom: some people come here to stop paying, not to erase themselves"
+              ],
+              "adapt": [
+                "the losses and keeps arrays",
+                "graceDays — the recovery window",
+                "the account address and the submit label",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "This is an interface demo: nothing is deleted — deletion and re-authentication are the caller's job.",
+                "The \"what we keep\" list must match the real retention policy, otherwise it is a lie.",
+                "Do not silently delete the sole owner of a project: ask them to transfer ownership first.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth029 graceDays={30} submit=\"Delete account\" />"
+            },
+            "controls": {
+              "graceDays": {
+                "label": "Recovery window, days"
+              },
+              "submit": {
+                "label": "Button",
+                "default": "Delete account"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
