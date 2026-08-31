@@ -1552,6 +1552,2617 @@
           }
         }
       }
+    },
+    {
+      "name": "collapsible-001",
+      "type": "registry:component",
+      "title": "Native Disclosure",
+      "description": "Базовая свёртка на нативном details: состояние живёт в разметке, клиентского кода нет, раскрытие работает до гидратации.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-001/collapsible-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-001-*. Серверный: хуков нет, корень блока — сам элемент details. Системный маркер снят через list-style:none и ::-webkit-details-marker, вместо него нарисован значок из двух граней квадрата, поворот привязан к селектору [open]. Подсказка справа прижата margin-left:auto, поэтому при её отсутствии значок берёт auto на себя через :only-child.",
+      "meta": {
+        "tags": ["collapsible", "details", "no-js", "disclosure"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible001",
+          "usage": "<Collapsible001 title=\"Как устанавливается компонент\" hint=\"30 секунд\" />",
+          "summary": "Свёртка на нативных details и summary: заголовок с подсказкой, поворачивающийся значок и текст под чертой. Клиентского JS нет, состояние хранит разметка. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-001-* и не подменять её токенами вашей темы",
+            "нативные details/summary: замена на кнопку с useState отнимает поиск по странице и работу до гидратации",
+            "скрытие системного маркера вместе со своим значком — иначе стрелок будет две",
+            "поворот значка через селектор [open], а не подмену символа: так состояние остаётся в CSS",
+            "outline focus-visible у summary с отрицательным offset: заголовок перебирают с клавиатуры",
+            "светлую подложку и рамку блока — на тёмной витрине без них текст не читается"
+          ],
+          "adapt": [
+            "заголовок через проп title",
+            "подсказку справа через проп hint",
+            "текст раскрытия через проп text",
+            "акцент через проп accent и ширину блока"
+          ],
+          "notes": [
+            "Анимации раскрытия здесь нет намеренно: нативный details меняет высоту скачком, плавность требует другой механики.",
+            "Атрибут open передаётся напрямую в details: он и есть состояние, отдельный стейт заводить не нужно.",
+            "Внутри summary не должно быть интерактивных элементов: клик по ним всё равно переключит свёртку.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Как устанавливается компонент",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "30 секунд",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A basic disclosure on a native details element: the state lives in the markup, there is no client code, and it works before hydration.",
+            "ai": {
+              "summary": "A disclosure on native details and summary: a heading with a hint, a rotating marker and body text under a rule. No client JS, the markup holds the state. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-001-* palette — do not swap it for your theme tokens",
+                "native details/summary: a button with useState loses find-in-page and pre-hydration behaviour",
+                "hiding the system marker along with drawing your own — otherwise there are two arrows",
+                "rotating the marker via the [open] selector instead of swapping glyphs: the state stays in CSS",
+                "the focus-visible outline on summary with a negative offset: headings get tabbed through",
+                "the light surface and border — without them the text is unreadable on a dark showcase"
+              ],
+              "adapt": [
+                "the heading through the title prop",
+                "the trailing hint through the hint prop",
+                "the body copy through the text prop",
+                "the accent through the accent prop and the block width"
+              ],
+              "notes": [
+                "There is deliberately no open animation: native details snaps, smooth height needs different machinery.",
+                "The open attribute goes straight to details: it is the state, no separate React state is needed.",
+                "Do not put interactive elements inside summary: clicking them still toggles the disclosure.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible001 title=\"How the component is installed\" hint=\"30 seconds\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "How the component is installed"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "30 seconds"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "collapsible-002",
+      "type": "registry:component",
+      "title": "Animated Height",
+      "description": "Свёртка с плавной анимацией высоты: обёртка-грид едет от 0fr к 1fr, поэтому высота содержимого не нужна заранее.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-002/collapsible-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-002-*. Клиентский: \"use client\" ради useState и aria-expanded. Анимация высоты сделана гридом: обёртка [data-part=\"wrap\"] переключает grid-template-rows с 0fr на 1fr, внутренний слой держит overflow:hidden и min-height:0 — без него строка грида не сжимается ниже содержимого. Скрытая часть помечена атрибутом inert, поэтому в свёрнутом виде её содержимое выпадает из табуляции.",
+      "meta": {
+        "tags": ["collapsible", "animation", "grid", "disclosure"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible002",
+          "usage": "<Collapsible002 title=\"Что входит в поставку\" defaultOpen />",
+          "summary": "Свёртка с честной анимацией высоты на grid-template-rows 0fr→1fr: конечная высота считается браузером, знать её заранее не нужно. Кнопка несёт aria-expanded и aria-controls. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-002-* и не подменять её токенами вашей темы",
+            "приём 0fr→1fr: height:auto не анимируется, а max-height даёт рывок в конце",
+            "overflow:hidden и min-height:0 на внутреннем слое — без них строка грида не сожмётся",
+            "атрибут inert на свёрнутой части: иначе Tab уводит фокус в невидимое содержимое",
+            "связку aria-expanded и aria-controls на кнопке — по ней скринридер понимает состояние",
+            "правило prefers-reduced-motion: анимация высоты особенно неприятна при вестибулярных нарушениях"
+          ],
+          "adapt": [
+            "заголовок через проп title",
+            "текст раскрытия через проп text",
+            "стартовое состояние через проп defaultOpen",
+            "длительность перехода и акцент через проп accent"
+          ],
+          "notes": [
+            "Содержимое остаётся в DOM и в свёрнутом виде: тяжёлые списки лучше монтировать по требованию.",
+            "Внутренние отступы кладите на сам текст, а не на слой с overflow: иначе они не сожмутся вместе с высотой.",
+            "Поддержка анимации grid-template-rows появилась не во всех старых браузерах: там свёртка просто переключится скачком.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что входит в поставку",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт сразу",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A disclosure with a real height animation: a grid wrapper travels from 0fr to 1fr, so the content height never has to be known upfront.",
+            "ai": {
+              "summary": "A disclosure with an honest height animation on grid-template-rows 0fr→1fr: the browser computes the final height for you. The trigger carries aria-expanded and aria-controls. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-002-* palette — do not swap it for your theme tokens",
+                "the 0fr→1fr trick: height:auto does not animate and max-height snaps at the end",
+                "overflow:hidden and min-height:0 on the inner layer — without them the grid row will not shrink",
+                "the inert attribute on the collapsed part: otherwise Tab moves focus into invisible content",
+                "the aria-expanded plus aria-controls pairing on the trigger — that is how the state is announced",
+                "the prefers-reduced-motion rule: height animation is the worst offender for vestibular disorders"
+              ],
+              "adapt": [
+                "the heading through the title prop",
+                "the body copy through the text prop",
+                "the initial state through the defaultOpen prop",
+                "the transition duration and the accent through the accent prop"
+              ],
+              "notes": [
+                "The content stays in the DOM while collapsed: mount heavy lists on demand instead.",
+                "Put padding on the text itself, not on the overflow layer, or it will not collapse with the height.",
+                "Animating grid-template-rows is unsupported in older browsers: there the disclosure simply snaps.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible002 title=\"What you get\" defaultOpen />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "What you get"
+              },
+              "defaultOpen": {
+                "label": "Open by default"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "collapsible-003",
+      "type": "registry:component",
+      "title": "Read More",
+      "description": "Свёртка длинного текста: обрез по числу строк, градиент вместо резкой границы и кнопка «Показать ещё».",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-003/collapsible-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-003-*. Клиентский: \"use client\" ради useState. Обрез сделан связкой display:-webkit-box, -webkit-box-orient:vertical и -webkit-line-clamp, где число строк приходит переменной --vibeui-collapsible-003-lines из пропса lines — поэтому граница всегда совпадает с базовой линией строки. Градиент лежит в ::after контейнера обреза и уходит в ту же переменную фона, что и вся карточка. Кнопка связана с абзацем через aria-controls и несёт aria-expanded.",
+      "meta": {
+        "tags": ["collapsible", "read-more", "line-clamp", "text"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible003",
+          "usage": "<Collapsible003 title=\"Почему компонент отдаётся одним файлом\" lines={4} />",
+          "summary": "Обрезка длинного текста по числу строк с растворяющимся градиентом и кнопкой «Показать ещё». Число строк задаётся пропсом и уезжает в CSS-переменную. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-003-* и не подменять её токенами вашей темы",
+            "обрез по line-clamp, а не по фиксированной высоте: при другом кегле пиксели врут",
+            "градиент, уходящий в переменную фона блока — иначе на другой подложке появится полоса",
+            "aria-expanded и aria-controls на кнопке: без них связь кнопки и текста не читается",
+            "полный текст в DOM даже в свёрнутом виде — так работают поиск по странице и копирование",
+            "светлую подложку карточки: на тёмной витрине тёмный текст без неё пропадает"
+          ],
+          "adapt": [
+            "заголовок через проп title",
+            "текст через проп text",
+            "число видимых строк через проп lines",
+            "акцент через проп accent и высоту градиента"
+          ],
+          "notes": [
+            "Компонент не проверяет, влезает ли текст: для короткого текста кнопку лучше скрывать снаружи по длине строки.",
+            "line-clamp работает только вместе с display:-webkit-box — обычный блок обрежется без многоточия.",
+            "Градиент рисуется поверх текста и не кликается благодаря pointer-events:none, не убирайте это правило.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "lines",
+            "label": "Строк видно",
+            "type": "number",
+            "default": 4,
+            "min": 2,
+            "max": 12
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Почему компонент отдаётся одним файлом",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A long-text disclosure: the clamp counts lines rather than pixels, a gradient replaces the hard cut, and a Show more button expands it.",
+            "ai": {
+              "summary": "Long text clamped by line count with a dissolving gradient and a Show more button. The line count is a prop that travels into a CSS variable. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-003-* palette — do not swap it for your theme tokens",
+                "the line-clamp rather than a fixed height: pixels lie as soon as the type size changes",
+                "the gradient ending in the block's own background variable — on another surface it would show a band",
+                "aria-expanded and aria-controls on the button: without them the link to the text is invisible",
+                "the full text staying in the DOM while collapsed — that keeps find-in-page and copying working",
+                "the light card surface: dark text disappears on a dark showcase without it"
+              ],
+              "adapt": [
+                "the heading through the title prop",
+                "the copy through the text prop",
+                "the number of visible lines through the lines prop",
+                "the accent through the accent prop and the gradient height"
+              ],
+              "notes": [
+                "The component does not measure whether the text overflows: hide the button from outside for short copy.",
+                "line-clamp only works together with display:-webkit-box — a plain block clips without the ellipsis.",
+                "The gradient sits above the text and stays click-through thanks to pointer-events:none; keep that rule.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible003 title=\"Why the component ships as one file\" lines={4} />"
+            },
+            "controls": {
+              "lines": {
+                "label": "Visible lines"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Why the component ships as one file"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "collapsible-004",
+      "type": "registry:component",
+      "title": "Collapsed Log",
+      "description": "Свёрнутый вывод сборки: итог по строкам и ошибкам виден в заголовке, а сам лог разворачивается только при разборе.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-004/collapsible-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-004-*. Серверный: хуков нет, корень — details. Количество ошибок считается из массива lines по полю level и попадает в summary, поэтому разворачивать блок ради подсчёта не нужно. Номера строк рисует счётчик CSS через counter-reset и li::before: в разметке их нет, и копия лога остаётся чистой. Поверхность тёмная, лог моноширинный, уровни различаются цветом строки.",
+      "meta": {
+        "tags": ["collapsible", "log", "details", "counter"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible004",
+          "usage": "<Collapsible004 title=\"Вывод сборки\" lines={[{ text: \"build failed\", level: \"error\" }]} />",
+          "summary": "Свёрнутый лог сборки: счётчик строк и ошибок прямо в заголовке, нумерация строк на CSS-счётчике, уровни различаются цветом. Клиентского JS нет. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-004-* и не подменять её токенами вашей темы",
+            "подсчёт ошибок в summary: свёрнутый лог иначе скрывает главное — упало или нет",
+            "нумерацию через CSS-счётчик, а не текстом в разметке: копия лога остаётся чистой",
+            "моноширинный шрифт лога — колонки и отступы в выводе значимы",
+            "рамку блока: тёмная панель на тёмной витрине без неё сливается с фоном",
+            "ограничение высоты с прокруткой: длинный лог не должен растягивать страницу"
+          ],
+          "adapt": [
+            "заголовок через проп title",
+            "массив lines и уровни строк",
+            "максимальную высоту прокрутки",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Подсветки синтаксиса нет: она стоит библиотеки, а вывод сборки в ней не нуждается.",
+            "Уровень строки задаётся полем level; неизвестное значение отрисуется как обычная строка.",
+            "Для живого лога добавьте прокрутку к последней строке снаружи: компонент не следит за обновлениями.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вывод сборки",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A collapsed build log: the line and error tally sits in the header, and the log itself expands only when something needs triage.",
+            "ai": {
+              "summary": "A collapsed build log: line and error counts right in the header, line numbers from a CSS counter, levels told apart by colour. No client JS. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-004-* palette — do not swap it for your theme tokens",
+                "the error tally in summary: otherwise a collapsed log hides the only thing that matters",
+                "numbering through a CSS counter rather than markup: a copied log stays clean",
+                "the monospaced face — columns and indentation carry meaning in build output",
+                "the block border: a dark panel merges into a dark showcase without it",
+                "the capped height with scrolling: a long log must not stretch the page"
+              ],
+              "adapt": [
+                "the heading through the title prop",
+                "the lines array and their levels",
+                "the maximum scroll height",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "There is no syntax highlighting: it costs a library and build output does not need it.",
+                "The row level comes from the level field; an unknown value renders as an ordinary line.",
+                "For a live log, scroll to the last line from outside: the component does not watch for updates.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible004 title=\"Build output\" lines={[{ text: \"build failed\", level: \"error\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Build output"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "collapsible-005",
+      "type": "registry:component",
+      "title": "Exclusive Steps",
+      "description": "Группа свёрток, где открыт ровно один шаг: взаимное исключение держит атрибут name у details, без React-состояния.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-005/collapsible-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-005-*. Серверный: хуков нет. Общий атрибут name на всех details превращает их в радиогруппу — открытым остаётся только один, и состояние не дублируется в React. Номер шага рисует CSS-счётчик на summary::before, поэтому перестановка массива steps сразу меняет нумерацию. Открытый шаг подсвечивается заливкой кружка через селектор details[open].",
+      "meta": {
+        "tags": ["collapsible", "steps", "exclusive", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible005",
+          "usage": "<Collapsible005 steps={[{ label: \"Подключить реестр\", text: \"Добавьте адрес в components.json\", open: true }]} />",
+          "summary": "Группа свёрток с одной открытой за раз: исключение обеспечивает атрибут name у details, нумерация шагов — CSS-счётчик. Клиентского JS нет. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-005-* и не подменять её токенами вашей темы",
+            "общий атрибут name у details — это и есть взаимное исключение, отдельный стейт не нужен",
+            "CSS-счётчик для номеров: при перестановке массива нумерация не разъедется",
+            "подсветку открытого шага через details[open], а не через класс из JS",
+            "отступ текста под номером: колонка задаёт направление чтения сверху вниз",
+            "светлую подложку карточки — на тёмной витрине тёмный текст без неё не виден"
+          ],
+          "adapt": [
+            "массив steps и стартовый шаг через флаг open",
+            "имя радиогруппы через проп groupName",
+            "акцент через проп accent",
+            "ширину блока и скругления"
+          ],
+          "notes": [
+            "Имя группы обязано быть уникальным на странице: два блока с одинаковым groupName начнут закрывать друг друга.",
+            "Все шаги можно закрыть щелчком по открытому — это поведение радиогруппы details, а не ошибка.",
+            "Анимации при переключении нет: браузер закрывает предыдущий details мгновенно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "groupName",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "vibeui-collapsible-005",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A group of disclosures where exactly one step stays open: mutual exclusion comes from the details name attribute, with no React state.",
+            "ai": {
+              "summary": "A group of disclosures with one open at a time: exclusion comes from the details name attribute, step numbers from a CSS counter. No client JS. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-005-* palette — do not swap it for your theme tokens",
+                "the shared name attribute on details — that is the mutual exclusion, no separate state needed",
+                "the CSS counter for numbering: reordering the array cannot desynchronise it",
+                "highlighting the open step via details[open] rather than a class pushed from JS",
+                "the text indent under the number: the column sets the top-down reading direction",
+                "the light card surface — dark text is invisible on a dark showcase without it"
+              ],
+              "adapt": [
+                "the steps array and the initial step through its open flag",
+                "the radio group name through the groupName prop",
+                "the accent through the accent prop",
+                "the block width and corner radii"
+              ],
+              "notes": [
+                "The group name must be unique on the page: two blocks sharing groupName will close each other.",
+                "Every step can end up closed by clicking the open one — that is details radio behaviour, not a bug.",
+                "There is no switch animation: the browser closes the previous details instantly.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible005 steps={[{ label: \"Connect the registry\", text: \"Add the URL to components.json\", open: true }]} />"
+            },
+            "controls": {
+              "groupName": {
+                "label": "Group name",
+                "default": "vibeui-collapsible-005"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "collapsible-006",
+      "type": "registry:component",
+      "title": "Hidden Count",
+      "description": "Свёртка со счётчиком скрытого: первые участники видны в заголовке, остальные прячутся за кружком «+N».",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-006/collapsible-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-006-*. Серверный: хуков нет, корень — details. Массив people делится пропсом visible на видимую и скрытую части, размер скрытой части и есть подпись кружка «+N». Стек аватаров собран отрицательным margin-left и рамкой цвета фона, инициалы вычисляются из имени, поэтому картинки не нужны. Кружок счётчика в раскрытом состоянии меняет цвет через селектор [open].",
+      "meta": {
+        "tags": ["collapsible", "avatars", "counter", "details"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible006",
+          "usage": "<Collapsible006 title=\"Участники проекта\" people={[\"Анна Ким\", \"Борис Радов\"]} visible={3} />",
+          "summary": "Свёртка, у которой в заголовке видно, сколько элементов скрыто: стек инициалов и кружок «+N», внутри — полный список остальных. Клиентского JS нет. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-006-* и не подменять её токенами вашей темы",
+            "счётчик скрытых в заголовке: без числа непонятно, стоит ли разворачивать",
+            "инициалы вместо картинок — компонент обязан работать без загрузки аватаров",
+            "рамку кружка цветом фона: она и создаёт эффект наложения в стеке",
+            "aria-label у кружка «+N»: сам по себе он читается как бессмысленное число",
+            "светлую подложку карточки — на тёмной витрине тёмный текст без неё не виден"
+          ],
+          "adapt": [
+            "заголовок через проп title",
+            "список people",
+            "сколько имён остаётся на виду через проп visible",
+            "акцент через проп accent и размер кружков"
+          ],
+          "notes": [
+            "Внутри показываются только скрытые участники: видимые уже есть в заголовке, дублировать их не нужно.",
+            "При visible больше длины списка кружок «+N» и раскрытие исчезают — это штатное поведение.",
+            "Инициалы берутся из первых двух слов имени: для одного слова получится одна буква.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "visible",
+            "label": "Видно имён",
+            "type": "number",
+            "default": 3,
+            "min": 0,
+            "max": 8
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Участники проекта",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A disclosure with a hidden-item count: the first people show in the header, the rest hide behind a +N circle.",
+            "ai": {
+              "summary": "A disclosure that shows how much is hidden right in the header: a stack of initials plus a +N circle, with the full remainder inside. No client JS. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-006-* palette — do not swap it for your theme tokens",
+                "the hidden count in the header: without a number there is no reason to expand",
+                "initials instead of pictures — the component must work without loading avatars",
+                "the background-coloured ring on each circle: it is what creates the overlap",
+                "the aria-label on the +N circle: on its own it reads as a meaningless number",
+                "the light card surface — dark text is invisible on a dark showcase without it"
+              ],
+              "adapt": [
+                "the heading through the title prop",
+                "the people list",
+                "how many names stay visible through the visible prop",
+                "the accent through the accent prop and the circle size"
+              ],
+              "notes": [
+                "Only hidden people are listed inside: the visible ones are already in the header.",
+                "When visible exceeds the list length the +N circle and the expansion disappear — that is intended.",
+                "Initials come from the first two words of the name: a single word yields one letter.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible006 title=\"Project members\" people={[\"Anna Kim\", \"Boris Radov\"]} visible={3} />"
+            },
+            "controls": {
+              "visible": {
+                "label": "Visible names"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Project members"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "collapsible-007",
+      "type": "registry:component",
+      "title": "Icon Rail",
+      "description": "Боковая панель, сворачивающаяся не в ноль, а в узкую полосу иконок: навигация остаётся доступной в обоих состояниях.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-007/collapsible-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-007-*. Клиентский: \"use client\" ради useState. Ширина панели едет по переменной --vibeui-collapsible-007-width, которую переопределяет селектор [data-collapsed=\"true\"] — переход описан одним свойством. Подписи не размонтируются, а схлопываются нулевой шириной с overflow:hidden, поэтому доступное имя кнопки сохраняется и порядок табуляции не меняется. В свёрнутом виде подпись дублируется в title кнопки.",
+      "meta": {
+        "tags": ["collapsible", "sidebar", "rail", "navigation"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible007",
+          "usage": "<Collapsible007 title=\"VibeUI\" items={[{ label: \"Каталог\", glyph: \"▦\" }]} />",
+          "summary": "Панель со сворачиванием в полосу иконок: ширина анимируется одной переменной, подписи схлопываются, но остаются в DOM ради доступных имён. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-007-* и не подменять её токенами вашей темы",
+            "подписи в DOM в свёрнутом виде: их удаление лишает кнопки доступного имени",
+            "переход по одной переменной ширины — так анимация не рассыпается на несколько свойств",
+            "aria-expanded у кнопки переключения: она сообщает состояние всей панели",
+            "видимую иконку в свёрнутом виде — панель, схлопнутая в ноль, лишает навигации",
+            "светлую подложку и рамку панели: на тёмной витрине без них ничего не видно"
+          ],
+          "adapt": [
+            "название через проп title",
+            "массив items с подписями и глифами",
+            "стартовое состояние через проп defaultCollapsed",
+            "ширину полосы и акцент через проп accent"
+          ],
+          "notes": [
+            "Глифы здесь текстовые: подставьте свои SVG-иконки, если нужен единый стиль и толщина линий.",
+            "aria-current=\"page\" проставлен первому пункту как пример — связывайте его со своим роутером.",
+            "Свёрнутая панель опирается на title кнопки: полноценный тултип с клавиатурной поддержкой добавляется отдельно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Название",
+            "type": "text",
+            "default": "VibeUI",
+            "maxLength": 20
+          },
+          {
+            "prop": "defaultCollapsed",
+            "label": "Свёрнута сразу",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A sidebar that collapses into a narrow icon rail rather than to zero, so navigation stays reachable in both states.",
+            "ai": {
+              "summary": "A sidebar collapsing to an icon rail: the width animates through a single variable and labels shrink away but stay in the DOM for accessible names. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-007-* palette — do not swap it for your theme tokens",
+                "keeping labels in the DOM while collapsed: removing them strips the buttons of accessible names",
+                "the single width variable driving the transition — otherwise the animation splits across properties",
+                "aria-expanded on the toggle: it reports the state of the whole panel",
+                "a visible icon while collapsed — a panel shrunk to zero takes navigation away",
+                "the light surface and border: nothing is visible on a dark showcase without them"
+              ],
+              "adapt": [
+                "the product name through the title prop",
+                "the items array with labels and glyphs",
+                "the initial state through the defaultCollapsed prop",
+                "the rail width and the accent through the accent prop"
+              ],
+              "notes": [
+                "The glyphs are plain text: swap in your own SVG icons if you need consistent stroke weights.",
+                "aria-current=\"page\" sits on the first item as an example — wire it to your router.",
+                "The collapsed rail relies on the button title: a real keyboard-accessible tooltip is a separate addition.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible007 title=\"VibeUI\" items={[{ label: \"Catalog\", glyph: \"▦\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Product name",
+                "default": "VibeUI"
+              },
+              "defaultCollapsed": {
+                "label": "Collapsed by default"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "collapsible-008",
+      "type": "registry:component",
+      "title": "Changed Settings",
+      "description": "Свёртка настроек с признаком «изменено»: число отличий от значений по умолчанию видно в заголовке до раскрытия.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-008/collapsible-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-008-*. Серверный: хуков нет, корень — details. Количество изменённых параметров считается из массива settings по флагу changed и выводится плашкой в summary; при нуле плашка меняет текст и приглушается через атрибут data-clean. Строки собраны на dl/dt/dd — это описания значений, а не таблица; изменённая строка получает точку в dt::before, подложку и жирное моноширинное значение.",
+      "meta": {
+        "tags": ["collapsible", "settings", "diff", "details"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible008",
+          "usage": "<Collapsible008 title=\"Параметры сборки\" settings={[{ label: \"Формат\", value: \"standalone\", changed: true }]} />",
+          "summary": "Свёрнутая группа настроек, которая честно сообщает, сколько значений отличается от умолчаний: счётчик в заголовке, точка и жирное значение в строках. Клиентского JS нет. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-008-* и не подменять её токенами вашей темы",
+            "счётчик изменений в заголовке: свёрнутый блок иначе скрывает сам факт правки",
+            "разметку dl/dt/dd — это пары «параметр — значение», а не таблица",
+            "двойной признак изменения (точка и насыщенность значения): цвет один не читается при дальтонизме",
+            "моноширинный шрифт значений: их сравнивают посимвольно",
+            "светлую подложку карточки — на тёмной витрине тёмный текст без неё не виден"
+          ],
+          "adapt": [
+            "заголовок через проп title",
+            "массив settings и флаги changed",
+            "формулировку плашки со счётчиком",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Компонент не сравнивает значения сам: флаг changed приходит снаружи, сравнение с умолчаниями за вами.",
+            "Кнопки «сбросить» здесь нет намеренно: это действие, а блок остаётся представлением.",
+            "Длинное значение не переносится — при длинных строках задайте перенос или сократите текст.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Параметры сборки",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A settings disclosure with a changed marker: the number of values differing from the defaults is visible before you expand it.",
+            "ai": {
+              "summary": "A collapsed settings group that states how many values differ from the defaults: a counter in the header, a dot and a bolder value in the rows. No client JS. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-008-* palette — do not swap it for your theme tokens",
+                "the change counter in the header: a collapsed block otherwise hides that anything was edited",
+                "the dl/dt/dd markup — these are name/value pairs, not a table",
+                "the double change cue (a dot plus a stronger value): colour alone fails for colour blindness",
+                "the monospaced values: they get compared character by character",
+                "the light card surface — dark text is invisible on a dark showcase without it"
+              ],
+              "adapt": [
+                "the heading through the title prop",
+                "the settings array and its changed flags",
+                "the wording of the counter badge",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The component does not diff anything itself: the changed flag comes from outside.",
+                "There is deliberately no reset button: that is an action, and this block stays a view.",
+                "Long values do not wrap — add wrapping or shorten the text if your values are long.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible008 title=\"Build options\" settings={[{ label: \"Format\", value: \"standalone\", changed: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Build options"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "collapsible-009",
+      "type": "registry:component",
+      "title": "Markup State",
+      "description": "История версий, где раскрытый раздел объявлен атрибутом open прямо в разметке: сервер отдаёт нужный раздел уже открытым.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-009/collapsible-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-009-*. Серверный: хуков нет, флаг open каждого релиза уходит прямо в атрибут details. Это не «начальное значение стейта», а само состояние: до гидратации ничего не мигает, печать и поиск по странице видят содержимое. Подпись переключателя меняется без React — в разметке лежат два узла data-when, а показывает нужный селектор details[open].",
+      "meta": {
+        "tags": ["collapsible", "changelog", "ssr", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible009",
+          "usage": "<Collapsible009 releases={[{ version: \"0.6.0\", date: \"12 августа\", text: \"Реестр отдаёт исходник\", open: true }]} />",
+          "summary": "Список изменений на details, где стартовое состояние живёт в разметке: раскрытый раздел приходит с сервера, подпись переключателя меняется чистым CSS. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-009-* и не подменять её токенами вашей темы",
+            "атрибут open как состояние: перенос его в useState вернёт мигание до гидратации",
+            "смену подписи через селектор details[open] и узлы data-when — React для этого не нужен",
+            "моноширинный номер версии: версии сравнивают посимвольно",
+            "видимый фокус у summary: разделы перебирают с клавиатуры",
+            "светлую подложку карточки — на тёмной витрине тёмный текст без неё не виден"
+          ],
+          "adapt": [
+            "заголовок через проп title",
+            "массив releases и флаги open",
+            "формат даты и подписи переключателя",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Состояние не сохраняется между переходами: для запоминания нужен внешний слой, но тогда пропадёт работа до гидратации.",
+            "Открытыми можно оставить сразу несколько разделов — взаимного исключения здесь нет намеренно.",
+            "Обе подписи переключателя лежат в DOM: скринридер может прочитать скрытую, если убрать display:none.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "История версий",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A changelog where the expanded section is declared with the open attribute in the markup, so the server ships it already open.",
+            "ai": {
+              "summary": "A changelog on details where the initial state lives in markup: the open section arrives from the server and the toggle caption swaps in pure CSS. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-009-* palette — do not swap it for your theme tokens",
+                "the open attribute as the state: moving it into useState brings back the pre-hydration flash",
+                "the caption swap through details[open] and the data-when nodes — React is not needed for that",
+                "the monospaced version number: versions get compared character by character",
+                "the visible focus ring on summary: sections get tabbed through",
+                "the light card surface — dark text is invisible on a dark showcase without it"
+              ],
+              "adapt": [
+                "the heading through the title prop",
+                "the releases array and its open flags",
+                "the date format and toggle captions",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "State does not persist across navigations: persisting it needs an outer layer, which costs pre-hydration behaviour.",
+                "Several sections may stay open at once — there is deliberately no mutual exclusion here.",
+                "Both toggle captions live in the DOM: a screen reader could read the hidden one if display:none is removed.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible009 releases={[{ version: \"0.6.0\", date: \"12 August\", text: \"The registry serves sources\", open: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Release history"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "collapsible-010",
+      "type": "registry:component",
+      "title": "Sticky Sections",
+      "description": "Свёртки внутри карточки с прокруткой: заголовок раздела липнет к верху и не уезжает, пока не придёт следующий.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "collapsible-010/collapsible-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/collapsible-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-010-*. Серверный: хуков нет. Прокрутка ограничена контейнером [data-part=\"scroll\"] с max-height и overscroll-behavior:contain, а summary внутри него получает position:sticky и top:0 — прилипание работает только потому, что скролл-контейнер свой, а не окно. Общее число элементов считается из массива sections и выводится в шапке карточки.",
+      "meta": {
+        "tags": ["collapsible", "sticky", "scroll", "sections"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Collapsible010",
+          "usage": "<Collapsible010 title=\"Библиотека\" sections={[{ label: \"Ввод\", items: [\"Поле ввода\"], open: true }]} />",
+          "summary": "Карточка с ограниченной высотой, внутри которой несколько свёрток, а заголовок раскрытого раздела липнет к верху прокрутки. Клиентского JS нет. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-collapsible-010-* и не подменять её токенами вашей темы",
+            "собственный скролл-контейнер: без него position:sticky прилипает к окну, а не к карточке",
+            "непрозрачный фон у summary — иначе строки списка просвечивают сквозь липкий заголовок",
+            "overscroll-behavior:contain: прокрутка карточки не должна утягивать за собой страницу",
+            "z-index у липкого заголовка: без него он окажется под содержимым",
+            "светлую подложку карточки — на тёмной витрине тёмный текст без неё не виден"
+          ],
+          "adapt": [
+            "заголовок через проп title",
+            "массив sections и флаги open",
+            "максимальную высоту прокрутки",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Липкий заголовок требует, чтобы у карточки была ограниченная высота: без max-height прилипать не к чему.",
+            "Если раскрыть все разделы, липких заголовков станет несколько — они сменяют друг друга по мере прокрутки, это нормально.",
+            "Элементы списка здесь не интерактивны: добавьте ссылки или кнопки под свою модель навигации.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Библиотека",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Disclosures inside a scrolling card: the section heading sticks to the top and stays there until the next one pushes it away.",
+            "ai": {
+              "summary": "A height-capped card holding several disclosures where the open section's heading sticks to the top of the scroll area. No client JS. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-collapsible-010-* palette — do not swap it for your theme tokens",
+                "the card's own scroll container: without it position:sticky pins to the window instead",
+                "the opaque background on summary — otherwise list rows show through the sticky heading",
+                "overscroll-behavior:contain: scrolling the card must not drag the page along",
+                "the z-index on the sticky heading: without it the content covers it",
+                "the light card surface — dark text is invisible on a dark showcase without it"
+              ],
+              "adapt": [
+                "the heading through the title prop",
+                "the sections array and its open flags",
+                "the maximum scroll height",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "A sticky heading needs the card to have a capped height: with no max-height there is nothing to stick to.",
+                "Open every section and several headings become sticky — they replace each other while scrolling, which is expected.",
+                "List items are not interactive here: add links or buttons to match your navigation model.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Collapsible010 title=\"Library\" sections={[{ label: \"Inputs\", items: [\"Text field\"], open: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Library"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-002",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-002/frame-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-002.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Frame002",
+          "usage": "<Frame002 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Frame002 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-003",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-003/frame-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-003.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Frame003",
+          "usage": "<Frame003 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Frame003 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-004",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-004/frame-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-004.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Frame004",
+          "usage": "<Frame004 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Frame004 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-005",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-005/frame-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-005.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Frame005",
+          "usage": "<Frame005 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Frame005 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-006",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-006/frame-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-006.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Frame006",
+          "usage": "<Frame006 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Frame006 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "icontile-002",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-002/icontile-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-002.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Icontile002",
+          "usage": "<Icontile002 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Icontile002 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "icontile-003",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-003/icontile-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-003.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Icontile003",
+          "usage": "<Icontile003 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Icontile003 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "icontile-004",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-004/icontile-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-004.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Icontile004",
+          "usage": "<Icontile004 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Icontile004 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "icontile-005",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-005/icontile-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-005.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Icontile005",
+          "usage": "<Icontile005 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Icontile005 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "icontile-006",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-006/icontile-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-006.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Icontile006",
+          "usage": "<Icontile006 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Icontile006 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "iconstack-002",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "iconstack-002/iconstack-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/iconstack-002.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Iconstack002",
+          "usage": "<Iconstack002 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Iconstack002 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "iconstack-003",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "iconstack-003/iconstack-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/iconstack-003.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Iconstack003",
+          "usage": "<Iconstack003 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Iconstack003 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "iconstack-004",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "iconstack-004/iconstack-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/iconstack-004.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Iconstack004",
+          "usage": "<Iconstack004 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Iconstack004 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "iconstack-005",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "iconstack-005/iconstack-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/iconstack-005.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Iconstack005",
+          "usage": "<Iconstack005 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Iconstack005 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kbd-002",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kbd-002/kbd-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kbd-002.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Kbd002",
+          "usage": "<Kbd002 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Kbd002 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kbd-003",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kbd-003/kbd-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kbd-003.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Kbd003",
+          "usage": "<Kbd003 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Kbd003 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kbd-004",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kbd-004/kbd-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kbd-004.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Kbd004",
+          "usage": "<Kbd004 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Kbd004 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kbd-005",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kbd-005/kbd-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kbd-005.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Kbd005",
+          "usage": "<Kbd005 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Kbd005 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kbd-006",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kbd-006/kbd-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kbd-006.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Kbd006",
+          "usage": "<Kbd006 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Kbd006 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "separator-002",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "separator-002/separator-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/separator-002.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Separator002",
+          "usage": "<Separator002 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Separator002 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "separator-003",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "separator-003/separator-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/separator-003.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Separator003",
+          "usage": "<Separator003 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Separator003 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "separator-004",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "separator-004/separator-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/separator-004.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Separator004",
+          "usage": "<Separator004 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Separator004 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "separator-005",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "separator-005/separator-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/separator-005.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Separator005",
+          "usage": "<Separator005 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Separator005 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "separator-006",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "separator-006/separator-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/separator-006.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Separator006",
+          "usage": "<Separator006 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Separator006 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "spinner-002",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "spinner-002/spinner-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/spinner-002.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Spinner002",
+          "usage": "<Spinner002 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Spinner002 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "spinner-003",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "spinner-003/spinner-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/spinner-003.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Spinner003",
+          "usage": "<Spinner003 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Spinner003 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "spinner-004",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "spinner-004/spinner-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/spinner-004.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Spinner004",
+          "usage": "<Spinner004 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Spinner004 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "spinner-005",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "spinner-005/spinner-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/spinner-005.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Spinner005",
+          "usage": "<Spinner005 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Spinner005 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "spinner-006",
+      "type": "registry:component",
+      "title": "TODO",
+      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "spinner-006/spinner-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/spinner-006.tsx"
+        }
+      ],
+      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "meta": {
+        "tags": ["TODO"],
+        "ai": {
+          "export": "Spinner006",
+          "usage": "<Spinner006 />",
+          "summary": "TODO: что делает компонент и чем он самодостаточен.",
+          "preserve": ["TODO", "TODO", "TODO"],
+          "adapt": ["TODO", "TODO", "TODO"],
+          "notes": ["TODO"]
+        },
+        "controls": [
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "TODO",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "TODO",
+            "ai": {
+              "summary": "TODO",
+              "preserve": ["TODO", "TODO", "TODO"],
+              "adapt": ["TODO", "TODO", "TODO"],
+              "notes": ["TODO"],
+              "usage": "<Spinner006 />"
+            },
+            "controls": {
+              "children": {
+                "label": "Label",
+                "default": "TODO"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
