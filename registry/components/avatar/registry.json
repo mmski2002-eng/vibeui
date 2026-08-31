@@ -1308,6 +1308,807 @@
           }
         }
       }
+    },
+    {
+      "name": "avatar-013",
+      "type": "registry:component",
+      "title": "Presence Avatar",
+      "description": "Аватар с состоянием присутствия: точка сидит в вырезе маски, а состояния различаются формой — цвета одного мало при дальтонизме.",
+      "categories": ["avatar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "avatar-013/avatar-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/avatar-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-013-*. Серверный: хуков нет. Зазор вокруг точки сделан mask-image по портрету, а не обводкой цветом фона — обводка выдаёт себя, как только фон меняется. Четыре состояния различаются формой (круг, кольцо, квадрат, пустой контур) и продублированы словом в скрытой подписи, поэтому точка не остаётся немой для скринридера. Размеры sm/md/lg переопределяют только --vibeui-avatar-013-size и --vibeui-avatar-013-dot.",
+      "meta": {
+        "tags": ["avatar", "presence", "status", "badge"],
+        "ai": {
+          "export": "Avatar013",
+          "usage": "<Avatar013 name=\"Анна Реброва\" status=\"online\" size=\"md\" />",
+          "summary": "Аватар с индикатором присутствия: точка в вырезе маски, состояние различается формой и названо словом для скринридера. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-avatar-013-* и не подменять её токенами вашей темы",
+            "вырез маской вместо обводки цветом фона — зазор обязан держаться на любой подложке",
+            "различие состояний формой, а не только цветом: цвет не читается при дальтонизме",
+            "скрытую подпись со словом состояния — без неё точка немая",
+            "aria-hidden на инициалах: имя уже прочитано в подписи",
+            "привязку размеров к --vibeui-avatar-013-size, а не к фиксированным пикселям"
+          ],
+          "adapt": [
+            "имя и состояние через status",
+            "размер через size",
+            "цвета состояний в переменных",
+            "формулировки слов состояния"
+          ],
+          "notes": [
+            "Точка «не в сети» намеренно пустая: залитый серый кружок читается как активное состояние.",
+            "Если портрет — картинка, кладите её в тот же слот: маска работает по элементу, а не по фону.",
+            "Не заменяйте вырез белой обводкой: на тёмной карточке она превращается в ободок.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "status",
+            "label": "Состояние",
+            "type": "select",
+            "default": "online",
+            "options": ["online", "away", "busy", "offline"]
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": ["sm", "md", "lg"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An avatar with presence: the dot sits in a mask cut-out and each state differs in shape — colour alone fails for colour-blind users.",
+            "ai": {
+              "summary": "An avatar with a presence indicator: the dot lives in a mask cut-out, the state differs in shape and is named in words for screen readers. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-avatar-013-* palette — do not swap it for your theme tokens",
+                "the mask cut-out instead of a background-coloured ring — the gap must hold on any surface",
+                "states differing in shape, not colour alone: colour fails for colour-blind users",
+                "the hidden caption naming the state — without it the dot is mute",
+                "aria-hidden on the initials: the name is already read out in the caption",
+                "sizes bound to --vibeui-avatar-013-size instead of fixed pixels"
+              ],
+              "adapt": [
+                "the name and the state through status",
+                "the size through size",
+                "state colours in the variables",
+                "the wording of the state labels"
+              ],
+              "notes": [
+                "The offline dot is deliberately hollow: a filled grey circle reads as an active state.",
+                "If the portrait is an image, put it in the same slot: the mask applies to the element, not the background.",
+                "Do not replace the cut-out with a white ring: on a dark card it turns into a halo.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Avatar013 name=\"Anna Rebrova\" status=\"online\" size=\"md\" />"
+            },
+            "controls": {
+              "status": {
+                "label": "State",
+                "default": "online"
+              },
+              "size": {
+                "label": "Size",
+                "default": "md"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "avatar-014",
+      "type": "registry:component",
+      "title": "Shaped Avatar",
+      "description": "Аватар нестандартной формы: шестиугольник и «сквиркл» вырезаны clip-path, обводка нарисована подложкой — обычный border срезается вместе с фигурой.",
+      "categories": ["avatar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "avatar-014/avatar-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/avatar-014.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-014-*. Серверный: хуков нет. Формы заданы clip-path (polygon для шестиугольника, скруглением для сквиркла), поэтому остаются резкими на любом масштабе и не тянут за собой картинку-маску. Обводка нарисована отдельной подложкой под clip-path: border режется вместе с фигурой. Инициалы центрируются по прямоугольнику, поэтому у шестиугольника задан оптический сдвиг в 1px — без него буквы кажутся поднятыми.",
+      "meta": {
+        "tags": ["avatar", "shape", "clip-path", "hexagon"],
+        "ai": {
+          "export": "Avatar014",
+          "usage": "<Avatar014 name=\"Илья Мохов\" role=\"Фронтенд\" shape=\"hex\" size=\"md\" />",
+          "summary": "Аватар нестандартной формы на clip-path: шестиугольник, сквиркл и круг с общей обводкой-подложкой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-avatar-014-* и не подменять её токенами вашей темы",
+            "clip-path вместо картинки-маски: форма обязана оставаться резкой на любом масштабе",
+            "обводку подложкой, а не border — border срезается вместе с фигурой",
+            "оптический сдвиг инициалов у шестиугольника: без него буквы кажутся поднятыми",
+            "aria-hidden на инициалах, имя читается из подписи",
+            "одну форму на весь список — смесь форм читается как разные сущности"
+          ],
+          "adapt": [
+            "имя и роль через role",
+            "форму через shape",
+            "размер через size",
+            "цвет обводки в переменной"
+          ],
+          "notes": [
+            "Шестиугольник заметно съедает углы портрета: для фото лиц берите squircle.",
+            "Не смешивайте формы в одном списке: разная форма читается как разный тип участника.",
+            "Роль необязательна: без неё останется одна строка с именем.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "shape",
+            "label": "Форма",
+            "type": "select",
+            "default": "hex",
+            "options": ["hex", "squircle", "circle"]
+          },
+          {
+            "prop": "role",
+            "label": "Роль",
+            "type": "text",
+            "default": "Фронтенд",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An avatar in a non-standard shape: hexagon and squircle are cut with clip-path, the ring is a backing layer — a border would be clipped with the shape.",
+            "ai": {
+              "summary": "A clip-path avatar shape set: hexagon, squircle and circle sharing one backing-layer ring. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-avatar-014-* palette — do not swap it for your theme tokens",
+                "clip-path instead of an image mask: the shape must stay crisp at any scale",
+                "the ring as a backing layer, not a border — a border is clipped with the shape",
+                "the optical nudge of the initials in the hexagon: without it the letters look raised",
+                "aria-hidden on the initials, the name is read from the caption",
+                "one shape across a list — mixed shapes read as different entities"
+              ],
+              "adapt": [
+                "the name and the role through role",
+                "the shape through shape",
+                "the size through size",
+                "the ring colour in the variable"
+              ],
+              "notes": [
+                "The hexagon eats noticeable corners off a portrait: for face photos pick squircle.",
+                "Do not mix shapes in one list: a different shape reads as a different kind of member.",
+                "The role is optional: without it only the name line remains.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Avatar014 name=\"Ilya Mokhov\" role=\"Frontend\" shape=\"hex\" size=\"md\" />"
+            },
+            "controls": {
+              "shape": {
+                "label": "Shape",
+                "default": "hex"
+              },
+              "role": {
+                "label": "Role",
+                "default": "Frontend"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "avatar-015",
+      "type": "registry:component",
+      "title": "Avatar Editor",
+      "description": "Аватар с меню правки на HTML popover: Escape и клик мимо закрывают меню сами, удаление отделено чертой и названо действием.",
+      "categories": ["avatar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "avatar-015/avatar-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/avatar-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-015-*. Клиентский: \"use client\", useState и useRef держат выбранное действие и ссылку на popover. Меню — нативный HTML popover с popovertarget: закрытие по Escape и клику мимо достаётся от браузера, а не пишется руками. Позиционирование сделано CSS anchor positioning под @supports (anchor-name: --a) с обычным абсолютным запасным вариантом. Кнопка правки уменьшена и сдвинута в угол, её доступная подпись называет имя — в списке карточек «изменить фото» без имени бесполезно.",
+      "meta": {
+        "tags": ["avatar", "upload", "popover", "menu"],
+        "ai": {
+          "export": "Avatar015",
+          "usage": "<Avatar015\n  name=\"Анна Реброва\"\n  hint=\"PNG или JPG до 2 МБ, квадрат от 200 пикселей\"\n  editLabel=\"Загрузить фото\"\n  removeLabel=\"Удалить фото\"\n/>",
+          "summary": "Аватар с меню правки: нативный popover, доступная подпись с именем, удаление отделено и названо действием. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-avatar-015-* и не подменять её токенами вашей темы",
+            "нативный popover: закрытие по Escape и клику мимо не переписывать на свои обработчики",
+            "имя в доступной подписи кнопки — «изменить фото» в списке карточек бесполезно",
+            "отделённый чертой пункт удаления и слово «удалить» вместо «сбросить»",
+            "подсказку о формате и размере рядом, а не в тексте ошибки после загрузки",
+            "фокус-стили на кнопке и пунктах меню",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "имя и подсказку о формате",
+            "подписи пунктов editLabel и removeLabel",
+            "акцентный цвет через accent",
+            "размер портрета в переменной"
+          ],
+          "notes": [
+            "Загрузка не реализована: компонент показывает выбор действия, файл принимает вызывающий код.",
+            "Меню открывается по кнопке, а не по клику в портрет: клик в портрет обычно открывает просмотр.",
+            "Пункт удаления не спрашивает подтверждения: если фото невосстановимо, добавьте диалог снаружи.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "editLabel",
+            "label": "Пункт загрузки",
+            "type": "text",
+            "default": "Загрузить фото",
+            "maxLength": 28
+          },
+          {
+            "prop": "removeLabel",
+            "label": "Пункт удаления",
+            "type": "text",
+            "default": "Удалить фото",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An avatar with an edit menu on the HTML popover: Escape and outside clicks close it for free, and remove is separated by a rule and named as an action.",
+            "ai": {
+              "summary": "An avatar with an edit menu: a native popover, an accessible label carrying the name, remove separated and named as an action. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-avatar-015-* palette — do not swap it for your theme tokens",
+                "the native popover: do not rewrite Escape and outside-click closing with your own handlers",
+                "the name inside the button label — \"change photo\" is useless in a list of cards",
+                "the rule-separated remove item and the word \"remove\" instead of \"reset\"",
+                "the format and size hint next to the control, not inside a post-upload error",
+                "focus styles on the button and the menu items",
+                "the card own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the name and the format hint",
+                "the editLabel and removeLabel captions",
+                "the accent colour through accent",
+                "the portrait size in the variable"
+              ],
+              "notes": [
+                "Uploading is not implemented: the component shows the choice, the caller takes the file.",
+                "The menu opens from the button, not from the portrait: clicking a portrait usually opens a viewer.",
+                "Remove asks for no confirmation: add a dialog outside if the photo cannot be restored.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Avatar015\n  name=\"Anna Rebrova\"\n  hint=\"PNG or JPG up to 2 MB, square from 200 pixels\"\n  editLabel=\"Upload photo\"\n  removeLabel=\"Remove photo\"\n/>"
+            },
+            "controls": {
+              "editLabel": {
+                "label": "Upload item",
+                "default": "Upload photo"
+              },
+              "removeLabel": {
+                "label": "Remove item",
+                "default": "Remove photo"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "avatar-016",
+      "type": "registry:component",
+      "title": "Avatar Grid",
+      "description": "Сетка лиц вместо стопки: состав команды виден целиком, число колонок считает браузер через auto-fill.",
+      "categories": ["avatar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "avatar-016/avatar-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/avatar-016.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-016-*. Серверный: хуков нет. Колонки заданы repeat(auto-fill, minmax(4.5rem, 1fr)), поэтому их число считает браузер по фактической ширине, а не пропс: при смене ширины ряды перестраиваются сами. Оттенок кружка выводится из имени функцией FNV-1a, поэтому один человек всегда одного цвета. Имена подписаны под лицами и режутся многоточием — обрезанное имя честнее подсказки, которая не появляется на телефоне.",
+      "meta": {
+        "tags": ["avatar", "grid", "team", "roster"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Avatar016",
+          "usage": "<Avatar016\n  title=\"В проекте\"\n  names={[\"Анна Реброва\", \"Илья Мохов\", \"Ким Сон\", \"Пётр Гай\"]}\n/>",
+          "summary": "Сетка лиц с подписями: состав команды виден целиком, колонки считает браузер через auto-fill. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-avatar-016-* и не подменять её токенами вашей темы",
+            "auto-fill с minmax вместо фиксированного числа колонок — ряды обязаны перестраиваться сами",
+            "подписи под лицами: кружки не отвечают, кто именно в команде",
+            "обрезку имени многоточием вместо подсказки по наведению — на телефоне её нет",
+            "вывод оттенка из имени: один человек обязан быть одного цвета в любом списке",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "массив names и заголовок title",
+            "минимальную ширину ячейки в grid-template-columns",
+            "размер лиц через переменную size",
+            "ширину карточки через max-width"
+          ],
+          "notes": [
+            "Сетка не ограничивает список: длинный состав лучше резать в вызывающем коде и давать ссылку «показать всех».",
+            "Ключ списка — имя: для полных тёзок передавайте идентификатор и правьте key.",
+            "Счётчик в заголовке считает переданный массив, а не общее число участников.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "В проекте",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid of faces instead of a stack: the whole team is visible, and the browser works out the column count through auto-fill.",
+            "ai": {
+              "summary": "A grid of captioned faces: the whole team stays visible and the browser works out the columns through auto-fill. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-avatar-016-* palette — do not swap it for your theme tokens",
+                "auto-fill with minmax instead of a fixed column count — the rows must reflow on their own",
+                "the captions under the faces: circles never answer who is on the team",
+                "ellipsis truncation instead of a hover tooltip — phones have none",
+                "deriving the hue from the name: one person must keep one colour across lists",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the names array and the title",
+                "the minimum cell width in grid-template-columns",
+                "the face size through the size variable",
+                "the card width through max-width"
+              ],
+              "notes": [
+                "The grid does not cap the list: trim a long roster in the caller and offer a \"show all\" link.",
+                "The list key is the name: pass an id and change the key when full namesakes are possible.",
+                "The header count reflects the passed array, not the total member count.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Avatar016\n  title=\"On the project\"\n  names={[\"Anna Rebrova\", \"Ilya Mokhov\", \"Kim Son\", \"Pyotr Gai\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "On the project"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "avatar-017",
+      "type": "registry:component",
+      "title": "Person Row",
+      "description": "Строка человека, кликабельная целиком: ссылка растянута псевдоэлементом, кнопка действия поднята над ней и остаётся отдельной целью.",
+      "categories": ["avatar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "avatar-017/avatar-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/avatar-017.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-017-*. Серверный: хуков нет. Вся строка — цель ссылки: a::after растянут на inset:0, а кнопка справа поднята z-index, поэтому открыть профиль и написать сообщение остаются разными действиями. Обводка фокуса ставится на строку через :has(a:focus-visible), поэтому с клавиатуры видно всю цель, а не подчёркнутое имя. Роль и служебная строка разведены начертанием: два одинаковых серых текста сливаются в один.",
+      "meta": {
+        "tags": ["avatar", "row", "list", "profile"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Avatar017",
+          "usage": "<Avatar017\n  name=\"Ким Сон\"\n  role=\"Аналитик\"\n  meta=\"был в сети 20 минут назад\"\n  action=\"Написать\"\n  href=\"/people/kim\"\n/>",
+          "summary": "Строка человека: ссылка растянута на всю строку, кнопка действия — отдельная цель, фокус подсвечивает строку целиком. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-avatar-017-* и не подменять её токенами вашей темы",
+            "растянутую ссылку через a::after: цель нажатия обязана быть строкой, а не словом",
+            "кнопку действия поверх ссылки по z-index — иначе она перестаёт нажиматься",
+            "обводку фокуса на строке через :has(): подчёркнутое имя не показывает реальную цель",
+            "разное начертание роли и служебной строки: серое на сером сливается",
+            "собственную светлую подложку строки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "имя, роль через role и служебную строку",
+            "подпись кнопки через action",
+            "адрес ссылки через href",
+            "ширину строки через max-width"
+          ],
+          "notes": [
+            "Растянутая ссылка ломает выделение текста внутри строки: это плата за большую цель нажатия.",
+            "Кнопка действия одна: вторую придётся ставить рядом и проверять ширину на телефоне.",
+            "Доступная подпись кнопки называет имя — в списке из десяти строк «Написать» без имени бесполезно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "role",
+            "label": "Роль",
+            "type": "text",
+            "default": "Аналитик",
+            "maxLength": 24
+          },
+          {
+            "prop": "action",
+            "label": "Действие",
+            "type": "text",
+            "default": "Написать",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A person row that is clickable end to end: the link is stretched by a pseudo-element and the action button is raised above it as a separate target.",
+            "ai": {
+              "summary": "A person row: the link stretches across the whole row, the action button stays a separate target, and focus highlights the entire row. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-avatar-017-* palette — do not swap it for your theme tokens",
+                "the stretched link via a::after: the tap target must be the row, not the word",
+                "the action button raised above the link by z-index — otherwise it stops being clickable",
+                "the focus ring on the row through :has(): an underlined name misstates the real target",
+                "the different weights on role and meta lines: grey on grey merges into one",
+                "the row's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the name, the role through role and the meta line",
+                "the button caption through action",
+                "the link address through href",
+                "the row width through max-width"
+              ],
+              "notes": [
+                "A stretched link breaks text selection inside the row: that is the price of a large tap target.",
+                "There is one action button: a second one has to sit beside it and be checked on phones.",
+                "The button's accessible label names the person — in a list of ten rows \"Message\" alone is useless.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Avatar017\n  name=\"Kim Son\"\n  role=\"Analyst\"\n  meta=\"last seen 20 minutes ago\"\n  action=\"Message\"\n  href=\"/people/kim\"\n/>"
+            },
+            "controls": {
+              "role": {
+                "label": "Role",
+                "default": "Analyst"
+              },
+              "action": {
+                "label": "Action",
+                "default": "Message"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "avatar-018",
+      "type": "registry:component",
+      "title": "Role Ring Avatar",
+      "description": "Аватар с ролью в кольце: дуга нарисована conic-gradient с маской, роли различаются длиной дуги, а не одним цветом.",
+      "categories": ["avatar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "avatar-018/avatar-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/avatar-018.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-018-*. Серверный: хуков нет. Кольцо роли собрано из conic-gradient с radial-маской: оно остаётся ровным на любом размере и не требует SVG. Роли различаются длиной дуги (владелец — полное кольцо, редактор — три четверти, читатель — половина, робот — четверть), а не только цветом, и продублированы словом в подписи: дуга без текста непонятна. Точка присутствия сюда намеренно не добавлена — она занята другим смыслом и вешать на кольцо второй индикатор нельзя.",
+      "meta": {
+        "tags": ["avatar", "role", "ring", "permissions"],
+        "ai": {
+          "export": "Avatar018",
+          "usage": "<Avatar018 name=\"Пётр Гай\" role=\"editor\" size=\"md\" />",
+          "summary": "Аватар с ролью в кольце: дуга из conic-gradient с маской, длина дуги различает права, роль названа словом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-avatar-018-* и не подменять её токенами вашей темы",
+            "conic-gradient с маской вместо SVG: кольцо обязано оставаться ровным на любом размере",
+            "разную длину дуги для ролей — одного цвета мало при дальтонизме",
+            "слово роли рядом с кольцом: дуга без текста не читается",
+            "aria-hidden на инициалах и кольце, смысл несёт подпись",
+            "толщину кольца в переменной, а не в пикселях по месту"
+          ],
+          "adapt": [
+            "имя и роль через role",
+            "размер через size",
+            "цвета и длины дуг в переменных",
+            "названия ролей в словаре"
+          ],
+          "notes": [
+            "Кольцо роли и точка присутствия — разные смыслы: не совмещайте их на одном аватаре.",
+            "Роль «робот» намеренно самая короткая дуга: у автоматики меньше всего прав.",
+            "Для больше чем четырёх ролей длина дуги перестаёт различаться на глаз — переходите к подписи.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "role",
+            "label": "Роль",
+            "type": "select",
+            "default": "editor",
+            "options": ["owner", "editor", "reader", "bot"]
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": ["sm", "md", "lg"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An avatar with the role in the ring: the arc is a conic-gradient with a mask, and roles differ in arc length, not colour alone.",
+            "ai": {
+              "summary": "An avatar with the role in the ring: a masked conic-gradient arc whose length separates permissions, with the role named in words. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-avatar-018-* palette — do not swap it for your theme tokens",
+                "the masked conic-gradient instead of SVG: the ring must stay even at any size",
+                "different arc lengths per role — colour alone fails for colour-blind users",
+                "the role word beside the ring: an arc without text is unreadable",
+                "aria-hidden on the initials and the ring, the caption carries the meaning",
+                "the ring thickness in a variable rather than pixels written in place"
+              ],
+              "adapt": [
+                "the name and the role through role",
+                "the size through size",
+                "arc colours and lengths in the variables",
+                "the role names in the dictionary"
+              ],
+              "notes": [
+                "The role ring and a presence dot mean different things: do not put both on one avatar.",
+                "The bot role is deliberately the shortest arc: automation holds the fewest rights.",
+                "Beyond four roles arc lengths stop being distinguishable by eye — switch to a label.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Avatar018 name=\"Pyotr Gai\" role=\"editor\" size=\"md\" />"
+            },
+            "controls": {
+              "role": {
+                "label": "Role",
+                "default": "editor"
+              },
+              "size": {
+                "label": "Size",
+                "default": "md"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "avatar-019",
+      "type": "registry:component",
+      "title": "Profile Card",
+      "description": "Карточка человека для hover-card, но без всплытия по наведению: на сенсорном экране всплывающая карточка либо не появляется, либо закрывает то, на что нажали.",
+      "categories": ["avatar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "avatar-019/avatar-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/avatar-019.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-019-*. Серверный: хуков нет. Это содержимое карточки, а не механизм всплытия: вызывающий код кладёт её в popover или hover-card по своему усмотрению — так карточка остаётся пригодной и на сенсорном экране, где наведения нет. Показатели набраны табличными цифрами и стоят в ряд по три; четвёртый ломает строку на узком экране, поэтому лишние отбрасываются в разметке через slice.",
+      "meta": {
+        "tags": ["avatar", "profile", "card", "hover-card"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Avatar019",
+          "usage": "<Avatar019\n  name=\"Мария Лоза\"\n  handle=\"@maria · Москва\"\n  bio=\"Собирает интерфейсы из блоков.\"\n  stats={[{ label: \"Установок\", value: \"412\" }]}\n/>",
+          "summary": "Карточка человека: портрет, био, три показателя и одно действие. Всплытие не реализовано намеренно — механизм выбирает вызывающий код. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-avatar-019-* и не подменять её токенами вашей темы",
+            "отсутствие всплытия по наведению: на сенсорном экране такая карточка недоступна",
+            "ограничение в три показателя — четвёртый ломает строку на узком экране",
+            "табличные цифры в показателях: числа обязаны стоять столбиком",
+            "одно действие внизу: набор кнопок превращает карточку в меню",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "имя, ник через handle и описание",
+            "массив stats",
+            "подпись кнопки через action",
+            "ширину карточки через max-width"
+          ],
+          "notes": [
+            "Класть карточку в hover-card можно, но продублируйте вызов нажатием — наведения на телефоне нет.",
+            "Лишние показатели отбрасываются молча: если их больше трёх, решайте порядок в вызывающем коде.",
+            "Описание рассчитано на две-три строки: длинный текст растянет всплывающий слой за экран.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "handle",
+            "label": "Ник",
+            "type": "text",
+            "default": "@maria · Москва",
+            "maxLength": 32
+          },
+          {
+            "prop": "action",
+            "label": "Действие",
+            "type": "text",
+            "default": "Написать сообщение",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A person card for a hover card, but without popping up on hover: on a touch screen such a card either never appears or covers what was tapped.",
+            "ai": {
+              "summary": "A person card: portrait, bio, three stats and one action. Popping up is deliberately left out — the caller picks the mechanism. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-avatar-019-* palette — do not swap it for your theme tokens",
+                "the absence of hover popping: such a card is unreachable on a touch screen",
+                "the three-stat cap — a fourth one breaks the row on a narrow screen",
+                "tabular numerals in the stats: the figures must line up in a column",
+                "the single action at the bottom: a row of buttons turns the card into a menu",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the name, the handle through handle and the bio",
+                "the stats array",
+                "the button caption through action",
+                "the card width through max-width"
+              ],
+              "notes": [
+                "Putting the card in a hover card is fine, but mirror the trigger on tap — phones have no hover.",
+                "Extra stats are dropped silently: decide the order in the caller when there are more than three.",
+                "The bio is sized for two or three lines: a long text stretches a floating layer off screen.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Avatar019\n  name=\"Maria Loza\"\n  handle=\"@maria · Moscow\"\n  bio=\"Assembles interfaces out of blocks.\"\n  stats={[{ label: \"Installs\", value: \"412\" }]}\n/>"
+            },
+            "controls": {
+              "handle": {
+                "label": "Handle",
+                "default": "@maria · Moscow"
+              },
+              "action": {
+                "label": "Action",
+                "default": "Send a message"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "avatar-020",
+      "type": "registry:component",
+      "title": "Unread Avatar",
+      "description": "Аватар со счётчиком непрочитанного: значок сидит в вырезе маски, больше девяноста девяти показывается как «99+», ноль не рисуется вовсе.",
+      "categories": ["avatar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "avatar-020/avatar-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/avatar-020.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-020-*. Серверный: хуков нет. Значок сидит в вырезе mask-image, поэтому зазор между числом и портретом остаётся ровным на любом фоне. Больше девяноста девяти показывается как «99+»: точное число в кружке нечитаемо и ни на что не влияет. Ноль не рисуется вовсе — пустой кружок читается как «есть что-то новое». Число продублировано словами в скрытой подписи, иначе для скринридера оно останется немым значком.",
+      "meta": {
+        "tags": ["avatar", "badge", "unread", "counter"],
+        "ai": {
+          "export": "Avatar020",
+          "usage": "<Avatar020\n  name=\"Илья Мохов\"\n  count={12}\n  label=\"непрочитанных сообщения\"\n  size=\"md\"\n/>",
+          "summary": "Аватар со счётчиком непрочитанного: значок в вырезе маски, «99+» вместо точного большого числа, ноль не рисуется. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-avatar-020-* и не подменять её токенами вашей темы",
+            "вырез маской вместо обводки цветом фона — зазор обязан держаться на любой подложке",
+            "порог «99+»: точное большое число в кружке нечитаемо и ни на что не влияет",
+            "скрытый ноль: пустой кружок читается как «есть что-то новое»",
+            "скрытую подпись с числом словами — иначе значок немой для скринридера",
+            "табличные цифры в значке: число не должно прыгать по ширине"
+          ],
+          "adapt": [
+            "имя и число через count",
+            "слово в подписи через label",
+            "размер через size",
+            "цвет значка в переменной"
+          ],
+          "notes": [
+            "Порог «99+» задан в разметке: меняйте его вместе с шириной значка, иначе число вылезет.",
+            "Согласование слова в подписи на вашей стороне: «1 сообщение» и «5 сообщений» — разные формы.",
+            "Значок не кликабелен: переход к непрочитанному навешивает вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "count",
+            "label": "Счётчик",
+            "type": "number",
+            "default": 12,
+            "min": 0,
+            "max": 250
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": ["sm", "md", "lg"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An avatar with an unread counter: the badge sits in a mask cut-out, anything above ninety-nine shows as \"99+\", and zero is not drawn at all.",
+            "ai": {
+              "summary": "An avatar with an unread counter: the badge lives in a mask cut-out, \"99+\" replaces an exact large number, and zero draws nothing. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-avatar-020-* palette — do not swap it for your theme tokens",
+                "the mask cut-out instead of a background-coloured ring — the gap must hold on any surface",
+                "the \"99+\" cap: an exact large number in a circle is unreadable and changes nothing",
+                "the hidden zero: an empty circle reads as \"there is something new\"",
+                "the hidden caption spelling out the number — otherwise the badge is mute",
+                "tabular numerals in the badge: the number must not jump in width"
+              ],
+              "adapt": [
+                "the name and the number through count",
+                "the caption word through label",
+                "the size through size",
+                "the badge colour in the variable"
+              ],
+              "notes": [
+                "The \"99+\" cap lives in the markup: change it together with the badge width or the number overflows.",
+                "Grammatical agreement in the caption is yours: \"1 message\" and \"5 messages\" differ.",
+                "The badge is not clickable: jumping to the unread items belongs to the caller.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Avatar020\n  name=\"Ilya Mokhov\"\n  count={12}\n  label=\"unread messages\"\n  size=\"md\"\n/>"
+            },
+            "controls": {
+              "count": {
+                "label": "Counter",
+                "default": 12
+              },
+              "size": {
+                "label": "Size",
+                "default": "md"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

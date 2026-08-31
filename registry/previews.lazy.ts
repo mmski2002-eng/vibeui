@@ -795,6 +795,46 @@ export const LAZY_PREVIEWS = {
       (module) => module.Avatar012,
     ),
   ),
+  "avatar-013": dynamic(() =>
+    import("@/registry/components/avatar/avatar-013/avatar-013").then(
+      (module) => module.Avatar013,
+    ),
+  ),
+  "avatar-014": dynamic(() =>
+    import("@/registry/components/avatar/avatar-014/avatar-014").then(
+      (module) => module.Avatar014,
+    ),
+  ),
+  "avatar-015": dynamic(() =>
+    import("@/registry/components/avatar/avatar-015/avatar-015").then(
+      (module) => module.Avatar015,
+    ),
+  ),
+  "avatar-016": dynamic(() =>
+    import("@/registry/components/avatar/avatar-016/avatar-016").then(
+      (module) => module.Avatar016,
+    ),
+  ),
+  "avatar-017": dynamic(() =>
+    import("@/registry/components/avatar/avatar-017/avatar-017").then(
+      (module) => module.Avatar017,
+    ),
+  ),
+  "avatar-018": dynamic(() =>
+    import("@/registry/components/avatar/avatar-018/avatar-018").then(
+      (module) => module.Avatar018,
+    ),
+  ),
+  "avatar-019": dynamic(() =>
+    import("@/registry/components/avatar/avatar-019/avatar-019").then(
+      (module) => module.Avatar019,
+    ),
+  ),
+  "avatar-020": dynamic(() =>
+    import("@/registry/components/avatar/avatar-020/avatar-020").then(
+      (module) => module.Avatar020,
+    ),
+  ),
   "badge-001": dynamic(() =>
     import("@/registry/components/badge/badge-001/badge-001").then(
       (module) => module.Badge001,
@@ -853,6 +893,21 @@ export const LAZY_PREVIEWS = {
   "badge-012": dynamic(() =>
     import("@/registry/components/badge/badge-012/badge-012").then(
       (module) => module.Badge012,
+    ),
+  ),
+  "badge-013": dynamic(() =>
+    import("@/registry/components/badge/badge-013/badge-013").then(
+      (module) => module.Badge013,
+    ),
+  ),
+  "badge-014": dynamic(() =>
+    import("@/registry/components/badge/badge-014/badge-014").then(
+      (module) => module.Badge014,
+    ),
+  ),
+  "badge-015": dynamic(() =>
+    import("@/registry/components/badge/badge-015/badge-015").then(
+      (module) => module.Badge015,
     ),
   ),
   "breadcrumb-001": dynamic(() =>

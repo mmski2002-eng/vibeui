@@ -159,6 +159,14 @@ import { Avatar009 } from "@/registry/components/avatar/avatar-009/avatar-009"
 import { Avatar010 } from "@/registry/components/avatar/avatar-010/avatar-010"
 import { Avatar011 } from "@/registry/components/avatar/avatar-011/avatar-011"
 import { Avatar012 } from "@/registry/components/avatar/avatar-012/avatar-012"
+import { Avatar013 } from "@/registry/components/avatar/avatar-013/avatar-013"
+import { Avatar014 } from "@/registry/components/avatar/avatar-014/avatar-014"
+import { Avatar015 } from "@/registry/components/avatar/avatar-015/avatar-015"
+import { Avatar016 } from "@/registry/components/avatar/avatar-016/avatar-016"
+import { Avatar017 } from "@/registry/components/avatar/avatar-017/avatar-017"
+import { Avatar018 } from "@/registry/components/avatar/avatar-018/avatar-018"
+import { Avatar019 } from "@/registry/components/avatar/avatar-019/avatar-019"
+import { Avatar020 } from "@/registry/components/avatar/avatar-020/avatar-020"
 import { Badge001 } from "@/registry/components/badge/badge-001/badge-001"
 import { Badge002 } from "@/registry/components/badge/badge-002/badge-002"
 import { Badge003 } from "@/registry/components/badge/badge-003/badge-003"
@@ -171,6 +179,9 @@ import { Badge009 } from "@/registry/components/badge/badge-009/badge-009"
 import { Badge010 } from "@/registry/components/badge/badge-010/badge-010"
 import { Badge011 } from "@/registry/components/badge/badge-011/badge-011"
 import { Badge012 } from "@/registry/components/badge/badge-012/badge-012"
+import { Badge013 } from "@/registry/components/badge/badge-013/badge-013"
+import { Badge014 } from "@/registry/components/badge/badge-014/badge-014"
+import { Badge015 } from "@/registry/components/badge/badge-015/badge-015"
 import { Breadcrumb001 } from "@/registry/components/breadcrumb/breadcrumb-001/breadcrumb-001"
 import { Breadcrumb002 } from "@/registry/components/breadcrumb/breadcrumb-002/breadcrumb-002"
 import { Breadcrumb003 } from "@/registry/components/breadcrumb/breadcrumb-003/breadcrumb-003"
@@ -473,6 +484,14 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "avatar-010": Avatar010,
   "avatar-011": Avatar011,
   "avatar-012": Avatar012,
+  "avatar-013": Avatar013,
+  "avatar-014": Avatar014,
+  "avatar-015": Avatar015,
+  "avatar-016": Avatar016,
+  "avatar-017": Avatar017,
+  "avatar-018": Avatar018,
+  "avatar-019": Avatar019,
+  "avatar-020": Avatar020,
   "badge-001": Badge001,
   "badge-002": Badge002,
   "badge-003": Badge003,
@@ -485,6 +504,9 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "badge-010": Badge010,
   "badge-011": Badge011,
   "badge-012": Badge012,
+  "badge-013": Badge013,
+  "badge-014": Badge014,
+  "badge-015": Badge015,
   "breadcrumb-001": Breadcrumb001,
   "breadcrumb-002": Breadcrumb002,
   "breadcrumb-003": Breadcrumb003,
