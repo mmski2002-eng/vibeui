@@ -1,0 +1,148 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Table010Row = {
+  source: string
+  visits: number
+}
+
+export type Table010Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children"
+> & {
+  rows?: Table010Row[]
+  caption?: string
+  accent?: string
+}
+
+// Идея компонента: таблица долей с полосой прямо в ячейке. Полоса рисуется
+// градиентом фона по проценту, поэтому не добавляет ни элемента, ни библиотеки.
+// Число остаётся рядом: полоса показывает соотношение, а точную величину
+// читают цифрой. Доля считается от суммы строк, а не задаётся отдельно, —
+// иначе итог перестаёт сходиться при правке данных.
+const STYLES = `
+:where([data-vibeui-block="table-010"]){
+--vibeui-table-010-bg:oklch(1 0 0);
+--vibeui-table-010-fg:oklch(0.24 0.014 265);
+--vibeui-table-010-muted:oklch(0.56 0.014 265);
+--vibeui-table-010-border:oklch(0.92 0.006 265);
+--vibeui-table-010-head:oklch(0.975 0.003 265);
+--vibeui-table-010-bar:oklch(0.55 0.2 262 / 16%);
+--vibeui-table-010-accent:oklch(0.55 0.2 262);
+--vibeui-table-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="table-010"]{
+width:100%;box-sizing:border-box;overflow-x:auto;
+background:var(--vibeui-table-010-bg);
+border:1px solid var(--vibeui-table-010-border);border-radius:0.875rem;
+font-family:var(--vibeui-table-010-font);color:var(--vibeui-table-010-fg);
+}
+[data-vibeui-block="table-010"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
+[data-vibeui-block="table-010"] caption{padding:0.75rem 0.875rem;text-align:left;font-size:0.875rem;font-weight:650}
+[data-vibeui-block="table-010"] th,
+[data-vibeui-block="table-010"] td{
+padding:0.5rem 0.875rem;text-align:left;white-space:nowrap;
+border-top:1px solid var(--vibeui-table-010-border);
+}
+[data-vibeui-block="table-010"] thead th{background:var(--vibeui-table-010-head);font-weight:600}
+[data-vibeui-block="table-010"] [data-align="end"]{text-align:right;font-variant-numeric:tabular-nums}
+/* Полоса — фон ячейки: лишний элемент и библиотека графиков не нужны. */
+[data-vibeui-block="table-010"] [data-part="share"]{
+min-width:9rem;
+background:linear-gradient(to right,var(--vibeui-table-010-bar) var(--vibeui-table-010-fill),transparent var(--vibeui-table-010-fill));
+}
+[data-vibeui-block="table-010"] tfoot td{
+font-weight:650;background:var(--vibeui-table-010-head);
+}
+[data-vibeui-block="table-010"] [data-part="total"]{color:var(--vibeui-table-010-muted);font-weight:600}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="table-010"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_ROWS: Table010Row[] = [
+  { source: "Поиск", visits: 18402 },
+  { source: "Прямые заходы", visits: 7118 },
+  { source: "Соцсети", visits: 6940 },
+  { source: "Письма", visits: 4233 },
+  { source: "Реклама", visits: 3211 },
+]
+
+/**
+ * Таблица долей: полоса рисуется фоном ячейки, число остаётся рядом.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Table010({
+  rows = DEFAULT_ROWS,
+  caption = "Источники трафика",
+  accent,
+  className,
+  style,
+  ...props
+}: Table010Props) {
+  const total = rows.reduce((sum, row) => sum + row.visits, 0)
+
+  const palette = {
+    ...(accent ? { "--vibeui-table-010-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-table-010" precedence="medium">
+        {STYLES}
+      </style>
+      <div
+        {...props}
+        data-vibeui-block="table-010"
+        className={className}
+        style={palette}
+      >
+        <table>
+          <caption>{caption}</caption>
+          <thead>
+            <tr>
+              <th scope="col">Источник</th>
+              <th scope="col" data-align="end">
+                Визиты
+              </th>
+              <th scope="col" data-align="end">
+                Доля
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => {
+              const share = total ? (row.visits / total) * 100 : 0
+              return (
+                <tr key={row.source}>
+                  <td>{row.source}</td>
+                  <td data-align="end">{row.visits.toLocaleString("ru-RU")}</td>
+                  <td
+                    data-part="share"
+                    data-align="end"
+                    style={
+                      {
+                        "--vibeui-table-010-fill": `${share.toFixed(1)}%`,
+                      } as CSSProperties
+                    }
+                  >
+                    {share.toLocaleString("ru-RU", {
+                      minimumFractionDigits: 1,
+                      maximumFractionDigits: 1,
+                    })}{" "}
+                    %
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td data-part="total">Всего</td>
+              <td data-align="end">{total.toLocaleString("ru-RU")}</td>
+              <td data-align="end">100,0 %</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </>
+  )
+}

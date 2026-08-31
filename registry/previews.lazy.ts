@@ -1176,6 +1176,41 @@ export const LAZY_PREVIEWS = {
       (module) => module.Table003,
     ),
   ),
+  "table-004": dynamic(() =>
+    import("@/registry/components/tables/table-004/table-004").then(
+      (module) => module.Table004,
+    ),
+  ),
+  "table-005": dynamic(() =>
+    import("@/registry/components/tables/table-005/table-005").then(
+      (module) => module.Table005,
+    ),
+  ),
+  "table-006": dynamic(() =>
+    import("@/registry/components/tables/table-006/table-006").then(
+      (module) => module.Table006,
+    ),
+  ),
+  "table-007": dynamic(() =>
+    import("@/registry/components/tables/table-007/table-007").then(
+      (module) => module.Table007,
+    ),
+  ),
+  "table-008": dynamic(() =>
+    import("@/registry/components/tables/table-008/table-008").then(
+      (module) => module.Table008,
+    ),
+  ),
+  "table-009": dynamic(() =>
+    import("@/registry/components/tables/table-009/table-009").then(
+      (module) => module.Table009,
+    ),
+  ),
+  "table-010": dynamic(() =>
+    import("@/registry/components/tables/table-010/table-010").then(
+      (module) => module.Table010,
+    ),
+  ),
   "chart-001": dynamic(() =>
     import("@/registry/components/charts/chart-001/chart-001").then(
       (module) => module.Chart001,

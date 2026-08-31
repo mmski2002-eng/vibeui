@@ -234,6 +234,13 @@ import { Tabs002 } from "@/registry/components/navigation/tabs-002/tabs-002"
 import { Table001 } from "@/registry/components/tables/table-001/table-001"
 import { Table002 } from "@/registry/components/tables/table-002/table-002"
 import { Table003 } from "@/registry/components/tables/table-003/table-003"
+import { Table004 } from "@/registry/components/tables/table-004/table-004"
+import { Table005 } from "@/registry/components/tables/table-005/table-005"
+import { Table006 } from "@/registry/components/tables/table-006/table-006"
+import { Table007 } from "@/registry/components/tables/table-007/table-007"
+import { Table008 } from "@/registry/components/tables/table-008/table-008"
+import { Table009 } from "@/registry/components/tables/table-009/table-009"
+import { Table010 } from "@/registry/components/tables/table-010/table-010"
 import { Chart001 } from "@/registry/components/charts/chart-001/chart-001"
 import { Chart002 } from "@/registry/components/charts/chart-002/chart-002"
 import { Sparkline001 } from "@/registry/components/charts/sparkline-001/sparkline-001"
@@ -484,6 +491,13 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "table-001": Table001,
   "table-002": Table002,
   "table-003": Table003,
+  "table-004": Table004,
+  "table-005": Table005,
+  "table-006": Table006,
+  "table-007": Table007,
+  "table-008": Table008,
+  "table-009": Table009,
+  "table-010": Table010,
   "chart-001": Chart001,
   "chart-002": Chart002,
   "sparkline-001": Sparkline001,

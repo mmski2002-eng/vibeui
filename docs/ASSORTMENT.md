@@ -39,7 +39,7 @@
 | `aspect`     | кадры с заданной пропорцией: обложки, видео, карты, коллажи                                                                                                                   |    ~8 |     8 |
 | `feedback`   | drawer, sheet, popover, tooltip, hover card, toast, empty state                                                                                                               |  ~130 |     4 |
 | `navigation` | breadcrumb, dropdown menu, context menu, menubar, navigation menu, tabs, stepper, command, scrollspy                                                                          |   ~85 |    12 |
-| `tables`     | table, data grid, pagination                                                                                                                                                  |   ~60 |     3 |
+| `tables`     | table, data grid, pagination                                                                                                                                                  |   ~60 |    10 |
 | `charts`     | chart (line, bar, area, pie, radial), sparkline                                                                                                                               |   ~55 |     3 |
 | `calendar`   | calendar, event calendar, gantt, kanban, sortable, filters                                                                                                                    |   ~70 |     0 |
 
@@ -168,9 +168,13 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
     радиокнопках без JS), `pagination-002` (курсорная, диапазон строк),
     `contextmenu-001` (правый клик плюс кнопка-дублёр), `sidebar-002`
     (свёртка одной переменной ширины).
-19. `tables` — первая волна закрыта: `table-001` (данные, липкая шапка),
-    `table-002` (сравнение, липкая первая колонка), `table-003` (счёт с
-    итогом из строк). Дальше: data grid с сортировкой.
+19. `tables` — 10 items в двух волнах. Первая: `table-001` (данные, липкая
+    шапка), `table-002` (сравнение, липкая первая колонка), `table-003`
+    (счёт с итогом из строк). Вторая: `table-004` (сортировка и aria-sort),
+    `table-005` (выбор строк, три состояния флажка), `table-006`
+    (раскрытие подробностей без JS), `table-007` (карточки в узкой колонке
+    по контейнерному запросу), `table-008` (плотные логи), `table-009`
+    (ожидание и пустота), `table-010` (доли полосой в фоне ячейки).
 20. Блоки для лендинга — закрыты: `navbar-001`, `cta-001`, `faq-001`,
     `testimonials-001`, `footer-001`. Вместе с hero, features и pricing
     собирается целая страница.
@@ -179,7 +183,7 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
     conic-gradient, рейтинг горизонтальными полосами, полоса долей, график с
     заливкой, полукруглая шкала с целью, воронка с переходами и сравнение
     двух периодов.
-22. Дальше: блоки `dashboard` и `ai`, вторая волна в tables.
+22. Дальше: блоки `dashboard` и `ai`.
 
 Ритм — пачка на категорию: спека всех items категории сразу (иначе выходят
 вариации одного и того же), потом реализация по одному, потом отдельный
