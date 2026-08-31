@@ -1,0 +1,185 @@
+"use client"
+
+import { useId, useRef } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Sheet006Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children" | "title"
+> & {
+  triggerLabel?: string
+  title?: string
+  text?: string
+  consequences?: string[]
+  confirmLabel?: string
+  cancelLabel?: string
+}
+
+// Идея компонента: подтверждение опасного действия на телефоне. Вопрос
+// приезжает снизу, потому что до центра экрана большой палец не достаёт.
+// Последствия перечислены списком, а не спрятаны в одну строку, фокус при
+// открытии стоит на отказе: опасная кнопка не должна срабатывать по Enter.
+const STYLES = `
+:where([data-vibeui-block="sheet-006"]){
+--vibeui-sheet-006-bg:oklch(1 0 0);
+--vibeui-sheet-006-fg:oklch(0.21 0.014 265);
+--vibeui-sheet-006-muted:oklch(0.55 0.014 265);
+--vibeui-sheet-006-border:oklch(0.91 0.006 265);
+--vibeui-sheet-006-danger:oklch(0.55 0.2 25);
+--vibeui-sheet-006-danger-soft:oklch(0.95 0.03 25);
+--vibeui-sheet-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="sheet-006"]{
+display:inline-block;font-family:var(--vibeui-sheet-006-font);color:var(--vibeui-sheet-006-fg);
+}
+[data-vibeui-block="sheet-006"] [data-part="trigger"]{
+appearance:none;cursor:pointer;height:2.25rem;padding:0 0.875rem;
+border:1px solid var(--vibeui-sheet-006-border);border-radius:0.625rem;
+background:var(--vibeui-sheet-006-bg);color:var(--vibeui-sheet-006-danger);
+font:inherit;font-size:0.8125rem;font-weight:600;
+}
+[data-vibeui-block="sheet-006"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-sheet-006-danger);outline-offset:2px}
+[data-vibeui-block="sheet-006"] dialog{
+position:fixed;inset:auto 0 0 0;margin:0;
+width:100%;max-width:100vw;max-height:85dvh;
+padding:0;border:0;border-radius:1.25rem 1.25rem 0 0;overflow:hidden;
+background:var(--vibeui-sheet-006-bg);color:inherit;
+box-shadow:0 -26px 60px -32px oklch(0.2 0.02 265 / 60%);
+translate:0 100%;transition:translate .24s ease,overlay .24s allow-discrete,display .24s allow-discrete;
+}
+[data-vibeui-block="sheet-006"] dialog[open]{translate:0 0}
+@starting-style{
+[data-vibeui-block="sheet-006"] dialog[open]{translate:0 100%}
+}
+[data-vibeui-block="sheet-006"] dialog::backdrop{background:oklch(0.17 0.02 265 / 55%)}
+[data-vibeui-block="sheet-006"] form{
+display:flex;flex-direction:column;align-items:center;gap:0.5rem;box-sizing:border-box;
+padding:0.5rem 1.125rem calc(1rem + env(safe-area-inset-bottom,0px));text-align:center;
+}
+[data-vibeui-block="sheet-006"] [data-part="grabber"]{
+width:2.5rem;height:0.25rem;margin:0.25rem 0 0.5rem;
+border-radius:9999px;background:var(--vibeui-sheet-006-border);
+}
+/* Знак опасности кругом с восклицанием: рисовать нечем, кроме CSS. */
+[data-vibeui-block="sheet-006"] [data-part="mark"]{
+position:relative;width:2.75rem;height:2.75rem;border-radius:9999px;
+background:var(--vibeui-sheet-006-danger-soft);
+}
+[data-vibeui-block="sheet-006"] [data-part="mark"]::before{
+content:"";position:absolute;left:50%;top:0.75rem;width:2px;height:0.8125rem;
+margin-left:-1px;border-radius:9999px;background:var(--vibeui-sheet-006-danger);
+}
+[data-vibeui-block="sheet-006"] [data-part="mark"]::after{
+content:"";position:absolute;left:50%;bottom:0.6875rem;width:2px;height:2px;
+margin-left:-1px;border-radius:9999px;background:var(--vibeui-sheet-006-danger);
+}
+[data-vibeui-block="sheet-006"] [data-part="title"]{margin:0.25rem 0 0;font-size:1.0625rem;font-weight:700;line-height:1.25}
+[data-vibeui-block="sheet-006"] [data-part="text"]{
+margin:0;max-width:34ch;font-size:0.875rem;line-height:1.45;color:var(--vibeui-sheet-006-muted);
+}
+[data-vibeui-block="sheet-006"] [data-part="list"]{
+list-style:none;margin:0.5rem 0 0.25rem;padding:0.625rem 0.875rem;width:100%;box-sizing:border-box;
+border:1px solid var(--vibeui-sheet-006-border);border-radius:0.875rem;
+text-align:left;font-size:0.8125rem;line-height:1.4;
+}
+[data-vibeui-block="sheet-006"] [data-part="item"]{position:relative;padding-left:0.875rem}
+[data-vibeui-block="sheet-006"] [data-part="item"]+[data-part="item"]{margin-top:0.375rem}
+[data-vibeui-block="sheet-006"] [data-part="item"]::before{
+content:"";position:absolute;left:0;top:0.5rem;width:0.3125rem;height:0.3125rem;
+border-radius:9999px;background:var(--vibeui-sheet-006-danger);
+}
+[data-vibeui-block="sheet-006"] [data-part="actions"]{display:flex;flex-direction:column;gap:0.5rem;width:100%;margin-top:0.5rem}
+[data-vibeui-block="sheet-006"] [data-part="actions"] button{
+appearance:none;cursor:pointer;width:100%;height:3rem;border-radius:0.875rem;
+border:1px solid var(--vibeui-sheet-006-border);background:transparent;color:inherit;
+font:inherit;font-size:0.9375rem;font-weight:650;
+}
+[data-vibeui-block="sheet-006"] [data-part="actions"] button[data-danger="true"]{
+border-color:transparent;background:var(--vibeui-sheet-006-danger);color:oklch(0.99 0.01 25);
+}
+[data-vibeui-block="sheet-006"] [data-part="actions"] button:focus-visible{outline:2px solid var(--vibeui-sheet-006-danger);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="sheet-006"] *{animation:none!important;transition:none!important}
+[data-vibeui-block="sheet-006"] dialog{translate:0 0}
+}
+`
+
+const DEFAULT_CONSEQUENCES = [
+  "Адрес vitrina.ru перестанет открываться сразу",
+  "Историю публикаций восстановить будет нельзя",
+  "Участники команды потеряют доступ к исходникам",
+]
+
+/**
+ * Лист подтверждения на телефоне: последствия списком, фокус на отказе.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Sheet006({
+  triggerLabel = "Удалить проект",
+  title = "Удалить проект «Витрина»?",
+  text = "Действие необратимо и затрагивает всех участников пространства.",
+  consequences = DEFAULT_CONSEQUENCES,
+  confirmLabel = "Удалить навсегда",
+  cancelLabel = "Не удалять",
+  className,
+  style,
+  ...props
+}: Sheet006Props) {
+  const sheet = useRef<HTMLDialogElement>(null)
+  const heading = useId()
+
+  return (
+    <>
+      <style href="vibeui-sheet-006" precedence="medium">
+        {STYLES}
+      </style>
+      <div
+        {...props}
+        data-vibeui-block="sheet-006"
+        className={className}
+        style={style as CSSProperties}
+      >
+        <button
+          type="button"
+          data-part="trigger"
+          onClick={() => sheet.current?.showModal()}
+        >
+          {triggerLabel}
+        </button>
+        <dialog
+          ref={sheet}
+          aria-labelledby={heading}
+          onClick={(event) => {
+            if (event.target === sheet.current) {
+              sheet.current.close()
+            }
+          }}
+        >
+          <form method="dialog">
+            <span data-part="grabber" aria-hidden="true" />
+            <span data-part="mark" aria-hidden="true" />
+            <h2 data-part="title" id={heading}>
+              {title}
+            </h2>
+            <p data-part="text">{text}</p>
+            <ul data-part="list">
+              {consequences.map((item) => (
+                <li key={item} data-part="item">
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <div data-part="actions">
+              <button type="submit" value="confirm" data-danger="true">
+                {confirmLabel}
+              </button>
+              <button type="submit" value="cancel" autoFocus>
+                {cancelLabel}
+              </button>
+            </div>
+          </form>
+        </dialog>
+      </div>
+    </>
+  )
+}
