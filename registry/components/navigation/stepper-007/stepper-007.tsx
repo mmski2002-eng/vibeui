@@ -1,0 +1,200 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Stepper007Step = {
+  title: string
+  /** Что уже выбрано на шаге: показывается только у пройденных. */
+  value?: string
+  href?: string
+}
+
+export type Stepper007Props = Omit<
+  ComponentPropsWithoutRef<"nav">,
+  "children"
+> & {
+  steps?: Stepper007Step[]
+  /** Номер текущего шага, считая с нуля. */
+  current?: number
+  /** Подпись ссылки возврата к пройденному шагу. */
+  editLabel?: string
+  label?: string
+  accent?: string
+}
+
+// Идея компонента: шаги оформления заказа, к которым можно вернуться.
+// Пройденный шаг показывает выбранное значение и ссылку возврата — у неё
+// доступное имя вида «Изменить: доставка», иначе в списке из четырёх ссылок
+// все называются одинаково. Будущие шаги ссылками не притворяются: это
+// обычный текст, а не отключённая кнопка, которую нельзя нажать.
+const STYLES = `
+:where([data-vibeui-block="stepper-007"]){
+--vibeui-stepper-007-bg:oklch(1 0 0);
+--vibeui-stepper-007-fg:oklch(0.24 0.016 265);
+--vibeui-stepper-007-muted:oklch(0.56 0.014 265);
+--vibeui-stepper-007-border:oklch(0.92 0.006 265);
+--vibeui-stepper-007-accent:oklch(0.55 0.2 262);
+--vibeui-stepper-007-accent-fg:oklch(1 0 0);
+--vibeui-stepper-007-done:oklch(0.55 0.14 155);
+--vibeui-stepper-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="stepper-007"]{
+width:100%;max-width:30rem;box-sizing:border-box;
+font-family:var(--vibeui-stepper-007-font);color:var(--vibeui-stepper-007-fg);
+}
+[data-vibeui-block="stepper-007"] [data-part="shell"]{
+background:var(--vibeui-stepper-007-bg);
+border:1px solid var(--vibeui-stepper-007-border);border-radius:1rem;overflow:hidden;
+}
+[data-vibeui-block="stepper-007"] ol{margin:0;padding:0;list-style:none}
+[data-vibeui-block="stepper-007"] li{
+display:grid;grid-template-columns:1.5rem 1fr auto;align-items:center;
+gap:0.125rem 0.75rem;padding:0.75rem 1rem;
+}
+[data-vibeui-block="stepper-007"] li + li{border-top:1px solid var(--vibeui-stepper-007-border)}
+[data-vibeui-block="stepper-007"] li[data-state="current"]{
+background:color-mix(in oklab,var(--vibeui-stepper-007-accent) 6%,transparent);
+}
+[data-vibeui-block="stepper-007"] [data-part="mark"]{
+grid-column:1;grid-row:1 / span 2;align-self:start;
+display:flex;align-items:center;justify-content:center;
+width:1.5rem;height:1.5rem;border-radius:9999px;
+border:2px solid var(--vibeui-stepper-007-border);
+background:var(--vibeui-stepper-007-bg);color:var(--vibeui-stepper-007-muted);
+font-size:0.6875rem;font-weight:700;line-height:1;
+}
+[data-vibeui-block="stepper-007"] li[data-state="done"] [data-part="mark"]{
+background:var(--vibeui-stepper-007-done);border-color:var(--vibeui-stepper-007-done);
+color:var(--vibeui-stepper-007-accent-fg);
+}
+[data-vibeui-block="stepper-007"] li[data-state="current"] [data-part="mark"]{
+background:var(--vibeui-stepper-007-accent);border-color:var(--vibeui-stepper-007-accent);
+color:var(--vibeui-stepper-007-accent-fg);
+}
+[data-vibeui-block="stepper-007"] [data-part="title"]{
+grid-column:2;font-size:0.875rem;font-weight:600;line-height:1.3;
+}
+[data-vibeui-block="stepper-007"] li[data-state="todo"] [data-part="title"]{
+font-weight:500;color:var(--vibeui-stepper-007-muted);
+}
+[data-vibeui-block="stepper-007"] [data-part="value"]{
+grid-column:2;font-size:0.8125rem;line-height:1.4;color:var(--vibeui-stepper-007-muted);
+}
+[data-vibeui-block="stepper-007"] [data-part="state"]{
+grid-column:3;grid-row:1 / span 2;
+font-size:0.75rem;color:var(--vibeui-stepper-007-muted);white-space:nowrap;
+}
+[data-vibeui-block="stepper-007"] [data-part="edit"]{
+grid-column:3;grid-row:1 / span 2;
+display:inline-flex;align-items:center;gap:0.25rem;
+padding:0.25rem 0.5rem;border-radius:0.5rem;
+color:var(--vibeui-stepper-007-accent);font-size:0.8125rem;font-weight:600;
+text-decoration:none;white-space:nowrap;
+}
+[data-vibeui-block="stepper-007"] [data-part="edit"]:hover{
+background:color-mix(in oklab,var(--vibeui-stepper-007-accent) 10%,transparent);
+text-decoration:underline;
+}
+[data-vibeui-block="stepper-007"] [data-part="edit"]:focus-visible{
+outline:2px solid var(--vibeui-stepper-007-accent);outline-offset:2px;
+}
+[data-vibeui-block="stepper-007"] [data-part="now"]{
+grid-column:3;grid-row:1 / span 2;
+padding:0.125rem 0.5rem;border-radius:9999px;
+background:var(--vibeui-stepper-007-accent);color:var(--vibeui-stepper-007-accent-fg);
+font-size:0.6875rem;font-weight:650;white-space:nowrap;
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="stepper-007"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_STEPS: Stepper007Step[] = [
+  {
+    title: "Контакты",
+    value: "Мария Ким, +7 917 000-11-22",
+    href: "#contacts",
+  },
+  {
+    title: "Доставка",
+    value: "Курьером завтра, 12:00–15:00",
+    href: "#delivery",
+  },
+  { title: "Оплата", href: "#payment" },
+  { title: "Подтверждение", href: "#confirm" },
+]
+
+/**
+ * Шаги оформления заказа: к пройденным можно вернуться по ссылке.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Stepper007({
+  steps = DEFAULT_STEPS,
+  current = 2,
+  editLabel = "Изменить",
+  label = "Оформление заказа",
+  accent,
+  className,
+  style,
+  ...props
+}: Stepper007Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-stepper-007-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-stepper-007" precedence="medium">
+        {STYLES}
+      </style>
+      <nav
+        {...props}
+        data-vibeui-block="stepper-007"
+        aria-label={label}
+        className={className}
+        style={palette}
+      >
+        <div data-part="shell">
+          <ol>
+            {steps.map((step, index) => {
+              const state =
+                index < current
+                  ? "done"
+                  : index === current
+                    ? "current"
+                    : "todo"
+
+              return (
+                <li
+                  key={step.title}
+                  data-state={state}
+                  aria-current={state === "current" ? "step" : undefined}
+                >
+                  <span data-part="mark" aria-hidden="true">
+                    {state === "done" ? "✓" : index + 1}
+                  </span>
+                  <span data-part="title">{step.title}</span>
+                  {state === "done" && step.value ? (
+                    <span data-part="value">{step.value}</span>
+                  ) : null}
+                  {state === "done" && step.href ? (
+                    <a
+                      data-part="edit"
+                      href={step.href}
+                      aria-label={`${editLabel}: ${step.title.toLowerCase()}`}
+                    >
+                      {editLabel}
+                    </a>
+                  ) : null}
+                  {state === "current" ? (
+                    <span data-part="now">Сейчас</span>
+                  ) : null}
+                  {state === "todo" ? (
+                    <span data-part="state">Впереди</span>
+                  ) : null}
+                </li>
+              )
+            })}
+          </ol>
+        </div>
+      </nav>
+    </>
+  )
+}

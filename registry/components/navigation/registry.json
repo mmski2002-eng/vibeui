@@ -5833,6 +5833,828 @@
           }
         }
       }
+    },
+    {
+      "name": "stepper-002",
+      "type": "registry:component",
+      "title": "Chevron Steps",
+      "description": "Лента шагов-шевронов, как хлебные крошки процесса: номер и подпись стоят в строку, стрелка режется clip-path, а пройденный шаг несёт галочку и слово.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stepper-002/stepper-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stepper-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-002-*. Серверный: хуков нет. Форма шеврона получается одним clip-path на пункте — вырез слева и остриё справа, — поэтому дополнительных узлов и псевдоэлементов под стрелку не нужно, а соседний пункт наезжает отрицательным margin. Текущий шаг помечен aria-current=\"step\"; состояние каждого пункта дублируется визуально скрытой фразой, потому что цвет заливки сам по себе ничего не сообщает. Ширину меряет контейнерный запрос: ниже 32rem подписи неактивных шагов прячутся, остаются номера и галочки.",
+      "meta": {
+        "tags": ["stepper", "navigation", "progress", "checkout"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Stepper002",
+          "usage": "<Stepper002\n  current={2}\n  label=\"Оформление заказа\"\n/>",
+          "summary": "Горизонтальная лента шагов-шевронов с номерами: текущий помечен aria-current, пройденные — галочкой и словом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-stepper-002-* и не подменять её токенами вашей темы",
+            "aria-current=\"step\" на текущем шаге: без него в озвучке все шаги равнозначны",
+            "скрытую подпись состояния у каждого пункта: заливка и галочка не читаются вслух",
+            "порядок в ol: нумерованный список — это и есть смысл «шаг за шагом»",
+            "container-type:inline-size на корне: раскладка обязана мерить блок, а не окно",
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "названия шагов через steps",
+            "номер активного шага через current",
+            "доступное имя ленты через label",
+            "глубину выреза шеврона через переменную --vibeui-stepper-002-notch"
+          ],
+          "notes": [
+            "Больше пяти шагов в ленту не влезают: шевроны сожмут подписи до многоточия.",
+            "current считается с нуля — 0 значит первый шаг, а не «ещё не начали».",
+            "Шевроны не кликабельны: возврат к пройденному шагу — задача другого варианта.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "current",
+            "label": "Текущий шаг",
+            "type": "number",
+            "default": 1,
+            "min": 0,
+            "max": 3
+          },
+          {
+            "prop": "label",
+            "label": "Название ленты",
+            "type": "text",
+            "default": "Оформление заказа",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A chevron step ribbon that reads like process breadcrumbs: number and label sit on one line, the arrow is cut with clip-path, and a finished step carries a check mark and a word.",
+            "ai": {
+              "summary": "A horizontal chevron step ribbon with numbers: the current step is marked with aria-current, finished ones with a check mark and a word. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-stepper-002-* palette — do not swap it for your theme tokens",
+                "aria-current=\"step\" on the current step: without it every step sounds equal",
+                "the hidden state phrase on each item: a fill colour and a check mark are not read aloud",
+                "the ol ordering: a numbered list is what \"step by step\" actually means",
+                "container-type:inline-size on the root: the layout must measure the block, not the window",
+                "the component's own light surface: dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the step names through steps",
+                "the active step number through current",
+                "the ribbon's accessible name through label",
+                "the chevron notch depth through the --vibeui-stepper-002-notch variable"
+              ],
+              "notes": [
+                "More than five steps do not fit: the chevrons squeeze labels down to an ellipsis.",
+                "current is zero-based — 0 means the first step, not \"not started\".",
+                "The chevrons are not clickable: returning to a finished step is another variant's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Stepper002\n  current={2}\n  label=\"Checkout\"\n/>"
+            },
+            "controls": {
+              "current": {
+                "label": "Current step"
+              },
+              "label": {
+                "label": "Ribbon name",
+                "default": "Checkout"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stepper-003",
+      "type": "registry:component",
+      "title": "Vertical Steps",
+      "description": "Вертикальная лента шагов, где у каждого есть место под объяснение и отметку времени, а состояние подписано словом рядом с заголовком.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stepper-003/stepper-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stepper-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-003-*. Серверный: хуков нет. Пункт — двухколоночный grid: кружок занимает первую колонку на все строки (grid-row:1 / span 3), текст идёт во вторую, поэтому описание и время выравниваются по заголовку без ручных отступов. Соединительная линия — ::before пункта: она начинается под кружком и обрывается на последнем шаге, поэтому не свисает в пустоту. Текущий шаг помечен aria-current=\"step\", а состояние каждого пункта продублировано подписью «Готово / Сейчас / Впереди»: цвет линии не единственный носитель смысла.",
+      "meta": {
+        "tags": ["stepper", "vertical", "timeline", "status"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Stepper003",
+          "usage": "<Stepper003\n  current={2}\n  label=\"Ход заявки\"\n/>",
+          "summary": "Вертикальные шаги с описанием, временем и подписью состояния словом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-stepper-003-* и не подменять её токенами вашей темы",
+            "aria-current=\"step\" на текущем шаге: иначе в озвучке не понять, где человек стоит",
+            "подпись состояния словом: залитая линия для скринридера не существует",
+            "обрыв линии на последнем пункте: свисающий хвост читается как незаконченный список",
+            "кружок в отдельной колонке grid: текст обязан выравниваться по заголовку, а не по значку",
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "шаги, описания и отметки времени через steps",
+            "номер активного шага через current",
+            "доступное имя ленты через label",
+            "диаметр кружка через переменную --vibeui-stepper-003-dot"
+          ],
+          "notes": [
+            "Описание необязательно: без него пункт схлопывается до одной строки и лента остаётся ровной.",
+            "current считается с нуля; значение больше длины списка просто закрасит все шаги пройденными.",
+            "Три строки текста на шаг — потолок читаемости: подробности лучше уводить на отдельную страницу.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "current",
+            "label": "Текущий шаг",
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 3
+          },
+          {
+            "prop": "label",
+            "label": "Название ленты",
+            "type": "text",
+            "default": "Ход заявки",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A vertical step list where every step has room for an explanation and a timestamp, and its state is spelled out in a word beside the title.",
+            "ai": {
+              "summary": "Vertical steps with descriptions, timestamps and a word for the state. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-stepper-003-* palette — do not swap it for your theme tokens",
+                "aria-current=\"step\" on the current step: otherwise there is no way to hear where the user stands",
+                "the state word: a filled connector does not exist for a screen reader",
+                "cutting the line at the last item: a dangling tail reads as an unfinished list",
+                "the dot in its own grid column: text must align to the title, not to the marker",
+                "the component's own light surface: dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the steps, descriptions and timestamps through steps",
+                "the active step number through current",
+                "the list's accessible name through label",
+                "the dot diameter through the --vibeui-stepper-003-dot variable"
+              ],
+              "notes": [
+                "The description is optional: without it the item collapses to one line and the rhythm holds.",
+                "current is zero-based; a value past the list length simply marks every step as done.",
+                "Three lines of text per step is the legibility ceiling: send the details to their own page.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Stepper003\n  current={2}\n  label=\"Application progress\"\n/>"
+            },
+            "controls": {
+              "current": {
+                "label": "Current step"
+              },
+              "label": {
+                "label": "List name",
+                "default": "Application progress"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stepper-004",
+      "type": "registry:component",
+      "title": "Step States",
+      "description": "Шаги с полным набором состояний: готово, ошибка, пропущен, текущий и будущий. У каждого свой знак и своя подпись словом, а не только цвет.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stepper-004/stepper-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stepper-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-004-*. Серверный: хуков нет. Состояние приходит данными, а не выводится из номера: пропущенный шаг может стоять между пройденными. Цвет пункта задаётся одной переменной --vibeui-stepper-004-tone, от неё красятся кружок, рамка и подпись — новое состояние добавляется одной строкой CSS плюс знаком в MARKS и словом в WORDS. Соединитель берёт цвет левого соседа через инлайновую переменную, поэтому разрыв виден ровно на месте ошибки. Пропущенный шаг дополнительно помечен пунктирной рамкой: форма работает там, где не работает цвет.",
+      "meta": {
+        "tags": ["stepper", "states", "error", "accessibility"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Stepper004",
+          "usage": "<Stepper004\n  label=\"Настройка магазина\"\n  accent=\"#4f46e5\"\n/>",
+          "summary": "Шаги с состояниями готово, ошибка, пропущен и текущий: знак, форма и слово, а не только цвет. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-stepper-004-* и не подменять её токенами вашей темы",
+            "подпись состояния словом под заголовком: цвет и значок не различимы при дальтонизме",
+            "пунктирную рамку у пропущенного шага: форма дублирует цвет там, где цвет не читается",
+            "aria-current=\"step\" на текущем шаге: без него порядок теряется в озвучке",
+            "aria-hidden на знаках ✓, ! и ↷: сами по себе они звучат как случайные символы",
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "шаги и их состояния через steps",
+            "доступное имя ленты через label",
+            "основной цвет через accent",
+            "слова состояний — правкой таблиц MARKS и WORDS"
+          ],
+          "notes": [
+            "Состояние задаётся явно: компонент не вычисляет его из номера и не проверяет, что текущий шаг один.",
+            "Шаг с ошибкой не блокирует следующие — это решает форма, а не индикатор.",
+            "Пять шагов на телефоне уже тесно: ниже 30rem подсказки прячутся, остаются заголовки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Название ленты",
+            "type": "text",
+            "default": "Настройка магазина",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Steps with the full set of states: done, error, skipped, current and upcoming. Each has its own glyph and its own word, not just a colour.",
+            "ai": {
+              "summary": "Steps with done, error, skipped and current states: a glyph, a shape and a word rather than colour alone. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-stepper-004-* palette — do not swap it for your theme tokens",
+                "the state word under the title: colour and glyph are indistinguishable to colour-blind readers",
+                "the dashed ring on a skipped step: shape backs up colour where colour fails",
+                "aria-current=\"step\" on the current step: without it the order is lost when announced",
+                "aria-hidden on the ✓, ! and ↷ glyphs: on their own they sound like stray symbols",
+                "the component's own light surface: dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the steps and their states through steps",
+                "the list's accessible name through label",
+                "the main colour through accent",
+                "the state wording by editing the MARKS and WORDS tables"
+              ],
+              "notes": [
+                "State is explicit: the component neither derives it from an index nor checks that only one step is current.",
+                "An errored step does not block the following ones — that is the form's decision, not the indicator's.",
+                "Five steps are already tight on a phone: below 30rem the hints hide and only titles remain.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Stepper004\n  label=\"Store setup\"\n  accent=\"#4f46e5\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "List name",
+                "default": "Store setup"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stepper-005",
+      "type": "registry:component",
+      "title": "Connector Progress",
+      "description": "Шаги, где прогресс живёт внутри соединителя: линия перед текущим шагом залита не целиком, а на долю готовности, и та же доля напечатана числом.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stepper-005/stepper-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stepper-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-005-*. Серверный: хуков нет. Дорожка и заливка соединителя — два псевдоэлемента одного пункта; ширина заливки считается как calc(100% * var(--vibeui-stepper-005-fill)), где переменная приходит инлайново безразмерным числом: умножать проценты на проценты CSS не умеет. Пройденные шаги получают заливку 1, текущий — долю готовности, будущие 0. Процент продублирован текстом под кружком: полоска для скринридера не существует. Текущий шаг помечен aria-current=\"step\", пройденные — галочкой и словом «Готово».",
+      "meta": {
+        "tags": ["stepper", "progress", "connector", "loading"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Stepper005",
+          "usage": "<Stepper005\n  current={2}\n  progress={45}\n/>",
+          "summary": "Шаги с частично залитым соединителем: доля готовности видна и полоской, и числом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-stepper-005-* и не подменять её токенами вашей темы",
+            "безразмерное значение доли: с процентом внутри calc(100% * …) ширина не посчитается",
+            "напечатанный процент рядом с полоской: заливка сама по себе не озвучивается",
+            "aria-current=\"step\" на текущем шаге: без него непонятно, к чему относится процент",
+            "правило prefers-reduced-motion: у заливки есть переход по ширине, и его нужно уметь выключить",
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "названия шагов через steps",
+            "номер активного шага через current",
+            "долю готовности через progress",
+            "доступное имя ленты через label"
+          ],
+          "notes": [
+            "progress зажимается в 0–100: значение вне диапазона не сломает вёрстку, но и не отобразится как есть.",
+            "Доля относится к переходу в текущий шаг, а не к работе внутри него — это разные величины.",
+            "У первого шага соединителя нет, поэтому прогресс на нём показать нечем: начинайте с current={1}.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "progress",
+            "label": "Готовность, %",
+            "type": "number",
+            "default": 45,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "current",
+            "label": "Текущий шаг",
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 3
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Steps where the progress lives inside the connector: the line before the current step is filled only part of the way, and the same fraction is printed as a number.",
+            "ai": {
+              "summary": "Steps with a partly filled connector: readiness shows as both a bar and a number. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-stepper-005-* palette — do not swap it for your theme tokens",
+                "the unitless fraction: a percentage inside calc(100% * …) does not resolve to a width",
+                "the printed percentage beside the bar: a fill is not announced on its own",
+                "aria-current=\"step\" on the current step: without it the percentage has nothing to attach to",
+                "the prefers-reduced-motion rule: the fill animates its width and that must be switchable",
+                "the component's own light surface: dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the step names through steps",
+                "the active step number through current",
+                "the readiness fraction through progress",
+                "the list's accessible name through label"
+              ],
+              "notes": [
+                "progress is clamped to 0–100: an out-of-range value will not break the layout but will not render literally.",
+                "The fraction describes the transition into the current step, not the work inside it — different quantities.",
+                "The first step has no connector, so progress cannot show there: start from current={1}.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Stepper005\n  current={2}\n  progress={45}\n/>"
+            },
+            "controls": {
+              "progress": {
+                "label": "Readiness, %"
+              },
+              "current": {
+                "label": "Current step"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stepper-006",
+      "type": "registry:component",
+      "title": "Mobile Counter",
+      "description": "Компактный индикатор для телефона: счётчик «шаг 2 из 5», название текущего шага, подсказка про следующий и полоски-сегменты вместо ленты подписей.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stepper-006/stepper-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stepper-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-006-*. Серверный: хуков нет. На ширине телефона пять подписей не помещаются, поэтому вместо ленты выводится счётчик и одно название — крупно. Сегменты остаются ol: каждый пункт несёт своё состояние и визуально скрытую фразу, поэтому индикатор озвучивается как список шагов, а не как декоративная полоса. Текущий сегмент помечен aria-current=\"step\" и растянут flex-grow, поэтому позиция читается и без чтения счётчика. Номер шага зажимается в границы массива: current вне диапазона не даст пустого заголовка.",
+      "meta": {
+        "tags": ["stepper", "mobile", "compact", "progress"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Stepper006",
+          "usage": "<Stepper006\n  current={1}\n  nextPrefix=\"Далее\"\n/>",
+          "summary": "Компактный счётчик шагов для телефона: «шаг 2 из 5», текущий шаг крупно и полоски-сегменты. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-stepper-006-* и не подменять её токенами вашей темы",
+            "сегменты как ol со скрытыми подписями: полоса из div для скринридера пустая",
+            "aria-current=\"step\" на текущем сегменте: счётчик текстом и разметка обязаны совпадать",
+            "счётчик «шаг N из M» словами: на телефоне это единственная навигация по процессу",
+            "зажим current в границы массива: иначе заголовок текущего шага окажется пустым",
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "названия шагов через steps",
+            "номер активного шага через current",
+            "приставку к следующему шагу через nextPrefix",
+            "доступное имя блока через label"
+          ],
+          "notes": [
+            "Названия шагов должны быть короткими: длинное уедет в две строки и собьёт высоту карточки.",
+            "На последнем шаге строка «Далее» не рисуется — подсказывать нечего.",
+            "Сегментов больше семи-восьми не имеет смысла: полоски станут неразличимы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "current",
+            "label": "Текущий шаг",
+            "type": "number",
+            "default": 1,
+            "min": 0,
+            "max": 4
+          },
+          {
+            "prop": "nextPrefix",
+            "label": "Приставка «далее»",
+            "type": "text",
+            "default": "Далее",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A compact indicator for phones: a \"step 2 of 5\" counter, the current step's name, a hint about the next one, and segment bars instead of a ribbon of labels.",
+            "ai": {
+              "summary": "A compact step counter for phones: \"step 2 of 5\", the current step in large type and segment bars. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-stepper-006-* palette — do not swap it for your theme tokens",
+                "the segments as an ol with hidden labels: a bar made of divs is empty to a screen reader",
+                "aria-current=\"step\" on the current segment: the text counter and the markup must agree",
+                "the \"step N of M\" counter in words: on a phone it is the only navigation through the process",
+                "clamping current to the array bounds: otherwise the current step title comes out empty",
+                "the component's own light surface: dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the step names through steps",
+                "the active step number through current",
+                "the next-step prefix through nextPrefix",
+                "the block's accessible name through label"
+              ],
+              "notes": [
+                "Step names must be short: a long one wraps to two lines and breaks the card height.",
+                "On the last step the \"next\" line is not drawn — there is nothing to hint at.",
+                "More than seven or eight segments is pointless: the bars stop being distinguishable.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Stepper006\n  current={1}\n  nextPrefix=\"Next\"\n/>"
+            },
+            "controls": {
+              "current": {
+                "label": "Current step"
+              },
+              "nextPrefix": {
+                "label": "Next prefix",
+                "default": "Next"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stepper-007",
+      "type": "registry:component",
+      "title": "Checkout Steps",
+      "description": "Шаги оформления заказа, к которым можно вернуться: пройденный шаг показывает выбранное значение и ссылку возврата, будущий остаётся текстом, а не отключённой кнопкой.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stepper-007/stepper-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stepper-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-007-*. Серверный: хуков нет, возврат — обычные ссылки. Пройденный шаг печатает выбранное значение, поэтому список работает и как сводка заказа. У ссылки возврата доступное имя вида «Изменить: доставка»: в списке из четырёх ссылок одинаковое слово «Изменить» бесполезно. Будущие шаги намеренно не притворяются отключёнными кнопками — это текст с подписью «Впереди», который не ловит фокус и не обещает нажатия. Пункт — grid из трёх колонок, значок и правый блок закреплены за своими колонками, поэтому строка не разъезжается без значения.",
+      "meta": {
+        "tags": ["stepper", "checkout", "navigation", "links"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Stepper007",
+          "usage": "<Stepper007\n  current={2}\n  editLabel=\"Изменить\"\n/>",
+          "summary": "Шаги заказа со сводкой выбранного и ссылкой возврата к пройденному шагу. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-stepper-007-* и не подменять её токенами вашей темы",
+            "доступное имя ссылки с названием шага: четыре ссылки «Изменить» подряд неразличимы в списке ссылок",
+            "aria-current=\"step\" на текущем шаге: он единственный, где сейчас идёт ввод",
+            "будущие шаги обычным текстом, а не disabled-кнопками: отключённая кнопка обещает действие, которого нет",
+            "видимый фокус у ссылки возврата: возврат обязан быть достижим с клавиатуры",
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "шаги, выбранные значения и адреса через steps",
+            "номер активного шага через current",
+            "подпись ссылки возврата через editLabel",
+            "доступное имя списка через label"
+          ],
+          "notes": [
+            "Ссылка возврата рисуется только у пройденного шага, у которого задан href: без адреса возвращаться некуда.",
+            "Значение показывается тоже только у пройденных: у текущего шага его ещё не выбрали.",
+            "Компонент не запрещает вернуться назад после оплаты — это правило бизнес-логики, а не индикатора.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "current",
+            "label": "Текущий шаг",
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 3
+          },
+          {
+            "prop": "editLabel",
+            "label": "Подпись возврата",
+            "type": "text",
+            "default": "Изменить",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Checkout steps you can go back to: a finished step shows the chosen value and a return link, while an upcoming one stays plain text instead of a disabled button.",
+            "ai": {
+              "summary": "Checkout steps with a summary of the choices and a return link to a finished step. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-stepper-007-* palette — do not swap it for your theme tokens",
+                "the link's accessible name including the step title: four \"Edit\" links in a row are indistinguishable in a links list",
+                "aria-current=\"step\" on the current step: it is the only one being filled in right now",
+                "upcoming steps as plain text rather than disabled buttons: a disabled button promises an action that does not exist",
+                "the visible focus on the return link: going back must be reachable from the keyboard",
+                "the component's own light surface: dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the steps, chosen values and targets through steps",
+                "the active step number through current",
+                "the return link caption through editLabel",
+                "the list's accessible name through label"
+              ],
+              "notes": [
+                "The return link is drawn only for a finished step that has an href: without a target there is nowhere to go.",
+                "Values are shown for finished steps only: the current one has nothing chosen yet.",
+                "The component does not forbid going back after payment — that is business logic, not an indicator's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Stepper007\n  current={2}\n  editLabel=\"Edit\"\n/>"
+            },
+            "controls": {
+              "current": {
+                "label": "Current step"
+              },
+              "editLabel": {
+                "label": "Return caption",
+                "default": "Edit"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stepper-008",
+      "type": "registry:component",
+      "title": "Optional Steps",
+      "description": "Шаги, среди которых есть необязательные: такие помечены словом и пунктирным контуром, а счётчик сверху считает только обязательные, чтобы прогресс не врал.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stepper-008/stepper-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stepper-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-008-*. Серверный: счёт обязательных шагов идёт при рендере. Необязательность помечена трижды: словом в метке, пунктирной рамкой пункта и пунктирным кружком — цвет здесь не участвует вовсе. Счётчик сверху намеренно считает только обязательные шаги: «2 из 6» пугает, когда четыре шага можно пропустить. Пункты лежат в ol с переносом, поэтому длинный список не уезжает в прокрутку, а перестраивается в несколько рядов. Текущий шаг помечен aria-current=\"step\", состояния продублированы скрытой фразой.",
+      "meta": {
+        "tags": ["stepper", "optional", "onboarding", "progress"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Stepper008",
+          "usage": "<Stepper008\n  current={2}\n  optionalLabel=\"Необязательно\"\n/>",
+          "summary": "Шаги с необязательными этапами: метка словом, пунктир и счётчик только по обязательным. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-stepper-008-* и не подменять её токенами вашей темы",
+            "метку «необязательно» словом: пунктир без подписи читается как ошибка вёрстки",
+            "счёт только обязательных шагов: иначе прогресс занижен и человек бросает настройку",
+            "aria-current=\"step\" на текущем шаге: список с переносом иначе теряет точку внимания",
+            "перенос пунктов вместо горизонтальной прокрутки: шесть шагов в ленту не помещаются",
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "шаги и признак необязательности через steps",
+            "номер активного шага через current",
+            "текст метки через optionalLabel",
+            "доступное имя списка через label"
+          ],
+          "notes": [
+            "Пройденность считается по номеру: пропущенный необязательный шаг выглядит пройденным, отдельного состояния нет.",
+            "Если необязательных шагов больше половины, счётчик перестаёт помогать — стоит разделить процесс на два.",
+            "Пункты не кликабельны: переход к шагу — задача формы, а не индикатора.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "current",
+            "label": "Текущий шаг",
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 5
+          },
+          {
+            "prop": "optionalLabel",
+            "label": "Метка «необязательно»",
+            "type": "text",
+            "default": "Необязательно",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Steps with optional stages among them: those are marked with a word and a dashed outline, while the counter on top counts only the required ones so the progress does not lie.",
+            "ai": {
+              "summary": "Steps with optional stages: a word label, a dashed outline and a counter over required steps only. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-stepper-008-* palette — do not swap it for your theme tokens",
+                "the \"optional\" word label: a dashed outline without a caption reads as a layout bug",
+                "counting required steps only: otherwise progress looks understated and people abandon setup",
+                "aria-current=\"step\" on the current step: a wrapping list otherwise loses its focal point",
+                "wrapping instead of horizontal scrolling: six steps do not fit one ribbon",
+                "the component's own light surface: dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the steps and their optional flag through steps",
+                "the active step number through current",
+                "the badge text through optionalLabel",
+                "the list's accessible name through label"
+              ],
+              "notes": [
+                "Completion is derived from the index: a skipped optional step looks done, there is no separate state.",
+                "If more than half the steps are optional the counter stops helping — split the process in two.",
+                "The items are not clickable: navigating to a step is the form's job, not the indicator's.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Stepper008\n  current={2}\n  optionalLabel=\"Optional\"\n/>"
+            },
+            "controls": {
+              "current": {
+                "label": "Current step"
+              },
+              "optionalLabel": {
+                "label": "Optional badge",
+                "default": "Optional"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "stepper-009",
+      "type": "registry:component",
+      "title": "Setup Steps",
+      "description": "Инструкция по установке шагами: команда показана только внутри того шага, который выполняется сейчас, остальные свёрнуты до заголовка и состояния.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stepper-009/stepper-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stepper-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-009-*. Серверный: хуков нет, раскрытие определяется номером шага, а не кликом. Код лежит в pre + code с tabIndex={0}: без фокуса длинную команду нельзя пролистать с клавиатуры, а горизонтальная прокрутка остаётся единственным способом её увидеть целиком. Тёмный блок кода несёт собственные переменные фона и моноширинного шрифта, поэтому не зависит от темы проекта. Текущий шаг помечен aria-current=\"step\", состояния подписаны словами «Готово / Сейчас / Впереди», а линия слева окрашена только на пройденном участке.",
+      "meta": {
+        "tags": ["stepper", "install", "code", "docs"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Stepper009",
+          "usage": "<Stepper009\n  current={1}\n  codeCaption=\"Выполните в терминале\"\n/>",
+          "summary": "Шаги установки: команда раскрыта только у текущего шага, блок кода прокручивается с клавиатуры. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-stepper-009-* и не подменять её токенами вашей темы",
+            "tabIndex={0} на блоке кода: прокручиваемая область без фокуса недоступна с клавиатуры",
+            "видимый фокус у pre: иначе непонятно, что именно сейчас прокручивается",
+            "pre + code вместо div: команду копируют, и переносы обязаны сохраниться дословно",
+            "aria-current=\"step\" и подпись состояния словом: раскрытый блок сам по себе не сообщает, где вы",
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "шаги, описания и команды через steps",
+            "номер активного шага через current",
+            "подпись над блоком кода через codeCaption",
+            "доступное имя списка через label"
+          ],
+          "notes": [
+            "Раскрыт ровно один шаг — текущий: это осознанный отказ от аккордеона, чтобы не терять место в инструкции.",
+            "Кнопки «скопировать» нет: она потребовала бы клиентского JS и превратила бы компонент в клиентский.",
+            "Подсветки синтаксиса нет — команда остаётся простым текстом и не тянет зависимость.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "current",
+            "label": "Текущий шаг",
+            "type": "number",
+            "default": 1,
+            "min": 0,
+            "max": 2
+          },
+          {
+            "prop": "codeCaption",
+            "label": "Подпись над кодом",
+            "type": "text",
+            "default": "Выполните в терминале",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An install guide as steps: the command is shown only inside the step being performed right now, while the others collapse to a title and a state.",
+            "ai": {
+              "summary": "Install steps: the command is expanded only for the current step and the code block scrolls from the keyboard. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-stepper-009-* palette — do not swap it for your theme tokens",
+                "tabIndex={0} on the code block: a scrollable area without focus is unreachable from the keyboard",
+                "the visible focus on pre: otherwise there is no way to tell what is being scrolled",
+                "pre + code instead of a div: the command gets copied and its line breaks must survive verbatim",
+                "aria-current=\"step\" and the state word: an expanded block alone does not say where you are",
+                "the component's own light surface: dark text disappears on the dark catalog card"
+              ],
+              "adapt": [
+                "the steps, descriptions and commands through steps",
+                "the active step number through current",
+                "the caption above the code block through codeCaption",
+                "the list's accessible name through label"
+              ],
+              "notes": [
+                "Exactly one step is expanded — the current one: a deliberate refusal of an accordion so the place is never lost.",
+                "There is no copy button: it would need client JS and turn the component into a client one.",
+                "There is no syntax highlighting — the command stays plain text and pulls in no dependency.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Stepper009\n  current={1}\n  codeCaption=\"Run in your terminal\"\n/>"
+            },
+            "controls": {
+              "current": {
+                "label": "Current step"
+              },
+              "codeCaption": {
+                "label": "Code caption",
+                "default": "Run in your terminal"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

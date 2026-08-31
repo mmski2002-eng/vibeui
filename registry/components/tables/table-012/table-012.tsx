@@ -1,0 +1,208 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Table012Line = {
+  title: string
+  note?: string
+  quantity: number
+  price: number
+}
+
+export type Table012Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children"
+> & {
+  lines?: Table012Line[]
+  /** Ставка налога в процентах: считается поверх подытога. */
+  taxRate?: number
+  currency?: string
+  caption?: string
+  accent?: string
+}
+
+// Идея компонента: смета, где расчёт виден целиком — подытог, скидка, налог
+// и итог лежат в tfoot отдельными строками, а не сворачиваются в одно число.
+// Подписи расчёта — заголовки строк (th scope="row"), поэтому «1 200 ₽»
+// всегда читается вместе со словом, к которому относится.
+const STYLES = `
+:where([data-vibeui-block="table-012"]){
+--vibeui-table-012-bg:oklch(1 0 0);
+--vibeui-table-012-fg:oklch(0.24 0.014 265);
+--vibeui-table-012-muted:oklch(0.56 0.014 265);
+--vibeui-table-012-border:oklch(0.92 0.006 265);
+--vibeui-table-012-head:oklch(0.975 0.003 265);
+--vibeui-table-012-accent:oklch(0.55 0.2 262);
+--vibeui-table-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="table-012"]{
+width:100%;box-sizing:border-box;
+font-family:var(--vibeui-table-012-font);color:var(--vibeui-table-012-fg);
+}
+[data-vibeui-block="table-012"] [data-part="shell"]{
+background:var(--vibeui-table-012-bg);
+border:1px solid var(--vibeui-table-012-border);border-radius:1rem;overflow:hidden;
+}
+[data-vibeui-block="table-012"] [data-part="scroll"]{overflow-x:auto}
+[data-vibeui-block="table-012"] [data-part="scroll"]:focus-visible{
+outline:2px solid var(--vibeui-table-012-accent);outline-offset:-2px;
+}
+[data-vibeui-block="table-012"] table{width:100%;border-collapse:collapse;font-size:0.8125rem;min-width:24rem}
+[data-vibeui-block="table-012"] caption{
+padding:0.875rem 1rem 0.5rem;text-align:left;font-size:0.9375rem;font-weight:650;
+}
+[data-vibeui-block="table-012"] th,
+[data-vibeui-block="table-012"] td{padding:0.5rem 0.875rem;text-align:left}
+[data-vibeui-block="table-012"] thead th{
+background:var(--vibeui-table-012-head);font-weight:600;white-space:nowrap;
+border-bottom:1px solid var(--vibeui-table-012-border);
+}
+[data-vibeui-block="table-012"] tbody tr + tr th,
+[data-vibeui-block="table-012"] tbody tr + tr td{border-top:1px solid var(--vibeui-table-012-border)}
+[data-vibeui-block="table-012"] [data-align="end"]{
+text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+[data-vibeui-block="table-012"] [data-part="note"]{
+display:block;font-size:0.75rem;font-weight:400;color:var(--vibeui-table-012-muted);
+}
+[data-vibeui-block="table-012"] tbody th{font-weight:600}
+/* Расчёт отбит от позиций: без этой линии итог читается как ещё одна позиция. */
+[data-vibeui-block="table-012"] tfoot th,
+[data-vibeui-block="table-012"] tfoot td{
+padding:0.375rem 0.875rem;color:var(--vibeui-table-012-muted);font-weight:500;
+}
+[data-vibeui-block="table-012"] tfoot tr:first-child th,
+[data-vibeui-block="table-012"] tfoot tr:first-child td{
+padding-top:0.75rem;border-top:1px solid var(--vibeui-table-012-border);
+}
+[data-vibeui-block="table-012"] tfoot [data-row="total"] th,
+[data-vibeui-block="table-012"] tfoot [data-row="total"] td{
+padding-top:0.5rem;padding-bottom:0.875rem;
+color:var(--vibeui-table-012-fg);font-size:1rem;font-weight:700;
+}
+[data-vibeui-block="table-012"] tfoot [data-row="total"] td{color:var(--vibeui-table-012-accent)}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="table-012"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_LINES: Table012Line[] = [
+  {
+    title: "Дизайн лендинга",
+    note: "5 экранов, 2 правки",
+    quantity: 1,
+    price: 84000,
+  },
+  { title: "Вёрстка", note: "адаптив до 360 px", quantity: 1, price: 46000 },
+  { title: "Иконки", note: "штучно", quantity: 12, price: 900 },
+  { title: "Поддержка", note: "часов в месяц", quantity: 8, price: 3200 },
+]
+
+/** Разряды разделяем неразрывным пробелом: сумма не должна рваться переносом. */
+function money(value: number, currency: string) {
+  const fixed = Math.round(value * 100) / 100
+  const [whole, fraction = "00"] = fixed.toFixed(2).split(".")
+  const grouped = whole.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+
+  return `${grouped},${fraction} ${currency}`
+}
+
+/**
+ * Смета с раскрытым расчётом: подытог, скидка, налог и итог в tfoot.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Table012({
+  lines = DEFAULT_LINES,
+  taxRate = 20,
+  currency = "₽",
+  caption = "Смета на запуск сайта",
+  accent,
+  className,
+  style,
+  ...props
+}: Table012Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-table-012-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  const subtotal = lines.reduce(
+    (sum, line) => sum + line.quantity * line.price,
+    0,
+  )
+  const tax = (subtotal * taxRate) / 100
+
+  return (
+    <>
+      <style href="vibeui-table-012" precedence="medium">
+        {STYLES}
+      </style>
+      <div
+        {...props}
+        data-vibeui-block="table-012"
+        className={className}
+        style={palette}
+      >
+        <div data-part="shell">
+          <div
+            data-part="scroll"
+            role="region"
+            aria-label={caption}
+            tabIndex={0}
+          >
+            <table>
+              <caption>{caption}</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Работа</th>
+                  <th scope="col" data-align="end">
+                    Кол-во
+                  </th>
+                  <th scope="col" data-align="end">
+                    Цена
+                  </th>
+                  <th scope="col" data-align="end">
+                    Сумма
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {lines.map((line) => (
+                  <tr key={line.title}>
+                    <th scope="row">
+                      {line.title}
+                      {line.note ? (
+                        <span data-part="note">{line.note}</span>
+                      ) : null}
+                    </th>
+                    <td data-align="end">{line.quantity}</td>
+                    <td data-align="end">{money(line.price, currency)}</td>
+                    <td data-align="end">
+                      {money(line.quantity * line.price, currency)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th scope="row" colSpan={3} data-align="end">
+                    Подытог
+                  </th>
+                  <td data-align="end">{money(subtotal, currency)}</td>
+                </tr>
+                <tr>
+                  <th scope="row" colSpan={3} data-align="end">
+                    Налог {taxRate}%
+                  </th>
+                  <td data-align="end">{money(tax, currency)}</td>
+                </tr>
+                <tr data-row="total">
+                  <th scope="row" colSpan={3} data-align="end">
+                    К оплате
+                  </th>
+                  <td data-align="end">{money(subtotal + tax, currency)}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
