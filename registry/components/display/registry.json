@@ -2572,8 +2572,8 @@
     {
       "name": "frame-002",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Aspect Video Frame",
+      "description": "Рамка встраивания с фиксированным соотношением сторон: место под ролик занято до того, как iframe успел загрузиться, поэтому страница не прыгает.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -2584,40 +2584,88 @@
           "target": "@components/vibeui/frame-002.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Соотношение сторон объявлено переменной --vibeui-frame-002-ratio на самой рамке, а варианты 4:3, 1:1 и 21:9 переопределяют её через атрибут data-ratio — так пропорция задаётся одной строкой, а не набором классов. Вложенный iframe, img или video растягиваются правилом для :where(iframe,img,video) на inset:0: без него iframe держит собственные 150px высоты и пропорция рамки перестаёт что-либо значить. Заглушка с треугольником нарисована рамками через ::before, чтобы не тащить svg. Компонент несёт свою белую подложку — тёмный экран внутри белой карточки читается на любом фоне каталога.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["frame", "video", "embed", "aspect-ratio"],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Frame002",
-          "usage": "<Frame002 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Frame002 ratio=\"16:9\" title=\"Обзор каталога VibeUI\">\n  <iframe src=\"https://example.com/embed/abc\" title=\"Обзор\" />\n</Frame002>",
+          "summary": "Рамка встраивания видео: соотношение сторон резервирует место до загрузки, вложенный iframe растягивается на всю рамку. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-002-* и не подменять её токенами вашей темы",
+            "соотношение сторон на самой рамке: без него страница прыгает в момент загрузки ролика",
+            "растягивание вложенного iframe на inset:0 — иначе он остаётся высотой 150px и ломает пропорцию",
+            "overflow:hidden на рамке: у видеоплееров свои скруглённые углы, которые вылезают за границу",
+            "заглушку с треугольником: пустой тёмный прямоугольник читается как ошибка загрузки",
+            "собственную светлую подложку: тёмный экран без неё сливается с тёмным фоном каталога"
+          ],
+          "adapt": [
+            "пропорцию через ratio: 16:9 для роликов, 1:1 для сторис, 21:9 для трейлеров",
+            "подпись заглушки через title",
+            "текст под рамкой через caption",
+            "ширину рамки через max-width"
+          ],
+          "notes": [
+            "Соотношение сторон поддерживается всеми актуальными браузерами, но в очень старых движках рамка схлопнется в ноль высоты.",
+            "object-fit:cover обрезает картинку по краям: если кадр важен целиком, поменяйте на contain.",
+            "Внутрь допустим ровно один медиа-узел — двум абсолютным детям рамка не поможет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
-            "label": "Подпись",
+            "prop": "ratio",
+            "label": "Пропорция",
+            "type": "select",
+            "default": "16:9",
+            "options": ["16:9", "4:3", "1:1", "21:9"]
+          },
+          {
+            "prop": "title",
+            "label": "Подпись заглушки",
             "type": "text",
-            "default": "TODO",
+            "default": "Обзор каталога VibeUI",
             "maxLength": 40
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "An embed frame with a fixed aspect ratio: the space for the video is reserved before the iframe loads, so the page never jumps.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Frame002 />"
+              "summary": "A video embed frame: the aspect ratio reserves space before loading and the nested iframe stretches to fill the frame. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-002-* palette — do not swap it for your theme tokens",
+                "the aspect ratio on the frame itself: without it the page jumps the moment the video loads",
+                "stretching the nested iframe to inset:0 — otherwise it stays 150px tall and breaks the ratio",
+                "overflow:hidden on the frame: video players carry their own rounded corners that spill outside",
+                "the stub with the play triangle: an empty dark rectangle reads as a loading error",
+                "the component's own light surface: without it the dark screen merges into a dark catalog background"
+              ],
+              "adapt": [
+                "the proportion through ratio: 16:9 for clips, 1:1 for stories, 21:9 for trailers",
+                "the stub caption through title",
+                "the text under the frame through caption",
+                "the frame width through max-width"
+              ],
+              "notes": [
+                "aspect-ratio is supported by every current browser, but in very old engines the frame collapses to zero height.",
+                "object-fit:cover crops the edges: switch it to contain when the whole frame matters.",
+                "Exactly one media node belongs inside — the frame cannot help two absolutely positioned children.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame002 ratio=\"16:9\" title=\"VibeUI catalog tour\">\n  <iframe src=\"https://example.com/embed/abc\" title=\"Tour\" />\n</Frame002>"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "ratio": {
+                "label": "Aspect ratio",
+                "default": "16:9"
+              },
+              "title": {
+                "label": "Stub caption",
+                "default": "VibeUI catalog tour"
               }
             }
           }
@@ -2627,8 +2675,8 @@
     {
       "name": "frame-003",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Browser Window Frame",
+      "description": "Окно браузера с вкладкой и адресной строкой вокруг слота: читатель сразу понимает, что внутри страница, а не иллюстрация на сайте.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -2639,40 +2687,88 @@
           "target": "@components/vibeui/frame-003.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Хром окна собран из трёх полос: вкладка со скруглением только сверху, строка адреса и тело со слотом. Замок в адресной строке нарисован блоком и ::before, а не эмодзи: эмодзи меняет начертание от системы и сбивает вертикальный ритм строки. Адрес обрезается многоточием (overflow + text-overflow), иначе длинный URL растягивает окно и ломает раскладку на телефоне. Хром помечен aria-hidden: для скринридера это декорация, а не навигация. Собственная белая подложка обязательна — вся типографика окна тёмная.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["frame", "browser", "mockup", "screenshot"],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Frame003",
-          "usage": "<Frame003 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Frame003 url=\"vibeui.ru/components\" tab=\"VibeUI — каталог\">\n  <img src=\"/shots/catalog.png\" alt=\"Каталог компонентов\" />\n</Frame003>",
+          "summary": "Рамка окна браузера: вкладка, адресная строка с замком и слот под скриншот. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-003-* и не подменять её токенами вашей темы",
+            "aria-hidden на хроме окна: вкладка и стрелки — декорация, а не навигация по сайту",
+            "обрезку адреса многоточием — длинный URL иначе растягивает окно и ломает телефон",
+            "замок, нарисованный CSS: эмодзи меняет начертание от системы и сбивает строку",
+            "условность хрома: подробная подделка браузера начинает спорить с интерфейсом вокруг",
+            "собственную светлую подложку: вся типографика окна тёмная и на тёмном фоне пропадает"
+          ],
+          "adapt": [
+            "адрес в строке через url",
+            "заголовок вкладки через tab",
+            "содержимое окна — картинкой, iframe или любым блоком в слоте",
+            "ширину окна через max-width"
+          ],
+          "notes": [
+            "Вкладка одна: ряд из трёх вкладок требует своей раскладки и проверки на узкой ширине.",
+            "Картинку внутри отдавайте в пропорции окна — рамка её не обрезает и не масштабирует.",
+            "Стрелки навигации не кнопки: если нужен рабочий переход, ставьте настоящие button.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
-            "label": "Подпись",
+            "prop": "url",
+            "label": "Адрес",
             "type": "text",
-            "default": "TODO",
+            "default": "vibeui.ru/components/frame-003",
+            "maxLength": 48
+          },
+          {
+            "prop": "tab",
+            "label": "Вкладка",
+            "type": "text",
+            "default": "VibeUI — каталог компонентов",
             "maxLength": 40
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A browser window with a tab and an address bar around the slot, so the reader instantly reads the content as a page rather than a picture.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Frame003 />"
+              "summary": "A browser window frame: a tab, an address bar with a lock and a slot for the screenshot. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-003-* palette — do not swap it for your theme tokens",
+                "aria-hidden on the window chrome: the tab and arrows are decoration, not site navigation",
+                "the ellipsis truncation of the address — a long URL otherwise stretches the window and breaks phones",
+                "the lock drawn in CSS: an emoji changes shape per system and knocks the line out of rhythm",
+                "the deliberately loose chrome: a detailed browser fake starts arguing with the surrounding UI",
+                "the component's own light surface: all of the window typography is dark and vanishes on a dark background"
+              ],
+              "adapt": [
+                "the address in the bar through url",
+                "the tab caption through tab",
+                "the window content — an image, an iframe or any block in the slot",
+                "the window width through max-width"
+              ],
+              "notes": [
+                "There is a single tab: a row of three needs its own layout and a check on narrow widths.",
+                "Supply the inner image in the window's proportion — the frame neither crops nor scales it.",
+                "The navigation arrows are not buttons: use real buttons if a working action is required.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame003 url=\"vibeui.ru/components\" tab=\"VibeUI — catalog\">\n  <img src=\"/shots/catalog.png\" alt=\"Component catalog\" />\n</Frame003>"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "url": {
+                "label": "Address",
+                "default": "vibeui.ru/components/frame-003"
+              },
+              "tab": {
+                "label": "Tab",
+                "default": "VibeUI — component catalog"
               }
             }
           }
@@ -2682,8 +2778,8 @@
     {
       "name": "frame-004",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Phone Screenshot Frame",
+      "description": "Рамка телефона под скриншот: экран задан пропорцией 9 / 19.5, поэтому картинка любого размера ложится в него без обрезки и чёрных полей.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -2694,40 +2790,88 @@
           "target": "@components/vibeui/frame-004.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Экран держит aspect-ratio 9 / 19.5 вместо фиксированной высоты, а корпус ограничен width:min(100%, 15rem) — рамка ужимается на телефоне, но не растекается на десктопе. Островок вынесен из потока в absolute: в потоке он сдвигал бы статус-строку вниз и съедал верх скриншота. Сигнал и батарея нарисованы блоками и градиентом, без иконочного шрифта. Корпус светлый с тонкой обводкой сознательно: тёмный корпус на тёмной подложке каталога сливается, и от телефона остаётся плавающий белый прямоугольник. Статус-строка помечена aria-hidden — это декорация макета.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["frame", "phone", "mockup", "screenshot"],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Frame004",
-          "usage": "<Frame004 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Frame004 time=\"9:41\" carrier=\"VibeUI\">\n  <img src=\"/shots/app.png\" alt=\"Экран приложения\" />\n</Frame004>",
+          "summary": "Рамка телефона: пропорция экрана 9 / 19.5, статус-строка и островок, слот под скриншот. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-004-* и не подменять её токенами вашей темы",
+            "пропорцию экрана вместо фиксированной высоты: иначе скриншот обрезается или получает поля",
+            "островок в absolute — в потоке он сдвигает статус-строку и съедает верх скриншота",
+            "ограничение ширины корпуса: телефон шириной с экран перестаёт читаться как телефон",
+            "светлый корпус с тонкой обводкой: тёмный сливается с тёмным фоном каталога",
+            "aria-hidden на статус-строке: время и батарея — декорация макета, а не данные"
+          ],
+          "adapt": [
+            "время в статус-строке через time",
+            "надпись оператора через carrier",
+            "содержимое экрана — картинкой или блоком в слоте",
+            "ширину корпуса через переменную --vibeui-frame-004-width"
+          ],
+          "notes": [
+            "Скриншот масштабируется по object-fit:cover: узкая картинка потеряет края.",
+            "Пропорция 9 / 19.5 соответствует современным телефонам; для старых моделей поменяйте её на 9 / 16.",
+            "Островок и полоса домой — детали конкретной платформы, на Android-макете их убирают.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
-            "label": "Подпись",
+            "prop": "time",
+            "label": "Время",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "9:41",
+            "maxLength": 8
+          },
+          {
+            "prop": "carrier",
+            "label": "Оператор",
+            "type": "text",
+            "default": "VibeUI",
+            "maxLength": 12
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A phone frame for a screenshot: the screen is set by a 9 / 19.5 ratio, so an image of any size fits without cropping or black bars.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Frame004 />"
+              "summary": "A phone frame: a 9 / 19.5 screen ratio, a status bar with an island and a slot for the screenshot. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-004-* palette — do not swap it for your theme tokens",
+                "the screen ratio instead of a fixed height: otherwise the screenshot is cropped or gets bars",
+                "the island in absolute position — in flow it pushes the status bar down and eats the screenshot",
+                "the body width cap: a phone as wide as the viewport stops reading as a phone",
+                "the light body with a thin outline: a dark one merges into the dark catalog background",
+                "aria-hidden on the status bar: the clock and battery are mockup decoration, not data"
+              ],
+              "adapt": [
+                "the clock in the status bar through time",
+                "the carrier caption through carrier",
+                "the screen content — an image or a block in the slot",
+                "the body width through the --vibeui-frame-004-width variable"
+              ],
+              "notes": [
+                "The screenshot is scaled with object-fit:cover: a narrow image loses its edges.",
+                "The 9 / 19.5 ratio matches modern phones; switch it to 9 / 16 for older models.",
+                "The island and the home bar are platform details — drop them in an Android mockup.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame004 time=\"9:41\" carrier=\"VibeUI\">\n  <img src=\"/shots/app.png\" alt=\"App screen\" />\n</Frame004>"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "time": {
+                "label": "Clock",
+                "default": "9:41"
+              },
+              "carrier": {
+                "label": "Carrier",
+                "default": "VibeUI"
               }
             }
           }
@@ -2737,8 +2881,8 @@
     {
       "name": "frame-005",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Laptop Device Frame",
+      "description": "Рамка ноутбука с экраном 16 / 10 и трапецией основания на clip-path: корпус сужается книзу без единой картинки и масштабируется вместе с экраном.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -2749,40 +2893,88 @@
           "target": "@components/vibeui/frame-005.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Крышка — обычный блок со скруглением сверху, экран держит aspect-ratio 16 / 10 (стандарт ноутбучной матрицы; 16 / 9 читается как телевизор). Основание нарисовано clip-path:polygon и потому сужается книзу без второго прямоугольника и без изображений; оно чуть шире крышки, что и даёт силуэт устройства. Оттенок корпуса переключается атрибутом data-tone: silver и graphite меняют три переменные палитры разом. Экран белый, поэтому конструкция читается и на тёмной подложке каталога; вся типографика демо-содержимого лежит внутри белого экрана.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["frame", "laptop", "device", "mockup"],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Frame005",
-          "usage": "<Frame005 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Frame005 title=\"Панель проекта\" tone=\"silver\">\n  <img src=\"/shots/dashboard.png\" alt=\"Панель проекта\" />\n</Frame005>",
+          "summary": "Рамка ноутбука: крышка с экраном 16 / 10 и основание-трапеция на clip-path. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-005-* и не подменять её токенами вашей темы",
+            "пропорцию экрана 16 / 10: на 16 / 9 силуэт перестаёт читаться как ноутбук",
+            "трапецию на clip-path — прямоугольное основание превращает устройство в две плашки",
+            "основание чуть шире крышки: ровно по ширине оно теряет перспективу",
+            "белый экран внутри корпуса: он держит контраст на любой подложке каталога",
+            "overflow:hidden на экране — скриншот со своими углами иначе вылезает за скругление"
+          ],
+          "adapt": [
+            "заголовок демо-экрана через title",
+            "оттенок корпуса через tone: silver или graphite",
+            "содержимое экрана — картинкой или блоком в слоте",
+            "ширину устройства через max-width"
+          ],
+          "notes": [
+            "Основание шире крышки на 8%: при вложении в узкий контейнер с overflow:hidden его срежет.",
+            "Скриншот отдавайте в пропорции 16 / 10, иначе object-fit обрежет края.",
+            "Клавиатуры и тачпада нет намеренно: детали корпуса спорят с содержимым экрана.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
-            "label": "Подпись",
+            "prop": "title",
+            "label": "Заголовок экрана",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "Панель проекта",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Корпус",
+            "type": "select",
+            "default": "silver",
+            "options": ["silver", "graphite"]
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A laptop frame with a 16 / 10 screen and a clip-path trapezoid base: the body tapers downwards without a single image and scales with the screen.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Frame005 />"
+              "summary": "A laptop frame: a lid with a 16 / 10 screen and a clip-path trapezoid base. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-005-* palette — do not swap it for your theme tokens",
+                "the 16 / 10 screen ratio: at 16 / 9 the silhouette stops reading as a laptop",
+                "the clip-path trapezoid — a rectangular base turns the device into two slabs",
+                "the base being slightly wider than the lid: flush widths lose the perspective",
+                "the white screen inside the body: it keeps contrast on any catalog background",
+                "overflow:hidden on the screen — a screenshot with its own corners otherwise spills past the radius"
+              ],
+              "adapt": [
+                "the demo screen heading through title",
+                "the body finish through tone: silver or graphite",
+                "the screen content — an image or a block in the slot",
+                "the device width through max-width"
+              ],
+              "notes": [
+                "The base is 8% wider than the lid: a narrow parent with overflow:hidden will clip it.",
+                "Supply the screenshot in a 16 / 10 ratio, otherwise object-fit crops the edges.",
+                "There is deliberately no keyboard or trackpad: body details argue with the screen content.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame005 title=\"Project dashboard\" tone=\"silver\">\n  <img src=\"/shots/dashboard.png\" alt=\"Project dashboard\" />\n</Frame005>"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "title": {
+                "label": "Screen heading",
+                "default": "Project dashboard"
+              },
+              "tone": {
+                "label": "Body",
+                "default": "silver"
               }
             }
           }
@@ -2792,8 +2984,8 @@
     {
       "name": "frame-006",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Captioned Figure Frame",
+      "description": "Рамка с нумерованной подписью под содержимым: номер рисунка, текст и строка источника разведены по трём уровням, поэтому подпись читается, а не сливается.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -2804,40 +2996,89 @@
           "target": "@components/vibeui/frame-006.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Разметка — figure с figcaption внутри, а не картинка и абзац рядом: только так связь изображения и подписи видна скринридеру. Номер рисунка вынесен в отдельный элемент с white-space:nowrap, поэтому «Рис. 12» не разрывается переносом; текст подписи и строка источника отличаются кеглем и цветом, иначе всё склеивается в одно предложение. Медиа-слот держит пропорцию 16 / 10, чтобы подпись не уезжала при разной высоте картинок. Выравнивание переключается атрибутом data-align. Подложка светлая: вся типографика подписи тёмная.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["frame", "caption", "figure", "gallery"],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Frame006",
-          "usage": "<Frame006 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Frame006\n  index={2}\n  caption=\"Каталог компонентов: карточка раскрывает превью\"\n  source=\"Источник: скриншот VibeUI\"\n  align=\"start\"\n>\n  <img src=\"/shots/catalog.png\" alt=\"Каталог\" />\n</Frame006>",
+          "summary": "Рамка с подписью под содержимым: номер рисунка, текст и источник тремя строками внутри figcaption. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-006-* и не подменять её токенами вашей темы",
+            "связку figure + figcaption: картинка с абзацем рядом теряет связь для скринридера",
+            "номер рисунка отдельным элементом с nowrap — иначе «Рис. 12» рвётся переносом",
+            "разный кегль подписи и источника: слитые строки читаются как одно предложение",
+            "пропорцию медиа-слота: без неё подпись прыгает от высоты каждой картинки",
+            "собственную светлую подложку: подпись тёмная и на тёмном фоне каталога исчезает"
+          ],
+          "adapt": [
+            "текст подписи через caption",
+            "номер рисунка через index",
+            "строку происхождения через source",
+            "выравнивание подписи через align"
+          ],
+          "notes": [
+            "Нумерация ручная: сквозной счётчик по странице делается CSS-счётчиком на родителе.",
+            "Пустой source убирает третью строку — проверьте, что подпись без неё не выглядит обрезанной.",
+            "Подпись не альтернативный текст: alt у картинки всё равно обязателен.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
+            "prop": "caption",
             "label": "Подпись",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "Каталог компонентов: карточка раскрывает превью по наведению",
+            "maxLength": 80
+          },
+          {
+            "prop": "index",
+            "label": "Номер рисунка",
+            "type": "number",
+            "default": 2,
+            "min": 1,
+            "max": 99
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A frame with a numbered caption below the content: the figure number, the text and the source line sit on three levels, so the caption reads instead of blurring together.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Frame006 />"
+              "summary": "A captioned frame: figure number, caption text and source line as three rows inside figcaption. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-006-* palette — do not swap it for your theme tokens",
+                "the figure + figcaption pairing: an image with a neighbouring paragraph loses the link for screen readers",
+                "the figure number as a separate nowrap element — otherwise \"Fig. 12\" breaks across lines",
+                "the different sizes of caption and source: merged rows read as one sentence",
+                "the media slot ratio: without it the caption jumps with every image height",
+                "the component's own light surface: the caption is dark and disappears on a dark catalog background"
+              ],
+              "adapt": [
+                "the caption text through caption",
+                "the figure number through index",
+                "the provenance line through source",
+                "the caption alignment through align"
+              ],
+              "notes": [
+                "Numbering is manual: a page-wide sequence is done with a CSS counter on the parent.",
+                "An empty source removes the third row — check the caption still looks finished without it.",
+                "A caption is not alternative text: the image still needs its alt.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame006\n  index={2}\n  caption=\"The catalog card expands the preview on hover\"\n  source=\"Source: VibeUI screenshot\"\n  align=\"start\"\n>\n  <img src=\"/shots/catalog.png\" alt=\"Catalog\" />\n</Frame006>"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "caption": {
+                "label": "Caption",
+                "default": "The catalog card expands the preview on hover"
+              },
+              "index": {
+                "label": "Figure number",
+                "default": 2
               }
             }
           }
@@ -2847,8 +3088,8 @@
     {
       "name": "icontile-002",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Gradient Icon Tile",
+      "description": "Градиентная плитка под иконку, где вся пара цветов считается от одного угла оттенка: рассогласовать градиент случайным подбором нельзя.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -2859,40 +3100,86 @@
           "target": "@components/vibeui/icontile-002.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Оба края градиента выведены из переменной --vibeui-icontile-002-hue: второй берётся сдвигом на 32° по тому же кругу oklch, поэтому пара всегда согласована, а перекрасить плитку можно одним числом. Внутренняя светлая рамка сделана inset-тенью, а не border: border съедал бы размер плитки и сбивал сетку иконок. Размер задаётся data-size и одной переменной, от которой считаются радиус и кегль знака. Плитка декоративна: без label она получает aria-hidden, с label — role=img и доступное имя.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["icontile", "gradient", "icon", "hue"],
         "ai": {
           "export": "Icontile002",
-          "usage": "<Icontile002 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Icontile002 glyph=\"◆\" hue={262} size=\"md\" label=\"Проекты\" />",
+          "summary": "Градиентная плитка под иконку: оба края градиента считаются от hue, размер — от одной переменной. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-002-* и не подменять её токенами вашей темы",
+            "вывод второго края градиента из hue: разведённые вручную цвета рассогласуются в первом же ряду плиток",
+            "inset-тень вместо border — border меняет размер плитки и сбивает сетку иконок",
+            "кегль знака как долю размера: иначе на sm знак упирается в края, а на lg теряется",
+            "aria-hidden без label: декоративная плитка не должна объявляться скринридером",
+            "светлый знак поверх градиента: тёмный на насыщенном фоне теряет контраст"
+          ],
+          "adapt": [
+            "знак внутри плитки через glyph",
+            "цвет плитки через hue: одно число двигает весь градиент",
+            "размер через size: sm, md или lg",
+            "радиус через переменную --vibeui-icontile-002-radius"
+          ],
+          "notes": [
+            "Знак — символ, а не svg: для иконочного набора подставьте свой элемент внутрь.",
+            "oklch и calc в цветах требуют актуального браузера; в старых плитка останется без фона.",
+            "Слишком длинный glyph выйдет за края: плитка рассчитана на один-два символа.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
-            "label": "Подпись",
+            "prop": "glyph",
+            "label": "Знак",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "◆",
+            "maxLength": 2
+          },
+          {
+            "prop": "hue",
+            "label": "Оттенок",
+            "type": "number",
+            "default": 262,
+            "min": 0,
+            "max": 360
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A gradient icon tile whose whole colour pair is derived from a single hue angle: you cannot knock the gradient out of tune by picking colours by hand.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Icontile002 />"
+              "summary": "A gradient icon tile: both gradient stops are derived from hue and the size comes from one variable. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-002-* palette — do not swap it for your theme tokens",
+                "deriving the second gradient stop from hue: hand-picked colours fall out of tune in the first row of tiles",
+                "the inset shadow instead of a border — a border changes the tile size and breaks the icon grid",
+                "the glyph size as a fraction of the tile: otherwise it hits the edges at sm and gets lost at lg",
+                "aria-hidden without a label: a decorative tile must not be announced by a screen reader",
+                "the light glyph over the gradient: a dark one loses contrast on a saturated fill"
+              ],
+              "adapt": [
+                "the glyph inside the tile through glyph",
+                "the tile colour through hue: one number moves the whole gradient",
+                "the size through size: sm, md or lg",
+                "the radius through the --vibeui-icontile-002-radius variable"
+              ],
+              "notes": [
+                "The glyph is a character, not an svg: drop your own element inside for an icon set.",
+                "oklch and calc in colours need a current browser; older ones leave the tile without a fill.",
+                "An over-long glyph spills outside: the tile is sized for one or two characters.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Icontile002 glyph=\"◆\" hue={262} size=\"md\" label=\"Projects\" />"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "glyph": {
+                "label": "Glyph",
+                "default": "◆"
+              },
+              "hue": {
+                "label": "Hue",
+                "default": 262
               }
             }
           }
@@ -2902,8 +3189,8 @@
     {
       "name": "icontile-003",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Status Shape Tile",
+      "description": "Статусная плитка, где смысл несёт форма: круг, треугольник, восьмиугольник и ромб различимы при дальтонизме и в чёрно-белой печати.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -2914,40 +3201,85 @@
           "target": "@components/vibeui/icontile-003.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Форма статуса вырезана clip-path из одной квадратной плитки, поэтому размер и положение в строке общие для всех статусов, и список не пляшет по высоте. Цвет считается от переменной --vibeui-icontile-003-hue, которую переключает атрибут data-status: цвет усиливает форму, но не остаётся единственным носителем смысла — это требование доступности, а не украшение. Знак внутри плитки помечен aria-hidden, значение проговаривает текстовая подпись. Компонент несёт свою белую подложку в форме пилюли: подпись тёмная.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["icontile", "status", "shape", "accessibility"],
         "ai": {
           "export": "Icontile003",
-          "usage": "<Icontile003 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Icontile003 status=\"warning\" label=\"Требует внимания\" />",
+          "summary": "Статусная плитка: форма кодирует смысл, цвет только усиливает её, подпись рядом несёт значение текстом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-003-* и не подменять её токенами вашей темы",
+            "форму как носитель смысла: цвет один не работает при дальтонизме и в печати",
+            "clip-path из общего квадрата — иначе статусы получают разную высоту и строка пляшет",
+            "текстовую подпись рядом: значок без слов оставляет статус на угадывание",
+            "aria-hidden на знаке внутри плитки, чтобы «✓» не читалось вслух отдельным словом",
+            "собственную светлую подложку: подпись тёмная и на тёмном фоне каталога пропадает"
+          ],
+          "adapt": [
+            "значение через status: success, warning, danger, info или pending",
+            "текст подписи и её длину",
+            "оттенки статусов через переменную --vibeui-icontile-003-hue",
+            "размер плитки через переменную --vibeui-icontile-003-size"
+          ],
+          "notes": [
+            "Треугольник теряет часть площади под знак: кегль в нём уменьшен намеренно.",
+            "Пять статусов — предел различимых форм; шестая начнёт путаться с существующими.",
+            "clip-path режет и фон, и тень: внешнюю тень на такую плитку не повесить.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
+            "prop": "status",
+            "label": "Статус",
+            "type": "select",
+            "default": "success",
+            "options": ["success", "warning", "danger", "info", "pending"]
+          },
+          {
+            "prop": "label",
             "label": "Подпись",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "Проверка пройдена",
+            "maxLength": 30
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A status tile where the shape carries the meaning: circle, triangle, octagon and diamond stay distinguishable under colour blindness and in black-and-white print.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Icontile003 />"
+              "summary": "A status tile: the shape encodes the meaning, colour only reinforces it, and the caption states the value in words. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-003-* palette — do not swap it for your theme tokens",
+                "the shape as the carrier of meaning: colour alone fails under colour blindness and in print",
+                "the clip-path cut from a shared square — otherwise statuses get different heights and the row wobbles",
+                "the text caption beside it: a glyph without words leaves the status to guesswork",
+                "aria-hidden on the glyph inside the tile so \"✓\" is not read out as a separate word",
+                "the component's own light surface: the caption is dark and vanishes on a dark catalog background"
+              ],
+              "adapt": [
+                "the value through status: success, warning, danger, info or pending",
+                "the caption text and its length",
+                "the status hues through the --vibeui-icontile-003-hue variable",
+                "the tile size through the --vibeui-icontile-003-size variable"
+              ],
+              "notes": [
+                "The triangle loses part of its area for the glyph: its font size is deliberately smaller.",
+                "Five statuses is the limit of distinguishable shapes; a sixth starts to blur into the others.",
+                "clip-path cuts the fill and the shadow alike: an outer shadow cannot be attached to this tile.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Icontile003 status=\"warning\" label=\"Needs attention\" />"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "status": {
+                "label": "Status",
+                "default": "success"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Check passed"
               }
             }
           }
@@ -2957,8 +3289,8 @@
     {
       "name": "icontile-004",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Tile Size Scale",
+      "description": "Размерная шкала плитки одним экспонатом: три ступени считаются от общего шага, а радиус и кегль знака берутся долей размера.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -2969,40 +3301,85 @@
           "target": "@components/vibeui/icontile-004.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Ступени sm, md и lg объявлены как кратные переменной --vibeui-icontile-004-step, поэтому шкала правится одним числом, а не тремя. Радиус и кегль знака вычисляются от размера ступени в calc, из-за чего пропорции плитки на всех ступенях одинаковые — это и есть смысл шкалы. Форма переключается на корне через data-shape и действует сразу на весь ряд. Каждая ступень подписана именем и значением в пикселях, поэтому размер выбирают глазами и не изобретают четвёртый. Подложка светлая: подписи ступеней тёмные.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["icontile", "scale", "sizes", "design-system"],
         "ai": {
           "export": "Icontile004",
-          "usage": "<Icontile004 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Icontile004 glyph=\"◆\" shape=\"squircle\" />",
+          "summary": "Ряд плиток трёх размеров: ступени кратны общему шагу, пропорции у всех одинаковые. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-004-* и не подменять её токенами вашей темы",
+            "ступени как кратные общего шага: разрозненные числа разъезжаются при первой правке",
+            "радиус и кегль как доли размера — иначе маленькая плитка выглядит толще большой",
+            "подписи ступеней: шкала без имён превращается в три случайных квадрата",
+            "выравнивание ряда по нижнему краю, чтобы подписи стояли на одной линии",
+            "собственную светлую подложку: подписи ступеней тёмные и на тёмном фоне пропадают"
+          ],
+          "adapt": [
+            "знак внутри плиток через glyph",
+            "форму всего ряда через shape: square, circle или squircle",
+            "шаг шкалы через переменную --vibeui-icontile-004-step",
+            "оттенок плиток через переменную --vibeui-icontile-004-hue"
+          ],
+          "notes": [
+            "Ступеней ровно три: четвёртая почти всегда означает, что шкала не продумана.",
+            "Подписи в пикселях верны для корневого кегля 16px; при другом их надо пересчитать.",
+            "Ряд не переносится: на очень узкой ширине уменьшайте шаг, а не добавляйте перенос.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
-            "label": "Подпись",
+            "prop": "glyph",
+            "label": "Знак",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "◆",
+            "maxLength": 2
+          },
+          {
+            "prop": "shape",
+            "label": "Форма",
+            "type": "select",
+            "default": "square",
+            "options": ["square", "circle", "squircle"]
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A tile size scale as a single exhibit: three steps derived from a shared unit, with radius and glyph size taken as fractions of the size.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Icontile004 />"
+              "summary": "A row of tiles in three sizes: the steps are multiples of a shared unit and every step keeps the same proportions. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-004-* palette — do not swap it for your theme tokens",
+                "the steps as multiples of a shared unit: loose numbers drift apart at the first edit",
+                "radius and glyph size as fractions of the size — otherwise the small tile looks chunkier than the large one",
+                "the step captions: a scale without names is just three random squares",
+                "the bottom alignment of the row so the captions sit on one line",
+                "the component's own light surface: the step captions are dark and vanish on a dark background"
+              ],
+              "adapt": [
+                "the glyph inside the tiles through glyph",
+                "the shape of the whole row through shape: square, circle or squircle",
+                "the scale unit through the --vibeui-icontile-004-step variable",
+                "the tile hue through the --vibeui-icontile-004-hue variable"
+              ],
+              "notes": [
+                "There are exactly three steps: a fourth almost always means the scale was not thought through.",
+                "The pixel captions assume a 16px root size; recalculate them for anything else.",
+                "The row does not wrap: on very narrow widths shrink the unit rather than allowing a wrap.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Icontile004 glyph=\"◆\" shape=\"squircle\" />"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "glyph": {
+                "label": "Glyph",
+                "default": "◆"
+              },
+              "shape": {
+                "label": "Shape",
+                "default": "square"
               }
             }
           }
@@ -3012,8 +3389,8 @@
     {
       "name": "icontile-005",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Counter Badge Tile",
+      "description": "Плитка со счётчиком в углу: бейдж отделён от плитки кольцом цвета подложки, а число обрезано порогом «99+», чтобы угол не разъезжался.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3024,40 +3401,86 @@
           "target": "@components/vibeui/icontile-005.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Бейдж позиционирован absolute относительно плитки и вырезан из неё кольцом box-shadow цвета подложки — отступом такого разделения не добиться, бейдж отъезжает от угла. Порог задаётся пропом max: всё, что больше, показывается как «99+», иначе трёхзначное число растягивает бейдж. Нулевой счётчик прячет бейдж целиком: пустой кружок сообщает «непрочитанных нет» хуже, чем его отсутствие. У бейджа есть aria-label, поэтому «12» читается как «12 непрочитанных». Подложка светлая, подпись тёмная.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["icontile", "badge", "counter", "notification"],
         "ai": {
           "export": "Icontile005",
-          "usage": "<Icontile005 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Icontile005 glyph=\"✉\" count={12} label=\"Входящие\" max={99} />",
+          "summary": "Плитка со счётчиком: бейдж в углу с кольцом подложки, порогом «99+» и доступной подписью. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-005-* и не подменять её токенами вашей темы",
+            "кольцо бейджа цветом подложки: отступом бейдж отъезжает от угла и теряет связь с плиткой",
+            "порог «99+» — трёхзначное число растягивает бейдж и ломает угол плитки",
+            "скрытие бейджа при нуле: пустой кружок хуже отсутствия бейджа",
+            "aria-label на бейдже, чтобы «12» читалось как «12 непрочитанных», а не как число",
+            "собственную светлую подложку: подпись тёмная и на тёмном фоне каталога исчезает"
+          ],
+          "adapt": [
+            "число в бейдже через count",
+            "порог обрезки через max",
+            "знак плитки через glyph и текст подписи",
+            "цвет бейджа через переменную --vibeui-icontile-005-badge"
+          ],
+          "notes": [
+            "Кольцо бейджа обязано совпадать с реальным фоном: на цветной панели поменяйте --vibeui-icontile-005-surface.",
+            "Счётчик не живой: обновление числа — задача родителя, компонент состояния не держит.",
+            "Отрицательные значения не обрабатываются: приводите их к нулю на стороне данных.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
+            "prop": "count",
+            "label": "Счётчик",
+            "type": "number",
+            "default": 12,
+            "min": 0,
+            "max": 999
+          },
+          {
+            "prop": "label",
             "label": "Подпись",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "Входящие",
+            "maxLength": 20
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A tile with a corner counter: the badge is cut out of the tile by a ring in the surface colour, and the number is capped at \"99+\" so the corner never sprawls.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Icontile005 />"
+              "summary": "A counter tile: a corner badge with a surface-coloured ring, a \"99+\" cap and an accessible label. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-005-* palette — do not swap it for your theme tokens",
+                "the badge ring in the surface colour: with a plain gap the badge drifts off the corner",
+                "the \"99+\" cap — a three-digit number stretches the badge and breaks the tile corner",
+                "hiding the badge at zero: an empty circle is worse than no badge at all",
+                "the aria-label on the badge so \"12\" is read as \"12 unread\" rather than a bare number",
+                "the component's own light surface: the caption is dark and disappears on a dark catalog background"
+              ],
+              "adapt": [
+                "the number in the badge through count",
+                "the cap threshold through max",
+                "the tile glyph through glyph and the caption text",
+                "the badge colour through the --vibeui-icontile-005-badge variable"
+              ],
+              "notes": [
+                "The badge ring must match the real background: change --vibeui-icontile-005-surface on a coloured panel.",
+                "The counter is not live: updating the number is the parent's job, the component holds no state.",
+                "Negative values are not handled: clamp them to zero on the data side.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Icontile005 glyph=\"✉\" count={12} label=\"Inbox\" max={99} />"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "count": {
+                "label": "Counter",
+                "default": 12
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Inbox"
               }
             }
           }
@@ -3067,8 +3490,8 @@
     {
       "name": "icontile-006",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Pressed Tile Button",
+      "description": "Плитка-кнопка с честным нажатым состоянием: включённость объявлена через aria-pressed и показана утопленной тенью, а не одним цветом.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3079,40 +3502,85 @@
           "target": "@components/vibeui/icontile-006.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Клиентский компонент: держит состояние в useState, поэтому в файле есть «use client». Состояние объявлено атрибутом aria-pressed, а не классом — без него скринридер сообщит просто «кнопка» и не скажет, включено ли. Визуально нажатие показано двумя признаками сразу: заливка меняется и плитка утоплена inset-тенью со сдвигом на пиксель, поэтому включённость видна и в чёрно-белом режиме. Доступное имя берётся из label, знак помечен aria-hidden. Заливка в покое светлая, так что кнопка читается на тёмной подложке каталога.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["icontile", "toggle", "button", "pressed"],
         "ai": {
           "export": "Icontile006",
-          "usage": "<Icontile006 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Icontile006 glyph=\"★\" label=\"В избранное\" defaultPressed />",
+          "summary": "Плитка-переключатель: aria-pressed для состояния, утопленная тень для видимости нажатия. Ноль зависимостей, один файл, состояние в useState.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-006-* и не подменять её токенами вашей темы",
+            "aria-pressed вместо класса: без него скринридер не скажет, включено состояние или нет",
+            "два признака нажатия сразу — цвет и утопленную тень: цвет один не работает в чёрно-белом режиме",
+            "aria-label на кнопке: плитка со знаком без имени бесполезна для скринридера",
+            "видимую обводку фокуса — плитку часто ставят в ряд и переключают с клавиатуры",
+            "светлую заливку в покое: тёмная кнопка на тёмном фоне каталога пропадает"
+          ],
+          "adapt": [
+            "знак кнопки через glyph и её имя через label",
+            "начальное состояние через defaultPressed",
+            "оттенок нажатого состояния через переменную --vibeui-icontile-006-hue",
+            "размер через переменную --vibeui-icontile-006-size"
+          ],
+          "notes": [
+            "Состояние внутреннее: для управляемого варианта поднимите его в родителя и уберите useState.",
+            "Кнопка-переключатель не заменяет чекбокс в форме — она ничего не отправляет.",
+            "Сдвиг на пиксель при нажатии отключается в prefers-reduced-motion вместе с переходом.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
-            "label": "Подпись",
+            "prop": "label",
+            "label": "Имя кнопки",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "В избранное",
+            "maxLength": 24
+          },
+          {
+            "prop": "glyph",
+            "label": "Знак",
+            "type": "text",
+            "default": "★",
+            "maxLength": 2
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A tile button with an honest pressed state: the toggle is declared through aria-pressed and shown by a sunken shadow, not by colour alone.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Icontile006 />"
+              "summary": "A toggle tile: aria-pressed for the state and a sunken shadow so the press is visible. Zero dependencies, one file, state in useState.",
+              "preserve": [
+                "the local --vibeui-icontile-006-* palette — do not swap it for your theme tokens",
+                "aria-pressed instead of a class: without it a screen reader cannot say whether the state is on",
+                "both press cues at once — colour and the sunken shadow: colour alone fails in monochrome",
+                "the aria-label on the button: a glyph tile without a name is useless to a screen reader",
+                "the visible focus ring — these tiles usually sit in a row and get toggled from the keyboard",
+                "the light idle fill: a dark button disappears on a dark catalog background"
+              ],
+              "adapt": [
+                "the button glyph through glyph and its name through label",
+                "the initial state through defaultPressed",
+                "the pressed hue through the --vibeui-icontile-006-hue variable",
+                "the size through the --vibeui-icontile-006-size variable"
+              ],
+              "notes": [
+                "The state is internal: lift it into the parent and drop useState for a controlled variant.",
+                "A toggle button does not replace a form checkbox — it submits nothing.",
+                "The one-pixel press shift is disabled together with the transition under prefers-reduced-motion.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Icontile006 glyph=\"★\" label=\"Add to favourites\" defaultPressed />"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "label": {
+                "label": "Button name",
+                "default": "Add to favourites"
+              },
+              "glyph": {
+                "label": "Glyph",
+                "default": "★"
               }
             }
           }
@@ -3122,8 +3590,8 @@
     {
       "name": "iconstack-002",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Tech Stack Row",
+      "description": "Стопка технологий с подписью: перекрытые квадратные плитки читаются слева направо, а список названий под ними расшифровывает монограммы словами.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3134,40 +3602,86 @@
           "target": "@components/vibeui/iconstack-002.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Перекрытие сделано обратным флексом (row-reverse и отрицательный margin-right), поэтому левая плитка ложится поверх правой без z-index на каждом элементе. Плитки — скруглённые квадраты, а не круги: продуктовые логотипы почти всегда квадратные, круг их обрезает. Оттенок каждой плитки выводится из имени FNV-хешем, поэтому набор технологий раскрашивается стабильно и без ручного словаря. Величина перекрытия вынесена в проп overlap и подставляется переменной в пикселях. Стопка декоративна и помечена aria-hidden, смысл несёт строка названий.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["iconstack", "stack", "tech", "overlap"],
         "ai": {
           "export": "Iconstack002",
-          "usage": "<Iconstack002 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Iconstack002\n  items={[\"React\", \"Next.js\", \"TypeScript\"]}\n  caption=\"Стек проекта\"\n  overlap={10}\n/>",
+          "summary": "Стопка технологий: перекрытые плитки с монограммами и подпись со списком названий. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-iconstack-002-* и не подменять её токенами вашей темы",
+            "обратный флекс вместо z-index: порядок чтения слева направо задаётся раскладкой, а не слоями",
+            "квадратные плитки: круг обрезает продуктовые логотипы по углам",
+            "обводку плитки цветом подложки — без неё соседние плитки сливаются в пятно",
+            "строку названий: монограммы «RE» и «NE» без расшифровки не читаются",
+            "собственную светлую подложку: подпись стека тёмная и на тёмном фоне пропадает"
+          ],
+          "adapt": [
+            "подпись под стопкой через caption",
+            "величину перекрытия через overlap в пикселях",
+            "состав стопки через items",
+            "размер плиток через переменную --vibeui-iconstack-002-size"
+          ],
+          "notes": [
+            "Монограмма берёт две первые буквы: «Next.js» и «Nest» дадут одинаковое «NE».",
+            "Больше шести плиток превращают стопку в полосу — обрежьте список заранее.",
+            "Перекрытие больше половины размера прячет монограммы соседей.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
+            "prop": "caption",
             "label": "Подпись",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "Стек проекта",
+            "maxLength": 30
+          },
+          {
+            "prop": "overlap",
+            "label": "Перекрытие",
+            "type": "number",
+            "default": 10,
+            "min": 0,
+            "max": 20
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A tech stack row with a caption: overlapping square tiles read left to right, and the list of names underneath spells the monograms out in words.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Iconstack002 />"
+              "summary": "A tech stack row: overlapping monogram tiles plus a caption listing the names. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-iconstack-002-* palette — do not swap it for your theme tokens",
+                "the reversed flex instead of z-index: the left-to-right reading order comes from layout, not layers",
+                "the square tiles: a circle clips product logos at the corners",
+                "the tile ring in the surface colour — without it neighbouring tiles merge into a blob",
+                "the row of names: monograms like \"RE\" and \"NE\" are unreadable on their own",
+                "the component's own light surface: the stack caption is dark and vanishes on a dark background"
+              ],
+              "adapt": [
+                "the caption under the stack through caption",
+                "the overlap amount through overlap in pixels",
+                "the stack contents through items",
+                "the tile size through the --vibeui-iconstack-002-size variable"
+              ],
+              "notes": [
+                "The monogram takes the first two letters: \"Next.js\" and \"Nest\" both yield \"NE\".",
+                "More than six tiles turn the stack into a stripe — trim the list beforehand.",
+                "An overlap larger than half the tile hides the neighbours' monograms.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Iconstack002\n  items={[\"React\", \"Next.js\", \"TypeScript\"]}\n  caption=\"Project stack\"\n  overlap={10}\n/>"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "caption": {
+                "label": "Caption",
+                "default": "Project stack"
+              },
+              "overlap": {
+                "label": "Overlap",
+                "default": 10
               }
             }
           }
@@ -3177,8 +3691,8 @@
     {
       "name": "iconstack-003",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Expandable Stack Count",
+      "description": "Стопка со счётчиком «+N», который не тупик, а вход в полный список: раскрытие сделано на details, поэтому имена доступны без строчки клиентского кода.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3189,40 +3703,86 @@
           "target": "@components/vibeui/iconstack-003.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет: раскрытие держит нативный details, состояние живёт в DOM. Стопка и счётчик лежат внутри summary, у которого убран стандартный маркер (list-style:none и ::-webkit-details-marker) и добавлена видимая обводка фокуса — summary фокусируется по табу, и без обводки цель нажатия невидима. Счётчик поставлен слева от стопки: справа он читается как ещё один участник. Перекрытие собрано обратным флексом, оттенок кружка выводится из имени FNV-хешем. Подложка светлая, потому что раскрытый список имён набран тёмным.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["iconstack", "details", "overflow", "avatars"],
         "ai": {
           "export": "Iconstack003",
-          "usage": "<Iconstack003 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Iconstack003\n  names={[\"Анна Реброва\", \"Илья Мохов\", \"Ким Сон\", \"Пётр Гай\", \"Мария Лоза\"]}\n  max={4}\n  label=\"участников\"\n/>",
+          "summary": "Стопка со счётчиком «+N», раскрывающая полный список участников на нативном details. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-iconstack-003-* и не подменять её токенами вашей темы",
+            "details вместо состояния в JS: раскрытие работает до гидрации и без клиентского кода",
+            "видимую обводку фокуса на summary — иначе цель нажатия невидима с клавиатуры",
+            "счётчик слева от стопки: справа он читается как ещё один участник",
+            "снятый маркер details, который иначе рисуется треугольником поверх раскладки",
+            "собственную светлую подложку: список имён тёмный и на тёмном фоне каталога исчезает"
+          ],
+          "adapt": [
+            "число видимых кружков через max",
+            "подпись группы и состав через names",
+            "размер кружков через переменную --vibeui-iconstack-003-size",
+            "величину перекрытия через переменную --vibeui-iconstack-003-overlap"
+          ],
+          "notes": [
+            "details не анимируется по высоте без allow-discrete: резкое раскрытие здесь намеренное.",
+            "Внутри summary нельзя ставить интерактивные элементы — вложенная кнопка перехватит нажатие.",
+            "Список имён не виртуализован: сотня участников раскроется одним длинным столбцом.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
-            "label": "Подпись",
+            "prop": "max",
+            "label": "Видимых кружков",
+            "type": "number",
+            "default": 4,
+            "min": 1,
+            "max": 8
+          },
+          {
+            "prop": "label",
+            "label": "Подпись группы",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "участников",
+            "maxLength": 20
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A stack whose \"+N\" counter is an entrance rather than a dead end: the disclosure runs on details, so the names are available without a line of client code.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Iconstack003 />"
+              "summary": "A stack with a \"+N\" counter that expands into the full member list using native details. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-iconstack-003-* palette — do not swap it for your theme tokens",
+                "details instead of JS state: the disclosure works before hydration and without client code",
+                "the visible focus ring on summary — otherwise the tap target is invisible from the keyboard",
+                "the counter to the left of the stack: on the right it reads as one more member",
+                "the removed details marker, which otherwise draws a triangle over the layout",
+                "the component's own light surface: the name list is dark and disappears on a dark catalog background"
+              ],
+              "adapt": [
+                "the number of visible circles through max",
+                "the group caption and the roster through names",
+                "the circle size through the --vibeui-iconstack-003-size variable",
+                "the overlap through the --vibeui-iconstack-003-overlap variable"
+              ],
+              "notes": [
+                "details cannot animate its height without allow-discrete: the abrupt opening here is deliberate.",
+                "Interactive elements do not belong inside summary — a nested button steals the click.",
+                "The name list is not virtualised: a hundred members expand into one long column.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Iconstack003\n  names={[\"Anna Rebrova\", \"Ilya Mokhov\", \"Kim Son\", \"Pyotr Gai\", \"Maria Loza\"]}\n  max={4}\n  label=\"members\"\n/>"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "max": {
+                "label": "Visible circles",
+                "default": 4
+              },
+              "label": {
+                "label": "Group caption",
+                "default": "members"
               }
             }
           }
@@ -3232,8 +3792,8 @@
     {
       "name": "iconstack-004",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Vertical Avatar Stack",
+      "description": "Вертикальная стопка участников для узкой колонки: она растёт вниз и занимает ширину одного кружка, а не ломает сайдбар горизонтальным рядом.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3244,40 +3804,85 @@
           "target": "@components/vibeui/iconstack-004.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Перекрытие собрано column-reverse и отрицательным margin-bottom, поэтому верхний кружок ложится поверх нижнего без z-index, а первое имя списка остаётся первым сверху — порядок чтения совпадает с порядком данных. Размер и величина перекрытия связаны одной парой переменных и переключаются атрибутом data-size, так что sm, md и lg сохраняют одинаковую плотность. Кружки декоративны и помечены aria-hidden: смысл несёт подпись с числом. Подложка светлая, поскольку подпись тёмная.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["iconstack", "vertical", "sidebar", "avatars"],
         "ai": {
           "export": "Iconstack004",
-          "usage": "<Iconstack004 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Iconstack004\n  names={[\"Анна Реброва\", \"Илья Мохов\", \"Ким Сон\"]}\n  size=\"md\"\n  label=\"на смене\"\n/>",
+          "summary": "Вертикальная стопка участников: перекрытие через column-reverse, подпись с числом под стопкой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-iconstack-004-* и не подменять её токенами вашей темы",
+            "column-reverse вместо z-index: верхний кружок ложится поверх нижнего сам",
+            "связку размера и перекрытия одной парой переменных — иначе на lg стопка распадается",
+            "aria-hidden на кружках: инициалы вслух не значат ничего, значение несёт подпись",
+            "подпись с числом: стопка из трёх кружков не сообщает, сколько людей в группе",
+            "собственную светлую подложку: подпись тёмная и на тёмном фоне каталога пропадает"
+          ],
+          "adapt": [
+            "размер кружков через size: sm, md или lg",
+            "подпись под стопкой через label",
+            "состав группы через names",
+            "величину перекрытия через переменную --vibeui-iconstack-004-overlap"
+          ],
+          "notes": [
+            "Вертикальная стопка длиннее горизонтальной по высоте: больше шести кружков ломают колонку.",
+            "Инициалы берутся из двух первых слов имени: односложные ники дадут одну букву.",
+            "Оттенок выводится хешем имени — переименование участника меняет цвет кружка.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": ["sm", "md", "lg"]
+          },
+          {
+            "prop": "label",
             "label": "Подпись",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "на смене",
+            "maxLength": 20
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A vertical member stack for a narrow column: it grows downwards and takes the width of a single circle instead of breaking the sidebar with a horizontal row.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Iconstack004 />"
+              "summary": "A vertical member stack: overlap through column-reverse and a counted caption below. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-iconstack-004-* palette — do not swap it for your theme tokens",
+                "column-reverse instead of z-index: the upper circle lands above the lower one on its own",
+                "tying size and overlap to one pair of variables — otherwise the stack falls apart at lg",
+                "aria-hidden on the circles: initials mean nothing aloud, the caption carries the meaning",
+                "the counted caption: three circles do not tell how many people are in the group",
+                "the component's own light surface: the caption is dark and vanishes on a dark catalog background"
+              ],
+              "adapt": [
+                "the circle size through size: sm, md or lg",
+                "the caption under the stack through label",
+                "the group roster through names",
+                "the overlap through the --vibeui-iconstack-004-overlap variable"
+              ],
+              "notes": [
+                "A vertical stack is taller than a horizontal one: more than six circles break the column.",
+                "Initials come from the first two words of the name: single-word handles yield one letter.",
+                "The hue is derived from a hash of the name — renaming a member changes the circle colour.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Iconstack004\n  names={[\"Anna Rebrova\", \"Ilya Mokhov\", \"Kim Son\"]}\n  size=\"md\"\n  label=\"on shift\"\n/>"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "size": {
+                "label": "Size",
+                "default": "md"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "on shift"
               }
             }
           }
@@ -3287,8 +3892,8 @@
     {
       "name": "iconstack-005",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Surface Ring Stack",
+      "description": "Стопка с обводкой под цвет подложки: одна и та же группа показана на светлой и тёмной полосе, поэтому видно, что обводка — это фон, а не белая рамка.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3299,40 +3904,84 @@
           "target": "@components/vibeui/iconstack-005.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Цвет обводки вынесен в переменную --vibeui-iconstack-005-ring и задаётся полосой, а не кружком: тёмная полоса переопределяет её своим фоном, светлая берёт значение из пропа ring и красит им же собственную заливку. Из-за этого обводка физически не может разойтись с подложкой. Обе полосы показаны одновременно, чтобы разница читалась без переключения темы. Перекрытие собрано обратным флексом, оттенок кружка выводится из имени хешем. Внешняя подложка светлая: подпись светлой полосы тёмная.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["iconstack", "ring", "surface", "contrast"],
         "ai": {
           "export": "Iconstack005",
-          "usage": "<Iconstack005 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Iconstack005\n  names={[\"Анна Реброва\", \"Илья Мохов\", \"Ким Сон\"]}\n  ring=\"#ffffff\"\n  label=\"обводка равна цвету подложки\"\n/>",
+          "summary": "Стопка с обводкой цвета подложки: светлая и тёмная полосы рядом доказывают, что обводка равна фону. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-iconstack-005-* и не подменять её токенами вашей темы",
+            "обводку как переменную полосы: заданная на кружке, она рано или поздно разойдётся с фоном",
+            "обе полосы рядом — без сравнения приём выглядит просто белой рамкой",
+            "толщину обводки в 2px: тоньше она пропадает, толще превращается в кольцо",
+            "aria-hidden на кружках: инициалы вслух ничего не сообщают",
+            "внешнюю светлую подложку: подпись светлой полосы тёмная и на тёмном фоне пропадает"
+          ],
+          "adapt": [
+            "цвет обводки и заливки светлой полосы через ring",
+            "подпись тёмной полосы через label",
+            "состав группы через names",
+            "цвет тёмной полосы через переменную --vibeui-iconstack-005-dark"
+          ],
+          "notes": [
+            "Обводка обязана совпадать с настоящим фоном: на картинке или градиенте приём не работает.",
+            "Обе полосы рендерят одну и ту же группу — это демонстрация, в бою нужна одна.",
+            "Значение ring передаётся как есть: подойдёт любой валидный CSS-цвет, не только #rrggbb.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
+            "prop": "ring",
+            "label": "Цвет обводки",
+            "type": "color",
+            "default": "#ffffff"
+          },
+          {
+            "prop": "label",
             "label": "Подпись",
             "type": "text",
-            "default": "TODO",
+            "default": "обводка равна цвету подложки",
             "maxLength": 40
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A stack whose ring matches the surface: the same group is shown on a light and a dark strip, making it obvious that the ring is the background, not a white border.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Iconstack005 />"
+              "summary": "A stack with a surface-coloured ring: light and dark strips side by side prove the ring equals the background. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-iconstack-005-* palette — do not swap it for your theme tokens",
+                "the ring as a strip variable: set on the circle it eventually drifts away from the background",
+                "both strips side by side — without the comparison the trick just looks like a white border",
+                "the 2px ring width: thinner it disappears, thicker it turns into a halo",
+                "aria-hidden on the circles: initials say nothing out loud",
+                "the outer light surface: the light strip caption is dark and vanishes on a dark background"
+              ],
+              "adapt": [
+                "the ring and light strip fill through ring",
+                "the dark strip caption through label",
+                "the group roster through names",
+                "the dark strip colour through the --vibeui-iconstack-005-dark variable"
+              ],
+              "notes": [
+                "The ring must match the real background: over an image or a gradient the trick fails.",
+                "Both strips render the same group — this is a demonstration, production needs one.",
+                "The ring value is passed through as is: any valid CSS colour works, not only #rrggbb.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Iconstack005\n  names={[\"Anna Rebrova\", \"Ilya Mokhov\", \"Kim Son\"]}\n  ring=\"#ffffff\"\n  label=\"the ring equals the surface\"\n/>"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "ring": {
+                "label": "Ring colour",
+                "default": "#ffffff"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "the ring equals the surface"
               }
             }
           }
@@ -3342,8 +3991,8 @@
     {
       "name": "kbd-002",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Key Chord Separator",
+      "description": "Сочетание клавиш с явным разделителем: «⌘ + K» и «⌘ затем K» — разные действия, и слово между клавишами избавляет пользователя от угадывания.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3354,40 +4003,85 @@
           "target": "@components/vibeui/kbd-002.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Клавиши набраны тегом kbd — это его прямое назначение, скринридер объявит их как ввод. Разделитель лежит в разметке отдельным узлом, а не рисуется псевдоэлементом: содержимое ::before не попадает в поток чтения, и вслух сочетание превратилось бы в две несвязанные клавиши. Вариант разделителя переключается атрибутом data-separator, набор вариантов вынесен в объект: plus для одновременного нажатия, then для последовательного, arrow для перехода. Подложка светлая, потому что и клавиши, и подпись тёмные.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["kbd", "shortcut", "chord", "keyboard"],
         "ai": {
           "export": "Kbd002",
-          "usage": "<Kbd002 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Kbd002 keys={[\"⌘\", \"⇧\", \"P\"]} separator=\"plus\" caption=\"Палитра команд\" />",
+          "summary": "Сочетание клавиш с разделителем в разметке: plus, затем или стрелка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-kbd-002-* и не подменять её токенами вашей темы",
+            "тег kbd для клавиш: скринридер объявит их как ввод, а не как обычный текст",
+            "разделитель в разметке — псевдоэлемент не читается вслух и рвёт смысл сочетания",
+            "различие plus и then: одновременное и последовательное нажатие — разные действия",
+            "нижнюю грань клавиши в 2px: она даёт объём клавиши без теней и градиентов",
+            "собственную светлую подложку: клавиши и подпись тёмные и на тёмном фоне пропадают"
+          ],
+          "adapt": [
+            "вид разделителя через separator: plus, then или arrow",
+            "подпись действия через caption",
+            "состав сочетания через keys",
+            "радиус клавиш через переменные --vibeui-kbd-002-*"
+          ],
+          "notes": [
+            "Символы ⌘ и ⇧ есть не во всех шрифтах: на Windows часть систем покажет квадрат.",
+            "Сочетание длиннее четырёх клавиш переносится — проверьте на узкой ширине.",
+            "Разделитель «затем» русский: для англоязычного интерфейса подставьте своё слово.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
+            "prop": "separator",
+            "label": "Разделитель",
+            "type": "select",
+            "default": "plus",
+            "options": ["plus", "then", "arrow"]
+          },
+          {
+            "prop": "caption",
             "label": "Подпись",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "Палитра команд",
+            "maxLength": 30
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A key chord with an explicit separator: \"⌘ + K\" and \"⌘ then K\" are different actions, and the word between the keys removes the guesswork.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Kbd002 />"
+              "summary": "A key chord with the separator in markup: plus, then, or an arrow. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-kbd-002-* palette — do not swap it for your theme tokens",
+                "the kbd tag for keys: a screen reader announces them as input rather than plain text",
+                "the separator in markup — a pseudo-element is not read aloud and breaks the chord's meaning",
+                "the difference between plus and then: simultaneous and sequential presses are different actions",
+                "the 2px bottom edge of the key: it gives the key depth without shadows or gradients",
+                "the component's own light surface: keys and caption are dark and vanish on a dark background"
+              ],
+              "adapt": [
+                "the separator style through separator: plus, then or arrow",
+                "the action caption through caption",
+                "the chord contents through keys",
+                "the key radius through the --vibeui-kbd-002-* variables"
+              ],
+              "notes": [
+                "The ⌘ and ⇧ glyphs are missing from some fonts: certain Windows setups show a box.",
+                "A chord longer than four keys wraps — check it on narrow widths.",
+                "The \"then\" separator is Russian in the default: substitute your own word for other locales.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kbd002 keys={[\"⌘\", \"⇧\", \"P\"]} separator=\"plus\" caption=\"Command palette\" />"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "separator": {
+                "label": "Separator",
+                "default": "plus"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "Command palette"
               }
             }
           }
@@ -3397,8 +4091,8 @@
     {
       "name": "kbd-003",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Inline Text Key",
+      "description": "Клавиша внутри строки текста, которая не рвёт интерлиньяж: высота задана в em, вертикальные отступы нулевые, объём даёт горизонтальный паддинг.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3409,40 +4103,88 @@
           "target": "@components/vibeui/kbd-003.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Обычная kbd с вертикальным паддингом делает свою строку выше соседних, и абзац «разъезжается». Здесь высота клавиши выражена в em и вписана в строку, вертикальные отступы нулевые, а точная посадка на базовую линию сделана сдвигом на 0.05em — не изменением line-height абзаца, которое поехало бы на весь текст. Кегль клавиши задан долей от текста (0.85em), поэтому она масштабируется вместе с абзацем. Сочетание обёрнуто в nowrap, чтобы «⌘ + K» не разорвался переносом. Подложка светлая: текст тёмный.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["kbd", "inline", "typography", "text"],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Kbd003",
-          "usage": "<Kbd003 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Kbd003\n  before=\"Нажмите\"\n  keys={[\"⌘\", \"K\"]}\n  after=\"чтобы открыть поиск.\"\n/>",
+          "summary": "Клавиша внутри абзаца: высота в em, нулевые вертикальные отступы, сдвиг на базовую линию. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-kbd-003-* и не подменять её токенами вашей темы",
+            "нулевые вертикальные отступы клавиши: с ними строка становится выше соседних",
+            "высоту и кегль в em — клавиша обязана масштабироваться вместе с абзацем",
+            "сдвиг на 0.05em вместо правки line-height: правка line-height поедет на весь текст",
+            "nowrap на сочетании, иначе «⌘ + K» разрывается переносом строки",
+            "собственную светлую подложку: абзац и клавиши тёмные и на тёмном фоне пропадают"
+          ],
+          "adapt": [
+            "текст до клавиши через before",
+            "текст после клавиши через after",
+            "состав сочетания через keys",
+            "ширину абзаца через max-width"
+          ],
+          "notes": [
+            "Клавиша занимает 1.5em высоты: при интерлиньяже меньше 1.5 строки начнут задевать друг друга.",
+            "Внутри одного абзаца допустимо одно-два сочетания — дальше текст превращается в список.",
+            "Сдвиг на базовую линию подобран для системного шрифта; при своём шрифте проверьте посадку.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
-            "label": "Подпись",
+            "prop": "before",
+            "label": "Текст до",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "Нажмите",
+            "maxLength": 20
+          },
+          {
+            "prop": "after",
+            "label": "Текст после",
+            "type": "text",
+            "default": "чтобы открыть поиск по каталогу — строка ввода появится поверх страницы.",
+            "maxLength": 90
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A key inside a line of text that does not break the leading: the height is set in em, vertical padding is zero and the bulk comes from horizontal padding.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Kbd003 />"
+              "summary": "A key inside a paragraph: em-based height, zero vertical padding and a nudge onto the baseline. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-kbd-003-* palette — do not swap it for your theme tokens",
+                "the zero vertical padding on the key: with it the line grows taller than its neighbours",
+                "the em-based height and size — the key must scale together with the paragraph",
+                "the 0.05em nudge instead of editing line-height: a line-height change affects the whole text",
+                "nowrap on the chord, otherwise \"⌘ + K\" is split across lines",
+                "the component's own light surface: paragraph and keys are dark and vanish on a dark background"
+              ],
+              "adapt": [
+                "the text before the key through before",
+                "the text after the key through after",
+                "the chord contents through keys",
+                "the paragraph width through max-width"
+              ],
+              "notes": [
+                "The key takes 1.5em of height: with leading below 1.5 the lines start touching.",
+                "One or two chords per paragraph is the limit — beyond that the text becomes a list.",
+                "The baseline nudge is tuned for the system font; verify it with your own typeface.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kbd003\n  before=\"Press\"\n  keys={[\"⌘\", \"K\"]}\n  after=\"to open the catalog search.\"\n/>"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "before": {
+                "label": "Text before",
+                "default": "Press"
+              },
+              "after": {
+                "label": "Text after",
+                "default": "to open the catalog search — the input appears above the page."
               }
             }
           }
@@ -3452,8 +4194,8 @@
     {
       "name": "kbd-004",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Shortcut Hint Bar",
+      "description": "Ряд подсказок горячих клавиш для нижней служебной полосы: пары «клавиша — действие» не переносятся, потому что разорванная подсказка бесполезна.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3464,40 +4206,88 @@
           "target": "@components/vibeui/kbd-004.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Полоса читается боковым зрением, поэтому подсказки разделены только промежутком: рамка вокруг каждой пары превращает служебную строку в панель кнопок. Каждая пара помечена white-space:nowrap, так что при нехватке ширины полоса переносит подсказки целиком, а не рвёт «↵ выбрать» пополам. Выравнивание переключается атрибутом data-align (start, center, between), плотность — data-size. Клавиши набраны тегом kbd. Подложка светлая, потому что вся полоса набрана тёмным.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["kbd", "hints", "footer", "shortcuts"],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Kbd004",
-          "usage": "<Kbd004 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Kbd004\n  hints={[{ keys: [\"↑\", \"↓\"], action: \"перемещение\" }, { keys: [\"↵\"], action: \"выбрать\" }]}\n  align=\"between\"\n  size=\"sm\"\n/>",
+          "summary": "Служебная полоса подсказок: пары «клавиша — действие» в одну линию, перенос только целыми парами. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-kbd-004-* и не подменять её токенами вашей темы",
+            "nowrap на паре: разорванная подсказка «↵ выбрать» перестаёт что-либо значить",
+            "отсутствие рамок вокруг пар — с ними служебная полоса читается как панель кнопок",
+            "тег kbd для клавиш: скринридер объявит их как ввод, а не как символы",
+            "мелкий кегль полосы: она читается боковым зрением и не должна спорить с содержимым",
+            "собственную светлую подложку: полоса набрана тёмным и на тёмном фоне исчезает"
+          ],
+          "adapt": [
+            "выравнивание полосы через align: start, center или between",
+            "плотность через size: sm или md",
+            "состав подсказок через hints",
+            "ширину полосы через max-width"
+          ],
+          "notes": [
+            "Больше пяти подсказок в полосе никто не читает — оставьте главные.",
+            "Выравнивание between на узкой ширине даёт большие дыры: проверьте на телефоне.",
+            "Полоса не интерактивна: если подсказку надо нажимать, ставьте настоящие кнопки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
-            "label": "Подпись",
-            "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "prop": "align",
+            "label": "Выравнивание",
+            "type": "select",
+            "default": "start",
+            "options": ["start", "center", "between"]
+          },
+          {
+            "prop": "size",
+            "label": "Плотность",
+            "type": "select",
+            "default": "sm",
+            "options": ["sm", "md"]
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A row of shortcut hints for a bottom status bar: the key-action pairs never break across lines, because a split hint is useless.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Kbd004 />"
+              "summary": "A status bar of hints: key-action pairs on one line, wrapping only as whole pairs. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-kbd-004-* palette — do not swap it for your theme tokens",
+                "nowrap on the pair: a split hint like \"↵ select\" stops meaning anything",
+                "the absence of borders around pairs — with them the status bar reads as a button panel",
+                "the kbd tag for keys: a screen reader announces them as input, not as symbols",
+                "the small type size: the bar is read peripherally and must not compete with the content",
+                "the component's own light surface: the bar is dark and disappears on a dark background"
+              ],
+              "adapt": [
+                "the bar alignment through align: start, center or between",
+                "the density through size: sm or md",
+                "the hint set through hints",
+                "the bar width through max-width"
+              ],
+              "notes": [
+                "Nobody reads more than five hints in a bar — keep the important ones.",
+                "The between alignment leaves large gaps on narrow widths: check it on a phone.",
+                "The bar is not interactive: use real buttons if a hint has to be clickable.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kbd004\n  hints={[{ keys: [\"↑\", \"↓\"], action: \"navigate\" }, { keys: [\"↵\"], action: \"select\" }]}\n  align=\"between\"\n  size=\"sm\"\n/>"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "align": {
+                "label": "Alignment",
+                "default": "start"
+              },
+              "size": {
+                "label": "Density",
+                "default": "sm"
               }
             }
           }
@@ -3507,8 +4297,8 @@
     {
       "name": "kbd-005",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Platform Aware Keys",
+      "description": "Платформозависимое сочетание: на macOS модификатор пишется знаком ⌘, на Windows и Linux — словом Ctrl, потому что подсказка с чужим знаком читается как ошибка.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3519,40 +4309,85 @@
           "target": "@components/vibeui/kbd-005.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Клиентский компонент: систему определяет useEffect после гидрации, поэтому в файле есть «use client». Сервер не знает системы клиента, и попытка угадать её при рендере даёт рассинхрон разметки — до определения показывается вариант с Ctrl, понятный на любой системе, в отличие от ⌘. Проп platform позволяет отключить автоопределение и зафиксировать вариант для документации. Ширина клавиши модификатора увеличена для ⌘ атрибутом data-system: знак шире буквы, и без правки ряд клавиш выглядит неровным. Подложка светлая: клавиши и подписи тёмные.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["kbd", "platform", "shortcut", "macos"],
         "ai": {
           "export": "Kbd005",
-          "usage": "<Kbd005 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Kbd005 platform=\"auto\" action=\"Открыть поиск\" letter=\"K\" />",
+          "summary": "Сочетание, которое подстраивается под систему: ⌘ на macOS, Ctrl на остальных. Ноль зависимостей, один файл, определение системы в useEffect.",
+          "preserve": [
+            "локальную палитру --vibeui-kbd-005-* и не подменять её токенами вашей темы",
+            "определение системы после гидрации: угаданное при рендере значение рассинхронизирует разметку",
+            "Ctrl как стартовый вариант — он понятен на любой системе, в отличие от ⌘",
+            "подпись системы под действием: без неё пользователь не понимает, почему знак другой",
+            "тег kbd для клавиш: скринридер объявит их как ввод, а не как текст",
+            "собственную светлую подложку: клавиши и подписи тёмные и на тёмном фоне пропадают"
+          ],
+          "adapt": [
+            "режим определения через platform: auto, mac или windows",
+            "название действия через action",
+            "букву сочетания через letter",
+            "ширину клавиш через переменные --vibeui-kbd-005-*"
+          ],
+          "notes": [
+            "Определение идёт по userAgent: он подделывается, и на редких системах даст мимо.",
+            "До гидрации показан вариант Windows — на macOS знак сменится после загрузки скрипта.",
+            "На Linux принят тот же Ctrl, что и на Windows: отдельной ветки для него нет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
-            "label": "Подпись",
+            "prop": "platform",
+            "label": "Платформа",
+            "type": "select",
+            "default": "auto",
+            "options": ["auto", "mac", "windows"]
+          },
+          {
+            "prop": "action",
+            "label": "Действие",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "Открыть поиск",
+            "maxLength": 24
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A platform-aware chord: macOS writes the modifier as ⌘, Windows and Linux write it as Ctrl, because a hint with the wrong glyph reads as a mistake.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Kbd005 />"
+              "summary": "A chord that adapts to the system: ⌘ on macOS, Ctrl elsewhere. Zero dependencies, one file, detection in useEffect.",
+              "preserve": [
+                "the local --vibeui-kbd-005-* palette — do not swap it for your theme tokens",
+                "detecting the system after hydration: a value guessed at render time desynchronises the markup",
+                "Ctrl as the starting variant — it is understood on any system, unlike ⌘",
+                "the system caption under the action: without it users cannot tell why the glyph changed",
+                "the kbd tag for keys: a screen reader announces them as input rather than text",
+                "the component's own light surface: keys and captions are dark and vanish on a dark background"
+              ],
+              "adapt": [
+                "the detection mode through platform: auto, mac or windows",
+                "the action name through action",
+                "the chord letter through letter",
+                "the key widths through the --vibeui-kbd-005-* variables"
+              ],
+              "notes": [
+                "Detection reads the userAgent: it can be spoofed and will miss on rare systems.",
+                "Before hydration the Windows variant is shown — on macOS the glyph swaps once the script loads.",
+                "Linux uses the same Ctrl as Windows: there is no separate branch for it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kbd005 platform=\"auto\" action=\"Open search\" letter=\"K\" />"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "platform": {
+                "label": "Platform",
+                "default": "auto"
+              },
+              "action": {
+                "label": "Action",
+                "default": "Open search"
               }
             }
           }
@@ -3562,8 +4397,8 @@
     {
       "name": "kbd-006",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Wide Label Keys",
+      "description": "Ряд клавиш с длинными подписями: «Backspace» и «Page Down» не влезают в квадрат, поэтому у ряда два честных режима ширины вместо одного компромисса.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3574,40 +4409,88 @@
           "target": "@components/vibeui/kbd-006.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Режим auto даёт клавише ширину по содержимому при общей минимальной — ряд выглядит как настоящая клавиатура с разными клавишами. Режим even переводит ряд на grid с repeat(auto-fit, minmax(4.5rem, 1fr)), и все клавиши получают равные колонки: это нужно, когда ряд должен читаться строем, например в легенде. Высота и кегль в обоих режимах общие, поэтому переключение не меняет ритм строки. Подписи помечены nowrap, чтобы «Page Down» не разорвался. Подложка светлая: клавиши и подпись тёмные.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["kbd", "keyboard", "layout", "labels"],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Kbd006",
-          "usage": "<Kbd006 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Kbd006\n  keys={[\"Shift\", \"Backspace\", \"Page Down\", \"Space\"]}\n  width=\"even\"\n  caption=\"Клавиши редактора\"\n/>",
+          "summary": "Ряд клавиш с длинными подписями: ширина по содержимому или равными колонками на grid. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-kbd-006-* и не подменять её токенами вашей темы",
+            "общую высоту клавиш в обоих режимах: разная высота ломает ритм ряда",
+            "nowrap на подписи — разорванное «Page Down» перестаёт читаться как одна клавиша",
+            "минимальную ширину клавиши: узкая «K» рядом с «Backspace» выглядит выпавшей",
+            "тег kbd для клавиш, чтобы скринридер объявил их как ввод",
+            "собственную светлую подложку: клавиши и подпись тёмные и на тёмном фоне пропадают"
+          ],
+          "adapt": [
+            "режим ширины через width: auto или even",
+            "подпись под рядом через caption",
+            "состав ряда через keys",
+            "высоту клавиш через переменную --vibeui-kbd-006-height"
+          ],
+          "notes": [
+            "В режиме even очень длинная подпись обрезается многоточием, а не растягивает колонку.",
+            "Минимум колонки 4.5rem подобран под «Backspace»; для более длинных слов увеличьте его.",
+            "Ряд не имитирует раскладку клавиатуры — это перечисление клавиш, а не карта.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
+            "prop": "width",
+            "label": "Ширина клавиш",
+            "type": "select",
+            "default": "auto",
+            "options": ["auto", "even"]
+          },
+          {
+            "prop": "caption",
             "label": "Подпись",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "Клавиши редактора текста",
+            "maxLength": 30
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A row of keys with long labels: \"Backspace\" and \"Page Down\" never fit a square, so the row offers two honest width modes instead of one compromise.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Kbd006 />"
+              "summary": "A row of long-label keys: width by content, or equal grid columns. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-kbd-006-* palette — do not swap it for your theme tokens",
+                "the shared key height in both modes: differing heights break the rhythm of the row",
+                "nowrap on the label — a split \"Page Down\" stops reading as one key",
+                "the minimum key width: a narrow \"K\" beside \"Backspace\" looks dropped out of the row",
+                "the kbd tag for keys so a screen reader announces them as input",
+                "the component's own light surface: keys and caption are dark and vanish on a dark background"
+              ],
+              "adapt": [
+                "the width mode through width: auto or even",
+                "the caption under the row through caption",
+                "the row contents through keys",
+                "the key height through the --vibeui-kbd-006-height variable"
+              ],
+              "notes": [
+                "In even mode a very long label is truncated with an ellipsis instead of stretching the column.",
+                "The 4.5rem column minimum is tuned for \"Backspace\"; raise it for longer words.",
+                "The row does not imitate a keyboard layout — it is a list of keys, not a map.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kbd006\n  keys={[\"Shift\", \"Backspace\", \"Page Down\", \"Space\"]}\n  width=\"even\"\n  caption=\"Editor keys\"\n/>"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "width": {
+                "label": "Key width",
+                "default": "auto"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "Editor keys"
               }
             }
           }
@@ -3617,8 +4500,8 @@
     {
       "name": "separator-002",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Pill Label Divider",
+      "description": "Разделитель с подписью в пилюле, которая несёт собственный фон: приём с текстом цвета страницы ломается на градиенте, а пилюля работает на любой подложке.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3629,40 +4512,88 @@
           "target": "@components/vibeui/separator-002.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Положение подписи задаётся числом колонок сетки: center — 1fr auto 1fr, start — auto 1fr, end — 1fr auto, поэтому линии всегда упираются в пилюлю без ручных отступов. Пилюля несёт свою заливку и рамку — популярный приём «закрасить текст цветом страницы» рассыпается на градиенте и на картинке, где подпись оказывается в прямоугольнике чужого цвета. У корня role=separator и aria-label с текстом подписи, так что граница слышна и названа. Пилюля светлая с тёмным текстом, поэтому подложка компоненту не нужна.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["separator", "label", "divider", "pill"],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Separator002",
-          "usage": "<Separator002 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Separator002 label=\"или\" align=\"center\" />",
+          "summary": "Разделитель с подписью в пилюле: положение задаётся колонками сетки, пилюля несёт свой фон. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-separator-002-* и не подменять её токенами вашей темы",
+            "собственную заливку пилюли: текст цвета страницы рассыпается на градиенте и картинке",
+            "колонки сетки вместо отступов — линии обязаны упираться в подпись при любом выравнивании",
+            "role=separator с aria-label: без них подпись читается как обычный текст между блоками",
+            "верхний регистр и разрядку подписи: они отличают служебную метку от заголовка",
+            "тонкую рамку пилюли — на светлом фоне заливка без рамки не отделяется от линии"
+          ],
+          "adapt": [
+            "текст подписи и её длину",
+            "положение подписи через align: start, center или end",
+            "цвет линии через переменную --vibeui-separator-002-line",
+            "ширину разделителя через max-width"
+          ],
+          "notes": [
+            "Пустой label оставит пилюлю пустой — в этом случае берите обычный разделитель.",
+            "Подпись не переносится: длинный текст лучше сократить, чем растягивать пилюлю.",
+            "role=separator без aria-orientation считается горизонтальным — так и задумано.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
+            "prop": "label",
             "label": "Подпись",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "или",
+            "maxLength": 16
+          },
+          {
+            "prop": "align",
+            "label": "Положение",
+            "type": "select",
+            "default": "center",
+            "options": ["start", "center", "end"]
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A divider whose caption sits in a pill carrying its own background: the page-coloured-text trick breaks on gradients, while a pill works on any surface.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Separator002 />"
+              "summary": "A divider with a pill caption: the position comes from grid columns and the pill carries its own fill. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-separator-002-* palette — do not swap it for your theme tokens",
+                "the pill's own fill: page-coloured text falls apart over a gradient or an image",
+                "the grid columns instead of margins — the lines must meet the caption at any alignment",
+                "role=separator with aria-label: without them the caption reads as ordinary text between blocks",
+                "the uppercase and tracking of the caption: they mark it as a utility label, not a heading",
+                "the thin pill border — on a light background the fill alone does not separate from the line"
+              ],
+              "adapt": [
+                "the caption text and its length",
+                "the caption position through align: start, center or end",
+                "the line colour through the --vibeui-separator-002-line variable",
+                "the divider width through max-width"
+              ],
+              "notes": [
+                "An empty label leaves an empty pill — use a plain divider in that case.",
+                "The caption does not wrap: shorten long text rather than stretching the pill.",
+                "role=separator without aria-orientation counts as horizontal — that is intended here.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Separator002 label=\"or\" align=\"center\" />"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "label": {
+                "label": "Caption",
+                "default": "or"
+              },
+              "align": {
+                "label": "Position",
+                "default": "center"
               }
             }
           }
@@ -3672,8 +4603,8 @@
     {
       "name": "separator-003",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Vertical Stat Rules",
+      "description": "Строка показателей с вертикальными разделителями: линия берёт высоту у соседей, а не задаёт её, поэтому строка не растёт от самой линии.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3684,40 +4615,86 @@
           "target": "@components/vibeui/separator-003.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Ряд выровнен align-items:stretch, из-за чего разделитель шириной в один пиксель сам вытягивается до высоты самого высокого блока — задавать ему height вручную не нужно и вредно. Режим text ограничивает линию высотой строки значения: так делают в шапках, где полная линия выглядит как граница таблицы. Каждый разделитель помечен role=separator с aria-orientation=vertical, поэтому граница между показателями слышна. Промежуток вынесен в проп gap и подставляется переменной в пикселях. Подложка светлая: цифры и подписи тёмные.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["separator", "vertical", "stats", "row"],
         "ai": {
           "export": "Separator003",
-          "usage": "<Separator003 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Separator003\n  items={[{ value: \"128\", caption: \"компонентов\" }, { value: \"24\", caption: \"категории\" }]}\n  gap={20}\n  dividerHeight=\"full\"\n/>",
+          "summary": "Строка показателей с вертикальными разделителями: линия тянется по высоте соседей или по строке значения. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-separator-003-* и не подменять её токенами вашей темы",
+            "align-items:stretch на ряду: без него линия схлопывается в ноль высоты",
+            "отсутствие фиксированной высоты у линии — заданная вручную, она разойдётся с соседями",
+            "role=separator с вертикальной ориентацией: иначе граница между цифрами не слышна",
+            "моноширинные цифры значений: обычные дают разную ширину и колонка дёргается",
+            "собственную светлую подложку: цифры и подписи тёмные и на тёмном фоне пропадают"
+          ],
+          "adapt": [
+            "промежуток между блоками через gap в пикселях",
+            "высоту линии через dividerHeight: text или full",
+            "состав показателей через items",
+            "цвет линии через переменную --vibeui-separator-003-line"
+          ],
+          "notes": [
+            "Ряд не переносится: четыре и больше показателей на телефоне уедут за край.",
+            "Промежуток задан в пикселях, а не в rem: он не масштабируется с кеглем.",
+            "Подписи помечены nowrap — длинное слово растянет строку, а не перенесётся.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
-            "label": "Подпись",
-            "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "prop": "gap",
+            "label": "Промежуток",
+            "type": "number",
+            "default": 20,
+            "min": 8,
+            "max": 48
+          },
+          {
+            "prop": "dividerHeight",
+            "label": "Высота линии",
+            "type": "select",
+            "default": "full",
+            "options": ["text", "full"]
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A row of stats with vertical rules: the line takes its height from the neighbours instead of setting it, so the row never grows because of the rule.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Separator003 />"
+              "summary": "A stat row with vertical rules: the line stretches to the neighbours' height or to the value line. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-separator-003-* palette — do not swap it for your theme tokens",
+                "align-items:stretch on the row: without it the rule collapses to zero height",
+                "the absence of a fixed height on the rule — set by hand it drifts away from the neighbours",
+                "role=separator with vertical orientation: otherwise the boundary between numbers is inaudible",
+                "the tabular figures in the values: proportional ones vary in width and make the column jitter",
+                "the component's own light surface: numbers and captions are dark and vanish on a dark background"
+              ],
+              "adapt": [
+                "the spacing between blocks through gap in pixels",
+                "the rule height through dividerHeight: text or full",
+                "the stat set through items",
+                "the rule colour through the --vibeui-separator-003-line variable"
+              ],
+              "notes": [
+                "The row does not wrap: four or more stats run off the edge on a phone.",
+                "The gap is in pixels, not rem: it does not scale with the type size.",
+                "Captions are nowrap — a long word stretches the row instead of wrapping.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Separator003\n  items={[{ value: \"128\", caption: \"components\" }, { value: \"24\", caption: \"categories\" }]}\n  gap={20}\n  dividerHeight=\"full\"\n/>"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "gap": {
+                "label": "Spacing",
+                "default": 20
+              },
+              "dividerHeight": {
+                "label": "Rule height",
+                "default": "full"
               }
             }
           }
@@ -3727,8 +4704,8 @@
     {
       "name": "separator-004",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Dashed Rule Divider",
+      "description": "Пунктирный разделитель с управляемым рисунком: длина штриха и промежуток заданы числами, поэтому пунктир повторяем в разных местах макета.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3739,40 +4716,90 @@
           "target": "@components/vibeui/separator-004.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. border-style:dashed рисует штрих, длина которого зависит от браузера и от толщины границы, — одинакового пунктира в двух местах макета так не добиться. Здесь линия набрана repeating-linear-gradient, где длина штриха и промежуток вынесены в переменные --vibeui-separator-004-dash и --vibeui-separator-004-gap и подставляются из пропов в пикселях. Разделитель набран тегом hr со снятой рамкой, поэтому граница видна и скринридеру. Компонент показан в контексте двух строк раздела и несёт свою светлую подложку: подписи тёмные.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["separator", "dashed", "gradient", "divider"],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Separator004",
-          "usage": "<Separator004 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Separator004 above=\"Личные данные\" below=\"Оплата\" dash={6} gap={6} />",
+          "summary": "Пунктирный разделитель на repeating-linear-gradient с точной длиной штриха и промежутка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-separator-004-* и не подменять её токенами вашей темы",
+            "градиент вместо border-dashed: длина штриха у border зависит от браузера",
+            "тег hr со снятой рамкой — это семантическая граница, а не декоративный div",
+            "равные длину штриха и промежуток по умолчанию: неравные читаются как ошибка отрисовки",
+            "толщину линии в один пиксель, иначе пунктир превращается в ряд плашек",
+            "собственную светлую подложку: подписи разделов тёмные и на тёмном фоне пропадают"
+          ],
+          "adapt": [
+            "длину штриха через dash в пикселях",
+            "промежуток между штрихами через gap в пикселях",
+            "подписи разделов через above и below",
+            "цвет линии через переменную --vibeui-separator-004-line"
+          ],
+          "notes": [
+            "Пунктир не подгоняется под ширину: последний штрих может обрезаться на любой ширине.",
+            "Вертикальный пунктир требует смены угла градиента с 90deg на 180deg.",
+            "Значения в пикселях не масштабируются с кеглем: на крупном тексте пунктир будет мелким.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
-            "label": "Подпись",
-            "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "prop": "dash",
+            "label": "Длина штриха",
+            "type": "number",
+            "default": 6,
+            "min": 2,
+            "max": 16
+          },
+          {
+            "prop": "gap",
+            "label": "Промежуток",
+            "type": "number",
+            "default": 6,
+            "min": 2,
+            "max": 16
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A dashed divider with a controllable pattern: dash length and gap are set as numbers, so the same dash repeats identically across the layout.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Separator004 />"
+              "summary": "A dashed divider built on repeating-linear-gradient with an exact dash length and gap. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-separator-004-* palette — do not swap it for your theme tokens",
+                "the gradient instead of border-dashed: a border's dash length depends on the browser",
+                "the hr tag with its border removed — this is a semantic boundary, not a decorative div",
+                "the equal default dash and gap: unequal values read as a rendering glitch",
+                "the one-pixel line thickness, otherwise the dash turns into a row of slabs",
+                "the component's own light surface: the section captions are dark and vanish on a dark background"
+              ],
+              "adapt": [
+                "the dash length through dash in pixels",
+                "the space between dashes through gap in pixels",
+                "the section captions through above and below",
+                "the line colour through the --vibeui-separator-004-line variable"
+              ],
+              "notes": [
+                "The dash pattern is not fitted to the width: the last dash may be cut at any width.",
+                "A vertical dash needs the gradient angle changed from 90deg to 180deg.",
+                "Pixel values do not scale with the type size: the dash looks tiny next to large text.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Separator004 above=\"Personal data\" below=\"Payment\" dash={6} gap={6} />"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "dash": {
+                "label": "Dash length",
+                "default": 6
+              },
+              "gap": {
+                "label": "Gap",
+                "default": 6
               }
             }
           }
@@ -3782,8 +4809,8 @@
     {
       "name": "separator-005",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Icon Center Divider",
+      "description": "Разделитель со знаком в кружке посередине линии: кружок несёт свою заливку, поэтому линия не просвечивает сквозь знак ни на светлом, ни на тёмном фоне.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3794,40 +4821,88 @@
           "target": "@components/vibeui/separator-005.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Сетка из трёх колонок (1fr auto 1fr) держит кружок ровно по центру при любой ширине. Кружок несёт собственную заливку и рамку: без заливки линия проходит сквозь знак, а вырезать её маской пришлось бы под каждый фон отдельно. Знак декоративен и помечен aria-hidden — «✦» вслух ничего не сообщает; смысл границы несёт role=separator с aria-label. Тон переключается атрибутом data-tone и меняет три переменные разом. Кружок светлый с тёмным знаком, поэтому отдельная подложка компоненту не нужна.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["separator", "icon", "divider", "ornament"],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Separator005",
-          "usage": "<Separator005 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Separator005 glyph=\"✦\" tone=\"accent\" label=\"Конец раздела\" />",
+          "summary": "Разделитель со знаком в кружке: три колонки сетки и собственная заливка кружка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-separator-005-* и не подменять её токенами вашей темы",
+            "собственную заливку кружка: без неё линия просвечивает сквозь знак",
+            "сетку 1fr auto 1fr — отступами кружок не удержать по центру при смене ширины",
+            "aria-hidden на знаке: «✦» вслух ничего не сообщает и мешает чтению",
+            "role=separator с aria-label: граница обязана быть названа, а не только нарисована",
+            "светлую заливку кружка с тёмным знаком: она читается на любом фоне каталога"
+          ],
+          "adapt": [
+            "знак в кружке через glyph",
+            "тон через tone: neutral или accent",
+            "название границы через label",
+            "ширину разделителя через max-width"
+          ],
+          "notes": [
+            "Знак — символ, а не svg: для иконочного набора подставьте свой элемент внутрь кружка.",
+            "Кружок фиксированного размера: очень крупный знак придётся уменьшать кеглем.",
+            "Тон accent меняет и цвет линий — это намеренно, иначе кружок выглядит наклейкой.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
-            "label": "Подпись",
+            "prop": "glyph",
+            "label": "Знак",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "✦",
+            "maxLength": 2
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "neutral",
+            "options": ["neutral", "accent"]
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A divider with a glyph in a disc at the centre of the line: the disc carries its own fill, so the line never shows through the glyph on light or dark backgrounds.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Separator005 />"
+              "summary": "A divider with a glyph disc: three grid columns and a disc with its own fill. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-separator-005-* palette — do not swap it for your theme tokens",
+                "the disc's own fill: without it the line shows through the glyph",
+                "the 1fr auto 1fr grid — margins cannot keep the disc centred as the width changes",
+                "aria-hidden on the glyph: \"✦\" says nothing aloud and only clutters the reading",
+                "role=separator with aria-label: a boundary must be named, not merely drawn",
+                "the light disc fill with a dark glyph: it stays readable on any catalog background"
+              ],
+              "adapt": [
+                "the glyph in the disc through glyph",
+                "the tone through tone: neutral or accent",
+                "the boundary name through label",
+                "the divider width through max-width"
+              ],
+              "notes": [
+                "The glyph is a character, not an svg: drop your own element into the disc for an icon set.",
+                "The disc has a fixed size: a very large glyph has to be scaled down by font size.",
+                "The accent tone also changes the line colour — deliberately, otherwise the disc looks like a sticker.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Separator005 glyph=\"✦\" tone=\"accent\" label=\"End of section\" />"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "glyph": {
+                "label": "Glyph",
+                "default": "✦"
+              },
+              "tone": {
+                "label": "Tone",
+                "default": "neutral"
               }
             }
           }
@@ -3837,8 +4912,8 @@
     {
       "name": "separator-006",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Scaled Space Divider",
+      "description": "Разделитель с отступами по шкале: пять ступеней кратны одному шагу, поэтому две границы в разных частях страницы дышат одинаково.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3849,40 +4924,87 @@
           "target": "@components/vibeui/separator-006.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Шкала отступов объявлена как кратные переменной --vibeui-separator-006-step, а ступени xs…xl переключаются атрибутом data-space — правится шкала одним числом, а не пятью значениями. Отступ живёт на самом разделителе, а не на соседних блоках: так соседи ничего не знают друг о друге и не схлопывают margin. Втяжка включается булевым пропом inset и задаётся отдельной переменной, чтобы линия отходила от краёв списка, как в системных таблицах. Подложка светлая: строки списка набраны тёмным.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["separator", "spacing", "scale", "rhythm"],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Separator006",
-          "usage": "<Separator006 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Separator006 space=\"lg\" inset />",
+          "summary": "Разделитель с отступами по шкале: пять ступеней от одного шага и втяжка по краям. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-separator-006-* и не подменять её токенами вашей темы",
+            "ступени как кратные общего шага: разрозненные значения рассыпают вертикальный ритм",
+            "отступ на самом разделителе — на соседних блоках он схлопывается и становится непредсказуемым",
+            "тег hr со снятой рамкой: это семантическая граница, а не декоративная линия",
+            "втяжку отдельной переменной, чтобы её можно было отключить, не трогая вертикальные отступы",
+            "собственную светлую подложку: строки списка тёмные и на тёмном фоне пропадают"
+          ],
+          "adapt": [
+            "ступень отступов через space: xs, sm, md, lg или xl",
+            "втяжку линии через inset",
+            "шаг шкалы через переменную --vibeui-separator-006-step",
+            "цвет линии через переменную --vibeui-separator-006-line"
+          ],
+          "notes": [
+            "Ступень xl рассчитана на разделы, а не на строки списка: в плотном списке она разрывает связь.",
+            "Втяжка в 1rem подобрана под паддинг карточки — при другом паддинге её надо пересчитать.",
+            "Шкала не отвечает за отступы соседних блоков: их ритм задаётся снаружи.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
-            "label": "Подпись",
-            "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "prop": "space",
+            "label": "Ступень отступа",
+            "type": "select",
+            "default": "md",
+            "options": ["xs", "sm", "md", "lg", "xl"]
+          },
+          {
+            "prop": "inset",
+            "label": "Втяжка",
+            "type": "boolean",
+            "default": false
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A divider with scale-based spacing: five steps are multiples of one unit, so two boundaries in different parts of the page breathe alike.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Separator006 />"
+              "summary": "A divider with scaled spacing: five steps from a single unit plus an optional inset. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-separator-006-* palette — do not swap it for your theme tokens",
+                "the steps as multiples of a shared unit: loose values scatter the vertical rhythm",
+                "the spacing on the divider itself — on neighbouring blocks it collapses and turns unpredictable",
+                "the hr tag with its border removed: this is a semantic boundary, not a decorative line",
+                "the inset as its own variable so it can be turned off without touching vertical spacing",
+                "the component's own light surface: the list rows are dark and vanish on a dark background"
+              ],
+              "adapt": [
+                "the spacing step through space: xs, sm, md, lg or xl",
+                "the line inset through inset",
+                "the scale unit through the --vibeui-separator-006-step variable",
+                "the line colour through the --vibeui-separator-006-line variable"
+              ],
+              "notes": [
+                "The xl step is meant for sections, not list rows: in a dense list it severs the connection.",
+                "The 1rem inset is tuned to the card padding — recalculate it for a different padding.",
+                "The scale does not govern the spacing of neighbouring blocks: their rhythm comes from outside.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Separator006 space=\"lg\" inset />"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "space": {
+                "label": "Spacing step",
+                "default": "md"
+              },
+              "inset": {
+                "label": "Inset",
+                "default": false
               }
             }
           }
@@ -3892,8 +5014,8 @@
     {
       "name": "spinner-002",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Dots Wave Loader",
+      "description": "Ожидание тремя точками вместо кольца: точки занимают меньше высоты и встают в строку рядом с текстом, не раздвигая её.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3904,40 +5026,86 @@
           "target": "@components/vibeui/spinner-002.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Волна собрана задержками, посчитанными от одной переменной --vibeui-spinner-002-speed через calc, поэтому темп меняется одним числом, а не тремя правками анимации. Точки декоративны и помечены aria-hidden, состояние объявлено role=status с aria-live=polite на корне — иначе скринридер молчит о том, что идёт работа. При prefers-reduced-motion анимация выключается, но точки замирают разной яркостью: сообщение «идёт работа» остаётся, мигание исчезает. Подложка светлая, потому что подпись тёмная.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["spinner", "dots", "loading", "status"],
         "ai": {
           "export": "Spinner002",
-          "usage": "<Spinner002 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Spinner002 label=\"Собираем каталог\" speed={1.2} />",
+          "summary": "Ожидание тремя точками: волна из задержек от одной длительности и обязательная подпись. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-spinner-002-* и не подменять её токенами вашей темы",
+            "подпись рядом с точками: три точки без слов не сообщают, что именно происходит",
+            "задержки, посчитанные от одной длительности — иначе темп правится в трёх местах",
+            "role=status с aria-live: без них скринридер молчит о начавшейся работе",
+            "замирание точек разной яркостью при prefers-reduced-motion: состояние обязано остаться видимым",
+            "собственную светлую подложку: подпись тёмная и на тёмном фоне каталога исчезает"
+          ],
+          "adapt": [
+            "текст подписи и её длину",
+            "темп волны через speed в секундах",
+            "цвет точек через переменную --vibeui-spinner-002-accent",
+            "размер точек через переменную --vibeui-spinner-002-dot"
+          ],
+          "notes": [
+            "Слишком быстрая волна (меньше 0.6с) читается как дрожание, а не как ожидание.",
+            "Три точки — не индикатор прогресса: если доля известна, берите полосу с процентом.",
+            "aria-live=polite не перебивает чтение: сообщение прозвучит после текущей фразы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
+            "prop": "label",
             "label": "Подпись",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "Собираем каталог",
+            "maxLength": 30
+          },
+          {
+            "prop": "speed",
+            "label": "Темп, с",
+            "type": "number",
+            "default": 1.2,
+            "min": 0.4,
+            "max": 3
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "Waiting shown as three dots instead of a ring: dots take less height and sit inline beside text without pushing the line apart.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Spinner002 />"
+              "summary": "A three-dot loader: the wave is built from delays derived from one duration, with a mandatory caption. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-spinner-002-* palette — do not swap it for your theme tokens",
+                "the caption beside the dots: three dots alone never say what is happening",
+                "the delays derived from a single duration — otherwise the tempo is edited in three places",
+                "role=status with aria-live: without them a screen reader stays silent about the work",
+                "the dots freezing at different opacities under prefers-reduced-motion: the state must remain visible",
+                "the component's own light surface: the caption is dark and disappears on a dark catalog background"
+              ],
+              "adapt": [
+                "the caption text and its length",
+                "the wave tempo through speed in seconds",
+                "the dot colour through the --vibeui-spinner-002-accent variable",
+                "the dot size through the --vibeui-spinner-002-dot variable"
+              ],
+              "notes": [
+                "A wave faster than 0.6s reads as jitter rather than waiting.",
+                "Three dots are not a progress indicator: use a bar with a percentage when the share is known.",
+                "aria-live=polite does not interrupt: the message is spoken after the current phrase.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Spinner002 label=\"Building the catalog\" speed={1.2} />"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "label": {
+                "label": "Caption",
+                "default": "Building the catalog"
+              },
+              "speed": {
+                "label": "Tempo, s",
+                "default": 1.2
               }
             }
           }
@@ -3947,8 +5115,8 @@
     {
       "name": "spinner-003",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Indeterminate Progress Bar",
+      "description": "Полоса неопределённого прогресса без aria-valuenow: как только атрибут появляется, скринридер называет процент, которого никто не считал.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -3959,40 +5127,89 @@
           "target": "@components/vibeui/spinner-003.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Дорожка помечена role=progressbar с aria-busy и без aria-valuenow — это и есть корректное объявление неопределённого прогресса; выдуманный процент хуже его отсутствия. Отрезок ездит по дорожке анимацией transform, а не изменением left или width: браузер не пересчитывает раскладку на каждом кадре, и полоса не греет процессор в длинном списке. Толщина вынесена в проп height и подставляется переменной в пикселях. При prefers-reduced-motion отрезок занимает дорожку целиком и медленно дышит. Подложка светлая: подписи тёмные.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["spinner", "progress", "indeterminate", "bar"],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Spinner003",
-          "usage": "<Spinner003 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Spinner003 label=\"Синхронизация каталога\" hint=\"Осталось немного\" height={4} />",
+          "summary": "Полоса неопределённого прогресса: отрезок на transform, role=progressbar без выдуманных процентов. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-spinner-003-* и не подменять её токенами вашей темы",
+            "отсутствие aria-valuenow: с ним скринридер назовёт процент, которого никто не считал",
+            "анимацию через transform — изменение width пересчитывает раскладку на каждом кадре",
+            "overflow:hidden на дорожке, иначе отрезок выезжает за её пределы",
+            "подпись над полосой: полоса без слов не сообщает, что именно синхронизируется",
+            "собственную светлую подложку: подписи тёмные и на тёмном фоне каталога пропадают"
+          ],
+          "adapt": [
+            "подпись и вторую строку через label и hint",
+            "толщину полосы через height в пикселях",
+            "цвет отрезка через переменную --vibeui-spinner-003-accent",
+            "ширину блока через max-width"
+          ],
+          "notes": [
+            "Как только доля известна, замените компонент на детерминированный прогресс с процентом.",
+            "Толщина меньше 3px плохо видна на мониторах без масштабирования.",
+            "aria-busy стоит на дорожке: если блокируется целый раздел, поднимите его на контейнер.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
+            "prop": "label",
             "label": "Подпись",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "Синхронизация каталога",
+            "maxLength": 30
+          },
+          {
+            "prop": "height",
+            "label": "Толщина, px",
+            "type": "number",
+            "default": 4,
+            "min": 2,
+            "max": 12
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "An indeterminate progress bar with no aria-valuenow: the moment that attribute appears, a screen reader announces a percentage nobody calculated.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Spinner003 />"
+              "summary": "An indeterminate progress bar: the beam runs on transform and role=progressbar carries no invented percentage. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-spinner-003-* palette — do not swap it for your theme tokens",
+                "the absence of aria-valuenow: with it a screen reader announces a percentage nobody calculated",
+                "the transform-based animation — animating width recalculates layout on every frame",
+                "overflow:hidden on the track, otherwise the beam escapes past its edges",
+                "the caption above the bar: a bar without words never says what is syncing",
+                "the component's own light surface: the captions are dark and vanish on a dark catalog background"
+              ],
+              "adapt": [
+                "the caption and the second line through label and hint",
+                "the bar thickness through height in pixels",
+                "the beam colour through the --vibeui-spinner-003-accent variable",
+                "the block width through max-width"
+              ],
+              "notes": [
+                "Once the share is known, replace this with a determinate progress bar showing a percentage.",
+                "A thickness below 3px is hard to see on unscaled displays.",
+                "aria-busy sits on the track: lift it to the container when a whole section is blocked.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Spinner003 label=\"Syncing the catalog\" hint=\"Almost there\" height={4} />"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "label": {
+                "label": "Caption",
+                "default": "Syncing the catalog"
+              },
+              "height": {
+                "label": "Thickness, px",
+                "default": 4
               }
             }
           }
@@ -4002,8 +5219,8 @@
     {
       "name": "spinner-004",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Percent Ring Meter",
+      "description": "Кольцо прогресса с числом внутри: дуга нарисована conic-gradient и вырезана маской, поэтому кольцо остаётся одним элементом без svg и круга-заглушки.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -4014,40 +5231,86 @@
           "target": "@components/vibeui/spinner-004.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Дуга — conic-gradient, из которого радиальная маска вырезает середину: так кольцо остаётся одним элементом, без svg и без второго круга, закрывающего центр. Число лежит поверх кольца отдельным узлом, а не внутри маскированного элемента, иначе маска вырезала бы и цифры. Значение зажимается в 0–100 внутри компонента и объявляется через role=progressbar с aria-valuenow, valuemin и valuemax. Цифры моноширинные: при обычных ширина «11 %» и «88 %» разная, и подпись дёргается на каждом обновлении. Подложка светлая: число и подписи тёмные.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["spinner", "progress", "ring", "percent"],
         "ai": {
           "export": "Spinner004",
-          "usage": "<Spinner004 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Spinner004 value={68} label=\"Загружаем компоненты\" size=\"md\" />",
+          "summary": "Кольцо прогресса с процентом: conic-gradient с радиальной маской и корректная роль progressbar. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-spinner-004-* и не подменять её токенами вашей темы",
+            "число поверх кольца отдельным узлом: внутри маскированного элемента маска вырежет и цифры",
+            "радиальную маску вместо круга-заглушки — заглушка выдаёт себя на любом фоне, кроме сплошного",
+            "моноширинные цифры: обычные меняют ширину, и подпись дёргается при каждом обновлении",
+            "aria-valuenow вместе с valuemin и valuemax: без границ значение не имеет смысла",
+            "собственную светлую подложку: число и подписи тёмные и на тёмном фоне пропадают"
+          ],
+          "adapt": [
+            "долю через value от 0 до 100",
+            "подпись действия через label",
+            "размер кольца через size: sm, md или lg",
+            "толщину кольца через переменную --vibeui-spinner-004-thickness"
+          ],
+          "notes": [
+            "conic-gradient не анимируется переходом: плавный рост требует своей анимации или JS.",
+            "Значение округляется до целого — доли процента в таком кольце всё равно не читаются.",
+            "mask поддерживается всеми актуальными браузерами, но в старых кольцо станет сплошным кругом.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
+            "prop": "value",
+            "label": "Значение, %",
+            "type": "number",
+            "default": 68,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "label",
             "label": "Подпись",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "Загружаем компоненты",
+            "maxLength": 30
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A progress ring with the number inside: the arc is a conic-gradient cut by a mask, so the ring stays a single element without svg or a cover circle.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Spinner004 />"
+              "summary": "A percentage progress ring: conic-gradient with a radial mask and a correct progressbar role. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-spinner-004-* palette — do not swap it for your theme tokens",
+                "the number layered above the ring as its own node: inside the masked element the mask would cut the digits too",
+                "the radial mask instead of a cover circle — a cover gives itself away on anything but a flat background",
+                "the tabular figures: proportional ones change width and make the caption jitter on every update",
+                "aria-valuenow together with valuemin and valuemax: without bounds the value means nothing",
+                "the component's own light surface: number and captions are dark and vanish on a dark background"
+              ],
+              "adapt": [
+                "the share through value from 0 to 100",
+                "the action caption through label",
+                "the ring size through size: sm, md or lg",
+                "the ring thickness through the --vibeui-spinner-004-thickness variable"
+              ],
+              "notes": [
+                "conic-gradient cannot be transitioned: a smooth fill needs its own animation or JS.",
+                "The value is rounded to an integer — fractions of a percent are unreadable in a ring this size.",
+                "mask is supported by every current browser, but older ones render a solid disc.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Spinner004 value={68} label=\"Loading components\" size=\"md\" />"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "value": {
+                "label": "Value, %",
+                "default": 68
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Loading components"
               }
             }
           }
@@ -4057,8 +5320,8 @@
     {
       "name": "spinner-005",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Blocking Busy Overlay",
+      "description": "Наложение поверх блока, которое действительно блокирует: содержимое помечено inert, поэтому под плёнкой не остаётся кликабельных кнопок и достижимых табом полей.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -4069,40 +5332,87 @@
           "target": "@components/vibeui/spinner-005.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет: состояние приходит пропом busy. Полупрозрачная плёнка сама по себе ничего не запрещает — под ней остаются рабочие кнопки и поля, до которых доходит таб. Здесь содержимое получает атрибут inert, который убирает его и из фокуса, и из дерева доступности, а на область ставится aria-busy, чтобы скринридер сообщил о работе. Плёнка сделана color-mix от цвета подложки плюс backdrop-filter: она приглушает содержимое, но не прячет его целиком, и пользователь видит, что именно сохраняется. При prefers-reduced-motion кольцо не крутится, а дышит.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["spinner", "overlay", "busy", "inert"],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Spinner005",
-          "usage": "<Spinner005 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Spinner005 busy label=\"Сохраняем изменения\" />",
+          "summary": "Наложение поверх блока: плёнка с подписью, содержимое под ней помечено inert и aria-busy. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-spinner-005-* и не подменять её токенами вашей темы",
+            "inert на содержимом: без него под плёнкой остаются нажимаемые кнопки и достижимые табом поля",
+            "aria-busy на области — иначе скринридер молчит о том, что блок занят",
+            "полупрозрачную плёнку вместо непрозрачной: пользователь должен видеть, что сохраняется",
+            "подпись рядом с кольцом: кольцо без слов не сообщает, чего именно ждут",
+            "собственную светлую подложку: и содержимое, и подпись наложения тёмные"
+          ],
+          "adapt": [
+            "текст наложения через label",
+            "включение блокировки через busy",
+            "содержимое блока — любым узлом в слоте",
+            "плотность плёнки через долю в color-mix"
+          ],
+          "notes": [
+            "inert поддерживается актуальными браузерами; в старых под плёнкой останется фокус.",
+            "backdrop-filter стоит дорого на слабых устройствах: на длинном списке его лучше убрать.",
+            "Фокус внутри заблокированного содержимого не переносится сам — уведите его до включения busy.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
+            "prop": "label",
             "label": "Подпись",
             "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "default": "Сохраняем изменения",
+            "maxLength": 30
+          },
+          {
+            "prop": "busy",
+            "label": "Блокировка",
+            "type": "boolean",
+            "default": true
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "An overlay that actually blocks: the content is marked inert, so no clickable buttons or tab-reachable fields survive underneath the veil.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Spinner005 />"
+              "summary": "A busy overlay: a veil with a caption while the content beneath is marked inert and aria-busy. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-spinner-005-* palette — do not swap it for your theme tokens",
+                "inert on the content: without it clickable buttons and tab-reachable fields survive under the veil",
+                "aria-busy on the region — otherwise a screen reader says nothing about the block being busy",
+                "the translucent veil rather than an opaque one: the user must see what is being saved",
+                "the caption beside the ring: a ring without words never says what is being awaited",
+                "the component's own light surface: both the content and the overlay caption are dark"
+              ],
+              "adapt": [
+                "the overlay text through label",
+                "turning the block on through busy",
+                "the block content — any node in the slot",
+                "the veil density through the color-mix share"
+              ],
+              "notes": [
+                "inert is supported by current browsers; older ones keep focus reachable under the veil.",
+                "backdrop-filter is expensive on weak devices: drop it inside a long list.",
+                "Focus inside blocked content does not move on its own — move it away before turning busy on.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Spinner005 busy label=\"Saving changes\" />"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "label": {
+                "label": "Caption",
+                "default": "Saving changes"
+              },
+              "busy": {
+                "label": "Blocking",
+                "default": true
               }
             }
           }
@@ -4112,8 +5422,8 @@
     {
       "name": "spinner-006",
       "type": "registry:component",
-      "title": "TODO",
-      "description": "TODO: что это и в чём его идея. Одно-два предложения для карточки каталога.",
+      "title": "Pulse Skeleton Card",
+      "description": "Скелетон карточки на пульсации прозрачности, а не на бегущем блике: пульс отдаётся композитору и почти ничего не стоит в списке из двадцати заглушек.",
       "categories": ["display"],
       "dependencies": [],
       "registryDependencies": [],
@@ -4124,40 +5434,88 @@
           "target": "@components/vibeui/spinner-006.tsx"
         }
       ],
-      "docs": "TODO: техническая справка для агента — из чего состоит и на чём держится.",
+      "docs": "Серверный компонент, хуков нет. Бегущий блик — это анимация большого градиента, и на списке заглушек он заметно греет процессор; пульсация прозрачности анимирует только opacity, что браузер отдаёт композитору. Заглушка повторяет метрику будущей карточки: та же высота строк, те же промежутки и та же пропорция картинки, поэтому при подстановке данных ничего не прыгает. Строки получают небольшие задержки, чтобы карточка не мигала одним куском. Для скринридера это одно сообщение role=status с именем, а не двадцать серых прямоугольников. Подложка светлая: серые плашки на тёмном фоне теряются.",
       "meta": {
-        "tags": ["TODO"],
+        "tags": ["spinner", "skeleton", "pulse", "placeholder"],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Spinner006",
-          "usage": "<Spinner006 />",
-          "summary": "TODO: что делает компонент и чем он самодостаточен.",
-          "preserve": ["TODO", "TODO", "TODO"],
-          "adapt": ["TODO", "TODO", "TODO"],
-          "notes": ["TODO"]
+          "usage": "<Spinner006 lines={3} media label=\"Загружаем карточку\" />",
+          "summary": "Скелетон карточки: пульсация прозрачности вместо бегущего блика и метрика будущего содержимого. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-spinner-006-* и не подменять её токенами вашей темы",
+            "пульсацию прозрачности вместо блика: градиентный блик греет процессор на длинном списке",
+            "метрику будущей карточки — заглушка другой высоты заставляет содержимое прыгать",
+            "одно role=status с именем: двадцать плашек не должны читаться как двадцать сообщений",
+            "укороченную последнюю строку: она превращает набор плашек в абзац",
+            "собственную светлую подложку: серые плашки на тёмном фоне каталога теряются"
+          ],
+          "adapt": [
+            "число строк через lines",
+            "показ картинки через media",
+            "цвет плашек через переменную --vibeui-spinner-006-base",
+            "текст сообщения через label"
+          ],
+          "notes": [
+            "Скелетон обязан совпадать с настоящей карточкой: расхождение заметно именно в момент подстановки.",
+            "Больше шести строк выглядят как абзац текста, а не как карточка.",
+            "Показывать скелетон меньше 300мс не стоит — мелькание раздражает сильнее ожидания.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
         },
         "controls": [
           {
-            "prop": "children",
-            "label": "Подпись",
-            "type": "text",
-            "default": "TODO",
-            "maxLength": 40
+            "prop": "lines",
+            "label": "Строк",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 6
+          },
+          {
+            "prop": "media",
+            "label": "Картинка",
+            "type": "boolean",
+            "default": true
           }
         ],
         "i18n": {
           "en": {
-            "description": "TODO",
+            "description": "A card skeleton built on an opacity pulse rather than a sweeping shine: the pulse is handed to the compositor and costs almost nothing across twenty placeholders.",
             "ai": {
-              "summary": "TODO",
-              "preserve": ["TODO", "TODO", "TODO"],
-              "adapt": ["TODO", "TODO", "TODO"],
-              "notes": ["TODO"],
-              "usage": "<Spinner006 />"
+              "summary": "A card skeleton: an opacity pulse instead of a sweeping shine, matching the metrics of the real card. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-spinner-006-* palette — do not swap it for your theme tokens",
+                "the opacity pulse instead of a shine: a gradient sweep heats the CPU across a long list",
+                "the metrics of the real card — a placeholder of a different height makes the content jump",
+                "a single role=status with a name: twenty slabs must not read as twenty messages",
+                "the shortened last line: it turns a set of slabs into a paragraph",
+                "the component's own light surface: grey slabs get lost on a dark catalog background"
+              ],
+              "adapt": [
+                "the number of rows through lines",
+                "showing the image through media",
+                "the slab colour through the --vibeui-spinner-006-base variable",
+                "the message text through label"
+              ],
+              "notes": [
+                "The skeleton must match the real card: any mismatch shows exactly at the swap moment.",
+                "More than six rows look like a paragraph of text rather than a card.",
+                "Showing a skeleton for under 300ms is not worth it — the flash annoys more than the wait.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Spinner006 lines={3} media label=\"Loading the card\" />"
             },
             "controls": {
-              "children": {
-                "label": "Label",
-                "default": "TODO"
+              "lines": {
+                "label": "Rows",
+                "default": 3
+              },
+              "media": {
+                "label": "Image",
+                "default": true
               }
             }
           }
