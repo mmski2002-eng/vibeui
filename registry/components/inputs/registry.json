@@ -1497,6 +1497,824 @@
           }
         }
       }
+    },
+    {
+      "name": "radio-001",
+      "type": "registry:component",
+      "title": "Radio Cards",
+      "description": "Выбор одного варианта карточками: кликабельна вся карточка, а не кружок в шестнадцать пикселей.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "radio-001/radio-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/radio-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-radio-001-*. Серверный: хуков нет, состояние держат радиокнопки. Группа собрана на fieldset с legend, поэтому вопрос объявляется перед вариантами. Легенда прижата float, иначе она садится на рамку fieldset и обрезается.",
+      "meta": {
+        "tags": ["radio", "choice", "pricing", "form"],
+        "ai": {
+          "export": "Radio001",
+          "usage": "<Radio001 options={[{ value: \"year\", label: \"На год\", price: \"5 900 ₽\" }]} defaultValue=\"year\" />",
+          "summary": "Радиогруппа карточками: подпись, пояснение и цена в каждой, выбранная отмечена рамкой и заливкой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-radio-001-* и не подменять её токенами вашей темы",
+            "кликабельность всей карточки: попасть в кружок пальцем на ходу невозможно",
+            "fieldset с legend — так вопрос объявляется перед вариантами",
+            "float у легенды: без него она садится на рамку и обрезается",
+            "рамку и заливку выбранной карточки, а не один закрашенный кружок",
+            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера"
+          ],
+          "adapt": [
+            "массив options с ценами и пояснениями",
+            "legend, name и defaultValue",
+            "акцент через проп accent",
+            "ширину карточек"
+          ],
+          "notes": [
+            "Уникальный name на группу обязателен: два блока с одним именем сольются в одну группу.",
+            "Выбранный вариант должен быть всегда: группа без defaultValue заставляет угадывать.",
+            "Больше пяти карточек не ставьте — на выбор уходит больше времени, чем на саму задачу.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Вопрос",
+            "type": "text",
+            "default": "Тариф",
+            "maxLength": 24
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Выбрано",
+            "type": "select",
+            "default": "year",
+            "options": ["month", "year", "team"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Single choice as cards: the whole card is the target, not a sixteen-pixel circle.",
+            "ai": {
+              "summary": "A radio group as cards: a label, a note and a price in each, the selected one marked by border and tint. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-radio-001-* palette — do not swap it for your theme tokens",
+                "the whole card being clickable: a circle is impossible to hit on the move",
+                "the fieldset with a legend — the question gets announced before the options",
+                "the float on the legend: without it it sits on the border and gets clipped",
+                "the border and tint on the selected card, not just a filled circle",
+                "native radio buttons: single selection and keyboard support come from the browser"
+              ],
+              "adapt": [
+                "the options array with prices and notes",
+                "legend, name and defaultValue",
+                "the accent through the accent prop",
+                "the card width"
+              ],
+              "notes": [
+                "A unique name per group is mandatory: two blocks sharing one merge into a single group.",
+                "There should always be a selected option: a group without defaultValue forces guessing.",
+                "Do not go past five cards — choosing then costs more than the task itself.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Radio001 options={[{ value: \"year\", label: \"Yearly\", price: \"$59\" }]} defaultValue=\"year\" />"
+            },
+            "controls": {
+              "legend": {
+                "label": "Question",
+                "default": "Plan"
+              },
+              "defaultValue": {
+                "label": "Selected"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "slider-001",
+      "type": "registry:component",
+      "title": "Value Slider",
+      "description": "Ползунок на нативном range: перетаскивание, касания и клавиатура достаются от браузера, а цифра стоит рядом с подписью.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "slider-001/slider-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/slider-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-slider-001-*. Клиентский: \"use client\" ради значения. Пройденная часть дорожки закрашена градиентом по проценту, процент передаётся переменной --vibeui-slider-001-fill. Идентификатор берётся из useId, поэтому два ползунка на странице не путают подписи.",
+      "meta": {
+        "tags": ["slider", "range", "value", "form"],
+        "ai": {
+          "export": "Slider001",
+          "usage": "<Slider001 label=\"Бюджет\" min={10} max={200} step={5} defaultValue={80} />",
+          "summary": "Ползунок: подпись и текущее значение в одной строке, закрашенная дорожка, границы под ползунком. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-slider-001-* и не подменять её токенами вашей темы",
+            "нативный input[type=range]: перетаскивание, касания и стрелки достаются даром",
+            "цифру рядом с подписью — позиция ручки читается хуже числа",
+            "закрашенную часть дорожки: она показывает долю без подсчёта",
+            "табличные цифры, чтобы число не дёргало подпись при изменении",
+            "useId вместо жёсткого id: иначе два ползунка делят одну подпись"
+          ],
+          "adapt": [
+            "label, min, max, step и defaultValue",
+            "unit — единицу измерения",
+            "акцент через проп accent",
+            "ширину блока"
+          ],
+          "notes": [
+            "Точное значение ползунком не выставляют: рядом с большим диапазоном оставьте поле ввода.",
+            "Стилизация ручки идёт через префиксы: правила ::-webkit- и ::-moz- нельзя объединять в один селектор.",
+            "Компонент неуправляемый снаружи: чтобы поднять значение наверх, добавьте свой onChange.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Бюджет проекта",
+            "maxLength": 24
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Значение",
+            "type": "number",
+            "default": 80,
+            "min": 10,
+            "max": 200
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A slider on the native range input: dragging, touch and keyboard come from the browser, with the number next to the label.",
+            "ai": {
+              "summary": "A slider: the label and current value on one line, a filled track and the bounds underneath. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-slider-001-* palette — do not swap it for your theme tokens",
+                "the native input[type=range]: dragging, touch and arrow keys come free",
+                "the number next to the label — a handle position reads worse than a figure",
+                "the filled part of the track: it shows the share without arithmetic",
+                "tabular figures so the changing number does not shift the label",
+                "useId instead of a hard-coded id: otherwise two sliders share one label"
+              ],
+              "adapt": [
+                "label, min, max, step and defaultValue",
+                "unit — the unit of measure",
+                "the accent through the accent prop",
+                "the block width"
+              ],
+              "notes": [
+                "A slider is not for exact values: pair a wide range with a number input.",
+                "Thumb styling is vendor-prefixed: ::-webkit- and ::-moz- rules cannot share a selector.",
+                "The component is self-contained: add your own onChange to lift the value up.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Slider001 label=\"Budget\" min={10} max={200} step={5} defaultValue={80} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Project budget"
+              },
+              "defaultValue": {
+                "label": "Value"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "rating-001",
+      "type": "registry:component",
+      "title": "Star Rating",
+      "description": "Оценка звёздами без JS: звёзды идут в разметке обратно и разворачиваются flex, поэтому подсветка работает одним селектором.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "rating-001/rating-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/rating-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-rating-001-*. Серверный: хуков нет, состояние держат радиокнопки. Порядок звёзд в разметке обратный, а flex-direction: row-reverse возвращает их на место — только так соседний селектор ~ красит звёзды левее. Подпись оценки тоже выбирается CSS: видна строка, чей value отмечен.",
+      "meta": {
+        "tags": ["rating", "stars", "radio", "no-js"],
+        "ai": {
+          "export": "Rating001",
+          "usage": "<Rating001 legend=\"Оцените компонент\" max={5} defaultValue={4} />",
+          "summary": "Оценка звёздами: наведение показывает будущий выбор, подпись оценки меняется без JS. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-rating-001-* и не подменять её токенами вашей темы",
+            "обратный порядок звёзд в разметке с row-reverse: без него ~ красит не ту сторону",
+            "радиокнопки: выбор, клавиатура и отправка формы достаются от браузера",
+            "aria-label на каждой звезде — «★» не читается как оценка",
+            "подсветку будущего выбора при наведении вместо застывшего значения",
+            "подпись оценки словами: цифра без слова ничего не уточняет"
+          ],
+          "adapt": [
+            "legend, max и defaultValue",
+            "массив hints — подписи оценок",
+            "акцент через проп accent",
+            "размер звёзд"
+          ],
+          "notes": [
+            "Правила подписи выписаны на десять оценок: для более длинной шкалы добавьте строки CSS.",
+            "Уникальный name обязателен: две шкалы с одним именем станут одной группой.",
+            "Полузвёзды не поддерживаются: для них нужен ползунок или свой JS.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Вопрос",
+            "type": "text",
+            "default": "Оцените компонент",
+            "maxLength": 28
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Оценка",
+            "type": "number",
+            "default": 4,
+            "min": 1,
+            "max": 5
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A star rating without JS: the stars are reversed in the markup and flipped back by flex, so one selector drives the highlight.",
+            "ai": {
+              "summary": "A star rating: hovering previews the choice and the caption changes without JS. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-rating-001-* palette — do not swap it for your theme tokens",
+                "the reversed star order with row-reverse: without it ~ paints the wrong side",
+                "the radio buttons: selection, keyboard and form submission come from the browser",
+                "an aria-label on every star — \"★\" does not read as a score",
+                "previewing the prospective choice on hover instead of a frozen value",
+                "the worded caption: a bare number clarifies nothing"
+              ],
+              "adapt": [
+                "legend, max and defaultValue",
+                "the hints array — the score captions",
+                "the accent through the accent prop",
+                "the star size"
+              ],
+              "notes": [
+                "Caption rules cover ten scores: a longer scale needs more CSS lines.",
+                "A unique name is mandatory: two scales sharing one become a single group.",
+                "Half stars are unsupported: they need a slider or your own JS.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Rating001 legend=\"Rate this component\" max={5} defaultValue={4} />"
+            },
+            "controls": {
+              "legend": {
+                "label": "Question",
+                "default": "Rate this component"
+              },
+              "defaultValue": {
+                "label": "Score"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "date-001",
+      "type": "registry:component",
+      "title": "Date Field",
+      "description": "Поле даты на нативном input: календарь, локаль и системный выбор на телефоне достаются от браузера.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "date-001/date-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/date-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-date-001-*. Серверный: хуков нет. Значение хранится в формате ГГГГ-ММ-ДД, а показывается по настройкам системы. Границы заданы min и max, поэтому недоступные даты отсекает сам браузер, а пояснение связано с полем через aria-describedby.",
+      "meta": {
+        "tags": ["date", "native", "form", "calendar"],
+        "ai": {
+          "export": "Date001",
+          "usage": "<Date001 label=\"Дата поездки\" min=\"2026-08-31\" max=\"2026-09-30\" />",
+          "summary": "Поле даты: подпись, нативный календарь и пояснение о доступных днях. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-date-001-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: поле показывают поверх любого фона",
+            "нативный input[type=date]: локаль, клавиатура и системный выбор на телефоне достаются даром",
+            "min и max: недоступные даты отсекает браузер, а не проверка после отправки",
+            "aria-describedby между полем и пояснением",
+            "иконку календаря — её перекрашивают, но не прячут",
+            "формат значения ГГГГ-ММ-ДД: показ зависит от системы, а значение — нет"
+          ],
+          "adapt": [
+            "label, hint и name",
+            "defaultValue, min и max",
+            "акцент через проп accent",
+            "ширину поля"
+          ],
+          "notes": [
+            "Оформление календаря браузеру не задать: если нужен свой вид, берите calendar-001.",
+            "Границы поля не заменяют проверку на сервере — их легко обойти.",
+            "Пояснение говорит о доступных днях, а не о формате: формат пользователь не набирает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Дата поездки",
+            "maxLength": 24
+          },
+          {
+            "prop": "hint",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Доступны даты до конца сентября.",
+            "maxLength": 44
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A date field on the native input: the calendar, the locale and the phone's system picker all come from the browser.",
+            "ai": {
+              "summary": "A date field: a label, the native calendar and a note about the available days. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-date-001-* palette — do not swap it for your theme tokens",
+                "its own light surface: the field gets shown over any background",
+                "the native input[type=date]: locale, keyboard and the phone picker come free",
+                "min and max: the browser rejects unavailable dates instead of a post-submit check",
+                "the aria-describedby link between field and note",
+                "the calendar icon — recolour it, do not hide it",
+                "the YYYY-MM-DD value format: display follows the system, the value does not"
+              ],
+              "adapt": [
+                "label, hint and name",
+                "defaultValue, min and max",
+                "the accent through the accent prop",
+                "the field width"
+              ],
+              "notes": [
+                "The browser calendar cannot be styled: for a custom look use calendar-001.",
+                "Field bounds do not replace server validation — they are trivial to bypass.",
+                "The note is about available days, not the format: the user never types the format.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Date001 label=\"Travel date\" min=\"2026-08-31\" max=\"2026-09-30\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Travel date"
+              },
+              "hint": {
+                "label": "Note",
+                "default": "Dates through the end of September."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "number-001",
+      "type": "registry:component",
+      "title": "Number Stepper",
+      "description": "Число с кнопками, но с сохранённым ручным вводом: набрать сорок семь быстрее, чем нажать кнопку сорок семь раз.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "number-001/number-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/number-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-number-001-*. Клиентский: \"use client\" ради кнопок. Значение хранится строкой, поэтому пустое поле в процессе ввода не превращается в ноль, а приводится к границам по blur. Кнопки на краях диапазона отключаются, а не молчат.",
+      "meta": {
+        "tags": ["number", "stepper", "quantity", "form"],
+        "ai": {
+          "export": "Number001",
+          "usage": "<Number001 label=\"Количество мест\" min={1} max={20} defaultValue={4} />",
+          "summary": "Число с кнопками «минус» и «плюс»: поле остаётся вводимым, границы подписаны, край диапазона выключает кнопку. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-number-001-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: поле показывают поверх любого фона",
+            "ручной ввод: кнопками до сорока семи не дожимают",
+            "хранение строкой — иначе пустое поле в процессе ввода схлопывается в ноль",
+            "disabled на краях диапазона вместо молчаливого игнорирования",
+            "приведение к границам по blur, а не на каждое нажатие клавиши",
+            "aria-label на кнопках: «−» и «+» скринридер прочитает как символы"
+          ],
+          "adapt": [
+            "label, min, max, step и defaultValue",
+            "unit — подпись единиц",
+            "акцент через проп accent",
+            "ширину блока"
+          ],
+          "notes": [
+            "Стрелки браузера убраны намеренно: две пары кнопок в одном поле путают.",
+            "Дробный шаг требует своего округления: Number не спасает от 0.30000000000000004.",
+            "Компонент неуправляемый снаружи: чтобы поднять значение наверх, добавьте свой onChange.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Количество мест",
+            "maxLength": 24
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Значение",
+            "type": "number",
+            "default": 4,
+            "min": 1,
+            "max": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A number stepper that keeps typing available: entering forty-seven beats pressing a button forty-seven times.",
+            "ai": {
+              "summary": "A number with minus and plus buttons: the field stays typeable, the bounds are labelled, the edge disables a button. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-number-001-* palette — do not swap it for your theme tokens",
+                "its own light surface: the field gets shown over any background",
+                "typing: nobody clicks their way to forty-seven",
+                "storing the value as a string — otherwise an in-progress empty field collapses to zero",
+                "disabled at the range edges instead of silently ignoring the press",
+                "clamping on blur rather than on every keystroke",
+                "aria-labels on the buttons: a screen reader reads \"−\" and \"+\" as symbols"
+              ],
+              "adapt": [
+                "label, min, max, step and defaultValue",
+                "unit — the unit caption",
+                "the accent through the accent prop",
+                "the block width"
+              ],
+              "notes": [
+                "The browser spinners are removed on purpose: two pairs of buttons in one field confuse.",
+                "A fractional step needs your own rounding: Number will not save you from 0.30000000000000004.",
+                "The component is self-contained: add your own onChange to lift the value up.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Number001 label=\"Seats\" min={1} max={20} defaultValue={4} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Seats"
+              },
+              "defaultValue": {
+                "label": "Value"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tags-001",
+      "type": "registry:component",
+      "title": "Tag Input",
+      "description": "Поле тегов: Enter и запятая добавляют, Backspace на пустом поле убирает последний — целиться в крестик не нужно.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tags-001/tags-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tags-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tags-001-*. Клиентский: \"use client\" ради ввода. Теги и черновик хранятся раздельно, повторы отсекаются молча. Поле ввода растягивается по остатку строки и переносится вместе с тегами, а счётчик показывает предел.",
+      "meta": {
+        "tags": ["tags", "chips", "input", "form"],
+        "ai": {
+          "export": "Tags001",
+          "usage": "<Tags001 label=\"Теги\" defaultValue={[\"форма\"]} max={8} />",
+          "summary": "Поле тегов: чипы с крестиком, ввод по Enter и запятой, счётчик и предел. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-tags-001-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: поле показывают поверх любого фона",
+            "добавление и по Enter, и по запятой: обе привычки встречаются одинаково часто",
+            "Backspace на пустом поле — без него приходится целиться в крестик",
+            "молчаливое отсечение повторов: второй такой же тег не ошибка, а шум",
+            "aria-label на крестике с именем тега",
+            "счётчик у предела: иначе непонятно, почему поле перестало принимать ввод"
+          ],
+          "adapt": [
+            "label, hint и стартовые теги",
+            "max — предел количества",
+            "акцент через проп accent",
+            "ширину поля"
+          ],
+          "notes": [
+            "Подсказок и автодополнения нет: для выбора из готового списка берите autocomplete-001.",
+            "Регистр не нормализуется: «Форма» и «форма» останутся разными тегами, если это не нужно — приведите сами.",
+            "Значение наружу не отдаётся: добавьте свой обработчик или скрытое поле для формы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Теги компонента",
+            "maxLength": 24
+          },
+          {
+            "prop": "max",
+            "label": "Предел",
+            "type": "number",
+            "default": 8,
+            "min": 2,
+            "max": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tag input: Enter and comma add, Backspace on an empty field removes the last one — no aiming at the little cross.",
+            "ai": {
+              "summary": "A tag input: chips with a remove cross, Enter and comma to add, a counter and a limit. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-tags-001-* palette — do not swap it for your theme tokens",
+                "its own light surface: the field gets shown over any background",
+                "adding on both Enter and comma: both habits are equally common",
+                "Backspace on an empty field — otherwise you have to aim at the cross",
+                "silently dropping duplicates: a repeated tag is noise, not a user error",
+                "the aria-label on the cross naming the tag",
+                "the counter at the limit: otherwise the field just stops accepting input"
+              ],
+              "adapt": [
+                "label, hint and the initial tags",
+                "max — the count limit",
+                "the accent through the accent prop",
+                "the field width"
+              ],
+              "notes": [
+                "There are no suggestions: to pick from a known list use autocomplete-001.",
+                "Case is not normalised: \"Form\" and \"form\" stay distinct — fold them yourself if that is wrong.",
+                "The value is not exposed: add your own handler or a hidden field for the form.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tags001 label=\"Tags\" defaultValue={[\"form\"]} max={8} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Component tags"
+              },
+              "max": {
+                "label": "Limit"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "field-001",
+      "type": "registry:component",
+      "title": "Field With Error",
+      "description": "Обвязка поля: пояснение и ошибка связаны через aria-describedby и читаются вслух вместе со значением, а не отдельно.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "field-001/field-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/field-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-001-*. Серверный: хуков нет. Ошибка помечает поле через aria-invalid и попадает в aria-describedby вместе с пояснением: условия остаются на экране ровно тогда, когда они нужнее всего. Ошибка снабжена знаком, а не только цветом.",
+      "meta": {
+        "tags": ["field", "error", "form", "a11y"],
+        "ai": {
+          "export": "Field001",
+          "usage": "<Field001 label=\"Рабочая почта\" hint=\"Пришлём ключ доступа.\" error=\"Адрес без «@».\" />",
+          "summary": "Поле с подписью, пояснением и ошибкой: обязательность подписана словом, ошибка со знаком и цветом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-field-001-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: поле показывают поверх любого фона",
+            "aria-describedby на пояснение и ошибку сразу: они читаются вместе со значением",
+            "aria-invalid на поле с ошибкой",
+            "сохранение пояснения рядом с ошибкой: условия нужны именно в этот момент",
+            "знак у ошибки — красный цвет виден не всем",
+            "слово «обязательно» вместо одной звёздочки"
+          ],
+          "adapt": [
+            "label, hint, error и placeholder",
+            "name и тип поля",
+            "акцент через проп accent",
+            "ширину поля"
+          ],
+          "notes": [
+            "Проверку компонент не делает: он только показывает переданную ошибку.",
+            "Ошибку показывают после попытки отправки, а не во время набора первого символа.",
+            "Текст ошибки должен говорить, что исправить, а не «поле заполнено неверно».",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Рабочая почта",
+            "maxLength": 24
+          },
+          {
+            "prop": "error",
+            "label": "Ошибка",
+            "type": "text",
+            "default": "Адрес без «@» — проверьте написание.",
+            "maxLength": 48
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A field wrapper: the note and the error are linked by aria-describedby and read out with the value, not apart from it.",
+            "ai": {
+              "summary": "A field with a label, a note and an error: the requirement is spelled out, the error carries a mark as well as colour. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-field-001-* palette — do not swap it for your theme tokens",
+                "its own light surface: the field gets shown over any background",
+                "aria-describedby pointing at both note and error: they read with the value",
+                "aria-invalid on the field in error",
+                "keeping the note beside the error: the rules are needed exactly then",
+                "the mark on the error — red is not visible to everyone",
+                "the word \"required\" instead of a lone asterisk"
+              ],
+              "adapt": [
+                "label, hint, error and placeholder",
+                "name and the input type",
+                "the accent through the accent prop",
+                "the field width"
+              ],
+              "notes": [
+                "The component does not validate: it only renders the error you pass.",
+                "Show the error after a submit attempt, not on the first typed character.",
+                "The error text must say what to fix, not \"the field is invalid\".",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Field001 label=\"Work email\" hint=\"We will send the key.\" error=\"Missing an @.\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Work email"
+              },
+              "error": {
+                "label": "Error",
+                "default": "The address has no \"@\" — check the spelling."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "range-001",
+      "type": "registry:component",
+      "title": "Price Range",
+      "description": "Диапазон двумя нативными ползунками: границы упираются друг в друга, поэтому «от» никогда не становится больше «до».",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "range-001/range-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/range-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-range-001-*. Клиентский: \"use client\" ради двух границ. Ползунки лежат друг на друге: дорожка не ловит события, а ручки ловят, поэтому обе доступны мышью. Закрашенный отрезок рисуется градиентом по двум переменным процента.",
+      "meta": {
+        "tags": ["range", "filter", "price", "slider"],
+        "ai": {
+          "export": "Range001",
+          "usage": "<Range001 label=\"Цена\" min={0} max={20000} step={500} defaultFrom={4000} defaultTo={14000} />",
+          "summary": "Диапазон цены: две границы на нативных ползунках, закрашенный отрезок между ними и подписи краёв. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-range-001-* и не подменять её токенами вашей темы",
+            "два нативных ползунка: свой драг пришлось бы учить клавиатуре и касаниям",
+            "pointer-events только на ручках — иначе верхний ползунок съедает клики по нижнему",
+            "упор границ друг в друга: перепрыгивание даёт пустую выборку",
+            "aria-label на каждой границе: два одинаковых ползунка неразличимы на слух",
+            "текущие значения в заголовке, а не только положение ручек"
+          ],
+          "adapt": [
+            "label, min, max и step",
+            "defaultFrom и defaultTo",
+            "unit — единицу измерения",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Ручки на одинаковых значениях наложатся: минимальный зазор задаёт step.",
+            "Стилизация ручек идёт через префиксы: правила ::-webkit- и ::-moz- нельзя объединять в один селектор.",
+            "Для точных сумм рядом с фильтром оставьте два числовых поля.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Цена",
+            "maxLength": 20
+          },
+          {
+            "prop": "defaultFrom",
+            "label": "От",
+            "type": "number",
+            "default": 4000,
+            "min": 0,
+            "max": 19000
+          },
+          {
+            "prop": "defaultTo",
+            "label": "До",
+            "type": "number",
+            "default": 14000,
+            "min": 1000,
+            "max": 20000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A range on two native sliders: the bounds stop against each other, so \"from\" never exceeds \"to\".",
+            "ai": {
+              "summary": "A price range: two bounds on native sliders, a filled segment between them and the edge labels. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-range-001-* palette — do not swap it for your theme tokens",
+                "two native sliders: a custom drag would need keyboard and touch support",
+                "pointer-events on the thumbs only — otherwise the top slider eats the clicks",
+                "the bounds stopping against each other: crossing them yields an empty result",
+                "an aria-label on each bound: two identical sliders are indistinguishable by ear",
+                "the current values in the heading, not just the handle positions"
+              ],
+              "adapt": [
+                "label, min, max and step",
+                "defaultFrom and defaultTo",
+                "unit — the unit of measure",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Thumbs at equal values overlap: step sets the minimum gap.",
+                "Thumb styling is vendor-prefixed: ::-webkit- and ::-moz- rules cannot share a selector.",
+                "For exact amounts keep two number fields beside the filter.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Range001 label=\"Price\" min={0} max={20000} step={500} defaultFrom={4000} defaultTo={14000} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Price"
+              },
+              "defaultFrom": {
+                "label": "From"
+              },
+              "defaultTo": {
+                "label": "To"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

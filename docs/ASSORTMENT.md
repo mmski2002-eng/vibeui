@@ -31,7 +31,7 @@
 | категория    | что входит                                                                                                                                                                    | спрос | у нас |
 | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----: | ----: |
 | `buttons`    | button, button group, toggle, toggle group, kbd                                                                                                                               |  ~155 |    11 |
-| `inputs`     | input, input group, select, combobox, autocomplete, checkbox, radio, switch, slider, textarea, number, otp, phone, label, field, file upload, date selector, cascader, rating |  ~300 |     6 |
+| `inputs`     | input, input group, select, combobox, autocomplete, checkbox, radio, switch, slider, textarea, number, otp, phone, label, field, file upload, date selector, cascader, rating |  ~300 |    20 |
 | `accordion`  | аккордеоны и раскрывающиеся разделы                                                                                                                                           |   ~11 |    11 |
 | `display`    | avatar, badge, card, item, icon tile, icon stack, separator, frame, code block, timeline, carousel, collapsible, scroll area, resizable, tree, skeleton, spinner, progress    |  ~265 |    10 |
 | `alert`      | сообщения, подтверждения, статусы, согласия                                                                                                                                   |   ~20 |    20 |
@@ -77,13 +77,19 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
    сегментированный переключатель, раскрывающаяся FAB, копирование, ссылка
    кнопкой, отправка без дублей, счётчик количества, реакция и нижняя
    панель телефона.
-2. `inputs` — 12 items в двух волнах. Первая: `input-001` (плавающая подпись),
+2. `inputs` — 20 items в трёх волнах. Первая: `input-001` (плавающая подпись),
    `input-002` (приставка и окончание), `textarea-001` (рост под текст),
    `select-001` (нативный список), `checkbox-001`, `switch-001`.
    Вторая: пароль с показом и оценкой, поиск с очисткой, телефон с маской
    от цифр, код из СМС по клеткам, зона перетаскивания файлов, поле суммы с
    разрядами по blur и поле с мягким ограничением длины.
-   Дальше по спросу: radio, slider, rating.
+   Третья: `radio-001` (кликабельна вся карточка), `slider-001` (нативный
+   range с закрашенной дорожкой), `rating-001` (звёзды на радиокнопках без
+   JS), `date-001` (нативный календарь и границы), `number-001` (кнопки,
+   но с ручным вводом), `tags-001` (Enter, запятая, Backspace),
+   `field-001` (пояснение и ошибка через aria-describedby),
+   `range-001` (диапазон двумя ползунками).
+   Дальше по спросу: combobox, cascader, label.
 3. `alert` — категория закрыта полностью, 20 вариантов: полоса тона, залитый,
    строка формы, решение, закрываемый, о новой возможности, сообщение,
    прогресс, обратный отсчёт, ошибки формы, техническая ошибка, обновление,
@@ -173,7 +179,7 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
     conic-gradient, рейтинг горизонтальными полосами, полоса долей, график с
     заливкой, полукруглая шкала с целью, воронка с переходами и сравнение
     двух периодов.
-22. Дальше: блоки `dashboard` и `ai`, вторые волны в inputs и tables.
+22. Дальше: блоки `dashboard` и `ai`, вторая волна в tables.
 
 Ритм — пачка на категорию: спека всех items категории сразу (иначе выходят
 вариации одного и того же), потом реализация по одному, потом отдельный

@@ -956,6 +956,46 @@ export const LAZY_PREVIEWS = {
       (module) => module.Textarea002,
     ),
   ),
+  "radio-001": dynamic(() =>
+    import("@/registry/components/inputs/radio-001/radio-001").then(
+      (module) => module.Radio001,
+    ),
+  ),
+  "slider-001": dynamic(() =>
+    import("@/registry/components/inputs/slider-001/slider-001").then(
+      (module) => module.Slider001,
+    ),
+  ),
+  "rating-001": dynamic(() =>
+    import("@/registry/components/inputs/rating-001/rating-001").then(
+      (module) => module.Rating001,
+    ),
+  ),
+  "date-001": dynamic(() =>
+    import("@/registry/components/inputs/date-001/date-001").then(
+      (module) => module.Date001,
+    ),
+  ),
+  "number-001": dynamic(() =>
+    import("@/registry/components/inputs/number-001/number-001").then(
+      (module) => module.Number001,
+    ),
+  ),
+  "tags-001": dynamic(() =>
+    import("@/registry/components/inputs/tags-001/tags-001").then(
+      (module) => module.Tags001,
+    ),
+  ),
+  "field-001": dynamic(() =>
+    import("@/registry/components/inputs/field-001/field-001").then(
+      (module) => module.Field001,
+    ),
+  ),
+  "range-001": dynamic(() =>
+    import("@/registry/components/inputs/range-001/range-001").then(
+      (module) => module.Range001,
+    ),
+  ),
   "skeleton-001": dynamic(() =>
     import("@/registry/components/display/skeleton-001/skeleton-001").then(
       (module) => module.Skeleton001,

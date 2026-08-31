@@ -190,6 +190,14 @@ import { Otp001 } from "@/registry/components/inputs/otp-001/otp-001"
 import { File001 } from "@/registry/components/inputs/file-001/file-001"
 import { Currency001 } from "@/registry/components/inputs/currency-001/currency-001"
 import { Textarea002 } from "@/registry/components/inputs/textarea-002/textarea-002"
+import { Radio001 } from "@/registry/components/inputs/radio-001/radio-001"
+import { Slider001 } from "@/registry/components/inputs/slider-001/slider-001"
+import { Rating001 } from "@/registry/components/inputs/rating-001/rating-001"
+import { Date001 } from "@/registry/components/inputs/date-001/date-001"
+import { Number001 } from "@/registry/components/inputs/number-001/number-001"
+import { Tags001 } from "@/registry/components/inputs/tags-001/tags-001"
+import { Field001 } from "@/registry/components/inputs/field-001/field-001"
+import { Range001 } from "@/registry/components/inputs/range-001/range-001"
 import { Skeleton001 } from "@/registry/components/display/skeleton-001/skeleton-001"
 import { Progress001 } from "@/registry/components/display/progress-001/progress-001"
 import { Separator001 } from "@/registry/components/display/separator-001/separator-001"
@@ -432,6 +440,14 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "file-001": File001,
   "currency-001": Currency001,
   "textarea-002": Textarea002,
+  "radio-001": Radio001,
+  "slider-001": Slider001,
+  "rating-001": Rating001,
+  "date-001": Date001,
+  "number-001": Number001,
+  "tags-001": Tags001,
+  "field-001": Field001,
+  "range-001": Range001,
   "skeleton-001": Skeleton001,
   "progress-001": Progress001,
   "separator-001": Separator001,
