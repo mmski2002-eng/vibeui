@@ -1235,6 +1235,312 @@
           }
         }
       }
+    },
+    {
+      "name": "breadcrumb-013",
+      "type": "registry:component",
+      "title": "Level Menu",
+      "description": "Последний уровень открывает меню соседних страниц: нативный popover со списком ссылок и пояснениями, текущая строка помечена полосой.",
+      "categories": ["breadcrumb"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "breadcrumb-013/breadcrumb-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/breadcrumb-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-013-*. Серверный: useId нужен только для уникального id popover и уникального anchor-name, клиентского состояния нет. Меню — нативный popover=\"auto\": верхний слой, закрытие по Esc и по клику мимо, возврат фокуса на кнопку достаются от браузера. Позиция берётся из CSS anchor positioning под @supports (anchor-name), с position-try-fallbacks на переворот; где anchor positioning не поддержан, popover остаётся карточкой по центру экрана — это рабочий вид, а не поломка. Текущая строка меню помечена и фоном, и полосой-маркером слева, чтобы «где я» читалось не только цветом.",
+      "meta": {
+        "tags": ["breadcrumb", "popover", "menu", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Breadcrumb013",
+          "usage": "<Breadcrumb013\n  trail={[\"Проекты\", \"Витрина\"]}\n  current=\"Настройки\"\n  menuTitle=\"Соседние страницы\"\n  siblings={[\n    { label: \"Обзор\", href: \"/overview\", hint: \"Сводка и последние события\" },\n    { label: \"Настройки\", href: \"/settings\", hint: \"Домен, доступы, интеграции\" },\n  ]}\n/>",
+          "summary": "Крошки, где текущий уровень — кнопка, открывающая popover-меню соседних страниц: обычные ссылки с пояснениями, а не поле выбора. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-breadcrumb-013-* и не подменять её токенами вашей темы",
+            "нативный popover: закрытие по Esc, клик мимо и верхний слой браузер делает сам, на самописном меню это придётся писать заново",
+            "уникальные id и anchor-name из useId — два экземпляра на странице иначе притянутся к одному якорю",
+            "запасной вид без anchor positioning: там popover встаёт карточкой по центру, и это нормальное поведение, а не баг",
+            "полосу-маркер у текущей строки меню: только цветом «где я» при дальтонизме не читается",
+            "собственную светлую подложку крошек: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "путь до текущей страницы через trail и её имя через current",
+            "список соседей через siblings — label, href и пояснение hint",
+            "заголовок меню через menuTitle",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Ссылки в меню никуда не ведут сами: подставьте реальные href, иначе клик закроет popover и ничего не произойдёт.",
+            "Пояснения hint не должны быть длиннее строки: меню фиксированной ширины, длинный текст переносится на три строки.",
+            "Соседей уместно до восьми: длиннее нужен поиск, а не меню.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "current",
+            "label": "Текущая страница",
+            "type": "text",
+            "default": "Настройки",
+            "maxLength": 24
+          },
+          {
+            "prop": "menuTitle",
+            "label": "Заголовок меню",
+            "type": "text",
+            "default": "Соседние страницы",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The last level opens a menu of sibling pages: a native popover with links and hints, the current row marked by a bar.",
+            "ai": {
+              "summary": "Breadcrumbs whose current level is a button opening a popover menu of sibling pages: plain links with hints, not a form control. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-breadcrumb-013-* palette — do not swap it for your theme tokens",
+                "the native popover: Esc, light dismiss and the top layer come from the browser, a hand-rolled menu has to reimplement them",
+                "the unique id and anchor-name from useId — two instances otherwise latch onto one anchor",
+                "the fallback without anchor positioning: there the popover lands as a centred card, and that is normal behaviour, not a bug",
+                "the marker bar on the current menu row: colour alone does not answer \"where am I\" for colour-blind users",
+                "the breadcrumbs' own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the path to the current page through trail and its name through current",
+                "the sibling list through siblings — label, href and the hint text",
+                "the menu heading through menuTitle",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Menu links lead nowhere on their own: pass real hrefs, otherwise a click just closes the popover.",
+                "Keep hint text to one line: the menu has a fixed width and long text wraps to three lines.",
+                "Up to eight siblings is fine: beyond that you need search, not a menu.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Breadcrumb013\n  trail={[\"Projects\", \"Storefront\"]}\n  current=\"Settings\"\n  menuTitle=\"Sibling pages\"\n  siblings={[\n    { label: \"Overview\", href: \"/overview\", hint: \"Summary and recent events\" },\n    { label: \"Settings\", href: \"/settings\", hint: \"Domain, access, integrations\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "current": {
+                "label": "Current page",
+                "default": "Settings"
+              },
+              "menuTitle": {
+                "label": "Menu heading",
+                "default": "Sibling pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "breadcrumb-014",
+      "type": "registry:component",
+      "title": "Typed Nodes",
+      "description": "Путь по разнородным сущностям: тип каждого узла — пространство, папка, база, таблица, запись — различается формой значка, а не только цветом.",
+      "categories": ["breadcrumb"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "breadcrumb-014/breadcrumb-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/breadcrumb-014.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-014-*. Серверный: хуков и состояния нет. Значки — инлайновый SVG в один контур на тип, поэтому пакет иконок не нужен; силуэты подобраны так, чтобы различаться без цвета (круг, язычок папки, цилиндр, сетка, лист со скосом). Цвет типа задан отдельными переменными и работает как вторая подсказка. Название типа лежит рядом со значком скрытым текстом, поэтому скринридер читает «Таблица: Сделки», а не одно имя. Разделитель — шеврон на бордюрах псевдоэлемента, чтобы не тянуть шрифт с символами.",
+      "meta": {
+        "tags": ["breadcrumb", "icons", "hierarchy", "admin"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Breadcrumb014",
+          "usage": "<Breadcrumb014\n  items={[\n    { label: \"Аналитика\", href: \"/spaces/analytics\", kind: \"space\" },\n    { label: \"CRM\", href: \"/db/crm\", kind: \"database\" },\n    { label: \"Сделки\", href: \"/db/crm/deals\", kind: \"table\" },\n    { label: \"Сделка №4471\", kind: \"record\" },\n  ]}\n  currentLabel=\"Сделка №4471\"\n  currentKind=\"record\"\n/>",
+          "summary": "Крошки для админки, где уровни разнотипные: значок различает пространство, папку, базу, таблицу и запись формой контура. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-breadcrumb-014-* и не подменять её токенами вашей темы",
+            "различие типов ФОРМОЙ значка: цвет — вторая подсказка, в монохроме и при дальтонизме остаётся только силуэт",
+            "скрытое название типа рядом со значком: сам значок для скринридера пустой",
+            "инлайновый SVG вместо пакета иконок — иначе компонент перестаёт быть переносимым одним файлом",
+            "одинаковую толщину штриха у всех пяти контуров: разнобой читается как разная важность уровней",
+            "собственную светлую подложку крошек: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "состав пути через items — label, href и kind каждого узла",
+            "имя последнего уровня через currentLabel",
+            "тип последнего уровня через currentKind",
+            "акцент фокуса через проп accent"
+          ],
+          "notes": [
+            "Типов ровно пять: новый тип — это новый контур в PATHS и своя переменная цвета, подменой существующего не обойтись.",
+            "Длинный путь переносится на вторую строку: на телефоне проверьте, что последний уровень не уехал один.",
+            "Значки нарисованы под размер 0.875rem; при сильном увеличении шрифта их стоит увеличить вместе с ним.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "currentLabel",
+            "label": "Текущий уровень",
+            "type": "text",
+            "default": "Сделка №4471",
+            "maxLength": 28
+          },
+          {
+            "prop": "currentKind",
+            "label": "Тип узла",
+            "type": "select",
+            "default": "record",
+            "options": ["space", "folder", "database", "table", "record"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A path across mixed entities: each node's type — space, folder, database, table, record — is told apart by icon shape, not colour alone.",
+            "ai": {
+              "summary": "Breadcrumbs for an admin panel with mixed levels: the icon distinguishes space, folder, database, table and record by outline shape. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-breadcrumb-014-* palette — do not swap it for your theme tokens",
+                "type told apart by icon SHAPE: colour is the second cue, in monochrome and for colour-blind users only the silhouette remains",
+                "the hidden type name next to the icon: the icon itself is empty to a screen reader",
+                "inline SVG instead of an icon package — otherwise the component stops being a portable single file",
+                "the same stroke width across all five outlines: a mismatch reads as levels of different importance",
+                "the breadcrumbs' own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the path contents through items — label, href and kind of every node",
+                "the last level's name through currentLabel",
+                "the last level's type through currentKind",
+                "the focus accent through the accent prop"
+              ],
+              "notes": [
+                "There are exactly five types: a new one means a new outline in PATHS and its own colour variable, not a repurposed existing type.",
+                "A long path wraps to a second line: check on a phone that the last level is not left alone there.",
+                "The icons are drawn for 0.875rem; at large text sizes scale them along with the type.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Breadcrumb014\n  items={[\n    { label: \"Analytics\", href: \"/spaces/analytics\", kind: \"space\" },\n    { label: \"CRM\", href: \"/db/crm\", kind: \"database\" },\n    { label: \"Deals\", href: \"/db/crm/deals\", kind: \"table\" },\n    { label: \"Deal #4471\", kind: \"record\" },\n  ]}\n  currentLabel=\"Deal #4471\"\n  currentKind=\"record\"\n/>"
+            },
+            "controls": {
+              "currentLabel": {
+                "label": "Current level",
+                "default": "Deal #4471"
+              },
+              "currentKind": {
+                "label": "Node type"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "breadcrumb-015",
+      "type": "registry:component",
+      "title": "Pending Segment",
+      "description": "Путь известен из маршрута, имя последнего сегмента ещё грузится: его место держит полоса-скелетон заданной ширины, поэтому строка не прыгает.",
+      "categories": ["breadcrumb"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "breadcrumb-015/breadcrumb-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/breadcrumb-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-015-*. Серверный: состояние приходит пропом loading, хуков нет. Ширина заглушки задана в ch через переменную --vibeui-breadcrumb-015-width, которую проп placeholderWidth ставит инлайном: единицы ch привязаны к шрифту самой строки, поэтому место под имя резервируется одинаково при любом размере текста. Блик — сдвиг background-position на фоновом градиенте, без лишних узлов; пульсирующая точка дублирует состояние формой. Загрузка объявлена через aria-busy на элементе списка и скрытую живую область role=\"status\", а не одним цветом.",
+      "meta": {
+        "tags": ["breadcrumb", "skeleton", "loading", "async"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Breadcrumb015",
+          "usage": "<Breadcrumb015\n  trail={[\"Каталог\", \"Поставщики\", \"Партии\"]}\n  currentLabel=\"Партия A-1180\"\n  loading={false}\n  placeholderWidth={12}\n/>",
+          "summary": "Крошки для страницы, где путь известен сразу, а имя записи приезжает запросом: последний сегмент держит место скелетоном и объявляет ожидание ассистивным технологиям. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-breadcrumb-015-* и не подменять её токенами вашей темы",
+            "резерв места под имя: без него строка прыгает и уезжают все блоки под ней",
+            "ширину заглушки в ch — привязка к шрифту строки, а не к пикселям экрана",
+            "aria-busy и живую область role=\"status\": состояние загрузки нельзя объявлять одним цветом",
+            "правило prefers-reduced-motion: бегущий блик и пульс — типовой раздражитель при вестибулярных нарушениях",
+            "собственную светлую подложку крошек: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "путь через trail и имя записи через currentLabel",
+            "состояние через loading — при false вместо полосы появляется имя",
+            "резерв места через placeholderWidth в символах",
+            "текст ожидания через loadingText и акцент через accent"
+          ],
+          "notes": [
+            "placeholderWidth задавайте по средней длине имени: слишком широкая полоса читается как ошибка загрузки.",
+            "Живая область произносит текст ожидания один раз; готовое имя объявит сама страница, дублировать его в статусе не нужно.",
+            "Скелетон уместен до пары секунд: дольше нужен явный текст о задержке, а не бесконечный блик.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "loading",
+            "label": "Идёт загрузка",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "placeholderWidth",
+            "label": "Ширина заглушки",
+            "type": "number",
+            "default": 10,
+            "min": 4,
+            "max": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The path is known from the route while the last segment's name is still loading: a skeleton bar of a set width holds its place, so the row never jumps.",
+            "ai": {
+              "summary": "Breadcrumbs for a page whose path is known instantly while the record name arrives by request: the last segment holds its place with a skeleton and announces the wait to assistive tech. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-breadcrumb-015-* palette — do not swap it for your theme tokens",
+                "the reserved space for the name: without it the row jumps and everything below shifts",
+                "the placeholder width in ch — tied to the row's font, not to screen pixels",
+                "aria-busy and the role=\"status\" live region: a loading state must not be announced by colour alone",
+                "the prefers-reduced-motion rule: a travelling sheen and a pulse are a classic vestibular trigger",
+                "the breadcrumbs' own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the path through trail and the record name through currentLabel",
+                "the state through loading — at false the name replaces the bar",
+                "the reserved space through placeholderWidth, in characters",
+                "the waiting text through loadingText and the accent through accent"
+              ],
+              "notes": [
+                "Set placeholderWidth to the average name length: an over-wide bar reads as a failed load.",
+                "The live region speaks the waiting text once; the finished name is announced by the page itself, so do not duplicate it in the status.",
+                "A skeleton fits a couple of seconds: longer waits need an explicit delay message, not an endless sheen.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Breadcrumb015\n  trail={[\"Catalog\", \"Suppliers\", \"Batches\"]}\n  currentLabel=\"Batch A-1180\"\n  loading={false}\n  placeholderWidth={12}\n/>"
+            },
+            "controls": {
+              "loading": {
+                "label": "Loading"
+              },
+              "placeholderWidth": {
+                "label": "Placeholder width"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

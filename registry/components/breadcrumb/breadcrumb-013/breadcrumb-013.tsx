@@ -1,0 +1,212 @@
+import { useId } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Breadcrumb013Sibling = {
+  label: string
+  href?: string
+  hint?: string
+}
+
+export type Breadcrumb013Props = Omit<
+  ComponentPropsWithoutRef<"nav">,
+  "children"
+> & {
+  trail?: string[]
+  current?: string
+  siblings?: Breadcrumb013Sibling[]
+  menuTitle?: string
+  accent?: string
+}
+
+// Идея компонента: последний уровень открывает меню соседних страниц —
+// не форму выбора, а обычный список ссылок с пояснениями. Меню живёт в
+// нативном popover: верхний слой, закрытие по Esc и по клику мимо достаются
+// от браузера. Позиция берётся из CSS anchor positioning там, где он есть,
+// а где нет — popover остаётся карточкой по центру экрана, и это рабочий
+// вид, а не поломка.
+const STYLES = `
+:where([data-vibeui-block="breadcrumb-013"]){
+--vibeui-breadcrumb-013-surface:oklch(1 0 0);
+--vibeui-breadcrumb-013-surface-border:oklch(0.91 0.006 265);
+--vibeui-breadcrumb-013-fg:oklch(0.26 0.016 265);
+--vibeui-breadcrumb-013-muted:oklch(0.56 0.014 265);
+--vibeui-breadcrumb-013-faint:oklch(0.66 0.012 265);
+--vibeui-breadcrumb-013-border:oklch(0.9 0.006 265);
+--vibeui-breadcrumb-013-hover:oklch(0.96 0.004 265);
+--vibeui-breadcrumb-013-accent:oklch(0.55 0.17 265);
+--vibeui-breadcrumb-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+/* Собственная светлая подложка: крошки — это тёмный текст, и на тёмной
+   карточке каталога он обязан читаться без правки темы проекта. */
+[data-vibeui-block="breadcrumb-013"]{
+box-sizing:border-box;width:100%;max-width:34rem;
+padding:0.5rem 0.75rem;
+background:var(--vibeui-breadcrumb-013-surface);
+border:1px solid var(--vibeui-breadcrumb-013-surface-border);border-radius:0.625rem;
+font-family:var(--vibeui-breadcrumb-013-font);font-size:0.8125rem;line-height:1.4;
+color:var(--vibeui-breadcrumb-013-muted);
+}
+[data-vibeui-block="breadcrumb-013"] ol{
+display:flex;flex-wrap:wrap;align-items:center;gap:0.4375rem;
+margin:0;padding:0;list-style:none;
+}
+[data-vibeui-block="breadcrumb-013"] li{display:inline-flex;align-items:center;gap:0.4375rem}
+[data-vibeui-block="breadcrumb-013"] li + li::before{content:"/";color:oklch(0.78 0.01 265)}
+[data-vibeui-block="breadcrumb-013"] a{color:inherit;text-decoration:none;border-radius:0.25rem}
+[data-vibeui-block="breadcrumb-013"] a:hover{color:var(--vibeui-breadcrumb-013-fg);text-decoration:underline;text-underline-offset:3px}
+[data-vibeui-block="breadcrumb-013"] a:focus-visible{outline:2px solid var(--vibeui-breadcrumb-013-accent);outline-offset:2px}
+/* Кнопка последнего уровня выглядит как текущая страница, а не как кнопка:
+   подсказку о меню несёт только галка справа. */
+[data-vibeui-block="breadcrumb-013"] [data-part="trigger"]{
+appearance:none;cursor:pointer;font:inherit;
+display:inline-flex;align-items:center;gap:0.375rem;
+padding:0.125rem 0.375rem;margin:-0.125rem -0.375rem;
+border:0;border-radius:0.375rem;background:transparent;
+color:var(--vibeui-breadcrumb-013-fg);font-weight:600;
+transition:background-color .16s ease;
+}
+[data-vibeui-block="breadcrumb-013"] [data-part="trigger"]:hover{background:var(--vibeui-breadcrumb-013-hover)}
+[data-vibeui-block="breadcrumb-013"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-breadcrumb-013-accent);outline-offset:2px}
+[data-vibeui-block="breadcrumb-013"] [data-part="caret"]{
+width:0.375rem;height:0.375rem;margin-top:-0.1875rem;
+border-right:1.5px solid var(--vibeui-breadcrumb-013-faint);
+border-bottom:1.5px solid var(--vibeui-breadcrumb-013-faint);
+transform:rotate(45deg);
+}
+[data-vibeui-block="breadcrumb-013"] [data-part="menu"]{
+box-sizing:border-box;width:min(17rem,calc(100vw - 2rem));
+padding:0.3125rem;border:1px solid var(--vibeui-breadcrumb-013-border);
+border-radius:0.625rem;background:var(--vibeui-breadcrumb-013-surface);
+font-family:var(--vibeui-breadcrumb-013-font);font-size:0.8125rem;
+color:var(--vibeui-breadcrumb-013-muted);
+box-shadow:0 18px 40px -22px oklch(0.2 0.02 265 / 60%);
+}
+[data-vibeui-block="breadcrumb-013"] [data-part="menu"]:not(:popover-open){display:none}
+[data-vibeui-block="breadcrumb-013"] [data-part="menu-title"]{
+display:block;padding:0.25rem 0.5rem 0.375rem;
+font-size:0.6875rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+color:var(--vibeui-breadcrumb-013-faint);
+}
+[data-vibeui-block="breadcrumb-013"] [data-part="menu"] ul{
+display:flex;flex-direction:column;gap:0.0625rem;
+margin:0;padding:0;list-style:none;
+}
+[data-vibeui-block="breadcrumb-013"] [data-part="menu"] li{display:block}
+[data-vibeui-block="breadcrumb-013"] [data-part="menu"] a{
+display:block;padding:0.375rem 0.5rem;border-radius:0.4375rem;
+}
+[data-vibeui-block="breadcrumb-013"] [data-part="menu"] a:hover{background:var(--vibeui-breadcrumb-013-hover);text-decoration:none}
+[data-vibeui-block="breadcrumb-013"] [data-part="name"]{display:block;color:var(--vibeui-breadcrumb-013-fg);font-weight:500}
+[data-vibeui-block="breadcrumb-013"] [data-part="hint"]{display:block;font-size:0.75rem;color:var(--vibeui-breadcrumb-013-faint)}
+/* Текущая строка помечена не только цветом: слева стоит полоса-маркер,
+   иначе при дальтонизме «где я» из меню не читается. */
+[data-vibeui-block="breadcrumb-013"] [data-part="menu"] [aria-current="page"]{
+position:relative;background:var(--vibeui-breadcrumb-013-hover);
+}
+[data-vibeui-block="breadcrumb-013"] [data-part="menu"] [aria-current="page"]::before{
+content:"";position:absolute;left:0;top:0.4375rem;bottom:0.4375rem;width:2px;
+border-radius:2px;background:var(--vibeui-breadcrumb-013-accent);
+}
+@supports (anchor-name:--vibeui-breadcrumb-013-a){
+[data-vibeui-block="breadcrumb-013"] [data-part="menu"]{
+position:fixed;margin:0.375rem 0 0;
+position-area:bottom span-right;
+position-try-fallbacks:flip-block,flip-inline;
+}
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="breadcrumb-013"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_TRAIL = ["Проекты", "Витрина"]
+
+const DEFAULT_SIBLINGS: Breadcrumb013Sibling[] = [
+  { label: "Обзор", href: "#", hint: "Сводка и последние события" },
+  { label: "Настройки", href: "#", hint: "Домен, доступы, интеграции" },
+  { label: "Участники", href: "#", hint: "12 человек, 3 приглашения" },
+  { label: "История", href: "#", hint: "Журнал изменений за 90 дней" },
+]
+
+/**
+ * Последний уровень открывает popover-меню соседних страниц.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Breadcrumb013({
+  trail = DEFAULT_TRAIL,
+  current = "Настройки",
+  siblings = DEFAULT_SIBLINGS,
+  menuTitle = "Соседние страницы",
+  accent,
+  className,
+  style,
+  ...props
+}: Breadcrumb013Props) {
+  const menuId = `vibeui-breadcrumb-013-${useId().replace(/[^a-zA-Z0-9]/g, "")}`
+  const anchorName = `--vibeui-breadcrumb-013-${menuId.slice(-8)}`
+  const palette = {
+    ...(accent ? { "--vibeui-breadcrumb-013-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-breadcrumb-013" precedence="medium">
+        {STYLES}
+      </style>
+      <nav
+        {...props}
+        data-vibeui-block="breadcrumb-013"
+        aria-label="Хлебные крошки"
+        className={className}
+        style={palette}
+      >
+        <ol>
+          {trail.map((label) => (
+            <li key={label}>
+              <a href="#">{label}</a>
+            </li>
+          ))}
+          <li>
+            <button
+              type="button"
+              data-part="trigger"
+              popoverTarget={menuId}
+              aria-current="page"
+              aria-label={`${current}: показать соседние страницы`}
+              style={{ anchorName } as CSSProperties}
+            >
+              {current}
+              <span data-part="caret" aria-hidden="true" />
+            </button>
+            <div
+              id={menuId}
+              popover="auto"
+              data-part="menu"
+              style={{ positionAnchor: anchorName } as CSSProperties}
+            >
+              <span data-part="menu-title">{menuTitle}</span>
+              <ul>
+                {siblings.map((sibling) => {
+                  const active = sibling.label === current
+
+                  return (
+                    <li key={sibling.label}>
+                      <a
+                        href={sibling.href ?? "#"}
+                        aria-current={active ? "page" : undefined}
+                      >
+                        <span data-part="name">{sibling.label}</span>
+                        {sibling.hint ? (
+                          <span data-part="hint">{sibling.hint}</span>
+                        ) : null}
+                      </a>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          </li>
+        </ol>
+      </nav>
+    </>
+  )
+}
