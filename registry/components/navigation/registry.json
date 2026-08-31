@@ -2862,6 +2862,2973 @@
           }
         }
       }
+    },
+    {
+      "name": "menubar-002",
+      "type": "registry:component",
+      "title": "Arrow Menubar",
+      "description": "Строка меню, по которой ходят стрелками: влево и вправо переводят раздел, вниз открывает список и ставит фокус на первый пункт.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "menubar-002/menubar-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/menubar-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-002-*. Клиентский: \"use client\" ради состояния открытого меню и клавиатуры. Разметка следует паттерну menubar из WAI-ARIA: role=\"menubar\", кнопки role=\"menuitem\" с aria-haspopup и aria-expanded, списки role=\"menu\". В Tab-порядке живёт только один раздел (roving tabindex), переход между разделами идёт стрелками. Меню позиционируется абсолютно от своей обёртки, поэтому anchor positioning не требуется. Клик мимо закрывает список через слушатель pointerdown, снимаемый вместе с закрытием.",
+      "meta": {
+        "tags": ["menubar", "keyboard", "menu", "aria"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Menubar002",
+          "usage": "<Menubar002\n  menus={[\n    { label: \"Файл\", items: [{ label: \"Открыть…\", keys: \"⌘O\" }] },\n    { label: \"Правка\", items: [{ label: \"Отменить\", keys: \"⌘Z\" }] },\n  ]}\n/>",
+          "summary": "Строка меню приложения с полной клавиатурой: стрелки влево и вправо переводят раздел по кругу, Home и End прыгают к краям, стрелка вниз открывает меню и ставит фокус на первый пункт, Escape закрывает и возвращает фокус на кнопку раздела. Внутри открытого списка стрелки вверх и вниз перебирают пункты. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-menubar-002-* и не подменять её токенами вашей темы (bg-popover, text-muted-foreground и подобными)",
+            "roving tabindex: tabIndex 0 только у текущего раздела, у остальных -1 — иначе Tab перебирает всю строку меню, а не проходит её насквозь",
+            "возврат фокуса на кнопку раздела при закрытии по Escape: без него фокус проваливается в начало документа",
+            "aria-expanded на кнопке раздела: по нему скринридер понимает, раскрыт список или нет",
+            "перенос фокуса вместе со сменой раздела — выбор без фокуса рассинхронизирует клавиатуру и глаз",
+            "слушатель pointerdown, закрывающий меню по клику мимо, и его снятие при закрытии — иначе он копится на каждом открытии"
+          ],
+          "adapt": [
+            "массив menus: разделы, пункты, сочетания клавиш и признак disabled",
+            "обработчики пунктов: сейчас клик только закрывает меню",
+            "акцент через проп accent — цвет кольца фокуса",
+            "высоту строки меню и ширину выпадающих списков"
+          ],
+          "notes": [
+            "Компонент клиентский: \"use client\" нужен ради состояния и обработки клавиш.",
+            "Меню позиционируется абсолютно внутри своей обёртки: если строка меню лежит в контейнере с overflow:hidden, список обрежется.",
+            "Первые буквы пунктов компонент не обрабатывает — в системных меню это привычный способ выбора, добавьте его при необходимости.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A menubar you walk with arrow keys: left and right move between sections, down opens the list and lands focus on the first item.",
+            "ai": {
+              "summary": "An application menubar with full keyboard support: left and right arrows move between sections in a loop, Home and End jump to the ends, arrow down opens the menu and focuses its first item, Escape closes it and returns focus to the section button. Inside an open list, up and down walk the items. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-menubar-002-* palette — do not swap it for your theme tokens (bg-popover, text-muted-foreground and the like)",
+                "the roving tabindex: 0 on the current section and -1 on the rest, otherwise Tab walks the whole menubar instead of passing through it",
+                "returning focus to the section button when Escape closes the menu: without it focus falls back to the start of the document",
+                "aria-expanded on the section button: it is how a screen reader knows whether the list is open",
+                "moving focus together with the section change — a selection without focus splits the keyboard from the eye",
+                "the pointerdown listener that closes the menu on an outside click, and its removal on close — otherwise it piles up with every opening"
+              ],
+              "adapt": [
+                "the menus array: sections, items, shortcuts and the disabled flag",
+                "the item handlers: a click currently only closes the menu",
+                "the accent through the accent prop — it colours the focus ring",
+                "the menubar height and the width of the drop-down lists"
+              ],
+              "notes": [
+                "The component is a client one: \"use client\" is there for the state and the key handling.",
+                "The menu is positioned absolutely inside its own wrapper: in a container with overflow:hidden the list gets clipped.",
+                "Type-ahead on item initials is not handled — it is a familiar shortcut in system menus, add it if you need it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Menubar002\n  menus={[\n    { label: \"File\", items: [{ label: \"Open…\", keys: \"⌘O\" }] },\n    { label: \"Edit\", items: [{ label: \"Undo\", keys: \"⌘Z\" }] },\n  ]}\n/>"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "menubar-003",
+      "type": "registry:component",
+      "title": "Shortcut Menubar",
+      "description": "Строка меню, где сочетания клавиш выстроены в общую колонку и записаны платформонезависимо: ⌘ на Mac, Ctrl на Windows.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "menubar-003/menubar-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/menubar-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-003-*. Серверный: хуков нет, состояние держит браузер. Каждый раздел — <details> с общим атрибутом name, поэтому браузер сам следит, что раскрыт только один. Пункт — сетка из двух колонок, сочетание всегда прижато к правому краю. Подписи клавиш хранятся как «Mod S» и разворачиваются функцией keysFor в ⌘ или Ctrl по пропу platform, каждая клавиша выводится отдельным <kbd>.",
+      "meta": {
+        "tags": ["menubar", "shortcuts", "no-js", "kbd"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Menubar003",
+          "usage": "<Menubar003\n  platform=\"windows\"\n  menus={[{ label: \"Файл\", items: [{ label: \"Сохранить\", keys: \"Mod S\" }] }]}\n/>",
+          "summary": "Строка меню с колонкой горячих клавиш: подписи слева, сочетания справа, каждая клавиша в своём <kbd>. Разделы закрывают друг друга без JS — за это отвечает атрибут name у <details>. Сочетания записаны как «Mod S» и подставляются под платформу. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-menubar-003-* и не подменять её токенами вашей темы (bg-muted, border-border и подобными)",
+            "общий атрибут name у <details>: именно он закрывает соседний раздел при открытии следующего, и без него раскрываются все сразу",
+            "сетку из двух колонок в пункте: сочетание должно стоять в общей колонке, иначе взгляд не находит его сверху вниз",
+            "запись сочетания через Mod вместо жёстко вписанного ⌘: на Windows символ ⌘ ничего не значит",
+            "каждую клавишу отдельным <kbd> — это семантика клавиши, а не украшение",
+            "disabled вместо скрытия недоступного пункта: исчезающие пункты ломают память о меню"
+          ],
+          "adapt": [
+            "массив menus и записи сочетаний в поле keys",
+            "platform — под какую платформу разворачивать Mod",
+            "акцент через проп accent — цвет кольца фокуса",
+            "оформление <kbd>: рамку, фон и размер"
+          ],
+          "notes": [
+            "Сами сочетания компонент не вешает: подпись в меню — это напоминание, обработчик за вами.",
+            "Escape не закрывает <details>: это поведение элемента, а не ошибка. Нужна реакция на Escape — берите вариант на popover.",
+            "Открытый раздел перекрывает содержимое под собой: строка меню должна лежать выше по слою.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "platform",
+            "label": "Платформа",
+            "type": "select",
+            "default": "mac",
+            "options": ["mac", "windows"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A menubar where the shortcuts line up in a column of their own and are written platform-independently: ⌘ on Mac, Ctrl on Windows.",
+            "ai": {
+              "summary": "A menubar with a shortcut column: labels on the left, key combinations on the right, every key in its own <kbd>. Sections close one another without JS — that is the name attribute on <details>. Shortcuts are stored as \"Mod S\" and expanded for the platform. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-menubar-003-* palette — do not swap it for your theme tokens (bg-muted, border-border and the like)",
+                "the shared name attribute on <details>: it is what closes the neighbouring section, and without it every section opens at once",
+                "the two-column grid inside an item: the shortcut has to sit in a shared column or the eye cannot scan it downwards",
+                "writing shortcuts with Mod instead of a hardcoded ⌘: on Windows the ⌘ symbol means nothing",
+                "each key in its own <kbd> — that is key semantics, not decoration",
+                "disabled instead of hiding an unavailable item: vanishing items break the memory of a menu"
+              ],
+              "adapt": [
+                "the menus array and the shortcut strings in the keys field",
+                "platform — which platform Mod expands for",
+                "the accent through the accent prop — it colours the focus ring",
+                "the <kbd> styling: border, background and size"
+              ],
+              "notes": [
+                "The component does not bind the shortcuts: the label is a reminder, the handler is yours.",
+                "Escape does not close a <details>: that is the element's behaviour, not a bug. If you need Escape, take the popover-based variant.",
+                "An open section overlaps whatever is beneath it: the menubar has to sit higher in the stacking order.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Menubar003\n  platform=\"windows\"\n  menus={[{ label: \"File\", items: [{ label: \"Save\", keys: \"Mod S\" }] }]}\n/>"
+            },
+            "controls": {
+              "platform": {
+                "label": "Platform"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "menubar-004",
+      "type": "registry:component",
+      "title": "Checkable Menubar",
+      "description": "Меню «Вид», где пункты не запускают действие, а держат состояние: переключатели с галочкой и взаимоисключающие варианты с точкой.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "menubar-004/menubar-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/menubar-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-004-*. Клиентский: \"use client\" ради состояния переключателей. Меню — popover=\"auto\", поэтому Escape и клик мимо достаются от браузера, а клик внутри его не закрывает — это и нужно для пунктов-переключателей. Пункты помечены role=\"menuitemcheckbox\" и role=\"menuitemradio\" с aria-checked. Отметка живёт в отдельной колонке фиксированной ширины, поэтому подписи не разъезжаются при включении.",
+      "meta": {
+        "tags": ["menubar", "checkbox", "state", "popover"],
+        "ai": {
+          "export": "Menubar004",
+          "usage": "<Menubar004\n  toggles={[{ id: \"grid\", label: \"Сетка\", keys: \"⌘'\" }]}\n  defaultOn={[\"grid\"]}\n  defaultChoice=\"cozy\"\n/>",
+          "summary": "Меню с пунктами-переключателями: галочки для независимых настроек, точки для взаимоисключающих вариантов, состояние видно прямо в строке меню. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-menubar-004-* и не подменять её токенами вашей темы (bg-accent, text-muted-foreground и подобными)",
+            "role=\"menuitemcheckbox\" и role=\"menuitemradio\" вместе с aria-checked: без них скринридер объявит пункт обычной командой и состояние потеряется",
+            "колонку отметки фиксированной ширины: если рисовать галочку на месте текста, подписи прыгают при каждом переключении",
+            "popover=\"auto\": клик внутри не закрывает меню, а Escape и клик мимо закрывают — ровно то поведение, которое нужно настройкам",
+            "разные знаки для переключателя и варианта: галочка означает «включено», точка — «выбрано из набора»",
+            "заголовки групп над пунктами — по ним понятно, где независимые настройки, а где один выбор из нескольких"
+          ],
+          "adapt": [
+            "массивы toggles и choices: подписи, идентификаторы и сочетания клавиш",
+            "начальное состояние через defaultOn и defaultChoice",
+            "акцент через проп accent — цвет галочки, точки и кольца фокуса",
+            "текст сводки справа от кнопки раздела"
+          ],
+          "notes": [
+            "Состояние живёт внутри компонента: чтобы поднять его наверх, замените useState на пропсы со своими обработчиками.",
+            "Настройки не сохраняются между перезагрузками: хранение — за вызывающим кодом.",
+            "Без поддержки anchor positioning меню открывается по центру экрана: проверьте целевые браузеры.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultChoice",
+            "label": "Плотность",
+            "type": "select",
+            "default": "cozy",
+            "options": ["compact", "cozy", "wide"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A View menu whose items hold state instead of firing actions: checkable toggles and mutually exclusive options marked with a dot.",
+            "ai": {
+              "summary": "A menu of stateful items: checks for independent settings, dots for mutually exclusive options, and the current state visible right in the menubar. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-menubar-004-* palette — do not swap it for your theme tokens (bg-accent, text-muted-foreground and the like)",
+                "role=\"menuitemcheckbox\" and role=\"menuitemradio\" together with aria-checked: without them a screen reader announces a plain command and the state is lost",
+                "the fixed-width mark column: drawing the check in place of the text makes the labels jump on every toggle",
+                "popover=\"auto\": a click inside does not close the menu while Escape and an outside click do — exactly what settings need",
+                "different marks for a toggle and an option: a check means \"on\", a dot means \"chosen from a set\"",
+                "the group headings above the items — they tell independent settings apart from a single choice"
+              ],
+              "adapt": [
+                "the toggles and choices arrays: labels, ids and shortcuts",
+                "the initial state through defaultOn and defaultChoice",
+                "the accent through the accent prop — it colours the check, the dot and the focus ring",
+                "the summary text beside the section button"
+              ],
+              "notes": [
+                "The state lives inside the component: to lift it up, replace useState with props and your own handlers.",
+                "Settings are not persisted across reloads: storing them is the caller's job.",
+                "Without anchor positioning support the menu opens centred: check your target browsers.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Menubar004\n  toggles={[{ id: \"grid\", label: \"Grid\", keys: \"⌘'\" }]}\n  defaultOn={[\"grid\"]}\n  defaultChoice=\"cozy\"\n/>"
+            },
+            "controls": {
+              "defaultChoice": {
+                "label": "Density"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "menubar-005",
+      "type": "registry:component",
+      "title": "Collapsing Menubar",
+      "description": "Строка меню, которая на узкой ширине сворачивается в бургер: порог берётся от ширины самого блока, а не от размера окна.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "menubar-005/menubar-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/menubar-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-005-*. Серверный: хуков нет, состояние держат <details>. Широкий и узкий виды лежат в разметке одновременно, лишний убирается display:none — так он не попадает ни в порядок табуляции, ни в дерево доступности. Порог переключения задан контейнерным запросом на внутреннем [data-part=\"shell\"], потому что правило внутри @container не действует на сам контейнер. Разделы в широком виде закрывают друг друга через общий атрибут name.",
+      "meta": {
+        "tags": ["menubar", "responsive", "container-query", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Menubar005",
+          "usage": "<Menubar005\n  burgerLabel=\"Меню\"\n  menus={[{ label: \"Файл\", items: [\"Новый проект\", \"Открыть…\"] }]}\n/>",
+          "summary": "Строка меню с двумя видами: широкий ряд разделов и бургер на узкой ширине. Переключение делает контейнерный запрос, поэтому компонент ведёт себя одинаково и на телефоне, и в узкой колонке на десктопе. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-menubar-005-* и не подменять её токенами вашей темы (bg-background, border-border и подобными)",
+            "контейнерный запрос вместо медиазапроса: компонент обязан реагировать на свою ширину, иначе в узкой колонке останется широкий ряд",
+            "правило раскладки на внутреннем [data-part=\"shell\"], а не на корне: @container не действует на сам контейнер",
+            "display:none у скрытого вида: спрятанный через прозрачность ряд остаётся в порядке табуляции и в дереве доступности",
+            "общий атрибут name у <details> в широком виде — им разделы закрывают друг друга",
+            "заголовки разделов внутри бургера: без них список превращается в две дюжины одинаковых строк"
+          ],
+          "adapt": [
+            "массив menus: разделы и их пункты",
+            "burgerLabel — подпись кнопки в свёрнутом виде",
+            "порог переключения в контейнерном запросе",
+            "акцент через проп accent — цвет кольца фокуса"
+          ],
+          "notes": [
+            "Оба вида есть в разметке, поэтому пункты меню перечислены дважды: при очень длинном меню это заметно в размере страницы.",
+            "Escape не закрывает <details>: это поведение элемента, а не ошибка.",
+            "Порог в 30rem подобран под подписи из примера: свои названия длиннее — сдвиньте порог.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "burgerLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Меню",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A menubar that folds into a burger on narrow widths: the threshold comes from the block's own width, not the window size.",
+            "ai": {
+              "summary": "A menubar with two faces: a wide row of sections and a burger when space runs out. A container query does the switching, so the component behaves the same on a phone and in a narrow desktop column. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-menubar-005-* palette — do not swap it for your theme tokens (bg-background, border-border and the like)",
+                "the container query instead of a media query: the component must react to its own width, or a narrow column keeps the wide row",
+                "the layout rule on the inner [data-part=\"shell\"] rather than the root: @container does not apply to the container itself",
+                "display:none on the hidden face: a row hidden with opacity stays in the tab order and in the accessibility tree",
+                "the shared name attribute on the wide view's <details> — it is how sections close one another",
+                "the section headings inside the burger: without them the list becomes two dozen identical rows"
+              ],
+              "adapt": [
+                "the menus array: sections and their items",
+                "burgerLabel — the collapsed button's caption",
+                "the switching threshold in the container query",
+                "the accent through the accent prop — it colours the focus ring"
+              ],
+              "notes": [
+                "Both faces live in the markup, so the items are listed twice: with a very long menu that shows up in page weight.",
+                "Escape does not close a <details>: that is the element's behaviour, not a bug.",
+                "The 30rem threshold is tuned to the sample labels: longer names need a larger threshold.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Menubar005\n  burgerLabel=\"Menu\"\n  menus={[{ label: \"File\", items: [\"New project\", \"Open…\"] }]}\n/>"
+            },
+            "controls": {
+              "burgerLabel": {
+                "label": "Button",
+                "default": "Menu"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "menubar-006",
+      "type": "registry:component",
+      "title": "Section Menubar",
+      "description": "Строка меню приложения, где активный раздел не просто подсвечен, а раскрыт: вторая строка показывает страницы именно этого раздела.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "menubar-006/menubar-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/menubar-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-006-*. Серверный: хуков нет, активный раздел приходит пропом activeLabel. Выпадающих списков нет вовсе — страницы активного раздела выводятся во вторую строку, поэтому и состояния не требуется. Активный раздел помечен aria-current=\"page\" и полосой через ::after. Обе строки — это <nav> с собственной подписью, счётчики набраны табличными цифрами.",
+      "meta": {
+        "tags": ["menubar", "sections", "app shell", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Menubar006",
+          "usage": "<Menubar006\n  activeLabel=\"Контент\"\n  sections={[\n    { label: \"Контент\", pages: [{ label: \"Страницы\", count: 24 }] },\n  ]}\n/>",
+          "summary": "Двухстрочная навигация приложения: сверху разделы с отмеченным текущим, снизу страницы этого раздела со счётчиками. Ни одного выпадающего списка, поэтому нет ни состояния, ни перекрытий. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-menubar-006-* и не подменять её токенами вашей темы (bg-muted, text-foreground и подобными)",
+            "двойную метку активного раздела: полоса плюс насыщенность текста — по одному цвету раздел теряется в печати и при дальтонизме",
+            "aria-current=\"page\" у активного раздела: это то, по чему его находит скринридер",
+            "две строки вместо выпадающего списка: подраздел виден сразу, а не после клика, и ничего не перекрывает содержимое",
+            "по <nav> с собственной подписью на каждую строку — иначе скринридер объявит две одинаковые «навигации»",
+            "табличные цифры у счётчиков, иначе правый край строки дёргается при смене чисел"
+          ],
+          "adapt": [
+            "массив sections: разделы, их страницы, адреса и счётчики",
+            "activeLabel — текущий раздел; в приложении подставляйте его из роутера",
+            "акцент через проп accent — цвет полосы под активным разделом",
+            "фон второй строки и высоту обеих строк"
+          ],
+          "notes": [
+            "Компонент не знает про маршруты: активный раздел задаёт вызывающий код.",
+            "Вторая строка рассчитана на пять-шесть страниц: длиннее — и она переносится в два ряда.",
+            "Счётчик — это то, что требует внимания: черновики, ошибки. Общее число элементов там не нужно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "activeLabel",
+            "label": "Активный раздел",
+            "type": "select",
+            "default": "Контент",
+            "options": ["Обзор", "Контент", "Оформление", "Настройки"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An app menubar where the active section is not merely highlighted but unfolded: a second row lists that section's own pages.",
+            "ai": {
+              "summary": "Two-row app navigation: sections on top with the current one marked, that section's pages with counters below. Not a single drop-down, so there is no state and nothing overlaps. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-menubar-006-* palette — do not swap it for your theme tokens (bg-muted, text-foreground and the like)",
+                "the double marking of the active section: a bar plus weight — colour alone loses it in print and for colour-blind readers",
+                "aria-current=\"page\" on the active section: it is how a screen reader finds it",
+                "two rows instead of a drop-down: the subsection is visible immediately rather than after a click, and nothing covers the content",
+                "one <nav> with its own label per row — otherwise a screen reader announces two identical \"navigations\"",
+                "tabular figures on the counters, or the right edge jitters as the numbers change"
+              ],
+              "adapt": [
+                "the sections array: sections, their pages, hrefs and counters",
+                "activeLabel — the current section; in an app feed it from the router",
+                "the accent through the accent prop — it colours the bar under the active section",
+                "the second row's background and the height of both rows"
+              ],
+              "notes": [
+                "The component knows nothing about routes: the caller decides the active section.",
+                "The second row is sized for five or six pages: beyond that it wraps onto two lines.",
+                "A counter means something needing attention — drafts, failures. A total item count does not belong there.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Menubar006\n  activeLabel=\"Content\"\n  sections={[\n    { label: \"Content\", pages: [{ label: \"Pages\", count: 24 }] },\n  ]}\n/>"
+            },
+            "controls": {
+              "activeLabel": {
+                "label": "Active section"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "menubar-007",
+      "type": "registry:component",
+      "title": "Nested Menubar",
+      "description": "Строка меню с вложенными подменю, которые раскрываются вбок по наведению и по фокусу — без единой строки JS.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "menubar-007/menubar-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/menubar-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-007-*. Серверный: хуков нет. Разделы — <details> с общим атрибутом name, поэтому открыт всегда один. Подменю показывается правилом :hover и :focus-within у своей строки: фокус на родительском пункте уже раскрывает список, и в него можно уйти табуляцией, поэтому вложенность доступна и без мыши. Пункт с продолжением помечен aria-haspopup и стрелкой из бордюров.",
+      "meta": {
+        "tags": ["menubar", "submenu", "focus-within", "no-js"],
+        "ai": {
+          "export": "Menubar007",
+          "usage": "<Menubar007\n  menus={[\n    {\n      label: \"Файл\",\n      items: [{ label: \"Экспорт\", items: [{ label: \"В PDF\" }] }],\n    },\n  ]}\n/>",
+          "summary": "Строка меню с двухуровневыми списками: пункт со стрелкой раскрывает подменю вбок. Открытие держат :hover и :focus-within, поэтому вложенное меню доступно и мышью, и с клавиатуры, а состояния в компоненте нет вовсе. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-menubar-007-* и не подменять её токенами вашей темы (bg-popover, border-border и подобными)",
+            ":focus-within рядом с :hover: только по наведению подменю недоступно тем, кто работает с клавиатуры",
+            "aria-haspopup=\"menu\" у пункта с продолжением — иначе скринридер объявит его обычной командой",
+            "стрелку справа у пункта с подменю: без неё вложенность не видна до наведения",
+            "общий атрибут name у <details>: им разделы закрывают друг друга",
+            "положение подменю от строки пункта (left:100%), а не от края меню — иначе оно уезжает от своего родителя"
+          ],
+          "adapt": [
+            "массив menus и вложенные items у пунктов",
+            "обработчики конечных пунктов",
+            "акцент через проп accent — цвет кольца фокуса",
+            "ширину меню и подменю"
+          ],
+          "notes": [
+            "Глубже двух уровней не уходите: третий уровень мышью почти непопадаем.",
+            "У правого края экрана подменю выйдет за границу: добавьте зеркальное раскрытие влево под свой макет.",
+            "Escape не закрывает <details>: это поведение элемента, а не ошибка.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A menubar with nested submenus that fly out sideways on hover and on focus — without a single line of JS.",
+            "ai": {
+              "summary": "A menubar with two-level lists: an item with an arrow opens a submenu sideways. :hover and :focus-within do the opening, so the nested menu is reachable with a mouse and with a keyboard, and the component holds no state at all. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-menubar-007-* palette — do not swap it for your theme tokens (bg-popover, border-border and the like)",
+                ":focus-within alongside :hover: hover alone puts the submenu out of reach for keyboard users",
+                "aria-haspopup=\"menu\" on the parent item — otherwise a screen reader announces it as a plain command",
+                "the arrow on the right of a parent item: without it the nesting is invisible until you hover",
+                "the shared name attribute on <details>: it is how sections close one another",
+                "positioning the submenu from the item row (left:100%) rather than the menu edge — otherwise it drifts away from its parent"
+              ],
+              "adapt": [
+                "the menus array and the nested items on each entry",
+                "the handlers on the leaf items",
+                "the accent through the accent prop — it colours the focus ring",
+                "the width of the menu and the submenu"
+              ],
+              "notes": [
+                "Do not go deeper than two levels: a third level is nearly impossible to hit with a mouse.",
+                "Near the right edge of the screen the submenu overflows: add a mirrored left-hand opening for your layout.",
+                "Escape does not close a <details>: that is the element's behaviour, not a bug.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Menubar007\n  menus={[\n    {\n      label: \"File\",\n      items: [{ label: \"Export\", items: [{ label: \"To PDF\" }] }],\n    },\n  ]}\n/>"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "menubar-008",
+      "type": "registry:component",
+      "title": "Menubar With Actions",
+      "description": "Строка меню с правой частью: разделы слева, уведомления со счётчиком и профиль справа, прижатые к краю.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "menubar-008/menubar-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/menubar-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-008-*. Серверный: хуков нет, все меню — popover=\"auto\". Правая группа прижата margin-left:auto, а её меню выравниваются по правому краю кнопки через position-area:bottom span-left, иначе они вылезают за пределы окна. Число непрочитанных попадает в aria-label кнопки, сам значок скрыт от скринридера. В узком блоке имя пользователя прячется контейнерным запросом, остаётся кружок с инициалами.",
+      "meta": {
+        "tags": ["menubar", "profile", "notifications", "popover"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Menubar008",
+          "usage": "<Menubar008 userName=\"Анна Крылова\" unread={4} />",
+          "summary": "Строка меню приложения с правым блоком: разделы слева, кнопка уведомлений со счётчиком и меню профиля справа. Меню открываются HTML popover, поэтому Escape, клик мимо и взаимное закрытие достаются от браузера. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-menubar-008-* и не подменять её токенами вашей темы (bg-card, text-muted-foreground и подобными)",
+            "выравнивание правых меню по правому краю кнопки: раскрытое вправо меню у края окна обрежется",
+            "число непрочитанных в aria-label кнопки, а сам значок aria-hidden — иначе скринридер прочитает голую цифру",
+            "margin-left:auto у правой группы вместо распорок: при добавлении раздела ничего не придётся пересчитывать",
+            "popover=\"auto\": Escape, клик мимо и закрытие соседнего меню достаются от браузера",
+            "контейнерный запрос, прячущий имя в узком блоке: иначе правая группа выдавливает разделы"
+          ],
+          "adapt": [
+            "массив menus: разделы и их пункты",
+            "userName и unread — имя в профиле и число непрочитанных",
+            "акцент через проп accent — цвет кружка с инициалами и колец фокуса",
+            "состав меню профиля и списка уведомлений"
+          ],
+          "notes": [
+            "Инициалы считаются из первых букв слов имени: для одного слова их будет одна, для трёх — только две первые.",
+            "Значок уведомлений нарисован символом: подставьте свою иконку, сохранив размер кнопки.",
+            "Без поддержки anchor positioning меню открывается по центру экрана: проверьте целевые браузеры.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "userName",
+            "label": "Имя",
+            "type": "text",
+            "default": "Анна Крылова",
+            "maxLength": 24
+          },
+          {
+            "prop": "unread",
+            "label": "Непрочитанных",
+            "type": "number",
+            "default": 4,
+            "min": 0,
+            "max": 99
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A menubar with a right-hand cluster: sections on the left, a notification count and a profile menu pinned to the right edge.",
+            "ai": {
+              "summary": "An app menubar with a right-hand block: sections on the left, a notifications button with a badge and a profile menu on the right. The menus run on the HTML popover, so Escape, outside clicks and mutual closing come from the browser. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-menubar-008-* palette — do not swap it for your theme tokens (bg-card, text-muted-foreground and the like)",
+                "aligning the right-hand menus to the button's right edge: opening rightwards near the window edge clips them",
+                "the unread count in the button's aria-label with the badge itself aria-hidden — otherwise a screen reader reads a bare number",
+                "margin-left:auto on the right group instead of spacers: adding a section then costs no recalculation",
+                "popover=\"auto\": Escape, outside clicks and closing a neighbouring menu come from the browser",
+                "the container query that hides the name in a narrow block: otherwise the right group squeezes out the sections"
+              ],
+              "adapt": [
+                "the menus array: sections and their items",
+                "userName and unread — the profile name and the unread count",
+                "the accent through the accent prop — it colours the initials circle and the focus rings",
+                "the contents of the profile menu and the notification list"
+              ],
+              "notes": [
+                "Initials are taken from the first letters of the name's words: one word gives one letter, three give only the first two.",
+                "The notification glyph is a character: swap in your icon, keeping the button size.",
+                "Without anchor positioning support the menu opens centred: check your target browsers.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Menubar008 userName=\"Anna Krylova\" unread={4} />"
+            },
+            "controls": {
+              "userName": {
+                "label": "Name",
+                "default": "Anna Krylova"
+              },
+              "unread": {
+                "label": "Unread"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navmenu-001",
+      "type": "registry:component",
+      "title": "Column Navmenu",
+      "description": "Навигация сайта с выпадающей панелью из колонок: под каждой ссылкой строка пояснения, поэтому по разделу понятно, что внутри.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navmenu-001/navmenu-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navmenu-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-001-*. Серверный: хуков нет, панель открывает popover=\"auto\". Якорем служит вся полоса навигации (anchor-name на [data-part=\"bar\"]), поэтому широкая панель встаёт под полосой целиком, а не под отдельной кнопкой. Колонки раскладывает grid с auto-fit и minmax, так что их число подстраивается под ширину панели. Разделы без панели — обычные ссылки.",
+      "meta": {
+        "tags": ["navmenu", "mega menu", "popover", "site nav"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navmenu001",
+          "usage": "<Navmenu001\n  entries={[\n    {\n      label: \"Продукт\",\n      columns: [\n        { title: \"Инструменты\", links: [{ label: \"Редактор\", hint: \"Блоки и сетка\" }] },\n      ],\n    },\n    { label: \"Цены\", href: \"/pricing\" },\n  ]}\n/>",
+          "summary": "Навигация сайта с широкой выпадающей панелью: колонки ссылок, у каждой ссылки строка пояснения. Панель открывает HTML popover и якорит к полосе навигации, поэтому Escape и клик мимо достаются от браузера. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navmenu-001-* и не подменять её токенами вашей темы (bg-popover, text-muted-foreground и подобными)",
+            "пояснение под каждой ссылкой: имя раздела в мега-меню почти никогда не объясняет, что там внутри",
+            "якорь на всей полосе, а не на отдельной кнопке: широкая панель, привязанная к кнопке, съезжает за край окна",
+            "popover=\"auto\": Escape, клик мимо и закрытие соседней панели достаются от браузера",
+            "auto-fit с minmax в колонках — при узкой панели они перестраиваются сами, без второго набора правил",
+            "разделы без панели обычными ссылками: кнопка, которая просто ведёт на страницу, ломает открытие в новой вкладке"
+          ],
+          "adapt": [
+            "массив entries: разделы, их колонки, ссылки и пояснения",
+            "ширину панели и минимальную ширину колонки",
+            "акцент через проп accent — цвет колец фокуса",
+            "высоту полосы навигации"
+          ],
+          "notes": [
+            "Панель не открывается по наведению — только по клику: случайное раскрытие мега-меню при проезде курсором раздражает сильнее, чем лишний клик.",
+            "Без поддержки anchor positioning панель открывается по центру экрана: проверьте целевые браузеры.",
+            "Больше трёх колонок в панели не ставьте: список перестаёт читаться и превращается в стену ссылок.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Site navigation with a drop-down panel of columns: every link carries a line of explanation, so a section says what is inside it.",
+            "ai": {
+              "summary": "Site navigation with a wide drop-down panel: columns of links, each with a line of explanation. The panel runs on the HTML popover and anchors to the nav bar, so Escape and outside clicks come from the browser. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navmenu-001-* palette — do not swap it for your theme tokens (bg-popover, text-muted-foreground and the like)",
+                "the hint under every link: a section name in a mega menu almost never explains what is inside",
+                "anchoring to the whole bar rather than one button: a wide panel tied to a button slides off the window edge",
+                "popover=\"auto\": Escape, outside clicks and closing a neighbouring panel come from the browser",
+                "auto-fit with minmax in the columns — a narrow panel rearranges itself without a second rule set",
+                "plain links for sections without a panel: a button that merely navigates breaks opening in a new tab"
+              ],
+              "adapt": [
+                "the entries array: sections, their columns, links and hints",
+                "the panel width and the minimum column width",
+                "the accent through the accent prop — it colours the focus rings",
+                "the height of the nav bar"
+              ],
+              "notes": [
+                "The panel does not open on hover, only on click: a mega menu unfolding as the cursor passes annoys more than one extra click.",
+                "Without anchor positioning support the panel opens centred: check your target browsers.",
+                "Do not go past three columns: the list stops reading and turns into a wall of links.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navmenu001\n  entries={[\n    {\n      label: \"Product\",\n      columns: [\n        { title: \"Tools\", links: [{ label: \"Editor\", hint: \"Blocks and grid\" }] },\n      ],\n    },\n    { label: \"Pricing\", href: \"/pricing\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navmenu-002",
+      "type": "registry:component",
+      "title": "Promo Navmenu",
+      "description": "Выпадающая панель с приоритетом: слева промо-карточка на всю высоту, справа обычные ссылки — вместо ровного списка одинаковых пунктов.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navmenu-002/navmenu-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navmenu-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-002-*. Серверный: хуков нет, панель — popover=\"auto\" с якорем на полосе навигации. Панель разложена в две колонки grid: промо и список. Промо целиком является ссылкой, поэтому кликается вся карточка, а её фон собран из радиального градиента поверх плоского цвета — картинок компонент не тянет.",
+      "meta": {
+        "tags": ["navmenu", "promo", "popover", "marketing"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navmenu002",
+          "usage": "<Navmenu002\n  panelLabel=\"Возможности\"\n  promoTitle=\"Конструктор писем\"\n  links={[{ label: \"Редактор\", hint: \"Блоки и сетка\" }]}\n/>",
+          "summary": "Навигация с выпадающей панелью, где есть главный экспонат: промо-блок слева задаёт приоритет, ссылки справа перечисляют остальное. Промо — одна большая ссылка с фоном из градиента, без картинок. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navmenu-002-* и не подменять её токенами вашей темы (bg-accent, text-muted-foreground и подобными)",
+            "промо как единую ссылку, а не набор из заголовка и кнопки: две цели рядом заставляют выбирать, куда нажать",
+            "приоритет в панели: одинаково оформленные пункты не подсказывают, с чего начать",
+            "popover=\"auto\": Escape и клик мимо достаются от браузера",
+            "фон промо из градиента вместо картинки — компонент обязан оставаться одним файлом без ассетов",
+            "метку «Новое» отдельным элементом, а не припиской к заголовку: приписку не видно при беглом чтении"
+          ],
+          "adapt": [
+            "массив links и подписи panelLabel, promoTitle, promoText, promoAction",
+            "массив entries — остальные разделы полосы",
+            "акцент через проп accent — цвет метки и колец фокуса",
+            "пропорции колонок панели"
+          ],
+          "notes": [
+            "Промо-блок стоит первым в разметке, поэтому и в порядке табуляции он первый: это осознанный приоритет, а не ошибка.",
+            "Без поддержки anchor positioning панель открывается по центру экрана: проверьте целевые браузеры.",
+            "Двух промо в одной панели быть не должно: приоритет, поделённый надвое, перестаёт работать.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "panelLabel",
+            "label": "Раздел",
+            "type": "text",
+            "default": "Возможности",
+            "maxLength": 20
+          },
+          {
+            "prop": "promoTitle",
+            "label": "Заголовок промо",
+            "type": "text",
+            "default": "Конструктор писем",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A drop-down panel with a priority: a full-height promo card on the left, ordinary links on the right — instead of a flat list of equals.",
+            "ai": {
+              "summary": "Navigation with a drop-down panel that has a headline exhibit: the promo block on the left sets the priority, the links on the right list the rest. The promo is one large link with a gradient background and no images. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navmenu-002-* palette — do not swap it for your theme tokens (bg-accent, text-muted-foreground and the like)",
+                "the promo as a single link rather than a heading plus a button: two adjacent targets force a choice about where to click",
+                "the priority inside the panel: identically styled items never suggest where to start",
+                "popover=\"auto\": Escape and outside clicks come from the browser",
+                "the gradient promo background instead of an image — the component has to stay one file with no assets",
+                "the \"New\" badge as its own element rather than an addition to the heading: an addition goes unseen when scanning"
+              ],
+              "adapt": [
+                "the links array and the panelLabel, promoTitle, promoText and promoAction captions",
+                "the entries array — the remaining sections of the bar",
+                "the accent through the accent prop — it colours the badge and the focus rings",
+                "the column proportions of the panel"
+              ],
+              "notes": [
+                "The promo comes first in the markup and therefore first in the tab order: that is deliberate priority, not a bug.",
+                "Without anchor positioning support the panel opens centred: check your target browsers.",
+                "There must never be two promos in one panel: a priority split in half stops working.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navmenu002\n  panelLabel=\"Features\"\n  promoTitle=\"Email builder\"\n  links={[{ label: \"Editor\", hint: \"Blocks and grid\" }]}\n/>"
+            },
+            "controls": {
+              "panelLabel": {
+                "label": "Section",
+                "default": "Features"
+              },
+              "promoTitle": {
+                "label": "Promo title",
+                "default": "Email builder"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navmenu-003",
+      "type": "registry:component",
+      "title": "Simple Navmenu",
+      "description": "Самое простое выпадающее меню разделов: столбик ссылок без описаний и картинок, взаимное закрытие держит атрибут name у details.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navmenu-003/navmenu-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navmenu-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-003-*. Серверный: хуков нет. Раздел с подпунктами — <details> с общим атрибутом name, поэтому браузер сам следит, что раскрыт только один. Меню позиционируется абсолютно от своей обёртки, anchor positioning не требуется. Галочка на кнопке переворачивается по атрибуту open, поэтому состояние видно на самой кнопке. Разделы без подпунктов — обычные ссылки.",
+      "meta": {
+        "tags": ["navmenu", "dropdown", "details", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navmenu003",
+          "usage": "<Navmenu003\n  groups={[\n    { label: \"Продукт\", items: [\"Редактор\", \"Шаблоны\"] },\n    { label: \"Цены\", href: \"/pricing\" },\n  ]}\n/>",
+          "summary": "Обычное меню сайта: разделы с выпадающим столбиком ссылок и разделы-ссылки без списка. Открытие и взаимное закрытие держат <details> с общим name, поэтому меню работает до гидратации и при отключённых скриптах. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navmenu-003-* и не подменять её токенами вашей темы (bg-popover, border-border и подобными)",
+            "общий атрибут name у <details>: без него открываются сразу все разделы",
+            "переворот галочки по атрибуту open — состояние кнопки должно читаться на ней самой",
+            "разделы без подпунктов обычными ссылками: кнопка вместо ссылки лишает открытия в новой вкладке",
+            "разметку меню списком <ul>: набор ссылок — это список, а не стопка div'ов",
+            "видимое кольцо фокуса на кнопках и ссылках: меню обязано проходиться табуляцией"
+          ],
+          "adapt": [
+            "массив groups: разделы, их пункты и адреса",
+            "ширину выпадающего столбика",
+            "акцент через проп accent — цвет колец фокуса",
+            "высоту полосы навигации"
+          ],
+          "notes": [
+            "Escape не закрывает <details>: это поведение элемента. Нужна реакция на Escape — берите вариант на popover.",
+            "Клик мимо тоже не закрывает раздел: за это в <details> никто не отвечает.",
+            "Выпадающий столбик перекрывает содержимое под собой: полоса навигации должна лежать выше по слою.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The plainest drop-down site menu: a column of links with no blurbs or pictures, with the name attribute on details doing the mutual closing.",
+            "ai": {
+              "summary": "An ordinary site menu: sections with a drop-down column of links, and link-only sections without a list. Opening and mutual closing come from <details> with a shared name, so the menu works before hydration and with scripts disabled. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navmenu-003-* palette — do not swap it for your theme tokens (bg-popover, border-border and the like)",
+                "the shared name attribute on <details>: without it every section opens at once",
+                "flipping the caret from the open attribute — a button's state must read on the button itself",
+                "plain links for sections without children: a button instead of a link removes opening in a new tab",
+                "the <ul> markup inside the menu: a set of links is a list, not a pile of divs",
+                "the visible focus ring on the buttons and links: the menu has to be walkable with Tab"
+              ],
+              "adapt": [
+                "the groups array: sections, their items and hrefs",
+                "the width of the drop-down column",
+                "the accent through the accent prop — it colours the focus rings",
+                "the height of the nav bar"
+              ],
+              "notes": [
+                "Escape does not close a <details>: that is the element's behaviour. If you need Escape, take the popover-based variant.",
+                "An outside click does not close it either: nothing in <details> handles that.",
+                "The drop-down covers whatever is beneath it: the nav bar has to sit higher in the stacking order.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navmenu003\n  groups={[\n    { label: \"Product\", items: [\"Editor\", \"Templates\"] },\n    { label: \"Pricing\", href: \"/pricing\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navmenu-004",
+      "type": "registry:component",
+      "title": "Catalog Navmenu",
+      "description": "Мега-меню каталога: плитки категорий со значками и счётчиками, где цвет значка выводится из названия и не хранится в данных.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navmenu-004/navmenu-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navmenu-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-004-*. Серверный: хуков нет, панель — popover=\"auto\" с якорем на полосе навигации. Оттенок значка считает функция hue: хеш подписи даёт число от 0 до 330, оно уходит переменной --vibeui-navmenu-004-hue и подставляется в oklch. Плитки раскладывает grid с auto-fit, поэтому их число зависит от ширины панели.",
+      "meta": {
+        "tags": ["navmenu", "catalog", "mega menu", "icons"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navmenu004",
+          "usage": "<Navmenu004\n  triggerLabel=\"Каталог\"\n  tiles={[{ label: \"Ноутбуки\", hint: \"Тонкие и игровые\", count: 412 }]}\n/>",
+          "summary": "Мега-меню каталога: кнопка со значком сетки открывает панель с плитками категорий. У каждой плитки цветной значок, подпись, пояснение и число товаров. Цвет значка выводится из названия хешем, поэтому категория всегда одного цвета и палитру не нужно вести руками. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navmenu-004-* и не подменять её токенами вашей темы (bg-muted, text-foreground и подобными)",
+            "вывод оттенка из подписи: цвет категории должен быть устойчивым, иначе он меняется при каждой правке данных",
+            "плитки вместо строчек: в каталоге на десяток категорий строчки сливаются, а плитка ловит взгляд значком",
+            "popover=\"auto\": Escape и клик мимо достаются от браузера",
+            "auto-fit в сетке плиток — панель перестраивается сама, без второго набора правил",
+            "табличные цифры у счётчиков, иначе числа дёргают подписи"
+          ],
+          "adapt": [
+            "массив tiles: категории, пояснения, счётчики и адреса",
+            "подписи triggerLabel и footerLabel",
+            "акцент через проп accent — цвет ссылки в подвале панели и колец фокуса",
+            "размер плитки и число колонок"
+          ],
+          "notes": [
+            "Значок — это две первые буквы названия: для категорий, начинающихся одинаково, подставьте свои значки.",
+            "Хеш даёт двенадцать оттенков: в очень длинном каталоге цвета начнут повторяться.",
+            "Без поддержки anchor positioning панель открывается по центру экрана: проверьте целевые браузеры.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "triggerLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Каталог",
+            "maxLength": 16
+          },
+          {
+            "prop": "footerLabel",
+            "label": "Ссылка внизу",
+            "type": "text",
+            "default": "Все категории",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A catalog mega menu: category tiles with glyphs and counts, where the glyph colour is derived from the name instead of stored in data.",
+            "ai": {
+              "summary": "A catalog mega menu: a grid-glyph button opens a panel of category tiles. Every tile carries a coloured glyph, a label, a hint and an item count. The glyph colour is hashed from the name, so a category keeps one colour and the palette needs no upkeep. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navmenu-004-* palette — do not swap it for your theme tokens (bg-muted, text-foreground and the like)",
+                "deriving the hue from the label: a category colour has to be stable, otherwise it shifts with every data edit",
+                "tiles instead of rows: with a dozen categories rows blur together, while a tile catches the eye with its glyph",
+                "popover=\"auto\": Escape and outside clicks come from the browser",
+                "auto-fit in the tile grid — the panel rearranges itself without a second rule set",
+                "tabular figures on the counts, or the numbers jitter the labels"
+              ],
+              "adapt": [
+                "the tiles array: categories, hints, counts and hrefs",
+                "the triggerLabel and footerLabel captions",
+                "the accent through the accent prop — it colours the footer link and the focus rings",
+                "the tile size and the number of columns"
+              ],
+              "notes": [
+                "The glyph is the first two letters of the name: for categories that start alike, supply your own icons.",
+                "The hash yields twelve hues: in a very long catalog the colours start repeating.",
+                "Without anchor positioning support the panel opens centred: check your target browsers.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navmenu004\n  triggerLabel=\"Catalog\"\n  tiles={[{ label: \"Laptops\", hint: \"Thin and gaming\", count: 412 }]}\n/>"
+            },
+            "controls": {
+              "triggerLabel": {
+                "label": "Trigger",
+                "default": "Catalog"
+              },
+              "footerLabel": {
+                "label": "Footer link",
+                "default": "All categories"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navmenu-005",
+      "type": "registry:component",
+      "title": "Preview Navmenu",
+      "description": "Меню с превью справа: наведение или фокус на строке показывает свою картинку, и всё это на :has(), без состояния и без JS.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navmenu-005/navmenu-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navmenu-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-005-*. Серверный: хуков нет. Превью лежат стопкой в общей области, а показывается то, чья строка под курсором или в фокусе — правилами :has() по data-index. Когда ничего не выбрано, показывается первое: за это отвечает отдельное правило с двойным :not(:has(...)). Картинки нарисованы градиентами по оттенку из подписи, поэтому меню не тянет ни одного файла изображения.",
+      "meta": {
+        "tags": ["navmenu", "preview", "has-selector", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navmenu005",
+          "usage": "<Navmenu005\n  triggerLabel=\"Возможности\"\n  entries={[\n    { label: \"Редактор\", hint: \"Блоки и сетка\", shotTitle: \"Холст\" },\n  ]}\n/>",
+          "summary": "Меню, у которого справа живёт превью: наведение или фокус на ссылке показывает свою картинку. Переключение делает :has(), поэтому нет ни состояния, ни обработчиков. Картинки собраны из градиентов по оттенку из подписи и не требуют файлов. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navmenu-005-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            ":focus-visible рядом с :hover в правилах :has(): иначе превью недоступно тем, кто идёт по меню табуляцией",
+            "правило с двойным :not(:has(...)), показывающее первое превью: без него панель открывается пустой",
+            "область превью помеченной aria-hidden: картинка дублирует подпись ссылки и скринридеру не нужна",
+            "фиксированную высоту области превью — иначе панель прыгает при переходе между строками",
+            "правила на шесть строк: их число ограничено сверху, потому что каждая требует своей пары селекторов"
+          ],
+          "adapt": [
+            "массив entries: ссылки, пояснения и подписи превью",
+            "triggerLabel — подпись кнопки, открывающей панель",
+            "акцент через проп accent — цвет колец фокуса",
+            "размер области превью и оформление карточек"
+          ],
+          "notes": [
+            "Показывается не больше пяти строк: под каждую нужна своя пара правил, остальные обрезаются.",
+            "Превью — это градиент с подписью, а не скриншот: подставьте свои изображения, сохранив стопку и правила :has().",
+            "Без поддержки :has() превью останется на первом варианте — меню при этом работает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "triggerLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Возможности",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A menu with a preview on the right: hovering or focusing a row shows its own picture, all of it on :has(), with no state and no JS.",
+            "ai": {
+              "summary": "A menu with a live preview beside it: hovering or focusing a link reveals its picture. :has() does the switching, so there is no state and no handlers. The pictures are gradients tinted by a hash of the label and need no files. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navmenu-005-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                ":focus-visible alongside :hover in the :has() rules: otherwise the preview is out of reach when tabbing through the menu",
+                "the double :not(:has(...)) rule that shows the first preview: without it the panel opens empty",
+                "the preview area marked aria-hidden: the picture repeats the link label and a screen reader does not need it",
+                "the fixed preview height — otherwise the panel jumps as you move between rows",
+                "the rules written for six rows: the count is capped because each row needs its own pair of selectors"
+              ],
+              "adapt": [
+                "the entries array: links, hints and preview captions",
+                "triggerLabel — the caption of the button that opens the panel",
+                "the accent through the accent prop — it colours the focus rings",
+                "the preview size and the card styling"
+              ],
+              "notes": [
+                "No more than five rows are rendered: each needs its own pair of rules, the rest are trimmed.",
+                "A preview is a captioned gradient, not a screenshot: drop in your images, keeping the stack and the :has() rules.",
+                "Without :has() support the preview stays on the first entry — the menu itself still works.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navmenu005\n  triggerLabel=\"Features\"\n  entries={[\n    { label: \"Editor\", hint: \"Blocks and grid\", shotTitle: \"Canvas\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "triggerLabel": {
+                "label": "Trigger",
+                "default": "Features"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navmenu-006",
+      "type": "registry:component",
+      "title": "Mobile Navmenu",
+      "description": "Мобильная навигация: бургер открывает лист, а разделы внутри раскрываются списком вниз, а не летящей панелью.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navmenu-006/navmenu-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navmenu-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-006-*. Серверный: хуков нет. Лист открывает чекбокс, состояние читается через :has(input:checked). Раскрытие сделано сменой grid-template-rows с 0fr на 1fr — так высота анимируется без магических чисел и без измерений. Разделы внутри — <details>. Полоски бургера складываются в крест по тому же состоянию чекбокса.",
+      "meta": {
+        "tags": ["navmenu", "mobile", "burger", "no-js"],
+        "ai": {
+          "export": "Navmenu006",
+          "usage": "<Navmenu006\n  brand=\"Полотно\"\n  sections={[{ label: \"Продукт\", items: [\"Редактор\", \"Шаблоны\"] }]}\n/>",
+          "summary": "Мобильная навигация: шапка с логотипом и бургером, под ней раскрывающийся лист с разделами. Разделы разворачиваются списком и толкают содержимое вниз, а не всплывают панелью — на узком экране панели некуда встать. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navmenu-006-* и не подменять её токенами вашей темы (bg-background, text-muted-foreground и подобными)",
+            "раскрытие через grid-template-rows от 0fr к 1fr: анимация высоты без заранее известного значения и без измерений в JS",
+            "чекбокс как хранилище состояния: без JS оно больше нигде не живёт",
+            "aria-label у скрытого чекбокса — иначе переключатель меню останется без имени",
+            "раскрытие списком вместо всплывающей панели: на телефоне панель либо не помещается, либо закрывает весь экран",
+            "крупные цели у строк: пункт меньше сорока пикселей по высоте пальцем не берётся"
+          ],
+          "adapt": [
+            "массив sections: разделы, их пункты и адреса",
+            "brand и actionLabel — название и подпись кнопки действия",
+            "акцент через проп accent — цвет кнопки действия и колец фокуса",
+            "высоту шапки и отступы в листе"
+          ],
+          "notes": [
+            "Идентификатор чекбокса зафиксирован в разметке: два экземпляра на странице дадут повторяющийся id, задайте свой.",
+            "Состояние листа не сохраняется между страницами: это переключатель меню, а не настройка.",
+            "Компонент рассчитан на узкую ширину: на десктопе берите вариант с выпадающими панелями.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Полотно",
+            "maxLength": 16
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Начать бесплатно",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Mobile navigation: the burger opens a sheet, and sections inside unfold as a list downwards rather than as a floating panel.",
+            "ai": {
+              "summary": "Mobile navigation: a header with a wordmark and a burger, and an expanding sheet with the sections below it. Sections unfold as a list and push the content down instead of floating over it — a panel has nowhere to sit on a narrow screen. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navmenu-006-* palette — do not swap it for your theme tokens (bg-background, text-muted-foreground and the like)",
+                "the 0fr to 1fr grid-template-rows expansion: height animates without a known value and without measuring in JS",
+                "the checkbox as the state store: without JS the state lives nowhere else",
+                "the aria-label on the hidden checkbox — otherwise the menu toggle has no name",
+                "unfolding as a list instead of a floating panel: on a phone a panel either does not fit or covers the whole screen",
+                "the large row targets: an item under forty pixels tall cannot be hit with a thumb"
+              ],
+              "adapt": [
+                "the sections array: sections, their items and hrefs",
+                "brand and actionLabel — the wordmark and the action button caption",
+                "the accent through the accent prop — it colours the action button and the focus rings",
+                "the header height and the spacing inside the sheet"
+              ],
+              "notes": [
+                "The checkbox id is fixed in the markup: two instances on one page produce a duplicate id, so give it your own.",
+                "The sheet state is not kept between pages: this is a menu toggle, not a setting.",
+                "The component is meant for narrow widths: on desktop take the drop-down panel variant.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navmenu006\n  brand=\"Canvas\"\n  sections={[{ label: \"Product\", items: [\"Editor\", \"Templates\"] }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Wordmark",
+                "default": "Canvas"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Start free"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navmenu-007",
+      "type": "registry:component",
+      "title": "Brand Navmenu",
+      "description": "Шапка сайта целиком: логотип слева, разделы по центру, вход и главное действие справа, с уходом лишнего на узкой ширине.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navmenu-007/navmenu-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navmenu-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-007-*. Серверный: хуков нет, разделы с подпунктами — <details> с общим атрибутом name. Средняя часть растягивается flex:1, поэтому правая группа остаётся у края при любой ширине. Знак логотипа нарисован градиентом, а не картинкой. На узкой ширине контейнерный запрос убирает ссылки и вторичное действие, оставляя логотип и главную кнопку.",
+      "meta": {
+        "tags": ["navmenu", "header", "brand", "cta"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navmenu007",
+          "usage": "<Navmenu007\n  brand=\"Полотно\"\n  actionLabel=\"Начать\"\n  entries={[{ label: \"Продукт\", items: [\"Редактор\", \"Шаблоны\"] }]}\n/>",
+          "summary": "Шапка сайта: логотип со знаком, разделы с выпадающими списками, вторичная ссылка и главная кнопка справа. На узкой ширине остаются логотип и кнопка, остальное уходит по контейнерному запросу. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navmenu-007-* и не подменять её токенами вашей темы (bg-primary, text-primary-foreground и подобными)",
+            "одну главную кнопку справа: два одинаково ярких действия в шапке отменяют друг друга",
+            "flex:1 у средней части вместо распорок — правая группа остаётся у края при любом числе разделов",
+            "логотип ссылкой на главную: это первое, куда возвращаются с любой страницы",
+            "контейнерный запрос, убирающий ссылки в узкой шапке: иначе кнопка выдавливается за край",
+            "общий атрибут name у <details>: им разделы закрывают друг друга"
+          ],
+          "adapt": [
+            "массив entries: разделы и их подпункты",
+            "brand и actionLabel — название и подпись главной кнопки",
+            "акцент через проп accent — цвет знака логотипа и главной кнопки",
+            "высоту шапки и радиус скругления"
+          ],
+          "notes": [
+            "В узком виде разделы просто исчезают: рядом должен стоять мобильный вариант навигации.",
+            "Знак логотипа — градиентный квадрат: подставьте свой, сохранив размер в 1.375rem.",
+            "Escape не закрывает <details>: это поведение элемента, а не ошибка.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Полотно",
+            "maxLength": 16
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Начать",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A whole site header: wordmark on the left, sections in the middle, sign-in and the primary action on the right, shedding parts when narrow.",
+            "ai": {
+              "summary": "A site header: a wordmark with a logo mark, sections with drop-down lists, a secondary link and the primary button on the right. When narrow, only the wordmark and the button remain — a container query removes the rest. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navmenu-007-* palette — do not swap it for your theme tokens (bg-primary, text-primary-foreground and the like)",
+                "the single primary button on the right: two equally loud actions in a header cancel each other out",
+                "flex:1 on the middle section instead of spacers — the right group stays at the edge whatever the section count",
+                "the wordmark as a link to the home page: it is the first place people return to from anywhere",
+                "the container query that removes the links in a narrow header: otherwise the button is pushed off the edge",
+                "the shared name attribute on <details>: it is how sections close one another"
+              ],
+              "adapt": [
+                "the entries array: sections and their children",
+                "brand and actionLabel — the wordmark and the primary button caption",
+                "the accent through the accent prop — it colours the logo mark and the primary button",
+                "the header height and the corner radius"
+              ],
+              "notes": [
+                "In the narrow view the sections simply disappear: a mobile navigation variant has to sit alongside.",
+                "The logo mark is a gradient square: swap in your own, keeping the 1.375rem size.",
+                "Escape does not close a <details>: that is the element's behaviour, not a bug.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navmenu007\n  brand=\"Canvas\"\n  actionLabel=\"Start\"\n  entries={[{ label: \"Product\", items: [\"Editor\", \"Templates\"] }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Wordmark",
+                "default": "Canvas"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Start"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navmenu-008",
+      "type": "registry:component",
+      "title": "Search Navmenu",
+      "description": "Навигация с панелью, которая начинается со строки поиска: под полем — частые запросы и недавнее, всё обычными ссылками.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navmenu-008/navmenu-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navmenu-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-008-*. Серверный: хуков нет. Панель — popover=\"auto\" с якорем на полосе навигации и выравниванием по правому краю. Поле лежит в настоящей <form method=\"get\"> с role=\"search\", поэтому запрос уходит на страницу результатов и без JS. Подсказки под полем — обычные ссылки, а лупа нарисована кругом с чёрточкой из бордюров.",
+      "meta": {
+        "tags": ["navmenu", "search", "popover", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navmenu008",
+          "usage": "<Navmenu008\n  placeholder=\"Что ищем в справке?\"\n  suggestions={[\"Тарифы\", \"Домены\"]}\n/>",
+          "summary": "Навигация со строкой поиска внутри выпадающей панели: поле, кнопка «Найти», частые запросы чипсами и недавние запросы списком. Форма настоящая, поэтому поиск работает и без JS. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navmenu-008-* и не подменять её токенами вашей темы (bg-input, border-input и подобными)",
+            "настоящую <form method=\"get\"> с role=\"search\": Enter отправляет её сам, и поиск работает до гидратации",
+            "aria-label у поля вместе с placeholder: подсказка исчезает при вводе и именем поля быть не может",
+            "type=\"search\" у поля — браузер даёт очистку и правильную клавиатуру на телефоне",
+            "подсказки обычными ссылками, а не кнопками: частый запрос должен открываться в новой вкладке",
+            "popover=\"auto\": Escape и клик мимо достаются от браузера"
+          ],
+          "adapt": [
+            "массивы suggestions и recent — частые и недавние запросы",
+            "подписи triggerLabel и placeholder",
+            "адрес формы: сейчас это заглушка",
+            "акцент через проп accent — цвет кнопки «Найти» и колец фокуса"
+          ],
+          "notes": [
+            "Подсказок по мере ввода нет: для живого поиска понадобится клиентский код и своя выдача.",
+            "Недавние запросы приходят пропом: компонент ничего не хранит и не читает историю.",
+            "Без поддержки anchor positioning панель открывается по центру экрана: проверьте целевые браузеры.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Что ищем в справке?",
+            "maxLength": 32
+          },
+          {
+            "prop": "triggerLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Поиск",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Navigation with a panel that opens on a search field: frequent queries and recent ones sit under it, all as ordinary links.",
+            "ai": {
+              "summary": "Navigation with a search field inside the drop-down panel: an input, a Search button, frequent queries as chips and recent ones as a list. The form is real, so search works without JS. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navmenu-008-* palette — do not swap it for your theme tokens (bg-input, border-input and the like)",
+                "the real <form method=\"get\"> with role=\"search\": Enter submits it on its own and search works before hydration",
+                "the field's aria-label alongside the placeholder: a placeholder disappears while typing and cannot be the name",
+                "type=\"search\" on the field — the browser gives a clear button and the right keyboard on a phone",
+                "the suggestions as plain links rather than buttons: a frequent query should open in a new tab",
+                "popover=\"auto\": Escape and outside clicks come from the browser"
+              ],
+              "adapt": [
+                "the suggestions and recent arrays — frequent and recent queries",
+                "the triggerLabel and placeholder captions",
+                "the form action: it is a stub right now",
+                "the accent through the accent prop — it colours the Search button and the focus rings"
+              ],
+              "notes": [
+                "There are no as-you-type suggestions: live search needs client code and your own results.",
+                "Recent queries arrive as a prop: the component stores nothing and reads no history.",
+                "Without anchor positioning support the panel opens centred: check your target browsers.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navmenu008\n  placeholder=\"Search the help centre\"\n  suggestions={[\"Pricing\", \"Domains\"]}\n/>"
+            },
+            "controls": {
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Search the help centre"
+              },
+              "triggerLabel": {
+                "label": "Trigger",
+                "default": "Search"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pagination-003",
+      "type": "registry:component",
+      "title": "Jumping Ellipsis",
+      "description": "Пагинация со свёрткой середины, где «…» не подпись, а кнопка: она перепрыгивает через пропущенный кусок сразу на пять страниц.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pagination-003/pagination-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pagination-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-003-*. Клиентский: \"use client\" ради состояния текущей страницы. Окно номеров считает функция windowOf: первая, последняя, соседи и разрывы между ними; разрыв помечен нулём, и на его месте рисуется кнопка прыжка. Многоточие превращается в стрелку по :hover и :focus-visible. Текущая страница помечена aria-current=\"page\", числа набраны табличными цифрами.",
+      "meta": {
+        "tags": ["pagination", "ellipsis", "jump", "list"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pagination003",
+          "usage": "<Pagination003 total={24} defaultPage={7} siblings={1} />",
+          "summary": "Пагинация с окном номеров вокруг текущей страницы и свёрткой середины. Многоточие — живая кнопка: наведение или фокус превращают его в стрелку, а нажатие переносит сразу на пять страниц. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-pagination-003-* и не подменять её токенами вашей темы (bg-primary, border-input и подобными)",
+            "многоточие кнопкой, а не подписью: обычный разрыв — тупик, из него до середины списка идут по одной странице",
+            "aria-label у кнопки прыжка: «…» скринридер прочитает как символ и не объяснит, куда она ведёт",
+            "aria-current=\"page\" у текущей страницы: без него активный номер отличается только цветом",
+            "заливку активного номера вместе с насыщенностью — один цвет теряется рядом с наведением",
+            "табличные цифры у номеров: без них ширина кнопок пляшет от цифр"
+          ],
+          "adapt": [
+            "total и defaultPage — количество страниц и та, что открыта изначально",
+            "siblings — сколько номеров показывать вокруг текущей",
+            "величину прыжка многоточия (константа JUMP)",
+            "акцент через проп accent — цвет активного номера и колец фокуса"
+          ],
+          "notes": [
+            "Номера здесь кнопки, а не ссылки: страница не открывается в новой вкладке. Нужен адрес — берите вариант на ссылках.",
+            "Состояние живёт внутри компонента: чтобы поднять его наверх, замените useState на пропсы со своим обработчиком.",
+            "Прыжок на пять страниц подобран под окно в одну соседнюю: при большем siblings увеличьте и его.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultPage",
+            "label": "Страница",
+            "type": "number",
+            "default": 7,
+            "min": 1,
+            "max": 24
+          },
+          {
+            "prop": "total",
+            "label": "Всего страниц",
+            "type": "number",
+            "default": 24,
+            "min": 1,
+            "max": 99
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Pagination with a collapsed middle where the ellipsis is not a label but a button: it jumps five pages across the gap at once.",
+            "ai": {
+              "summary": "Pagination with a window of numbers around the current page and a collapsed middle. The ellipsis is a live button: hover or focus turns it into an arrow, and pressing it moves five pages at a time. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-pagination-003-* palette — do not swap it for your theme tokens (bg-primary, border-input and the like)",
+                "the ellipsis as a button rather than a label: an ordinary gap is a dead end, and the middle is then reached one page at a time",
+                "the aria-label on the jump button: a screen reader announces \"…\" as a symbol and explains nothing",
+                "aria-current=\"page\" on the active page: without it the current number differs only by colour",
+                "the filled active number together with the weight — colour alone is lost next to a hover state",
+                "tabular figures on the numbers: without them the buttons jitter as digits change"
+              ],
+              "adapt": [
+                "total and defaultPage — the page count and the one open at the start",
+                "siblings — how many numbers surround the current page",
+                "the jump distance of the ellipsis (the JUMP constant)",
+                "the accent through the accent prop — it colours the active number and the focus rings"
+              ],
+              "notes": [
+                "The numbers here are buttons, not links: a page cannot be opened in a new tab. If you need URLs, take the link-based variant.",
+                "The state lives inside the component: to lift it up, replace useState with props and your own handler.",
+                "The five-page jump is tuned to a window of one sibling: raise it if you raise siblings.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Pagination003 total={24} defaultPage={7} siblings={1} />"
+            },
+            "controls": {
+              "defaultPage": {
+                "label": "Page"
+              },
+              "total": {
+                "label": "Total pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pagination-004",
+      "type": "registry:component",
+      "title": "Prev Next Counter",
+      "description": "Самая скромная пагинация: две ссылки и счётчик между ними. Номеров нет намеренно — их незачем показывать в ленте, которую читают подряд.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pagination-004/pagination-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pagination-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-004-*. Серверный: хуков нет, границы считаются из пропсов page и total. Адрес соседней страницы собирает функция hrefOf, по умолчанию `?page=N`. Край списка помечен aria-disabled и гасится, а не исчезает, поэтому ряд не прыгает. Счётчик занимает всё свободное место и набран табличными цифрами, стрелки нарисованы бордюрами и поворачиваются по data-dir.",
+      "meta": {
+        "tags": ["pagination", "prev-next", "links", "minimal"],
+        "ai": {
+          "export": "Pagination004",
+          "usage": "<Pagination004 page={4} total={12} hrefOf={(page) => `/blog?page=${page}`} />",
+          "summary": "Пагинация из двух ссылок и счётчика посередине: «Страница 4 из 12». Края гасятся, а не пропадают, поэтому ширина ряда не меняется при переходе. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-pagination-004-* и не подменять её токенами вашей темы (bg-secondary, border-input и подобными)",
+            "ссылки вместо кнопок: открыть в новой вкладке, скопировать адрес и вернуться из истории — всё это идёт бесплатно",
+            "rel=\"prev\" и rel=\"next\" на краях: это подсказка и браузеру, и поисковому роботу о порядке страниц",
+            "гашение края через aria-disabled вместо удаления ссылки — исчезнувшая ссылка сдвигает счётчик",
+            "табличные цифры в счётчике: иначе ссылки по краям дёргаются при смене номера",
+            "счётчик текстом, а не только номером: «4 из 12» отвечает на вопрос «сколько осталось», а голая четвёрка — нет"
+          ],
+          "adapt": [
+            "page и total — текущая страница и общее количество",
+            "hrefOf — как собрать адрес страницы под ваш роутер",
+            "label — слово перед номером",
+            "акцент через проп accent — цвет колец фокуса"
+          ],
+          "notes": [
+            "Прыгнуть на произвольную страницу отсюда нельзя: это осознанный отказ, для прыжков берите вариант с номерами.",
+            "pointer-events:none на краю не отменяет переход по клавиатуре — href там уже не задан, и это главная защита.",
+            "Общее количество должно быть известно: для меняющихся данных лучше подходит курсорная навигация.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "page",
+            "label": "Страница",
+            "type": "number",
+            "default": 4,
+            "min": 1,
+            "max": 12
+          },
+          {
+            "prop": "total",
+            "label": "Всего",
+            "type": "number",
+            "default": 12,
+            "min": 1,
+            "max": 99
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The most modest pagination: two links and a counter between them. The numbers are deliberately gone — a feed read in order does not need them.",
+            "ai": {
+              "summary": "Pagination made of two links and a counter in the middle: \"Page 4 of 12\". The edges dim instead of disappearing, so the row keeps its width between pages. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-pagination-004-* palette — do not swap it for your theme tokens (bg-secondary, border-input and the like)",
+                "links rather than buttons: opening in a new tab, copying the address and going back through history all come free",
+                "rel=\"prev\" and rel=\"next\" on the edges: they tell the browser and the crawler how the pages are ordered",
+                "dimming the edge with aria-disabled instead of removing the link — a vanished link shifts the counter",
+                "tabular figures in the counter: otherwise the edge links jitter as the number changes",
+                "the counter as a sentence rather than a bare number: \"4 of 12\" answers \"how much is left\", a lone 4 does not"
+              ],
+              "adapt": [
+                "page and total — the current page and the count",
+                "hrefOf — how to build a page address for your router",
+                "label — the word before the number",
+                "the accent through the accent prop — it colours the focus rings"
+              ],
+              "notes": [
+                "There is no way to jump to an arbitrary page: that is a deliberate omission, use the numbered variant for jumps.",
+                "pointer-events:none at the edge does not block keyboard activation — the href is already absent there, and that is the real guard.",
+                "The total has to be known: for shifting data cursor pagination fits better.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Pagination004 page={4} total={12} hrefOf={(page) => `/blog?page=${page}`} />"
+            },
+            "controls": {
+              "page": {
+                "label": "Page"
+              },
+              "total": {
+                "label": "Total"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pagination-005",
+      "type": "registry:component",
+      "title": "Load More Progress",
+      "description": "«Показать ещё» вместо страниц: полоса прогресса и счётчик «12 из 84» отвечают на главный вопрос длинного списка — сколько осталось.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pagination-005/pagination-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pagination-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-005-*. Клиентский: \"use client\" ради счётчика показанного. Ширина заливки приходит переменной --vibeui-pagination-005-progress, посчитанной из отношения показанного к общему. Полоса помечена role=\"progressbar\" с aria-valuenow, aria-valuemin и aria-valuemax, а сообщение о догрузке живёт в области aria-live=\"polite\". Когда показано всё, кнопка заменяется строкой о конце списка.",
+      "meta": {
+        "tags": ["pagination", "load more", "progress", "list"],
+        "ai": {
+          "export": "Pagination005",
+          "usage": "<Pagination005 total={84} perPage={12} label=\"Показать ещё\" />",
+          "summary": "Кнопка «Показать ещё» с честной шкалой: полоса прогресса, счётчик показанного и подпись, сколько добавит следующее нажатие. Дойдя до конца, кнопка уступает место строке о том, что это всё. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-pagination-005-* и не подменять её токенами вашей темы (bg-primary, bg-muted и подобными)",
+            "счётчик «показано из общего»: без него длинный список превращается в бесконечность без края",
+            "role=\"progressbar\" с aria-valuenow и границами: полоса без ролей для скринридера просто цветной прямоугольник",
+            "aria-live=\"polite\" у счётчика — иначе догрузка проходит мимо тех, кто не видит экран",
+            "число в подписи кнопки: человек должен знать, сколько добавит нажатие",
+            "явную строку об окончании списка вместо исчезающей кнопки: пропавшая кнопка читается как поломка"
+          ],
+          "adapt": [
+            "total и perPage — общее количество и размер порции",
+            "defaultShown — сколько показано изначально",
+            "label — подпись кнопки",
+            "акцент через проп accent — цвет полосы прогресса"
+          ],
+          "notes": [
+            "Компонент показывает только счётчики: сам список и загрузку данных держит вызывающий код.",
+            "Позиция прокрутки после догрузки не трогается — это верно для «показать ещё», но неверно для замены страницы.",
+            "Такой список плохо возвращается по ссылке: место в нём нельзя передать адресом. Нужен адрес — берите страницы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "total",
+            "label": "Всего",
+            "type": "number",
+            "default": 84,
+            "min": 1,
+            "max": 999
+          },
+          {
+            "prop": "perPage",
+            "label": "Порция",
+            "type": "number",
+            "default": 12,
+            "min": 1,
+            "max": 100
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "\"Load more\" instead of pages: a progress bar and a \"12 of 84\" counter answer the one question a long list raises — how much is left.",
+            "ai": {
+              "summary": "A \"Load more\" button with an honest scale: a progress bar, a counter of what is shown and a label saying how much the next press adds. At the end the button gives way to a line saying that is all. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-pagination-005-* palette — do not swap it for your theme tokens (bg-primary, bg-muted and the like)",
+                "the \"shown of total\" counter: without it a long list becomes an edgeless infinity",
+                "role=\"progressbar\" with aria-valuenow and the bounds: without roles the bar is just a coloured rectangle to a screen reader",
+                "aria-live=\"polite\" on the counter — otherwise the load goes unnoticed by anyone not watching the screen",
+                "the number in the button caption: people have to know how much a press adds",
+                "the explicit end-of-list line instead of a vanishing button: a disappeared button reads as a breakage"
+              ],
+              "adapt": [
+                "total and perPage — the overall count and the batch size",
+                "defaultShown — how much is shown at the start",
+                "label — the button caption",
+                "the accent through the accent prop — it colours the progress bar"
+              ],
+              "notes": [
+                "The component only shows the counters: the list itself and the data loading stay in the caller.",
+                "The scroll position is untouched after loading — right for \"load more\", wrong for replacing a page.",
+                "Such a list returns badly from a link: a place in it cannot be carried in a URL. If you need URLs, use pages.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Pagination005 total={84} perPage={12} label=\"Load more\" />"
+            },
+            "controls": {
+              "total": {
+                "label": "Total"
+              },
+              "perPage": {
+                "label": "Batch"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pagination-006",
+      "type": "registry:component",
+      "title": "Infinite Beacon",
+      "description": "Бесконечная лента, у которой всё-таки есть кнопка: маячок догрузки — живая кнопка, до неё доезжают табуляцией и жмут с клавиатуры.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pagination-006/pagination-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pagination-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-006-*. Клиентский: \"use client\" ради IntersectionObserver и состояния ленты. Наблюдатель ограничен своей областью прокрутки через root, а маячком служит сама кнопка «Загрузить ещё», поэтому догрузка работает и прокруткой, и с клавиатуры. Итог объявляется в области aria-live=\"polite\". Кнопка «Наверх» возвращает область прокрутки в начало.",
+      "meta": {
+        "tags": ["pagination", "infinite", "observer", "a11y"],
+        "ai": {
+          "export": "Pagination006",
+          "usage": "<Pagination006 total={60} batch={10} height=\"13rem\" />",
+          "summary": "Бесконечная лента с догрузкой по прокрутке: IntersectionObserver следит за маячком в конце списка, а маячок — это обычная кнопка, поэтому лента доступна и без мыши. Внизу строка состояния с числом загруженного и возврат наверх. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-pagination-006-* и не подменять её токенами вашей темы (bg-card, bg-muted и подобными)",
+            "маячок кнопкой, а не пустым div'ом: без мыши и без прокрутки бесконечная лента иначе просто заканчивается",
+            "IntersectionObserver вместо обработчика scroll: пересчёт делает браузер, а не каждый кадр ваш код",
+            "root у наблюдателя, указывающий на область прокрутки: без него слежение идёт за окном и срабатывает не там",
+            "aria-live=\"polite\" у строки состояния — догрузка обязана быть объявлена",
+            "отключение наблюдателя после конца списка: иначе он продолжает висеть на удалённом узле"
+          ],
+          "adapt": [
+            "total и batch — общее количество и размер порции догрузки",
+            "height — высота области прокрутки",
+            "содержимое строк ленты",
+            "акцент через проп accent — цвет колец фокуса и ссылки «Наверх»"
+          ],
+          "notes": [
+            "Данные не загружаются: компонент показывает механику, запрос за строками остаётся вашим.",
+            "Бесконечная лента ломает подвал страницы: до него не долистать. Здесь лента ограничена своей областью, но в макете страницы это стоит помнить.",
+            "Место в ленте нельзя передать ссылкой: для этого нужны страницы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "total",
+            "label": "Всего записей",
+            "type": "number",
+            "default": 60,
+            "min": 10,
+            "max": 500
+          },
+          {
+            "prop": "batch",
+            "label": "Порция",
+            "type": "number",
+            "default": 10,
+            "min": 5,
+            "max": 50
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An infinite feed that still has a button: the loading beacon is a real button, reachable with Tab and pressable from the keyboard.",
+            "ai": {
+              "summary": "An infinite feed that loads on scroll: an IntersectionObserver watches a beacon at the end of the list, and the beacon is an ordinary button, so the feed stays usable without a mouse. A status line with the loaded count and a back-to-top control sit below. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-pagination-006-* palette — do not swap it for your theme tokens (bg-card, bg-muted and the like)",
+                "the beacon as a button rather than an empty div: without a mouse and without scrolling an infinite feed otherwise just ends",
+                "IntersectionObserver instead of a scroll handler: the browser decides when to recompute, not your code every frame",
+                "the observer's root pointing at the scroll area: without it the watching happens against the window and fires in the wrong place",
+                "aria-live=\"polite\" on the status line — a load has to be announced",
+                "disconnecting the observer at the end of the list: otherwise it lingers on a removed node"
+              ],
+              "adapt": [
+                "total and batch — the overall count and the size of each load",
+                "height — the height of the scroll area",
+                "the contents of the feed rows",
+                "the accent through the accent prop — it colours the focus rings and the back-to-top control"
+              ],
+              "notes": [
+                "No data is fetched: the component shows the mechanics, the request for rows stays yours.",
+                "An infinite feed breaks a page footer: nobody ever reaches it. Here the feed is bounded by its own area, but it is worth remembering in a page layout.",
+                "A place in the feed cannot be carried in a link: that needs pages.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Pagination006 total={60} batch={10} height=\"13rem\" />"
+            },
+            "controls": {
+              "total": {
+                "label": "Total rows"
+              },
+              "batch": {
+                "label": "Batch"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pagination-007",
+      "type": "registry:component",
+      "title": "Page Size Pagination",
+      "description": "Пагинация таблицы с выбором размера страницы: при смене размера первая видимая строка остаётся на месте, а не сбрасывается в начало.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pagination-007/pagination-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pagination-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-007-*. Клиентский: \"use client\" ради страницы и размера. При смене размера номер страницы пересчитывается от номера первой видимой строки, поэтому позиция в списке сохраняется. Стрелка у <select> нарисована двумя линейными градиентами, чтобы не тянуть иконку. В узком блоке контейнерный запрос переносит выбор размера на свою строку через order.",
+      "meta": {
+        "tags": ["pagination", "page size", "table", "select"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pagination007",
+          "usage": "<Pagination007 total={214} defaultPerPage={20} sizes={[10, 20, 50, 100]} />",
+          "summary": "Панель навигации по таблице: диапазон строк слева, стрелки с номером страницы посередине, выбор размера страницы справа. Смена размера сохраняет место в списке: номер страницы пересчитывается от первой видимой строки. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-pagination-007-* и не подменять её токенами вашей темы (bg-input, border-input и подобными)",
+            "пересчёт страницы от первой видимой строки: сброс на начало теряет место, к которому долго шли",
+            "диапазон строк вместо одного номера страницы: он не врёт при смене размера",
+            "aria-current=\"page\" у указателя страницы и aria-label у стрелок — символы «‹» и «›» скринридер прочитает как знаки",
+            "табличные цифры в диапазоне и в номере страницы: иначе панель дёргается на каждом переходе",
+            "<select> вместо своего выпадающего списка: на телефоне он открывается системным колесом"
+          ],
+          "adapt": [
+            "total и defaultPerPage — общее количество строк и начальный размер страницы",
+            "массив sizes — доступные размеры",
+            "акцент через проп accent — цвет колец фокуса",
+            "порог контейнерного запроса, по которому панель перестраивается"
+          ],
+          "notes": [
+            "Компонент показывает только границы: сам запрос строк остаётся за вызывающим кодом.",
+            "Размер страницы не сохраняется между визитами: хранение — за вами.",
+            "Размеры больше сотни строк почти всегда бессмысленны: страница будет грузиться дольше, чем читаться.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "total",
+            "label": "Всего строк",
+            "type": "number",
+            "default": 214,
+            "min": 10,
+            "max": 999
+          },
+          {
+            "prop": "defaultPerPage",
+            "label": "На странице",
+            "type": "number",
+            "default": 20,
+            "min": 5,
+            "max": 100
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Table pagination with a page-size picker: changing the size keeps the first visible row in place instead of throwing you back to the start.",
+            "ai": {
+              "summary": "A table navigation bar: the row range on the left, arrows with the page number in the middle, the page-size picker on the right. Changing the size preserves your place: the page number is recomputed from the first visible row. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-pagination-007-* palette — do not swap it for your theme tokens (bg-input, border-input and the like)",
+                "recomputing the page from the first visible row: resetting to the start loses a place that took a while to reach",
+                "the row range instead of a lone page number: it does not lie when the size changes",
+                "aria-current=\"page\" on the page indicator and aria-labels on the arrows — a screen reader reads \"‹\" and \"›\" as symbols",
+                "tabular figures in the range and the page number: otherwise the bar jitters on every step",
+                "a <select> instead of a custom drop-down: on a phone it opens as the system wheel"
+              ],
+              "adapt": [
+                "total and defaultPerPage — the row count and the initial page size",
+                "the sizes array — the available page sizes",
+                "the accent through the accent prop — it colours the focus rings",
+                "the container-query threshold where the bar rearranges"
+              ],
+              "notes": [
+                "The component only shows the bounds: fetching the rows stays with the caller.",
+                "The page size is not remembered between visits: persisting it is up to you.",
+                "Sizes beyond a hundred rows are almost always pointless: the page takes longer to load than to read.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Pagination007 total={214} defaultPerPage={20} sizes={[10, 20, 50, 100]} />"
+            },
+            "controls": {
+              "total": {
+                "label": "Total rows"
+              },
+              "defaultPerPage": {
+                "label": "Per page"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pagination-008",
+      "type": "registry:component",
+      "title": "Jump To Page",
+      "description": "Пагинация с полем перехода: номер вводится и отправляется формой, а неверное значение не молчит, а объясняет допустимый диапазон.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pagination-008/pagination-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pagination-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-008-*. Клиентский: \"use client\" ради страницы и черновика ввода. Поле перехода лежит в настоящей <form>, поэтому Enter отправляет её без отдельного обработчика клавиши. Неверный номер помечает поле через aria-invalid и показывает сообщение с role=\"alert\", связанное с полем через aria-describedby; то же место в спокойном состоянии занимает подсказка об общем числе страниц.",
+      "meta": {
+        "tags": ["pagination", "jump", "form", "validation"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pagination008",
+          "usage": "<Pagination008 total={148} defaultPage={37} label=\"Перейти к странице\" />",
+          "summary": "Пагинация для длинного списка: стрелки с указателем страницы сверху и поле перехода к произвольному номеру снизу. Ввод проверяется, ошибка объясняется словами и связана с полем. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-pagination-008-* и не подменять её токенами вашей темы (bg-input, border-destructive и подобными)",
+            "настоящую <form> вокруг поля: Enter отправляет её сам, отдельный обработчик клавиши не нужен и не забудется",
+            "aria-describedby, связывающий поле с подсказкой и с сообщением об ошибке — иначе текст рядом с полем для скринридера просто абзац",
+            "role=\"alert\" у сообщения об ошибке: без него оно не объявляется в момент появления",
+            "подсказку об общем числе страниц в спокойном состоянии — место под сообщение занято всегда, и раскладка не прыгает",
+            "<label> у поля вместо одного placeholder: подсказка исчезает при вводе и именем поля быть не может"
+          ],
+          "adapt": [
+            "total и defaultPage — количество страниц и начальную",
+            "label — подпись поля перехода",
+            "тексты подсказки и сообщения об ошибке",
+            "акцент через проп accent — цвет кнопки «Перейти» и колец фокуса"
+          ],
+          "notes": [
+            "Компонент клиентский: состояние страницы и черновик ввода живут внутри.",
+            "Поле не ограничивает ввод жёстко: атрибуты min и max — подсказка браузеру, проверка всё равно нужна в обработчике.",
+            "Поле перехода окупается на списках от нескольких десятков страниц: на пяти оно только мешает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "total",
+            "label": "Всего страниц",
+            "type": "number",
+            "default": 148,
+            "min": 1,
+            "max": 999
+          },
+          {
+            "prop": "defaultPage",
+            "label": "Страница",
+            "type": "number",
+            "default": 37,
+            "min": 1,
+            "max": 148
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Pagination with a jump field: the number is typed and submitted by a form, and a wrong value explains the allowed range instead of staying silent.",
+            "ai": {
+              "summary": "Pagination for a long list: arrows with a page indicator on top and a jump-to-page field below. Input is validated, the error is spelled out in words and tied to the field. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-pagination-008-* palette — do not swap it for your theme tokens (bg-input, border-destructive and the like)",
+                "the real <form> around the field: Enter submits it by itself, so a separate key handler is neither needed nor forgotten",
+                "the aria-describedby linking the field to the hint and to the error — otherwise the text beside the field is just a paragraph",
+                "role=\"alert\" on the error message: without it the message is not announced when it appears",
+                "the hint about the page count in the calm state — the message slot is always occupied, so the layout never jumps",
+                "a <label> on the field rather than a placeholder alone: a placeholder disappears while typing and cannot be the name"
+              ],
+              "adapt": [
+                "total and defaultPage — the page count and the starting page",
+                "label — the caption of the jump field",
+                "the hint and error texts",
+                "the accent through the accent prop — it colours the Go button and the focus rings"
+              ],
+              "notes": [
+                "The component is a client one: the page state and the input draft live inside it.",
+                "The field does not hard-limit typing: min and max are hints to the browser, the check still belongs in the handler.",
+                "A jump field pays off on lists of dozens of pages: on five it only gets in the way.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Pagination008 total={148} defaultPage={37} label=\"Go to page\" />"
+            },
+            "controls": {
+              "total": {
+                "label": "Total pages"
+              },
+              "defaultPage": {
+                "label": "Page"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pagination-009",
+      "type": "registry:component",
+      "title": "Thumb Pagination",
+      "description": "Пагинация для телефона: три крупные цели вместо ряда номеров, а полный список страниц открывается сеткой в popover.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pagination-009/pagination-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pagination-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-009-*. Серверный: хуков нет, все номера — обычные ссылки. Цели по 2.75rem — нижняя граница для касания пальцем. Сетка страниц лежит в popover=\"auto\" с якорем на самой панели, поэтому закрытие по Escape и по касанию мимо достаётся от браузера. Текущая страница помечена aria-current=\"page\", края гасятся через aria-disabled.",
+      "meta": {
+        "tags": ["pagination", "mobile", "touch", "popover"],
+        "ai": {
+          "export": "Pagination009",
+          "usage": "<Pagination009 page={3} total={18} hrefOf={(page) => `/catalog?page=${page}`} />",
+          "summary": "Компактная пагинация для телефона: крупные стрелки по краям и кнопка с текущей страницей посередине, открывающая сетку всех номеров. Все переходы — ссылки, поэтому страница открывается в новой вкладке и остаётся в истории. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-pagination-009-* и не подменять её токенами вашей темы (bg-card, border-input и подобными)",
+            "размер целей не меньше 2.75rem: ряд из мелких номеров на телефоне не берётся пальцем",
+            "сетку номеров в popover вместо ряда: восемнадцать номеров в строку на узком экране не помещаются",
+            "popover=\"auto\": Escape и касание мимо закрывают сетку без вашего кода",
+            "aria-current=\"page\" у текущего номера и в списке, и на кнопке-указателе",
+            "aria-label у стрелок: стрелка из бордюров не имеет текста и без подписи безымянна"
+          ],
+          "adapt": [
+            "page и total — текущая страница и общее количество",
+            "hrefOf — как собрать адрес страницы под ваш роутер",
+            "акцент через проп accent — цвет активного номера и колец фокуса",
+            "размер целей и число колонок в сетке"
+          ],
+          "notes": [
+            "Сетка выводит все страницы: на нескольких сотнях она станет длинным списком с прокруткой.",
+            "Без поддержки anchor positioning сетка открывается по центру экрана: на телефоне это приемлемо, но проверьте.",
+            "Компонент рассчитан на узкую ширину: на десктопе берите ряд номеров.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "page",
+            "label": "Страница",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 18
+          },
+          {
+            "prop": "total",
+            "label": "Всего",
+            "type": "number",
+            "default": 18,
+            "min": 1,
+            "max": 99
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Pagination for a phone: three large targets instead of a row of numbers, with the full page list opening as a grid in a popover.",
+            "ai": {
+              "summary": "Compact phone pagination: large arrows at the edges and a current-page button in the middle that opens a grid of every number. Every step is a link, so a page opens in a new tab and stays in history. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-pagination-009-* palette — do not swap it for your theme tokens (bg-card, border-input and the like)",
+                "targets no smaller than 2.75rem: a row of small numbers cannot be hit with a thumb",
+                "the number grid in a popover instead of a row: eighteen numbers do not fit across a narrow screen",
+                "popover=\"auto\": Escape and a tap outside close the grid without your code",
+                "aria-current=\"page\" on the current number both in the list and on the indicator button",
+                "the aria-labels on the arrows: a border-drawn arrow has no text and is nameless without one"
+              ],
+              "adapt": [
+                "page and total — the current page and the count",
+                "hrefOf — how to build a page address for your router",
+                "the accent through the accent prop — it colours the active number and the focus rings",
+                "the target size and the number of grid columns"
+              ],
+              "notes": [
+                "The grid lists every page: at several hundred it becomes a long scrolling list.",
+                "Without anchor positioning support the grid opens centred: acceptable on a phone, but check it.",
+                "The component is meant for narrow widths: on desktop take the row of numbers.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Pagination009 page={3} total={18} hrefOf={(page) => `/catalog?page=${page}`} />"
+            },
+            "controls": {
+              "page": {
+                "label": "Page"
+              },
+              "total": {
+                "label": "Total"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tabs-003",
+      "type": "registry:component",
+      "title": "Sliding Underline",
+      "description": "Вкладки с одним переезжающим индикатором: позиция считается арифметикой в CSS от индекса и количества, ничего не измеряется в JS.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tabs-003/tabs-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tabs-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-003-*. Клиентский: \"use client\" ради выбранной вкладки и клавиатуры. Вкладки лежат в сетке равными колонками, а индикатор абсолютно спозиционирован и потому не занимает колонку. Его ширина — 100%/count, сдвиг — translateX(index * 100%); оба числа приходят переменными --vibeui-tabs-003-count и --vibeui-tabs-003-index. Разметка следует паттерну tabs из WAI-ARIA, в Tab-порядке живёт только активная вкладка.",
+      "meta": {
+        "tags": ["tabs", "indicator", "keyboard", "aria"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Tabs003",
+          "usage": "<Tabs003\n  defaultId=\"team\"\n  items={[\n    { id: \"brief\", label: \"Задача\", content: \"Что нужно получить\" },\n    { id: \"team\", label: \"Команда\", content: \"Кто участвует\" },\n  ]}\n/>",
+          "summary": "Вкладки с общим индикатором, который переезжает под активную. Позиция берётся из индекса и количества вкладок арифметикой в CSS, поэтому ничего не измеряется и индикатор не рассыпается при смене шрифта или ширины. Стрелки, Home и End работают. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-tabs-003-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
+            "сетку равными колонками: на ней держится вся арифметика индикатора, при разной ширине вкладок он поедет мимо",
+            "абсолютное позиционирование индикатора — иначе он станет ещё одной колонкой сетки и сдвинет вкладки",
+            "разметку tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby",
+            "roving tabindex: tabIndex 0 только у активной вкладки, у остальных -1 — иначе Tab перебирает все вкладки подряд",
+            "перенос фокуса вместе со сменой выбора при стрелках: без него выбор меняется, а фокус остаётся на месте"
+          ],
+          "adapt": [
+            "массив items: id, подписи и содержимое панелей",
+            "defaultId — какая вкладка открыта изначально",
+            "акцент через проп accent — цвет индикатора и кольца фокуса",
+            "ширину индикатора через множитель scaleX"
+          ],
+          "notes": [
+            "Компонент клиентский: \"use client\" нужен ради состояния и клавиатуры.",
+            "Больше пяти вкладок в равных колонках плохо читаются: длинные подписи начинают переноситься.",
+            "Идентификаторы панелей строятся из id вкладки: два экземпляра с одинаковыми id дадут повторяющиеся id в разметке.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultId",
+            "label": "Открыта вкладка",
+            "type": "select",
+            "default": "brief",
+            "options": ["brief", "team", "budget"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Tabs with one travelling indicator: its position is arithmetic in CSS from the index and the count, with nothing measured in JS.",
+            "ai": {
+              "summary": "Tabs with a shared indicator that slides under the active one. The position comes from the index and the tab count as CSS arithmetic, so nothing is measured and the indicator never falls apart on a font or width change. Arrows, Home and End all work. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-tabs-003-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
+                "the equal-column grid: the whole indicator arithmetic rests on it, and with uneven tab widths it lands off target",
+                "the absolute positioning of the indicator — otherwise it becomes another grid column and shifts the tabs",
+                "the WAI-ARIA tabs markup: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby",
+                "the roving tabindex: 0 on the active tab and -1 on the rest, otherwise Tab walks through every tab",
+                "moving focus together with the selection on arrow keys: without it the selection changes while focus stays behind"
+              ],
+              "adapt": [
+                "the items array: ids, labels and panel content",
+                "defaultId — which tab starts open",
+                "the accent through the accent prop — it colours the indicator and the focus ring",
+                "the indicator width through the scaleX factor"
+              ],
+              "notes": [
+                "The component is a client one: \"use client\" is there for the state and the keyboard.",
+                "More than five equal columns read poorly: long labels start wrapping.",
+                "Panel ids are built from the tab id: two instances sharing ids produce duplicate ids in the document.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tabs003\n  defaultId=\"team\"\n  items={[\n    { id: \"brief\", label: \"Brief\", content: \"What has to be delivered\" },\n    { id: \"team\", label: \"Team\", content: \"Who is involved\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "defaultId": {
+                "label": "Open tab"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tabs-004",
+      "type": "registry:component",
+      "title": "Pill Tabs",
+      "description": "Вкладки-пилюли как в системном сегментированном переключателе: активная залита акцентом, между неактивными — тонкие разделители.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tabs-004/tabs-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tabs-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-004-*. Клиентский: \"use client\" ради выбранной вкладки и клавиатуры. Разделитель — ::before у каждой вкладки, кроме первой; рядом с активной пилюлей он гасится правилами по aria-selected, иначе линия у края заливки выглядит грязью. Разметка следует паттерну tabs из WAI-ARIA, в Tab-порядке живёт только активная вкладка.",
+      "meta": {
+        "tags": ["tabs", "segmented", "pills", "aria"],
+        "ai": {
+          "export": "Tabs004",
+          "usage": "<Tabs004\n  defaultId=\"week\"\n  items={[\n    { id: \"day\", label: \"Сутки\", content: \"1 284 визита\" },\n    { id: \"week\", label: \"Неделя\", content: \"9 470 визитов\" },\n  ]}\n/>",
+          "summary": "Сегментированный переключатель на вкладках: пилюли в общей дорожке, активная залита акцентом, соседи разделены тонкими линиями. Стрелки, Home и End переводят выбор. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-tabs-004-* и не подменять её токенами вашей темы (bg-secondary, text-secondary-foreground и подобными)",
+            "гашение разделителя у краёв активной пилюли: линия, упирающаяся в заливку, читается как грязь на стыке",
+            "заливку активной пилюли вместе с цветом текста — контраст обязан оставаться достаточным на акценте",
+            "разметку tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby",
+            "roving tabindex: tabIndex 0 только у активной вкладки, у остальных -1",
+            "перенос фокуса вместе со сменой выбора при стрелках"
+          ],
+          "adapt": [
+            "массив items: id, подписи и содержимое панелей",
+            "defaultId — какая вкладка открыта изначально",
+            "акцент через проп accent — цвет активной пилюли",
+            "радиус пилюль и высоту дорожки"
+          ],
+          "notes": [
+            "Сегментированный переключатель рассчитан на два-четыре коротких варианта: длинные подписи в него не помещаются.",
+            "Это переключение содержимого, а не навигация: для перехода между страницами нужны ссылки.",
+            "Компонент клиентский: \"use client\" нужен ради состояния и клавиатуры.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultId",
+            "label": "Период",
+            "type": "select",
+            "default": "day",
+            "options": ["day", "week", "month"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Pill tabs in the manner of a system segmented control: the active pill is filled with the accent, thin dividers separate the rest.",
+            "ai": {
+              "summary": "A segmented control built on tabs: pills in a shared track, the active one filled with the accent, neighbours separated by thin lines. Arrows, Home and End move the selection. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-tabs-004-* palette — do not swap it for your theme tokens (bg-secondary, text-secondary-foreground and the like)",
+                "hiding the divider at the edges of the active pill: a line running into the fill reads as dirt on the seam",
+                "the filled active pill together with its text colour — the contrast has to stay sufficient on the accent",
+                "the WAI-ARIA tabs markup: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby",
+                "the roving tabindex: 0 on the active tab and -1 on the rest",
+                "moving focus together with the selection on arrow keys"
+              ],
+              "adapt": [
+                "the items array: ids, labels and panel content",
+                "defaultId — which tab starts open",
+                "the accent through the accent prop — it colours the active pill",
+                "the pill radius and the track height"
+              ],
+              "notes": [
+                "A segmented control is meant for two to four short options: long labels do not fit.",
+                "This switches content, it is not navigation: moving between pages needs links.",
+                "The component is a client one: \"use client\" is there for the state and the keyboard.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tabs004\n  defaultId=\"week\"\n  items={[\n    { id: \"day\", label: \"Day\", content: \"1,284 visits\" },\n    { id: \"week\", label: \"Week\", content: \"9,470 visits\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "defaultId": {
+                "label": "Period"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tabs-005",
+      "type": "registry:component",
+      "title": "Vertical Tabs",
+      "description": "Вертикальные вкладки настроек: список слева читается сверху вниз, поэтому подписи с пояснениями помещаются целиком.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tabs-005/tabs-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tabs-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-005-*. Клиентский: \"use client\" ради выбранной вкладки и клавиатуры. Список помечен aria-orientation=\"vertical\", и стрелки соответственно вертикальные: вверх и вниз, плюс Home и End. Две колонки появляются контейнерным запросом на внутреннем [data-part=\"shell\"], потому что правило внутри @container не действует на сам контейнер; в узком блоке список ложится над содержимым.",
+      "meta": {
+        "tags": ["tabs", "vertical", "settings", "container-query"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Tabs005",
+          "usage": "<Tabs005\n  defaultId=\"security\"\n  items={[\n    { id: \"profile\", label: \"Профиль\", hint: \"Имя и аватар\", content: <Profile /> },\n  ]}\n/>",
+          "summary": "Вертикальные вкладки: список разделов слева с подписью и пояснением, содержимое справа. Стрелки вверх и вниз переводят выбор, Home и End прыгают к краям. В узком блоке колонки складываются в одну. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-tabs-005-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
+            "aria-orientation=\"vertical\" вместе с вертикальными стрелками: в вертикальном списке горизонтальные стрелки ничего не значат и должны остаться браузеру",
+            "полосу у края активной вкладки: рядом с наведением одной заливки мало, чтобы отличить выбранное",
+            "разметку tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby",
+            "контейнерный запрос на внутреннем [data-part=\"shell\"], а не на корне: @container не действует на сам контейнер",
+            "roving tabindex: tabIndex 0 только у активной вкладки, у остальных -1"
+          ],
+          "adapt": [
+            "массив items: подписи, пояснения и содержимое панелей",
+            "defaultId — какой раздел открыт изначально",
+            "ширину колонки со списком и порог перестроения",
+            "акцент через проп accent — цвет полосы и кольца фокуса"
+          ],
+          "notes": [
+            "Компонент клиентский: \"use client\" нужен ради состояния и клавиатуры.",
+            "Вертикальные вкладки окупаются от четырёх разделов: на двух дешевле обойтись заголовками.",
+            "Панель прокручивается вместе со страницей: если содержимое длинное, задайте ей свою высоту и прокрутку.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultId",
+            "label": "Раздел",
+            "type": "select",
+            "default": "profile",
+            "options": ["profile", "security", "alerts", "billing"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Vertical settings tabs: the list on the left reads top to bottom, so labels with their hints fit in full.",
+            "ai": {
+              "summary": "Vertical tabs: a list of sections on the left with a label and a hint, the content on the right. Up and down arrows move the selection, Home and End jump to the ends. In a narrow block the columns fold into one. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-tabs-005-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
+                "aria-orientation=\"vertical\" together with vertical arrows: horizontal arrows mean nothing in a vertical list and belong to the browser",
+                "the bar at the edge of the active tab: next to a hover state a fill alone is not enough to tell the selection apart",
+                "the WAI-ARIA tabs markup: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby",
+                "the container query on the inner [data-part=\"shell\"] rather than the root: @container does not apply to the container itself",
+                "the roving tabindex: 0 on the active tab and -1 on the rest"
+              ],
+              "adapt": [
+                "the items array: labels, hints and panel content",
+                "defaultId — which section starts open",
+                "the list column width and the rearranging threshold",
+                "the accent through the accent prop — it colours the bar and the focus ring"
+              ],
+              "notes": [
+                "The component is a client one: \"use client\" is there for the state and the keyboard.",
+                "Vertical tabs pay off from four sections up: with two, headings are cheaper.",
+                "The panel scrolls with the page: for long content give it its own height and scrolling.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tabs005\n  defaultId=\"security\"\n  items={[\n    { id: \"profile\", label: \"Profile\", hint: \"Name and avatar\", content: <Profile /> },\n  ]}\n/>"
+            },
+            "controls": {
+              "defaultId": {
+                "label": "Section"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tabs-006",
+      "type": "registry:component",
+      "title": "Counter Tabs",
+      "description": "Вкладки почтовых папок: значок, подпись и счётчик в одной строке, причём число уходит в имя вкладки, а не читается отдельной цифрой.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tabs-006/tabs-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tabs-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-006-*. Клиентский: \"use client\" ради выбранной вкладки и клавиатуры. Значки нарисованы бордюрами и clip-path по атрибуту data-glyph, поэтому иконочный шрифт не нужен. Счётчик помечен aria-hidden, а число попадает в aria-label вкладки. Разметка следует паттерну tabs из WAI-ARIA, ряд прокручивается по горизонтали со скрытой полосой прокрутки.",
+      "meta": {
+        "tags": ["tabs", "icons", "counters", "mail"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Tabs006",
+          "usage": "<Tabs006\n  defaultId=\"star\"\n  items={[\n    { id: \"inbox\", label: \"Входящие\", glyph: \"inbox\", count: 12, content: \"…\" },\n  ]}\n/>",
+          "summary": "Вкладки со значками и счётчиками: подпись рядом со значком, число непрочитанного справа, у активной вкладки счётчик залит акцентом. Значки собраны из бордюров, поэтому файл остаётся самодостаточным. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-tabs-006-* и не подменять её токенами вашей темы (bg-muted, text-foreground и подобными)",
+            "число в aria-label вкладки вместе с aria-hidden у счётчика: иначе скринридер прочитает подпись и голую цифру подряд",
+            "подписи рядом со значками: значок без слова угадывают неверно, особенно в почте",
+            "разметку tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby",
+            "значки из бордюров и clip-path вместо иконочного шрифта — компонент обязан оставаться одним файлом",
+            "табличные цифры в счётчике: без них ширина вкладки пляшет от чисел"
+          ],
+          "adapt": [
+            "массив items: подписи, значки, счётчики и содержимое панелей",
+            "defaultId — какая папка открыта изначально",
+            "набор значков: подставьте свои, сохранив размер в 0.875rem",
+            "акцент через проп accent — цвет полоски и счётчика активной вкладки"
+          ],
+          "notes": [
+            "Счётчик — это то, что требует внимания: непрочитанные, ошибки. Общее число писем там не нужно.",
+            "Компонент клиентский: \"use client\" нужен ради состояния и клавиатуры.",
+            "Значки нарисованы условно: для узнаваемых иконок подставьте свой набор.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultId",
+            "label": "Папка",
+            "type": "select",
+            "default": "inbox",
+            "options": ["inbox", "star", "later", "trash"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Mail folder tabs: a glyph, a label and a counter in one row, with the number folded into the tab's name rather than read as a bare digit.",
+            "ai": {
+              "summary": "Tabs with glyphs and counters: the label beside the glyph, the unread count on the right, and the active tab's counter filled with the accent. The glyphs are drawn with borders, so the file stays self-contained. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-tabs-006-* palette — do not swap it for your theme tokens (bg-muted, text-foreground and the like)",
+                "the count inside the tab's aria-label with the badge aria-hidden: otherwise a screen reader reads the label and a bare number back to back",
+                "the labels beside the glyphs: a wordless glyph gets guessed wrong, especially in mail",
+                "the WAI-ARIA tabs markup: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby",
+                "glyphs from borders and clip-path instead of an icon font — the component has to stay a single file",
+                "tabular figures in the counter: without them the tab width jitters with the numbers"
+              ],
+              "adapt": [
+                "the items array: labels, glyphs, counts and panel content",
+                "defaultId — which folder starts open",
+                "the glyph set: swap in your own, keeping the 0.875rem size",
+                "the accent through the accent prop — it colours the underline and the active counter"
+              ],
+              "notes": [
+                "A counter means something needing attention — unread, failing. A total message count does not belong there.",
+                "The component is a client one: \"use client\" is there for the state and the keyboard.",
+                "The glyphs are schematic: for recognisable icons drop in your own set.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tabs006\n  defaultId=\"star\"\n  items={[\n    { id: \"inbox\", label: \"Inbox\", glyph: \"inbox\", count: 12, content: \"…\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "defaultId": {
+                "label": "Folder"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tabs-007",
+      "type": "registry:component",
+      "title": "Scrolling Tabs",
+      "description": "Прокручиваемый ряд вкладок с тенями по краям: тень появляется только с той стороны, где содержимое ещё осталось, и всё это без JS.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tabs-007/tabs-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tabs-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-007-*. Клиентский: \"use client\" ради выбранной вкладки и клавиатуры, но тени по краям сделаны чистым CSS: четыре градиента с разной привязкой фона — «маска» цвета фона едет вместе с содержимым (background-attachment:local), а сама тень стоит на месте (scroll), поэтому у докрученного края тень закрывается маской. Стрелки дополнительно доводят выбранную вкладку в поле зрения через scrollIntoView.",
+      "meta": {
+        "tags": ["tabs", "scroll", "shadow", "overflow"],
+        "ai": {
+          "export": "Tabs007",
+          "usage": "<Tabs007\n  defaultId=\"msk\"\n  items={[\n    { id: \"all\", label: \"Все\", content: \"Полный список\" },\n    { id: \"msk\", label: \"Москва\", content: \"Доставка в день заказа\" },\n  ]}\n/>",
+          "summary": "Ряд вкладок, который не помещается в ширину и прокручивается по горизонтали. По краям появляются тени, подсказывающие, что список продолжается; они сделаны градиентами с разной привязкой фона, без наблюдателей и без обработчика прокрутки. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-tabs-007-* и не подменять её токенами вашей темы (bg-background, text-muted-foreground и подобными)",
+            "пару градиентов с background-attachment local и scroll: именно из их сочетания тень гаснет у докрученного края",
+            "цвет маски, совпадающий с фоном блока: если фон другой, у края появится полоса чужого цвета",
+            "тени по краям вообще: без них не видно, что ряд продолжается, и половина вкладок остаётся ненайденной",
+            "scrollIntoView при переходе стрелками — иначе выбранная вкладка получает фокус за пределами видимой области",
+            "разметку tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby"
+          ],
+          "adapt": [
+            "массив items: подписи и содержимое панелей",
+            "defaultId — какая вкладка открыта изначально",
+            "ширину и плотность теней в размере фона",
+            "акцент через проп accent — цвет полоски и кольца фокуса"
+          ],
+          "notes": [
+            "Полоса прокрутки скрыта намеренно: её роль выполняют тени. Если ряд короткий, теней не будет вовсе.",
+            "Компонент клиентский: \"use client\" нужен ради состояния и клавиатуры.",
+            "Приём с background-attachment требует непрозрачного фона у ряда: на просвечивающей подложке маска выдаст себя.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultId",
+            "label": "Город",
+            "type": "select",
+            "default": "all",
+            "options": ["all", "msk", "spb", "ekb", "nsk", "kzn", "sochi"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A scrolling row of tabs with edge shadows: a shadow appears only on the side that still has content, and all of it without JS.",
+            "ai": {
+              "summary": "A row of tabs that does not fit and scrolls horizontally. Shadows at the edges hint that the list continues; they are made of gradients with different background attachments, with no observers and no scroll handler. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-tabs-007-* palette — do not swap it for your theme tokens (bg-background, text-muted-foreground and the like)",
+                "the pair of gradients with background-attachment local and scroll: their combination is exactly what fades the shadow at a fully scrolled edge",
+                "the mask colour matching the block background: with a different background a stripe of foreign colour appears at the edge",
+                "the edge shadows at all: without them nobody sees the row continues and half the tabs go unfound",
+                "scrollIntoView on arrow navigation — otherwise the selected tab takes focus outside the visible area",
+                "the WAI-ARIA tabs markup: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby"
+              ],
+              "adapt": [
+                "the items array: labels and panel content",
+                "defaultId — which tab starts open",
+                "the width and density of the shadows in the background size",
+                "the accent through the accent prop — it colours the underline and the focus ring"
+              ],
+              "notes": [
+                "The scrollbar is hidden on purpose: the shadows do its job. With a short row there are no shadows at all.",
+                "The component is a client one: \"use client\" is there for the state and the keyboard.",
+                "The background-attachment trick needs an opaque row background: on a translucent surface the mask gives itself away.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tabs007\n  defaultId=\"msk\"\n  items={[\n    { id: \"all\", label: \"All\", content: \"The full list\" },\n    { id: \"msk\", label: \"Moscow\", content: \"Same-day delivery\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "defaultId": {
+                "label": "City"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tabs-008",
+      "type": "registry:component",
+      "title": "Overflow Tabs",
+      "description": "Вкладки со свёрткой лишних в «ещё»: выбранная из списка занимает последнее видимое место, поэтому активная вкладка всегда на виду.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tabs-008/tabs-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tabs-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-008-*. Клиентский: \"use client\" ради выбора, открытия списка и подмены видимой вкладки. Видимый ряд — первые visible вкладок, где последнее место отдано вкладке, выбранной из «ещё»; вытесненная уходит в список. Панель одна на все вкладки, её aria-labelledby указывает на активную. Разметка следует паттерну tabs из WAI-ARIA, стрелки ходят по видимому ряду.",
+      "meta": {
+        "tags": ["tabs", "overflow", "more menu", "responsive"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Tabs008",
+          "usage": "<Tabs008\n  visible={3}\n  moreLabel=\"Ещё\"\n  items={[\n    { id: \"summary\", label: \"Сводка\", content: \"Ключевые цифры\" },\n  ]}\n/>",
+          "summary": "Вкладки, которых больше, чем помещается: часть остаётся в ряду, остальные уходят в список «ещё» со счётчиком. Выбор из списка выводит вкладку в видимый ряд, а вытесненную убирает в список, поэтому активная вкладка не исчезает. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-tabs-008-* и не подменять её токенами вашей темы (bg-popover, text-muted-foreground и подобными)",
+            "подмену последнего видимого места выбранной вкладкой: иначе после выбора из «ещё» активная вкладка исчезает из ряда",
+            "счётчик у кнопки «ещё»: без него непонятно, спрятана одна вкладка или десять",
+            "aria-expanded у кнопки «ещё» — по нему скринридер понимает, раскрыт список или нет",
+            "разметку tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby",
+            "roving tabindex по видимому ряду: скрытые вкладки не должны попадать в Tab-порядок"
+          ],
+          "adapt": [
+            "массив items: подписи и содержимое панелей",
+            "visible — сколько вкладок остаётся в ряду",
+            "moreLabel — подпись кнопки со скрытыми вкладками",
+            "акцент через проп accent — цвет полоски и колец фокуса"
+          ],
+          "notes": [
+            "Число видимых вкладок задаётся числом, а не измеряется: компонент не считает реальную ширину подписей.",
+            "Стрелки ходят только по видимому ряду: до скрытых вкладок добираются через кнопку «ещё».",
+            "Список закрывается выбором и повторным нажатием кнопки, но не кликом мимо: добавьте закрытие, если оно нужно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "visible",
+            "label": "Видимых вкладок",
+            "type": "number",
+            "default": 3,
+            "min": 2,
+            "max": 5
+          },
+          {
+            "prop": "moreLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Ещё",
+            "maxLength": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Tabs that fold the extras into a \"more\" list: a tab picked from the list takes the last visible slot, so the active tab is always on screen.",
+            "ai": {
+              "summary": "More tabs than fit: some stay in the row, the rest move into a \"more\" list with a counter. Picking from the list promotes that tab into the visible row and demotes the one it replaces, so the active tab never disappears. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-tabs-008-* palette — do not swap it for your theme tokens (bg-popover, text-muted-foreground and the like)",
+                "swapping the last visible slot for the chosen tab: otherwise the active tab vanishes from the row after a pick",
+                "the counter on the \"more\" button: without it nobody knows whether one tab is hidden or ten",
+                "aria-expanded on the \"more\" button — it is how a screen reader knows whether the list is open",
+                "the WAI-ARIA tabs markup: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby",
+                "the roving tabindex across the visible row: hidden tabs must not enter the tab order"
+              ],
+              "adapt": [
+                "the items array: labels and panel content",
+                "visible — how many tabs stay in the row",
+                "moreLabel — the caption of the hidden-tabs button",
+                "the accent through the accent prop — it colours the underline and the focus rings"
+              ],
+              "notes": [
+                "The visible count is a number, not a measurement: the component does not compute the real label widths.",
+                "Arrows walk the visible row only: hidden tabs are reached through the \"more\" button.",
+                "The list closes on a pick and on a second press of the button, but not on an outside click: add that if you need it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tabs008\n  visible={3}\n  moreLabel=\"More\"\n  items={[\n    { id: \"summary\", label: \"Summary\", content: \"Key figures\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "visible": {
+                "label": "Visible tabs"
+              },
+              "moreLabel": {
+                "label": "Button",
+                "default": "More"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tabs-009",
+      "type": "registry:component",
+      "title": "Editor Tabs",
+      "description": "Вкладки редактора с закрытием: у несохранённого файла крестик заменён точкой, поэтому правки не теряются одним промахом мыши.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tabs-009/tabs-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tabs-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-009-*. Клиентский: \"use client\" ради списка открытых файлов и выбора. Вкладка — элемент с role=\"tab\", а крестик внутри неё — отдельная кнопка с tabIndex -1 и остановкой всплытия, поэтому закрытие не срабатывает при переключении. Точка несохранённого файла подменяется крестиком по :hover и :focus-within. Закрытая вкладка отдаёт выбор соседу слева.",
+      "meta": {
+        "tags": ["tabs", "editor", "close", "dirty state"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Tabs009",
+          "usage": "<Tabs009\n  defaultId=\"layout\"\n  files={[\n    { id: \"page\", label: \"page.tsx\", text: \"export default function Page() {}\" },\n    { id: \"layout\", label: \"layout.tsx\", dirty: true, text: \"…\" },\n  ]}\n/>",
+          "summary": "Ряд вкладок как в редакторе кода: моноширинные имена файлов, крестик закрытия, точка у несохранённого файла и явное состояние, когда закрыто всё. Закрытие переводит выбор на соседа слева. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-tabs-009-* и не подменять её токенами вашей темы (bg-muted, border-border и подобными)",
+            "точку вместо крестика у несохранённого файла: крестик на месте метки правок приводит к случайной потере работы",
+            "остановку всплытия у кнопки закрытия — без неё закрытие заодно переключает вкладку",
+            "tabIndex -1 у крестика: иначе Tab перебирает по две цели на каждую вкладку",
+            "aria-label у кнопки закрытия с именем файла: «×» скринридер прочитает как символ",
+            "перевод выбора на соседа слева при закрытии — иначе после закрытия активной вкладки не остаётся ни одной"
+          ],
+          "adapt": [
+            "массив files: имена, признак dirty и содержимое",
+            "defaultId — какой файл открыт изначально",
+            "моноширинный шрифт и высоту ряда",
+            "акцент через проп accent — цвет верхней полоски активной вкладки"
+          ],
+          "notes": [
+            "Закрытие безусловно: подтверждения для несохранённого файла компонент не показывает, добавьте его под свою модель.",
+            "Закрытые вкладки не возвращаются: список открытого живёт в состоянии компонента.",
+            "Вкладка — это div с role=\"tab\", а не кнопка: внутри неё уже есть своя кнопка, и кнопка в кнопке недопустима.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultId",
+            "label": "Открыт файл",
+            "type": "select",
+            "default": "page",
+            "options": ["page", "layout", "styles"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Editor tabs you can close: on an unsaved file the close cross is replaced by a dot, so edits are not lost to one stray click.",
+            "ai": {
+              "summary": "A row of tabs as in a code editor: monospaced file names, a close cross, a dot on an unsaved file and an explicit state when everything is closed. Closing hands the selection to the left neighbour. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-tabs-009-* palette — do not swap it for your theme tokens (bg-muted, border-border and the like)",
+                "the dot instead of a cross on an unsaved file: a cross where the edit marker belongs leads to accidental loss of work",
+                "the stopPropagation on the close button — without it closing also switches the tab",
+                "tabIndex -1 on the cross: otherwise Tab walks two targets per tab",
+                "the aria-label on the close button carrying the file name: a screen reader reads \"×\" as a symbol",
+                "handing the selection to the left neighbour on close — otherwise closing the active tab leaves none selected"
+              ],
+              "adapt": [
+                "the files array: names, the dirty flag and the contents",
+                "defaultId — which file starts open",
+                "the monospaced font and the row height",
+                "the accent through the accent prop — it colours the active tab's top bar"
+              ],
+              "notes": [
+                "Closing is unconditional: the component shows no confirmation for an unsaved file, add one for your model.",
+                "Closed tabs do not come back: the list of open files lives in component state.",
+                "A tab is a div with role=\"tab\", not a button: it already contains a button, and a button inside a button is invalid.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tabs009\n  defaultId=\"layout\"\n  files={[\n    { id: \"page\", label: \"page.tsx\", text: \"export default function Page() {}\" },\n    { id: \"layout\", label: \"layout.tsx\", dirty: true, text: \"…\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "defaultId": {
+                "label": "Open file"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tabs-010",
+      "type": "registry:component",
+      "title": "Radio Tabs",
+      "description": "Вкладки без JS, но с переезжающим индикатором: выбор держат радиокнопки, а положение полосы задаёт правило :has() и арифметика в CSS.",
+      "categories": ["navigation"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tabs-010/tabs-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tabs-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-010-*. Серверный: хуков нет, выбор держат радиокнопки, и браузер сам даёт по ним переход стрелками. Отмеченная кнопка через :has() выставляет переменную --vibeui-tabs-010-index, от которой считается сдвиг индикатора; панели показываются такими же правилами по data-index. Правила заданы на шесть вкладок — больше требует ещё двух строк CSS.",
+      "meta": {
+        "tags": ["tabs", "no-js", "radio", "has-selector"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Tabs010",
+          "usage": "<Tabs010\n  tabs={[\n    { label: \"Доставка\", title: \"Сроки\", text: \"По городу — в день заказа\" },\n    { label: \"Оплата\", title: \"Способы\", text: \"Картой и по счёту\" },\n  ]}\n/>",
+          "summary": "Вкладки на радиокнопках: переключение, стрелки по группе и переход между вкладками достаются от браузера, а полоса под активной вкладкой едет за счёт арифметики в CSS. Ни состояния, ни гидратации, ни измерений. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-tabs-010-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
+            "радиокнопки как хранилище выбора: браузер сам следит, что отмечена одна, и сам даёт стрелки по группе",
+            "уникальное значение name у группы: два экземпляра с одинаковым именем начнут переключать друг друга",
+            "правила :has(), выставляющие индекс: без них индикатор останется под первой вкладкой",
+            "сетку равными колонками: на ней держится арифметика сдвига индикатора",
+            "кольцо фокуса на подписи через input:focus-visible + [data-part=\"tab\"] — сам input скрыт и своего фокуса не показывает"
+          ],
+          "adapt": [
+            "массив tabs: подписи, заголовки и тексты панелей",
+            "name — имя группы радиокнопок",
+            "акцент через проп accent — цвет индикатора и кольца фокуса",
+            "ширину индикатора через множитель scaleX"
+          ],
+          "notes": [
+            "Правила заданы на шесть вкладок: седьмая не покажет ни панель, ни индикатор, пока не добавите ещё две строки CSS.",
+            "Это не паттерн tabs из WAI-ARIA, а группа радиокнопок: скринридер объявит её переключателем, и это честно — разметка именно такая.",
+            "Выбранная вкладка не запоминается между страницами: состояние живёт только в разметке.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Tabs without JS but with a travelling indicator: radio buttons hold the choice, and a :has() rule plus CSS arithmetic places the bar.",
+            "ai": {
+              "summary": "Radio-driven tabs: switching, arrow keys across the group and moving between tabs all come from the browser, while the bar under the active tab travels on CSS arithmetic. No state, no hydration, no measuring. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-tabs-010-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
+                "the radio buttons as the store of the choice: the browser keeps exactly one checked and gives arrow keys for free",
+                "a unique name for the group: two instances sharing a name start switching each other",
+                "the :has() rules that set the index: without them the indicator stays under the first tab",
+                "the equal-column grid: the indicator's offset arithmetic rests on it",
+                "the focus ring on the label through input:focus-visible + [data-part=\"tab\"] — the input itself is hidden and shows no focus of its own"
+              ],
+              "adapt": [
+                "the tabs array: labels, headings and panel text",
+                "name — the radio group name",
+                "the accent through the accent prop — it colours the indicator and the focus ring",
+                "the indicator width through the scaleX factor"
+              ],
+              "notes": [
+                "The rules cover six tabs: a seventh shows neither panel nor indicator until you add two more CSS lines.",
+                "This is not the WAI-ARIA tabs pattern but a radio group: a screen reader announces a set of choices, which is honest — that is what the markup is.",
+                "The selected tab is not remembered between pages: the state lives only in the markup.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tabs010\n  tabs={[\n    { label: \"Delivery\", title: \"Timing\", text: \"Same-day within the city\" },\n    { label: \"Payment\", title: \"Methods\", text: \"By card and by invoice\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

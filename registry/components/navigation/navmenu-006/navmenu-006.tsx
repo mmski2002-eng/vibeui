@@ -1,0 +1,196 @@
+import type { CSSProperties } from "react"
+
+export type Navmenu006Section = {
+  label: string
+  items?: string[]
+  href?: string
+}
+
+export type Navmenu006Props = {
+  sections?: Navmenu006Section[]
+  brand?: string
+  actionLabel?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+// Идея компонента: мобильная навигация, где выпадающие панели заменены
+// раскрытием списком — на узком экране летящая панель некуда встать, поэтому
+// разделы разворачиваются вниз и толкают содержимое. Лист открывает чекбокс,
+// разделы внутри — <details>, поэтому состояние живёт без единой строки JS.
+const STYLES = `
+:where([data-vibeui-block="navmenu-006"]){
+--vibeui-navmenu-006-bg:oklch(1 0 0);
+--vibeui-navmenu-006-fg:oklch(0.22 0.014 265);
+--vibeui-navmenu-006-muted:oklch(0.55 0.014 265);
+--vibeui-navmenu-006-border:oklch(0.91 0.006 265);
+--vibeui-navmenu-006-hover:oklch(0.55 0.02 265 / 8%);
+--vibeui-navmenu-006-accent:oklch(0.55 0.2 262);
+--vibeui-navmenu-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="navmenu-006"]{
+box-sizing:border-box;width:100%;max-width:24rem;
+background:var(--vibeui-navmenu-006-bg);color:var(--vibeui-navmenu-006-fg);
+border:1px solid var(--vibeui-navmenu-006-border);border-radius:0.875rem;
+font-family:var(--vibeui-navmenu-006-font);overflow:hidden;
+}
+[data-vibeui-block="navmenu-006"] [data-part="top"]{
+display:flex;align-items:center;gap:0.5rem;padding:0.625rem 0.75rem;
+}
+[data-vibeui-block="navmenu-006"] [data-part="brand"]{font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em}
+[data-vibeui-block="navmenu-006"] input{position:absolute;opacity:0;pointer-events:none}
+[data-vibeui-block="navmenu-006"] [data-part="burger"]{
+margin-left:auto;cursor:pointer;
+display:inline-flex;align-items:center;gap:0.5rem;
+height:2.25rem;padding:0 0.625rem;border-radius:0.5rem;
+font-size:0.8125rem;color:var(--vibeui-navmenu-006-muted);
+border:1px solid var(--vibeui-navmenu-006-border);
+}
+[data-vibeui-block="navmenu-006"] input:focus-visible + [data-part="burger"]{outline:2px solid var(--vibeui-navmenu-006-accent);outline-offset:2px}
+[data-vibeui-block="navmenu-006"] [data-part="bars"]{display:grid;gap:0.1875rem;width:0.875rem}
+[data-vibeui-block="navmenu-006"] [data-part="bars"] i{display:block;height:1.5px;background:currentColor;border-radius:1px;transition:transform .18s ease,opacity .18s ease}
+[data-vibeui-block="navmenu-006"] input:checked + [data-part="burger"] [data-part="bars"] i:first-child{transform:translateY(0.3125rem) rotate(45deg)}
+[data-vibeui-block="navmenu-006"] input:checked + [data-part="burger"] [data-part="bars"] i:nth-child(2){opacity:0}
+[data-vibeui-block="navmenu-006"] input:checked + [data-part="burger"] [data-part="bars"] i:last-child{transform:translateY(-0.3125rem) rotate(-45deg)}
+/* Лист раскрывается высотой, а не display:none — так переход виден, а ссылки
+   остаются в разметке одинаково при любом состоянии. */
+[data-vibeui-block="navmenu-006"] [data-part="sheet"]{
+display:grid;grid-template-rows:0fr;transition:grid-template-rows .22s ease;
+}
+[data-vibeui-block="navmenu-006"]:has(input:checked) [data-part="sheet"]{grid-template-rows:1fr}
+[data-vibeui-block="navmenu-006"] [data-part="sheet"] > div{overflow:hidden}
+[data-vibeui-block="navmenu-006"] [data-part="list"]{
+margin:0;padding:0 0.5rem 0.5rem;list-style:none;
+border-top:1px solid var(--vibeui-navmenu-006-border);
+}
+[data-vibeui-block="navmenu-006"] [data-part="row-wrap"]{border-bottom:1px solid var(--vibeui-navmenu-006-border)}
+[data-vibeui-block="navmenu-006"] [data-part="row-wrap"]:last-child{border-bottom:0}
+[data-vibeui-block="navmenu-006"] [data-part="head"]{
+list-style:none;cursor:pointer;
+display:flex;align-items:center;justify-content:space-between;
+padding:0.75rem 0.5rem;font-size:0.9375rem;
+}
+[data-vibeui-block="navmenu-006"] [data-part="head"]::-webkit-details-marker{display:none}
+[data-vibeui-block="navmenu-006"] [data-part="head"]:focus-visible{outline:2px solid var(--vibeui-navmenu-006-accent);outline-offset:-2px;border-radius:0.375rem}
+[data-vibeui-block="navmenu-006"] [data-part="caret"]{
+width:0.4375rem;height:0.4375rem;
+border:1.5px solid var(--vibeui-navmenu-006-muted);border-left:0;border-top:0;
+transform:rotate(45deg);margin-top:-0.1875rem;transition:transform .16s ease;
+}
+[data-vibeui-block="navmenu-006"] [data-part="row"][open] [data-part="caret"]{transform:rotate(-135deg);margin-top:0.125rem}
+[data-vibeui-block="navmenu-006"] [data-part="sub"]{margin:0;padding:0 0 0.5rem;list-style:none}
+[data-vibeui-block="navmenu-006"] [data-part="link"]{
+display:block;padding:0.5rem 0.5rem 0.5rem 1rem;border-radius:0.5rem;
+text-decoration:none;color:var(--vibeui-navmenu-006-muted);font-size:0.875rem;
+}
+[data-vibeui-block="navmenu-006"] [data-part="link"]:hover{background:var(--vibeui-navmenu-006-hover);color:var(--vibeui-navmenu-006-fg)}
+[data-vibeui-block="navmenu-006"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-navmenu-006-accent);outline-offset:-2px}
+[data-vibeui-block="navmenu-006"] [data-part="plain"]{
+display:block;padding:0.75rem 0.5rem;text-decoration:none;color:inherit;font-size:0.9375rem;
+}
+[data-vibeui-block="navmenu-006"] [data-part="plain"]:focus-visible{outline:2px solid var(--vibeui-navmenu-006-accent);outline-offset:-2px;border-radius:0.375rem}
+[data-vibeui-block="navmenu-006"] [data-part="action"]{
+display:block;margin:0.5rem;padding:0.6875rem;border-radius:0.625rem;text-align:center;
+background:var(--vibeui-navmenu-006-accent);color:oklch(1 0 0);
+text-decoration:none;font-size:0.875rem;font-weight:600;
+}
+[data-vibeui-block="navmenu-006"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-navmenu-006-accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="navmenu-006"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_SECTIONS: Navmenu006Section[] = [
+  {
+    label: "Продукт",
+    items: ["Редактор", "Шаблоны", "Аналитика", "Интеграции"],
+  },
+  {
+    label: "Решения",
+    items: ["Студиям", "Магазинам", "Медиа"],
+  },
+  { label: "Цены", href: "#" },
+  { label: "Документация", href: "#" },
+]
+
+/**
+ * Мобильная навигация: бургер открывает лист, разделы раскрываются списком.
+ * Один файл, ноль зависимостей, собственная палитра, клиентского JS нет.
+ */
+export function Navmenu006({
+  sections = DEFAULT_SECTIONS,
+  brand = "Полотно",
+  actionLabel = "Начать бесплатно",
+  accent,
+  className,
+  style,
+}: Navmenu006Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-navmenu-006-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-navmenu-006" precedence="medium">
+        {STYLES}
+      </style>
+      <nav
+        data-vibeui-block="navmenu-006"
+        aria-label="Основная навигация"
+        className={className}
+        style={palette}
+      >
+        <div data-part="top">
+          <span data-part="brand">{brand}</span>
+          <input
+            type="checkbox"
+            id="vibeui-navmenu-006-toggle"
+            aria-label="Показать меню"
+          />
+          <label data-part="burger" htmlFor="vibeui-navmenu-006-toggle">
+            <span data-part="bars" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
+            Меню
+          </label>
+        </div>
+        <div data-part="sheet">
+          <div>
+            <ul data-part="list">
+              {sections.map((section) => (
+                <li key={section.label} data-part="row-wrap">
+                  {section.items ? (
+                    <details data-part="row">
+                      <summary data-part="head">
+                        {section.label}
+                        <span data-part="caret" aria-hidden="true" />
+                      </summary>
+                      <ul data-part="sub">
+                        {section.items.map((item) => (
+                          <li key={item}>
+                            <a data-part="link" href="#">
+                              {item}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
+                  ) : (
+                    <a data-part="plain" href={section.href ?? "#"}>
+                      {section.label}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <a data-part="action" href="#">
+              {actionLabel}
+            </a>
+          </div>
+        </div>
+      </nav>
+    </>
+  )
+}
