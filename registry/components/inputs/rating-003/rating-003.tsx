@@ -1,0 +1,182 @@
+"use client"
+
+import { useId, useState } from "react"
+import type {
+  ComponentPropsWithoutRef,
+  CSSProperties,
+  KeyboardEvent,
+} from "react"
+
+export type Rating003Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children" | "defaultValue" | "onChange"
+> & {
+  label?: string
+  max?: number
+  defaultValue?: number
+  hints?: string[]
+  accent?: string
+}
+
+// Идея компонента: десятибалльная шкала как ряд пронумерованных клеток. Звёзды
+// на десяти делениях перестают считываться — приходится пересчитывать значки
+// глазами, а цифра называет оценку сразу. Клетки до выбранной закрашиваются,
+// поэтому оценка читается и как число, и как длина. Группа собрана на ролях
+// radiogroup/radio с ручным roving tabindex: десять кнопок в табуляции — это
+// десять лишних нажатий Tab, поэтому фокус в группу входит один раз, а стрелки
+// двигают выбор внутри.
+const STYLES = `
+:where([data-vibeui-block="rating-003"]){
+--vibeui-rating-003-surface:oklch(1 0 0);
+--vibeui-rating-003-shell:oklch(0.9 0.006 265);
+--vibeui-rating-003-fg:oklch(0.23 0.014 265);
+--vibeui-rating-003-muted:oklch(0.55 0.014 265);
+--vibeui-rating-003-border:oklch(0.9 0.006 265);
+--vibeui-rating-003-empty:oklch(0.97 0.003 265);
+--vibeui-rating-003-accent:oklch(0.55 0.17 265);
+--vibeui-rating-003-on:oklch(1 0 0);
+--vibeui-rating-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+/* Своя светлая подложка: шкалу показывают поверх любого фона. */
+[data-vibeui-block="rating-003"]{
+display:flex;flex-direction:column;gap:0.5rem;
+width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
+background:var(--vibeui-rating-003-surface);
+border:1px solid var(--vibeui-rating-003-shell);border-radius:0.875rem;
+font-family:var(--vibeui-rating-003-font);color:var(--vibeui-rating-003-fg);
+}
+[data-vibeui-block="rating-003"] [data-part="head"]{
+display:flex;align-items:baseline;justify-content:space-between;gap:0.75rem;margin:0;
+}
+[data-vibeui-block="rating-003"] [data-part="title"]{font-size:0.8125rem;font-weight:650}
+[data-vibeui-block="rating-003"] [data-part="score"]{
+font-size:0.8125rem;font-weight:700;color:var(--vibeui-rating-003-accent);
+font-variant-numeric:tabular-nums;
+}
+[data-vibeui-block="rating-003"] [data-part="scale"]{display:flex;gap:0.1875rem}
+[data-vibeui-block="rating-003"] button{
+appearance:none;cursor:pointer;flex:1 1 0;min-width:0;
+height:2.25rem;padding:0;
+border:1px solid var(--vibeui-rating-003-border);border-radius:0.375rem;
+background:var(--vibeui-rating-003-empty);color:var(--vibeui-rating-003-muted);
+font:inherit;font-size:0.75rem;font-weight:700;font-variant-numeric:tabular-nums;
+transition:background-color .12s ease,color .12s ease,border-color .12s ease;
+}
+/* Клетки до выбранной закрашены: оценка читается и числом, и длиной. */
+[data-vibeui-block="rating-003"] button[data-filled="true"]{
+background:color-mix(in oklch,var(--vibeui-rating-003-accent) 22%,white);
+border-color:transparent;color:var(--vibeui-rating-003-fg);
+}
+[data-vibeui-block="rating-003"] button[aria-checked="true"]{
+background:var(--vibeui-rating-003-accent);border-color:transparent;
+color:var(--vibeui-rating-003-on);
+}
+[data-vibeui-block="rating-003"] button:focus-visible{outline:2px solid var(--vibeui-rating-003-accent);outline-offset:2px}
+[data-vibeui-block="rating-003"] [data-part="foot"]{
+display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin:0;
+font-size:0.6875rem;color:var(--vibeui-rating-003-muted);
+}
+[data-vibeui-block="rating-003"] [data-part="hint"]{
+font-size:0.75rem;font-weight:650;color:var(--vibeui-rating-003-fg);
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="rating-003"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_HINTS = [
+  "никогда",
+  "очень плохо",
+  "плохо",
+  "слабо",
+  "терпимо",
+  "средне",
+  "неплохо",
+  "хорошо",
+  "очень хорошо",
+  "отлично",
+]
+
+/**
+ * Десятибалльная шкала пронумерованными клетками с накопительной заливкой.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Rating003({
+  label = "Оцените сервис",
+  max = 10,
+  defaultValue = 8,
+  hints = DEFAULT_HINTS,
+  accent,
+  className,
+  style,
+  ...props
+}: Rating003Props) {
+  const id = useId()
+  const [value, setValue] = useState(defaultValue)
+  const points = Array.from({ length: max }, (_, index) => index + 1)
+
+  // Стрелки двигают выбор внутри группы: десять кнопок в табуляции — это
+  // десять лишних нажатий Tab до следующего поля формы.
+  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    const delta =
+      event.key === "ArrowRight" || event.key === "ArrowUp"
+        ? 1
+        : event.key === "ArrowLeft" || event.key === "ArrowDown"
+          ? -1
+          : 0
+    if (delta === 0) return
+    event.preventDefault()
+    setValue(Math.min(max, Math.max(1, value + delta)))
+  }
+
+  const palette = {
+    ...(accent ? { "--vibeui-rating-003-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-rating-003" precedence="medium">
+        {STYLES}
+      </style>
+      <div
+        {...props}
+        data-vibeui-block="rating-003"
+        className={className}
+        style={palette}
+      >
+        <p data-part="head">
+          <span data-part="title" id={`${id}-label`}>
+            {label}
+          </span>
+          <span data-part="score" aria-live="polite">
+            {value} / {max}
+          </span>
+        </p>
+        <div
+          data-part="scale"
+          role="radiogroup"
+          aria-labelledby={`${id}-label`}
+          onKeyDown={onKeyDown}
+        >
+          {points.map((point) => (
+            <button
+              key={point}
+              type="button"
+              role="radio"
+              aria-checked={value === point}
+              aria-label={`${point} из ${max}`}
+              tabIndex={value === point ? 0 : -1}
+              data-filled={point < value}
+              onClick={() => setValue(point)}
+            >
+              {point}
+            </button>
+          ))}
+        </div>
+        <p data-part="foot">
+          <span>1 — совсем плохо</span>
+          <span data-part="hint">{hints[value - 1]}</span>
+        </p>
+      </div>
+    </>
+  )
+}
