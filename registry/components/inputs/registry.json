@@ -2514,6 +2514,1096 @@
           }
         }
       }
+    },
+    {
+      "name": "cascader-002",
+      "type": "registry:component",
+      "title": "Level Columns",
+      "description": "Каскадный выбор колонками: три уровня дерева стоят рядом, выбранный родитель остаётся подсвеченным слева, а пустая колонка держит место подсказкой.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cascader-002/cascader-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cascader-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-002-*. Клиентский: путь выбора живёт в useState. Колонки считаются из дерева по текущему пути, но сетка всегда держит три слота — при коротком пути слот занимает подсказка, поэтому панель не меняет ширину на каждый клик. Выбор в колонке обрезает путь до её уровня, поэтому устаревшие правые колонки исчезают сами. Высота сетки фиксирована, прокрутка своя у каждой колонки: иначе длинный уровень растягивает всю панель.",
+      "meta": {
+        "tags": ["cascader", "columns", "tree", "select"],
+        "ai": {
+          "export": "Cascader002",
+          "usage": "<Cascader002 heading=\"Раздел каталога\" accent=\"#4f46e5\" />",
+          "summary": "Каскад колонками: три уровня видны одновременно, выбранный путь подсвечен по всей глубине, снизу строка пути и сброс. Один файл, ноль зависимостей, клиентское состояние — только текущий путь.",
+          "preserve": [
+            "локальную палитру --vibeui-cascader-002-* и не подменять её токенами вашей темы",
+            "три постоянных слота в сетке: если пустая колонка исчезает, панель прыгает по ширине на каждый клик",
+            "фиксированную высоту сетки с прокруткой внутри колонки — длинный уровень иначе растягивает всю панель",
+            "обрезку пути при выборе на верхнем уровне: без неё справа остаются колонки от прошлой ветки",
+            "aria-current на выбранном пункте — подсветка цветом скринридером не читается",
+            "собственную светлую подложку панели: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "заголовок панели через heading",
+            "акцентный цвет через accent",
+            "состав и глубину дерева через tree",
+            "ширину панели через max-width на корне"
+          ],
+          "notes": [
+            "Дерево глубже трёх уровней не поместится: четвёртая колонка потребует горизонтальной прокрутки сетки.",
+            "Результат выбора — массив пути, а не один узел: логику формы придётся строить вокруг массива.",
+            "На экране уже 360 px три колонки по 1fr становятся тесными — там уместнее пошаговый вариант каскада.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Раздел каталога",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A column cascader: three levels of the tree stand side by side, the chosen parent stays highlighted on the left, and an empty column holds its place with a hint.",
+            "ai": {
+              "summary": "A column cascader: three levels visible at once, the chosen path highlighted all the way down, a path line and a reset below. One file, zero dependencies, the only client state is the current path.",
+              "preserve": [
+                "the local --vibeui-cascader-002-* palette — do not swap it for your theme tokens",
+                "the three permanent slots in the grid: if an empty column disappears, the panel jumps in width on every click",
+                "the fixed grid height with scrolling inside a column — otherwise a long level stretches the whole panel",
+                "trimming the path when a higher level is picked: without it stale columns from the previous branch stay on the right",
+                "aria-current on the selected option — a colour highlight alone is not announced by a screen reader",
+                "the panel's own light surface: dark text disappears on the dark catalogue card"
+              ],
+              "adapt": [
+                "the panel heading through heading",
+                "the accent colour through accent",
+                "the shape and depth of the tree through tree",
+                "the panel width through max-width on the root"
+              ],
+              "notes": [
+                "A tree deeper than three levels will not fit: a fourth column needs horizontal scrolling of the grid.",
+                "The result is a path array, not a single node: the form logic has to be built around an array.",
+                "At 360 px three 1fr columns get cramped — a stepwise cascader fits that width better.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Cascader002 heading=\"Catalogue section\" accent=\"#4f46e5\" />"
+            },
+            "controls": {
+              "heading": {
+                "label": "Heading",
+                "default": "Catalogue section"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cascader-003",
+      "type": "registry:component",
+      "title": "Nested Flyout",
+      "description": "Каскад как вложенное меню: ветка раскрывается панелью вправо на нативном HTML popover, без единой строки клиентского JavaScript.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cascader-003/cascader-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cascader-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-003-*. Серверный: хуков нет, открытием управляет браузер через popover и popovertarget. Кнопка третьего уровня лежит внутри панели второго, поэтому браузер считает попoveры вложенными и не гасит родителя при открытии потомка. Положение панели держит CSS anchor positioning: имя якоря нельзя собрать на лету, поэтому правила для 24 слотов генерируются заранее, а ветка получает номер слота при рендере. Без поддержки якорей панель открывается по центру экрана — некрасиво, но кликабельно.",
+      "meta": {
+        "tags": ["cascader", "menu", "popover", "no-js"],
+        "ai": {
+          "export": "Cascader003",
+          "usage": "<Cascader003 id=\"workspace-cascader\" heading=\"Настройки рабочего пространства\" accent=\"#7c3aed\" />",
+          "summary": "Каскадное меню с раскрытием вправо: уровни живут в HTML popover, Esc и клик мимо закрывают панель силами браузера. Один файл, ноль зависимостей, серверный компонент без клиентского JS.",
+          "preserve": [
+            "локальную палитру --vibeui-cascader-003-* и не подменять её токенами вашей темы",
+            "кнопку-раскрыватель внутри родительской панели: только так браузер считает попoveры вложенными и не закрывает родителя",
+            "generated-правила якорей и data-anchor на паре «кнопка + панель» — без них панель улетит в центр экрана",
+            "@supports вокруг anchor positioning: в браузерах без якорей резервное положение по центру остаётся рабочим",
+            "popover=\"auto\" вместо ручного состояния: Esc, клик мимо и верхний слой достаются бесплатно",
+            "собственную светлую подложку меню: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "подпись меню через heading",
+            "акцентный цвет через accent",
+            "префикс идентификаторов панелей через id",
+            "состав веток через tree"
+          ],
+          "notes": [
+            "Слотов якорей ровно 24: более широкое дерево начнёт переиспользовать имена и панели встанут друг на друга.",
+            "Клавиатурная навигация здесь браузерная: стрелок между пунктами нет, ходят Tab и Esc.",
+            "Панель в верхнем слое не обрезается родителем — но и не наследует его overflow-прокрутку.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Настройки рабочего пространства",
+            "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A cascader as a nested menu: a branch opens to the right in a native HTML popover, without a single line of client-side JavaScript.",
+            "ai": {
+              "summary": "A cascading menu that opens to the right: levels live in HTML popovers, and Esc plus outside clicks are handled by the browser. One file, zero dependencies, a server component with no client JS.",
+              "preserve": [
+                "the local --vibeui-cascader-003-* palette — do not swap it for your theme tokens",
+                "the opener button inside the parent panel: only then does the browser treat the popovers as nested and keep the parent open",
+                "the generated anchor rules and the data-anchor pair on button and panel — without them the panel flies to the centre of the screen",
+                "the @supports guard around anchor positioning: in browsers without anchors the centred fallback still works",
+                "popover=\"auto\" instead of hand-rolled state: Esc, outside clicks and the top layer come for free",
+                "the menu's own light surface: dark text disappears on the dark catalogue card"
+              ],
+              "adapt": [
+                "the menu caption through heading",
+                "the accent colour through accent",
+                "the panel id prefix through id",
+                "the set of branches through tree"
+              ],
+              "notes": [
+                "There are exactly 24 anchor slots: a wider tree starts reusing names and panels stack on each other.",
+                "Keyboard navigation here is the browser's: there are no arrow keys between items, only Tab and Esc.",
+                "A panel in the top layer is never clipped by its parent — but it does not inherit the parent's scrolling either.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Cascader003 id=\"workspace-cascader\" heading=\"Workspace settings\" accent=\"#7c3aed\" />"
+            },
+            "controls": {
+              "heading": {
+                "label": "Heading",
+                "default": "Workspace settings"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cascader-004",
+      "type": "registry:component",
+      "title": "Stepwise Picker",
+      "description": "Каскад для узкого экрана: на панели всегда один уровень, шапка со стрелкой «назад», а направление съезда списка подсказывает, куда шагнул пользователь.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cascader-004/cascader-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cascader-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-004-*. Клиентский: путь, направление перехода и выбранный лист живут в useState. Список перемонтируется по key из пути, поэтому CSS-анимация проигрывается заново на каждом шаге, а имя keyframes переключается атрибутом data-direction — вперёд список приезжает справа, назад слева. Кнопка «назад» отключена на верхнем уровне: неактивная цель честнее исчезнувшей, потому что шапка не меняет высоту.",
+      "meta": {
+        "tags": ["cascader", "mobile", "stepper", "drill-down"],
+        "ai": {
+          "export": "Cascader004",
+          "usage": "<Cascader004 heading=\"Куда доставить\" accent=\"#0ea5a4\" />",
+          "summary": "Пошаговый каскад: один уровень на экране, стрелка «назад» в шапке и подпись текущего шага. Один файл, ноль зависимостей, клиентское состояние — путь и направление перехода.",
+          "preserve": [
+            "локальную палитру --vibeui-cascader-004-* и не подменять её токенами вашей темы",
+            "перемонтирование списка по key из пути: без него анимация шага не проигрывается заново",
+            "разные keyframes для шага вперёд и назад — одинаковое движение не объясняет, куда попал пользователь",
+            "отключённую, а не спрятанную кнопку «назад» на верхнем уровне: иначе шапка меняет высоту",
+            "минимальную высоту списка — короткий уровень иначе схлопывает панель и она прыгает",
+            "собственную светлую подложку карточки: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "подпись сценария через heading",
+            "акцентный цвет через accent",
+            "уровни и подписи-приписки через tree",
+            "ширину карточки через max-width на корне"
+          ],
+          "notes": [
+            "Пользователь видит один уровень: без строки пути в шапке он теряет контекст на третьем шаге.",
+            "Анимация выключается через prefers-reduced-motion — проверяйте, что без неё шаг всё ещё понятен.",
+            "Выбор листа не закрывает панель: закрытие принадлежит родительскому диалогу, а не каскаду.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "heading",
+            "label": "Сценарий",
+            "type": "text",
+            "default": "Куда доставить",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A cascader for a narrow screen: one level at a time, a back arrow in the header, and the slide direction telling the user which way they stepped.",
+            "ai": {
+              "summary": "A stepwise cascader: one level on screen, a back arrow in the header and a caption for the current step. One file, zero dependencies, the client state is the path and the step direction.",
+              "preserve": [
+                "the local --vibeui-cascader-004-* palette — do not swap it for your theme tokens",
+                "remounting the list by a key built from the path: without it the step animation never replays",
+                "the two separate keyframes for forward and back — identical motion does not tell the user where they landed",
+                "the disabled, not hidden, back button on the top level: otherwise the header changes height",
+                "the minimum list height — a short level otherwise collapses the panel and it jumps",
+                "the card's own light surface: dark text disappears on the dark catalogue card"
+              ],
+              "adapt": [
+                "the scenario caption through heading",
+                "the accent colour through accent",
+                "the levels and their side notes through tree",
+                "the card width through max-width on the root"
+              ],
+              "notes": [
+                "The user sees a single level: without the path line in the header they lose context by the third step.",
+                "The animation is switched off by prefers-reduced-motion — check that a step still reads without it.",
+                "Picking a leaf does not close the panel: closing belongs to the parent dialog, not to the cascader.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Cascader004 heading=\"Where to deliver\" accent=\"#0ea5a4\" />"
+            },
+            "controls": {
+              "heading": {
+                "label": "Scenario",
+                "default": "Where to deliver"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cascader-005",
+      "type": "registry:component",
+      "title": "Category Crumbs",
+      "description": "Выбор категории товара, где навигацию ведут хлебные крошки: пройденный путь висит сверху и кликается, а текущий уровень открывается плитками в две колонки.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cascader-005/cascader-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cascader-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-005-*. Клиентский: путь и выбранный лист живут в useState. Крошки собираются из корневой подписи и пути, клик по крошке режет путь до её индекса — вернуться на два шага можно одним нажатием, а не серией «назад». Плитки в две колонки дают место второй строке с числом подкатегорий, поэтому видно, раскроется узел или он конечный. Кнопка подтверждения печатает путь целиком: лист без ветки над ним неоднозначен.",
+      "meta": {
+        "tags": ["cascader", "breadcrumb", "category", "commerce"],
+        "ai": {
+          "export": "Cascader005",
+          "usage": "<Cascader005 rootLabel=\"Все товары\" submitLabel=\"Выбрать категорию\" />",
+          "summary": "Каскад по категориям товара: кликабельные хлебные крошки сверху, плитки уровня в две колонки, кнопка подтверждения с полным путём. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-cascader-005-* и не подменять её токенами вашей темы",
+            "кликабельные крошки: возврат на два уровня одним нажатием — единственное преимущество этой схемы перед кнопкой «назад»",
+            "полный путь на кнопке подтверждения: категория «Куртки» без ветки над ней означает разные разделы",
+            "подпись про число подкатегорий на плитке — иначе непонятно, раскроется узел или он конечный",
+            "aria-current=\"page\" на последней крошке: визуального выделения скринридеру мало",
+            "собственную светлую подложку панели: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "подпись корня через rootLabel",
+            "подпись кнопки через submitLabel",
+            "дерево категорий через tree",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Крошки переносятся на вторую строку на глубоком пути — это лучше горизонтальной прокрутки, но высота панели меняется.",
+            "Конечная категория выбирается плиткой и не меняет путь: подтверждение читает и путь, и выбранный лист.",
+            "Плитки в две колонки требуют коротких названий: длинное имя переносится и ломает ровный ряд.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "rootLabel",
+            "label": "Корень",
+            "type": "text",
+            "default": "Все товары",
+            "maxLength": 30
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Выбрать категорию",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A product category picker driven by breadcrumbs: the travelled path sits on top and is clickable, while the current level opens as tiles in two columns.",
+            "ai": {
+              "summary": "A product category cascader: clickable breadcrumbs on top, level tiles in two columns, a confirm button carrying the full path. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-cascader-005-* palette — do not swap it for your theme tokens",
+                "clickable crumbs: jumping back two levels in one tap is the only advantage this layout has over a back button",
+                "the full path on the confirm button: a \"Jackets\" category without its branch means different sections",
+                "the subcategory count on a tile — otherwise it is unclear whether the node opens or is final",
+                "aria-current=\"page\" on the last crumb: a visual accent alone is not enough for a screen reader",
+                "the panel's own light surface: dark text disappears on the dark catalogue card"
+              ],
+              "adapt": [
+                "the root caption through rootLabel",
+                "the button caption through submitLabel",
+                "the category tree through tree",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "Crumbs wrap to a second line on a deep path — better than horizontal scrolling, but the panel height changes.",
+                "A final category is picked as a tile and does not change the path: confirmation reads both the path and the leaf.",
+                "Two-column tiles need short names: a long one wraps and breaks the even row.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Cascader005 rootLabel=\"All products\" submitLabel=\"Choose category\" />"
+            },
+            "controls": {
+              "rootLabel": {
+                "label": "Root",
+                "default": "All products"
+              },
+              "submitLabel": {
+                "label": "Button",
+                "default": "Choose category"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cascader-006",
+      "type": "registry:component",
+      "title": "Tree Search",
+      "description": "Каскад с поиском по всему дереву сразу: результат показывает полный путь до узла и подсвечивает совпавшую часть названия.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cascader-006/cascader-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cascader-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-006-*. Клиентский: запрос и выбранный результат живут в useState, плоский список листьев считается один раз через useMemo. Поиск смотрит и на путь, и на имя листа, поэтому «инфра» находит узлы внутри ветки «Инфраструктура». Совпадение подсвечивается через <mark>, а под именем идёт путь: без него два одинаковых «Общие настройки» из разных веток неразличимы. Пустой запрос показывает все листья, а не пустоту.",
+      "meta": {
+        "tags": ["cascader", "search", "tree", "filter"],
+        "ai": {
+          "export": "Cascader006",
+          "usage": "<Cascader006 label=\"Раздел настроек\" placeholder=\"Искать по всем уровням\" />",
+          "summary": "Поиск по всему дереву каскада: плоский список результатов, полный путь под каждым именем и подсветка совпадения. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-cascader-006-* и не подменять её токенами вашей темы",
+            "полный путь под именем результата: одинаковые листья из разных веток иначе неразличимы",
+            "поиск и по пути тоже — иначе запрос по названию родителя не находит ничего",
+            "подсветку совпадения через <mark>: без неё непонятно, почему строка попала в выдачу",
+            "фиксированную высоту списка результатов — панель иначе прыгает на каждый символ запроса",
+            "собственную светлую подложку панели: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "подпись поля через label",
+            "подсказку внутри поля через placeholder",
+            "дерево через tree и акцентный цвет через accent",
+            "высоту списка результатов в CSS"
+          ],
+          "notes": [
+            "Поиск линейный по всем листьям: на дереве в десятки тысяч узлов его надо выносить на сервер.",
+            "Подсветка ищет совпадение только в имени листа — совпадение в пути видно по строке пути, но не выделено.",
+            "Пустой запрос показывает всё дерево целиком: это осознанный выбор вместо пустой панели.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Раздел настроек",
+            "maxLength": 40
+          },
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Искать по всем уровням",
+            "maxLength": 48
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A cascader with search across the whole tree at once: every result carries the full path to the node and highlights the matched part of the name.",
+            "ai": {
+              "summary": "Search across a whole cascader tree: a flat result list, the full path under each name and a highlighted match. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-cascader-006-* palette — do not swap it for your theme tokens",
+                "the full path under a result name: identical leaves from different branches are otherwise indistinguishable",
+                "matching against the path too — otherwise a query naming the parent finds nothing",
+                "the <mark> highlight: without it the reason a row is in the list is unclear",
+                "the fixed result list height — the panel otherwise jumps on every typed character",
+                "the panel's own light surface: dark text disappears on the dark catalogue card"
+              ],
+              "adapt": [
+                "the field caption through label",
+                "the in-field hint through placeholder",
+                "the tree through tree and the accent colour through accent",
+                "the result list height in CSS"
+              ],
+              "notes": [
+                "The search is linear over every leaf: on a tree of tens of thousands of nodes it belongs on the server.",
+                "The highlight only marks a match inside the leaf name — a match in the path shows in the path line but is not marked.",
+                "An empty query lists the whole tree: that is a deliberate choice over an empty panel.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Cascader006 label=\"Settings section\" placeholder=\"Search every level\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Settings section"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Search every level"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cascader-007",
+      "type": "registry:component",
+      "title": "Checked Branches",
+      "description": "Каскад с множественным выбором: галочка на родителе включает всю ветку, частичный выбор показан третьим состоянием, а итог собран чипами внизу.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cascader-007/cascader-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cascader-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-007-*. Клиентский: список выбранных ключей «родитель → ребёнок» живёт в useState. Родительская галочка не хранит своего состояния — checked и indeterminate вычисляются из детей, поэтому рассинхронизация невозможна. Третье состояние ставится ref-колбэком: у input.indeterminate нет HTML-атрибута. Строки подсвечиваются через :has(input:focus-visible), поэтому фокус виден на всей строке, а не на самом чекбоксе.",
+      "meta": {
+        "tags": ["cascader", "multiselect", "checkbox", "tree"],
+        "ai": {
+          "export": "Cascader007",
+          "usage": "<Cascader007 heading=\"Направления рассылки\" accent=\"#4338ca\" />",
+          "summary": "Каскад с галочками и наследованием: родитель включает ветку целиком, частичный выбор виден третьим состоянием, выбранное продублировано чипами. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-cascader-007-* и не подменять её токенами вашей темы",
+            "вычисление состояния родителя из детей: собственное состояние у родителя рано или поздно разойдётся с веткой",
+            "третье состояние через ref: у indeterminate нет HTML-атрибута, разметкой его не поставить",
+            "счётчик «выбрано из» на родителе — по свёрнутой ветке иначе не видно, сколько в ней отмечено",
+            "чипы выбранного внизу: в списке с прокруткой итог выбора иначе не охватить взглядом",
+            "собственную светлую подложку панели: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "заголовок панели через heading",
+            "акцентный цвет через accent",
+            "состав веток через groups",
+            "высоту прокручиваемого дерева в CSS"
+          ],
+          "notes": [
+            "Дерево здесь ровно двухуровневое: третий уровень потребует рекурсии и пересчёта indeterminate по поддереву.",
+            "Ключ выбранного пункта — строка «родитель → ребёнок»: одноимённые листья из разных веток не столкнутся.",
+            "Клик по родителю с частичным выбором дополняет ветку, а не снимает её: это привычнее, но требует проверки на ваших данных.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Направления рассылки",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A multi-select cascader: ticking a parent switches on the whole branch, a partial selection shows as the third checkbox state, and the result is echoed as chips below.",
+            "ai": {
+              "summary": "A cascader with checkboxes and inheritance: a parent toggles its whole branch, a partial selection reads as the third state, and picks are echoed as chips. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-cascader-007-* palette — do not swap it for your theme tokens",
+                "deriving the parent state from its children: a parent with its own state eventually drifts from the branch",
+                "the third state through a ref: indeterminate has no HTML attribute and cannot be set from markup",
+                "the \"picked of total\" counter on the parent — a collapsed branch otherwise hides how much is ticked",
+                "the chips below: in a scrolling list the selection cannot be taken in at a glance otherwise",
+                "the panel's own light surface: dark text disappears on the dark catalogue card"
+              ],
+              "adapt": [
+                "the panel heading through heading",
+                "the accent colour through accent",
+                "the set of branches through groups",
+                "the height of the scrolling tree in CSS"
+              ],
+              "notes": [
+                "The tree here is exactly two levels: a third one needs recursion and indeterminate recomputed over the subtree.",
+                "A pick is keyed by the \"parent → child\" string, so identically named leaves from different branches never collide.",
+                "Clicking a partially ticked parent completes the branch instead of clearing it: familiar, but verify it on your data.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Cascader007 heading=\"Newsletter topics\" accent=\"#4338ca\" />"
+            },
+            "controls": {
+              "heading": {
+                "label": "Heading",
+                "default": "Newsletter topics"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cascader-008",
+      "type": "registry:component",
+      "title": "Details Tree",
+      "description": "Дерево каскада на нативных details и radio: уровни раскрываются без JavaScript, а выбранная ветка подсвечивается по всей глубине через :has().",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cascader-008/cascader-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cascader-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-008-*. Серверный: хуков нет, раскрытие уровней ведёт нативный details, выбор — radio с общим именем, поэтому дерево уходит обычной формой даже без JavaScript. Правило details:has(input:checked) > summary подсвечивает всю цепочку родителей: при свёрнутых уровнях иначе не видно, где стоит отметка. Заголовок сделан абзацем, а не legend: legend с float ломает поток соседних flex-детей.",
+      "meta": {
+        "tags": ["cascader", "details", "no-js", "form"],
+        "ai": {
+          "export": "Cascader008",
+          "usage": "<Cascader008 name=\"destination\" heading=\"Куда положить файл\" />",
+          "summary": "Каскадное дерево на details и radio: раскрытие и выбор работают без клиентского JS и уходят обычной отправкой формы. Один файл, ноль зависимостей, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-cascader-008-* и не подменять её токенами вашей темы",
+            "общее имя у всех radio: без него в форму уедет несколько значений вместо одного",
+            "подсветку пути через :has(input:checked) — при свёрнутых ветках отметка иначе невидима",
+            "value листа в виде полного пути: имя листа без ветки неоднозначно на стороне сервера",
+            "заголовок абзацем вместо legend: legend с float заставляет соседние flex-дети обтекать его",
+            "собственную светлую подложку панели: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "имя поля формы через name",
+            "заголовок панели через heading",
+            "дерево и начально раскрытые ветки через tree",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "details не анимирует раскрытие по высоте — поворот стрелки здесь единственная анимация и она отключается по prefers-reduced-motion.",
+            "Раскрытые ветки сбрасываются при перерисовке: их состояние живёт в DOM, а не в пропсах.",
+            "Выбирается только лист: чтобы разрешить выбор ветки, нужен radio рядом с summary.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя поля",
+            "type": "text",
+            "default": "vibeui-cascader-008",
+            "maxLength": 40
+          },
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Куда положить файл",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A cascader tree built on native details and radios: levels open without JavaScript, and the chosen branch is highlighted all the way up through :has().",
+            "ai": {
+              "summary": "A cascading tree on details and radios: opening and picking work without client JS and submit with an ordinary form. One file, zero dependencies, a server component.",
+              "preserve": [
+                "the local --vibeui-cascader-008-* palette — do not swap it for your theme tokens",
+                "one shared name across every radio: without it the form receives several values instead of one",
+                "the path highlight through :has(input:checked) — with collapsed branches the tick is otherwise invisible",
+                "the leaf value as a full path: a leaf name without its branch is ambiguous on the server",
+                "the heading as a paragraph rather than a legend: a floated legend makes sibling flex children wrap around it",
+                "the panel's own light surface: dark text disappears on the dark catalogue card"
+              ],
+              "adapt": [
+                "the form field name through name",
+                "the panel heading through heading",
+                "the tree and its initially open branches through tree",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "details cannot animate its height — the arrow rotation is the only animation here and it is disabled by prefers-reduced-motion.",
+                "Open branches reset on a re-render: that state lives in the DOM, not in props.",
+                "Only a leaf is selectable: allowing a branch to be picked needs a radio next to the summary.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Cascader008 name=\"destination\" heading=\"Where to file it\" />"
+            },
+            "controls": {
+              "name": {
+                "label": "Field name",
+                "default": "vibeui-cascader-008"
+              },
+              "heading": {
+                "label": "Heading",
+                "default": "Where to file it"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cascader-009",
+      "type": "registry:component",
+      "title": "Folder Target",
+      "description": "Каскадный выбор папки для перемещения файла: целью может быть любой уровень, строка «наверх» ведёт назад, а папка-источник заблокирована.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cascader-009/cascader-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cascader-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-009-*. Клиентский: текущий путь живёт в useState. В отличие от обычного каскада целью здесь может быть промежуточный узел, поэтому кнопка действия активна на каждом шаге и всегда называет текущую папку. Возврат сделан отдельной строкой списка, а не крошкой: в файловых диалогах это привычный жест. Заблокированная папка остаётся видимой с подписью «источник» — исчезнувшая строка читается как потеря данных.",
+      "meta": {
+        "tags": ["cascader", "folders", "picker", "files"],
+        "ai": {
+          "export": "Cascader009",
+          "usage": "<Cascader009 fileName=\"отчёт-за-квартал.pdf\" actionLabel=\"Переместить в\" />",
+          "summary": "Выбор папки назначения каскадом: строка «наверх», счётчики файлов, заблокированная папка-источник и кнопка с именем текущей папки. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-cascader-009-* и не подменять её токенами вашей темы",
+            "активную кнопку действия на каждом уровне: цель перемещения — любая папка, а не только конечная",
+            "имя текущей папки на кнопке — «Переместить сюда» без имени приводит к ошибочным перемещениям",
+            "строку «наверх» отдельной целью списка: в файловых диалогах возвращаются именно так",
+            "видимую, но заблокированную папку-источник: исчезнувшая строка читается как потеря данных",
+            "собственную светлую подложку панели: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "имя перемещаемого файла через fileName",
+            "подпись действия через actionLabel",
+            "дерево папок и счётчики через tree",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Пустая папка показывает только строку «наверх» — это правильное поведение, но стоит добавить подпись про пустоту.",
+            "Блокировка ставится флагом locked в данных: компонент сам не знает, откуда файл переносят.",
+            "Панель рассчитана на вставку в диалог: своей подложки-затемнения и ловушки фокуса у неё нет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "fileName",
+            "label": "Файл",
+            "type": "text",
+            "default": "отчёт-за-квартал.pdf",
+            "maxLength": 40
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Переместить в",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A cascading folder picker for moving a file: any level can be the target, a dedicated \"up\" row leads back, and the source folder is locked.",
+            "ai": {
+              "summary": "A destination folder picker as a cascader: an \"up\" row, file counts, a locked source folder and an action button naming the current folder. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-cascader-009-* palette — do not swap it for your theme tokens",
+                "the action button enabled on every level: the destination is any folder, not only a final one",
+                "the current folder name on the button — \"Move here\" without a name leads to misplaced files",
+                "the \"up\" row as its own list target: that is how people go back in file dialogs",
+                "the visible but disabled source folder: a row that vanishes reads as lost data",
+                "the panel's own light surface: dark text disappears on the dark catalogue card"
+              ],
+              "adapt": [
+                "the moved file name through fileName",
+                "the action caption through actionLabel",
+                "the folder tree and its counts through tree",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "An empty folder shows only the \"up\" row — correct behaviour, but an empty-state caption is worth adding.",
+                "Locking comes from a locked flag in the data: the component does not know where the file is moved from.",
+                "The panel is meant to sit inside a dialog: it brings no backdrop and no focus trap of its own.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Cascader009 fileName=\"quarterly-report.pdf\" actionLabel=\"Move into\" />"
+            },
+            "controls": {
+              "fileName": {
+                "label": "File",
+                "default": "quarterly-report.pdf"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Move into"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cascader-010",
+      "type": "registry:component",
+      "title": "Org Rails",
+      "description": "Оргструктура каскадом из трёх горизонтальных лент: отдел, команда и человек лежат отдельными рядами пилюль, а выбранный человек уезжает в карточку.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cascader-010/cascader-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cascader-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-010-*. Клиентский: индексы выбранных отдела, команды и человека живут в useState. Уровни разложены горизонтальными лентами с прокруткой, поэтому каскад не требует высоты под три списка и читается слева направо. Смена ленты выше сбрасывает выбор ниже — иначе на экране остаётся человек из другой команды. Выбранный человек показан карточкой: в пилюлю не помещаются роль и путь до неё.",
+      "meta": {
+        "tags": ["cascader", "org-chart", "people", "chips"],
+        "ai": {
+          "export": "Cascader010",
+          "usage": "<Cascader010 heading=\"Кому назначить задачу\" accent=\"#a21caf\" />",
+          "summary": "Каскад по оргструктуре: три ленты пилюль (отдел, команда, человек) и карточка выбранного с инициалами и ролью. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-cascader-010-* и не подменять её токенами вашей темы",
+            "сброс нижних лент при смене верхней: иначе на экране остаётся человек из другой команды",
+            "подписи уровней над лентами — три ряда пилюль без подписей неотличимы друг от друга",
+            "карточку выбранного человека: роль и путь до него в пилюлю не помещаются",
+            "aria-pressed на пилюлях — выбор, показанный только заливкой, скринридеру не виден",
+            "собственную светлую подложку панели: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "подпись сценария через heading",
+            "акцентный цвет через accent",
+            "состав оргструктуры через units",
+            "число уровней, добавив четвёртую ленту"
+          ],
+          "notes": [
+            "Ленты прокручиваются горизонтально: на отделе из тридцати команд правый край легко пропустить, нужна тень-подсказка.",
+            "Состояние хранит индексы, а не имена: при смене данных выбранный индекс может указать на другого человека.",
+            "Инициалы берутся из первых двух слов имени — для однословных ников буква будет одна.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Кому назначить задачу",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An org chart as a cascader of three horizontal rails: department, team and person live in separate pill rows, and the chosen person moves into a card.",
+            "ai": {
+              "summary": "An org-chart cascader: three pill rails (department, team, person) and a card for the chosen person with initials and role. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-cascader-010-* palette — do not swap it for your theme tokens",
+                "resetting the lower rails when an upper one changes: otherwise a person from another team stays on screen",
+                "the level captions above the rails — three pill rows without them are indistinguishable",
+                "the card for the chosen person: their role and path do not fit into a pill",
+                "aria-pressed on the pills — a selection shown only by fill is invisible to a screen reader",
+                "the panel's own light surface: dark text disappears on the dark catalogue card"
+              ],
+              "adapt": [
+                "the scenario caption through heading",
+                "the accent colour through accent",
+                "the org structure through units",
+                "the number of levels by adding a fourth rail"
+              ],
+              "notes": [
+                "The rails scroll horizontally: with thirty teams the right edge is easy to miss, so a fade hint is worth adding.",
+                "State keeps indices, not names: when the data changes an index may point at a different person.",
+                "Initials are taken from the first two words of a name — a single-word nickname yields one letter.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Cascader010 heading=\"Assign the task to\" accent=\"#a21caf\" />"
+            },
+            "controls": {
+              "heading": {
+                "label": "Heading",
+                "default": "Assign the task to"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cascader-011",
+      "type": "registry:component",
+      "title": "Counted Levels",
+      "description": "Каскад со счётчиками: у каждого узла стоит число записей и полоса его доли от текущего уровня, поэтому видно, какую ветку вообще стоит раскрывать.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cascader-011/cascader-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cascader-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-011-*. Клиентский: текущий путь живёт в useState. Доля считается от суммы текущего уровня, а не от глобального максимума: иначе на глубине все полосы схлопываются в ниточки. Ширина полосы передаётся локальной переменной --vibeui-cascader-011-share в inline-стиле — это динамическое значение, классом его не выразить. Строка выбирается только при наличии детей, лист помечен подписью «последний уровень».",
+      "meta": {
+        "tags": ["cascader", "counters", "analytics", "drill-down"],
+        "ai": {
+          "export": "Cascader011",
+          "usage": "<Cascader011 heading=\"Разбор обращений\" unit=\"обращений\" />",
+          "summary": "Каскад с числами: счётчик у каждой ветки, полоса доли от уровня и сумма уровня в шапке. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-cascader-011-* и не подменять её токенами вашей темы",
+            "долю от суммы текущего уровня, а не от глобального максимума: иначе на глубине все полосы схлопываются",
+            "сумму уровня в шапке — по отдельным числам её никто не складывает в уме",
+            "подпись «последний уровень» у листа: строка, которая не раскрывается, иначе выглядит сломанной",
+            "aria-label с числом на строке — полоса и цифра рядом читаются скринридером как мусор",
+            "собственную светлую подложку панели: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "заголовок разбора через heading",
+            "единицу измерения через unit",
+            "дерево со счётчиками через tree",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Счётчик родителя может не совпадать с суммой детей: компонент считает уровень, а не проверяет данные.",
+            "Числа форматируются локалью ru-RU — для другой локали замените вызов toLocaleString.",
+            "Полоса доли отражает вклад в уровень, а не в общий объём: на глубине это разные величины.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Разбор обращений",
+            "maxLength": 40
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "обращений",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A cascader with counters: every node carries a record count and a bar showing its share of the current level, so it is clear which branch is worth opening.",
+            "ai": {
+              "summary": "A cascader with numbers: a counter on every branch, a share bar against the level and the level total in the header. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-cascader-011-* palette — do not swap it for your theme tokens",
+                "the share measured against the current level, not a global maximum: deeper down every bar otherwise collapses to a thread",
+                "the level total in the header — nobody adds the separate numbers up in their head",
+                "the \"final level\" caption on a leaf: a row that does not open otherwise looks broken",
+                "the aria-label carrying the number on each row — a bar and a figure side by side read as noise to a screen reader",
+                "the panel's own light surface: dark text disappears on the dark catalogue card"
+              ],
+              "adapt": [
+                "the breakdown heading through heading",
+                "the measurement unit through unit",
+                "the counted tree through tree",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "A parent counter may not equal the sum of its children: the component totals the level, it does not audit the data.",
+                "Numbers are formatted with the ru-RU locale — swap the toLocaleString call for another locale.",
+                "The bar shows a share of the level, not of the grand total: deeper down those are different quantities.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Cascader011 heading=\"Ticket breakdown\" unit=\"tickets\" />"
+            },
+            "controls": {
+              "heading": {
+                "label": "Heading",
+                "default": "Ticket breakdown"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": "tickets"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cascader-012",
+      "type": "registry:component",
+      "title": "Lazy Level",
+      "description": "Каскад с ленивой подгрузкой: следующий уровень приходит с задержкой, а на его месте стоят скелетоны той же высоты, что и будущие строки.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cascader-012/cascader-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cascader-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-012-*. Клиентский: выбранная ветка и лист живут в useState, а флаг загрузки выведен сравнением «что показано» с «что выбрано» — setState в теле эффекта не вызывается и лишнего рендера нет. Задержка эмулирует запрос через setTimeout в useEffect, таймер снимается в cleanup: без этого быстрые переключения перезаписывают друг друга и в списке оказывается ветка, которую уже никто не выбирал. Скелетон повторяет высоту будущей строки, поэтому панель не прыгает при приходе данных, а сам список помечен aria-busy — скринридер объявляет загрузку, а не молчит.",
+      "meta": {
+        "tags": ["cascader", "lazy", "loading", "skeleton"],
+        "ai": {
+          "export": "Cascader012",
+          "usage": "<Cascader012 heading=\"Регион и город\" delay={700} />",
+          "summary": "Каскад с асинхронным уровнем: скелетоны на время запроса, aria-busy на списке и статус загрузки в шапке. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-cascader-012-* и не подменять её токенами вашей темы",
+            "снятие таймера в cleanup useEffect: без него быстрые переключения приносят данные уже неактуальной ветки",
+            "высоту скелетона, равную высоте будущей строки — иначе панель прыгает в момент прихода данных",
+            "aria-busy на подгружаемом списке: без него скринридер молчит всю загрузку",
+            "фиксированную высоту обеих колонок — правая колонка иначе меняет размер вместе с числом городов",
+            "собственную светлую подложку панели: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "заголовок панели через heading",
+            "длительность запроса через delay",
+            "дерево через tree и акцентный цвет через accent",
+            "число строк-скелетонов под ожидаемый размер уровня"
+          ],
+          "notes": [
+            "setTimeout здесь стоит вместо запроса: подставьте fetch и не забудьте AbortController в том же cleanup.",
+            "Состояние ошибки не предусмотрено — для реального запроса нужен третий вариант с кнопкой повтора.",
+            "Скелетоны скрыты от скринридера через aria-hidden: озвучивать пустые полоски бессмысленно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "delay",
+            "label": "Задержка, мс",
+            "type": "number",
+            "default": 700,
+            "min": 200,
+            "max": 3000
+          },
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Регион и город",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A cascader with lazy loading: the next level arrives after a delay, and skeletons of exactly the future row height stand in its place.",
+            "ai": {
+              "summary": "A cascader with an async level: skeletons while the request runs, aria-busy on the list and a loading status in the header. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-cascader-012-* palette — do not swap it for your theme tokens",
+                "clearing the timer in the useEffect cleanup: without it fast switching delivers data for a branch nobody is on",
+                "the skeleton height matching the future row — otherwise the panel jumps the moment data arrives",
+                "aria-busy on the loading list: without it a screen reader stays silent for the whole wait",
+                "the fixed height of both columns — the right one otherwise resizes with the number of cities",
+                "the panel's own light surface: dark text disappears on the dark catalogue card"
+              ],
+              "adapt": [
+                "the panel heading through heading",
+                "the request duration through delay",
+                "the tree through tree and the accent colour through accent",
+                "the number of skeleton rows to match the expected level size"
+              ],
+              "notes": [
+                "setTimeout stands in for a request: drop in fetch and put an AbortController in the same cleanup.",
+                "There is no error state — a real request needs a third branch with a retry button.",
+                "Skeletons are hidden from screen readers with aria-hidden: announcing blank bars is pointless.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Cascader012 heading=\"Region and city\" delay={700} />"
+            },
+            "controls": {
+              "delay": {
+                "label": "Delay, ms"
+              },
+              "heading": {
+                "label": "Heading",
+                "default": "Region and city"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
