@@ -1,0 +1,113 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Item005Props = Omit<
+  ComponentPropsWithoutRef<"li">,
+  "children" | "title"
+> & {
+  title?: string
+  meta?: string
+  badge?: string
+  image?: string
+  accent?: string
+}
+
+// Идея компонента: строка с медиа-превью. Место под картинку занято до её
+// загрузки: превью задано пропорцией 16 / 9 и фиксированной шириной, поэтому
+// строка не прыгает, когда файл наконец приехал. Без картинки в том же
+// прямоугольнике лежит градиентная заглушка, а не пустота — высота строки
+// одинакова в обоих случаях. Длительность лежит поверх превью и продублирована
+// текстом для скринридера: подпись на картинке ему не видна.
+const STYLES = `
+:where([data-vibeui-block="item-005"]){
+--vibeui-item-005-bg:oklch(1 0 0);
+--vibeui-item-005-fg:oklch(0.23 0.014 265);
+--vibeui-item-005-muted:oklch(0.56 0.014 265);
+--vibeui-item-005-border:oklch(0.9 0.006 265);
+--vibeui-item-005-accent:oklch(0.55 0.19 262);
+--vibeui-item-005-shade:oklch(0.2 0.02 265 / 72%);
+--vibeui-item-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="item-005"]{
+display:flex;align-items:center;gap:0.75rem;
+width:100%;max-width:24rem;box-sizing:border-box;padding:0.625rem 0.75rem;
+list-style:none;
+background:var(--vibeui-item-005-bg);
+border:1px solid var(--vibeui-item-005-border);border-radius:0.75rem;
+font-family:var(--vibeui-item-005-font);color:var(--vibeui-item-005-fg);
+}
+[data-vibeui-block="item-005"] *{box-sizing:border-box}
+/* Место под превью занято пропорцией: строка не прыгает после загрузки. */
+[data-vibeui-block="item-005"] [data-part="media"]{
+position:relative;flex:none;width:5.5rem;aspect-ratio:16 / 9;
+border-radius:0.5rem;overflow:hidden;
+background:linear-gradient(135deg,
+color-mix(in oklab,var(--vibeui-item-005-accent) 30%,white),
+color-mix(in oklab,var(--vibeui-item-005-accent) 70%,black));
+}
+[data-vibeui-block="item-005"] [data-part="media"] img{
+display:block;width:100%;height:100%;object-fit:cover;
+}
+[data-vibeui-block="item-005"] [data-part="badge"]{
+position:absolute;right:0.25rem;bottom:0.25rem;
+padding:0 0.25rem;border-radius:0.25rem;
+background:var(--vibeui-item-005-shade);color:oklch(1 0 0);
+font-size:0.625rem;font-weight:650;line-height:1.4;font-variant-numeric:tabular-nums;
+}
+[data-vibeui-block="item-005"] [data-part="text"]{flex:1 1 auto;min-width:0;display:grid;gap:0.1875rem}
+[data-vibeui-block="item-005"] [data-part="title"]{
+font-size:0.875rem;font-weight:650;line-height:1.3;
+display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;
+}
+[data-vibeui-block="item-005"] [data-part="meta"]{font-size:0.75rem;line-height:1.35;color:var(--vibeui-item-005-muted)}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="item-005"] *{animation:none!important;transition:none!important}}
+`
+
+/**
+ * Строка списка с медиа-превью фиксированной пропорции и меткой длительности.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Item005({
+  title = "Как собрать каталог компонентов за вечер",
+  meta = "Роман Тищенко · 3 дня назад",
+  badge = "12:40",
+  image,
+  accent,
+  className,
+  style,
+  ...props
+}: Item005Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-item-005-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-item-005" precedence="medium">
+        {STYLES}
+      </style>
+      <li
+        {...props}
+        data-vibeui-block="item-005"
+        className={className}
+        style={palette}
+      >
+        <span data-part="media">
+          {image ? <img src={image} alt="" /> : null}
+          {badge ? (
+            <span data-part="badge" aria-hidden="true">
+              {badge}
+            </span>
+          ) : null}
+        </span>
+        <span data-part="text">
+          <span data-part="title">{title}</span>
+          <span data-part="meta">
+            {meta}
+            {badge ? ` · ${badge}` : null}
+          </span>
+        </span>
+      </li>
+    </>
+  )
+}

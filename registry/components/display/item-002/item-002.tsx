@@ -1,0 +1,96 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Item002Props = Omit<
+  ComponentPropsWithoutRef<"li">,
+  "children" | "title"
+> & {
+  title?: string
+  meta?: string
+  glyph?: string
+  tint?: string
+}
+
+// Идея компонента: строка списка с ведущим знаком. Знак не украшение, а якорь
+// для глаза: он всегда одного размера и всегда на одном месте, поэтому колонка
+// названий начинается по одной вертикали независимо от длины текста. Оттенок
+// плитки считается от одного числа, а фон и цвет знака выводятся из него через
+// color-mix — рассогласовать пару невозможно.
+const STYLES = `
+:where([data-vibeui-block="item-002"]){
+--vibeui-item-002-bg:oklch(1 0 0);
+--vibeui-item-002-fg:oklch(0.23 0.014 265);
+--vibeui-item-002-muted:oklch(0.56 0.014 265);
+--vibeui-item-002-border:oklch(0.9 0.006 265);
+--vibeui-item-002-tint:oklch(0.55 0.17 265);
+--vibeui-item-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="item-002"]{
+display:flex;align-items:center;gap:0.6875rem;
+width:100%;max-width:22rem;box-sizing:border-box;padding:0.625rem 0.75rem;
+list-style:none;
+background:var(--vibeui-item-002-bg);
+border:1px solid var(--vibeui-item-002-border);border-radius:0.75rem;
+font-family:var(--vibeui-item-002-font);color:var(--vibeui-item-002-fg);
+}
+[data-vibeui-block="item-002"] *{box-sizing:border-box}
+/* Плитка знака: фиксированный квадрат, поэтому колонка названий не пляшет. */
+[data-vibeui-block="item-002"] [data-part="glyph"]{
+flex:none;display:grid;place-items:center;
+width:2.25rem;height:2.25rem;border-radius:0.625rem;
+background:color-mix(in oklab,var(--vibeui-item-002-tint) 14%,transparent);
+color:var(--vibeui-item-002-tint);
+font-size:0.9375rem;font-weight:700;line-height:1;
+}
+[data-vibeui-block="item-002"] [data-part="text"]{display:grid;gap:0.125rem;min-width:0}
+[data-vibeui-block="item-002"] [data-part="title"]{
+font-size:0.875rem;font-weight:650;line-height:1.3;
+overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+/* Вторичная строка обрезается вторая: главное имя важнее подробностей. */
+[data-vibeui-block="item-002"] [data-part="meta"]{
+font-size:0.75rem;line-height:1.35;color:var(--vibeui-item-002-muted);
+overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="item-002"] *{animation:none!important;transition:none!important}}
+`
+
+/**
+ * Строка списка с ведущим знаком и вторичным текстом.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Item002({
+  title = "Проектная документация",
+  meta = "14 файлов · обновлено вчера",
+  glyph = "ПД",
+  tint,
+  className,
+  style,
+  ...props
+}: Item002Props) {
+  const palette = {
+    ...(tint ? { "--vibeui-item-002-tint": tint } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-item-002" precedence="medium">
+        {STYLES}
+      </style>
+      <li
+        {...props}
+        data-vibeui-block="item-002"
+        className={className}
+        style={palette}
+      >
+        <span data-part="glyph" aria-hidden="true">
+          {glyph}
+        </span>
+        <span data-part="text">
+          <span data-part="title">{title}</span>
+          {meta ? <span data-part="meta">{meta}</span> : null}
+        </span>
+      </li>
+    </>
+  )
+}

@@ -5521,6 +5521,2114 @@
           }
         }
       }
+    },
+    {
+      "name": "item-002",
+      "type": "registry:component",
+      "title": "Icon Lead Row",
+      "description": "Строка списка с ведущим знаком: плитка фиксированного размера держит колонку названий на одной вертикали, а её цвет выводится из одного оттенка.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "item-002/item-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/item-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-002-*. Серверный: хуков и обработчиков нет. Корень — li с флексом; плитка знака имеет фиксированный квадрат 2.25rem и не сжимается, поэтому названия всех строк начинаются по одной вертикали. Фон плитки и цвет знака считаются из --vibeui-item-002-tint через color-mix, поэтому пара не может рассогласоваться. Текстовые узлы обрезаются многоточием и не ломают высоту строки.",
+      "meta": {
+        "tags": ["item", "list", "row", "icon"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Item002",
+          "usage": "<Item002 title=\"Договоры\" glyph=\"Д\" meta=\"8 файлов\" />",
+          "summary": "Строка списка с ведущей плиткой-знаком и вторичной строкой под названием. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-item-002-* и не подменять её токенами вашей темы",
+            "фиксированный квадрат плитки: плавающая ширина сдвигает колонку названий у каждой строки",
+            "вычисление фона и цвета знака из одного оттенка через color-mix — иначе пара разъезжается",
+            "aria-hidden на плитке: знак дублирует название и в озвучке лишний",
+            "обрезку названия многоточием: перенос на вторую строку меняет высоту в плотном списке",
+            "тег li: строки живут в списке, а не в наборе div"
+          ],
+          "adapt": [
+            "title и meta — название строки и вторичный текст",
+            "glyph — одна или две буквы на плитке",
+            "оттенок плитки через проп tint",
+            "ширину строки и радиус скругления"
+          ],
+          "notes": [
+            "Плитка рассчитана на одну-две буквы: три уже не помещаются в квадрат.",
+            "Оберните строки в <ul>: одиночный li без списка невалиден.",
+            "Для строки со ссылкой на всю площадь берите item-001 или item-004.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Название",
+            "type": "text",
+            "default": "Проектная документация",
+            "maxLength": 40
+          },
+          {
+            "prop": "glyph",
+            "label": "Знак",
+            "type": "text",
+            "default": "ПД",
+            "maxLength": 4
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A list row with a leading glyph: a fixed-size tile keeps the title column on one vertical line, and its colours are derived from a single tint.",
+            "ai": {
+              "summary": "A list row with a leading glyph tile and a secondary line under the title. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-item-002-* palette — do not swap it for your theme tokens",
+                "the fixed tile square: a fluid width shifts the title column on every row",
+                "deriving the tile fill and glyph colour from one tint through color-mix — otherwise the pair drifts apart",
+                "aria-hidden on the tile: the glyph repeats the title and is noise in speech",
+                "the ellipsis on the title: wrapping to a second line changes row height in a dense list",
+                "the li element: rows belong in a list, not a pile of divs"
+              ],
+              "adapt": [
+                "title and meta — the row title and the secondary text",
+                "glyph — one or two letters on the tile",
+                "the tile tint through the tint prop",
+                "the row width and corner radius"
+              ],
+              "notes": [
+                "The tile fits one or two letters: three no longer fit the square.",
+                "Wrap the rows in a <ul>: a lone li outside a list is invalid.",
+                "For a row that is one big link use item-001 or item-004.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Item002 title=\"Contracts\" glyph=\"C\" meta=\"8 files\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Project documents"
+              },
+              "glyph": {
+                "label": "Glyph",
+                "default": "PD"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "item-003",
+      "type": "registry:component",
+      "title": "Row With Action",
+      "description": "Строка с отдельной кнопкой справа: растянуть ссылку на всю площадь здесь нельзя, поэтому кнопка остаётся собственной целью и несёт название записи в подписи.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "item-003/item-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/item-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-003-*. Серверный: состояния нет, обработчик вешает вызывающий код через проп onClick. Раскладка — флекс из текстового блока и кнопки; кнопка помечена flex:none и не сжимается, текст обрезается многоточием. aria-label кнопки собирается из действия и названия строки, поэтому десять одинаковых кнопок подряд различимы на слух.",
+      "meta": {
+        "tags": ["item", "list", "row", "action"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Item003",
+          "usage": "<Item003 title=\"Мария Ковалёва\" action=\"Пригласить\" />",
+          "summary": "Строка списка с текстовым блоком слева и кнопкой действия справа. Ноль зависимостей, один файл, состояния нет.",
+          "preserve": [
+            "локальную палитру --vibeui-item-003-* и не подменять её токенами вашей темы",
+            "кнопку как отдельную цель: растянутая ссылка перекрыла бы её и сделала недоступной",
+            "aria-label кнопки с названием строки — иначе в списке десять кнопок «Пригласить» неразличимы",
+            "flex:none у кнопки: сжатая подпись действия читается хуже обрезанного описания",
+            "видимую обводку фокуса на кнопке — она единственная интерактивная цель строки",
+            "тег li: строки живут в списке, а не в наборе div"
+          ],
+          "adapt": [
+            "title и meta — название и вторичный текст",
+            "action — подпись кнопки",
+            "акцент через проп accent",
+            "ширину строки"
+          ],
+          "notes": [
+            "Обработчик кнопки не входит в компонент: передайте onClick вызывающим кодом.",
+            "Двух и более действий строка не предполагает — для меню действий нужен свой блок.",
+            "Оберните строки в <ul>: одиночный li без списка невалиден.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Название",
+            "type": "text",
+            "default": "Мария Ковалёва",
+            "maxLength": 40
+          },
+          {
+            "prop": "action",
+            "label": "Действие",
+            "type": "text",
+            "default": "Пригласить",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A row with its own button on the right: a stretched link is impossible here, so the button stays a separate target and carries the row title in its label.",
+            "ai": {
+              "summary": "A list row with a text block on the left and an action button on the right. Zero dependencies, one file, no state.",
+              "preserve": [
+                "the local --vibeui-item-003-* palette — do not swap it for your theme tokens",
+                "the button as its own target: a stretched link would cover it and make it unreachable",
+                "the button aria-label carrying the row title — otherwise ten \"Invite\" buttons are indistinguishable",
+                "flex:none on the button: a squeezed action label reads worse than a clipped description",
+                "the visible focus ring on the button — it is the only interactive target in the row",
+                "the li element: rows belong in a list, not a pile of divs"
+              ],
+              "adapt": [
+                "title and meta — the title and the secondary text",
+                "action — the button label",
+                "the accent through the accent prop",
+                "the row width"
+              ],
+              "notes": [
+                "The button handler is not part of the component: pass onClick from the caller.",
+                "The row does not assume two or more actions — an action menu needs its own block.",
+                "Wrap the rows in a <ul>: a lone li outside a list is invalid.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Item003 title=\"Maria Kovaleva\" action=\"Invite\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Maria Kovaleva"
+              },
+              "action": {
+                "label": "Action",
+                "default": "Invite"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "item-004",
+      "type": "registry:component",
+      "title": "Linked Nav Row",
+      "description": "Навигационная строка, где корень блока и есть тег a: цель не эмулируется псевдоэлементом, а стрелка сдвигается одинаково на наведении и на фокусе.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "item-004/item-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/item-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-004-*. Серверный: хуков нет. Корневой элемент — a, поэтому строка попадает в список ссылок страницы целиком, а не одним названием, и не требует растянутого ::after, как item-001. Состояния :hover и :focus-visible описаны одним правилом, поэтому клавиатурный сценарий выглядит так же, как мышиный.",
+      "meta": {
+        "tags": ["item", "row", "link", "navigation"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Item004",
+          "usage": "<Item004 title=\"Уведомления\" href=\"/settings/notifications\" />",
+          "summary": "Строка-ссылка: название, пояснение, счётчик и стрелка; корень блока — сам тег a. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-item-004-* и не подменять её токенами вашей темы",
+            "корень-ссылку: она даёт настоящую цель без растянутого псевдоэлемента",
+            "общее правило для :hover и :focus-visible — состояние клавиатуры не должно быть беднее мышиного",
+            "стрелку под aria-hidden: «стрелка вправо» в озвучке ничего не добавляет",
+            "видимую обводку фокуса на всей строке, а не на одном названии",
+            "смену цвета рамки вместе с фоном: одного фона мало на светлой подложке"
+          ],
+          "adapt": [
+            "title и meta — название и пояснение",
+            "hint — счётчик или короткая приписка справа",
+            "href — адрес строки и акцент через проп accent",
+            "ширину строки"
+          ],
+          "notes": [
+            "Внутрь строки нельзя класть вторую ссылку или кнопку: вложенные интерактивные элементы невалидны.",
+            "Для строки с кнопкой действия берите item-003.",
+            "Строки-ссылки кладите в <nav> или <ul> — набор ссылок подряд без контейнера читается хуже.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Название",
+            "type": "text",
+            "default": "Настройки уведомлений",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Приписка",
+            "type": "text",
+            "default": "12",
+            "maxLength": 8
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A navigation row where the block root is the a element itself: the target is not emulated by a pseudo-element, and the arrow shifts alike on hover and focus.",
+            "ai": {
+              "summary": "A link row: title, description, counter and arrow, with the block root being the a element itself. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-item-004-* palette — do not swap it for your theme tokens",
+                "the link root: it gives a real target without a stretched pseudo-element",
+                "the shared rule for :hover and :focus-visible — the keyboard state must not be poorer than the mouse one",
+                "aria-hidden on the arrow: \"right arrow\" adds nothing in speech",
+                "the visible focus ring on the whole row, not on the title alone",
+                "changing the border colour together with the background: the fill alone is too weak on a light surface"
+              ],
+              "adapt": [
+                "title and meta — the title and the description",
+                "hint — the counter or a short note on the right",
+                "href — the row target, and the accent through the accent prop",
+                "the row width"
+              ],
+              "notes": [
+                "No second link or button may go inside: nested interactive elements are invalid.",
+                "For a row with an action button use item-003.",
+                "Put link rows inside a <nav> or a <ul> — a bare run of links reads worse.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Item004 title=\"Notifications\" href=\"/settings/notifications\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Notification settings"
+              },
+              "hint": {
+                "label": "Note",
+                "default": "12"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "item-005",
+      "type": "registry:component",
+      "title": "Media Preview Row",
+      "description": "Строка с медиа-превью, у которого место занято пропорцией 16 / 9 до загрузки картинки: строка не прыгает, а длительность продублирована текстом.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "item-005/item-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/item-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-005-*. Серверный: хуков нет. Превью — блок фиксированной ширины с aspect-ratio 16 / 9 и overflow:hidden; без пропа image в нём лежит градиентная заглушка, поэтому высота строки одинакова с картинкой и без неё. Метка длительности лежит поверх превью под aria-hidden и повторена во вторичной строке текстом. Название обрезается двумя строками через -webkit-line-clamp.",
+      "meta": {
+        "tags": ["item", "row", "media", "thumbnail"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Item005",
+          "usage": "<Item005 title=\"Разбор кейса\" badge=\"08:12\" image=\"/cover.jpg\" />",
+          "summary": "Строка списка с превью 16 / 9, меткой длительности и названием в две строки. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-item-005-* и не подменять её токенами вашей темы",
+            "aspect-ratio у превью: без него строка прыгает в момент загрузки картинки",
+            "градиентную заглушку: пустое место той же высоты честнее, чем схлопнувшаяся строка",
+            "дубль длительности текстом: подпись поверх картинки скринридеру не видна",
+            "alt=\"\" у картинки — она декоративна, смысл несёт название рядом",
+            "обрезку названия двумя строками: третья ломает ритм списка"
+          ],
+          "adapt": [
+            "title и meta — название и строку автора с датой",
+            "badge — длительность или другую короткую метку",
+            "image — адрес картинки, акцент через проп accent",
+            "ширину превью и ширину строки"
+          ],
+          "notes": [
+            "Компонент рендерит обычный тег img: next/image сюда не подставляйте, блок обязан работать вне Next.",
+            "Без пропа image остаётся градиент — это штатное состояние, а не ошибка.",
+            "Оберните строки в <ul>: одиночный li без списка невалиден.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Название",
+            "type": "text",
+            "default": "Как собрать каталог компонентов за вечер",
+            "maxLength": 56
+          },
+          {
+            "prop": "badge",
+            "label": "Длительность",
+            "type": "text",
+            "default": "12:40",
+            "maxLength": 8
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A row with a 16 / 9 thumbnail whose space is reserved before the image loads: the row never jumps, and the duration is repeated as real text.",
+            "ai": {
+              "summary": "A list row with a 16 / 9 thumbnail, a duration badge and a two-line title. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-item-005-* palette — do not swap it for your theme tokens",
+                "the aspect-ratio on the thumbnail: without it the row jumps when the image loads",
+                "the gradient placeholder: empty space of the same height is more honest than a collapsed row",
+                "the duration repeated as text: a caption drawn over the image is invisible to a screen reader",
+                "alt=\"\" on the image — it is decorative, the meaning sits in the title next to it",
+                "clamping the title to two lines: a third one breaks the rhythm of the list"
+              ],
+              "adapt": [
+                "title and meta — the title and the author-and-date line",
+                "badge — the duration or another short marker",
+                "image — the picture URL, and the accent through the accent prop",
+                "the thumbnail width and the row width"
+              ],
+              "notes": [
+                "The component renders a plain img tag: do not swap in next/image, the block must work outside Next.",
+                "Without the image prop the gradient stays — that is a normal state, not an error.",
+                "Wrap the rows in a <ul>: a lone li outside a list is invalid.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Item005 title=\"Case study\" badge=\"08:12\" image=\"/cover.jpg\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Building a component catalogue in one evening"
+              },
+              "badge": {
+                "label": "Duration",
+                "default": "12:40"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "item-006",
+      "type": "registry:component",
+      "title": "Three Column Meta",
+      "description": "Строка, где подробности разложены по трём подписанным колонкам парами dt/dd, а раскладка считается от собственной ширины через контейнерный запрос.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "item-006/item-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/item-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-006-*. Серверный: хуков нет. Корень — li с container-type:inline-size; вся раскладка лежит на внутреннем [data-part=\"shell\"], потому что контейнерный запрос действует на потомков, а не на сам контейнер. Ячейки описаны тегом dl с парами dt/dd, поэтому подпись и значение связаны разметкой. Значения набраны табличными цифрами и обрезаются многоточием.",
+      "meta": {
+        "tags": ["item", "row", "metadata", "container"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Item006",
+          "usage": "<Item006 title=\"Смета\" cells={[{ label: \"Владелец\", value: \"Ирина\" }]} />",
+          "summary": "Строка списка с названием и тремя подписанными ячейками подробностей, перестраивающимися по ширине строки. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-item-006-* и не подменять её токенами вашей темы",
+            "раскладку на внутренней обёртке: правило @container не применяется к самому контейнеру",
+            "пары dt/dd — подпись и значение обязаны быть связаны разметкой, а не соседством",
+            "container-type:inline-size на корне: раскладка считается от ширины строки, а не от вьюпорта",
+            "табличные цифры у значений — колонку сравнивают взглядом сверху вниз",
+            "тег li: строки живут в списке, а не в наборе div"
+          ],
+          "adapt": [
+            "title — название записи",
+            "массив cells: подписи и значения ячеек",
+            "акцент через проп accent и порог контейнерного запроса",
+            "ширину строки"
+          ],
+          "notes": [
+            "Три ячейки — расчётный максимум: четвёртая ломает ритм в узкой колонке.",
+            "Контейнерные запросы требуют современного браузера; в старых строка останется в один столбец.",
+            "Оберните строки в <ul>: одиночный li без списка невалиден.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Название",
+            "type": "text",
+            "default": "Смета на второй этап",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A row with details laid out in three labelled columns as dt/dd pairs, reflowing from its own width through a container query.",
+            "ai": {
+              "summary": "A list row with a title and three labelled detail cells that reflow with the row width. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-item-006-* palette — do not swap it for your theme tokens",
+                "the layout on the inner wrapper: an @container rule does not apply to the container itself",
+                "the dt/dd pairs — label and value must be tied by markup, not by proximity",
+                "container-type:inline-size on the root: the layout follows the row width, not the viewport",
+                "tabular figures on the values — the column gets compared top to bottom",
+                "the li element: rows belong in a list, not a pile of divs"
+              ],
+              "adapt": [
+                "title — the record title",
+                "the cells array: cell labels and values",
+                "the accent through the accent prop and the container query breakpoint",
+                "the row width"
+              ],
+              "notes": [
+                "Three cells is the designed maximum: a fourth breaks the rhythm in a narrow column.",
+                "Container queries need a modern browser; in older ones the row simply stays single-column.",
+                "Wrap the rows in a <ul>: a lone li outside a list is invalid.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Item006 title=\"Estimate\" cells={[{ label: \"Owner\", value: \"Irina\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Stage two estimate"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "item-007",
+      "type": "registry:component",
+      "title": "Selectable Row",
+      "description": "Строка выбора на нативном чекбоксе: состояние живёт в разметке, галочка рисуется через :has(:checked), а компонент остаётся серверным и работает в форме.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "item-007/item-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/item-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-007-*. Серверный: React-состояния нет, значение держит нативный input type=checkbox и отдаёт его при отправке формы. Input не скрыт display:none, а растянут прозрачным по строке — иначе он выпал бы из последовательности фокуса. Выбранная строка меняет фон, рамку и заливку квадратика одновременно, потому что одного цвета мало при дальтонизме.",
+      "meta": {
+        "tags": ["item", "row", "checkbox", "selection"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Item007",
+          "usage": "<Item007 title=\"Отдельный домен\" name=\"domain\" defaultChecked />",
+          "summary": "Строка выбора с галочкой: нативный чекбокс, разметочное состояние, отправка в форме. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-item-007-* и не подменять её токенами вашей темы",
+            "нативный input вместо React-состояния: так строка работает в форме и остаётся серверной",
+            "прозрачный растянутый input — display:none выкинул бы его из последовательности фокуса",
+            "обводку фокуса на строке через :has(input:focus-visible)",
+            "смену фона, рамки и квадратика вместе: один цвет не читается при дальтонизме",
+            "корень-label: клик по всей строке обязан переключать выбор"
+          ],
+          "adapt": [
+            "title и meta — название и пояснение",
+            "name — имя поля в форме, defaultChecked — начальное состояние",
+            "акцент через проп accent",
+            "ширину строки"
+          ],
+          "notes": [
+            "Состояние неуправляемое: чтобы читать выбор в React, добавьте checked и onChange и сделайте компонент клиентским.",
+            "Для набора взаимоисключающих вариантов замените type на radio и дайте строкам общий name.",
+            "Селектор :has() нужен современному браузеру: в старых пропадёт подсветка выбранной строки, но выбор работает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Название",
+            "type": "text",
+            "default": "Отдельный домен",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultChecked",
+            "label": "Отмечено",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A selectable row on a native checkbox: state lives in markup, the checkmark is drawn with :has(:checked), and the component stays server-side and form-ready.",
+            "ai": {
+              "summary": "A selectable row with a checkmark: a native checkbox, state in markup, submits with the form. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-item-007-* palette — do not swap it for your theme tokens",
+                "the native input instead of React state: this keeps the row form-ready and server-rendered",
+                "the transparent stretched input — display:none would drop it out of the focus order",
+                "the focus ring on the row via :has(input:focus-visible)",
+                "changing background, border and box together: a single colour fails for colour blindness",
+                "the label root: clicking anywhere on the row must toggle the choice"
+              ],
+              "adapt": [
+                "title and meta — the title and the description",
+                "name — the form field name, defaultChecked — the initial state",
+                "the accent through the accent prop",
+                "the row width"
+              ],
+              "notes": [
+                "The state is uncontrolled: to read the choice in React add checked and onChange and make the component client-side.",
+                "For mutually exclusive options switch the type to radio and give the rows a shared name.",
+                "The :has() selector needs a modern browser: older ones lose the selected highlight but keep the choice working.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Item007 title=\"Custom domain\" name=\"domain\" defaultChecked />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Custom domain"
+              },
+              "defaultChecked": {
+                "label": "Checked"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "item-008",
+      "type": "registry:component",
+      "title": "Reorder Handle Row",
+      "description": "Строка с ручкой переноса, где ручка — кнопка: мышью строку тянут, а с клавиатуры берут пробелом и двигают стрелками, и каждый шаг объявляется вслух.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "item-008/item-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/item-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-008-*. Клиентский: \"use client\" ради режима переноса. Ручка — button с aria-pressed, обрабатывающая пробел, стрелки вверх и вниз и Escape; сам перенос выполняет вызывающий код через проп onMove, поэтому порядком владеет список, а не строка. Живая область role=status объявляет захват, шаг и отмену. Мышиный путь — нативный HTML5 drag and drop на самой строке.",
+      "meta": {
+        "tags": ["item", "row", "drag", "a11y"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Item008",
+          "usage": "<Item008 title=\"Тарифы\" position={3} total={8} onMove={move} />",
+          "summary": "Строка с ручкой переноса: нативный drag мышью и модель «взять — нести — положить» с клавиатуры, с озвучкой в живой области. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-item-008-* и не подменять её токенами вашей темы",
+            "ручку тегом button: декоративный значок недостижим с клавиатуры, и перенос теряет половину пользователей",
+            "живую область role=status: сдвиг строки виден глазами, но не слышен",
+            "позицию в подписи ручки — «3 из 8» слышно, а порядок нет",
+            "Escape как выход из режима переноса: без отмены захват превращается в ловушку",
+            "поднятый вид строки тенью и рамкой, а не одним оттенком"
+          ],
+          "adapt": [
+            "title и meta — название строки и пояснение",
+            "position и total — номер строки и длину списка",
+            "обработчик onMove, акцент через проп accent",
+            "ширину строки"
+          ],
+          "notes": [
+            "Порядком владеет список: строка сообщает направление через onMove и сама ничего не переставляет.",
+            "Нативный drag не работает на сенсорных экранах — клавиатурный путь закрывает и этот случай.",
+            "Готовый список с сортировкой целиком — sortable-002, здесь только одна строка.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Название",
+            "type": "text",
+            "default": "Блок «Тарифы»",
+            "maxLength": 40
+          },
+          {
+            "prop": "total",
+            "label": "Всего строк",
+            "type": "number",
+            "default": 8,
+            "min": 2,
+            "max": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A row with a drag handle that is a button: the mouse drags it, the keyboard picks it up with space and moves it with arrows, and every step is announced.",
+            "ai": {
+              "summary": "A row with a drag handle: native mouse dragging plus a pick-up, move, drop model from the keyboard, announced in a live region. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-item-008-* palette — do not swap it for your theme tokens",
+                "the handle as a button: a decorative glyph is unreachable from a keyboard and loses half the users",
+                "the role=status live region: a row shifting is visible but not audible",
+                "the position in the handle label — \"3 of 8\" is audible, order is not",
+                "Escape as the way out of move mode: without a cancel the pick-up becomes a trap",
+                "the lifted look via shadow and border, not a single tint"
+              ],
+              "adapt": [
+                "title and meta — the row title and the description",
+                "position and total — the row number and the list length",
+                "the onMove handler and the accent through the accent prop",
+                "the row width"
+              ],
+              "notes": [
+                "The list owns the order: the row reports a direction through onMove and moves nothing itself.",
+                "Native dragging does not work on touch screens — the keyboard path covers that case too.",
+                "For a whole sortable list use sortable-002; this is a single row.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Item008 title=\"Pricing\" position={3} total={8} onMove={move} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Pricing block"
+              },
+              "total": {
+                "label": "Rows total"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "item-009",
+      "type": "registry:component",
+      "title": "Status Marker Row",
+      "description": "Строка с меткой состояния, которую можно прочитать без цвета: каждому состоянию отвечает своя форма маркера и своё слово, цвет здесь третий признак.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "item-009/item-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/item-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-009-*. Серверный: хуков нет. Состояние приходит пропом state и попадает в data-state на корне; тон метки выбирается переменной --vibeui-item-009-tone, поэтому фон, рамка и текст пилюли считаются из одного значения. Форму маркера задают border-radius, clip-path и box-shadow: круг, треугольник, ромб и кольцо различимы при дальтонизме и на чёрно-белой печати.",
+      "meta": {
+        "tags": ["item", "row", "status", "a11y"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Item009",
+          "usage": "<Item009 title=\"api.vibeui.ru\" state=\"fail\" label=\"Ошибка\" />",
+          "summary": "Строка списка с меткой состояния: форма маркера, слово и цвет вместе. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-item-009-* и не подменять её токенами вашей темы",
+            "разные формы маркера: цвет один не работает при дальтонизме и на чёрно-белой печати",
+            "слово состояния текстом в разметке — оно нужно и скринридеру, и поиску по странице",
+            "вывод фона, рамки и текста метки из одного тона через color-mix",
+            "aria-hidden на маркере: форма дублирует слово рядом",
+            "тег li: строки живут в списке, а не в наборе div"
+          ],
+          "adapt": [
+            "title и meta — название объекта и строку подробностей",
+            "state — одно из четырёх состояний",
+            "label — слово состояния, если стандартное не подходит",
+            "цвета состояний и ширину строки"
+          ],
+          "notes": [
+            "Состояний ровно четыре: пятой формы, различимой на маркере в 8 пикселей, уже не остаётся.",
+            "Не заменяйте слово состояния только цветной точкой — метка перестанет читаться на печати.",
+            "Оберните строки в <ul>: одиночный li без списка невалиден.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "state",
+            "label": "Состояние",
+            "type": "select",
+            "default": "ok",
+            "options": ["ok", "wait", "fail", "off"]
+          },
+          {
+            "prop": "title",
+            "label": "Название",
+            "type": "text",
+            "default": "api.vibeui.ru",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A row with a status badge readable without colour: every state gets its own marker shape and its own word, with colour only the third cue.",
+            "ai": {
+              "summary": "A list row with a status marker: shape, word and colour together. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-item-009-* palette — do not swap it for your theme tokens",
+                "the distinct marker shapes: colour alone fails for colour blindness and in black and white print",
+                "the status word as real text — it is needed both by a screen reader and by page search",
+                "deriving the badge fill, border and text from a single tone through color-mix",
+                "aria-hidden on the marker: the shape repeats the word beside it",
+                "the li element: rows belong in a list, not a pile of divs"
+              ],
+              "adapt": [
+                "title and meta — the object name and the details line",
+                "state — one of the four states",
+                "label — the status word when the built-in one does not fit",
+                "the state colours and the row width"
+              ],
+              "notes": [
+                "There are exactly four states: a fifth shape readable at eight pixels no longer exists.",
+                "Do not replace the status word with a coloured dot — the badge stops working in print.",
+                "Wrap the rows in a <ul>: a lone li outside a list is invalid.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Item009 title=\"api.vibeui.ru\" state=\"fail\" label=\"Failed\" />"
+            },
+            "controls": {
+              "state": {
+                "label": "State"
+              },
+              "title": {
+                "label": "Title",
+                "default": "api.vibeui.ru"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "item-010",
+      "type": "registry:component",
+      "title": "Dense List Rows",
+      "description": "Плотный список, где высота строки задана одной переменной шага: плотность меняется целиком, а разделители нарисованы внутренней линией без двойных стыков.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "item-010/item-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/item-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-010-*. Серверный: хуков нет. Корень — ul, каждая строка это li с гридом из трёх колонок. Высота строки берётся из --vibeui-item-010-step, а проп density переключает шаг через data-density, поэтому плотность меняется одним значением. Разделитель сделан внутренней тенью на соседних строках, а не рамкой каждой: рамки удваивались бы на стыках.",
+      "meta": {
+        "tags": ["item", "list", "dense", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Item010",
+          "usage": "<Item010 density=\"compact\" rows={[{ code: \"AL-118\", title: \"Кабель\", value: \"412\" }]} />",
+          "summary": "Плотный список строк с артикулом, названием и числом: три ступени плотности от одного шага. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-item-010-* и не подменять её токенами вашей темы",
+            "высоту строки от одной переменной шага: подкрутка отступов у каждого узла ломает ритм",
+            "разделитель внутренней тенью — рамка у каждой строки даёт двойную линию на стыке",
+            "табличные цифры в правой колонке: столбец сравнивают взглядом сверху вниз",
+            "обрезку названия многоточием вместо переноса — иначе строки станут разной высоты",
+            "теги ul и li: плотный список остаётся списком, а не сеткой из div"
+          ],
+          "adapt": [
+            "массив rows: артикул, название и значение",
+            "density — одна из трёх ступеней плотности",
+            "акцент через проп accent",
+            "ширину списка и набор колонок"
+          ],
+          "notes": [
+            "Для сортируемых колонок и заголовков берите таблицу: это список, а не table.",
+            "На ступени tight строка ниже 24 пикселей — проверьте, что цель нажатия не нужна на телефоне.",
+            "Ключом строк служит артикул: он обязан быть уникальным.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "density",
+            "label": "Плотность",
+            "type": "select",
+            "default": "tight",
+            "options": ["tight", "compact", "cozy"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dense list where row height comes from a single step variable: density changes as a whole, and separators are inset lines without doubled seams.",
+            "ai": {
+              "summary": "A dense list of rows with a code, a title and a number: three density steps from one unit. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-item-010-* palette — do not swap it for your theme tokens",
+                "the row height driven by one step variable: tweaking paddings per node breaks the rhythm",
+                "the inset-shadow separator — a border on every row doubles up at the seams",
+                "tabular figures in the right column: the column gets compared top to bottom",
+                "clipping the title with an ellipsis instead of wrapping — otherwise rows differ in height",
+                "the ul and li elements: a dense list is still a list, not a grid of divs"
+              ],
+              "adapt": [
+                "the rows array: code, title and value",
+                "density — one of the three density steps",
+                "the accent through the accent prop",
+                "the list width and the set of columns"
+              ],
+              "notes": [
+                "For sortable columns and headers use a table: this is a list, not a table.",
+                "At the tight step a row is under 24 pixels — check you do not need a tap target on phones.",
+                "The row key is the code: it has to be unique.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Item010 density=\"compact\" rows={[{ code: \"AL-118\", title: \"Cable\", value: \"412\" }]} />"
+            },
+            "controls": {
+              "density": {
+                "label": "Density"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kanban-002",
+      "type": "registry:component",
+      "title": "WIP Limit Board",
+      "description": "Доска с лимитом карточек в колонке: заполнение видно до переноса, а перенос сверх лимита не отменяется молча, а объявляется отказом в живой области.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kanban-002/kanban-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kanban-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-002-*. Клиентский: \"use client\" ради состояния доски. Колонка описана парой имя и лимит; заполнение считается из карточек и показывается числом «3 / 4» и полосой. Функция переноса одна для мыши и клавиатуры: она проверяет лимит и в случае отказа пишет причину в живую область role=status. Мышиный путь — нативный HTML5 drag and drop, клавиатурный — кнопки со стрелками на карточке.",
+      "meta": {
+        "tags": ["kanban", "wip", "limit", "a11y"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kanban002",
+          "usage": "<Kanban002 columns={[{ name: \"В работе\", limit: 2 }]} cards={[{ id: \"1\", title: \"Задача\", column: \"В работе\" }]} />",
+          "summary": "Доска с лимитом незавершённой работы: счётчик «занято из лимита», полоса заполнения, отказ в переносе с озвучкой. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-kanban-002-* и не подменять её токенами вашей темы",
+            "кнопки со стрелками: перетаскивание недоступно с клавиатуры в принципе",
+            "живую область role=status: молча отменённый перенос выглядит как поломка интерфейса",
+            "счётчик, посчитанный из карточек — отдельное число врёт после первого переноса",
+            "полосу заполнения рядом с числом: приближение к лимиту должно читаться без счёта",
+            "aria-label колонки с числом карточек и лимитом"
+          ],
+          "adapt": [
+            "массивы columns и cards вместе с лимитами",
+            "обработчик onChange",
+            "акцент через проп accent и цвет предупреждения",
+            "ширину колонки"
+          ],
+          "notes": [
+            "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
+            "Лимит проверяется и для мыши, и для клавиатуры — оба пути идут через одну функцию.",
+            "Состояние живёт внутри компонента: сохранение делает вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A board with a per-column card limit: the fill is visible before the move, and an over-limit move is refused out loud instead of being cancelled silently.",
+            "ai": {
+              "summary": "A work-in-progress limited board: an occupied-of-limit counter, a fill bar and a spoken refusal when the limit is reached. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-kanban-002-* palette — do not swap it for your theme tokens",
+                "the arrow buttons: dragging is fundamentally unavailable from a keyboard",
+                "the role=status live region: a silently cancelled move looks like a broken interface",
+                "the counter computed from the cards — a stored number lies after the first move",
+                "the fill bar next to the number: approaching the limit must read without counting",
+                "the column aria-label carrying the card count and the limit"
+              ],
+              "adapt": [
+                "the columns and cards arrays together with the limits",
+                "the onChange handler",
+                "the accent through the accent prop and the warning colour",
+                "the column width"
+              ],
+              "notes": [
+                "Order inside a column does not change: the move only sets membership.",
+                "The limit is checked for mouse and keyboard alike — both paths go through one function.",
+                "State lives inside the component: persisting it is the caller's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kanban002 columns={[{ name: \"Doing\", limit: 2 }]} cards={[{ id: \"1\", title: \"Task\", column: \"Doing\" }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kanban-003",
+      "type": "registry:component",
+      "title": "Assignee Due Board",
+      "description": "Доска, где карточка отвечает на два вопроса до открытия: кто делает и когда срок. Просрочка помечена словом, а оттенок инициалов считается из имени.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kanban-003/kanban-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kanban-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-003-*. Клиентский: \"use client\" ради состояния доски. Оттенок кружка инициалов выводится хеш-функцией из имени исполнителя и подставляется переменной, поэтому палитру людей не нужно вести руками. Срок сравнивается со строкой даты из пропа today, а не с Date.now(): текущее время на сервере и на клиенте разное и ломает гидрацию. Перенос: нативный drag мышью и стрелки влево и вправо на самой карточке с клавиатуры, результат идёт в живую область.",
+      "meta": {
+        "tags": ["kanban", "assignee", "due", "board"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kanban003",
+          "usage": "<Kanban003 today=\"2026-03-18\" cards={[{ id: \"1\", title: \"Смета\", assignee: \"Ирина Лаптева\", due: \"2026-03-16\", column: \"Очередь\" }]} />",
+          "summary": "Доска с исполнителем и сроком на карточке: инициалы в цветном кружке, дата и признак просрочки. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-kanban-003-* и не подменять её токенами вашей темы",
+            "сравнение срока с пропом today: Date.now() на сервере и на клиенте разный и ломает гидрацию",
+            "слово «просрочен» рядом с датой — красным цветом одним пользоваться нельзя",
+            "оттенок инициалов из хеша имени: руками заведённая палитра расходится с составом команды",
+            "стрелки влево и вправо на карточке: перетаскивание недоступно с клавиатуры",
+            "живую область role=status: перенос обязан быть слышен, а не только виден"
+          ],
+          "adapt": [
+            "массивы columns и cards с исполнителями и сроками",
+            "today — дату, относительно которой считается просрочка",
+            "обработчик onChange, акцент через проп accent",
+            "формат даты и ширину колонки"
+          ],
+          "notes": [
+            "Даты сравниваются как строки: формат обязан быть ГГГГ-ММ-ДД, иначе сравнение неверно.",
+            "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
+            "Инициалы берутся из первых двух слов имени: одно слово даст одну букву.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "today",
+            "label": "Сегодня",
+            "type": "text",
+            "default": "2026-03-18",
+            "maxLength": 10
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A board where a card answers two questions before it is opened: who is on it and when it is due. Overdue is marked with a word, and initials are tinted from the name.",
+            "ai": {
+              "summary": "A board with an assignee and a due date on every card: initials in a tinted circle, the date and an overdue marker. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-kanban-003-* palette — do not swap it for your theme tokens",
+                "comparing the due date against the today prop: Date.now() differs on server and client and breaks hydration",
+                "the word \"overdue\" next to the date — red alone must not carry the meaning",
+                "the initials tint from a name hash: a hand-kept palette drifts away from the team roster",
+                "the left and right arrows on the card: dragging is unavailable from a keyboard",
+                "the role=status live region: a move has to be audible, not only visible"
+              ],
+              "adapt": [
+                "the columns and cards arrays with assignees and due dates",
+                "today — the date the overdue check is made against",
+                "the onChange handler and the accent through the accent prop",
+                "the date format and the column width"
+              ],
+              "notes": [
+                "Dates are compared as strings: the format must be YYYY-MM-DD or the comparison is wrong.",
+                "Order inside a column does not change: the move only sets membership.",
+                "Initials come from the first two words of the name: a single word yields one letter.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kanban003 today=\"2026-03-18\" cards={[{ id: \"1\", title: \"Estimate\", assignee: \"Irina Lapteva\", due: \"2026-03-16\", column: \"Queue\" }]} />"
+            },
+            "controls": {
+              "today": {
+                "label": "Today",
+                "default": "2026-03-18"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kanban-004",
+      "type": "registry:component",
+      "title": "Collapsible Columns",
+      "description": "Доска, где колонку сворачивают в узкую полосу с вертикальным именем и счётчиком, а перенос в свёрнутую колонку не отклоняется, а разворачивает её.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kanban-004/kanban-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kanban-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-004-*. Клиентский: \"use client\" ради состояния доски и набора свёрнутых колонок. Колонки лежат во флексе, свёрнутая получает фиксированную узкую основу, а её заголовок переворачивается через writing-mode. Список карточек свёрнутой колонки помечен hidden, поэтому выпадает и из отрисовки, и из последовательности фокуса. Кнопка заголовка несёт aria-expanded, все изменения объявляются в живой области role=status.",
+      "meta": {
+        "tags": ["kanban", "collapse", "column", "board"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kanban004",
+          "usage": "<Kanban004 collapsed={[\"Готово\"]} columns={[\"Очередь\", \"Готово\"]} />",
+          "summary": "Доска со сворачиваемыми колонками: свёрнутая становится полосой с именем и счётчиком, но остаётся целью переноса. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-kanban-004-* и не подменять её токенами вашей темы",
+            "атрибут hidden на списке свёрнутой колонки: невидимые карточки не должны ловить фокус",
+            "aria-expanded на кнопке заголовка — иначе состояние свёртки не слышно",
+            "разворот колонки при переносе в неё: скрытая цель, куда нельзя попасть, — ловушка",
+            "счётчик на свёрнутой полосе: без него колонка выглядит пустой",
+            "кнопки со стрелками на карточке — перетаскивание недоступно с клавиатуры"
+          ],
+          "adapt": [
+            "массивы columns и cards",
+            "collapsed — какие колонки свёрнуты изначально",
+            "обработчик onChange, акцент через проп accent",
+            "ширину развёрнутой и свёрнутой колонки"
+          ],
+          "notes": [
+            "Свёрнутость хранится внутри компонента: начальное значение задаёт проп collapsed.",
+            "Вертикальное имя опирается на writing-mode — проверьте длинные названия колонок.",
+            "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A board where a column collapses into a narrow strip with a vertical name and a counter, and a move into a collapsed column expands it instead of failing.",
+            "ai": {
+              "summary": "A board with collapsible columns: a collapsed one turns into a strip with its name and counter yet stays a drop target. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-kanban-004-* palette — do not swap it for your theme tokens",
+                "the hidden attribute on a collapsed column's list: invisible cards must not catch focus",
+                "aria-expanded on the header button — otherwise the collapsed state is inaudible",
+                "expanding a column when a card is moved into it: a hidden target you cannot reach is a trap",
+                "the counter on the collapsed strip: without it the column looks empty",
+                "the arrow buttons on the card — dragging is unavailable from a keyboard"
+              ],
+              "adapt": [
+                "the columns and cards arrays",
+                "collapsed — which columns start collapsed",
+                "the onChange handler and the accent through the accent prop",
+                "the width of an expanded and of a collapsed column"
+              ],
+              "notes": [
+                "The collapsed set lives inside the component: the collapsed prop only seeds it.",
+                "The vertical name relies on writing-mode — check long column titles.",
+                "Order inside a column does not change: the move only sets membership.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kanban004 collapsed={[\"Done\"]} columns={[\"Queue\", \"Done\"]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kanban-005",
+      "type": "registry:component",
+      "title": "Assignee Filter Board",
+      "description": "Доска с фильтром по исполнителю, где счётчик колонки показывает «показано из всего», а опустевшая после фильтра колонка объясняет словами, что скрыто.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kanban-005/kanban-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kanban-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-005-*. Клиентский: \"use client\" ради фильтра и состояния доски. Список исполнителей собирается из карточек через Set, поэтому его не надо вести отдельно. Фильтр — ряд кнопок с aria-pressed, а не набор ссылок: выбор не меняет адрес страницы. Счётчик колонки печатает видимое и общее число, пустая колонка показывает объяснение вместо пустоты, смена фильтра и перенос объявляются в живой области role=status.",
+      "meta": {
+        "tags": ["kanban", "filter", "assignee", "board"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kanban005",
+          "usage": "<Kanban005 everyone=\"Все\" columns={[\"Очередь\", \"В работе\"]} />",
+          "summary": "Доска с фильтром по исполнителю: чипсы выбора, счётчик «показано из всего» и объяснение в опустевшей колонке. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-kanban-005-* и не подменять её токенами вашей темы",
+            "счётчик «показано из всего»: одно число после фильтрации выглядит как пропажа задач",
+            "объяснение в опустевшей колонке вместо схлопывания — иначе фильтр читается как удаление",
+            "aria-pressed на чипсах: выбранный фильтр обязан быть слышен, а не только подсвечен",
+            "заливку и рамку выбранного чипса, а не один оттенок текста",
+            "кнопки со стрелками на карточке — перетаскивание недоступно с клавиатуры"
+          ],
+          "adapt": [
+            "массивы columns и cards с исполнителями",
+            "everyone — подпись чипса «без фильтра»",
+            "обработчик onChange, акцент через проп accent",
+            "ширину колонки"
+          ],
+          "notes": [
+            "Список исполнителей строится из исходного пропа cards, а не из текущего состояния доски.",
+            "Фильтр не меняет данные: скрытые карточки остаются в состоянии и учитываются в общем числе.",
+            "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "everyone",
+            "label": "Подпись «все»",
+            "type": "text",
+            "default": "Все",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A board filtered by assignee, where the column counter shows shown-of-total and a column emptied by the filter explains in words what is hidden.",
+            "ai": {
+              "summary": "A board filtered by assignee: filter chips, a shown-of-total counter and an explanation inside an emptied column. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-kanban-005-* palette — do not swap it for your theme tokens",
+                "the shown-of-total counter: a single number after filtering looks like tasks went missing",
+                "the explanation inside an emptied column instead of collapsing it — otherwise filtering reads as deletion",
+                "aria-pressed on the chips: the active filter has to be audible, not merely highlighted",
+                "the fill and border of the selected chip, not a lone text tint",
+                "the arrow buttons on the card — dragging is unavailable from a keyboard"
+              ],
+              "adapt": [
+                "the columns and cards arrays with assignees",
+                "everyone — the label of the no-filter chip",
+                "the onChange handler and the accent through the accent prop",
+                "the column width"
+              ],
+              "notes": [
+                "The assignee list is built from the original cards prop, not from the current board state.",
+                "Filtering changes no data: hidden cards stay in state and count towards the total.",
+                "Order inside a column does not change: the move only sets membership.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kanban005 everyone=\"All\" columns={[\"Queue\", \"Doing\"]} />"
+            },
+            "controls": {
+              "everyone": {
+                "label": "All-chip label",
+                "default": "All"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kanban-006",
+      "type": "registry:component",
+      "title": "Keyboard Card Move",
+      "description": "Доска, где перенос сделан клавиатурой в первую очередь: карточку берут пробелом, несут стрелками по колонкам и внутри колонки, кладут или отменяют Escape.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kanban-006/kanban-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kanban-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-006-*. Клиентский: \"use client\" ради режима переноса. Карточка — button, поэтому фокус и клавиши достаются без tabindex. Пробел переключает захват и запоминает снимок доски, стрелки влево и вправо меняют колонку, вверх и вниз — место внутри колонки, Escape возвращает снимок. Живая область role=status с aria-live=assertive называет колонку и позицию после каждого шага, колонка «в руке» подсвечена.",
+      "meta": {
+        "tags": ["kanban", "keyboard", "a11y", "board"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kanban006",
+          "usage": "<Kanban006 columns={[\"Бэклог\", \"В работе\"]} onChange={save} />",
+          "summary": "Доска с клавиатурным переносом: взять пробелом, нести стрелками по колонкам и рядам, положить или отменить, с озвучкой каждого шага. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-kanban-006-* и не подменять её токенами вашей темы",
+            "карточку тегом button: без него стрелки и фокус пришлось бы чинить руками через tabindex",
+            "снимок доски при захвате: без него Escape нечего восстанавливать",
+            "живую область с aria-live=assertive: при переносе вслепую промежуточные шаги важнее вежливости",
+            "название колонки и позиции в каждом сообщении — «перемещено» без координат бесполезно",
+            "поднятый вид карточки тенью и сдвигом, а не только цветом рамки"
+          ],
+          "adapt": [
+            "массивы columns и cards",
+            "hint — текст подсказки о клавишах",
+            "обработчик onChange, акцент через проп accent",
+            "ширину колонки"
+          ],
+          "notes": [
+            "Мышиного перетаскивания здесь нет намеренно: блок показывает клавиатурную модель целиком.",
+            "Потеря фокуса кладёт карточку: это защита от зависшего режима переноса.",
+            "Перенос в соседнюю колонку ставит карточку в конец — внутри колонки её двигают стрелками вверх и вниз.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Пробел берёт карточку, стрелки несут, пробел кладёт, Escape отменяет.",
+            "maxLength": 96
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A board where moving is keyboard-first: space picks a card up, arrows carry it across columns and inside one, space drops it and Escape cancels.",
+            "ai": {
+              "summary": "A board with keyboard moving: pick up with space, carry with arrows across columns and rows, drop or cancel, every step announced. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-kanban-006-* palette — do not swap it for your theme tokens",
+                "the card as a button element: without it arrows and focus would need hand-made tabindex work",
+                "the board snapshot taken on pick-up: without it Escape has nothing to restore",
+                "the aria-live=assertive region: while moving blind, intermediate steps matter more than politeness",
+                "the column and position in every message — \"moved\" without coordinates is useless",
+                "the lifted card look via shadow and offset, not the border colour alone"
+              ],
+              "adapt": [
+                "the columns and cards arrays",
+                "hint — the text explaining the keys",
+                "the onChange handler and the accent through the accent prop",
+                "the column width"
+              ],
+              "notes": [
+                "Mouse dragging is deliberately absent: the block demonstrates the keyboard model in full.",
+                "Losing focus drops the card: that guards against a stuck move mode.",
+                "Moving to a neighbouring column appends the card — inside the column it is moved with up and down arrows.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kanban006 columns={[\"Backlog\", \"Doing\"]} onChange={save} />"
+            },
+            "controls": {
+              "hint": {
+                "label": "Hint",
+                "default": "Space picks the card up, arrows carry it, space drops it, Escape cancels."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kanban-007",
+      "type": "registry:component",
+      "title": "Column Totals Board",
+      "description": "Доска, которая считает не карточки, а часы: итог колонки, её доля от общего и итоговая строка выводятся из карточек при каждом рендере.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kanban-007/kanban-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kanban-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-007-*. Клиентский: \"use client\" ради состояния доски. Итог колонки, доля и общий итог считаются из массива карточек, а не хранятся числом: сохранённая сумма расходится с содержимым после первого переноса. Доля показана и процентом, и полосой, чтобы колонки сравнивались с одного взгляда. Итоговая строка вынесена в тег footer. Перенос: нативный drag мышью и список колонок на карточке с клавиатуры, результат объявляется в живой области.",
+      "meta": {
+        "tags": ["kanban", "totals", "estimate", "board"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kanban007",
+          "usage": "<Kanban007 unit=\"ч\" cards={[{ id: \"1\", title: \"Каталог\", hours: 12, column: \"Оценено\" }]} />",
+          "summary": "Доска с итогами по колонкам: сумма часов, доля колонки полосой и процентом, общий итог в подвале. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-kanban-007-* и не подменять её токенами вашей темы",
+            "подсчёт итогов из карточек: сохранённая сумма разойдётся с доской после первого переноса",
+            "долю и полосой, и цифрой — полоса даёт сравнение, цифра даёт точность",
+            "список выбора колонки на карточке: перенос мышью недоступен с клавиатуры",
+            "живую область role=status с новым итогом колонки после переноса",
+            "итоговую строку тегом footer со сводкой словами"
+          ],
+          "adapt": [
+            "массивы columns и cards с оценками в часах",
+            "unit — единицу измерения оценки",
+            "обработчик onChange, акцент через проп accent",
+            "ширину колонки"
+          ],
+          "notes": [
+            "Оценка обязана быть числом: строка сломает суммирование.",
+            "Доля округляется до целых процентов, поэтому сумма долей может дать 99 или 101.",
+            "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "ч",
+            "maxLength": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A board that counts hours rather than cards: the column total, its share and the grand total are derived from the cards on every render.",
+            "ai": {
+              "summary": "A board with column totals: summed hours, the column share as a bar and a percentage, and a grand total in the footer. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-kanban-007-* palette — do not swap it for your theme tokens",
+                "computing the totals from the cards: a stored sum drifts from the board after the first move",
+                "the share as both a bar and a number — the bar gives comparison, the number gives precision",
+                "the column select on the card: mouse dragging is unavailable from a keyboard",
+                "the role=status live region carrying the column's new total after a move",
+                "the footer element for the grand total with a worded summary"
+              ],
+              "adapt": [
+                "the columns and cards arrays with estimates in hours",
+                "unit — the unit of the estimate",
+                "the onChange handler and the accent through the accent prop",
+                "the column width"
+              ],
+              "notes": [
+                "The estimate has to be a number: a string breaks the summation.",
+                "The share is rounded to whole percents, so the shares may add up to 99 or 101.",
+                "Order inside a column does not change: the move only sets membership.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kanban007 unit=\"h\" cards={[{ id: \"1\", title: \"Catalogue\", hours: 12, column: \"Estimated\" }]} />"
+            },
+            "controls": {
+              "unit": {
+                "label": "Unit",
+                "default": "h"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sortable-002",
+      "type": "registry:component",
+      "title": "Grip Keyboard Sort",
+      "description": "Список, где ручка сама является клавиатурным органом: пробел берёт строку, стрелки несут, пробел кладёт, Escape возвращает порядок на момент захвата.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sortable-002/sortable-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sortable-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-002-*. Клиентский: \"use client\" ради порядка и режима переноса. Ручка — button с aria-pressed, обрабатывающая пробел, стрелки вверх и вниз и Escape; снимок порядка делается в момент захвата, поэтому отмена возвращает исходный вид. Мышиный путь — нативный HTML5 drag and drop с линией места вставки. Живая область role=status с aria-live=assertive называет позицию после каждого шага.",
+      "meta": {
+        "tags": ["sortable", "keyboard", "drag", "a11y"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Sortable002",
+          "usage": "<Sortable002 items={[\"Обложка\", \"Тарифы\"]} onChange={save} />",
+          "summary": "Список с ручкой, работающей и мышью, и клавиатурой по модели «взять — нести — положить», с отменой по Escape. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sortable-002-* и не подменять её токенами вашей темы",
+            "ручку тегом button: декоративный значок недостижим с клавиатуры",
+            "снимок порядка при захвате: без него Escape нечего восстанавливать",
+            "живую область с aria-live=assertive — при переносе вслепую важен каждый шаг",
+            "поднятый вид строки тенью и сдвигом, а не одним цветом рамки",
+            "линию места вставки вместо подсветки всей строки при переносе мышью"
+          ],
+          "adapt": [
+            "массив items и title",
+            "обработчик onChange",
+            "акцент через проп accent и текст подсказки",
+            "ширину блока"
+          ],
+          "notes": [
+            "Ключом строк служит их текст: одинаковые подписи в списке недопустимы.",
+            "Потеря фокуса кладёт строку: это защита от зависшего режима переноса.",
+            "Вариант с отдельными кнопками «выше» и «ниже» — sortable-001, здесь другой сценарий.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Порядок разделов",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A list whose grip is the keyboard control itself: space picks a row up, arrows carry it, space drops it and Escape restores the order from the moment of pick-up.",
+            "ai": {
+              "summary": "A list whose grip works with mouse and keyboard alike on a pick-up, carry, drop model, with Escape to cancel. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sortable-002-* palette — do not swap it for your theme tokens",
+                "the grip as a button element: a decorative glyph is unreachable from a keyboard",
+                "the order snapshot taken on pick-up: without it Escape has nothing to restore",
+                "the aria-live=assertive region — while moving blind every step matters",
+                "the lifted row look via shadow and offset, not the border colour alone",
+                "the insertion line instead of highlighting the whole row while dragging"
+              ],
+              "adapt": [
+                "the items array and the title",
+                "the onChange handler",
+                "the accent through the accent prop and the hint text",
+                "the block width"
+              ],
+              "notes": [
+                "The row key is its text: duplicate labels in the list are not allowed.",
+                "Losing focus drops the row: that guards against a stuck move mode.",
+                "For separate up and down buttons use sortable-001; this is a different scenario.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sortable002 items={[\"Cover\", \"Pricing\"]} onChange={save} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Section order"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sortable-003",
+      "type": "registry:component",
+      "title": "Sortable Table Columns",
+      "description": "Таблица, у которой переставляются колонки, а не строки: порядок живёт одним массивом, поэтому заголовок и данные не могут разъехаться.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sortable-003/sortable-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sortable-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-003-*. Клиентский: \"use client\" ради порядка колонок. Ячейки тела рисуются по тому же массиву описаний колонок, что и заголовки, поэтому рассинхронизация невозможна. Заголовок остаётся тегом th со scope=\"col\": перетаскивание не повод превращать таблицу в набор div. Ручка внутри th — button со стрелками влево и вправо, мышиный путь — нативный drag с вертикальной линией места вставки, результат идёт в живую область role=status.",
+      "meta": {
+        "tags": ["sortable", "table", "columns", "a11y"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Sortable003",
+          "usage": "<Sortable003 columns={[{ key: \"name\", label: \"Название\" }]} rows={[{ sku: \"AL-118\", name: \"Кабель\" }]} />",
+          "summary": "Таблица с переставляемыми колонками: ручка в заголовке, drag мышью и стрелки с клавиатуры. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sortable-003-* и не подменять её токенами вашей темы",
+            "теги table, th и scope=\"col\": перетаскивание не повод ломать семантику таблицы",
+            "единый массив колонок для заголовка и тела — иначе данные разъедутся с подписями",
+            "ручку тегом button со стрелками влево и вправо: drag недоступен с клавиатуры",
+            "линию места вставки у края колонки вместо заливки всей ячейки",
+            "живую область role=status с новой позицией колонки"
+          ],
+          "adapt": [
+            "массивы columns и rows",
+            "caption — подпись таблицы",
+            "обработчик onChange, акцент через проп accent",
+            "ширину таблицы и выравнивание числовых колонок"
+          ],
+          "notes": [
+            "Ключ колонки обязан совпадать с ключом поля в строках данных.",
+            "Сортировки значений здесь нет: переставляется порядок колонок, а не порядок записей.",
+            "Ключом строк служит артикул: он обязан быть уникальным.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись таблицы",
+            "type": "text",
+            "default": "Порядок колонок меняется мышью или стрелками при фокусе на заголовке",
+            "maxLength": 96
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A table whose columns are reordered instead of its rows: the order lives in a single array, so headers and data cannot drift apart.",
+            "ai": {
+              "summary": "A table with reorderable columns: a grip in the header, mouse dragging and keyboard arrows. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sortable-003-* palette — do not swap it for your theme tokens",
+                "the table, th and scope=\"col\" markup: dragging is no reason to break table semantics",
+                "one shared column array for the header and the body — otherwise data drifts from labels",
+                "the grip as a button with left and right arrows: dragging is unavailable from a keyboard",
+                "the insertion line at the column edge instead of filling the whole cell",
+                "the role=status live region carrying the column's new position"
+              ],
+              "adapt": [
+                "the columns and rows arrays",
+                "caption — the table caption",
+                "the onChange handler and the accent through the accent prop",
+                "the table width and the alignment of numeric columns"
+              ],
+              "notes": [
+                "A column key must match the field key inside the data rows.",
+                "There is no value sorting here: the column order changes, not the record order.",
+                "The row key is the code: it has to be unique.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sortable003 columns={[{ key: \"name\", label: \"Name\" }]} rows={[{ sku: \"AL-118\", name: \"Cable\" }]} />"
+            },
+            "controls": {
+              "caption": {
+                "label": "Table caption",
+                "default": "Column order changes by dragging or with arrows while a header is focused"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sortable-004",
+      "type": "registry:component",
+      "title": "Two List Transfer",
+      "description": "Перенос между двумя списками, где приёмник не схлопывается в полоску: у пустого списка своя высота и объясняющая надпись, а у каждой строки — кнопка переноса.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sortable-004/sortable-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sortable-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-004-*. Клиентский: \"use client\" ради состояния обоих списков. Панели описаны одним массивом и рисуются общей разметкой, поэтому обе стороны ведут себя одинаково. Минимальная высота панели задана явно, поэтому пустой список остаётся видимой целью для мыши. Кнопка со стрелкой у каждой строки называет обе стороны переноса, живая область role=status сообщает результат и остатки в обоих списках.",
+      "meta": {
+        "tags": ["sortable", "transfer", "dual-list", "a11y"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Sortable004",
+          "usage": "<Sortable004 source={[\"Артикул\", \"Поставщик\"]} target={[\"Название\"]} />",
+          "summary": "Две панели с переносом между ними: drag мышью, кнопка со стрелкой с клавиатуры, счётчики и объяснение в пустой панели. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sortable-004-* и не подменять её токенами вашей темы",
+            "минимальную высоту панели: схлопнувшийся приёмник — цель, в которую нельзя попасть мышью",
+            "надпись в пустой панели вместо пустоты — она объясняет, что делать дальше",
+            "кнопку со стрелкой у каждой строки: перетаскивание недоступно с клавиатуры",
+            "подпись кнопки с обеими сторонами переноса — «→» без контекста ничего не говорит",
+            "живую область role=status с числом строк в обоих списках после переноса"
+          ],
+          "adapt": [
+            "массивы source и target",
+            "sourceTitle и targetTitle — заголовки панелей",
+            "обработчик onChange, акцент через проп accent",
+            "ширину блока и минимальную высоту панели"
+          ],
+          "notes": [
+            "Порядок внутри панели не меняется: строка добавляется в конец списка-приёмника.",
+            "Ключом строк служит их текст: одинаковые подписи в двух панелях недопустимы.",
+            "Состояние живёт внутри компонента: сохранение делает вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "sourceTitle",
+            "label": "Левая панель",
+            "type": "text",
+            "default": "Доступные поля",
+            "maxLength": 24
+          },
+          {
+            "prop": "targetTitle",
+            "label": "Правая панель",
+            "type": "text",
+            "default": "В отчёте",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Transfer between two lists where the receiver never collapses into a strip: an empty list keeps its height and an explaining caption, and every row has a transfer button.",
+            "ai": {
+              "summary": "Two panels with transfer between them: mouse dragging, an arrow button from the keyboard, counters and an explanation in an empty panel. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sortable-004-* palette — do not swap it for your theme tokens",
+                "the minimum panel height: a collapsed target is a target you cannot hit with a mouse",
+                "the caption in an empty panel instead of blankness — it explains what to do next",
+                "the arrow button on every row: dragging is unavailable from a keyboard",
+                "the button label naming both sides of the transfer — a bare \"→\" says nothing",
+                "the role=status live region reporting the size of both lists after a transfer"
+              ],
+              "adapt": [
+                "the source and target arrays",
+                "sourceTitle and targetTitle — the panel headings",
+                "the onChange handler and the accent through the accent prop",
+                "the block width and the minimum panel height"
+              ],
+              "notes": [
+                "Order inside a panel does not change: a row is appended to the end of the receiving list.",
+                "The row key is its text: duplicate labels across the two panels are not allowed.",
+                "State lives inside the component: persisting it is the caller's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sortable004 source={[\"SKU\", \"Supplier\"]} target={[\"Name\"]} />"
+            },
+            "controls": {
+              "sourceTitle": {
+                "label": "Left panel",
+                "default": "Available fields"
+              },
+              "targetTitle": {
+                "label": "Right panel",
+                "default": "In the report"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sortable-005",
+      "type": "registry:component",
+      "title": "Reorderable Tile Grid",
+      "description": "Переупорядочивание в сетке, а не в столбце: стрелки влево и вправо двигают плитку на позицию, вверх и вниз — сразу на ширину ряда.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sortable-005/sortable-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sortable-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-005-*. Клиентский: \"use client\" ради порядка плиток. Число колонок приходит пропом и подставляется и в grid-template-columns через переменную, и в шаг клавиатурного переноса, поэтому раскладка и клавиатура считают ряды одинаково. Плитка — button, поэтому фокус и стрелки работают без tabindex. Позиция называется рядом и колонкой, а не только номером; результат идёт в живую область role=status.",
+      "meta": {
+        "tags": ["sortable", "grid", "tiles", "keyboard"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Sortable005",
+          "usage": "<Sortable005 columns={4} tiles={[\"Обложка\", \"Галерея\"]} />",
+          "summary": "Сетка плиток с переупорядочиванием: drag мышью и двумерный перенос стрелками с клавиатуры. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sortable-005-* и не подменять её токенами вашей темы",
+            "одно число колонок для раскладки и для шага стрелок — иначе клавиатура считает ряды не так, как их видно",
+            "плитку тегом button: фокус и стрелки не должны держаться на tabindex",
+            "название ряда и колонки в озвучке: «шестая из восьми» в сетке не говорит ничего",
+            "стрелки вверх и вниз с шагом в ряд — построчный перенос в сетке бесполезен",
+            "живую область role=status: перестановка обязана быть слышна"
+          ],
+          "adapt": [
+            "массив tiles и title",
+            "columns — число колонок сетки",
+            "обработчик onChange, акцент через проп accent",
+            "пропорцию плитки и ширину блока"
+          ],
+          "notes": [
+            "Число колонок фиксировано пропом: адаптивная сетка сломала бы клавиатурный шаг.",
+            "Ключом плиток служит их текст: одинаковые подписи недопустимы.",
+            "Последний неполный ряд короче остальных — стрелка вниз с краю упрётся в границу списка.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "columns",
+            "label": "Колонок",
+            "type": "number",
+            "default": 3,
+            "min": 2,
+            "max": 5
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Плитки на главной",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Reordering in a grid rather than a column: left and right arrows move a tile one position, up and down move it a whole row at a time.",
+            "ai": {
+              "summary": "A reorderable tile grid: mouse dragging plus two-dimensional keyboard moving with arrows. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sortable-005-* palette — do not swap it for your theme tokens",
+                "one column count for both the layout and the arrow step — otherwise the keyboard counts rows differently from the eye",
+                "the tile as a button element: focus and arrows must not rest on tabindex",
+                "naming the row and the column in speech: \"sixth of eight\" says nothing in a grid",
+                "up and down arrows stepping a whole row — a one-by-one move is useless in a grid",
+                "the role=status live region: a reorder has to be audible"
+              ],
+              "adapt": [
+                "the tiles array and the title",
+                "columns — the number of grid columns",
+                "the onChange handler and the accent through the accent prop",
+                "the tile aspect ratio and the block width"
+              ],
+              "notes": [
+                "The column count is fixed by the prop: a responsive grid would break the keyboard step.",
+                "The tile key is its text: duplicate labels are not allowed.",
+                "The last row may be short — a down arrow near the edge simply hits the end of the list.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sortable005 columns={4} tiles={[\"Cover\", \"Gallery\"]} />"
+            },
+            "controls": {
+              "columns": {
+                "label": "Columns"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Home page tiles"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sortable-006",
+      "type": "registry:component",
+      "title": "Pinned First Row",
+      "description": "Список с закреплённой первой позицией: у закреплённой строки нет органов переноса, а подвижная не может встать выше неё — отказ проговаривается, а не игнорируется.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sortable-006/sortable-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sortable-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-006-*. Клиентский: \"use client\" ради порядка. Закреплённая строка не входит в сортируемый массив: она отрисована отдельно, без ручки и кнопок, поэтому невозможных состояний просто не существует. Нумерация подвижных строк начинается с двойки, а попытка уйти выше первой позиции пишет причину в живую область role=status. Мышиный путь — нативный drag, клавиатурный — кнопки «выше» и «ниже».",
+      "meta": {
+        "tags": ["sortable", "pinned", "list", "a11y"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Sortable006",
+          "usage": "<Sortable006 pinned=\"Сводка за сегодня\" items={[\"Заявки\", \"Выручка\"]} />",
+          "summary": "Список с закреплённой первой строкой: она не двигается и не имеет ручки, остальные сортируются мышью и кнопками. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sortable-006-* и не подменять её токенами вашей темы",
+            "отсутствие ручки и кнопок у закреплённой строки: орган, который ничего не делает, обманывает",
+            "слово «закреплено» в разметке — значок без текста скринридер не читает",
+            "объяснение отказа в живой области: молча проигнорированное нажатие выглядит поломкой",
+            "нумерацию подвижных строк со второй позиции — она подтверждает, что первая занята",
+            "кнопки «выше» и «ниже»: перетаскивание недоступно с клавиатуры"
+          ],
+          "adapt": [
+            "массив items и title",
+            "pinned — текст закреплённой строки",
+            "обработчик onChange, акцент через проп accent",
+            "цвет закрепления и ширину блока"
+          ],
+          "notes": [
+            "Закреплённая строка не входит в массив items и не приходит в onChange.",
+            "Закрепление ровно одно и всегда первое: несколько закреплённых требуют другой модели.",
+            "Ключом строк служит их текст: одинаковые подписи недопустимы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "pinned",
+            "label": "Закреплённая строка",
+            "type": "text",
+            "default": "Сводка за сегодня",
+            "maxLength": 32
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Виджеты дашборда",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A list with a pinned first slot: the pinned row has no move controls, and a movable one cannot go above it — the refusal is spoken, not ignored.",
+            "ai": {
+              "summary": "A list with a pinned first row: it never moves and has no grip, the rest sort with mouse and buttons. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sortable-006-* palette — do not swap it for your theme tokens",
+                "the missing grip and buttons on the pinned row: a control that does nothing is a lie",
+                "the word \"pinned\" in the markup — an icon without text is not read aloud",
+                "the spoken refusal in the live region: a silently ignored press looks broken",
+                "numbering the movable rows from two — it confirms the first slot is taken",
+                "the up and down buttons: dragging is unavailable from a keyboard"
+              ],
+              "adapt": [
+                "the items array and the title",
+                "pinned — the text of the pinned row",
+                "the onChange handler and the accent through the accent prop",
+                "the pin colour and the block width"
+              ],
+              "notes": [
+                "The pinned row is not part of the items array and never reaches onChange.",
+                "There is exactly one pin and it is always first: several pins need a different model.",
+                "The row key is its text: duplicate labels are not allowed.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sortable006 pinned=\"Today at a glance\" items={[\"Leads\", \"Revenue\"]} />"
+            },
+            "controls": {
+              "pinned": {
+                "label": "Pinned row",
+                "default": "Today at a glance"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Dashboard widgets"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sortable-007",
+      "type": "registry:component",
+      "title": "Undoable Reorder",
+      "description": "Список с отменой последнего переноса: каждый перенос кладёт прежний порядок в стек, а полоса внизу называет действие словами и даёт кнопку возврата.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sortable-007/sortable-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sortable-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-007-*. Клиентский: \"use client\" ради порядка и истории. Каждый перенос — мышью или кнопками — сохраняет прежний массив и подпись шага в стек, поэтому отмена не пересчитывает движение, а возвращает снимок. Полоса отмены отсутствует в разметке, пока история пуста: неактивная кнопка без причины сбивает с толку. Возвращённая строка подсвечивается, а отмена объявляется в живой области role=status.",
+      "meta": {
+        "tags": ["sortable", "undo", "history", "list"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Sortable007",
+          "usage": "<Sortable007 items={[\"Приветствие\", \"Напоминание\"]} undoLabel=\"Отменить\" />",
+          "summary": "Список с историей переносов: стек прежних порядков, полоса с описанием последнего шага и кнопка отмены. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sortable-007-* и не подменять её токенами вашей темы",
+            "стек прежних порядков: отмена обязана возвращать снимок, а не пересчитывать движение",
+            "исчезновение полосы при пустой истории — неактивная кнопка без причины сбивает с толку",
+            "описание шага словами: «отменить» без указания, что именно, — это лотерея",
+            "подсветку возвращённой строки: результат отмены должен быть виден",
+            "кнопки «выше» и «ниже»: перетаскивание недоступно с клавиатуры"
+          ],
+          "adapt": [
+            "массив items и title",
+            "undoLabel — подпись кнопки отмены",
+            "обработчик onChange, акцент через проп accent",
+            "глубину истории и ширину блока"
+          ],
+          "notes": [
+            "История не ограничена по длине: для длинных сессий обрежьте стек в вызывающем коде.",
+            "Повтора отменённого шага здесь нет: стек только разматывается.",
+            "Ключом строк служит их текст: одинаковые подписи недопустимы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Цепочка писем",
+            "maxLength": 28
+          },
+          {
+            "prop": "undoLabel",
+            "label": "Кнопка отмены",
+            "type": "text",
+            "default": "Отменить",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A list with undo for the last move: every move pushes the previous order onto a stack, and a bar below names the action in words and offers a way back.",
+            "ai": {
+              "summary": "A list with a move history: a stack of previous orders, a bar describing the last step and an undo button. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sortable-007-* palette — do not swap it for your theme tokens",
+                "the stack of previous orders: undo must restore a snapshot, not recompute a move",
+                "hiding the bar when the history is empty — a disabled button with no cause is confusing",
+                "the worded description of the step: \"undo\" without saying what is a lottery",
+                "the highlight on the restored row: the result of an undo has to be visible",
+                "the up and down buttons: dragging is unavailable from a keyboard"
+              ],
+              "adapt": [
+                "the items array and the title",
+                "undoLabel — the label of the undo button",
+                "the onChange handler and the accent through the accent prop",
+                "the history depth and the block width"
+              ],
+              "notes": [
+                "The history is unbounded: trim the stack in the caller for long sessions.",
+                "There is no redo here: the stack only unwinds.",
+                "The row key is its text: duplicate labels are not allowed.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sortable007 items={[\"Welcome\", \"Reminder\"]} undoLabel=\"Undo\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Email sequence"
+              },
+              "undoLabel": {
+                "label": "Undo button",
+                "default": "Undo"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
