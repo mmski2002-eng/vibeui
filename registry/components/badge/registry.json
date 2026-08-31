@@ -1256,6 +1256,1302 @@
           }
         }
       }
+    },
+    {
+      "name": "badge-013",
+      "type": "registry:component",
+      "title": "Icon Badge",
+      "description": "Плашка со знаком слева: иконка задана в em, поэтому едет вместе с подписью и не сплющивается, когда текст длинный.",
+      "categories": ["badge"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "badge-013/badge-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/badge-013.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-013-*. Серверный: хуков нет. Знаки — inline SVG из карты ICONS, размер width/height в 1em и flex:none, оптический сдвиг margin-top:-0.0625em ставит знак на середину строчной высоты. Тон переключается атрибутом data-tone, который меняет только --hue и --chroma: фон, текст, рамка и цвет знака считаются из них в oklch, поэтому новый тон добавляется одной строкой. Иконка помечена aria-hidden — смысл несёт подпись, дублировать его нечем.",
+      "meta": {
+        "tags": ["badge", "icon", "status", "label"],
+        "ai": {
+          "export": "Badge013",
+          "usage": "<Badge013 icon=\"check\" tone=\"positive\">\n  Оплачено\n</Badge013>",
+          "summary": "Плашка с иконкой слева: знак масштабируется вместе с текстом, а весь тон выводится из одного оттенка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-badge-013-* и не подменять её токенами вашей темы",
+            "размер иконки в em: в rem знак перестаёт совпадать с подписью при другом кегле",
+            "flex:none на иконке — иначе длинная подпись сплющит знак в овал",
+            "оптический сдвиг margin-top у знака: без него иконка садится ниже текста",
+            "aria-hidden на иконке: она повторяет подпись и в доступном имени лишняя",
+            "собственную светлую подложку плашки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "набор знаков в карте ICONS",
+            "выбранный знак через icon",
+            "тон через tone",
+            "подпись через children"
+          ],
+          "notes": [
+            "Знаков в наборе четыре: пятый добавляется путём в ICONS, а не импортом библиотеки иконок.",
+            "Иконка не заменяет подпись: плашка без текста перестаёт читаться без наведения.",
+            "Тон меняет оттенок и насыщенность, но не светлоту: контраст держится, пока она остаётся 0.34.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "icon",
+            "label": "Знак",
+            "type": "select",
+            "default": "check",
+            "options": ["check", "clock", "alert", "spark"]
+          },
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Оплачено",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A badge with a mark on the left: the icon is sized in em, so it scales with the caption and never gets squashed by a long text.",
+            "ai": {
+              "summary": "A badge with a leading icon: the mark scales with the text and the whole tone is derived from a single hue. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-badge-013-* palette — do not swap it for your theme tokens",
+                "the icon size in em: in rem the mark stops matching the caption at another font size",
+                "flex:none on the icon — otherwise a long caption squashes the mark into an oval",
+                "the optical margin-top on the mark: without it the icon sits below the text",
+                "aria-hidden on the icon: it repeats the caption and is noise in the accessible name",
+                "the badge's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the set of marks in the ICONS map",
+                "the chosen mark through icon",
+                "the tone through tone",
+                "the caption through children"
+              ],
+              "notes": [
+                "There are four marks in the set: a fifth one is a path in ICONS, not an icon library import.",
+                "The icon does not replace the caption: a badge without text stops being readable without a hover.",
+                "The tone changes hue and chroma but not lightness: contrast holds as long as it stays at 0.34.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Badge013 icon=\"check\" tone=\"positive\">\n  Paid\n</Badge013>"
+            },
+            "controls": {
+              "icon": {
+                "label": "Mark"
+              },
+              "children": {
+                "label": "Caption",
+                "default": "Paid"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "badge-014",
+      "type": "registry:component",
+      "title": "Outline Badge",
+      "description": "Плашка на обводке: рамка, текст и подложка считаются из одного оттенка, а пунктир отделяет черновик от опубликованного.",
+      "categories": ["badge"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "badge-014/badge-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/badge-014.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-014-*. Серверный: хуков нет. Всё оформление выводится из одного числа: проп hue кладётся в --vibeui-badge-014-hue инлайновым стилем, а рамка, текст и подложка собираются функцией oklch с этим оттенком — палитру не нужно вести таблицей. Подложка намеренно не прозрачная: на тёмной карточке каталога прозрачный фон оставил бы тёмный текст на тёмном. Флаг dashed переводит рамку в пунктир и приглушает тон, поэтому черновик отличается от финального формой линии, а не только цветом.",
+      "meta": {
+        "tags": ["badge", "outline", "hue", "draft"],
+        "ai": {
+          "export": "Badge014",
+          "usage": "<Badge014 hue={150} dashed={false}>\n  Опубликовано\n</Badge014>",
+          "summary": "Плашка-контур, у которой вся палитра выводится из одного оттенка, а пунктирная рамка помечает предварительное состояние. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-badge-014-* и не подменять её токенами вашей темы",
+            "светлую подложку вместо прозрачной: иначе тёмный текст пропадает на тёмном фоне",
+            "вывод всех цветов из одного оттенка: разведённые вручную цвета расходятся при первой правке",
+            "пунктир как признак черновика: он читается там, где цвет не различается",
+            "толщину рамки 1.5px — на 1px контур теряется рядом с залитыми соседями",
+            "точку слева: у пунктирного варианта она пустая внутри и повторяет смысл рамки"
+          ],
+          "adapt": [
+            "оттенок через hue",
+            "пунктирную рамку через dashed",
+            "подпись через children",
+            "высоту и радиус плашки в правилах блока"
+          ],
+          "notes": [
+            "hue — это число градусов, а не цвет: значение приводится по модулю 360, «#4f46e5» сюда не подойдёт.",
+            "Насыщенность фиксирована: очень бледные фирменные оттенки придётся править в самих правилах.",
+            "Пунктир и цвет несут один и тот же смысл — не назначайте им разные состояния.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "hue",
+            "label": "Оттенок",
+            "type": "number",
+            "default": 265,
+            "min": 0,
+            "max": 360
+          },
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Опубликовано",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An outline badge: border, text and surface are all derived from one hue, and a dashed line separates a draft from a published item.",
+            "ai": {
+              "summary": "An outline badge whose whole palette is derived from a single hue, with a dashed border marking a provisional state. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-badge-014-* palette — do not swap it for your theme tokens",
+                "the light surface instead of a transparent one: otherwise dark text disappears on a dark background",
+                "deriving every colour from one hue: hand-picked colours drift apart at the first edit",
+                "the dashed border as the draft marker: it reads where colour does not",
+                "the 1.5px border width — at 1px the outline is lost next to filled neighbours",
+                "the leading dot: in the dashed variant it is hollow and repeats what the border says"
+              ],
+              "adapt": [
+                "the hue through hue",
+                "the dashed border through dashed",
+                "the caption through children",
+                "the badge height and radius in the block rules"
+              ],
+              "notes": [
+                "hue is a number of degrees, not a colour: it is taken modulo 360, and \"#4f46e5\" will not work here.",
+                "Chroma is fixed: very pale brand hues have to be edited in the rules themselves.",
+                "The dash and the colour carry the same meaning — do not assign them different states.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Badge014 hue={150} dashed={false}>\n  Published\n</Badge014>"
+            },
+            "controls": {
+              "hue": {
+                "label": "Hue"
+              },
+              "children": {
+                "label": "Caption",
+                "default": "Published"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "badge-015",
+      "type": "registry:component",
+      "title": "Size Scale",
+      "description": "Плашка с размерной шкалой: sm, md и lg меняют один шаг сетки, а высота, кегль, отступы, радиус и точка считаются от него.",
+      "categories": ["badge"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "badge-015/badge-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/badge-015.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-015-*. Серверный: хуков нет. Атрибут data-size задаёт единственное число --vibeui-badge-015-unit, остальное собрано через calc от него: высота — шесть шагов, кегль — три, горизонтальный отступ — 2.4, радиус — три, точка и зазор — 1.6. Поэтому маленькая плашка не выглядит уменьшенной копией: пропорции остаются теми же, а не подбираются на глаз для каждого размера. Хвостовой счётчик отделён вертикальной линией на всю высоту (align-self:stretch), чтобы разделитель не приходилось подгонять под кегль.",
+      "meta": {
+        "tags": ["badge", "size", "scale", "tokens"],
+        "ai": {
+          "export": "Badge015",
+          "usage": "<Badge015 size=\"lg\" count={8}>\n  В работе\n</Badge015>",
+          "summary": "Плашка трёх размеров, у которой все метрики выводятся из одного шага сетки через calc. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-badge-015-* и не подменять её токенами вашей темы",
+            "вывод метрик из одного шага: набитые вручную размеры расходятся уже на втором варианте",
+            "множители в calc — они и есть пропорция, ради которой шкала существует",
+            "табличные цифры у счётчика: иначе плашка дёргается при каждом изменении числа",
+            "align-self:stretch у разделителя, чтобы линия шла на всю высоту при любом размере",
+            "собственную светлую подложку плашки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "размер через size",
+            "число в хвосте через count",
+            "подпись через children",
+            "сами шаги шкалы в правилах data-size"
+          ],
+          "notes": [
+            "Размеров три: четвёртый добавляется строкой с новым --unit, а не отдельным набором правил.",
+            "Кегль sm получается 0.75rem — ниже опускаться не стоит, текст перестаёт читаться.",
+            "count при нуле не рисуется: плашка сжимается, и в таблице это заметно — задайте минимум, если нужна стабильная ширина.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": ["sm", "md", "lg"]
+          },
+          {
+            "prop": "count",
+            "label": "Счётчик",
+            "type": "number",
+            "default": 8,
+            "min": 0,
+            "max": 999
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A badge with a size scale: sm, md and lg change one grid step, and height, type size, padding, radius and dot are all computed from it.",
+            "ai": {
+              "summary": "A badge in three sizes whose every metric is derived from a single grid step through calc. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-badge-015-* palette — do not swap it for your theme tokens",
+                "deriving the metrics from one step: hand-typed sizes drift apart by the second variant",
+                "the multipliers in calc — they are the proportion the scale exists for",
+                "tabular figures in the counter: otherwise the badge jitters on every change",
+                "align-self:stretch on the divider so the line spans the full height at any size",
+                "the badge's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the size through size",
+                "the trailing number through count",
+                "the caption through children",
+                "the steps of the scale in the data-size rules"
+              ],
+              "notes": [
+                "There are three sizes: a fourth is one line with a new --unit, not a separate set of rules.",
+                "The sm type size lands at 0.75rem — going lower makes the text unreadable.",
+                "count is not drawn at zero: the badge shrinks, which shows in a table — set a minimum if you need a stable width.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Badge015 size=\"lg\" count={8}>\n  In progress\n</Badge015>"
+            },
+            "controls": {
+              "size": {
+                "label": "Size"
+              },
+              "count": {
+                "label": "Counter"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "badge-016",
+      "type": "registry:component",
+      "title": "Link Badge",
+      "description": "Плашка-ссылка: внешний адрес компонент распознаёт сам, ставит target и rel и дописывает в доступное имя, что откроется новая вкладка.",
+      "categories": ["badge"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "badge-016/badge-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/badge-016.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-016-*. Серверный: хуков нет. Корень — настоящий тег a, поэтому нажатие средней кнопкой, «открыть в новой вкладке» и предпросмотр адреса в строке состояния работают сами. Внешняя ссылка определяется по схеме http(s) в href: у неё меняется знак (стрелка наружу вместо стрелки вправо), добавляются target=_blank и rel=noreferrer noopener, а в доступное имя уходит скрытая подпись hint — иконку скринридер не читает. Стрелка сдвигается при наведении на один пиксель: движение отключено правилом prefers-reduced-motion.",
+      "meta": {
+        "tags": ["badge", "link", "external", "a11y"],
+        "ai": {
+          "export": "Badge016",
+          "usage": "<Badge016\n  href=\"https://example.com/changelog\"\n  hint=\"откроется в новой вкладке\"\n>\n  Список изменений\n</Badge016>",
+          "summary": "Плашка-ссылка, которая сама распознаёт внешний адрес и объявляет новую вкладку скринридеру. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-badge-016-* и не подменять её токенами вашей темы",
+            "тег a вместо кнопки с обработчиком: иначе ломается открытие в новой вкладке и копирование адреса",
+            "rel=noreferrer noopener у внешних ссылок — target=_blank без него отдаёт доступ к окну",
+            "скрытую подпись про новую вкладку: стрелка для скринридера не существует",
+            "видимую обводку фокуса: плашка-ссылка обходится с клавиатуры наравне с кнопками",
+            "разные знаки у внутренней и внешней ссылки: они обещают разное поведение"
+          ],
+          "adapt": [
+            "адрес через href",
+            "подпись про новую вкладку через hint",
+            "текст ссылки через children",
+            "оттенок и фон в переменных блока"
+          ],
+          "notes": [
+            "Внешним считается только адрес со схемой http или https: протокольные ссылки вида //example.com распознаны не будут.",
+            "Сдвиг стрелки — подтверждение наведения, а не украшение: при отключённой анимации он честно пропадает.",
+            "В Next.js оберните компонент в Link или передайте href от роутера — компонент сам ничего не знает про навигацию.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "href",
+            "label": "Адрес",
+            "type": "text",
+            "default": "https://example.com/changelog",
+            "maxLength": 60
+          },
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Список изменений",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A link badge: it detects an external address itself, sets target and rel, and adds to the accessible name that a new tab will open.",
+            "ai": {
+              "summary": "A link badge that detects an external address by itself and announces the new tab to screen readers. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-badge-016-* palette — do not swap it for your theme tokens",
+                "the a element instead of a button with a handler: otherwise open-in-new-tab and copy-link break",
+                "rel=noreferrer noopener on external links — target=_blank without it hands over window access",
+                "the hidden note about the new tab: the arrow does not exist for a screen reader",
+                "the visible focus ring: a link badge is operated from the keyboard like any button",
+                "the different marks for internal and external links: they promise different behaviour"
+              ],
+              "adapt": [
+                "the address through href",
+                "the new-tab note through hint",
+                "the link text through children",
+                "the hue and surface in the block variables"
+              ],
+              "notes": [
+                "Only http and https addresses count as external: protocol-relative links like //example.com are not detected.",
+                "The arrow shift is hover feedback, not decoration: with animation off it honestly disappears.",
+                "In Next.js wrap the component in Link or pass a router href — the component knows nothing about navigation.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Badge016\n  href=\"https://example.com/changelog\"\n  hint=\"opens in a new tab\"\n>\n  Changelog\n</Badge016>"
+            },
+            "controls": {
+              "href": {
+                "label": "Address",
+                "default": "https://example.com/changelog"
+              },
+              "children": {
+                "label": "Caption",
+                "default": "Changelog"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "badge-017",
+      "type": "registry:component",
+      "title": "New Pulse",
+      "description": "Метка «новое» с расходящейся волной: анимируется отдельный слой, поэтому при выключенной анимации точка остаётся на месте.",
+      "categories": ["badge"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "badge-017/badge-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/badge-017.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-017-*. Серверный: хуков нет. Маяк собран из двух слоёв — неподвижного ядра и колец, которые расходятся анимацией vibeui-badge-017-ripple; каждое кольцо получает свою задержку через инлайновую переменную --vibeui-badge-017-delay, поэтому волны идут одна за другой, а не мигают вместе. Правило prefers-reduced-motion не просто гасит анимацию, а убирает кольца совсем: застывшее раскрытое кольцо вокруг точки читалось бы как сломанная вёрстка. Тон переключается data-tone и меняет только --hue и --chroma.",
+      "meta": {
+        "tags": ["badge", "new", "pulse", "attention"],
+        "ai": {
+          "export": "Badge017",
+          "usage": "<Badge017 tone=\"accent\" waves={2}>\n  Новое\n</Badge017>",
+          "summary": "Метка «новое», где волна — отдельный слой поверх неподвижной точки, а при отключённой анимации остаётся сама точка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-badge-017-* и не подменять её токенами вашей темы",
+            "разделение ядра и волны: анимировать саму точку — значит потерять метку при reduced-motion",
+            "удаление колец в prefers-reduced-motion, а не просто animation:none — иначе кольцо застывает раскрытым",
+            "задержку между волнами: одновременные кольца превращаются в мигание",
+            "текстовую подпись рядом с точкой: одна пульсирующая точка не сообщает, что именно новое",
+            "собственную светлую подложку плашки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "тон через tone",
+            "число колец через waves",
+            "подпись через children",
+            "скорость волны в правиле animation"
+          ],
+          "notes": [
+            "Колец максимум три: больше сливаются в шум и перестают читаться как один сигнал.",
+            "Метка привлекает внимание постоянно — снимайте её, когда новость перестала быть новостью, иначе она обесценится.",
+            "Волна выходит за габарит плашки только визуально: раскладку она не двигает, но при overflow:hidden у родителя обрежется.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "accent",
+            "options": ["accent", "positive", "danger"]
+          },
+          {
+            "prop": "waves",
+            "label": "Колец",
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 3
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A \"new\" badge with an expanding ripple: only a separate layer animates, so with animation off the dot stays in place.",
+            "ai": {
+              "summary": "A \"new\" badge where the ripple is a separate layer above a static dot, and with animation off the dot itself remains. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-badge-017-* palette — do not swap it for your theme tokens",
+                "the split between core and ripple: animating the dot itself loses the badge under reduced-motion",
+                "removing the rings under prefers-reduced-motion rather than just animation:none — otherwise a ring freezes expanded",
+                "the delay between waves: simultaneous rings turn into blinking",
+                "the text caption next to the dot: one pulsing dot does not say what is new",
+                "the badge's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the tone through tone",
+                "the number of rings through waves",
+                "the caption through children",
+                "the ripple speed in the animation rule"
+              ],
+              "notes": [
+                "Three rings is the maximum: more merge into noise and stop reading as one signal.",
+                "The badge draws attention permanently — remove it once the news is no longer news, or it devalues.",
+                "The ripple leaves the badge box only visually: it does not move layout, but a parent with overflow:hidden clips it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Badge017 tone=\"accent\" waves={2}>\n  New\n</Badge017>"
+            },
+            "controls": {
+              "tone": {
+                "label": "Tone"
+              },
+              "waves": {
+                "label": "Rings"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "badge-018",
+      "type": "registry:component",
+      "title": "Corner Slot",
+      "description": "Слот, который вешает плашку в угол чужого элемента: обёртка не добавляет отступов, а плашка не перехватывает нажатие.",
+      "categories": ["badge"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "badge-018/badge-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/badge-018.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-018-*. Серверный: хуков нет. Обёртка — inline-flex без отступов, поэтому она сжимается по хосту и не меняет раскладку строки. Плашка абсолютная, угол выбирается атрибутом data-position: он задаёт пару top/right и transform со сдвигом на --vibeui-badge-018-offset, так что вылет считается от собственных габаритов плашки, а не подбирается пикселями под каждый размер хоста. Кольцо box-shadow цвета подложки отделяет плашку от хоста без выреза в нём. pointer-events:none снимает с плашки перехват нажатия: под слотом обычно кнопка, и клик обязан доходить до неё. Значение продублировано скрытой подписью, а сама плашка помечена aria-hidden.",
+      "meta": {
+        "tags": ["badge", "slot", "overlay", "counter"],
+        "ai": {
+          "export": "Badge018",
+          "usage": "<Badge018 content=\"3\" position=\"top-right\" label=\"новых уведомления\">\n  <button type=\"button\">Входящие</button>\n</Badge018>",
+          "summary": "Слот-обёртка, сажающая плашку в любой из четырёх углов чужого элемента, не забирая у него нажатие. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-badge-018-* и не подменять её токенами вашей темы",
+            "pointer-events:none у плашки — иначе она перехватывает клик по кнопке под собой",
+            "обёртку inline-flex без отступов: любой padding сдвинет хост относительно соседей",
+            "вылет через transform в процентах: в пикселях он ломается при другом размере плашки",
+            "кольцо box-shadow цвета подложки: без него плашка сливается с краем хоста",
+            "скрытую подпись со значением: aria-hidden у плашки означает, что число нужно объявить отдельно"
+          ],
+          "adapt": [
+            "содержимое плашки через content",
+            "угол через position",
+            "подпись для скринридера через label",
+            "хост — любым элементом в children"
+          ],
+          "notes": [
+            "Кольцо нарисовано белым: на цветной подложке подставьте её цвет в --vibeui-badge-018-ring, иначе появится светлый ободок.",
+            "Хост по умолчанию — заглушка-аватар: в бою всегда передавайте свой элемент в children.",
+            "Плашка выходит за габарит обёртки — родитель с overflow:hidden срежет ей угол.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "content",
+            "label": "Значение",
+            "type": "text",
+            "default": "3",
+            "maxLength": 4
+          },
+          {
+            "prop": "position",
+            "label": "Угол",
+            "type": "select",
+            "default": "top-right",
+            "options": ["top-right", "top-left", "bottom-right", "bottom-left"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A slot that pins a badge to the corner of another element: the wrapper adds no padding and the badge never steals the click.",
+            "ai": {
+              "summary": "A wrapper slot that places a badge in any of the four corners of a host element without taking its click. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-badge-018-* palette — do not swap it for your theme tokens",
+                "pointer-events:none on the badge — otherwise it intercepts clicks on the button underneath",
+                "the padding-free inline-flex wrapper: any padding shifts the host against its neighbours",
+                "the overhang through a percentage transform: in pixels it breaks at another badge size",
+                "the surface-coloured box-shadow ring: without it the badge merges into the host edge",
+                "the hidden caption with the value: aria-hidden on the badge means the number must be announced separately"
+              ],
+              "adapt": [
+                "the badge content through content",
+                "the corner through position",
+                "the screen-reader caption through label",
+                "the host — any element passed as children"
+              ],
+              "notes": [
+                "The ring is drawn white: on a coloured surface pass its colour into --vibeui-badge-018-ring or a light halo appears.",
+                "The default host is a placeholder avatar: in production always pass your own element as children.",
+                "The badge sticks out of the wrapper box — a parent with overflow:hidden will clip its corner.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Badge018 content=\"3\" position=\"top-right\" label=\"new notifications\">\n  <button type=\"button\">Inbox</button>\n</Badge018>"
+            },
+            "controls": {
+              "content": {
+                "label": "Value",
+                "default": "3"
+              },
+              "position": {
+                "label": "Corner"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "badge-019",
+      "type": "registry:component",
+      "title": "Plan Badge",
+      "description": "Метка тарифа, в которой старшинство плана читается количеством ромбов, а не насыщенностью цвета — в том числе в чёрно-белом счёте.",
+      "categories": ["badge"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "badge-019/badge-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/badge-019.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-019-*. Серверный: хуков нет. Карта LEVELS переводит план в число знаков, и ромбы рисуются массивом: free — ноль, pro — один, business — два. Ромб сделан clip-path из квадрата, поэтому не требует ни SVG, ни шрифта. Атрибут data-plan меняет палитру и заливку: у pro — светлый золотой градиент, у business — тёмный. Форма знака отличает уровни там, где цвет теряется: на распечатке счёта или на скриншоте в поддержке.",
+      "meta": {
+        "tags": ["badge", "plan", "pricing", "tier"],
+        "ai": {
+          "export": "Badge019",
+          "usage": "<Badge019 plan=\"business\" label=\"Business\" />",
+          "summary": "Метка тарифа, где уровень плана передан числом ромбов, а не только цветом заливки. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-badge-019-* и не подменять её токенами вашей темы",
+            "число ромбов как признак уровня: цвет не передаёт «выше или ниже»",
+            "карту LEVELS: она единственное место, где живёт порядок тарифов",
+            "ромбы под aria-hidden — уровень уже назван подписью, дублировать его нечем",
+            "контраст подписи на градиенте: светлый текст на золотом фоне не читается",
+            "прямоугольный радиус вместо пилюли: тариф не статус, и форма это подсказывает"
+          ],
+          "adapt": [
+            "тариф через plan",
+            "подпись через label",
+            "цвета планов в правилах data-plan",
+            "число уровней в карте LEVELS"
+          ],
+          "notes": [
+            "Подпись не выводится из плана автоматически: label задаётся отдельно, иначе локализация упирается в код.",
+            "Планов три: четвёртый требует и записи в LEVELS, и правила data-plan, иначе метка останется нейтральной.",
+            "Тёмная заливка business рассчитана на светлую страницу — на тёмной подложке проверьте контраст рамки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "plan",
+            "label": "Тариф",
+            "type": "select",
+            "default": "pro",
+            "options": ["free", "pro", "business"]
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Pro",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A plan badge where the tier is read from the number of diamonds rather than colour saturation — including on a black-and-white invoice.",
+            "ai": {
+              "summary": "A plan badge that conveys the tier through a count of diamonds, not just a fill colour. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-badge-019-* palette — do not swap it for your theme tokens",
+                "the diamond count as the tier marker: colour does not convey \"higher or lower\"",
+                "the LEVELS map: it is the only place where the plan order lives",
+                "the diamonds under aria-hidden — the tier is already named by the caption",
+                "the caption contrast on the gradient: light text on gold is unreadable",
+                "the rectangular radius instead of a pill: a plan is not a status, and the shape says so"
+              ],
+              "adapt": [
+                "the plan through plan",
+                "the caption through label",
+                "the plan colours in the data-plan rules",
+                "the number of tiers in the LEVELS map"
+              ],
+              "notes": [
+                "The caption is not derived from the plan: label is passed separately, otherwise localisation hits the code.",
+                "There are three plans: a fourth needs both a LEVELS entry and a data-plan rule, or the badge stays neutral.",
+                "The dark business fill assumes a light page — check the border contrast on a dark surface.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Badge019 plan=\"business\" label=\"Business\" />"
+            },
+            "controls": {
+              "plan": {
+                "label": "Plan"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Pro"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "badge-020",
+      "type": "registry:component",
+      "title": "Expiry Badge",
+      "description": "Плашка срока, у которой вместе с тоном меняется формулировка: «ещё 21 день», «истекает через 3 дня», «истекает сегодня», «просрочено».",
+      "categories": ["badge"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "badge-020/badge-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/badge-020.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-020-*. Серверный: хуков нет. Состояние выводится из числа дней и порога warnAt и попадает в data-state, который меняет только --hue и --chroma — четыре тона держатся на двух переменных. Главное здесь не цвет: для каждого состояния своя фраза, поэтому срок понятен в чёрно-белом списке и вслух в скринридере. Число склоняется функцией plural по русским правилам, включая исключение для 11–14. Часы — inline SVG под aria-hidden.",
+      "meta": {
+        "tags": ["badge", "expiry", "deadline", "threshold"],
+        "ai": {
+          "export": "Badge020",
+          "usage": "<Badge020 days={3} warnAt={7} />",
+          "summary": "Плашка срока: пороги переключают и тон, и саму формулировку, а число дней склоняется по-русски. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-badge-020-* и не подменять её токенами вашей темы",
+            "смену формулировки, а не только тона: цвет теряется первым при печати и дальтонизме",
+            "функцию plural с исключением для 11–14: «11 дня» читается как опечатка и подрывает доверие к числу",
+            "отдельное состояние «сегодня»: «истекает через 0 дней» бессмысленно",
+            "табличные цифры — иначе плашка дёргается при пересчёте срока",
+            "собственную светлую подложку плашки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "число дней через days",
+            "порог тревоги через warnAt",
+            "формулировки в теле компонента",
+            "оттенки состояний в правилах data-state"
+          ],
+          "notes": [
+            "Компонент принимает готовое число дней, а не дату: разницу считает вызывающий код, иначе сервер и клиент разойдутся в часовых поясах.",
+            "Отрицательное значение — это просрочка: знак не теряется, из него берётся модуль для фразы.",
+            "Порог один: если нужны «месяц», «неделя», «день», добавляйте состояния, а не растягивайте warnAt.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "days",
+            "label": "Дней осталось",
+            "type": "number",
+            "default": 3,
+            "min": -30,
+            "max": 365
+          },
+          {
+            "prop": "warnAt",
+            "label": "Порог тревоги",
+            "type": "number",
+            "default": 7,
+            "min": 1,
+            "max": 90
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An expiry badge whose wording changes along with the tone: \"21 days left\", \"expires in 3 days\", \"expires today\", \"overdue\".",
+            "ai": {
+              "summary": "An expiry badge: thresholds switch both the tone and the wording itself, and the day count is declined in Russian. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-badge-020-* palette — do not swap it for your theme tokens",
+                "the change of wording, not just of tone: colour is the first thing lost in print and colour blindness",
+                "the plural function with the 11–14 exception: \"11 дня\" reads as a typo and undermines trust in the number",
+                "the separate \"today\" state: \"expires in 0 days\" is meaningless",
+                "tabular figures — otherwise the badge jitters as the term is recomputed",
+                "the badge's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the number of days through days",
+                "the warning threshold through warnAt",
+                "the wording in the component body",
+                "the state hues in the data-state rules"
+              ],
+              "notes": [
+                "The component takes a ready day count, not a date: the caller computes the difference, otherwise server and client disagree on time zones.",
+                "A negative value means overdue: the sign is not lost, its absolute value feeds the phrase.",
+                "There is one threshold: if you need \"a month\", \"a week\", \"a day\", add states instead of stretching warnAt.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Badge020 days={3} warnAt={7} />"
+            },
+            "controls": {
+              "days": {
+                "label": "Days left"
+              },
+              "warnAt": {
+                "label": "Warning threshold"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "badge-021",
+      "type": "registry:component",
+      "title": "Env Badge",
+      "description": "Метка окружения, где смысл несёт силуэт: боевое — скошенный ярлык, предпродакшен — пилюля, разработка — пунктирный прямоугольник.",
+      "categories": ["badge"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "badge-021/badge-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/badge-021.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-021-*. Серверный: хуков нет. Атрибут data-env меняет не только цвета, но и форму: у prod clip-path срезает углы и рамка убирается (обводку всё равно срезало бы вместе с углом), у stage радиус уходит в пилюлю, у dev рамка становится пунктирной. Шрифт моноширинный и в верхнем регистре с разрядкой: метка окружения читается как техническая, а не как статус записи. На скриншоте в баг-репорте цвет теряется первым, а силуэт остаётся — перепутанное окружение стоит дороже любой другой ошибки метки.",
+      "meta": {
+        "tags": ["badge", "environment", "shape", "devops"],
+        "ai": {
+          "export": "Badge021",
+          "usage": "<Badge021 env=\"stage\" label=\"stage\" />",
+          "summary": "Метка окружения, у которой prod, stage и dev отличаются формой плашки, а не только цветом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-badge-021-* и не подменять её токенами вашей темы",
+            "разную форму окружений: на пересжатом скриншоте цвет уходит, силуэт остаётся",
+            "отсутствие рамки у prod: clip-path срезает обводку вместе с углом и оставляет рваный край",
+            "моноширинный верхний регистр: метка обязана читаться как техническая, а не как статус записи",
+            "самый заметный тон именно у prod — ошибиться окружением дороже всего",
+            "собственную подложку плашки: без неё метка теряется на любой карточке"
+          ],
+          "adapt": [
+            "окружение через env",
+            "подпись через label",
+            "цвета окружений в правилах data-env",
+            "величину среза в clip-path у prod"
+          ],
+          "notes": [
+            "Подпись не выводится из env: label задаётся отдельно, чтобы «прод» и «prod» были вопросом текста, а не кода.",
+            "Окружений три: четвёртому нужна собственная форма, иначе идея «форма = смысл» рассыпается.",
+            "clip-path режет и фон, и тень: не вешайте на prod внешнюю тень — она обрежется по тому же контуру.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "env",
+            "label": "Окружение",
+            "type": "select",
+            "default": "prod",
+            "options": ["prod", "stage", "dev"]
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "prod",
+            "maxLength": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An environment badge where the silhouette carries the meaning: production is a bevelled tag, staging a pill, development a dashed rectangle.",
+            "ai": {
+              "summary": "An environment badge in which prod, stage and dev differ by shape, not only by colour. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-badge-021-* palette — do not swap it for your theme tokens",
+                "the different shapes per environment: in a recompressed screenshot colour goes, the silhouette stays",
+                "the missing border on prod: clip-path would cut the outline along with the corner and leave a ragged edge",
+                "the monospace upper case: the badge must read as technical, not as a record status",
+                "the loudest tone on prod — mistaking the environment costs the most",
+                "the badge's own surface: without it the label is lost on any card"
+              ],
+              "adapt": [
+                "the environment through env",
+                "the caption through label",
+                "the environment colours in the data-env rules",
+                "the bevel size in the prod clip-path"
+              ],
+              "notes": [
+                "The caption is not derived from env: label is passed separately so wording stays a text question, not a code one.",
+                "There are three environments: a fourth needs its own shape, or the \"shape equals meaning\" idea falls apart.",
+                "clip-path cuts both background and shadow: do not give prod an outer shadow, it is clipped by the same contour.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Badge021 env=\"stage\" label=\"stage\" />"
+            },
+            "controls": {
+              "env": {
+                "label": "Environment"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "prod"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "badge-022",
+      "type": "registry:component",
+      "title": "Split Counter",
+      "description": "Счётчик из двух половин: слева новые с порогом «9+», справа общее число — пара отвечает на вопрос «двенадцать из скольких».",
+      "categories": ["badge"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "badge-022/badge-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/badge-022.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-022-*. Серверный: хуков нет. Пилюля разделена на две зоны с общим overflow:hidden, граница между ними — левая рамка правой половины, поэтому разделитель не требует отдельного узла. Обе половины набраны табличными цифрами и имеют одинаковый минимум ширины: при пересчёте плашка не меняет габарит и не дёргает соседей. Порог применяется только к левому числу — «9+ из 48» осмысленно, а «9+ из 9+» нет. Когда новых ноль, левая половина гаснет, но остаётся: исчезающая зона меняла бы ширину. Числа помечены aria-hidden, вся плашка объявляется одной фразой через aria-label.",
+      "meta": {
+        "tags": ["badge", "counter", "unread", "threshold"],
+        "ai": {
+          "export": "Badge022",
+          "usage": "<Badge022 unread={12} total={48} max={9} />",
+          "summary": "Счётчик из двух половин: новые с порогом и общее число в одной пилюле с общей шириной. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-badge-022-* и не подменять её токенами вашей темы",
+            "табличные цифры и минимум ширины у обеих половин: иначе плашка прыгает при каждом обновлении",
+            "порог только на левом числе — «9+ из 9+» не сообщает ничего",
+            "погасшую, но не исчезнувшую левую половину при нуле: пропажа зоны меняет ширину плашки",
+            "aria-label на всей плашке: два числа подряд в скринридере звучат как «12 48»",
+            "собственную светлую подложку плашки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "число новых через unread",
+            "общее число через total",
+            "порог через max",
+            "акцентный цвет в переменной accent"
+          ],
+          "notes": [
+            "total не может быть меньше unread: компонент подтягивает его вверх, а не показывает противоречие.",
+            "Порог по умолчанию 9, а не 99: две зоны занимают место, и трёхзначное число разносит пилюлю.",
+            "Формулировка aria-label жёстко на русском — переведите её при локализации, иначе скринридер смешает языки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "unread",
+            "label": "Новых",
+            "type": "number",
+            "default": 12,
+            "min": 0,
+            "max": 999
+          },
+          {
+            "prop": "max",
+            "label": "Порог",
+            "type": "number",
+            "default": 9,
+            "min": 1,
+            "max": 99
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A counter split in two: unread with a \"9+\" threshold on the left, the total on the right — the pair answers \"twelve out of how many\".",
+            "ai": {
+              "summary": "A split counter: unread with a threshold and the total inside one pill of constant width. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-badge-022-* palette — do not swap it for your theme tokens",
+                "tabular figures and a minimum width on both halves: otherwise the badge jumps on every refresh",
+                "the threshold on the left number only — \"9+ of 9+\" says nothing",
+                "the dimmed but not removed left half at zero: dropping the zone changes the badge width",
+                "the aria-label on the whole badge: two bare numbers read as \"12 48\" in a screen reader",
+                "the badge's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the unread count through unread",
+                "the total through total",
+                "the threshold through max",
+                "the accent colour in the accent variable"
+              ],
+              "notes": [
+                "total cannot be smaller than unread: the component raises it instead of showing a contradiction.",
+                "The default threshold is 9, not 99: two zones take space and a three-digit number blows the pill apart.",
+                "The aria-label wording is hard-coded in Russian — translate it when localising, or the screen reader mixes languages.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Badge022 unread={12} total={48} max={9} />"
+            },
+            "controls": {
+              "unread": {
+                "label": "Unread"
+              },
+              "max": {
+                "label": "Threshold"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "badge-023",
+      "type": "registry:component",
+      "title": "Truncating Badge",
+      "description": "Плашка для текста непредсказуемой длины: обрезка с конца отдана CSS, обрезка по середине — коду, а полный текст остаётся доступен.",
+      "categories": ["badge"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "badge-023/badge-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/badge-023.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-023-*. Серверный: хуков нет. Ширина задаётся в ch и кладётся в --vibeui-badge-023-width инлайновым стилем. Режим end работает штатным text-overflow:ellipsis, причём многоточие живёт на внутреннем узле: у flex-контейнера text-overflow не срабатывает и строка просто отрезалась бы без знака. Режим middle CSS не умеет вовсе, поэтому строку режет функция shorten — голова и хвост считаются от лимита, между ними многоточие; у имени ветки и у пути к файлу значимы оба края. Полный текст уходит в title и в скрытую подпись, а обрезанный вариант помечается aria-hidden.",
+      "meta": {
+        "tags": ["badge", "truncate", "overflow", "monospace"],
+        "ai": {
+          "export": "Badge023",
+          "usage": "<Badge023 width={16} truncate=\"middle\">\n  feature/registry-badge-overflow\n</Badge023>",
+          "summary": "Плашка с усечением длинного текста в двух режимах: с конца средствами CSS и по середине средствами кода. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-badge-023-* и не подменять её токенами вашей темы",
+            "полный текст в title и в скрытой подписи: обрезка не должна терять содержание",
+            "многоточие на внутреннем узле, а не на flex-контейнере — иначе строка режется без знака",
+            "обрезку по середине для имён с общим началом: «feature/very-long-…» неотличимо от десятка соседей",
+            "моноширинный шрифт: он делает ширину в ch предсказуемой",
+            "собственную светлую подложку плашки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "ширину в знаках через width",
+            "режим обрезки через truncate",
+            "текст через children",
+            "радиус и высоту плашки в правилах блока"
+          ],
+          "notes": [
+            "children типизирован строкой: обрезка по середине работает с текстом, а не с деревом узлов.",
+            "Единица ch считается по ширине нуля — в пропорциональном шрифте реальная строка окажется шире, поэтому у режима middle оставлен запас в четыре знака.",
+            "title не показывается на тачскрине: если текст критичен, дайте его и рядом с плашкой.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "width",
+            "label": "Ширина, знаков",
+            "type": "number",
+            "default": 16,
+            "min": 4,
+            "max": 48
+          },
+          {
+            "prop": "truncate",
+            "label": "Обрезка",
+            "type": "select",
+            "default": "middle",
+            "options": ["end", "middle"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A badge for text of unpredictable length: end truncation is left to CSS, middle truncation to code, and the full text stays available.",
+            "ai": {
+              "summary": "A badge that truncates long text in two modes: from the end via CSS and in the middle via code. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-badge-023-* palette — do not swap it for your theme tokens",
+                "the full text in title and in the hidden caption: truncation must not lose the content",
+                "the ellipsis on the inner node rather than the flex container — otherwise the string is cut with no mark",
+                "middle truncation for names with a shared prefix: \"feature/very-long-…\" is indistinguishable from a dozen neighbours",
+                "the monospace font: it makes a width in ch predictable",
+                "the badge's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the width in characters through width",
+                "the truncation mode through truncate",
+                "the text through children",
+                "the badge radius and height in the block rules"
+              ],
+              "notes": [
+                "children is typed as a string: middle truncation works on text, not on a node tree.",
+                "The ch unit measures the width of a zero — in a proportional font the real string is wider, which is why middle mode keeps four characters of slack.",
+                "title is not shown on touch screens: if the text is critical, repeat it next to the badge.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Badge023 width={16} truncate=\"middle\">\n  feature/registry-badge-overflow\n</Badge023>"
+            },
+            "controls": {
+              "width": {
+                "label": "Width, characters"
+              },
+              "truncate": {
+                "label": "Truncation"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "badge-024",
+      "type": "registry:component",
+      "title": "Overflow Group",
+      "description": "Группа плашек, хвост которой сворачивается в «+4» и раскрывается по нажатию — на нативном details, без единой строки клиентского кода.",
+      "categories": ["badge"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "badge-024/badge-024.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/badge-024.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-024-*. Серверный: раскрытие держит нативная пара details/summary, поэтому ни useState, ни обработчика, ни директивы use client здесь нет. Сам details объявлен flex-контейнером: summary и раскрытый хвост становятся его элементами и встают в тот же ряд, а не блоком под ним. Маркер треугольника убран (list-style:none плюс правило для WebKit), подпись «+4» подменяется на «Свернуть» селектором [open]. Клавиатура, фокус и объявление состояния «раскрыто/свёрнуто» достаются от браузера бесплатно.",
+      "meta": {
+        "tags": ["badge", "group", "overflow", "details"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Badge024",
+          "usage": "<Badge024\n  items={[\"TypeScript\", \"React\", \"Tailwind\", \"PostgreSQL\"]}\n  visible={3}\n  label=\"Технологии\"\n/>",
+          "summary": "Группа плашек со сворачиваемым хвостом «+N», который раскрывается нативным details без клиентского JS. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-badge-024-* и не подменять её токенами вашей темы",
+            "нативный details вместо useState: он бесплатно даёт клавиатуру, фокус и объявление состояния",
+            "details как flex-контейнер — иначе раскрытый хвост уезжает блоком под кнопку",
+            "снятый маркер треугольника: два указателя на одну и ту же кнопку сбивают с толку",
+            "видимую обводку фокуса у summary: это единственный интерактивный узел группы",
+            "собственные светлые подложки плашек: без них тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "список через items",
+            "число видимых плашек через visible",
+            "название группы через label",
+            "форму плашек — радиус и высоту в правилах блока"
+          ],
+          "notes": [
+            "Раскрытие не анимируется: высота details неизвестна заранее, а прыгающая анимация хуже мгновенного показа.",
+            "Ключом в списке служит сам текст — одинаковые метки в items дадут предупреждение React.",
+            "На узкой ширине группа переносится на вторую строку: если ряд обязан остаться одним, ограничьте visible.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "visible",
+            "label": "Видимых",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 8
+          },
+          {
+            "prop": "label",
+            "label": "Название группы",
+            "type": "text",
+            "default": "Технологии",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A badge group whose tail collapses into \"+4\" and expands on click — on native details, without a single line of client code.",
+            "ai": {
+              "summary": "A badge group with a collapsible \"+N\" tail that expands through native details with no client JS. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-badge-024-* palette — do not swap it for your theme tokens",
+                "native details instead of useState: it gives keyboard, focus and state announcement for free",
+                "details as a flex container — otherwise the expanded tail drops below the button as a block",
+                "the removed triangle marker: two pointers to the same button are confusing",
+                "the visible focus ring on summary: it is the only interactive node in the group",
+                "the badges' own light surfaces: without them the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the list through items",
+                "the number of visible badges through visible",
+                "the group name through label",
+                "the badge shape — radius and height in the block rules"
+              ],
+              "notes": [
+                "Expansion is not animated: the details height is unknown in advance, and a jumping animation is worse than an instant reveal.",
+                "The text itself is used as the key — duplicate labels in items produce a React warning.",
+                "On a narrow width the group wraps onto a second line: if the row must stay single, cap visible.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Badge024\n  items={[\"TypeScript\", \"React\", \"Tailwind\", \"PostgreSQL\"]}\n  visible={3}\n  label=\"Stack\"\n/>"
+            },
+            "controls": {
+              "visible": {
+                "label": "Visible"
+              },
+              "label": {
+                "label": "Group name",
+                "default": "Stack"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "badge-025",
+      "type": "registry:component",
+      "title": "Key Value Badge",
+      "description": "Плашка «ключ: значение» для служебных данных: ключ не выделяется мышью, значение выделяется целиком одним щелчком.",
+      "categories": ["badge"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "badge-025/badge-025.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/badge-025.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-025-*. Серверный: хуков нет. Две зоны в одной рамке с общим overflow:hidden: тёмный ключ и светлое значение, граница между ними — смена фона, а не линия. Ключ помечен user-select:none, значение — user-select:all, поэтому щелчок по хешу выделяет ровно хеш, и в буфер не уезжает слово «commit» вместе с ним. Значение набрано моноширинным шрифтом и обрезается многоточием, полное — в title. Обе зоны под aria-hidden, вся плашка объявляется одной фразой через aria-label.",
+      "meta": {
+        "tags": ["badge", "key-value", "metadata", "copy"],
+        "ai": {
+          "export": "Badge025",
+          "usage": "<Badge025 label=\"commit\" value=\"a1f9c02\" />",
+          "summary": "Плашка «ключ: значение», где выделяется и копируется только значение, а подпись остаётся невыделяемой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-badge-025-* и не подменять её токенами вашей темы",
+            "user-select:none у ключа: иначе в буфер уезжает подпись вместе со значением",
+            "user-select:all у значения — ради него плашка и существует, хеш не ведут мышью по символам",
+            "моноширинный шрифт значения: идентификаторы сравнивают глазами, и «0» с «O» обязаны различаться",
+            "контраст тёмного ключа и светлого значения: без смены фона граница зон исчезает",
+            "aria-label на всей плашке: «commit a1f9c02» без двоеточия звучит как два разных слова"
+          ],
+          "adapt": [
+            "подпись через label",
+            "значение через value",
+            "цвета зон в переменных key-bg и value-bg",
+            "радиус и высоту плашки в правилах блока"
+          ],
+          "notes": [
+            "user-select:all выделяет узел целиком: часть значения мышью выбрать уже не получится — это осознанный обмен.",
+            "Копирование остаётся ручным: кнопки с буфером обмена здесь нет, иначе компоненту понадобился бы клиентский JS.",
+            "Длинное значение обрезается многоточием — полное лежит в title, но на тачскрине подсказки нет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Ключ",
+            "type": "text",
+            "default": "commit",
+            "maxLength": 16
+          },
+          {
+            "prop": "value",
+            "label": "Значение",
+            "type": "text",
+            "default": "a1f9c02",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A key-value badge for technical data: the key cannot be selected with the mouse, the value is selected whole in a single click.",
+            "ai": {
+              "summary": "A key-value badge where only the value is selectable and copyable, while the key stays unselectable. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-badge-025-* palette — do not swap it for your theme tokens",
+                "user-select:none on the key: otherwise the caption travels to the clipboard with the value",
+                "user-select:all on the value — the badge exists for it, nobody drags a mouse across a hash",
+                "the monospace value: identifiers are compared by eye, and \"0\" must differ from \"O\"",
+                "the contrast between the dark key and the light value: without the background change the zone boundary disappears",
+                "the aria-label on the whole badge: \"commit a1f9c02\" without a colon sounds like two unrelated words"
+              ],
+              "adapt": [
+                "the caption through label",
+                "the value through value",
+                "the zone colours in the key-bg and value-bg variables",
+                "the badge radius and height in the block rules"
+              ],
+              "notes": [
+                "user-select:all selects the node as a whole: picking part of the value with the mouse is no longer possible — that is a deliberate trade.",
+                "Copying stays manual: there is no clipboard button here, otherwise the component would need client JS.",
+                "A long value is cut with an ellipsis — the full one lives in title, but touch screens have no tooltip.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Badge025 label=\"commit\" value=\"a1f9c02\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Key",
+                "default": "commit"
+              },
+              "value": {
+                "label": "Value",
+                "default": "a1f9c02"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
