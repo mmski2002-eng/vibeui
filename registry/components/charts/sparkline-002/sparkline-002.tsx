@@ -1,0 +1,216 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Sparkline002Row = {
+  label: string
+  value: string
+  delta: number
+  values: number[]
+}
+
+export type Sparkline002Props = Omit<
+  ComponentPropsWithoutRef<"table">,
+  "children" | "title"
+> & {
+  caption?: string
+  rows?: Sparkline002Row[]
+  period?: string
+  accent?: string
+}
+
+// Идея компонента: таблица метрик, где динамика живёт прямо в строке. Данные
+// здесь уже текст — таблица и есть текстовая альтернатива графику, поэтому
+// кривые помечены aria-hidden и не мешают скринридеру. Направление кривой
+// выводится из знака delta, так что цвет не может разойтись со смыслом.
+const STYLES = `
+:where([data-vibeui-block="sparkline-002"]){
+--vibeui-sparkline-002-bg:oklch(1 0 0);
+--vibeui-sparkline-002-fg:oklch(0.22 0.014 265);
+--vibeui-sparkline-002-muted:oklch(0.55 0.014 265);
+--vibeui-sparkline-002-border:oklch(0.91 0.006 265);
+--vibeui-sparkline-002-up:oklch(0.58 0.14 155);
+--vibeui-sparkline-002-down:oklch(0.6 0.16 25);
+--vibeui-sparkline-002-flat:oklch(0.62 0.01 265);
+--vibeui-sparkline-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="sparkline-002"]{
+width:100%;max-width:32rem;box-sizing:border-box;border-collapse:collapse;
+background:var(--vibeui-sparkline-002-bg);
+border:1px solid var(--vibeui-sparkline-002-border);border-radius:0.875rem;
+color:var(--vibeui-sparkline-002-fg);font-family:var(--vibeui-sparkline-002-font);
+font-size:0.8125rem;overflow:hidden;
+}
+[data-vibeui-block="sparkline-002"] caption{
+padding:0.75rem 0.875rem 0.5rem;text-align:left;font-size:0.875rem;font-weight:650;
+color:var(--vibeui-sparkline-002-fg);
+}
+[data-vibeui-block="sparkline-002"] caption span{
+display:block;font-size:0.75rem;font-weight:400;color:var(--vibeui-sparkline-002-muted);
+}
+[data-vibeui-block="sparkline-002"] th,
+[data-vibeui-block="sparkline-002"] td{
+padding:0.5rem 0.875rem;text-align:left;border-top:1px solid var(--vibeui-sparkline-002-border);
+}
+[data-vibeui-block="sparkline-002"] thead th{
+font-size:0.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;
+color:var(--vibeui-sparkline-002-muted);
+}
+[data-vibeui-block="sparkline-002"] [data-part="value"],
+[data-vibeui-block="sparkline-002"] [data-part="delta"]{
+text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+[data-vibeui-block="sparkline-002"] [data-part="value"]{font-weight:650}
+[data-vibeui-block="sparkline-002"] [data-part="delta"][data-trend="up"]{color:var(--vibeui-sparkline-002-up)}
+[data-vibeui-block="sparkline-002"] [data-part="delta"][data-trend="down"]{color:var(--vibeui-sparkline-002-down)}
+[data-vibeui-block="sparkline-002"] [data-part="delta"][data-trend="flat"]{color:var(--vibeui-sparkline-002-flat)}
+[data-vibeui-block="sparkline-002"] [data-part="spark"]{width:6rem;padding-right:0}
+[data-vibeui-block="sparkline-002"] svg{display:block;width:5.5rem;height:1.5rem}
+/* Толщина линии не масштабируется вместе с viewBox: иначе в узкой колонке
+   кривая становится ниткой, а в широкой — жирной. */
+[data-vibeui-block="sparkline-002"] [data-part="line"]{
+fill:none;stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round;
+vector-effect:non-scaling-stroke;
+}
+[data-vibeui-block="sparkline-002"] tr[data-trend="up"] [data-part="line"]{stroke:var(--vibeui-sparkline-002-up)}
+[data-vibeui-block="sparkline-002"] tr[data-trend="down"] [data-part="line"]{stroke:var(--vibeui-sparkline-002-down)}
+[data-vibeui-block="sparkline-002"] tr[data-trend="flat"] [data-part="line"]{stroke:var(--vibeui-sparkline-002-flat)}
+[data-vibeui-block="sparkline-002"] [data-part="last"]{r:2}
+[data-vibeui-block="sparkline-002"] tr[data-trend="up"] [data-part="last"]{fill:var(--vibeui-sparkline-002-up)}
+[data-vibeui-block="sparkline-002"] tr[data-trend="down"] [data-part="last"]{fill:var(--vibeui-sparkline-002-down)}
+[data-vibeui-block="sparkline-002"] tr[data-trend="flat"] [data-part="last"]{fill:var(--vibeui-sparkline-002-flat)}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="sparkline-002"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_ROWS: Sparkline002Row[] = [
+  {
+    label: "Визиты",
+    value: "48 210",
+    delta: 8.4,
+    values: [31, 34, 33, 38, 41, 44, 48],
+  },
+  {
+    label: "Регистрации",
+    value: "1 284",
+    delta: 12.1,
+    values: [8, 9, 11, 10, 12, 12, 14],
+  },
+  {
+    label: "Отказы",
+    value: "37,2 %",
+    delta: -3.6,
+    values: [44, 43, 41, 42, 39, 38, 37],
+  },
+  {
+    label: "Средний чек",
+    value: "2 940 ₽",
+    delta: 0.2,
+    values: [29, 30, 29, 30, 29, 30, 29],
+  },
+]
+
+// Ниже полупроцента изменение считается шумом: колебание в 0,1 % не должно
+// краситься как рост.
+const FLAT = 0.5
+
+function pathFor(values: number[]) {
+  const max = Math.max(...values)
+  const min = Math.min(...values)
+  const span = max - min || 1
+
+  return values
+    .map((value, index) => {
+      const x = values.length > 1 ? (index / (values.length - 1)) * 100 : 0
+      const y = 22 - ((value - min) / span) * 18
+
+      return `${index === 0 ? "M" : "L"}${x.toFixed(2)} ${y.toFixed(2)}`
+    })
+    .join(" ")
+}
+
+function lastPoint(values: number[]) {
+  const max = Math.max(...values)
+  const min = Math.min(...values)
+  const span = max - min || 1
+  const value = values[values.length - 1]
+
+  return { x: 100, y: 22 - ((value - min) / span) * 18 }
+}
+
+/**
+ * Таблица метрик со спарклайном в каждой строке.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Sparkline002({
+  caption = "Ключевые метрики",
+  rows = DEFAULT_ROWS,
+  period = "за последние 7 дней",
+  accent,
+  className,
+  style,
+  ...props
+}: Sparkline002Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-sparkline-002-up": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-sparkline-002" precedence="medium">
+        {STYLES}
+      </style>
+      <table
+        {...props}
+        data-vibeui-block="sparkline-002"
+        className={className}
+        style={palette}
+      >
+        <caption>
+          {caption}
+          <span>Динамика {period}, изменение — к прошлому периоду</span>
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Метрика</th>
+            <th scope="col">Значение</th>
+            <th scope="col">Динамика</th>
+            <th scope="col">Изменение</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => {
+            const trend =
+              row.delta > FLAT ? "up" : row.delta < -FLAT ? "down" : "flat"
+            const point = lastPoint(row.values)
+
+            return (
+              <tr key={row.label} data-trend={trend}>
+                <th scope="row">{row.label}</th>
+                <td data-part="value">{row.value}</td>
+                <td data-part="spark">
+                  <svg
+                    viewBox="0 0 100 24"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path data-part="line" d={pathFor(row.values)} />
+                    <circle
+                      data-part="last"
+                      cx={point.x - 1.5}
+                      cy={point.y}
+                      r={2}
+                    />
+                  </svg>
+                </td>
+                <td data-part="delta" data-trend={trend}>
+                  {row.delta > 0 ? "+" : ""}
+                  {row.delta} %
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    </>
+  )
+}
