@@ -353,6 +353,17 @@ import { Menu004 } from "@/registry/components/menu/menu-004/menu-004"
 import { Menu005 } from "@/registry/components/menu/menu-005/menu-005"
 import { Menu006 } from "@/registry/components/menu/menu-006/menu-006"
 import { Menu007 } from "@/registry/components/menu/menu-007/menu-007"
+import { Dropdown002 } from "@/registry/components/menu/dropdown-002/dropdown-002"
+import { Dropdown003 } from "@/registry/components/menu/dropdown-003/dropdown-003"
+import { Dropdown004 } from "@/registry/components/menu/dropdown-004/dropdown-004"
+import { Dropdown005 } from "@/registry/components/menu/dropdown-005/dropdown-005"
+import { Dropdown006 } from "@/registry/components/menu/dropdown-006/dropdown-006"
+import { Dropdown007 } from "@/registry/components/menu/dropdown-007/dropdown-007"
+import { Dropdown008 } from "@/registry/components/menu/dropdown-008/dropdown-008"
+import { Dropdown009 } from "@/registry/components/menu/dropdown-009/dropdown-009"
+import { Dropdown010 } from "@/registry/components/menu/dropdown-010/dropdown-010"
+import { Dropdown011 } from "@/registry/components/menu/dropdown-011/dropdown-011"
+import { Dropdown012 } from "@/registry/components/menu/dropdown-012/dropdown-012"
 import { Input001 } from "@/registry/components/inputs/input-001/input-001"
 import { Input002 } from "@/registry/components/inputs/input-002/input-002"
 import { Textarea001 } from "@/registry/components/inputs/textarea-001/textarea-001"
@@ -386,6 +397,58 @@ import { Cascader009 } from "@/registry/components/inputs/cascader-009/cascader-
 import { Cascader010 } from "@/registry/components/inputs/cascader-010/cascader-010"
 import { Cascader011 } from "@/registry/components/inputs/cascader-011/cascader-011"
 import { Cascader012 } from "@/registry/components/inputs/cascader-012/cascader-012"
+import { Field002 } from "@/registry/components/inputs/field-002/field-002"
+import { Field003 } from "@/registry/components/inputs/field-003/field-003"
+import { Field004 } from "@/registry/components/inputs/field-004/field-004"
+import { Field005 } from "@/registry/components/inputs/field-005/field-005"
+import { Field006 } from "@/registry/components/inputs/field-006/field-006"
+import { Field007 } from "@/registry/components/inputs/field-007/field-007"
+import { Field008 } from "@/registry/components/inputs/field-008/field-008"
+import { Field009 } from "@/registry/components/inputs/field-009/field-009"
+import { Field010 } from "@/registry/components/inputs/field-010/field-010"
+import { File002 } from "@/registry/components/inputs/file-002/file-002"
+import { File003 } from "@/registry/components/inputs/file-003/file-003"
+import { File004 } from "@/registry/components/inputs/file-004/file-004"
+import { File005 } from "@/registry/components/inputs/file-005/file-005"
+import { File006 } from "@/registry/components/inputs/file-006/file-006"
+import { File007 } from "@/registry/components/inputs/file-007/file-007"
+import { File008 } from "@/registry/components/inputs/file-008/file-008"
+import { File009 } from "@/registry/components/inputs/file-009/file-009"
+import { File010 } from "@/registry/components/inputs/file-010/file-010"
+import { Filters002 } from "@/registry/components/inputs/filters-002/filters-002"
+import { Filters003 } from "@/registry/components/inputs/filters-003/filters-003"
+import { Filters004 } from "@/registry/components/inputs/filters-004/filters-004"
+import { Filters005 } from "@/registry/components/inputs/filters-005/filters-005"
+import { Filters006 } from "@/registry/components/inputs/filters-006/filters-006"
+import { Filters007 } from "@/registry/components/inputs/filters-007/filters-007"
+import { Filters008 } from "@/registry/components/inputs/filters-008/filters-008"
+import { Filters009 } from "@/registry/components/inputs/filters-009/filters-009"
+import { Input006 } from "@/registry/components/inputs/input-006/input-006"
+import { Input007 } from "@/registry/components/inputs/input-007/input-007"
+import { Input008 } from "@/registry/components/inputs/input-008/input-008"
+import { Input009 } from "@/registry/components/inputs/input-009/input-009"
+import { Input010 } from "@/registry/components/inputs/input-010/input-010"
+import { Input011 } from "@/registry/components/inputs/input-011/input-011"
+import { Input012 } from "@/registry/components/inputs/input-012/input-012"
+import { Input013 } from "@/registry/components/inputs/input-013/input-013"
+import { Input014 } from "@/registry/components/inputs/input-014/input-014"
+import { Input015 } from "@/registry/components/inputs/input-015/input-015"
+import { Inputgroup001 } from "@/registry/components/inputs/inputgroup-001/inputgroup-001"
+import { Inputgroup002 } from "@/registry/components/inputs/inputgroup-002/inputgroup-002"
+import { Inputgroup003 } from "@/registry/components/inputs/inputgroup-003/inputgroup-003"
+import { Inputgroup004 } from "@/registry/components/inputs/inputgroup-004/inputgroup-004"
+import { Inputgroup005 } from "@/registry/components/inputs/inputgroup-005/inputgroup-005"
+import { Inputgroup006 } from "@/registry/components/inputs/inputgroup-006/inputgroup-006"
+import { Inputgroup007 } from "@/registry/components/inputs/inputgroup-007/inputgroup-007"
+import { Inputgroup008 } from "@/registry/components/inputs/inputgroup-008/inputgroup-008"
+import { Inputgroup009 } from "@/registry/components/inputs/inputgroup-009/inputgroup-009"
+import { Inputgroup010 } from "@/registry/components/inputs/inputgroup-010/inputgroup-010"
+import { Otp002 } from "@/registry/components/inputs/otp-002/otp-002"
+import { Otp003 } from "@/registry/components/inputs/otp-003/otp-003"
+import { Otp004 } from "@/registry/components/inputs/otp-004/otp-004"
+import { Otp005 } from "@/registry/components/inputs/otp-005/otp-005"
+import { Otp006 } from "@/registry/components/inputs/otp-006/otp-006"
+import { Otp007 } from "@/registry/components/inputs/otp-007/otp-007"
 import { Skeleton001 } from "@/registry/components/display/skeleton-001/skeleton-001"
 import { Progress001 } from "@/registry/components/display/progress-001/progress-001"
 import { Separator001 } from "@/registry/components/display/separator-001/separator-001"
@@ -401,6 +464,66 @@ import { Icontile001 } from "@/registry/components/display/icontile-001/icontile
 import { Iconstack001 } from "@/registry/components/display/iconstack-001/iconstack-001"
 import { Sortable001 } from "@/registry/components/display/sortable-001/sortable-001"
 import { Kanban001 } from "@/registry/components/display/kanban-001/kanban-001"
+import { Collapsible001 } from "@/registry/components/display/collapsible-001/collapsible-001"
+import { Collapsible002 } from "@/registry/components/display/collapsible-002/collapsible-002"
+import { Collapsible003 } from "@/registry/components/display/collapsible-003/collapsible-003"
+import { Collapsible004 } from "@/registry/components/display/collapsible-004/collapsible-004"
+import { Collapsible005 } from "@/registry/components/display/collapsible-005/collapsible-005"
+import { Collapsible006 } from "@/registry/components/display/collapsible-006/collapsible-006"
+import { Collapsible007 } from "@/registry/components/display/collapsible-007/collapsible-007"
+import { Collapsible008 } from "@/registry/components/display/collapsible-008/collapsible-008"
+import { Collapsible009 } from "@/registry/components/display/collapsible-009/collapsible-009"
+import { Collapsible010 } from "@/registry/components/display/collapsible-010/collapsible-010"
+import { Frame002 } from "@/registry/components/display/frame-002/frame-002"
+import { Frame003 } from "@/registry/components/display/frame-003/frame-003"
+import { Frame004 } from "@/registry/components/display/frame-004/frame-004"
+import { Frame005 } from "@/registry/components/display/frame-005/frame-005"
+import { Frame006 } from "@/registry/components/display/frame-006/frame-006"
+import { Icontile002 } from "@/registry/components/display/icontile-002/icontile-002"
+import { Icontile003 } from "@/registry/components/display/icontile-003/icontile-003"
+import { Icontile004 } from "@/registry/components/display/icontile-004/icontile-004"
+import { Icontile005 } from "@/registry/components/display/icontile-005/icontile-005"
+import { Icontile006 } from "@/registry/components/display/icontile-006/icontile-006"
+import { Iconstack002 } from "@/registry/components/display/iconstack-002/iconstack-002"
+import { Iconstack003 } from "@/registry/components/display/iconstack-003/iconstack-003"
+import { Iconstack004 } from "@/registry/components/display/iconstack-004/iconstack-004"
+import { Iconstack005 } from "@/registry/components/display/iconstack-005/iconstack-005"
+import { Kbd002 } from "@/registry/components/display/kbd-002/kbd-002"
+import { Kbd003 } from "@/registry/components/display/kbd-003/kbd-003"
+import { Kbd004 } from "@/registry/components/display/kbd-004/kbd-004"
+import { Kbd005 } from "@/registry/components/display/kbd-005/kbd-005"
+import { Kbd006 } from "@/registry/components/display/kbd-006/kbd-006"
+import { Separator002 } from "@/registry/components/display/separator-002/separator-002"
+import { Separator003 } from "@/registry/components/display/separator-003/separator-003"
+import { Separator004 } from "@/registry/components/display/separator-004/separator-004"
+import { Separator005 } from "@/registry/components/display/separator-005/separator-005"
+import { Separator006 } from "@/registry/components/display/separator-006/separator-006"
+import { Spinner002 } from "@/registry/components/display/spinner-002/spinner-002"
+import { Spinner003 } from "@/registry/components/display/spinner-003/spinner-003"
+import { Spinner004 } from "@/registry/components/display/spinner-004/spinner-004"
+import { Spinner005 } from "@/registry/components/display/spinner-005/spinner-005"
+import { Spinner006 } from "@/registry/components/display/spinner-006/spinner-006"
+import { Item002 } from "@/registry/components/display/item-002/item-002"
+import { Item003 } from "@/registry/components/display/item-003/item-003"
+import { Item004 } from "@/registry/components/display/item-004/item-004"
+import { Item005 } from "@/registry/components/display/item-005/item-005"
+import { Item006 } from "@/registry/components/display/item-006/item-006"
+import { Item007 } from "@/registry/components/display/item-007/item-007"
+import { Item008 } from "@/registry/components/display/item-008/item-008"
+import { Item009 } from "@/registry/components/display/item-009/item-009"
+import { Item010 } from "@/registry/components/display/item-010/item-010"
+import { Kanban002 } from "@/registry/components/display/kanban-002/kanban-002"
+import { Kanban003 } from "@/registry/components/display/kanban-003/kanban-003"
+import { Kanban004 } from "@/registry/components/display/kanban-004/kanban-004"
+import { Kanban005 } from "@/registry/components/display/kanban-005/kanban-005"
+import { Kanban006 } from "@/registry/components/display/kanban-006/kanban-006"
+import { Kanban007 } from "@/registry/components/display/kanban-007/kanban-007"
+import { Sortable002 } from "@/registry/components/display/sortable-002/sortable-002"
+import { Sortable003 } from "@/registry/components/display/sortable-003/sortable-003"
+import { Sortable004 } from "@/registry/components/display/sortable-004/sortable-004"
+import { Sortable005 } from "@/registry/components/display/sortable-005/sortable-005"
+import { Sortable006 } from "@/registry/components/display/sortable-006/sortable-006"
+import { Sortable007 } from "@/registry/components/display/sortable-007/sortable-007"
 import { Toast001 } from "@/registry/components/feedback/toast-001/toast-001"
 import { Empty001 } from "@/registry/components/feedback/empty-001/empty-001"
 import { Tooltip001 } from "@/registry/components/feedback/tooltip-001/tooltip-001"
@@ -412,6 +535,26 @@ import { Drawer001 } from "@/registry/components/feedback/drawer-001/drawer-001"
 import { Sheet001 } from "@/registry/components/feedback/sheet-001/sheet-001"
 import { Hovercard001 } from "@/registry/components/feedback/hovercard-001/hovercard-001"
 import { Empty002 } from "@/registry/components/feedback/empty-002/empty-002"
+import { Drawer002 } from "@/registry/components/feedback/drawer-002/drawer-002"
+import { Drawer003 } from "@/registry/components/feedback/drawer-003/drawer-003"
+import { Drawer004 } from "@/registry/components/feedback/drawer-004/drawer-004"
+import { Drawer005 } from "@/registry/components/feedback/drawer-005/drawer-005"
+import { Drawer006 } from "@/registry/components/feedback/drawer-006/drawer-006"
+import { Drawer007 } from "@/registry/components/feedback/drawer-007/drawer-007"
+import { Drawer008 } from "@/registry/components/feedback/drawer-008/drawer-008"
+import { Sheet002 } from "@/registry/components/feedback/sheet-002/sheet-002"
+import { Sheet003 } from "@/registry/components/feedback/sheet-003/sheet-003"
+import { Sheet004 } from "@/registry/components/feedback/sheet-004/sheet-004"
+import { Sheet005 } from "@/registry/components/feedback/sheet-005/sheet-005"
+import { Sheet006 } from "@/registry/components/feedback/sheet-006/sheet-006"
+import { Sheet007 } from "@/registry/components/feedback/sheet-007/sheet-007"
+import { Empty003 } from "@/registry/components/feedback/empty-003/empty-003"
+import { Empty004 } from "@/registry/components/feedback/empty-004/empty-004"
+import { Empty005 } from "@/registry/components/feedback/empty-005/empty-005"
+import { Empty006 } from "@/registry/components/feedback/empty-006/empty-006"
+import { Empty007 } from "@/registry/components/feedback/empty-007/empty-007"
+import { Empty008 } from "@/registry/components/feedback/empty-008/empty-008"
+import { Empty009 } from "@/registry/components/feedback/empty-009/empty-009"
 import { Tabs001 } from "@/registry/components/navigation/tabs-001/tabs-001"
 import { Stepper001 } from "@/registry/components/navigation/stepper-001/stepper-001"
 import { Pagination001 } from "@/registry/components/navigation/pagination-001/pagination-001"
@@ -424,6 +567,48 @@ import { Pagination002 } from "@/registry/components/navigation/pagination-002/p
 import { Contextmenu001 } from "@/registry/components/navigation/contextmenu-001/contextmenu-001"
 import { Sidebar002 } from "@/registry/components/navigation/sidebar-002/sidebar-002"
 import { Tabs002 } from "@/registry/components/navigation/tabs-002/tabs-002"
+import { Command002 } from "@/registry/components/navigation/command-002/command-002"
+import { Command003 } from "@/registry/components/navigation/command-003/command-003"
+import { Command004 } from "@/registry/components/navigation/command-004/command-004"
+import { Command005 } from "@/registry/components/navigation/command-005/command-005"
+import { Command006 } from "@/registry/components/navigation/command-006/command-006"
+import { Command007 } from "@/registry/components/navigation/command-007/command-007"
+import { Contextmenu002 } from "@/registry/components/navigation/contextmenu-002/contextmenu-002"
+import { Contextmenu003 } from "@/registry/components/navigation/contextmenu-003/contextmenu-003"
+import { Contextmenu004 } from "@/registry/components/navigation/contextmenu-004/contextmenu-004"
+import { Contextmenu005 } from "@/registry/components/navigation/contextmenu-005/contextmenu-005"
+import { Contextmenu006 } from "@/registry/components/navigation/contextmenu-006/contextmenu-006"
+import { Contextmenu007 } from "@/registry/components/navigation/contextmenu-007/contextmenu-007"
+import { Contextmenu008 } from "@/registry/components/navigation/contextmenu-008/contextmenu-008"
+import { Command008 } from "@/registry/components/navigation/command-008/command-008"
+import { Command009 } from "@/registry/components/navigation/command-009/command-009"
+import { Command010 } from "@/registry/components/navigation/command-010/command-010"
+import { Menubar002 } from "@/registry/components/navigation/menubar-002/menubar-002"
+import { Menubar003 } from "@/registry/components/navigation/menubar-003/menubar-003"
+import { Menubar004 } from "@/registry/components/navigation/menubar-004/menubar-004"
+import { Menubar005 } from "@/registry/components/navigation/menubar-005/menubar-005"
+import { Menubar006 } from "@/registry/components/navigation/menubar-006/menubar-006"
+import { Menubar007 } from "@/registry/components/navigation/menubar-007/menubar-007"
+import { Menubar008 } from "@/registry/components/navigation/menubar-008/menubar-008"
+import { Navmenu001 } from "@/registry/components/navigation/navmenu-001/navmenu-001"
+import { Navmenu002 } from "@/registry/components/navigation/navmenu-002/navmenu-002"
+import { Navmenu003 } from "@/registry/components/navigation/navmenu-003/navmenu-003"
+import { Navmenu004 } from "@/registry/components/navigation/navmenu-004/navmenu-004"
+import { Navmenu005 } from "@/registry/components/navigation/navmenu-005/navmenu-005"
+import { Navmenu006 } from "@/registry/components/navigation/navmenu-006/navmenu-006"
+import { Navmenu007 } from "@/registry/components/navigation/navmenu-007/navmenu-007"
+import { Navmenu008 } from "@/registry/components/navigation/navmenu-008/navmenu-008"
+import { Pagination003 } from "@/registry/components/navigation/pagination-003/pagination-003"
+import { Pagination004 } from "@/registry/components/navigation/pagination-004/pagination-004"
+import { Pagination005 } from "@/registry/components/navigation/pagination-005/pagination-005"
+import { Pagination006 } from "@/registry/components/navigation/pagination-006/pagination-006"
+import { Pagination007 } from "@/registry/components/navigation/pagination-007/pagination-007"
+import { Pagination008 } from "@/registry/components/navigation/pagination-008/pagination-008"
+import { Pagination009 } from "@/registry/components/navigation/pagination-009/pagination-009"
+import { Tabs003 } from "@/registry/components/navigation/tabs-003/tabs-003"
+import { Tabs004 } from "@/registry/components/navigation/tabs-004/tabs-004"
+import { Tabs005 } from "@/registry/components/navigation/tabs-005/tabs-005"
+import { Tabs006 } from "@/registry/components/navigation/tabs-006/tabs-006"
 import { Table001 } from "@/registry/components/tables/table-001/table-001"
 import { Table002 } from "@/registry/components/tables/table-002/table-002"
 import { Table003 } from "@/registry/components/tables/table-003/table-003"
@@ -824,6 +1009,17 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "menu-005": Menu005,
   "menu-006": Menu006,
   "menu-007": Menu007,
+  "dropdown-002": Dropdown002,
+  "dropdown-003": Dropdown003,
+  "dropdown-004": Dropdown004,
+  "dropdown-005": Dropdown005,
+  "dropdown-006": Dropdown006,
+  "dropdown-007": Dropdown007,
+  "dropdown-008": Dropdown008,
+  "dropdown-009": Dropdown009,
+  "dropdown-010": Dropdown010,
+  "dropdown-011": Dropdown011,
+  "dropdown-012": Dropdown012,
   "input-001": Input001,
   "input-002": Input002,
   "textarea-001": Textarea001,
@@ -857,6 +1053,58 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "cascader-010": Cascader010,
   "cascader-011": Cascader011,
   "cascader-012": Cascader012,
+  "field-002": Field002,
+  "field-003": Field003,
+  "field-004": Field004,
+  "field-005": Field005,
+  "field-006": Field006,
+  "field-007": Field007,
+  "field-008": Field008,
+  "field-009": Field009,
+  "field-010": Field010,
+  "file-002": File002,
+  "file-003": File003,
+  "file-004": File004,
+  "file-005": File005,
+  "file-006": File006,
+  "file-007": File007,
+  "file-008": File008,
+  "file-009": File009,
+  "file-010": File010,
+  "filters-002": Filters002,
+  "filters-003": Filters003,
+  "filters-004": Filters004,
+  "filters-005": Filters005,
+  "filters-006": Filters006,
+  "filters-007": Filters007,
+  "filters-008": Filters008,
+  "filters-009": Filters009,
+  "input-006": Input006,
+  "input-007": Input007,
+  "input-008": Input008,
+  "input-009": Input009,
+  "input-010": Input010,
+  "input-011": Input011,
+  "input-012": Input012,
+  "input-013": Input013,
+  "input-014": Input014,
+  "input-015": Input015,
+  "inputgroup-001": Inputgroup001,
+  "inputgroup-002": Inputgroup002,
+  "inputgroup-003": Inputgroup003,
+  "inputgroup-004": Inputgroup004,
+  "inputgroup-005": Inputgroup005,
+  "inputgroup-006": Inputgroup006,
+  "inputgroup-007": Inputgroup007,
+  "inputgroup-008": Inputgroup008,
+  "inputgroup-009": Inputgroup009,
+  "inputgroup-010": Inputgroup010,
+  "otp-002": Otp002,
+  "otp-003": Otp003,
+  "otp-004": Otp004,
+  "otp-005": Otp005,
+  "otp-006": Otp006,
+  "otp-007": Otp007,
   "skeleton-001": Skeleton001,
   "progress-001": Progress001,
   "separator-001": Separator001,
@@ -872,6 +1120,66 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "iconstack-001": Iconstack001,
   "sortable-001": Sortable001,
   "kanban-001": Kanban001,
+  "collapsible-001": Collapsible001,
+  "collapsible-002": Collapsible002,
+  "collapsible-003": Collapsible003,
+  "collapsible-004": Collapsible004,
+  "collapsible-005": Collapsible005,
+  "collapsible-006": Collapsible006,
+  "collapsible-007": Collapsible007,
+  "collapsible-008": Collapsible008,
+  "collapsible-009": Collapsible009,
+  "collapsible-010": Collapsible010,
+  "frame-002": Frame002,
+  "frame-003": Frame003,
+  "frame-004": Frame004,
+  "frame-005": Frame005,
+  "frame-006": Frame006,
+  "icontile-002": Icontile002,
+  "icontile-003": Icontile003,
+  "icontile-004": Icontile004,
+  "icontile-005": Icontile005,
+  "icontile-006": Icontile006,
+  "iconstack-002": Iconstack002,
+  "iconstack-003": Iconstack003,
+  "iconstack-004": Iconstack004,
+  "iconstack-005": Iconstack005,
+  "kbd-002": Kbd002,
+  "kbd-003": Kbd003,
+  "kbd-004": Kbd004,
+  "kbd-005": Kbd005,
+  "kbd-006": Kbd006,
+  "separator-002": Separator002,
+  "separator-003": Separator003,
+  "separator-004": Separator004,
+  "separator-005": Separator005,
+  "separator-006": Separator006,
+  "spinner-002": Spinner002,
+  "spinner-003": Spinner003,
+  "spinner-004": Spinner004,
+  "spinner-005": Spinner005,
+  "spinner-006": Spinner006,
+  "item-002": Item002,
+  "item-003": Item003,
+  "item-004": Item004,
+  "item-005": Item005,
+  "item-006": Item006,
+  "item-007": Item007,
+  "item-008": Item008,
+  "item-009": Item009,
+  "item-010": Item010,
+  "kanban-002": Kanban002,
+  "kanban-003": Kanban003,
+  "kanban-004": Kanban004,
+  "kanban-005": Kanban005,
+  "kanban-006": Kanban006,
+  "kanban-007": Kanban007,
+  "sortable-002": Sortable002,
+  "sortable-003": Sortable003,
+  "sortable-004": Sortable004,
+  "sortable-005": Sortable005,
+  "sortable-006": Sortable006,
+  "sortable-007": Sortable007,
   "toast-001": Toast001,
   "empty-001": Empty001,
   "tooltip-001": Tooltip001,
@@ -883,6 +1191,26 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "sheet-001": Sheet001,
   "hovercard-001": Hovercard001,
   "empty-002": Empty002,
+  "drawer-002": Drawer002,
+  "drawer-003": Drawer003,
+  "drawer-004": Drawer004,
+  "drawer-005": Drawer005,
+  "drawer-006": Drawer006,
+  "drawer-007": Drawer007,
+  "drawer-008": Drawer008,
+  "sheet-002": Sheet002,
+  "sheet-003": Sheet003,
+  "sheet-004": Sheet004,
+  "sheet-005": Sheet005,
+  "sheet-006": Sheet006,
+  "sheet-007": Sheet007,
+  "empty-003": Empty003,
+  "empty-004": Empty004,
+  "empty-005": Empty005,
+  "empty-006": Empty006,
+  "empty-007": Empty007,
+  "empty-008": Empty008,
+  "empty-009": Empty009,
   "tabs-001": Tabs001,
   "stepper-001": Stepper001,
   "pagination-001": Pagination001,
@@ -895,6 +1223,48 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "contextmenu-001": Contextmenu001,
   "sidebar-002": Sidebar002,
   "tabs-002": Tabs002,
+  "command-002": Command002,
+  "command-003": Command003,
+  "command-004": Command004,
+  "command-005": Command005,
+  "command-006": Command006,
+  "command-007": Command007,
+  "contextmenu-002": Contextmenu002,
+  "contextmenu-003": Contextmenu003,
+  "contextmenu-004": Contextmenu004,
+  "contextmenu-005": Contextmenu005,
+  "contextmenu-006": Contextmenu006,
+  "contextmenu-007": Contextmenu007,
+  "contextmenu-008": Contextmenu008,
+  "command-008": Command008,
+  "command-009": Command009,
+  "command-010": Command010,
+  "menubar-002": Menubar002,
+  "menubar-003": Menubar003,
+  "menubar-004": Menubar004,
+  "menubar-005": Menubar005,
+  "menubar-006": Menubar006,
+  "menubar-007": Menubar007,
+  "menubar-008": Menubar008,
+  "navmenu-001": Navmenu001,
+  "navmenu-002": Navmenu002,
+  "navmenu-003": Navmenu003,
+  "navmenu-004": Navmenu004,
+  "navmenu-005": Navmenu005,
+  "navmenu-006": Navmenu006,
+  "navmenu-007": Navmenu007,
+  "navmenu-008": Navmenu008,
+  "pagination-003": Pagination003,
+  "pagination-004": Pagination004,
+  "pagination-005": Pagination005,
+  "pagination-006": Pagination006,
+  "pagination-007": Pagination007,
+  "pagination-008": Pagination008,
+  "pagination-009": Pagination009,
+  "tabs-003": Tabs003,
+  "tabs-004": Tabs004,
+  "tabs-005": Tabs005,
+  "tabs-006": Tabs006,
   "table-001": Table001,
   "table-002": Table002,
   "table-003": Table003,

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useSyncExternalStore } from "react"
 import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
 export type Kbd005Platform = "auto" | "mac" | "windows"
@@ -52,6 +52,9 @@ font-family:inherit;font-size:0.75rem;font-weight:650;line-height:1;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="kbd-005"] *{animation:none!important;transition:none!important}}
 `
 
+const subscribe = () => () => {}
+const serverSystem = (): "mac" | "windows" => "windows"
+
 function detect(): "mac" | "windows" {
   if (typeof navigator === "undefined") {
     return "windows"
@@ -72,15 +75,10 @@ export function Kbd005({
   style,
   ...props
 }: Kbd005Props) {
-  // Определяем систему после гидрации: сервер её не знает, а угаданное
-  // значение разошлось бы с разметкой клиента.
-  const [detected, setDetected] = useState<"mac" | "windows">("windows")
-
-  useEffect(() => {
-    if (platform === "auto") {
-      setDetected(detect())
-    }
-  }, [platform])
+  // Систему знает только клиент. useSyncExternalStore отдаёт серверу
+  // «windows», а после гидрации — настоящее значение: разметка сервера и
+  // клиента совпадают, и состояние не досылается эффектом.
+  const detected = useSyncExternalStore(subscribe, detect, serverSystem)
 
   const system = platform === "auto" ? detected : platform
   const modifier = system === "mac" ? "⌘" : "Ctrl"
