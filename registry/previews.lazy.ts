@@ -1035,6 +1035,16 @@ export const LAZY_PREVIEWS = {
       (module) => module.Range001,
     ),
   ),
+  "cascader-001": dynamic(() =>
+    import("@/registry/components/inputs/cascader-001/cascader-001").then(
+      (module) => module.Cascader001,
+    ),
+  ),
+  "filters-001": dynamic(() =>
+    import("@/registry/components/inputs/filters-001/filters-001").then(
+      (module) => module.Filters001,
+    ),
+  ),
   "skeleton-001": dynamic(() =>
     import("@/registry/components/display/skeleton-001/skeleton-001").then(
       (module) => module.Skeleton001,
@@ -1083,6 +1093,31 @@ export const LAZY_PREVIEWS = {
   "spinner-001": dynamic(() =>
     import("@/registry/components/display/spinner-001/spinner-001").then(
       (module) => module.Spinner001,
+    ),
+  ),
+  "frame-001": dynamic(() =>
+    import("@/registry/components/display/frame-001/frame-001").then(
+      (module) => module.Frame001,
+    ),
+  ),
+  "icontile-001": dynamic(() =>
+    import("@/registry/components/display/icontile-001/icontile-001").then(
+      (module) => module.Icontile001,
+    ),
+  ),
+  "iconstack-001": dynamic(() =>
+    import("@/registry/components/display/iconstack-001/iconstack-001").then(
+      (module) => module.Iconstack001,
+    ),
+  ),
+  "sortable-001": dynamic(() =>
+    import("@/registry/components/display/sortable-001/sortable-001").then(
+      (module) => module.Sortable001,
+    ),
+  ),
+  "kanban-001": dynamic(() =>
+    import("@/registry/components/display/kanban-001/kanban-001").then(
+      (module) => module.Kanban001,
     ),
   ),
   "toast-001": dynamic(() =>
@@ -1298,6 +1333,11 @@ export const LAZY_PREVIEWS = {
   "chart-009": dynamic(() =>
     import("@/registry/components/charts/chart-009/chart-009").then(
       (module) => module.Chart009,
+    ),
+  ),
+  "gantt-001": dynamic(() =>
+    import("@/registry/components/charts/gantt-001/gantt-001").then(
+      (module) => module.Gantt001,
     ),
   ),
 } as unknown as Record<string, ComponentType<PreviewProps>>

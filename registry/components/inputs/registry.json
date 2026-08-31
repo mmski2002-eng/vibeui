@@ -2315,6 +2315,205 @@
           }
         }
       }
+    },
+    {
+      "name": "cascader-001",
+      "type": "registry:component",
+      "title": "Cascader Select",
+      "description": "Каскадный выбор: уровень за уровнем на нативных списках, следующий уровень появляется только после выбора на текущем.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cascader-001/cascader-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cascader-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-001-*. Клиентский: \"use client\" ради пути выбора. Каждый уровень — нативный select, поэтому на телефоне открывается системный выбор, а клавиатура работает без своего кода. Уровни считаются из дерева по текущему пути, лишние отбрасываются при смене верхнего уровня.",
+      "meta": {
+        "tags": ["cascader", "select", "tree", "form"],
+        "ai": {
+          "export": "Cascader001",
+          "usage": "<Cascader001 label=\"Раздел\" tree={[{ label: \"Компоненты\", children: [{ label: \"Формы\" }] }]} />",
+          "summary": "Каскадный выбор по уровням: нативные списки, путь строкой под ними и сброс нижних уровней при смене верхнего. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-cascader-001-* и не подменять её токенами вашей темы",
+            "нативные select: системный выбор на телефоне и клавиатура достаются даром",
+            "появление следующего уровня только после выбора: пустой список выглядит сломанным",
+            "сброс нижних уровней при смене верхнего — иначе путь становится невозможным",
+            "путь строкой под списками: после закрытия выбора иначе не видно результата",
+            "aria-live у строки пути"
+          ],
+          "adapt": [
+            "дерево tree и подпись label",
+            "обработчик onChange",
+            "акцент через проп accent",
+            "ширину блока"
+          ],
+          "notes": [
+            "Поиска по уровням нет: для длинных списков берите autocomplete-001.",
+            "Глубина дерева не ограничена, но после четвёртого уровня выбор перестаёт читаться.",
+            "Промежуточный уровень нельзя выбрать как конечный: если это нужно, добавьте свой вариант «весь раздел».",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Раздел каталога",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A cascading select: level by level on native selects, with the next level appearing only after a choice on the current one.",
+            "ai": {
+              "summary": "A cascading select: native lists per level, the chosen path spelled out below and lower levels reset when an upper one changes. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-cascader-001-* palette — do not swap it for your theme tokens",
+                "native selects: the phone's system picker and keyboard support come free",
+                "revealing the next level only after a choice: an empty list looks broken",
+                "resetting lower levels when an upper one changes — otherwise the path becomes impossible",
+                "the path spelled out below: once the lists close nothing else shows the result",
+                "aria-live on the path line"
+              ],
+              "adapt": [
+                "the tree and the label",
+                "the onChange handler",
+                "the accent through the accent prop",
+                "the block width"
+              ],
+              "notes": [
+                "There is no search across levels: for long lists use autocomplete-001.",
+                "Depth is unlimited, but past the fourth level the choice stops reading.",
+                "An intermediate level cannot be the final answer: add an \"entire section\" option if you need it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Cascader001 label=\"Section\" tree={[{ label: \"Components\", children: [{ label: \"Forms\" }] }]} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Catalog section"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "filters-001",
+      "type": "registry:component",
+      "title": "Filter Builder",
+      "description": "Строитель условий: поле, оператор и значение в строке, а связка «и» написана словом, а не подразумевается.",
+      "categories": ["inputs"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "filters-001/filters-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/filters-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-filters-001-*. Клиентский: \"use client\" ради набора условий. Строка условия собрана из нативных select и input, поэтому клавиатура и мобильный выбор работают сами. Кнопка удаления называет условие целиком, а не «удалить строку 2».",
+      "meta": {
+        "tags": ["filters", "query", "conditions", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Filters001",
+          "usage": "<Filters001 fields={[\"Категория\"]} rules={[{ id: \"1\", field: \"Категория\", operator: \"равно\", value: \"Формы\" }]} />",
+          "summary": "Набор условий отбора: строки «поле — оператор — значение», связка словом, счётчик найденного и добавление с очисткой. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-filters-001-* и не подменять её токенами вашей темы",
+            "связку «и» словом: без неё набор условий читается как «или» так же часто",
+            "имя условия в подписи кнопки удаления, а не номер строки",
+            "aria-live у счётчика найденного: он меняется от действий пользователя",
+            "внятное пустое состояние вместо голого списка без строк",
+            "нативные select и input — клавиатура и мобильный выбор достаются даром"
+          ],
+          "adapt": [
+            "списки fields и operators",
+            "стартовые rules и текст found",
+            "акцент через проп accent",
+            "ширину блока"
+          ],
+          "notes": [
+            "Отбор не выполняется: компонент собирает условия, запрос делает вызывающий код.",
+            "Тип значения не проверяется — для дат и чисел подставьте свои поля ввода.",
+            "Группировка условий скобками не поддерживается: для неё нужен свой разбор дерева.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "found",
+            "label": "Найдено",
+            "type": "text",
+            "default": "Найдено 42 из 255",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A condition builder: field, operator and value in a row, with the \"and\" spelled out rather than implied.",
+            "ai": {
+              "summary": "A set of filter conditions: field-operator-value rows, a spelled-out join, a result counter, add and clear. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-filters-001-* palette — do not swap it for your theme tokens",
+                "spelling out the \"and\": otherwise a stack of conditions reads as \"or\" just as often",
+                "naming the condition in the remove button rather than its row number",
+                "aria-live on the result counter: it changes from the user's own actions",
+                "a real empty state instead of a bare list with no rows",
+                "native selects and inputs — keyboard and mobile pickers come free"
+              ],
+              "adapt": [
+                "the fields and operators lists",
+                "the initial rules and the found text",
+                "the accent through the accent prop",
+                "the block width"
+              ],
+              "notes": [
+                "No filtering happens: the component builds conditions, the caller runs the query.",
+                "Value types are unchecked — swap in your own inputs for dates and numbers.",
+                "Bracketed grouping is unsupported: it needs your own expression tree.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Filters001 fields={[\"Category\"]} rules={[{ id: \"1\", field: \"Category\", operator: \"is\", value: \"Forms\" }]} />"
+            },
+            "controls": {
+              "found": {
+                "label": "Found",
+                "default": "42 of 255 found"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

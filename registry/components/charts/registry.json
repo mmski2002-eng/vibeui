@@ -1163,6 +1163,107 @@
           }
         }
       }
+    },
+    {
+      "name": "gantt-001",
+      "type": "registry:component",
+      "title": "Gantt Plan",
+      "description": "План работ полосами по неделям: длительность задаётся колонками грида, а не пересчётом в проценты.",
+      "categories": ["charts"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "gantt-001/gantt-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/gantt-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-gantt-001-*. Серверный: хуков нет. Полоса задачи занимает колонки грида от начала до конца, поэтому пересчёт длительности в проценты не нужен. Колонка названий липкая, состояние различается заливкой и стилем рамки, сроки продублированы текстом.",
+      "meta": {
+        "tags": ["gantt", "plan", "grid", "timeline"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Gantt001",
+          "usage": "<Gantt001 weeks={[\"1 нед\", \"2 нед\"]} tasks={[{ title: \"Спека\", start: 1, span: 2, tone: \"work\" }]} />",
+          "summary": "План работ: задачи строками, недели колонками, полоса занимает свой интервал, состояние различается заливкой и рамкой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-gantt-001-* и не подменять её токенами вашей темы",
+            "полосу на колонках грида: пересчёт длительности в проценты не нужен",
+            "липкую колонку названий — план читают по строкам, а не по датам",
+            "заливку вместе со стилем рамки: одного цвета мало на печати и при дальтонизме",
+            "сроки текстом внутри полосы, а не только её длиной",
+            "горизонтальную прокрутку вместо сжатия недель"
+          ],
+          "adapt": [
+            "массив tasks и подписи weeks",
+            "title — заголовок плана",
+            "акцент через проп accent",
+            "ширину колонки названий"
+          ],
+          "notes": [
+            "Зависимости между задачами не рисуются: стрелки требуют своей раскладки.",
+            "Единица — неделя: для дней увеличьте число колонок, а не дробите полосу.",
+            "Перетаскивание сроков отсутствует — это показ плана, а не редактор.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "План работ",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A work plan as bars over weeks: duration comes from grid columns rather than percentage math.",
+            "ai": {
+              "summary": "A work plan: tasks as rows, weeks as columns, each bar spanning its interval, state carried by fill and border style. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-gantt-001-* palette — do not swap it for your theme tokens",
+                "bars placed on grid columns: no duration-to-percentage math is needed",
+                "the sticky name column — a plan is read by rows, not by dates",
+                "fill together with border style: colour alone dies in print and for colour blindness",
+                "the dates as text inside the bar, not only its length",
+                "horizontal scrolling instead of squeezing the weeks"
+              ],
+              "adapt": [
+                "the tasks array and the week labels",
+                "title — the plan heading",
+                "the accent through the accent prop",
+                "the name column width"
+              ],
+              "notes": [
+                "Dependencies between tasks are not drawn: arrows need their own layout pass.",
+                "The unit is a week: for days add columns rather than splitting a bar.",
+                "There is no drag to reschedule — this displays a plan, it does not edit one.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Gantt001 weeks={[\"W1\", \"W2\"]} tasks={[{ title: \"Spec\", start: 1, span: 2, tone: \"work\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Work plan"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

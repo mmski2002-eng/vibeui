@@ -207,6 +207,8 @@ import { Number001 } from "@/registry/components/inputs/number-001/number-001"
 import { Tags001 } from "@/registry/components/inputs/tags-001/tags-001"
 import { Field001 } from "@/registry/components/inputs/field-001/field-001"
 import { Range001 } from "@/registry/components/inputs/range-001/range-001"
+import { Cascader001 } from "@/registry/components/inputs/cascader-001/cascader-001"
+import { Filters001 } from "@/registry/components/inputs/filters-001/filters-001"
 import { Skeleton001 } from "@/registry/components/display/skeleton-001/skeleton-001"
 import { Progress001 } from "@/registry/components/display/progress-001/progress-001"
 import { Separator001 } from "@/registry/components/display/separator-001/separator-001"
@@ -217,6 +219,11 @@ import { Tree001 } from "@/registry/components/display/tree-001/tree-001"
 import { Scrollarea001 } from "@/registry/components/display/scrollarea-001/scrollarea-001"
 import { Item001 } from "@/registry/components/display/item-001/item-001"
 import { Spinner001 } from "@/registry/components/display/spinner-001/spinner-001"
+import { Frame001 } from "@/registry/components/display/frame-001/frame-001"
+import { Icontile001 } from "@/registry/components/display/icontile-001/icontile-001"
+import { Iconstack001 } from "@/registry/components/display/iconstack-001/iconstack-001"
+import { Sortable001 } from "@/registry/components/display/sortable-001/sortable-001"
+import { Kanban001 } from "@/registry/components/display/kanban-001/kanban-001"
 import { Toast001 } from "@/registry/components/feedback/toast-001/toast-001"
 import { Empty001 } from "@/registry/components/feedback/empty-001/empty-001"
 import { Tooltip001 } from "@/registry/components/feedback/tooltip-001/tooltip-001"
@@ -260,6 +267,7 @@ import { Chart006 } from "@/registry/components/charts/chart-006/chart-006"
 import { Chart007 } from "@/registry/components/charts/chart-007/chart-007"
 import { Chart008 } from "@/registry/components/charts/chart-008/chart-008"
 import { Chart009 } from "@/registry/components/charts/chart-009/chart-009"
+import { Gantt001 } from "@/registry/components/charts/gantt-001/gantt-001"
 
 /**
  * Карта slug -> React-компонент. Из неё рендерятся и миниатюра каталога,
@@ -473,6 +481,8 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "tags-001": Tags001,
   "field-001": Field001,
   "range-001": Range001,
+  "cascader-001": Cascader001,
+  "filters-001": Filters001,
   "skeleton-001": Skeleton001,
   "progress-001": Progress001,
   "separator-001": Separator001,
@@ -483,6 +493,11 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "scrollarea-001": Scrollarea001,
   "item-001": Item001,
   "spinner-001": Spinner001,
+  "frame-001": Frame001,
+  "icontile-001": Icontile001,
+  "iconstack-001": Iconstack001,
+  "sortable-001": Sortable001,
+  "kanban-001": Kanban001,
   "toast-001": Toast001,
   "empty-001": Empty001,
   "tooltip-001": Tooltip001,
@@ -526,4 +541,5 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "chart-007": Chart007,
   "chart-008": Chart008,
   "chart-009": Chart009,
+  "gantt-001": Gantt001,
 }

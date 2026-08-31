@@ -1042,6 +1042,516 @@
           }
         }
       }
+    },
+    {
+      "name": "frame-001",
+      "type": "registry:component",
+      "title": "Demo Frame",
+      "description": "Обрамление демо: условная рамка браузера или телефона вокруг слота, без подделки интерфейса до кнопок и вкладок.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-001/frame-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-frame-001-*. Серверный: хуков нет. Содержимое приходит через children, поэтому внутрь встаёт картинка, iframe или другой блок. Вариант phone ограничивает ширину и увеличивает скругление, вариант plain оставляет чистую рамку.",
+      "meta": {
+        "tags": ["frame", "mockup", "browser", "demo"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame001",
+          "usage": "<Frame001 variant=\"browser\" url=\"vibeui.ru\" caption=\"Каталог\"><img src=\"/shot.png\" alt=\"\" /></Frame001>",
+          "summary": "Рамка вокруг демо: браузер с полосой адреса, телефон со скруглением или чистая рамка. Подпись под кадром. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-001-* и не подменять её токенами вашей темы",
+            "условность рамки: подделка браузера до вкладок и кнопок спорит с интерфейсом вокруг",
+            "слот для содержимого — внутрь встаёт картинка, iframe или другой блок",
+            "подпись под кадром, а не поверх него",
+            "ограничение ширины у варианта phone: без него это не телефон",
+            "figure и figcaption вместо пары div: подпись должна быть связана с кадром"
+          ],
+          "adapt": [
+            "variant — browser, phone или plain",
+            "url, title и caption",
+            "скругление и толщину рамки",
+            "содержимое слота"
+          ],
+          "notes": [
+            "Рамка декоративна: alt и подписи должны нести смысл сами, без опоры на неё.",
+            "Скриншот внутри не масштабируется по высоте: задайте пропорцию картинке или возьмите aspect-001.",
+            "Не рисуйте кнопки «назад» и «обновить»: они выглядят рабочими и вводят в заблуждение.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "variant",
+            "label": "Вид",
+            "type": "select",
+            "default": "browser",
+            "options": ["browser", "phone", "plain"]
+          },
+          {
+            "prop": "url",
+            "label": "Адрес",
+            "type": "text",
+            "default": "vibeui.ru/components",
+            "maxLength": 32
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Каталог компонентов в браузере",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A demo frame: a suggested browser or phone shell around a slot, without faking the interface down to tabs and buttons.",
+            "ai": {
+              "summary": "A frame around a demo: a browser with an address strip, a phone with heavy rounding, or a plain border. Caption below. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-001-* palette — do not swap it for your theme tokens",
+                "the suggestion, not the imitation: a full browser fake fights the surrounding UI",
+                "the content slot — an image, an iframe or another block goes inside",
+                "the caption below the frame rather than over it",
+                "the width cap on the phone variant: without it it is not a phone",
+                "figure and figcaption instead of two divs: the caption must belong to the frame"
+              ],
+              "adapt": [
+                "variant — browser, phone or plain",
+                "url, title and caption",
+                "the corner radius and border weight",
+                "the slot content"
+              ],
+              "notes": [
+                "The frame is decorative: alt text and captions must carry the meaning alone.",
+                "A screenshot inside does not scale by height: set a ratio or use aspect-001.",
+                "Do not draw back and reload buttons: they look functional and mislead.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame001 variant=\"browser\" url=\"vibeui.ru\" caption=\"Catalog\"><img src=\"/shot.png\" alt=\"\" /></Frame001>"
+            },
+            "controls": {
+              "variant": {
+                "label": "Variant"
+              },
+              "url": {
+                "label": "Address",
+                "default": "vibeui.ru/components"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "The catalog in a browser"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "icontile-001",
+      "type": "registry:component",
+      "title": "Icon Tile",
+      "description": "Плитка под иконку: постоянный размер и место, а фон со знаком считаются от одного оттенка, а не подбираются вручную.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "icontile-001/icontile-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/icontile-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-icontile-001-*. Серверный: хуков нет. Тон задаётся парой переменных оттенка и насыщенности, а цвета фона и знака выводятся из них функцией oklch — поэтому новый тон добавляется одной строкой. Без подписи плитка скрыта от скринридера как декоративная.",
+      "meta": {
+        "tags": ["icon", "tile", "tone", "list"],
+        "ai": {
+          "export": "Icontile001",
+          "usage": "<Icontile001 glyph=\"◆\" tone=\"success\" size=\"md\" label=\"Готово\" />",
+          "summary": "Подложка под иконку: пять тонов, три размера, круг или квадрат. Фон и знак выводятся из одного оттенка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-icontile-001-* и не подменять её токенами вашей темы",
+            "вывод фона и знака из общего оттенка: пара цветов не подбирается руками",
+            "постоянный размер плитки — иначе список пунктов прыгает на разной ширине иконок",
+            "скрытие от скринридера без подписи: декоративная плитка не должна читаться",
+            "кегль знака в долях от размера плитки, а не фиксированным числом",
+            "flex:none — плитка не должна сжиматься в узкой строке"
+          ],
+          "adapt": [
+            "glyph — символ или своя иконка",
+            "tone, size и shape",
+            "label для смысловой плитки",
+            "радиус скругления"
+          ],
+          "notes": [
+            "Смысл несёт подпись рядом: цветом одним состояние не передать.",
+            "Символ по умолчанию — заглушка; ставьте свою иконку тем же размером.",
+            "Пять тонов — предел: больше цветов перестают различаться в списке.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "accent",
+            "options": ["neutral", "accent", "success", "warning", "danger"]
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": ["sm", "md", "lg"]
+          },
+          {
+            "prop": "shape",
+            "label": "Форма",
+            "type": "select",
+            "default": "square",
+            "options": ["square", "circle"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An icon tile: a fixed size and slot, with the background and glyph derived from one hue instead of hand-picked.",
+            "ai": {
+              "summary": "A pad behind an icon: five tones, three sizes, square or circle. Background and glyph derive from one hue. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-icontile-001-* palette — do not swap it for your theme tokens",
+                "deriving background and glyph from a shared hue: the pair is not hand-picked",
+                "the fixed tile size — otherwise a list jumps with every icon's width",
+                "hiding it from screen readers without a label: a decorative tile must not read",
+                "the glyph size as a fraction of the tile, not a fixed number",
+                "flex:none — the tile must not shrink in a narrow row"
+              ],
+              "adapt": [
+                "glyph — a symbol or your own icon",
+                "tone, size and shape",
+                "label for a meaningful tile",
+                "the corner radius"
+              ],
+              "notes": [
+                "The meaning lives in the adjacent text: colour alone carries no state.",
+                "The default glyph is a placeholder; drop in your icon at the same size.",
+                "Five tones is the ceiling: more colours stop being distinguishable in a list.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Icontile001 glyph=\"◆\" tone=\"success\" size=\"md\" label=\"Done\" />"
+            },
+            "controls": {
+              "tone": {
+                "label": "Tone"
+              },
+              "size": {
+                "label": "Size"
+              },
+              "shape": {
+                "label": "Shape"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "iconstack-001",
+      "type": "registry:component",
+      "title": "Avatar Stack",
+      "description": "Стопка участников: перекрытие задано обратным флексом вместо z-index, а остаток свёрнут в «+N».",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "iconstack-001/iconstack-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/iconstack-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-iconstack-001-*. Серверный: хуков нет. Порядок наложения задан flex-direction: row-reverse, поэтому левый кружок лежит поверх правого без z-index на каждом элементе. Оттенок кружка считается хешем FNV-1a от имени.",
+      "meta": {
+        "tags": ["avatar", "stack", "team", "overlap"],
+        "ai": {
+          "export": "Iconstack001",
+          "usage": "<Iconstack001 names={[\"Анна Реброва\", \"Илья Мохов\"]} max={4} />",
+          "summary": "Стопка аватаров с перекрытием, счётчиком «+N» и подписью группы. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-iconstack-001-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: стопку показывают поверх любого фона",
+            "обратный флекс вместо z-index на каждом кружке",
+            "свёртку остатка в «+N»: десять кружков подряд не читаются",
+            "хеш FNV-1a для оттенка — сумма кодов красит целый алфавит одинаково",
+            "кольцо фона вокруг кружка: без него стопка сливается в пятно",
+            "подпись с числом участников: кружки скрыты от скринридера"
+          ],
+          "adapt": [
+            "массив names и предел max",
+            "label — подпись группы",
+            "size — sm, md или lg",
+            "величину перекрытия"
+          ],
+          "notes": [
+            "Кружки декоративны: имена должны быть доступны в подписи или рядом.",
+            "Инициалы берутся из первых двух слов: для одного слова останется одна буква.",
+            "Больше пяти кружков не показывайте — дальше «+N» честнее.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "max",
+            "label": "Показывать",
+            "type": "number",
+            "default": 4,
+            "min": 1,
+            "max": 6
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": ["sm", "md", "lg"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An avatar stack: the overlap comes from a reversed flex row instead of z-index, and the remainder collapses into \"+N\".",
+            "ai": {
+              "summary": "An overlapping avatar stack with a \"+N\" counter and a group caption. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-iconstack-001-* palette — do not swap it for your theme tokens",
+                "its own light surface: the stack gets shown over any background",
+                "the reversed flex row instead of a z-index on every circle",
+                "collapsing the remainder into \"+N\": ten circles in a row do not read",
+                "the FNV-1a hash for the hue — summing code points paints a whole alphabet alike",
+                "the ring around each circle: without it the stack becomes one blob",
+                "the caption with the member count: the circles are hidden from screen readers"
+              ],
+              "adapt": [
+                "the names array and the max cap",
+                "label — the group caption",
+                "size — sm, md or lg",
+                "the overlap amount"
+              ],
+              "notes": [
+                "The circles are decorative: the names must be reachable in the caption or nearby.",
+                "Initials come from the first two words: a single-word name yields one letter.",
+                "Do not show more than five circles — past that \"+N\" is more honest.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Iconstack001 names={[\"Anna Rebrova\", \"Ilya Mokhov\"]} max={4} />"
+            },
+            "controls": {
+              "max": {
+                "label": "Show"
+              },
+              "size": {
+                "label": "Size"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sortable-001",
+      "type": "registry:component",
+      "title": "Sortable List",
+      "description": "Список с ручной сортировкой: нативное перетаскивание плюс кнопки со стрелками — единственный путь для клавиатуры.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sortable-001/sortable-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sortable-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-001-*. Клиентский: \"use client\" ради порядка. Перенос сделан на HTML5 drag and drop, поэтому библиотека не нужна; кнопки «выше» и «ниже» дают тот же результат с клавиатуры и называют текущую позицию строки вслух.",
+      "meta": {
+        "tags": ["sortable", "drag", "list", "a11y"],
+        "ai": {
+          "export": "Sortable001",
+          "usage": "<Sortable001 items={[\"Hero\", \"Тарифы\"]} onChange={save} />",
+          "summary": "Список с перетаскиванием: номер строки, ручка захвата, кнопки перемещения и линия места вставки. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sortable-001-* и не подменять её токенами вашей темы",
+            "кнопки перемещения: перетаскивание недоступно с клавиатуры в принципе",
+            "позицию строки в подписи кнопки — «сейчас 3 из 5» слышно, а порядок нет",
+            "линию места вставки вместо подсветки всей строки",
+            "нативный drag and drop: библиотека здесь не нужна",
+            "нумерацию строк — после переноса она подтверждает результат"
+          ],
+          "adapt": [
+            "массив items и title",
+            "обработчик onChange",
+            "акцент через проп accent",
+            "ширину блока"
+          ],
+          "notes": [
+            "Перетаскивание не работает на сенсорных экранах без своей эмуляции — кнопки закрывают этот случай.",
+            "Порядок хранится внутри компонента: сохранение на сервере делает вызывающий код.",
+            "Для сортировки между колонками берите kanban-001: тут один столбец.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Порядок секций",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A sortable list: native drag and drop plus arrow buttons — the only route available from a keyboard.",
+            "ai": {
+              "summary": "A drag-to-reorder list: row numbers, a grip, move buttons and an insertion line. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sortable-001-* palette — do not swap it for your theme tokens",
+                "the move buttons: dragging is fundamentally unavailable from a keyboard",
+                "the position inside the button label — \"now 3 of 5\" is audible, order is not",
+                "the insertion line instead of highlighting the whole row",
+                "native HTML5 drag and drop: no library is needed here",
+                "the row numbering — after a move it confirms the result"
+              ],
+              "adapt": [
+                "the items array and the title",
+                "the onChange handler",
+                "the accent through the accent prop",
+                "the block width"
+              ],
+              "notes": [
+                "Dragging does not work on touch screens without emulation — the buttons cover that case.",
+                "Order lives inside the component: persisting it is the caller's job.",
+                "For moving between columns use kanban-001: this is a single column.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sortable001 items={[\"Hero\", \"Pricing\"]} onChange={save} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Section order"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kanban-001",
+      "type": "registry:component",
+      "title": "Kanban Board",
+      "description": "Доска задач по колонкам: нативный перенос плюс выбор колонки списком, потому что drag недоступен с клавиатуры.",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kanban-001/kanban-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kanban-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-001-*. Клиентский: \"use client\" ради переноса. Колонки лежат в гриде с автоколонками и прокруткой по горизонтали. Счётчик в шапке считается из карточек, а не хранится отдельным числом.",
+      "meta": {
+        "tags": ["kanban", "board", "drag", "tasks"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kanban001",
+          "usage": "<Kanban001 columns={[\"Очередь\", \"В работе\"]} cards={[{ id: \"1\", title: \"Задача\", column: \"Очередь\" }]} />",
+          "summary": "Доска задач: колонки со счётчиком, карточки с меткой, перенос мышью и выбор колонки списком. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-kanban-001-* и не подменять её токенами вашей темы",
+            "выбор колонки списком: перенос мышью недоступен с клавиатуры и труден на телефоне",
+            "счётчик, посчитанный из карточек — отдельное число врёт после первого переноса",
+            "подсветку цели рамкой, а не заливкой: заливка спорит с карточками внутри",
+            "горизонтальную прокрутку колонок вместо их сжатия",
+            "aria-label колонки с числом карточек"
+          ],
+          "adapt": [
+            "массив columns и cards",
+            "обработчик onChange",
+            "акцент через проп accent",
+            "ширину колонки"
+          ],
+          "notes": [
+            "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
+            "Состояние живёт внутри компонента: сохранение делает вызывающий код.",
+            "Для длинных колонок добавьте свою прокрутку по вертикали — здесь её нет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A column board: native drag plus a column select, because dragging is unavailable from a keyboard.",
+            "ai": {
+              "summary": "A task board: columns with counters, tagged cards, mouse dragging and a column select. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-kanban-001-* palette — do not swap it for your theme tokens",
+                "the column select: dragging is unavailable from a keyboard and hard on a phone",
+                "the counter computed from the cards — a stored number lies after the first move",
+                "highlighting the target with a border, not a fill: a fill fights the cards inside",
+                "horizontal scrolling of columns instead of squeezing them",
+                "the column aria-label carrying the card count"
+              ],
+              "adapt": [
+                "the columns and cards arrays",
+                "the onChange handler",
+                "the accent through the accent prop",
+                "the column width"
+              ],
+              "notes": [
+                "Order inside a column does not change: the move only sets membership.",
+                "State lives inside the component: persisting it is the caller's job.",
+                "For long columns add your own vertical scrolling — there is none here.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kanban001 columns={[\"Queue\", \"Doing\"]} cards={[{ id: \"1\", title: \"Task\", column: \"Queue\" }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

@@ -31,37 +31,48 @@
 | категория    | что входит                                                                                                                                                                    | спрос | у нас |
 | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----: | ----: |
 | `buttons`    | button, button group, toggle, toggle group, kbd                                                                                                                               |  ~155 |    11 |
-| `inputs`     | input, input group, select, combobox, autocomplete, checkbox, radio, switch, slider, textarea, number, otp, phone, label, field, file upload, date selector, cascader, rating |  ~300 |    20 |
+| `inputs`     | input, input group, select, combobox, autocomplete, checkbox, radio, switch, slider, textarea, number, otp, phone, label, field, file upload, date selector, cascader, rating, filters |  ~300 |    22 |
 | `accordion`  | аккордеоны и раскрывающиеся разделы                                                                                                                                           |   ~11 |    11 |
-| `display`    | avatar, badge, card, item, icon tile, icon stack, separator, frame, code block, timeline, carousel, collapsible, scroll area, resizable, tree, skeleton, spinner, progress    |  ~265 |    10 |
+| `display`    | avatar, badge, card, item, icon tile, icon stack, separator, frame, code block, timeline, carousel, collapsible, scroll area, resizable, tree, skeleton, spinner, progress, sortable, kanban |  ~265 |    15 |
 | `alert`      | сообщения, подтверждения, статусы, согласия                                                                                                                                   |   ~20 |    20 |
 | `dialog`     | модальные окна: подтверждения, формы, результаты, мастера                                                                                                                     |   ~14 |    14 |
 | `aspect`     | кадры с заданной пропорцией: обложки, видео, карты, коллажи                                                                                                                   |    ~8 |     8 |
 | `feedback`   | drawer, sheet, popover, tooltip, hover card, toast, empty state                                                                                                               |  ~130 |     4 |
 | `navigation` | breadcrumb, dropdown menu, context menu, menubar, navigation menu, tabs, stepper, command, scrollspy                                                                          |   ~85 |    12 |
 | `tables`     | table, data grid, pagination                                                                                                                                                  |   ~60 |    10 |
-| `charts`     | chart (line, bar, area, pie, radial), sparkline                                                                                                                               |   ~55 |     3 |
+| `charts`     | chart (line, bar, area, pie, radial), sparkline                                                                                                                               |   ~55 |    11 |
 | `calendar`   | calendar, event calendar, gantt, kanban, sortable, filters                                                                                                                    |   ~70 |     0 |
 
 ## kind: block
 
-| категория      | что входит                                                        | спрос | у нас |
-| -------------- | ----------------------------------------------------------------- | ----: | ----: |
-| `hero`         | hero-секции лендинга                                              |   ~24 |     3 |
-| `features`     | features, comparison, stats                                       |   ~35 |     1 |
-| `pricing`      | pricing, coupon, receipt                                          |   ~20 |     1 |
-| `navbar`       | шапки сайта и приложения                                          |   ~13 |     1 |
-| `cta`          | cta-секции                                                        |    ~6 |     1 |
-| `faq`          | faq-секции                                                        |    ~6 |     1 |
-| `testimonials` | отзывы, wall of love, review                                      |   ~12 |     1 |
-| `footer`       | подвалы                                                           |    ~8 |     1 |
-| `dashboard`    | app shell, dashboard, settings, profile, filter sidebar, schedule |   ~80 |     6 |
-| `ai`           | чат, ассистент, агентные сценарии                                 |   ~20 |     3 |
+Ориентир пересчитан по фактическому каталогу reui.io (сверка 31 августа
+2026 года): у них 512 блоков, у нас 19. Колонка «спрос» — их число блоков
+в категории, а не оценка.
 
-Ещё не заведённые категории блоков, если пойдём в e-commerce и в auth:
-`commerce` (product card, product grid, product detail, shop hero, checkout,
-cart, wishlist, category card — суммарно ~55) и `auth` (вход, регистрация,
-восстановление, onboarding, wizard — ~35).
+| категория      | что входит                                        | спрос | у нас |
+| -------------- | ------------------------------------------------- | ----: | ----: |
+| `hero`         | hero-секции лендинга                              |    16 |     3 |
+| `features`     | features, comparison, stats                       |    15 |     1 |
+| `pricing`      | pricing, coupon, receipt                          |    19 |     1 |
+| `navbar`       | шапки сайта и приложения                          |    13 |     1 |
+| `cta`          | cta-секции                                        |     6 |     1 |
+| `faq`          | faq-секции                                        |     6 |     1 |
+| `testimonials` | отзывы, wall of love, review                      |     6 |     1 |
+| `footer`       | подвалы                                           |     8 |     1 |
+| `blog`         | анонсы, лента статей, карточка записи             |     6 |     0 |
+| `contact`      | формы связи, контакты, карта                      |     6 |     0 |
+| `dashboard`    | app shell, dashboard, settings, profile, schedule |    92 |     6 |
+| `ai`           | чат, ассистент, агентные сценарии, AI Ops         |    19 |     3 |
+| `auth`         | вход, регистрация, восстановление, onboarding     |    29 |     0 |
+| `commerce`     | товар, витрина, корзина, оформление, чек, отзыв   |    79 |     0 |
+| `datagrid`     | таблица данных: колонки, правка, группировка      |    36 |     0 |
+| `solutions`    | аналитика, биллинг, CRM, файлы, склад, участники  |    55 |     0 |
+
+Соответствие разделам reui.io: их Application (292) у нас разложено по
+`dashboard`, `auth`, `ai` и мелким блокам; их eCommerce (79) — это
+`commerce`; Data Grid (36) — `datagrid`; Solutions (65) — `solutions` и
+`ai`; Marketing (40) — `hero`, `features`, `pricing`, `cta`, `faq`,
+`testimonials`, `blog`, `contact`.
 
 ## kind: template
 
@@ -188,10 +199,18 @@ cart, wishlist, category card — суммарно ~55) и `auth` (вход, р�
     `dashboard-003` (настройки с опасной зоной), `dashboard-004`
     (участники, роли и расход мест), `dashboard-005` (панель фильтров с
     чипами выбранного), `dashboard-006` (недельное расписание на гриде).
-23. `ai` — первая волна: `ai-001` (чат с ассистентом), `ai-002` (панель
+23. Пропущенные типы ReUI закрыты: `frame-001` (условная рамка демо),
+    `icontile-001` (плитка под иконку), `iconstack-001` (стопка участников),
+    `sortable-001` (сортировка перетаскиванием и кнопками),
+    `kanban-001` (доска с переносом и выбором колонки),
+    `cascader-001` (выбор по уровням), `filters-001` (строитель условий),
+    `gantt-001` (план полосами по неделям).
+24. `ai` — первая волна: `ai-001` (чат с ассистентом), `ai-002` (панель
     запроса к модели), `ai-003` (лента шагов агента).
-24. Дальше: вторые волны в `dashboard` и `ai`, затем блоки `commerce`
-    и `auth`.
+25. Дальше по объёму разрыва: блоки `commerce` (79), `dashboard` (86 из 92),
+    `solutions` (55), `datagrid` (36), `auth` (29), добор `hero` (13),
+    `navbar` (12), `pricing` (18), `features` (14), затем `blog`
+    и `contact`.
 
 Ритм — пачка на категорию: спека всех items категории сразу (иначе выходят
 вариации одного и того же), потом реализация по одному, потом отдельный
