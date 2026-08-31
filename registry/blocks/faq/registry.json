@@ -80,6 +80,553 @@
           }
         }
       }
+    },
+    {
+      "name": "faq-002",
+      "type": "registry:block",
+      "title": "Two Column FAQ",
+      "description": "Вопросы в две колонки на CSS columns: порядок чтения остаётся вертикальным, карточки не разрываются между колонками, каждый вопрос пронумерован.",
+      "categories": ["faq"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-002/faq-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-002-*. Серверный компонент, раскрытие держат нативные <details>. Две колонки сделаны через column-count, а не через grid: при сетке порядок пошёл бы слева направо и нумерация запуталась бы, а columns сохраняет вертикальное чтение. break-inside:avoid не даёт карточке разорваться между колонками. Одна колонка до 44rem собственной ширины блока, две — дальше.",
+      "meta": {
+        "tags": ["faq", "columns", "details", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Faq002",
+          "usage": "<Faq002\n  title=\"Вопросы, которые задают до оплаты\"\n  items={[{ question: \"Как быстро подключают тариф?\", answer: \"Сразу после оплаты.\" }]}\n/>",
+          "summary": "Секция вопросов в две колонки: заголовок, вводный абзац и карточки с нумерацией, раскрывающиеся нативными details. Колонки собраны на CSS columns, поэтому вопросы читаются сверху вниз, а не змейкой. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-faq-002-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "column-count вместо сетки: сетка пустила бы порядок слева направо и сломала бы нумерацию",
+            "break-inside:avoid у карточки — иначе вопрос окажется внизу одной колонки, а ответ вверху другой",
+            "нативные details и summary: поиск по странице сам раскрывает найденный вопрос, а до гидратации всё уже работает",
+            "скрытие стандартного маркера вместе с собственной стрелкой — без своей стрелки непонятно, что карточка раскрывается",
+            "видимое кольцо фокуса на summary: раскрытие обязано работать с клавиатуры",
+            "container-запрос вместо медиазапроса: в узкой колонке секция обязана становиться одноколоночной сама",
+            "блок <style> внутри компонента — в нём палитра, колонки и карточки"
+          ],
+          "adapt": [
+            "title и description — заголовок и вводный абзац",
+            "массив items — вопросы и ответы; нумерация считается сама по порядку",
+            "акцент через проп accent — цвет номеров, стрелки и фокуса",
+            "внешние отступы через className: секция занимает всю ширину родителя"
+          ],
+          "notes": [
+            "Нечётное число вопросов делает колонки разной длины — это нормально, не подгоняйте текст ради ровного низа.",
+            "Очень длинный ответ разбалансирует колонки: держите ответы в три-четыре строки, длинное уводите на отдельную страницу.",
+            "Разделы независимы: несколько открытых ответов сразу — это осознанное решение для страницы вопросов.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вопросы, которые задают до оплаты",
+            "maxLength": 48
+          },
+          {
+            "prop": "description",
+            "label": "Вводный абзац",
+            "type": "text",
+            "default": "Собрали то, о чём чаще всего спрашивают в чате поддержки.",
+            "maxLength": 96
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Questions in two columns built on CSS columns: the reading order stays vertical, cards never break across columns, and every question is numbered.",
+            "ai": {
+              "summary": "A two-column FAQ section: a heading, an intro paragraph and numbered cards that open with native details. The columns are built on CSS columns, so questions read top to bottom rather than snaking. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-faq-002-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "column-count instead of a grid: a grid would run the order left to right and break the numbering",
+                "break-inside:avoid on the card — otherwise the question ends up at the bottom of one column and the answer at the top of the next",
+                "the native details and summary: find-on-page opens the matching question by itself, and everything works before hydration",
+                "hiding the default marker together with the custom arrow — without an arrow of your own nothing says the card opens",
+                "the visible focus ring on summary: opening has to work from the keyboard",
+                "the container query instead of a media query: in a narrow column the section has to become single-column on its own",
+                "the <style> block inside the component — it holds the palette, the columns and the cards"
+              ],
+              "adapt": [
+                "title and description — the heading and the intro paragraph",
+                "the items array — questions and answers; the numbering counts itself in order",
+                "the accent through the accent prop — it colours the numbers, the arrow and focus",
+                "outer spacing through className: the section fills its parent's width"
+              ],
+              "notes": [
+                "An odd number of questions leaves the columns uneven — that is fine, do not pad the text for a straight bottom edge.",
+                "A very long answer unbalances the columns: keep answers to three or four lines and move long ones to their own page.",
+                "The items are independent: several answers open at once is a deliberate choice for a questions page.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Faq002\n  title=\"Questions people ask before paying\"\n  items={[{ question: \"How fast is the plan activated?\", answer: \"Right after payment.\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Questions people ask before paying"
+              },
+              "description": {
+                "label": "Intro paragraph",
+                "default": "The things support gets asked about most often."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "faq-003",
+      "type": "registry:block",
+      "title": "Tabbed FAQ",
+      "description": "Вопросы, разложенные по категориям-вкладкам. Переключение живёт на радио-кнопках: без JS, без состояния и со штатной работой стрелок клавиатуры.",
+      "categories": ["faq"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-003/faq-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-003-*. Серверный компонент. Вкладки собраны на радио-кнопках одной группы: они спрятаны visually-hidden, но остаются в потоке фокуса, поэтому стрелки листают вкладки так же, как в настоящем tablist. Активная вкладка и её панель находятся правилами :nth-of-type(n):checked ~ ..., поэтому поддерживается до пяти категорий — больше требует дописать правила. Ответы внутри панели — нативные details со знаком «плюс» из псевдоэлементов.",
+      "meta": {
+        "tags": ["faq", "tabs", "categories", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Faq003",
+          "usage": "<Faq003\n  title=\"Вопросы по разделам\"\n  groups={[{ label: \"Доставка\", items: [{ question: \"Когда привезут заказ?\", answer: \"На следующий день.\" }] }]}\n/>",
+          "summary": "Секция вопросов с категориями-вкладками: сверху лента разделов, ниже список вопросов выбранного раздела. Переключение сделано радио-кнопками, поэтому работает без JS и слушается стрелок клавиатуры. Ответы раскрываются нативными details. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-faq-003-* и не подменять её токенами вашей темы",
+            "радио-кнопки visually-hidden, а не display:none: скрытые через display элементы выпадают из фокуса, и вкладки перестают листаться стрелками",
+            "порядок разметки: сначала все радио, потом лента вкладок, потом панели — правила :checked ~ работают только вперёд по соседям",
+            "aria-label у каждого радио — метки нарисованы отдельно, и без подписи переключатель остаётся безымянным",
+            "кольцо фокуса, перенесённое с радио на метку: иначе фокус на невидимом элементе не видно нигде",
+            "defaultChecked у первой категории: без него секция открывается пустой",
+            "нативные details внутри панели — они дают поиск по странице и работу до гидратации",
+            "блок <style> внутри компонента: в нём палитра, вкладки, панели и знак"
+          ],
+          "adapt": [
+            "title и description — заголовок и вводный абзац",
+            "массив groups — категории и вопросы внутри каждой",
+            "id — если на странице две такие секции, у групп радио должны быть разные идентификаторы",
+            "акцент через проп accent — цвет активной вкладки, знака и фокуса",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Категорий поддерживается пять: правила :nth-of-type написаны до пятой, для шестой допишите ещё одну строку.",
+            "Это не ARIA-tablist: скринридер объявит переключатель как группу радио. Так честнее, чем tablist без клавиатурной модели.",
+            "Вкладки прокручиваются по горизонтали — длинные названия разделов лучше сокращать до одного слова.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вопросы по разделам",
+            "maxLength": 40
+          },
+          {
+            "prop": "id",
+            "label": "Идентификатор группы",
+            "type": "text",
+            "default": "vibeui-faq-003",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Questions split into category tabs. The switching lives on radio buttons: no JS, no state, and keyboard arrows work the way they should.",
+            "ai": {
+              "summary": "A FAQ section with category tabs: a rail of sections on top and the questions of the chosen section below. The switching is done with radio buttons, so it works without JS and responds to keyboard arrows. Answers open with native details. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-faq-003-* palette — do not swap it for your theme tokens",
+                "the radios as visually-hidden rather than display:none: elements hidden that way fall out of the focus order and the arrows stop switching tabs",
+                "the markup order: all radios first, then the tab rail, then the panels — the :checked ~ rules only reach forward through siblings",
+                "the aria-label on every radio — the labels are drawn separately, so without it the control stays nameless",
+                "the focus ring moved from the radio onto the label: otherwise focus on an invisible element is visible nowhere",
+                "defaultChecked on the first category: without it the section opens empty",
+                "the native details inside the panel — they give find-on-page and work before hydration",
+                "the <style> block inside the component: it holds the palette, the tabs, the panels and the sign"
+              ],
+              "adapt": [
+                "title and description — the heading and the intro paragraph",
+                "the groups array — the categories and the questions inside each",
+                "id — two such sections on a page need different radio group ids",
+                "the accent through the accent prop — it colours the active tab, the sign and focus",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Five categories are supported: the :nth-of-type rules go up to the fifth, add one more line for a sixth.",
+                "This is not an ARIA tablist: a screen reader announces a radio group. That is more honest than a tablist without the keyboard model.",
+                "The tabs scroll horizontally — long section names are better shortened to one word.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Faq003\n  title=\"Questions by topic\"\n  groups={[{ label: \"Delivery\", items: [{ question: \"When does the order arrive?\", answer: \"The next day.\" }] }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Questions by topic"
+              },
+              "id": {
+                "label": "Group id",
+                "default": "vibeui-faq-003"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "faq-004",
+      "type": "registry:block",
+      "title": "Exclusive Accordion FAQ",
+      "description": "Аккордеон, в котором одновременно открыт только один ответ. Согласование делает сам браузер через одинаковый атрибут name у всех details — без JS.",
+      "categories": ["faq"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-004/faq-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-004.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-004-*. Серверный компонент. Все <details> получают одинаковый атрибут name, и браузер закрывает предыдущий ответ при открытии следующего: это штатное поведение эксклюзивного аккордеона, а не эмуляция на состоянии. Заголовок и номера набраны засечной гарнитурой, вопросы — рубленой: контраст гарнитур отделяет разговорную часть от служебной. Раскладка узкая по замыслу — длинные ответы про условия читают в одну колонку.",
+      "meta": {
+        "tags": ["faq", "accordion", "details", "exclusive"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Faq004",
+          "usage": "<Faq004\n  eyebrow=\"Условия работы\"\n  title=\"Что спрашивают до подписания договора\"\n  items={[{ question: \"Кто владеет правами на макеты?\", answer: \"Заказчик.\" }]}\n/>",
+          "summary": "Секция вопросов узкой колонкой: надзаголовок, засечный заголовок и нумерованный список вопросов, где открыт всегда ровно один ответ. Согласование обеспечивает атрибут name у нативных details, клиентского кода нет вовсе. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-faq-004-* и не подменять её токенами вашей темы",
+            "одинаковый атрибут name у всех details: на нём держится всё поведение блока, без него аккордеон перестанет быть согласованным",
+            "нативные details вместо кнопок с состоянием — поиск по странице и работа до гидратации достаются даром",
+            "узкую колонку: длинные ответы про условия читают в одну колонку, а не в две",
+            "контраст гарнитур — засечная в заголовке и номерах, рубленая в вопросах: он отделяет разговорную часть от служебной",
+            "поворот стрелки при раскрытии как единственный признак состояния",
+            "видимое кольцо фокуса на summary: раскрытие обязано работать с клавиатуры",
+            "блок <style> внутри компонента — в нём палитра, типографика и раскладка"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив items — вопросы и ответы; нумерация считается сама",
+            "name — имя группы аккордеона; на странице с двумя такими секциями оно обязано различаться",
+            "акцент через проп accent — цвет надзаголовка, номеров, стрелки и фокуса",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Эксклюзивный аккордеон поддерживают не все старые браузеры: там ответы просто открываются независимо, ничего не ломается.",
+            "Одновременное закрытие уместно не всегда: на странице частых вопросов удобнее независимые разделы, для этого возьмите другой блок.",
+            "Если оставить name пустым, согласование пропадёт — атрибут обязан быть непустой строкой.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что спрашивают до подписания договора",
+            "maxLength": 52
+          },
+          {
+            "prop": "name",
+            "label": "Имя группы",
+            "type": "text",
+            "default": "vibeui-faq-004",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An accordion where exactly one answer is open at a time. The browser itself coordinates it through a shared name attribute on the details elements — no JS.",
+            "ai": {
+              "summary": "A narrow-column FAQ section: an eyebrow, a serif heading and a numbered list of questions where exactly one answer stays open. The coordination comes from the name attribute on native details, with no client code at all. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-faq-004-* palette — do not swap it for your theme tokens",
+                "the shared name attribute on every details: the whole behaviour of the block rests on it, without it the accordion stops coordinating",
+                "native details instead of stateful buttons — find-on-page and pre-hydration behaviour come for free",
+                "the narrow column: long answers about terms are read in one column, not two",
+                "the typeface contrast — serif in the heading and numbers, sans in the questions: it separates the spoken part from the functional one",
+                "the arrow rotation on open as the only sign of state",
+                "the visible focus ring on summary: opening has to work from the keyboard",
+                "the <style> block inside the component — it holds the palette, the typography and the layout"
+              ],
+              "adapt": [
+                "eyebrow and title — the eyebrow and the section heading",
+                "the items array — the questions and answers; the numbering counts itself",
+                "name — the accordion group name; on a page with two such sections it has to differ",
+                "the accent through the accent prop — it colours the eyebrow, the numbers, the arrow and focus",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Older browsers do not support the exclusive accordion: there the answers simply open independently, nothing breaks.",
+                "Closing the previous answer is not always right: on a general FAQ page independent items are more convenient — take another block for that.",
+                "Leaving name empty removes the coordination — the attribute has to be a non-empty string.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Faq004\n  eyebrow=\"How we work\"\n  title=\"What clients ask before signing\"\n  items={[{ question: \"Who owns the design files?\", answer: \"You do.\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "What clients ask before signing"
+              },
+              "name": {
+                "label": "Group name",
+                "default": "vibeui-faq-004"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "faq-005",
+      "type": "registry:block",
+      "title": "Searchable FAQ",
+      "description": "Вопросы с поиском по списку: фильтрация идёт по вопросу, ответу и теме, а число найденного объявляется вслух — иначе изменение списка остаётся незамеченным.",
+      "categories": ["faq"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-005/faq-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-005.tsx"
+        }
+      ],
+      "docs": "Блок клиентский: \"use client\" нужен ради поля поиска и useState, другого состояния нет. Один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-005-*. Фильтр разбивает запрос на слова и требует совпадения каждого в склейке «вопрос + ответ + тема», поэтому «когда привезут» находит раздел про доставку. Результат считается в useMemo, чтобы список не пересобирался на каждый рендер. Счётчик найденного помечен aria-live=\"polite\": без него человек со скринридером не узнает, что список под полем изменился.",
+      "meta": {
+        "tags": ["faq", "search", "filter", "client"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Faq005",
+          "usage": "<Faq005\n  title=\"Найдите ответ за десять секунд\"\n  placeholder=\"Например: когда привезут заказ\"\n  items={[{ topic: \"Доставка\", question: \"Когда привезут заказ?\", answer: \"На следующий день.\" }]}\n/>",
+          "summary": "Секция вопросов с поиском: поле сверху, счётчик найденного и список вопросов с темой над каждым. Фильтр ищет по всем словам запроса сразу в вопросе, ответе и теме. Клиентский компонент ровно ради поля, зависимостей нет, палитра своя.",
+          "preserve": [
+            "локальную палитру --vibeui-faq-005-* и не подменять её токенами вашей темы",
+            "aria-live=\"polite\" у счётчика найденного: без него изменение списка под полем остаётся неозвученным",
+            "поиск по вопросу, ответу и теме вместе — люди спрашивают словами из ответа, а не из заголовка",
+            "разбиение запроса на слова: совпадение целой фразы срабатывает слишком редко и создаёт ощущение поломки",
+            "useMemo вокруг фильтрации: список пересобирается только при изменении запроса",
+            "aria-label у поля — видимой подписи нет, а placeholder исчезает при наборе",
+            "текст пустого состояния с подсказкой, куда писать: пустой экран без выхода бесполезен",
+            "нативные details у найденных вопросов: раскрытие работает и на клавиатуре, и поиском по странице"
+          ],
+          "adapt": [
+            "title — заголовок секции",
+            "placeholder — пример запроса в поле",
+            "emptyLabel — текст, когда ничего не нашлось",
+            "массив items — вопросы, ответы и темы",
+            "акцент через проп accent — цвет темы, стрелки, кольца фокуса",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Поиск подстрочный и без морфологии: «доставка» не найдёт «доставки». Для русского имеет смысл добавить свой нормализатор.",
+            "Список не подсвечивает совпадения — подсветка внутри ответа мешает читать больше, чем помогает.",
+            "На двадцати вопросах фильтрация мгновенная; на нескольких сотнях выносите поиск на сервер.",
+            "Блок клиентский: он не должен оказаться в самом верху страницы, иначе первый экран ждёт гидратации."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Найдите ответ за десять секунд",
+            "maxLength": 44
+          },
+          {
+            "prop": "placeholder",
+            "label": "Подсказка поиска",
+            "type": "text",
+            "default": "Например: когда привезут заказ",
+            "maxLength": 48
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A FAQ with search: the filter matches question, answer and topic, and the number of results is announced aloud — otherwise the list change goes unnoticed.",
+            "ai": {
+              "summary": "A searchable FAQ section: a field on top, a result counter and a list of questions with a topic above each one. The filter matches every word of the query across the question, the answer and the topic. A client component purely for the field, no dependencies, its own palette.",
+              "preserve": [
+                "the local --vibeui-faq-005-* palette — do not swap it for your theme tokens",
+                "aria-live=\"polite\" on the result counter: without it the list change under the field is never announced",
+                "searching the question, the answer and the topic together — people ask using words from the answer, not the heading",
+                "splitting the query into words: whole-phrase matching fires too rarely and feels broken",
+                "the useMemo around the filtering: the list is rebuilt only when the query changes",
+                "the aria-label on the field — there is no visible label and the placeholder disappears while typing",
+                "the empty-state text with a hint about where to write: an empty screen with no way out is useless",
+                "native details on the found questions: opening works from the keyboard and through find-on-page"
+              ],
+              "adapt": [
+                "title — the section heading",
+                "placeholder — the example query in the field",
+                "emptyLabel — the text shown when nothing matches",
+                "the items array — questions, answers and topics",
+                "the accent through the accent prop — it colours the topic, the arrow and the focus ring",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "The search is substring-based and has no stemming: \"delivery\" will not match \"deliveries\". Add your own normaliser if you need it.",
+                "The list does not highlight matches — highlighting inside an answer hurts reading more than it helps.",
+                "With twenty questions the filtering is instant; with several hundred move the search to the server.",
+                "The block is a client component: do not put it at the very top of a page or the first screen waits for hydration."
+              ],
+              "usage": "<Faq005\n  title=\"Find an answer in ten seconds\"\n  placeholder=\"For example: when will my order arrive\"\n  items={[{ topic: \"Delivery\", question: \"When will my order arrive?\", answer: \"The next day.\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Find an answer in ten seconds"
+              },
+              "placeholder": {
+                "label": "Search hint",
+                "default": "For example: when will my order arrive"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "faq-006",
+      "type": "registry:block",
+      "title": "Ask Support FAQ",
+      "description": "Вопросы с карточкой «не нашли ответ» рядом со списком, а не после него: на широкой раскладке карточка залипает, и до контактов не нужно долистывать.",
+      "categories": ["faq"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-006/faq-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-006.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-006-*. Серверный компонент, раскрытие держат нативные <details>. Карточка помощи — <aside> с подписью, на широкой раскладке она становится sticky: тот, кто не нашёл свой вопрос, обычно бросает список посередине, и контакты должны быть в поле зрения именно там. Каналы связи оформлены ссылками с пояснением, а не одной кнопкой «Связаться»: пояснение отвечает на вопрос «когда мне ответят» до нажатия.",
+      "meta": {
+        "tags": ["faq", "support", "contact", "sticky"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Faq006",
+          "usage": "<Faq006\n  title=\"Частые вопросы о работе сервиса\"\n  helpTitle=\"Не нашли ответ?\"\n  channels={[{ label: \"Написать в поддержку\", detail: \"Отвечаем за 15 минут\", href: \"/support\" }]}\n/>",
+          "summary": "Секция вопросов в две колонки: слева список с раскрывающимися ответами, справа карточка «не нашли ответ» с каналами связи и временем ответа у каждого. На широкой раскладке карточка залипает при прокрутке списка. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-faq-006-* и не подменять её токенами вашей темы",
+            "карточку помощи рядом со списком, а не под ним: тот, кто не нашёл вопрос, бросает список посередине",
+            "sticky у карточки только на широкой раскладке — в одной колонке залипший блок перекрывает вопросы",
+            "пояснение под каждым каналом связи: «отвечаем за 15 минут» решает больше, чем сама кнопка",
+            "карточку элементом <aside> с подписью — это отдельный блок помощи, а не часть списка вопросов",
+            "нативные details: поиск по странице сам раскрывает найденный вопрос",
+            "container-запрос вместо медиазапроса: в узком контейнере колонки обязаны складываться сами",
+            "блок <style> внутри компонента — в нём палитра, две колонки и карточка"
+          ],
+          "adapt": [
+            "title — заголовок списка вопросов",
+            "массив items — вопросы и ответы",
+            "helpTitle и helpText — заголовок и текст карточки помощи",
+            "массив channels — каналы связи, их пояснения и адреса",
+            "акцент через проп accent — цвет стрелок, рамки канала при наведении и фокуса",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Не обещайте в пояснении канала того, чего не выдерживаете: «отвечаем за 15 минут» проверяют сразу.",
+            "Больше трёх каналов превращают карточку в меню: лишнее уводите на страницу контактов.",
+            "Sticky работает, только если у родителя нет overflow:hidden — проверьте обёртку страницы.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "helpTitle",
+            "label": "Заголовок карточки",
+            "type": "text",
+            "default": "Не нашли ответ?",
+            "maxLength": 32
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок списка",
+            "type": "text",
+            "default": "Частые вопросы о работе сервиса",
+            "maxLength": 44
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A FAQ with a \"didn't find an answer\" card beside the list rather than after it: on the wide layout the card sticks, so nobody has to scroll to the bottom to find the contacts.",
+            "ai": {
+              "summary": "A two-column FAQ section: the list with expandable answers on the left, a \"didn't find an answer\" card with contact channels and response times on the right. On the wide layout the card sticks while the list scrolls. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-faq-006-* palette — do not swap it for your theme tokens",
+                "the help card beside the list rather than under it: people who do not find their question abandon the list halfway",
+                "sticky on the card only on the wide layout — in a single column a stuck block covers the questions",
+                "the explanation under every channel: \"we answer in 15 minutes\" decides more than the button itself",
+                "the card as an <aside> with a label — it is a separate help block, not part of the question list",
+                "the native details: find-on-page opens the matching question by itself",
+                "the container query instead of a media query: in a narrow container the columns have to fold on their own",
+                "the <style> block inside the component — it holds the palette, the two columns and the card"
+              ],
+              "adapt": [
+                "title — the heading of the question list",
+                "the items array — the questions and answers",
+                "helpTitle and helpText — the heading and text of the help card",
+                "the channels array — the contact channels, their explanations and addresses",
+                "the accent through the accent prop — it colours the arrows, the channel border on hover and focus",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not promise in a channel explanation what you cannot keep: \"we answer in 15 minutes\" gets tested immediately.",
+                "More than three channels turn the card into a menu: move the rest to a contacts page.",
+                "Sticky only works when no ancestor has overflow:hidden — check the page wrapper.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Faq006\n  title=\"Common questions about the service\"\n  helpTitle=\"Didn't find an answer?\"\n  channels={[{ label: \"Message support\", detail: \"We answer in 15 minutes\", href: \"/support\" }]}\n/>"
+            },
+            "controls": {
+              "helpTitle": {
+                "label": "Card heading",
+                "default": "Didn't find an answer?"
+              },
+              "title": {
+                "label": "List heading",
+                "default": "Common questions about the service"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

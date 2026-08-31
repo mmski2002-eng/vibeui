@@ -78,6 +78,781 @@
           }
         }
       }
+    },
+    {
+      "name": "footer-002",
+      "type": "registry:block",
+      "title": "Four Column Footer",
+      "description": "Тёмный подвал в четыре колонки ссылок: каждая группа — отдельная навигация со своей подписью, а в нижнем ряду живая строка состояния сервисов.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-002/footer-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-002-*. Серверный компонент. Каждая группа ссылок — отдельный <nav> с aria-label, иначе скринридер читает двадцать ссылок подряд одной кашей. Раскладка считается от собственной ширины блока: две колонки, затем четыре, затем бренд уходит в отдельную колонку слева. Точка у строки состояния пульсирует через box-shadow в ключевых кадрах и гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": ["footer", "links", "dark", "status"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Footer002",
+          "usage": "<Footer002\n  brand=\"Контур\"\n  columns={[{ title: \"Продукт\", links: [{ label: \"Тарифы\", href: \"/pricing\" }] }]}\n  status=\"Все системы работают\"\n/>",
+          "summary": "Тёмный подвал: слева знак, название и фраза о продукте, справа четыре колонки ссылок, внизу копирайт и ссылка на страницу состояния с пульсирующей точкой. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-002-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
+            "каждую группу ссылок отдельным <nav> с подписью — иначе скринридер читает двадцать ссылок подряд без структуры",
+            "строку состояния в нижнем ряду: в подвал за ней спускаются те, у кого что-то не работает",
+            "пульсацию точки через box-shadow, а не через изменение размера: размер дёргал бы соседний текст",
+            "правило prefers-reduced-motion — пульсация обязана выключаться",
+            "четыре колонки как предел: при пяти подписи групп начинают переноситься и ломать ритм",
+            "container-запросы на число колонок: в узкой колонке подвал обязан складываться сам",
+            "блок <style> внутри компонента — в нём палитра, колонки и пульсация"
+          ],
+          "adapt": [
+            "brand и tagline — название и фраза о продукте; знак можно заменить на свой <svg>",
+            "массив columns — заголовки групп и ссылки внутри",
+            "legal — строка копирайта",
+            "status — подпись ссылки на страницу состояния",
+            "акцент через проп accent — цвет знака, наведения на ссылки и точки состояния",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Не ставьте ссылку на состояние, если страницы состояния нет: обещание проверят в первый же сбой.",
+            "Больше четырёх ссылок в колонке делают подвал выше первого экрана телефона — переносите редкое в карту сайта.",
+            "Знак вырезан маской из фона: при очень тёмном акценте он сольётся с подложкой.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Контур",
+            "maxLength": 24
+          },
+          {
+            "prop": "status",
+            "label": "Состояние сервисов",
+            "type": "text",
+            "default": "Все системы работают",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dark four-column footer: every link group is its own navigation with a label, and the bottom row carries a live service-status line.",
+            "ai": {
+              "summary": "A dark footer: the mark, the name and a sentence about the product on the left, four columns of links on the right, and a bottom row with the copyright and a status link with a pulsing dot. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-footer-002-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
+                "every link group as its own <nav> with a label — otherwise a screen reader reads twenty links in a row with no structure",
+                "the status line in the bottom row: people come down to the footer for it when something is broken",
+                "the dot pulsing through box-shadow rather than size: a size change would nudge the text next to it",
+                "the prefers-reduced-motion rule — the pulse has to switch off",
+                "four columns as the limit: at five the group titles start wrapping and break the rhythm",
+                "the container queries on the column count: in a narrow column the footer has to fold on its own",
+                "the <style> block inside the component — it holds the palette, the columns and the pulse"
+              ],
+              "adapt": [
+                "brand and tagline — the name and the sentence about the product; the mark can be replaced with your own <svg>",
+                "the columns array — group titles and the links inside them",
+                "legal — the copyright line",
+                "status — the label of the status page link",
+                "the accent through the accent prop — it colours the mark, link hover and the status dot",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Do not link to a status page you do not have: the promise gets tested at the first outage.",
+                "More than four links per column push the footer past a phone's first screen — move rare ones to a sitemap.",
+                "The mark is masked out of the background: with a very dark accent it merges into the ground.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Footer002\n  brand=\"Contour\"\n  columns={[{ title: \"Product\", links: [{ label: \"Pricing\", href: \"/pricing\" }] }]}\n  status=\"All systems operational\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Contour"
+              },
+              "status": {
+                "label": "Service status",
+                "default": "All systems operational"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-003",
+      "type": "registry:block",
+      "title": "Newsletter Footer",
+      "description": "Подвал с подпиской: форма занимает верхний ряд целиком, у поля видимая подпись, рядом честное согласие, а колонки ссылок идут под ней.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-003/footer-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-003-*. Серверный компонент: поле неуправляемое, форма отправляется обычным POST и работает до гидратации. Форма поставлена в верхний ряд и отделена чертой: если подписка нужна бизнесу, она не должна ютиться сбоку от ссылок. Подпись поля видимая и связана через htmlFor, а не спрятана в placeholder. От 46rem форма делится на две колонки, а поле с кнопкой встают в один ряд.",
+      "meta": {
+        "tags": ["footer", "newsletter", "form", "links"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Footer003",
+          "usage": "<Footer003\n  brand=\"Лоза\"\n  formTitle=\"Письмо о новых партиях\"\n  submitLabel=\"Подписаться\"\n  columns={[{ title: \"Каталог\", links: [{ label: \"Новинки\", href: \"/new\" }] }]}\n/>",
+          "summary": "Подвал с подпиской на рассылку: сверху заголовок, объяснение и форма с видимой подписью поля и строкой согласия, ниже четыре колонки ссылок и строка копирайта. Форма настоящая и работает без клиентского кода. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-003-* и не подменять её токенами вашей темы",
+            "форму в верхнем ряду: подписка, зажатая между колонками ссылок, собирает в разы меньше",
+            "видимую подпись поля со связью htmlFor — placeholder исчезает при заполнении и перестаёт объяснять поле",
+            "type=\"email\" вместе с autoComplete=\"email\" и required: на телефоне это другая клавиатура и проверка без JS",
+            "строку согласия рядом с кнопкой, а не ссылкой в самом низу: согласие дают здесь",
+            "каждую группу ссылок отдельным <nav> с подписью",
+            "кольцо фокуса у поля и кнопки — подвал часто проходят с клавиатуры последним",
+            "блок <style> внутри компонента — в нём палитра, форма и колонки"
+          ],
+          "adapt": [
+            "formTitle и formText — заголовок и объяснение, о чём письма",
+            "placeholder, submitLabel и consent — подсказка поля, подпись кнопки и текст согласия",
+            "массив columns — группы ссылок",
+            "brand и legal — название и копирайт в нижней строке",
+            "акцент через проп accent — цвет кнопки, наведения на ссылки и кольца фокуса",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Форма уходит на #subscribe: подставьте адрес своего обработчика и имя поля.",
+            "Блок не показывает состояние «спасибо, проверьте почту»: сделайте отдельную страницу или добавьте своё состояние.",
+            "Не обещайте частоту, которую не выдержите: строка про два письма в месяц проверяется через месяц.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "formTitle",
+            "label": "Заголовок формы",
+            "type": "text",
+            "default": "Письмо о новых партиях",
+            "maxLength": 40
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Подписаться",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A footer with a signup: the form takes the whole top row, the field has a visible label, honest consent sits next to it, and the link columns run below.",
+            "ai": {
+              "summary": "A newsletter footer: a heading, an explanation and a form with a visible field label and a consent line on top, then four columns of links and a copyright row. The form is real and works without client code. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-footer-003-* palette — do not swap it for your theme tokens",
+                "the form in the top row: a signup squeezed between link columns collects a fraction as many addresses",
+                "the visible field label tied through htmlFor — a placeholder disappears while typing and stops explaining the field",
+                "type=\"email\" together with autoComplete=\"email\" and required: on a phone that is a different keyboard and validation without JS",
+                "the consent line next to the button rather than a link at the very bottom: consent is given here",
+                "every link group as its own <nav> with a label",
+                "the focus ring on the field and the button — the footer is often the last stop of a keyboard pass",
+                "the <style> block inside the component — it holds the palette, the form and the columns"
+              ],
+              "adapt": [
+                "formTitle and formText — the heading and the explanation of what the letters are about",
+                "placeholder, submitLabel and consent — the field hint, the button label and the consent text",
+                "the columns array — the link groups",
+                "brand and legal — the name and the copyright in the bottom row",
+                "the accent through the accent prop — it colours the button, link hover and the focus ring",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "The form posts to #subscribe: point it at your own handler and field name.",
+                "The block shows no \"thanks, check your inbox\" state: use a separate page or add your own state.",
+                "Do not promise a frequency you cannot keep: the \"two letters a month\" line gets checked in a month.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Footer003\n  brand=\"Vine\"\n  formTitle=\"A letter about new batches\"\n  submitLabel=\"Subscribe\"\n  columns={[{ title: \"Catalog\", links: [{ label: \"New in\", href: \"/new\" }] }]}\n/>"
+            },
+            "controls": {
+              "formTitle": {
+                "label": "Form heading",
+                "default": "A letter about new batches"
+              },
+              "submitLabel": {
+                "label": "Button",
+                "default": "Subscribe"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-004",
+      "type": "registry:block",
+      "title": "Minimal Line Footer",
+      "description": "Минимальный подвал в одну строку: бренд, копирайт, три служебные ссылки и «наверх». Для коротких страниц, где четыре колонки выглядят чужой деталью.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-004/footer-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-004.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-004-*. Серверный компонент. Всё содержимое лежит в одном flex-ряду: на узкой ширине он переносится, от 40rem собственной ширины — идёт строго в строку. Ссылка «наверх» прижата margin-left:auto и не прячется на телефоне: на длинной странице это единственный быстрый путь обратно. Стрелка нарисована двумя границами, отдельной иконки нет.",
+      "meta": {
+        "tags": ["footer", "minimal", "compact", "landing"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Footer004",
+          "usage": "<Footer004\n  brand=\"Полёт\"\n  legal=\"© 2026\"\n  links={[{ label: \"Условия\", href: \"/terms\" }]}\n  backLabel=\"Наверх\"\n/>",
+          "summary": "Подвал в одну строку: точка-знак с названием, копирайт, три служебные ссылки и ссылка «наверх» справа. Нужен там, где страница короткая и большой подвал выглядит чужой деталью. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-004-* и не подменять её токенами вашей темы",
+            "одну строку как замысел: добавите колонки — получите другой блок, а этот перестанет быть нужным",
+            "ссылку «наверх» на узкой раскладке — на длинной странице она единственный быстрый путь обратно",
+            "три ссылки как предел: четвёртая переносит строку и рушит весь смысл",
+            "служебные ссылки отдельным <nav> с подписью",
+            "верхнюю границу блока: она отделяет подвал от последней секции страницы",
+            "container-запрос вместо медиазапроса: в узкой колонке строка обязана переноситься сама",
+            "блок <style> внутри компонента — в нём палитра, строка и стрелка"
+          ],
+          "adapt": [
+            "brand — название рядом с точкой",
+            "legal — короткая строка копирайта",
+            "массив links — служебные ссылки",
+            "backLabel — подпись ссылки «наверх»",
+            "акцент через проп accent — цвет точки, стрелки и фокуса",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Ссылка «наверх» ведёт на #top: добавьте такой якорь в начало страницы, иначе она никуда не приведёт.",
+            "Копирайт держите коротким: длинная юридическая строка ломает единственный ряд.",
+            "Для сайта с большим деревом разделов возьмите подвал с колонками — этот блок про короткие страницы.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Полёт",
+            "maxLength": 20
+          },
+          {
+            "prop": "legal",
+            "label": "Копирайт",
+            "type": "text",
+            "default": "© 2026",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A minimal single-line footer: brand, copyright, three utility links and a back-to-top link. For short pages where four columns look like a borrowed part.",
+            "ai": {
+              "summary": "A single-line footer: a dot mark with the name, the copyright, three utility links and a back-to-top link on the right. For pages short enough that a large footer looks out of place. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-footer-004-* palette — do not swap it for your theme tokens",
+                "the single line as the point: add columns and you get a different block, and this one stops being needed",
+                "the back-to-top link on the narrow layout — on a long page it is the only quick way back",
+                "three links as the limit: a fourth wraps the row and destroys the idea",
+                "the utility links as their own <nav> with a label",
+                "the top border of the block: it separates the footer from the last section of the page",
+                "the container query instead of a media query: in a narrow column the row has to wrap on its own",
+                "the <style> block inside the component — it holds the palette, the row and the arrow"
+              ],
+              "adapt": [
+                "brand — the name next to the dot",
+                "legal — the short copyright line",
+                "the links array — the utility links",
+                "backLabel — the label of the back-to-top link",
+                "the accent through the accent prop — it colours the dot, the arrow and focus",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "The back-to-top link points at #top: add that anchor at the start of the page or it leads nowhere.",
+                "Keep the copyright short: a long legal string breaks the single row.",
+                "For a site with a deep section tree take a footer with columns — this block is about short pages.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Footer004\n  brand=\"Flight\"\n  legal=\"© 2026\"\n  links={[{ label: \"Terms\", href: \"/terms\" }]}\n  backLabel=\"Back to top\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Flight"
+              },
+              "legal": {
+                "label": "Copyright",
+                "default": "© 2026"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-005",
+      "type": "registry:block",
+      "title": "Sitemap Footer",
+      "description": "Подвал-карта сайта: шесть групп ссылок и выбор языка. На телефоне группы сворачиваются, на широкой раскладке заголовки становятся инертными.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-005/footer-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-005.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-005-*. Серверный компонент. Каждая группа — раскрытый <details>: на телефоне карту сайта можно свернуть и не листать экран длиной со страницу, а от 46rem заголовок получает pointer-events:none, стрелка прячется, и группы просто стоят колонками. Разметка при этом одна, без дублирования узлов под разные ширины. Языки — ссылки с атрибутом lang и aria-current у текущего.",
+      "meta": {
+        "tags": ["footer", "sitemap", "locale", "details"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Footer005",
+          "usage": "<Footer005\n  brand=\"Ориентир\"\n  groups={[{ title: \"Продукт\", links: [{ label: \"Обзор\", href: \"/overview\" }] }]}\n  currentLocale=\"RU\"\n/>",
+          "summary": "Подвал с полной картой сайта: шесть групп ссылок, ряд языковых версий и нижняя строка с реквизитами. На телефоне группы сворачиваются нативными details, на широкой раскладке стоят колонками. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-005-* и не подменять её токенами вашей темы",
+            "группы на <details> с атрибутом open: на телефоне их можно свернуть, а на десктопе они уже раскрыты",
+            "pointer-events:none у заголовка на широкой раскладке — иначе кто-нибудь свернёт колонку на десктопе и решит, что подвал сломался",
+            "одну и ту же разметку под обе ширины: дублирование узлов ради мобильной версии всегда расходится по содержимому",
+            "языки ссылками с атрибутом lang: смена языка — это переход на локализованный адрес, а не состояние",
+            "aria-current=\"true\" у текущего языка",
+            "container-запросы на число колонок: три, затем шесть",
+            "блок <style> внутри компонента — в нём палитра, свёртка и раскладка"
+          ],
+          "adapt": [
+            "массив groups — группы карты сайта и ссылки внутри",
+            "массив locales и currentLocale — языковые версии и текущая",
+            "brand и legal — название и строка реквизитов",
+            "акцент через проп accent — цвет стрелок, наведения и активного языка",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Шесть групп — это предел для одной строки на широком экране; седьмая уедет во второй ряд.",
+            "Карта сайта не заменяет sitemap.xml: поисковику нужен файл, а не подвал.",
+            "Не подменяйте названия языков флагами: страна и язык — разные вещи.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Ориентир",
+            "maxLength": 24
+          },
+          {
+            "prop": "currentLocale",
+            "label": "Текущий язык",
+            "type": "select",
+            "default": "RU",
+            "options": ["RU", "EN", "DE", "KK"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A sitemap footer: six link groups and a language row. On a phone the groups collapse; on the wide layout the headings become inert.",
+            "ai": {
+              "summary": "A footer with a full sitemap: six link groups, a row of language versions and a bottom row with registration details. On a phone the groups collapse through native details; on the wide layout they stand as columns. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-footer-005-* palette — do not swap it for your theme tokens",
+                "the groups as <details> with the open attribute: on a phone they can be collapsed, on desktop they are already open",
+                "pointer-events:none on the heading in the wide layout — otherwise somebody collapses a column on desktop and decides the footer is broken",
+                "the same markup for both widths: duplicating nodes for a mobile version always drifts apart in content",
+                "languages as links carrying lang: switching language is a move to a localised address, not a state",
+                "aria-current=\"true\" on the current language",
+                "the container queries on the column count: three, then six",
+                "the <style> block inside the component — it holds the palette, the collapsing and the layout"
+              ],
+              "adapt": [
+                "the groups array — the sitemap groups and the links inside them",
+                "the locales array and currentLocale — the language versions and the current one",
+                "brand and legal — the name and the registration line",
+                "the accent through the accent prop — it colours the arrows, hover and the active language",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Six groups is the limit for one row on a wide screen; a seventh drops to a second row.",
+                "A sitemap footer does not replace sitemap.xml: a crawler needs the file, not the footer.",
+                "Do not replace language names with flags: a country is not a language.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Footer005\n  brand=\"Landmark\"\n  groups={[{ title: \"Product\", links: [{ label: \"Overview\", href: \"/overview\" }] }]}\n  currentLocale=\"EN\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Landmark"
+              },
+              "currentLocale": {
+                "label": "Current language",
+                "default": "RU"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-006",
+      "type": "registry:block",
+      "title": "Contacts Footer",
+      "description": "Подвал с контактами и соцсетями: телефон и почта — настоящие ссылки tel: и mailto: с видимым значением, адрес размечен тегом address.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-006/footer-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-006.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-006-*. Серверный компонент. Контакты размечены списком определений <dl>: подпись и значение — пара, а не два независимых абзаца. Телефон и почта остаются настоящими ссылками tel: и mailto: с видимым значением, потому что подвал открывают именно ради них. Адрес обёрнут в <address>. Значки соцсетей — буквенные плашки с aria-label: блок не имеет права тянуть иконочный набор.",
+      "meta": {
+        "tags": ["footer", "contacts", "social", "dark"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Footer006",
+          "usage": "<Footer006\n  brand=\"Ясная\"\n  address=\"Москва, Пресненская набережная, 12\"\n  contacts={[{ label: \"Телефон\", value: \"+7 495 000-11-22\", href: \"tel:+74950001122\" }]}\n/>",
+          "summary": "Тёмный подвал с контактами: название, адрес и часы работы слева, список контактов ссылками в середине, плашки соцсетей справа, внизу юридическая строка. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-006-* и не подменять её токенами вашей темы",
+            "видимые значения телефона и почты вместо кнопки «Связаться»: подвал открывают ради номера, а не ради ещё одного перехода",
+            "схемы tel: и mailto: у ссылок — на телефоне это звонок в одно касание",
+            "адрес в теге <address>: это не просто абзац, и браузеры с поисковиками это учитывают",
+            "контакты списком определений <dl> — подпись и значение обязаны быть парой",
+            "aria-label у плашек соцсетей: двухбуквенное сокращение вслух звучит бессмысленно",
+            "часы работы рядом с адресом — без них адрес не отвечает на главный вопрос",
+            "блок <style> внутри компонента — в нём палитра, раскладка и плашки"
+          ],
+          "adapt": [
+            "brand, address и hours — название, адрес и часы работы",
+            "массив contacts — подписи, значения и адреса ссылок",
+            "массив socials — соцсети, их сокращения и адреса",
+            "legal — юридическая строка внизу",
+            "акцент через проп accent — цвет часов, наведения на контакты и заливки плашек",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "В href для телефона оставляйте номер без пробелов и скобок, иначе часть устройств его не наберёт.",
+            "Сокращения соцсетей — две буквы: три уже не помещаются в плашку.",
+            "Если офисов несколько, этот блок покажет только один: для списка адресов нужен отдельный раздел.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Ясная",
+            "maxLength": 24
+          },
+          {
+            "prop": "hours",
+            "label": "Часы работы",
+            "type": "text",
+            "default": "Пн–Пт, 9:00–19:00",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A footer with contacts and social links: the phone and email are real tel: and mailto: links with visible values, and the address sits in an address tag.",
+            "ai": {
+              "summary": "A dark contacts footer: the name, address and opening hours on the left, a list of contact links in the middle, social tiles on the right and a legal line at the bottom. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-footer-006-* palette — do not swap it for your theme tokens",
+                "the visible phone and email values instead of a \"Contact us\" button: people open the footer for the number, not for another hop",
+                "the tel: and mailto: schemes on the links — on a phone that is a one-tap call",
+                "the address inside an <address> tag: it is not just a paragraph, and browsers and crawlers treat it accordingly",
+                "the contacts as a <dl> — label and value have to be a pair",
+                "the aria-labels on the social tiles: a two-letter abbreviation read aloud means nothing",
+                "the opening hours next to the address — without them the address does not answer the main question",
+                "the <style> block inside the component — it holds the palette, the layout and the tiles"
+              ],
+              "adapt": [
+                "brand, address and hours — the name, the address and the opening hours",
+                "the contacts array — labels, values and link addresses",
+                "the socials array — the networks, their abbreviations and addresses",
+                "legal — the legal line at the bottom",
+                "the accent through the accent prop — it colours the hours, contact hover and the tile fill",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "Keep the phone href free of spaces and brackets, or some devices will not dial it.",
+                "Social abbreviations are two letters: three no longer fit the tile.",
+                "With several offices this block shows only one: a list of addresses needs its own section.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Footer006\n  brand=\"Clearview\"\n  address=\"12 Riverside, London\"\n  contacts={[{ label: \"Phone\", value: \"+44 20 7000 1122\", href: \"tel:+442070001122\" }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Clearview"
+              },
+              "hours": {
+                "label": "Opening hours",
+                "default": "Mon–Fri, 9:00–19:00"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-007",
+      "type": "registry:block",
+      "title": "Storefront Footer",
+      "description": "Подвал магазина: колонки ссылок, полоса про доставку и ряд способов оплаты над копирайтом — там, где его ищут перед тем, как решиться на заказ.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-007/footer-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-007.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-007-*. Серверный компонент. Способы оплаты — текстовые плашки в списке <ul> с aria-label у каждой, а не логотипы платёжных систем: логотипы требуют лицензии, обновляются без предупреждения и утяжеляют страницу. Ряд оплаты стоит отдельной секцией с подписью и отделён чертой, потому что за ним спускаются вниз перед оформлением. Раскладка колонок считается от собственной ширины блока.",
+      "meta": {
+        "tags": ["footer", "ecommerce", "payments", "delivery"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Footer007",
+          "usage": "<Footer007\n  brand=\"Дом и лад\"\n  payments={[{ label: \"Система быстрых платежей\", short: \"СБП\" }]}\n  deliveryNote=\"Бесплатная доставка от 5 000 ₽\"\n/>",
+          "summary": "Подвал интернет-магазина: четыре колонки ссылок, полоса с условиями доставки, отдельная секция со способами оплаты и пояснением про защищённую страницу банка, внизу реквизиты. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-007-* и не подменять её токенами вашей темы",
+            "ряд способов оплаты над копирайтом: перед оформлением заказа люди спускаются вниз именно за ним",
+            "текстовые плашки вместо логотипов платёжных систем — логотипы требуют лицензии и молча устаревают",
+            "aria-label у каждой плашки: «СБП» вслух не объясняет, что это",
+            "пояснение про защищённую страницу банка рядом с плашками — оно снимает главное возражение перед оплатой",
+            "полосу с условиями доставки: порог бесплатной доставки решает больше, чем любая ссылка в колонке",
+            "каждую группу ссылок отдельным <nav> с подписью",
+            "блок <style> внутри компонента — в нём палитра, колонки и плашки"
+          ],
+          "adapt": [
+            "массив columns — группы ссылок магазина",
+            "массив payments — способы оплаты, их сокращения и полные названия",
+            "paymentsNote — пояснение под плашками",
+            "deliveryNote — полоса с условиями доставки",
+            "brand и legal — название и реквизиты в нижней строке",
+            "акцент через проп accent — цвет наведения на ссылки и подложки полосы доставки"
+          ],
+          "notes": [
+            "Не показывайте способ оплаты, который на самом деле не работает: это первая причина брошенной корзины.",
+            "Сокращения держите в четыре знака: длинное название растянет плашку и сломает ряд.",
+            "Порог бесплатной доставки дублируйте в корзине — в подвале его читают до, а не во время оформления.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Дом и лад",
+            "maxLength": 24
+          },
+          {
+            "prop": "deliveryNote",
+            "label": "Условия доставки",
+            "type": "text",
+            "default": "Бесплатная доставка по городу от 5 000 ₽",
+            "maxLength": 72
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A storefront footer: link columns, a delivery strip and a row of payment methods above the copyright — where people look for it before committing to an order.",
+            "ai": {
+              "summary": "An online store footer: four columns of links, a strip with delivery terms, a separate payment-methods section with a note about the bank's secure page, and registration details at the bottom. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-footer-007-* palette — do not swap it for your theme tokens",
+                "the payment row above the copyright: before checking out people scroll down exactly for it",
+                "text tiles instead of payment-system logos — logos need licences and go stale silently",
+                "the aria-label on every tile: an abbreviation read aloud explains nothing",
+                "the note about the bank's secure page next to the tiles — it removes the main objection before payment",
+                "the delivery strip: the free-delivery threshold decides more than any link in a column",
+                "every link group as its own <nav> with a label",
+                "the <style> block inside the component — it holds the palette, the columns and the tiles"
+              ],
+              "adapt": [
+                "the columns array — the store link groups",
+                "the payments array — the methods, their abbreviations and full names",
+                "paymentsNote — the note under the tiles",
+                "deliveryNote — the delivery terms strip",
+                "brand and legal — the name and the registration details in the bottom row",
+                "the accent through the accent prop — it colours link hover and the delivery strip ground"
+              ],
+              "notes": [
+                "Do not show a payment method that does not actually work: it is the first cause of an abandoned cart.",
+                "Keep abbreviations to four characters: a long name stretches the tile and breaks the row.",
+                "Repeat the free-delivery threshold in the cart — in the footer it is read before checkout, not during it.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Footer007\n  brand=\"House & Harmony\"\n  payments={[{ label: \"Instant bank transfer\", short: \"SBP\" }]}\n  deliveryNote=\"Free delivery over £50\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "House & Harmony"
+              },
+              "deliveryNote": {
+                "label": "Delivery terms",
+                "default": "Free city delivery on orders over £50"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footer-008",
+      "type": "registry:block",
+      "title": "Legal Footer",
+      "description": "Юридический подвал: реквизиты списком определений, обязательные документы отдельной навигацией, дисклеймер и отдельная ссылка на настройки cookie.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-008/footer-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-008.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-008-*. Серверный компонент. Реквизиты размечены списком определений <dl>: это пары «что это — значение», и скринридер обязан читать их парами, а не сплошной строкой цифр. Числовые значения набраны tabular-nums, поэтому колонка цифр не пляшет. Настройки cookie вынесены отдельной ссылкой в нижнем ряду: по регламентам согласие должно отзываться так же просто, как давалось, и прятать эту ссылку в тексте нельзя.",
+      "meta": {
+        "tags": ["footer", "legal", "compliance", "cookies"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Footer008",
+          "usage": "<Footer008\n  company=\"ООО «Ориентир»\"\n  details={[{ term: \"ОГРН\", value: \"1157700000000\" }]}\n  legalLinks={[{ label: \"Публичная оферта\", href: \"/offer\" }]}\n/>",
+          "summary": "Юридический подвал: слева название компании и реквизиты парами, справа список обязательных документов, ниже дисклеймер и нижняя строка с копирайтом и ссылкой на настройки cookie. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-008-* и не подменять её токенами вашей темы",
+            "реквизиты списком определений <dl>: пары «что это — значение» скринридер обязан читать парами",
+            "tabular-nums у значений — иначе колонка цифр пляшет по ширине",
+            "отдельную ссылку на настройки cookie в нижнем ряду: согласие обязано отзываться так же просто, как давалось",
+            "документы отдельной навигацией с подписью, а не строкой ссылок через запятую",
+            "читаемый кегль дисклеймера: юридический текст в шесть пикселей — это претензия к вам, а не к пользователю",
+            "разделение реквизитов и документов на две колонки только с 46rem собственной ширины",
+            "блок <style> внутри компонента — в нём палитра, реквизиты и раскладка"
+          ],
+          "adapt": [
+            "company — название юридического лица",
+            "массив details — реквизиты и их значения",
+            "массив legalLinks — обязательные документы",
+            "disclaimer и copyright — предупреждение и строка копирайта",
+            "cookieLabel и cookieHref — подпись и адрес настроек cookie",
+            "акцент через проп accent — цвет наведения на документы и фокуса"
+          ],
+          "notes": [
+            "Реквизиты в блоке вымышленные: подставьте свои до публикации, иначе рискуете претензией.",
+            "Ссылка на настройки cookie должна открывать настоящий диалог согласия, а не страницу политики.",
+            "Дисклеймер про оферту относится к российскому праву: для другой юрисдикции перепишите текст.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "company",
+            "label": "Юридическое лицо",
+            "type": "text",
+            "default": "ООО «Ориентир»",
+            "maxLength": 40
+          },
+          {
+            "prop": "cookieLabel",
+            "label": "Ссылка на cookie",
+            "type": "text",
+            "default": "Настройки cookie",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A legal footer: registration details as a definition list, required documents in their own navigation, a disclaimer and a separate cookie-settings link.",
+            "ai": {
+              "summary": "A legal footer: the company name and registration details as pairs on the left, the list of required documents on the right, a disclaimer below and a bottom row with the copyright and a cookie-settings link. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-footer-008-* palette — do not swap it for your theme tokens",
+                "the registration details as a <dl>: a screen reader has to read the label-and-value pairs as pairs",
+                "tabular-nums on the values — otherwise the column of digits jitters in width",
+                "the separate cookie-settings link in the bottom row: consent has to be as easy to withdraw as it was to give",
+                "the documents as their own navigation with a label rather than a comma-separated line of links",
+                "the readable size of the disclaimer: legal text at six pixels is a complaint against you, not the reader",
+                "splitting details and documents into two columns only from 46rem of the block's own width",
+                "the <style> block inside the component — it holds the palette, the details and the layout"
+              ],
+              "adapt": [
+                "company — the legal entity name",
+                "the details array — the registration entries and their values",
+                "the legalLinks array — the required documents",
+                "disclaimer and copyright — the notice and the copyright line",
+                "cookieLabel and cookieHref — the label and address of the cookie settings",
+                "the accent through the accent prop — it colours document hover and focus"
+              ],
+              "notes": [
+                "The details in the block are fictional: put your own in before publishing or risk a complaint.",
+                "The cookie-settings link has to open a real consent dialog, not the policy page.",
+                "The offer disclaimer refers to Russian law: rewrite it for another jurisdiction.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Footer008\n  company=\"Landmark Ltd\"\n  details={[{ term: \"Company no.\", value: \"11577000\" }]}\n  legalLinks={[{ label: \"Terms of service\", href: \"/terms\" }]}\n/>"
+            },
+            "controls": {
+              "company": {
+                "label": "Legal entity",
+                "default": "Landmark Ltd"
+              },
+              "cookieLabel": {
+                "label": "Cookie link",
+                "default": "Cookie settings"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

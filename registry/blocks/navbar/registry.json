@@ -82,6 +82,1342 @@
           }
         }
       }
+    },
+    {
+      "name": "navbar-002",
+      "type": "registry:block",
+      "title": "Pill Rail Navbar",
+      "description": "Тёмная шапка, в которой меню собрано в одну пилюлю: разделы читаются как единый объект, а в узкой колонке пилюля не прячется в бургер, а превращается в ленту с горизонтальной прокруткой.",
+      "categories": ["navbar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-002/navbar-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-002-*. Серверный компонент, клиентского JS нет. Раскладка считается container-запросом от собственной ширины блока: до 54rem пилюля переносится на вторую строку и прокручивается по горизонтали, дальше встаёт в один ряд по центру шапки. Текущий раздел помечается атрибутом aria-current=\"page\" и подсвечивается селектором по этому атрибуту, а не отдельным классом, поэтому подсветка и доступность не расходятся.",
+      "meta": {
+        "tags": ["navbar", "header", "navigation", "dark"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navbar002",
+          "usage": "<Navbar002\n  brand=\"Контур\"\n  links={[{ label: \"Продукт\", href: \"/product\", current: true }]}\n  actionLabel=\"Демо\"\n  actionHref=\"/demo\"\n/>",
+          "summary": "Тёмная шапка сайта: логотип со знаком, меню в виде одной пилюли, текстовая ссылка входа и закрашенная кнопка действия. В узкой раскладке пилюля уезжает на вторую строку и прокручивается пальцем, поэтому разделы остаются видимыми там, где обычно появляется бургер. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navbar-002-* и не подменять её токенами вашей темы (bg-background, border-border и подобными): блок обязан выглядеть одинаково в любом проекте",
+            "меню одной пилюлей: рамка вокруг ссылок и есть основная идея блока, без неё это обычная строка ссылок",
+            "горизонтальную прокрутку пилюли на узкой ширине вместо бургера — разделы контентного сайта должны оставаться на виду",
+            "скрытие полосы прокрутки вместе с сохранением самой прокрутки: полоса поверх пилюли ломает её форму",
+            "container-запрос вместо медиазапроса: раскладка считается от ширины блока, иначе в узкой колонке появится десктопный ряд",
+            "подсветку текущего раздела через aria-current=\"page\", а не через отдельный класс: разметка и доступность обязаны совпадать",
+            "одну закрашенную кнопку рядом с текстовой ссылкой входа — два одинаковых действия раздваивают выбор",
+            "блок <style> внутри компонента: в нём вся палитра, раскладка и состояния"
+          ],
+          "adapt": [
+            "brand — название и буква в знаке; знак можно заменить на свой <svg>",
+            "массив links — пункты меню и флаг current у текущего раздела",
+            "loginLabel и loginHref — второстепенное действие входа",
+            "actionLabel и actionHref — главное действие шапки",
+            "акцент через проп accent — цвет знака, кнопки и фокуса",
+            "position:sticky и внешние отступы задавайте снаружи через className"
+          ],
+          "notes": [
+            "Больше шести пунктов в пилюле на широкой раскладке начинают жать: лишнее уводите в подвал.",
+            "Пилюля прокручивается без видимой полосы — оставьте у крайних пунктов отступ, иначе не видно, что список продолжается.",
+            "Не делайте вход второй закрашенной кнопкой: он намеренно оформлен как ссылка.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Контур",
+            "maxLength": 24
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Демо",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dark header whose menu is gathered into a single pill: the sections read as one object, and in a narrow column the pill turns into a horizontally scrollable rail instead of collapsing into a burger.",
+            "ai": {
+              "summary": "A dark site header: a logo with a mark, a menu inside one pill, a text sign-in link and a filled action button. On a narrow layout the pill moves to a second row and scrolls by finger, so the sections stay visible where a burger usually appears. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-navbar-002-* palette — do not swap it for your theme tokens (bg-background, border-border and the like): the block must look the same in any project",
+                "the menu as a single pill: the frame around the links is the idea of the block, without it this is a plain row of links",
+                "the horizontal scrolling pill on narrow widths instead of a burger — the sections of a content site should stay visible",
+                "hiding the scrollbar while keeping the scrolling itself: a bar over the pill breaks its shape",
+                "the container query instead of a media query: the layout measures the block, otherwise a narrow column gets the desktop row",
+                "the current section highlighted through aria-current=\"page\" rather than a separate class: markup and accessibility have to agree",
+                "one filled button next to the text sign-in link — two identical actions split the choice",
+                "the <style> block inside the component: it holds the palette, the layout and the states"
+              ],
+              "adapt": [
+                "brand — the name and the letter in the mark; the mark can be replaced with your own <svg>",
+                "the links array — menu items and the current flag on the active section",
+                "loginLabel and loginHref — the secondary sign-in action",
+                "actionLabel and actionHref — the header's primary action",
+                "the accent through the accent prop — it colours the mark, the button and focus",
+                "position:sticky and outer spacing belong outside through className"
+              ],
+              "notes": [
+                "More than six items start to crowd the pill on the wide layout: move the rest to the footer.",
+                "The pill scrolls without a visible bar — keep padding on the edge items so it is clear the list continues.",
+                "Do not turn sign-in into a second filled button: it is deliberately a link.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Navbar002\n  brand=\"Contour\"\n  links={[{ label: \"Product\", href: \"/product\", current: true }]}\n  actionLabel=\"Demo\"\n  actionHref=\"/demo\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Contour"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Demo"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-003",
+      "type": "registry:block",
+      "title": "Dropdown Sections Navbar",
+      "description": "Шапка с выпадающими разделами: панель раскрывается по наведению и по фокусу, каждый пункт несёт поясняющую строку. Ни строки JS и ни одного состояния в React.",
+      "categories": ["navbar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-003/navbar-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-003-*. Серверный компонент. Раскрытие панели держится на :hover и :focus-within у элемента списка, поэтому меню одинаково работает мышью и с клавиатуры: пока фокус внутри панели, она открыта. Панель позиционируется относительно <li> с position:relative, ширина ограничена через min() с единицей cqi — в узком контейнере она не вылезает за край. Стрелка триггера — псевдоэлемент с поворотом, отдельной иконки нет.",
+      "meta": {
+        "tags": ["navbar", "dropdown", "menu", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navbar003",
+          "usage": "<Navbar003\n  brand=\"Слой\"\n  sections={[{ label: \"Продукт\", items: [{ label: \"Конструктор\", href: \"/builder\", hint: \"Секции из готовых блоков\" }] }]}\n  actionLabel=\"Попробовать\"\n/>",
+          "summary": "Светлая шапка с выпадающими разделами: под каждым разделом открывается панель со ссылками и пояснением к каждой. Раскрытие делают :hover и :focus-within, поэтому клавиатура работает без обработчиков, а компонент остаётся серверным. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-navbar-003-* и не подменять её токенами вашей темы (bg-popover, border-border и подобными)",
+            "пару :hover и :focus-within: без второго селектора меню перестанет открываться с клавиатуры, и это заметят не сразу",
+            "поясняющую строку у каждого пункта — раздел верхнего уровня почти никогда не объясняет себя одним словом",
+            "position:relative у <li>: панель обязана считать положение от своего раздела, а не от всей шапки",
+            "ограничение ширины панели через min() с cqi — в узком контейнере фиксированная ширина вылезет за край",
+            "разметку списком <ul>/<li>: скринридер объявит число разделов, а из набора <div> ничего не поймёт",
+            "стрелку псевдоэлементом и её поворот при раскрытии — это единственный признак, что раздел раскрывается",
+            "блок <style> внутри компонента: в нём вся палитра, панель и раскладка"
+          ],
+          "adapt": [
+            "brand — название и знак",
+            "массив sections — разделы, их пункты и пояснения к пунктам",
+            "plainLabel и plainHref — раздел без выпадающей панели",
+            "actionLabel и actionHref — кнопка справа",
+            "акцент через проп accent — цвет знака, кнопки, подсветки пунктов и фокуса",
+            "внешние отступы и sticky через className"
+          ],
+          "notes": [
+            "Раскрытие по наведению неудобно на сенсорных экранах: на узкой раскладке разделы намеренно скрыты, продублируйте их в мобильном меню.",
+            "Больше четырёх разделов с панелями делают шапку непредсказуемой — панели начинают перекрывать друг друга при быстром движении мыши.",
+            "Триггер — <button> без aria-expanded: состояние здесь чисто визуальное, если вам нужно объявляемое меню, переводите его на JS и добавляйте атрибут.",
+            "Панель не обрезается контейнером, но её перекроет любой родитель с overflow:hidden — проверьте обёртку страницы."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Слой",
+            "maxLength": 24
+          },
+          {
+            "prop": "plainLabel",
+            "label": "Простой раздел",
+            "type": "text",
+            "default": "Тарифы",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A header with dropdown sections: the panel opens on hover and on focus, and every item carries a short explanation. No JS and no React state at all.",
+            "ai": {
+              "summary": "A light header with dropdown sections: each section opens a panel of links with a short explanation under every one. :hover and :focus-within do the opening, so the keyboard works without handlers and the component stays a server component. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-navbar-003-* palette — do not swap it for your theme tokens (bg-popover, border-border and the like)",
+                "the :hover and :focus-within pair: without the second selector the menu stops opening from the keyboard, and nobody notices immediately",
+                "the explanation line under every item — a top-level section almost never explains itself in one word",
+                "position:relative on the <li>: the panel must measure its own section, not the whole header",
+                "the panel width limited through min() with cqi — a fixed width overflows a narrow container",
+                "the <ul>/<li> markup: a screen reader announces how many sections there are and understands nothing from a pile of <div>s",
+                "the arrow as a pseudo-element and its rotation on open — it is the only hint that the section expands",
+                "the <style> block inside the component: it holds the palette, the panel and the layout"
+              ],
+              "adapt": [
+                "brand — the name and the mark",
+                "the sections array — sections, their items and the item explanations",
+                "plainLabel and plainHref — the section without a dropdown panel",
+                "actionLabel and actionHref — the button on the right",
+                "the accent through the accent prop — it colours the mark, the button, item highlights and focus",
+                "outer spacing and sticky through className"
+              ],
+              "notes": [
+                "Hover opening is awkward on touch screens: the sections are deliberately hidden on the narrow layout, repeat them in a mobile menu.",
+                "More than four panelled sections make the header unpredictable — panels start overlapping when the mouse moves fast.",
+                "The trigger is a <button> without aria-expanded: the state here is purely visual; if you need an announced menu, move it to JS and add the attribute.",
+                "The panel is not clipped by the container, but any ancestor with overflow:hidden will cut it — check the page wrapper."
+              ],
+              "usage": "<Navbar003\n  brand=\"Layer\"\n  sections={[{ label: \"Product\", items: [{ label: \"Builder\", href: \"/builder\", hint: \"Sections from ready blocks\" }] }]}\n  actionLabel=\"Try it\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Layer"
+              },
+              "plainLabel": {
+                "label": "Plain section",
+                "default": "Pricing"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-004",
+      "type": "registry:block",
+      "title": "Scroll Shrink Navbar",
+      "description": "Прозрачная шапка поверх обложки, которая уплотняется при прокрутке. Делает это анимация по прогрессу прокрутки — без слушателя scroll и без клиентского состояния.",
+      "categories": ["navbar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-004/navbar-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-004.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-004-*. Серверный компонент. Уплотнение описано ключевыми кадрами и привязано к прокрутке страницы через animation-timeline:scroll(root block) под @supports: где свойства нет, шапка просто остаётся развёрнутой, и это осознанная деградация. Анимация лежит на внутреннем [data-part=\"shell\"], а не на корне, поэтому правило prefers-reduced-motion её честно выключает. Собственный тёмный градиент нужен, чтобы прозрачная шапка была видна и вне страницы с обложкой.",
+      "meta": {
+        "tags": ["navbar", "scroll", "transparent", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navbar004",
+          "usage": "<Navbar004\n  brand=\"Меридиан\"\n  links={[{ label: \"Маршруты\", href: \"/routes\" }]}\n  actionLabel=\"Забронировать\"\n  actionHref=\"/booking\"\n/>",
+          "summary": "Шапка поверх обложки: сначала просторная и прозрачная, при прокрутке страницы она сжимается, наливается полупрозрачным фоном и получает нижнюю границу. Всё делает анимация с animation-timeline:scroll() — ни слушателя события, ни состояния. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-navbar-004-* и не подменять её токенами вашей темы",
+            "обёртку @supports вокруг animation-timeline: без неё в старом браузере шапка застынет в конечном кадре",
+            "анимацию на внутреннем [data-part=\"shell\"], а не на корне блока: только так её выключает правило prefers-reduced-motion",
+            "собственный тёмный фон блока — прозрачная шапка обязана оставаться читаемой и там, где под ней нет фотографии",
+            "backdrop-filter вместе с полупрозрачным фоном: на них держится эффект уплотнения",
+            "светлую типографику и контраст ссылок: на обложке серый текст пропадает",
+            "animation-range в rem, а не в процентах: проценты привязали бы уплотнение к длине страницы",
+            "блок <style> внутри компонента — в нём палитра, ключевые кадры и раскладка"
+          ],
+          "adapt": [
+            "brand — название и точка-акцент рядом с ним",
+            "массив links — пункты меню",
+            "actionLabel и actionHref — кнопка бронирования",
+            "акцент через проп accent — цвет точки, кнопки и фокуса",
+            "фоновый градиент блока: замените его на своё изображение обложки",
+            "внешние отступы и position:sticky через className"
+          ],
+          "notes": [
+            "В превью каталога прокрутки нет, поэтому шапка показана в развёрнутом состоянии — это её исходный вид.",
+            "Уплотнение считается от прокрутки корневого скроллера: внутри собственного контейнера с прокруткой нужно поменять scroll(root block) на scroll(nearest block).",
+            "Строка-подсказка под шапкой нужна для витрины: на живой странице замените её содержимым обложки или удалите.",
+            "При prefers-reduced-motion уплотнение отключается целиком — это намеренно, не пытайтесь вернуть его через transition."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Меридиан",
+            "maxLength": 24
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Забронировать",
+            "maxLength": 22
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A transparent header over a cover image that condenses as the page scrolls. A scroll-driven animation does it — no scroll listener and no client state.",
+            "ai": {
+              "summary": "A header over a cover: roomy and transparent at first, then it shrinks, fills with a translucent background and gains a bottom border as the page scrolls. A scroll-driven animation does everything — no event listener, no state. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-navbar-004-* palette — do not swap it for your theme tokens",
+                "the @supports wrapper around animation-timeline: without it an older browser freezes the header in the final keyframe",
+                "the animation on the inner [data-part=\"shell\"] rather than the block root: only there does the prefers-reduced-motion rule switch it off",
+                "the block's own dark background — a transparent header must stay readable where there is no photo under it",
+                "backdrop-filter together with the translucent background: the condensing effect depends on both",
+                "the light typography and link contrast: grey text disappears over a cover image",
+                "animation-range in rem rather than percent: percentages would tie the condensing to the page length",
+                "the <style> block inside the component — it holds the palette, the keyframes and the layout"
+              ],
+              "adapt": [
+                "brand — the name and the accent dot next to it",
+                "the links array — the menu items",
+                "actionLabel and actionHref — the booking button",
+                "the accent through the accent prop — it colours the dot, the button and focus",
+                "the block's background gradient: replace it with your own cover image",
+                "outer spacing and position:sticky through className"
+              ],
+              "notes": [
+                "There is no scrolling in the catalogue preview, so the header is shown expanded — that is its initial state.",
+                "The condensing is measured on the root scroller: inside your own scrolling container swap scroll(root block) for scroll(nearest block).",
+                "The hint line under the header exists for the showcase: on a live page replace it with cover content or delete it.",
+                "Under prefers-reduced-motion the condensing is switched off entirely — that is deliberate, do not bring it back through a transition."
+              ],
+              "usage": "<Navbar004\n  brand=\"Meridian\"\n  links={[{ label: \"Routes\", href: \"/routes\" }]}\n  actionLabel=\"Book a seat\"\n  actionHref=\"/booking\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Meridian"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Book a seat"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-005",
+      "type": "registry:block",
+      "title": "Search First Navbar",
+      "description": "Шапка, построенная вокруг поиска: поле стоит в середине и забирает всю свободную ширину, разделы ужимаются вокруг него. Настоящая форма, работает и без JS.",
+      "categories": ["navbar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-005/navbar-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-005.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-005-*. Серверный компонент: поле неуправляемое, отправка формы уходит на страницу поиска обычным GET. Раскладка — CSS-сетка: в узком контейнере поле и разделы занимают отдельные строки, от 56rem всё встаёт в один ряд, где поле получает minmax(12rem,26rem). Лупа собрана из двух псевдоэлементов, подсказка горячей клавиши — <kbd> с pointer-events:none, чтобы не мешать клику по полю.",
+      "meta": {
+        "tags": ["navbar", "search", "header", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navbar005",
+          "usage": "<Navbar005\n  brand=\"Справочник\"\n  searchPlaceholder=\"Поиск по документации\"\n  links={[{ label: \"Каталог\", href: \"/catalog\" }]}\n  actionLabel=\"Войти\"\n/>",
+          "summary": "Шапка вокруг поиска: слева логотип, в середине широкое поле с лупой и подсказкой горячей клавиши, дальше разделы и кнопка входа. Поле — настоящая форма с role=\"search\", поэтому поиск работает до гидратации и без клиентского кода. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-navbar-005-* и не подменять её токенами вашей темы (bg-input, ring-ring и подобными)",
+            "форму с role=\"search\" и настоящим <input type=\"search\">: замена на <div> с обработчиком убивает поиск до гидратации",
+            "aria-label у поля: видимой подписи здесь нет, и без него поле остаётся безымянным",
+            "минимальную и максимальную ширину поля через minmax: без верхней границы поле растянется на полстраницы и потеряет форму",
+            "pointer-events:none у подсказки <kbd> и у лупы — иначе клик по краю поля не попадает в поле",
+            "видимое кольцо фокуса у поля: поиск — первое, куда попадают с клавиатуры",
+            "container-запрос вместо медиазапроса: в узкой колонке поле обязано уезжать на свою строку",
+            "блок <style> внутри компонента — в нём палитра, сетка и оформление поля"
+          ],
+          "adapt": [
+            "brand — название и буква в знаке",
+            "searchPlaceholder — подсказка внутри поля",
+            "searchHint — символ горячей клавиши в углу поля",
+            "массив links — разделы справа от поиска",
+            "actionLabel и actionHref — кнопка входа",
+            "акцент через проп accent — цвет знака, кнопки и кольца фокуса"
+          ],
+          "notes": [
+            "Форма отправляется на #search: подставьте свой адрес и имя параметра вместо q.",
+            "Подсказка горячей клавиши ничего не делает сама: если обещаете «/», повесьте обработчик в своём приложении.",
+            "Не превращайте поле в подсказки-автодополнение без роли combobox — иначе скринридер не сообщит о появившемся списке.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Справочник",
+            "maxLength": 24
+          },
+          {
+            "prop": "searchPlaceholder",
+            "label": "Подсказка поиска",
+            "type": "text",
+            "default": "Поиск по документации и примерам",
+            "maxLength": 48
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A header built around search: the field sits in the middle and takes all the free width while the sections squeeze around it. A real form that works without JS.",
+            "ai": {
+              "summary": "A header around search: the logo on the left, a wide field with a magnifier and a shortcut hint in the middle, then the sections and a sign-in button. The field is a real form with role=\"search\", so search works before hydration and without client code. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-navbar-005-* palette — do not swap it for your theme tokens (bg-input, ring-ring and the like)",
+                "the form with role=\"search\" and a real <input type=\"search\">: replacing it with a <div> and a handler kills search before hydration",
+                "the aria-label on the field: there is no visible label here, and without it the field stays nameless",
+                "the minimum and maximum field width through minmax: with no upper bound the field stretches across half the page and loses its shape",
+                "pointer-events:none on the <kbd> hint and the magnifier — otherwise a click near the field edge misses the field",
+                "the visible focus ring on the field: search is the first stop for keyboard users",
+                "the container query instead of a media query: in a narrow column the field has to move to its own row",
+                "the <style> block inside the component — it holds the palette, the grid and the field styling"
+              ],
+              "adapt": [
+                "brand — the name and the letter in the mark",
+                "searchPlaceholder — the hint inside the field",
+                "searchHint — the shortcut character in the corner of the field",
+                "the links array — the sections to the right of search",
+                "actionLabel and actionHref — the sign-in button",
+                "the accent through the accent prop — it colours the mark, the button and the focus ring"
+              ],
+              "notes": [
+                "The form posts to #search: put your own address and parameter name in place of q.",
+                "The shortcut hint does nothing by itself: if you promise \"/\", wire a handler in your app.",
+                "Do not turn the field into an autocomplete without the combobox role — a screen reader will not announce the list that appears.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Navbar005\n  brand=\"Handbook\"\n  searchPlaceholder=\"Search the docs\"\n  links={[{ label: \"Catalog\", href: \"/catalog\" }]}\n  actionLabel=\"Sign in\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Handbook"
+              },
+              "searchPlaceholder": {
+                "label": "Search hint",
+                "default": "Search the docs and examples"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-006",
+      "type": "registry:block",
+      "title": "Locale Switch Navbar",
+      "description": "Шапка международного сайта: рядом с меню стоит переключатель языка, открывающий список локализованных версий ссылками, а не состоянием интерфейса.",
+      "categories": ["navbar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-006/navbar-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-006.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-006-*. Серверный компонент. Список языков — HTML popover: браузер сам даёт закрытие по Esc и клику мимо. Панель живёт в верхнем слое и потому стилизуется по атрибуту [data-vibeui-navbar-006-locales] и получает палитру отдельным style. Где поддерживается якорное позиционирование, панель встаёт прямо под кнопкой (position-anchor + position-area под @supports), иначе — в правом верхнем углу. Языки остаются ссылками с атрибутом lang: переключение языка — это переход на другой адрес.",
+      "meta": {
+        "tags": ["navbar", "locale", "i18n", "popover"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navbar006",
+          "usage": "<Navbar006\n  brand=\"Ориентир\"\n  currentLocale=\"RU\"\n  locales={[{ code: \"EN\", label: \"English\", region: \"Global\", href: \"/en\" }]}\n  actionLabel=\"Связаться\"\n/>",
+          "summary": "Шапка международного сайта: логотип, разделы, кнопка с кодом текущего языка и кнопка действия. По нажатию на код открывается список локалей с названием языка на самом языке и регионом. Список — HTML popover, языки — обычные ссылки с атрибутом lang. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-navbar-006-* и не подменять её токенами вашей темы",
+            "языки ссылками, а не кнопками: смена языка — это переход на локализованный адрес, который должен открываться в новой вкладке и индексироваться",
+            "атрибут lang у каждой ссылки — иначе синтезатор речи прочитает «Қазақша» русскими правилами",
+            "название языка на самом языке: перевод названий на текущий язык не помогает тому, кто ищет свой",
+            "механику popover: popovertarget и popover=\"auto\" дают Esc и клик мимо без JS",
+            "стилизацию панели по атрибуту и передачу ей палитры отдельным style — в верхнем слое она перестаёт быть потомком шапки",
+            "запасное положение панели вне @supports: без него в браузере без якорного позиционирования список уедет в центр экрана",
+            "aria-current=\"true\" у текущего языка и подпись кнопки, называющую текущий язык"
+          ],
+          "adapt": [
+            "brand — название и знак",
+            "массив locales — коды, названия, регионы и адреса версий",
+            "currentLocale — код текущего языка на кнопке",
+            "массив links — разделы сайта",
+            "actionLabel и actionHref — кнопка действия",
+            "id — если на странице две такие шапки, у панелей должны быть разные идентификаторы"
+          ],
+          "notes": [
+            "Список не запоминает выбор: сохранение локали — дело приложения, а не блока.",
+            "Не подменяйте названия языков флагами: страна и язык — разные вещи, и флаг всегда кого-то обижает.",
+            "Больше восьми языков в списке требуют группировки по регионам или отдельной страницы выбора.",
+            "Панель наследует ширину от содержимого: длинные названия регионов растянут её сильнее, чем ожидается."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Ориентир",
+            "maxLength": 24
+          },
+          {
+            "prop": "currentLocale",
+            "label": "Текущий язык",
+            "type": "select",
+            "default": "RU",
+            "options": ["RU", "EN", "DE", "KK"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A header for an international site: a language switch next to the menu opens a list of localised versions as links, not as interface state.",
+            "ai": {
+              "summary": "A header for an international site: the logo, the sections, a button with the current language code and an action button. The code opens a list of locales showing each language in its own language plus the region. The list is an HTML popover and the languages are plain links carrying lang. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-navbar-006-* palette — do not swap it for your theme tokens",
+                "languages as links rather than buttons: switching language is a move to a localised address that should open in a new tab and be indexable",
+                "the lang attribute on every link — otherwise a speech synthesiser reads \"Қазақша\" with the wrong rules",
+                "the language name written in that language: translating the names into the current language does not help someone looking for theirs",
+                "the popover mechanism: popovertarget and popover=\"auto\" give Esc and click-outside without JS",
+                "styling the panel by attribute and passing it the palette through its own style — in the top layer it is no longer a descendant of the header",
+                "the fallback position outside @supports: without it the list jumps to the middle of the screen in a browser without anchor positioning",
+                "aria-current=\"true\" on the current language and the button label that names it"
+              ],
+              "adapt": [
+                "brand — the name and the mark",
+                "the locales array — codes, names, regions and addresses of the versions",
+                "currentLocale — the current language code on the button",
+                "the links array — the site sections",
+                "actionLabel and actionHref — the action button",
+                "id — two such headers on a page need different panel ids"
+              ],
+              "notes": [
+                "The list does not remember the choice: persisting the locale belongs to the app, not the block.",
+                "Do not replace language names with flags: a country is not a language, and a flag always offends somebody.",
+                "More than eight languages need grouping by region or a separate picker page.",
+                "The panel takes its width from the content: long region names stretch it more than you expect."
+              ],
+              "usage": "<Navbar006\n  brand=\"Landmark\"\n  currentLocale=\"EN\"\n  locales={[{ code: \"DE\", label: \"Deutsch\", region: \"Deutschland\", href: \"/de\" }]}\n  actionLabel=\"Contact us\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Landmark"
+              },
+              "currentLocale": {
+                "label": "Current language",
+                "default": "RU"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-007",
+      "type": "registry:block",
+      "title": "Free Trial Navbar",
+      "description": "Шапка продукта с пробным периодом: вход остаётся текстовой ссылкой, кнопка одна, а под ней мелкая строка, снимающая возражение про банковскую карту.",
+      "categories": ["navbar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-007/navbar-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-007.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-007-*. Серверный компонент. Кнопка и подпись под ней собраны в одну колонку, поэтому подпись выравнивается по правому краю кнопки и не растягивает шапку. На узкой раскладке подпись скрывается — в мобильной шапке она съедает высоту, ради которой всё и затевалось. Знак логотипа вырезан mask-image с радиальным градиентом: отдельного файла иконки нет.",
+      "meta": {
+        "tags": ["navbar", "saas", "trial", "conversion"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navbar007",
+          "usage": "<Navbar007\n  brand=\"Ростки\"\n  trialLabel=\"14 дней бесплатно\"\n  trialHref=\"/trial\"\n  trialNote=\"Карта не нужна\"\n/>",
+          "summary": "Шапка продуктового сайта: логотип, разделы, ссылка входа и одна закрашенная кнопка пробного периода с мелкой строкой под ней. Строка отвечает на возражение «сейчас попросят карту» ровно там, где человек решает нажимать. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navbar-007-* и не подменять её токенами вашей темы",
+            "одну закрашенную кнопку: вход обязан остаться текстовой ссылкой, иначе выбор раздваивается в самом дорогом месте страницы",
+            "строку под кнопкой — она снимает возражение в момент решения, а не в разделе с условиями",
+            "выравнивание подписи по правому краю кнопки: колонка из кнопки и подписи не должна растягивать шапку",
+            "скрытие подписи на узкой раскладке — в мобильной шапке она забирает высоту, ради которой всё и делалось",
+            "container-запрос вместо медиазапроса: раскладка считается от ширины блока",
+            "срок прямо в подписи кнопки: «Попробовать» без числа дней работает заметно хуже",
+            "блок <style> внутри компонента — в нём палитра, раскладка и кнопка"
+          ],
+          "adapt": [
+            "brand — название и знак",
+            "массив links — разделы сайта",
+            "loginLabel и loginHref — ссылка входа",
+            "trialLabel, trialHref и trialNote — подпись кнопки, адрес и строка под ней",
+            "акцент через проп accent — цвет знака, кнопки, тени и фокуса",
+            "внешние отступы и sticky через className"
+          ],
+          "notes": [
+            "Не обещайте в trialNote того, чего нет: строка про карту проверяется на первом же шаге регистрации.",
+            "Тень под кнопкой считается от акцента через color-mix — при очень светлом акценте её стоит убрать.",
+            "Разделы скрыты на узкой раскладке: продублируйте их в мобильном меню своего проекта.",
+            "Не превращайте вход во вторую кнопку: вся идея блока в единственном закрашенном действии."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "trialLabel",
+            "label": "Кнопка пробного периода",
+            "type": "text",
+            "default": "14 дней бесплатно",
+            "maxLength": 24
+          },
+          {
+            "prop": "trialNote",
+            "label": "Строка под кнопкой",
+            "type": "text",
+            "default": "Карта не нужна",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A product header with a free trial: sign-in stays a text link, there is exactly one button, and a small line under it answers the objection about the credit card.",
+            "ai": {
+              "summary": "A product site header: the logo, the sections, a sign-in link and one filled trial button with a small line under it. The line answers \"they will ask for my card\" exactly where the decision happens. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-navbar-007-* palette — do not swap it for your theme tokens",
+                "the single filled button: sign-in has to stay a text link, otherwise the choice splits at the most expensive spot on the page",
+                "the line under the button — it removes the objection at the moment of decision, not in the terms section",
+                "the caption aligned to the right edge of the button: the button-plus-caption column must not stretch the header",
+                "hiding the caption on the narrow layout — in a mobile header it eats the height the whole design was made for",
+                "the container query instead of a media query: the layout measures the block",
+                "the length of the trial inside the button label: \"Try it\" without a number of days performs noticeably worse",
+                "the <style> block inside the component — it holds the palette, the layout and the button"
+              ],
+              "adapt": [
+                "brand — the name and the mark",
+                "the links array — the site sections",
+                "loginLabel and loginHref — the sign-in link",
+                "trialLabel, trialHref and trialNote — the button label, its address and the line under it",
+                "the accent through the accent prop — it colours the mark, the button, its shadow and focus",
+                "outer spacing and sticky through className"
+              ],
+              "notes": [
+                "Do not promise anything in trialNote that is not true: the card line is checked at the first signup step.",
+                "The button shadow is derived from the accent through color-mix — with a very light accent it is better removed.",
+                "The sections are hidden on the narrow layout: repeat them in your project's mobile menu.",
+                "Do not turn sign-in into a second button: the whole idea of the block is the single filled action."
+              ],
+              "usage": "<Navbar007\n  brand=\"Sprouts\"\n  trialLabel=\"14 days free\"\n  trialHref=\"/trial\"\n  trialNote=\"No card needed\"\n/>"
+            },
+            "controls": {
+              "trialLabel": {
+                "label": "Trial button",
+                "default": "14 days free"
+              },
+              "trialNote": {
+                "label": "Line under button",
+                "default": "No card needed"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-008",
+      "type": "registry:block",
+      "title": "Workspace App Navbar",
+      "description": "Шапка внутреннего приложения: рабочее пространство с тарифом слева, вкладки разделов с подчёркиванием текущего, колокол со счётчиком и меню аккаунта.",
+      "categories": ["navbar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-008/navbar-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-008.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-008-*. Серверный компонент: меню аккаунта — HTML popover, состояния в React нет. Текущая вкладка помечается aria-current=\"page\", подчёркивание рисует псевдоэлемент по этому же атрибуту. Счётчик уведомлений нарисован кружком, но продублирован словами в aria-label кнопки: цифра в кружке сама по себе скринридеру ничего не сообщает. Колокол и корзиноподобные иконки собраны из границ и box-shadow, файлов иконок нет.",
+      "meta": {
+        "tags": ["navbar", "app", "dashboard", "account"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navbar008",
+          "usage": "<Navbar008\n  workspace=\"Ателье Восход\"\n  plan=\"Команда\"\n  tabs={[{ label: \"Обзор\", href: \"/overview\", current: true }]}\n  notifications={7}\n/>",
+          "summary": "Шапка внутреннего приложения: рабочее пространство со значком тарифа, вкладки разделов с подчёркиванием активной, колокол уведомлений со счётчиком и кнопка аккаунта, открывающая меню на HTML popover. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navbar-008-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "aria-current=\"page\" у активной вкладки: подчёркивание рисуется по этому атрибуту, поэтому вид и доступность не могут разойтись",
+            "текстовое дублирование счётчика в aria-label кнопки — цифра в кружке сама по себе не читается вслух",
+            "aria-hidden у самого кружка со счётчиком: иначе число прозвучит дважды",
+            "меню аккаунта на HTML popover — Esc и клик мимо достаются бесплатно",
+            "стилизацию меню по атрибуту и передачу палитры отдельным style: в верхнем слое оно не потомок шапки",
+            "строку с именем и почтой в шапке меню: в приложении с несколькими аккаунтами это единственный способ понять, под кем вошёл",
+            "container-запросы на вкладки и на имя пользователя — в узкой шапке они обязаны исчезать сами"
+          ],
+          "adapt": [
+            "workspace и plan — название пространства и подпись тарифа",
+            "массив tabs — разделы приложения и флаг current",
+            "notifications — число новых уведомлений",
+            "userName, userEmail и массив menu — данные аккаунта и пункты его меню",
+            "акцент через проп accent — цвет знака пространства, подчёркивания и фокуса",
+            "id — если на странице две шапки, у меню должны быть разные идентификаторы"
+          ],
+          "notes": [
+            "Инициалы в значках заданы в разметке текстом: при смене workspace и userName поменяйте и их.",
+            "Больше шести вкладок в шапке приложения не помещаются — уводите редкие разделы в меню аккаунта.",
+            "Счётчик выше 99 сломает кружок: подставляйте «99+» на стороне приложения.",
+            "Колокол не открывает список уведомлений: это кнопка, к которой вы подключаете свой обработчик."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "workspace",
+            "label": "Пространство",
+            "type": "text",
+            "default": "Ателье Восход",
+            "maxLength": 24
+          },
+          {
+            "prop": "notifications",
+            "label": "Уведомлений",
+            "type": "number",
+            "default": 7,
+            "min": 0,
+            "max": 99
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An in-app header: the workspace with its plan on the left, section tabs with the active one underlined, a bell with a counter and an account menu.",
+            "ai": {
+              "summary": "An in-app header: the workspace with a plan badge, section tabs with the active one underlined, a notification bell with a counter and an account button that opens a menu built on the HTML popover. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-navbar-008-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "aria-current=\"page\" on the active tab: the underline is drawn from that attribute, so looks and accessibility cannot drift apart",
+                "the counter repeated as words in the button's aria-label — a number in a circle is not read aloud on its own",
+                "aria-hidden on the counter bubble itself: otherwise the number is announced twice",
+                "the account menu on the HTML popover — Esc and click-outside come for free",
+                "styling the menu by attribute and passing the palette through its own style: in the top layer it is not a descendant of the header",
+                "the name and email line at the top of the menu: in an app with several accounts it is the only way to tell who is signed in",
+                "the container queries on the tabs and the user name — in a narrow header they have to disappear on their own"
+              ],
+              "adapt": [
+                "workspace and plan — the workspace name and the plan label",
+                "the tabs array — the app sections and the current flag",
+                "notifications — the number of new notifications",
+                "userName, userEmail and the menu array — account data and its menu items",
+                "the accent through the accent prop — it colours the workspace mark, the underline and focus",
+                "id — two headers on a page need different menu ids"
+              ],
+              "notes": [
+                "The initials in the badges are written as text in the markup: change them when you change workspace and userName.",
+                "More than six tabs do not fit an app header — move rare sections into the account menu.",
+                "A counter above 99 breaks the bubble: substitute \"99+\" on the app side.",
+                "The bell does not open a notification list: it is a button you wire your own handler to."
+              ],
+              "usage": "<Navbar008\n  workspace=\"Sunrise Studio\"\n  plan=\"Team\"\n  tabs={[{ label: \"Overview\", href: \"/overview\", current: true }]}\n  notifications={7}\n/>"
+            },
+            "controls": {
+              "workspace": {
+                "label": "Workspace",
+                "default": "Sunrise Studio"
+              },
+              "notifications": {
+                "label": "Notifications",
+                "default": 7
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-009",
+      "type": "registry:block",
+      "title": "Announcement Navbar",
+      "description": "Шапка с полосой объявления над ней. Полоса закрывается без JS: скрытый чекбокс держит состояние, а :has() убирает объявление, когда он отмечен.",
+      "categories": ["navbar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-009/navbar-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-009.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-009-*. Серверный компонент. Закрытие объявления сделано на скрытом чекбоксе и селекторе :has(:checked) у корня блока: состояние живёт в DOM, React о нём не знает. Чекбокс спрятан visually-hidden, но остаётся в потоке фокуса, поэтому крестик доступен с клавиатуры, а кольцо фокуса рисуется на метке через :has(:focus-visible). Сам крестик собран из двух псевдоэлементов.",
+      "meta": {
+        "tags": ["navbar", "announcement", "banner", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navbar009",
+          "usage": "<Navbar009\n  brand=\"Импульс\"\n  announcement=\"Ранние билеты заканчиваются в пятницу.\"\n  announcementLabel=\"Забрать место\"\n  announcementHref=\"/tickets\"\n/>",
+          "summary": "Шапка с объявлением: сверху цветная полоса с новостью, ссылкой и крестиком, под ней обычная шапка с логотипом, разделами и кнопкой. Полоса закрывается совсем без JS — состояние держит скрытый чекбокс, а прячет объявление :has(). Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-navbar-009-* и не подменять её токенами вашей темы",
+            "скрытый чекбокс именно как visually-hidden: display:none выкинул бы его из потока фокуса и крестик перестал бы работать с клавиатуры",
+            "aria-label у чекбокса — метка нарисована псевдоэлементами и текста не содержит",
+            "aria-hidden у метки: без него скринридер объявит пустой элемент рядом с настоящей кнопкой",
+            "кольцо фокуса через :has([data-part=\"switch\"]:focus-visible) — иначе клавиатурный фокус на невидимом чекбоксе не видно нигде",
+            "полосу объявления элементом <aside> с подписью: это дополнительный материал, а не часть навигации",
+            "контраст текста на цветной полосе: светлый текст на градиенте — единственное, что здесь читают",
+            "блок <style> внутри компонента — в нём палитра, полоса, крестик и раскладка"
+          ],
+          "adapt": [
+            "announcement, announcementLabel и announcementHref — текст объявления, подпись ссылки и адрес",
+            "brand — название и знак",
+            "массив links — разделы сайта",
+            "actionLabel и actionHref — кнопка справа",
+            "акцент через проп accent — цвет полосы, знака, кнопки и фокуса",
+            "id — если на странице две такие шапки, у чекбоксов должны быть разные идентификаторы"
+          ],
+          "notes": [
+            "Закрытие не запоминается: после перезагрузки объявление вернётся. Сохранение выбора — дело приложения.",
+            "Текст объявления в две строки на телефоне выглядит нормально, в три — уже нет: держите фразу короткой.",
+            "Не заменяйте <aside> на <div>: полоса объявления должна быть отделима от навигации.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "announcement",
+            "label": "Текст объявления",
+            "type": "text",
+            "default": "Ранние билеты на конференцию заканчиваются в пятницу.",
+            "maxLength": 72
+          },
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Импульс",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A header with an announcement strip above it. The strip closes without JS: a hidden checkbox holds the state and :has() removes the announcement once it is checked.",
+            "ai": {
+              "summary": "A header with an announcement: a coloured strip on top carrying the news, a link and a close cross, and a regular header with logo, sections and button below it. The strip closes with no JS at all — a hidden checkbox holds the state and :has() hides the announcement. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-navbar-009-* palette — do not swap it for your theme tokens",
+                "the hidden checkbox as visually-hidden specifically: display:none would drop it out of the focus order and the cross would stop working from the keyboard",
+                "the aria-label on the checkbox — the label is drawn with pseudo-elements and carries no text",
+                "aria-hidden on the label: without it a screen reader announces an empty element next to the real control",
+                "the focus ring through :has([data-part=\"switch\"]:focus-visible) — otherwise keyboard focus on an invisible checkbox is visible nowhere",
+                "the announcement as an <aside> with a label: it is supplementary material, not part of the navigation",
+                "the text contrast on the coloured strip: light text on the gradient is the only thing people read here",
+                "the <style> block inside the component — it holds the palette, the strip, the cross and the layout"
+              ],
+              "adapt": [
+                "announcement, announcementLabel and announcementHref — the announcement text, the link label and its address",
+                "brand — the name and the mark",
+                "the links array — the site sections",
+                "actionLabel and actionHref — the button on the right",
+                "the accent through the accent prop — it colours the strip, the mark, the button and focus",
+                "id — two such headers on a page need different checkbox ids"
+              ],
+              "notes": [
+                "Dismissal is not remembered: the announcement returns after a reload. Persisting the choice belongs to the app.",
+                "Two lines of announcement text look fine on a phone, three do not: keep the sentence short.",
+                "Do not replace the <aside> with a <div>: the strip must stay separable from the navigation.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Navbar009\n  brand=\"Impulse\"\n  announcement=\"Early bird tickets end on Friday.\"\n  announcementLabel=\"Get a seat\"\n  announcementHref=\"/tickets\"\n/>"
+            },
+            "controls": {
+              "announcement": {
+                "label": "Announcement text",
+                "default": "Early bird conference tickets end on Friday."
+              },
+              "brand": {
+                "label": "Brand",
+                "default": "Impulse"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-010",
+      "type": "registry:block",
+      "title": "Storefront Navbar",
+      "description": "Шапка магазина: поиск с кнопкой, кабинет и корзина, где рядом со счётчиком стоит сумма заказа. Ниже — лента категорий и строка про сроки доставки.",
+      "categories": ["navbar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-010/navbar-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-010.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-010-*. Серверный компонент: поиск — обычная форма с ролью search, состояния в React нет. Раскладка — CSS-сетка от собственной ширины блока: до 56rem поиск и категории занимают отдельные строки, дальше всё встаёт в один ряд. Значок корзины и его крышка нарисованы границами и псевдоэлементом. Ссылка корзины несёт aria-label с числом товаров и суммой прописью, а сами кружок и сумма помечены aria-hidden, чтобы не читаться дважды.",
+      "meta": {
+        "tags": ["navbar", "ecommerce", "cart", "search"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navbar010",
+          "usage": "<Navbar010\n  brand=\"Дом и лад\"\n  cartCount={3}\n  cartTotal=\"7 480 ₽\"\n  categories={[{ label: \"Новинки\", href: \"/new\" }]}\n/>",
+          "summary": "Шапка интернет-магазина: логотип, поиск с кнопкой «Найти», ссылка на кабинет и корзина, показывающая и число товаров, и накопленную сумму. Ниже идёт прокручиваемая лента категорий и строка про сроки доставки. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navbar-010-* и не подменять её токенами вашей темы",
+            "сумму рядом со счётчиком корзины: она отвечает на вопрос «сколько я уже набрал» без перехода в корзину",
+            "aria-label у ссылки корзины с числом и суммой словами, при aria-hidden у кружка и суммы — иначе всё прозвучит дважды",
+            "поиск настоящей формой с role=\"search\" и кнопкой отправки: в магазине поиском пользуются раньше, чем меню",
+            "ленту категорий с горизонтальной прокруткой вместо переноса — перенос категорий в три строки съедает первый экран",
+            "строку про доставку в шапке: срок и город снимают главное возражение до карточки товара",
+            "container-запрос вместо медиазапроса: раскладка обязана считаться от ширины блока",
+            "блок <style> внутри компонента — в нём палитра, сетка, значок корзины и лента"
+          ],
+          "adapt": [
+            "brand — название и знак магазина",
+            "searchPlaceholder — подсказка в поле поиска",
+            "cartCount и cartTotal — число товаров и сумма в корзине",
+            "accountLabel и accountHref — ссылка на кабинет",
+            "массив categories — лента категорий",
+            "deliveryNote — строка про сроки доставки",
+            "акцент через проп accent — цвет знака, кнопки, счётчика и фокуса"
+          ],
+          "notes": [
+            "cartTotal — строка, а не число: форматируйте сумму на стороне приложения вместе с валютой.",
+            "Счётчик выше 99 сломает кружок: подставляйте «99+».",
+            "Форма уходит на #search — подставьте свой адрес и имя параметра вместо q.",
+            "Лента категорий прокручивается без видимой полосы: держите у крайних элементов отступ, иначе не видно продолжения."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "cartCount",
+            "label": "Товаров в корзине",
+            "type": "number",
+            "default": 3,
+            "min": 0,
+            "max": 99
+          },
+          {
+            "prop": "cartTotal",
+            "label": "Сумма корзины",
+            "type": "text",
+            "default": "7 480 ₽",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A store header: search with a button, an account link and a cart that shows the running total next to the item counter. Below it, a category rail and a delivery line.",
+            "ai": {
+              "summary": "An online store header: the logo, a search field with a Find button, an account link and a cart showing both the number of items and the running total. Below runs a scrollable category rail and a line about delivery times. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-navbar-010-* palette — do not swap it for your theme tokens",
+                "the total next to the cart counter: it answers \"how much have I picked up\" without opening the cart",
+                "the aria-label on the cart link spelling out the count and total, with aria-hidden on the bubble and the amount — otherwise everything is announced twice",
+                "search as a real form with role=\"search\" and a submit button: in a shop people reach for search before the menu",
+                "the category rail scrolling horizontally instead of wrapping — three wrapped rows of categories eat the first screen",
+                "the delivery line in the header: the timeframe and the city remove the main objection before the product page",
+                "the container query instead of a media query: the layout has to measure the block",
+                "the <style> block inside the component — it holds the palette, the grid, the cart glyph and the rail"
+              ],
+              "adapt": [
+                "brand — the store name and mark",
+                "searchPlaceholder — the hint inside the search field",
+                "cartCount and cartTotal — the number of items and the amount in the cart",
+                "accountLabel and accountHref — the account link",
+                "the categories array — the category rail",
+                "deliveryNote — the line about delivery times",
+                "the accent through the accent prop — it colours the mark, the button, the counter and focus"
+              ],
+              "notes": [
+                "cartTotal is a string, not a number: format the amount and currency on the app side.",
+                "A counter above 99 breaks the bubble: substitute \"99+\".",
+                "The form posts to #search — put your own address and parameter name in place of q.",
+                "The category rail scrolls without a visible bar: keep padding on the edge items so the continuation is visible."
+              ],
+              "usage": "<Navbar010\n  brand=\"House & Harmony\"\n  cartCount={3}\n  cartTotal=\"$94.20\"\n  categories={[{ label: \"New in\", href: \"/new\" }]}\n/>"
+            },
+            "controls": {
+              "cartCount": {
+                "label": "Items in cart",
+                "default": 3
+              },
+              "cartTotal": {
+                "label": "Cart total",
+                "default": "$94.20"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-011",
+      "type": "registry:block",
+      "title": "Docs Version Navbar",
+      "description": "Шапка документации с выбором версии: человек, пришедший из поисковика, сразу видит, к какой версии относится страница. Выбор — нативный select, без JS.",
+      "categories": ["navbar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-011/navbar-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-011.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-011-*. Серверный компонент: <select> неуправляемый, с defaultValue, поэтому состояния в React нет и блок остаётся серверным. Стрелка селекта нарисована двумя линейными градиентами в background-image — своей иконки нет. Раздел и версия набраны моноширинным шрифтом: это подпись к техническому объекту, а не заголовок. От 54rem разделы встают в один ряд с логотипом, до этого уезжают на вторую строку с горизонтальной прокруткой.",
+      "meta": {
+        "tags": ["navbar", "docs", "version", "select"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navbar011",
+          "usage": "<Navbar011\n  project=\"Плита\"\n  versions={[\"v4.2 (текущая)\", \"v4.1\", \"v3.9 LTS\"]}\n  currentVersion=\"v4.2 (текущая)\"\n  links={[{ label: \"Справочник API\", href: \"/api\" }]}\n/>",
+          "summary": "Шапка документации: логотип проекта, метка раздела, выбор версии нативным select, разделы документации и ссылка на репозиторий со счётчиком звёзд. Всё работает без клиентского кода: select отдаёт значение обычной формой. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-navbar-011-* и не подменять её токенами вашей темы",
+            "выбор версии нативным <select> с defaultValue: он работает без JS, а на телефоне открывает системный список, который не переписать лучше",
+            "aria-label у select — видимой подписи «Версия» рядом нет",
+            "моноширинный шрифт у версии и метки раздела: это подписи к техническому объекту, а не заголовки",
+            "видимую версию прямо в шапке — иначе человек из поисковика читает документацию не от своей версии и не замечает этого",
+            "aria-current=\"page\" у текущего раздела документации",
+            "container-запрос вместо медиазапроса: в узком контейнере разделы обязаны уезжать на вторую строку",
+            "блок <style> внутри компонента — в нём палитра, селект и раскладка"
+          ],
+          "adapt": [
+            "project и section — имя проекта и метка раздела",
+            "массив versions и currentVersion — список версий и выбранная",
+            "массив links — разделы документации и флаг current",
+            "repoLabel, repoHref и stars — ссылка на репозиторий и счётчик",
+            "акцент через проп accent — цвет текущего раздела, рамки репозитория и фокуса",
+            "внешние отступы и sticky через className"
+          ],
+          "notes": [
+            "Select ничего не переключает сам: повесьте форму с автоотправкой или свой обработчик поверх.",
+            "Держите строку версии короткой: длинное «v4.2.1-beta.3 (текущая)» растянет шапку сильнее, чем кажется.",
+            "Счётчик звёзд — строка: форматируйте «4.1k» на своей стороне, блок не считает.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "project",
+            "label": "Проект",
+            "type": "text",
+            "default": "Плита",
+            "maxLength": 20
+          },
+          {
+            "prop": "currentVersion",
+            "label": "Версия",
+            "type": "select",
+            "default": "v4.2 (текущая)",
+            "options": ["v4.2 (текущая)", "v4.1", "v3.9 LTS", "v2.14"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A docs header with a version picker: someone arriving from a search engine sees at once which version the page belongs to. The picker is a native select, no JS.",
+            "ai": {
+              "summary": "A documentation header: the project logo, a section badge, a version picker built on a native select, the docs sections and a repository link with a star count. Everything works without client code: the select submits its value through a plain form. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-navbar-011-* palette — do not swap it for your theme tokens",
+                "the version picker as a native <select> with defaultValue: it works without JS and on a phone opens the system list, which nothing custom improves on",
+                "the aria-label on the select — there is no visible \"Version\" caption next to it",
+                "the monospace face on the version and the section badge: these label a technical object, they are not headings",
+                "the visible version in the header — otherwise a visitor from search reads docs for the wrong version without noticing",
+                "aria-current=\"page\" on the current docs section",
+                "the container query instead of a media query: in a narrow container the sections have to move to a second row",
+                "the <style> block inside the component — it holds the palette, the select and the layout"
+              ],
+              "adapt": [
+                "project and section — the project name and the section badge",
+                "the versions array and currentVersion — the list of versions and the selected one",
+                "the links array — the docs sections and the current flag",
+                "repoLabel, repoHref and stars — the repository link and its counter",
+                "the accent through the accent prop — it colours the current section, the repo border and focus",
+                "outer spacing and sticky through className"
+              ],
+              "notes": [
+                "The select does not switch anything by itself: wrap it in an auto-submitting form or add your own handler.",
+                "Keep the version string short: a long \"v4.2.1-beta.3 (current)\" stretches the header more than you think.",
+                "The star count is a string: format \"4.1k\" on your side, the block does not count.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Navbar011\n  project=\"Slab\"\n  versions={[\"v4.2 (current)\", \"v4.1\", \"v3.9 LTS\"]}\n  currentVersion=\"v4.2 (current)\"\n  links={[{ label: \"API reference\", href: \"/api\" }]}\n/>"
+            },
+            "controls": {
+              "project": {
+                "label": "Project",
+                "default": "Slab"
+              },
+              "currentVersion": {
+                "label": "Version",
+                "default": "v4.2 (текущая)"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-012",
+      "type": "registry:block",
+      "title": "Drawer Menu Navbar",
+      "description": "Компактная шапка, у которой меню всегда ящик: панель во всю высоту уезжает справа и остаётся такой на любой ширине — для сайтов с длинным деревом разделов.",
+      "categories": ["navbar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-012/navbar-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-012.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-012-*. Серверный компонент. Ящик — HTML popover, поэтому закрытие по Esc и по клику мимо достаётся без JS, а ::backdrop затемняет страницу. Панель живёт в верхнем слое и стилизуется по атрибуту [data-vibeui-navbar-012-drawer], палитра передаётся ей отдельным style. Выезд сделан свойством translate вместе с transition-behavior для discrete-свойств и @starting-style, поэтому анимация работает и при открытии, и при закрытии. Разделы сгруппированы заголовками: плоский список из пятнадцати ссылок не читается.",
+      "meta": {
+        "tags": ["navbar", "drawer", "mobile", "popover"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navbar012",
+          "usage": "<Navbar012\n  brand=\"Ясная\"\n  tagline=\"Семейная клиника\"\n  callLabel=\"+7 495 000-11-22\"\n  actionLabel=\"Записаться на приём\"\n/>",
+          "summary": "Компактная шапка с меню-ящиком: логотип с подписью, телефон и кнопка «Меню», открывающая панель во всю высоту справа. Внутри — сгруппированные разделы с пояснениями и кнопка записи. Ящик собран на HTML popover: Esc, клик мимо и затемнение фона работают без JS. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-navbar-012-* и не подменять её токенами вашей темы",
+            "ящик на любой ширине: это осознанный выбор для длинного дерева разделов, а не мобильная заглушка",
+            "механику popover вместе с ::backdrop — затемнение, Esc и клик мимо приходят от браузера",
+            "стилизацию панели по атрибуту и передачу палитры отдельным style: в верхнем слое она не потомок шапки",
+            "пару @starting-style и transition с allow-discrete: без них панель появляется рывком, а закрывается вовсе без анимации",
+            "группировку разделов заголовками — плоский список из пятнадцати ссылок не читается",
+            "кнопку «Закрыть» внутри панели: на десктопе крестик ищут глазами, а не клавишей Esc",
+            "телефон отдельной ссылкой в шапке: у клиники это действие популярнее любого раздела"
+          ],
+          "adapt": [
+            "brand и tagline — название и подпись под ним",
+            "массив groups — группы разделов, ссылки и пояснения к ним",
+            "callLabel и callHref — телефон в шапке",
+            "actionLabel и actionHref — кнопка внизу панели",
+            "акцент через проп accent — цвет рамки кнопки меню, кнопки записи и фокуса",
+            "id — если на странице две такие шапки, у ящиков должны быть разные идентификаторы"
+          ],
+          "notes": [
+            "Ящик занимает 100dvh: внутри длинного списка он прокручивается сам, отдельного контейнера не нужно.",
+            "На совсем узком экране панель берёт 90vw — не делайте её шире, иначе исчезает ощущение слоя поверх страницы.",
+            "Popover не блокирует прокрутку страницы под собой: если это мешает, добавьте overflow:hidden у body своим кодом.",
+            "Не дублируйте разделы ещё и в строке шапки: смысл блока в том, что там их нет."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Ясная",
+            "maxLength": 20
+          },
+          {
+            "prop": "tagline",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Семейная клиника",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A compact header whose menu is always a drawer: a full-height panel slides in from the right and stays that way at any width — for sites with a deep section tree.",
+            "ai": {
+              "summary": "A compact header with a drawer menu: a logo with a tagline, a phone number and a Menu button that opens a full-height panel on the right. Inside are grouped sections with explanations and a booking button. The drawer is an HTML popover: Esc, click-outside and the dimmed backdrop work without JS. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-navbar-012-* palette — do not swap it for your theme tokens",
+                "the drawer at every width: it is a deliberate choice for a deep section tree, not a mobile fallback",
+                "the popover mechanism together with ::backdrop — the dimming, Esc and click-outside come from the browser",
+                "styling the panel by attribute and passing the palette through its own style: in the top layer it is not a descendant of the header",
+                "the @starting-style and allow-discrete transition pair: without them the panel appears with a jump and closes with no animation at all",
+                "grouping the sections under headings — a flat list of fifteen links is unreadable",
+                "the Close button inside the panel: on desktop people look for a cross rather than press Esc",
+                "the phone number as its own link in the header: for a clinic it is a more popular action than any section"
+              ],
+              "adapt": [
+                "brand and tagline — the name and the line under it",
+                "the groups array — section groups, links and their explanations",
+                "callLabel and callHref — the phone number in the header",
+                "actionLabel and actionHref — the button at the bottom of the panel",
+                "the accent through the accent prop — it colours the menu button border, the booking button and focus",
+                "id — two such headers on a page need different drawer ids"
+              ],
+              "notes": [
+                "The drawer is 100dvh tall: a long list scrolls inside it, no extra container needed.",
+                "On a very narrow screen the panel takes 90vw — do not make it wider or it stops reading as a layer above the page.",
+                "The popover does not lock scrolling of the page behind it: add overflow:hidden on body in your own code if that bothers you.",
+                "Do not repeat the sections in the header row as well: the point of the block is that they are not there."
+              ],
+              "usage": "<Navbar012\n  brand=\"Clearview\"\n  tagline=\"Family clinic\"\n  callLabel=\"+44 20 7000 1122\"\n  actionLabel=\"Book a visit\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Clearview"
+              },
+              "tagline": {
+                "label": "Tagline",
+                "default": "Family clinic"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navbar-013",
+      "type": "registry:block",
+      "title": "Two Tier Navbar",
+      "description": "Двухуровневая шапка для сайта с большим деревом разделов: служебная полоса сверху, основные разделы посередине и подразделы текущего в третьем ряду.",
+      "categories": ["navbar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-013/navbar-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-013.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navbar-013-*. Серверный компонент. Три ряда — три отдельные группы навигации, каждая со своим aria-label, поэтому скринридер перечисляет их раздельно, а не как одну кашу из двадцати ссылок. Ряд подразделов рендерится только при непустом массиве: пустая полоса читается как ошибка вёрстки. Подчёркивание активного раздела — псевдоэлемент с transform:scaleX, он же работает при наведении. Служебная полоса и ряд подразделов прокручиваются по горизонтали в узком контейнере.",
+      "meta": {
+        "tags": ["navbar", "two tier", "navigation", "institution"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navbar013",
+          "usage": "<Navbar013\n  brand=\"Институт связи\"\n  sections={[{ label: \"Обучение\", href: \"/education\", current: true }]}\n  subsections={[{ label: \"Бакалавриат\", href: \"/bachelor\", current: true }]}\n  actionLabel=\"Подать заявку\"\n/>",
+          "summary": "Двухуровневая шапка: сверху узкая служебная полоса с аудиториями сайта и кабинетом, посередине логотип, основные разделы и кнопка действия, снизу подразделы текущего раздела. Каждый ряд — отдельная навигация со своей подписью. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navbar-013-* и не подменять её токенами вашей темы",
+            "три ряда как три отдельных <nav> со своими aria-label — иначе скринридер читает двадцать ссылок подряд без структуры",
+            "условный рендер ряда подразделов: пустая третья полоса выглядит как ошибка вёрстки",
+            "разный кегль по рядам: служебная полоса намеренно мельче основных разделов, иначе иерархия исчезает",
+            "aria-current=\"page\" и в ряду разделов, и в ряду подразделов: подчёркивание рисуется по этому атрибуту",
+            "горизонтальную прокрутку служебной полосы и подразделов в узком контейнере вместо переноса",
+            "container-запрос вместо медиазапроса: раскладка обязана считаться от ширины блока",
+            "блок <style> внутри компонента — в нём палитра, три ряда и подчёркивание"
+          ],
+          "adapt": [
+            "brand — название организации и знак",
+            "массив utilities — служебная полоса сверху",
+            "массив sections — основные разделы и флаг current",
+            "массив subsections — подразделы текущего раздела; пустой массив убирает третий ряд",
+            "actionLabel и actionHref — кнопка действия",
+            "акцент через проп accent — цвет знака, подчёркивания, кнопки и фокуса"
+          ],
+          "notes": [
+            "Блок не выводит подразделы сам: какой набор показать, решает страница — передайте нужный массив.",
+            "Больше пяти основных разделов ломают ряд: часть уводите в служебную полосу или в подвал.",
+            "Служебная полоса прижата вправо намеренно — она не должна конкурировать с логотипом.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Организация",
+            "type": "text",
+            "default": "Институт связи",
+            "maxLength": 28
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Подать заявку",
+            "maxLength": 22
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A two-tier header for a site with a large section tree: a utility strip on top, the main sections in the middle and the subsections of the current one in a third row.",
+            "ai": {
+              "summary": "A two-tier header: a narrow utility strip on top with the site's audiences and the account, the logo, main sections and an action button in the middle, and the subsections of the current section below. Each row is its own navigation with its own label. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-navbar-013-* palette — do not swap it for your theme tokens",
+                "the three rows as three separate <nav> elements with their own aria-labels — otherwise a screen reader reads twenty links in a row with no structure",
+                "the conditional rendering of the subsection row: an empty third strip looks like a layout bug",
+                "the different type sizes per row: the utility strip is deliberately smaller than the main sections, otherwise the hierarchy disappears",
+                "aria-current=\"page\" in both the section row and the subsection row: the underline is drawn from that attribute",
+                "the horizontal scrolling of the utility strip and the subsections in a narrow container instead of wrapping",
+                "the container query instead of a media query: the layout has to measure the block",
+                "the <style> block inside the component — it holds the palette, the three rows and the underline"
+              ],
+              "adapt": [
+                "brand — the organisation name and the mark",
+                "the utilities array — the top utility strip",
+                "the sections array — the main sections and the current flag",
+                "the subsections array — the subsections of the current section; an empty array removes the third row",
+                "actionLabel and actionHref — the action button",
+                "the accent through the accent prop — it colours the mark, the underline, the button and focus"
+              ],
+              "notes": [
+                "The block does not derive the subsections: the page decides which set to show — pass the right array.",
+                "More than five main sections break the row: move some into the utility strip or the footer.",
+                "The utility strip is pushed right on purpose — it must not compete with the logo.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Navbar013\n  brand=\"Institute of Communications\"\n  sections={[{ label: \"Education\", href: \"/education\", current: true }]}\n  subsections={[{ label: \"Bachelor\", href: \"/bachelor\", current: true }]}\n  actionLabel=\"Apply now\"\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Organisation",
+                "default": "Institute"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Apply now"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
