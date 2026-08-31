@@ -1,0 +1,623 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "blog-001",
+      "type": "registry:block",
+      "title": "Article Grid",
+      "description": "Лента статей карточками с обложкой-градиентом: оттенок считается из названия рубрики, поэтому одинаковые рубрики красятся одинаково без таблицы соответствий.",
+      "categories": ["blog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "blog-001/blog-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/blog-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-001-*. Серверный: хуков нет. Обложка рисуется линейным градиентом от оттенка, который получается хешированием названия рубрики, — ассетов и картинок нет вовсе. Ссылка заголовка растянута псевдоэлементом ::after на всю карточку, поэтому кликается любое место, а текстом ссылки остаётся заголовок. Сетка на две и три колонки включается container query.",
+      "meta": {
+        "tags": ["blog", "cards", "feed", "articles"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Blog001",
+          "usage": "<Blog001 title=\"Как мы делаем интерфейсы\" posts={[{ title: \"…\", excerpt: \"…\", topic: \"Вёрстка\", date: \"4 марта 2025\", readingTime: \"11 мин\", author: \"Кирилл\" }]} />",
+          "summary": "Секция ленты статей: заголовок раздела и карточки с обложкой, рубрикой, автором, датой и временем чтения. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-blog-001-* и не подменять её токенами вашей темы",
+            "растянутую ссылку на заголовке: отдельная кнопка «читать» бесполезна в списке ссылок",
+            ":focus-within на карточке — иначе при клавиатурном обходе не видно, где вы находитесь",
+            "обложку из градиента: она снимает требование рисовать баннер к каждой заметке",
+            "обрезку анонса тремя строками, иначе карточки в ряду разной высоты",
+            "тег <time> у даты: её понимают агрегаторы и поиск"
+          ],
+          "adapt": [
+            "массив posts и поле hue у отдельной статьи",
+            "eyebrow, title и description над сеткой",
+            "moreLabel и ссылку moreHref",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Оттенок обложки считается из названия рубрики: переименование рубрики поменяет цвет всех её карточек.",
+            "Ключом списка служит заголовок — две статьи с одинаковым названием сломают отрисовку.",
+            "Обложка декоративна и помечена aria-hidden: смысловую иллюстрацию так подавать нельзя.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Как мы делаем интерфейсы",
+            "maxLength": 32
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Журнал",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An article feed of cards with gradient covers: the hue is derived from the topic name, so equal topics get equal colours without a lookup table.",
+            "ai": {
+              "summary": "An article feed section: a section heading and cards with cover, topic, author, date and reading time. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-blog-001-* palette — do not swap it for your theme tokens",
+                "the stretched link on the heading: a separate «read more» is useless in a link list",
+                ":focus-within on the card — otherwise keyboard navigation gives no sense of place",
+                "the gradient cover: it removes the need to draw a banner for every post",
+                "clamping the excerpt to three lines, or cards in a row end up uneven",
+                "the <time> tag on the date: aggregators and search understand it"
+              ],
+              "adapt": [
+                "the posts array and a per-article hue field",
+                "eyebrow, title and description above the grid",
+                "moreLabel and the moreHref link",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The cover hue is derived from the topic name: renaming a topic recolours all of its cards.",
+                "The list key is the title — two articles with the same name break rendering.",
+                "The cover is decorative and aria-hidden: a meaningful illustration cannot be delivered this way.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Blog001 title=\"How we build interfaces\" posts={[{ title: \"…\", excerpt: \"…\", topic: \"CSS\", date: \"4 March 2025\", readingTime: \"11 min\", author: \"Kirill\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "How we build interfaces"
+              },
+              "eyebrow": {
+                "label": "Overline",
+                "default": "Journal"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "blog-002",
+      "type": "registry:block",
+      "title": "Article Reader",
+      "description": "Страница статьи с оглавлением: на широком блоке оно липнет сбоку, на узком сворачивается в details, чтобы не съедать половину экрана.",
+      "categories": ["blog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "blog-002/blog-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/blog-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-002-*. Серверный: оглавление собрано из тех же секций, что и текст, раскрытие держит нативный <details open>. На широком блоке контейнерный запрос делает колонку липкой и гасит стрелку, а у summary снимает pointer-events, чтобы оглавление нельзя было свернуть. Заголовки несут id и scroll-margin-top, ширина текста ограничена в ch.",
+      "meta": {
+        "tags": ["blog", "article", "toc", "longread"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Blog002",
+          "usage": "<Blog002 title=\"Контейнерные запросы\" sections={[{ id: \"why\", heading: \"Почему\", paragraphs: [\"…\"] }]} />",
+          "summary": "Страница длинной статьи: шапка с автором и временем чтения, оглавление из секций и сам текст с врезками. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-blog-002-* и не подменять её токенами вашей темы",
+            "оглавление из тех же секций, что и текст: руками собранный список разойдётся с содержанием",
+            "scroll-margin-top у заголовков — без него якорь прилипает к кромке окна",
+            "сворачивание оглавления на узком блоке: липкая колонка на телефоне съедает экран",
+            "ширину текста в ch, а не в пикселях: мера строки зависит от кегля, а не от разрешения",
+            "тег <time> в подписи и указание времени чтения до начала текста"
+          ],
+          "adapt": [
+            "массив sections: заголовки, абзацы и врезки",
+            "title, lede и topic в шапке",
+            "author, role, date и readingTime",
+            "tocTitle и акцент через проп accent"
+          ],
+          "notes": [
+            "Идентификаторы секций приходят из данных: следите за уникальностью, иначе якоря столкнутся.",
+            "Подсветка текущего раздела в оглавлении не делается — для неё нужен наблюдатель пересечений.",
+            "Абзац рендерится как обычный текст: разметка внутри строки не разбирается.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок статьи",
+            "type": "text",
+            "default": "Контейнерные запросы вместо брейкпоинтов",
+            "maxLength": 60
+          },
+          {
+            "prop": "tocTitle",
+            "label": "Заголовок оглавления",
+            "type": "text",
+            "default": "В статье",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An article page with a table of contents: sticky beside the text on a wide block, collapsed into details on a narrow one so it does not eat the screen.",
+            "ai": {
+              "summary": "A longread page: a header with author and reading time, a table of contents built from the sections and the text itself with callouts. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-blog-002-* palette — do not swap it for your theme tokens",
+                "the contents built from the same sections as the text: a hand-written list drifts from the content",
+                "scroll-margin-top on the headings — without it the anchor sticks to the window edge",
+                "collapsing the contents on a narrow block: a sticky column eats a phone screen",
+                "the text measure in ch, not pixels: line length should follow the font size, not the resolution",
+                "the <time> tag in the byline and the reading time before the text starts"
+              ],
+              "adapt": [
+                "the sections array: headings, paragraphs and callouts",
+                "title, lede and topic in the header",
+                "author, role, date and readingTime",
+                "tocTitle and the accent through the accent prop"
+              ],
+              "notes": [
+                "Section ids come from the data: keep them unique or the anchors collide.",
+                "The current section is not highlighted in the contents — that needs an intersection observer.",
+                "A paragraph renders as plain text: inline markup is not parsed.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Blog002 title=\"Container queries\" sections={[{ id: \"why\", heading: \"Why\", paragraphs: [\"…\"] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Article heading",
+                "default": "Container queries over breakpoints"
+              },
+              "tocTitle": {
+                "label": "Contents heading",
+                "default": "In this article"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "blog-003",
+      "type": "registry:block",
+      "title": "Featured Post",
+      "description": "Крупный анонс одной статьи: обложка-градиент слева, а рядом с именем автора — время чтения и объём текста, то есть ответ на вопрос перед кликом.",
+      "categories": ["blog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "blog-003/blog-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/blog-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-003-*. Серверный: хуков нет. Обложка собрана из слоёв радиальных градиентов поверх линейного, оттенок задаётся числом hue. Ссылка заголовка растянута ::after на всю карточку, состояние обводки держит :focus-within. Раскладка в две колонки включается container query, на узком блоке обложка становится горизонтальной.",
+      "meta": {
+        "tags": ["blog", "featured", "announce", "author"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Blog003",
+          "usage": "<Blog003 badge=\"Свежее\" title=\"Почему мы отказались от библиотеки иконок\" readingTime=\"7 минут\" hue={300} />",
+          "summary": "Один крупный анонс: метка, рубрика, заголовок, анонс, автор и метрики чтения. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-blog-003-* и не подменять её токенами вашей темы",
+            "время чтения рядом с автором: это последний вопрос перед кликом, а не подвальная мелочь",
+            "растянутую ссылку с заголовком в качестве текста — «читать далее» в списке ссылок бесполезно",
+            ":focus-within на карточке: при клавиатурном обходе обводка должна быть у всего анонса",
+            "обложку из градиентов — анонс не должен ждать иллюстратора",
+            "ограничение заголовка в 22 символа строки: длинная строка в крупном кегле не читается"
+          ],
+          "adapt": [
+            "title, excerpt и topic анонса",
+            "badge, coverLabel и значение hue",
+            "author, role, date, readingTime и words",
+            "ctaLabel, href и акцент через проп accent"
+          ],
+          "notes": [
+            "Значение hue — угол в градусах: 0 и 360 дадут один и тот же цвет.",
+            "Кнопка призыва нарисована как часть карточки и не является отдельной ссылкой — работает растянутая ссылка заголовка.",
+            "Инициал автора берётся первой буквой имени: для инициалов из двух букв поменяйте разметку.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "badge",
+            "label": "Метка",
+            "type": "text",
+            "default": "Свежее",
+            "maxLength": 20
+          },
+          {
+            "prop": "hue",
+            "label": "Оттенок обложки",
+            "type": "number",
+            "default": 300,
+            "min": 0,
+            "max": 360
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "One large article announcement: a gradient cover on the left and, next to the author, the reading time and word count — the question people ask before clicking.",
+            "ai": {
+              "summary": "A single large announcement: badge, topic, heading, excerpt, author and reading metrics. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-blog-003-* palette — do not swap it for your theme tokens",
+                "the reading time next to the author: it is the last question before a click, not a footer detail",
+                "the stretched link with the heading as its text — «read more» is useless in a link list",
+                ":focus-within on the card: keyboard navigation should ring the whole announcement",
+                "the gradient cover — an announcement should not wait for an illustrator",
+                "the 22-character measure on the heading: a long line at a large size stops being readable"
+              ],
+              "adapt": [
+                "title, excerpt and the topic of the announcement",
+                "badge, coverLabel and the hue value",
+                "author, role, date, readingTime and words",
+                "ctaLabel, href and the accent through the accent prop"
+              ],
+              "notes": [
+                "The hue value is an angle in degrees: 0 and 360 give the same colour.",
+                "The call to action is drawn as part of the card and is not a separate link — the stretched heading link does the work.",
+                "The author initial is the first letter of the name: change the markup for two-letter initials.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Blog003 badge=\"New\" title=\"Why we dropped the icon library\" readingTime=\"7 minutes\" hue={300} />"
+            },
+            "controls": {
+              "badge": {
+                "label": "Badge",
+                "default": "New"
+              },
+              "hue": {
+                "label": "Cover hue"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "blog-004",
+      "type": "registry:block",
+      "title": "Newsletter Signup",
+      "description": "Подписка на рассылку с проверяемым обещанием: три пункта о содержимом письма, периодичность и число подписчиков рядом с полем.",
+      "categories": ["blog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "blog-004/blog-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/blog-004.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-004-*. Серверный: валидация нативная — type=\"email\" и required, ошибка показывается по :user-invalid, а не :invalid. Текст ошибки всегда есть в разметке, но визуально скрыт clip-path, и связан с полем через aria-describedby. Тёмная подложка своя, поэтому блок читается и на светлой странице, и на тёмной карточке каталога. Отправку реализует вызывающий код.",
+      "meta": {
+        "tags": ["blog", "newsletter", "subscribe", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Blog004",
+          "usage": "<Blog004 title=\"Письмо раз в две недели\" bullets={[\"Разбор решения\", \"Список правок\"]} submitLabel=\"Подписаться\" />",
+          "summary": "Секция подписки: обещание списком, поле почты с нативной проверкой, согласие и социальное доказательство. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-blog-004-* и не подменять её токенами вашей темы",
+            ":user-invalid вместо :invalid — пустое поле не должно краснеть до первого ввода",
+            "текст ошибки в разметке всегда: появившийся из ниоткуда узел скринридер не найдёт",
+            "три пункта о содержимом: «полезные материалы» — это не обещание",
+            "периодичность рядом с кнопкой: неизвестная частота писем и есть причина не подписываться",
+            "обязательный чекбокс согласия и упоминание отписки в его тексте"
+          ],
+          "adapt": [
+            "массив bullets — обещание рассылки",
+            "title, description и eyebrow",
+            "proof, frequency и errorText",
+            "submitLabel, consentLabel и акцент через проп accent"
+          ],
+          "notes": [
+            "Отправку, проверку на сервере и защиту от ботов реализует вызывающий код: блок несёт только разметку.",
+            "Нативная проверка почты ловит опечатки в структуре адреса, но не существование ящика.",
+            "Идентификаторы поля и ошибки фиксированы: два таких блока на странице дадут дублирующиеся id.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Письмо раз в две недели",
+            "maxLength": 32
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Подписаться",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A newsletter signup with a checkable promise: three lines on what the letter contains, the cadence and the subscriber count beside the field.",
+            "ai": {
+              "summary": "A subscribe section: the promise as a list, an email field with native validation, consent and social proof. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-blog-004-* palette — do not swap it for your theme tokens",
+                ":user-invalid instead of :invalid — an untouched field must not turn red",
+                "the error text always present in the markup: a node appearing from nowhere is not found by a screen reader",
+                "the three lines on the content: «useful materials» is not a promise",
+                "the cadence next to the button: an unknown sending frequency is exactly why people do not subscribe",
+                "the required consent checkbox and the unsubscribe note inside it"
+              ],
+              "adapt": [
+                "the bullets array — the newsletter promise",
+                "title, description and eyebrow",
+                "proof, frequency and errorText",
+                "submitLabel, consentLabel and the accent through the accent prop"
+              ],
+              "notes": [
+                "Submission, server-side validation and bot protection belong to the caller: the block is markup only.",
+                "Native email validation catches structural typos, not whether the mailbox exists.",
+                "The field and error ids are fixed: two of these blocks on one page produce duplicate ids.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Blog004 title=\"A letter every two weeks\" bullets={[\"One case study\", \"The changelog\"]} submitLabel=\"Subscribe\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "A letter every two weeks"
+              },
+              "submitLabel": {
+                "label": "Button caption",
+                "default": "Subscribe"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "blog-005",
+      "type": "registry:block",
+      "title": "Topic Feed",
+      "description": "Архив статей строками с фильтром по рубрикам: рубрики собираются из самих записей, поэтому счётчик всегда совпадает с тем, что покажет фильтр.",
+      "categories": ["blog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "blog-005/blog-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/blog-005.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-005-*. Клиентский: \"use client\" ради фильтра в useState. Список рубрик выводится из массива записей через Set, счётчик считает те же записи, что покажет фильтр. Обёртка списка объявлена aria-live=\"polite\". На широком блоке container query переносит дату и рубрику в отдельную колонку слева.",
+      "meta": {
+        "tags": ["blog", "archive", "filter", "list"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Blog005",
+          "usage": "<Blog005 title=\"Все статьи по рубрикам\" allLabel=\"Все\" entries={[{ title: \"…\", excerpt: \"…\", topic: \"Вёрстка\", date: \"4 марта 2025\", readingTime: \"11 мин\" }]} />",
+          "summary": "Архив статей строками: фильтр по рубрикам со счётчиками, дата, время чтения и анонс у каждой записи. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-blog-005-* и не подменять её токенами вашей темы",
+            "сбор рубрик из самих записей: отдельный список фильтров рано или поздно разойдётся с архивом",
+            "счётчики у рубрик — они показывают объём до нажатия",
+            "aria-live у списка: смена фильтра иначе проходит незамеченной",
+            "строки вместо плиток: плитка врёт про объём архива, на экран влезает шесть карточек",
+            "aria-pressed у кнопок фильтра — активная рубрика не должна отличаться только цветом"
+          ],
+          "adapt": [
+            "массив entries и их рубрики",
+            "title и eyebrow над фильтром",
+            "allLabel — подпись рубрики «все»",
+            "emptyLabel, countLabel и акцент через проп accent"
+          ],
+          "notes": [
+            "Порядок рубрик берётся из порядка записей: блок не сортирует их по алфавиту.",
+            "Записи не сортируются по дате — приходят в том порядке, в каком лежат в массиве.",
+            "Фильтр живёт в состоянии блока: связать его с адресом страницы должен вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Все статьи по рубрикам",
+            "maxLength": 32
+          },
+          {
+            "prop": "allLabel",
+            "label": "Подпись «все»",
+            "type": "text",
+            "default": "Все",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An article archive as rows with a topic filter: topics are derived from the entries, so the counter always matches what the filter shows.",
+            "ai": {
+              "summary": "An article archive as rows: a topic filter with counters, plus date, reading time and excerpt per entry. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-blog-005-* palette — do not swap it for your theme tokens",
+                "deriving topics from the entries: a separate filter list drifts from the archive",
+                "the counters on the topics — they show the volume before a click",
+                "aria-live on the list: otherwise filtering passes unnoticed",
+                "rows instead of tiles: a tile grid lies about the archive size, six cards fill a screen",
+                "aria-pressed on the filter buttons — the active topic must not differ by colour alone"
+              ],
+              "adapt": [
+                "the entries array and their topics",
+                "title and eyebrow above the filter",
+                "allLabel — the caption of the «all» topic",
+                "emptyLabel, countLabel and the accent through the accent prop"
+              ],
+              "notes": [
+                "Topic order follows the order of entries: the block does not sort alphabetically.",
+                "Entries are not sorted by date — they render in array order.",
+                "The filter lives in block state: wiring it to the page URL is the caller's job.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Blog005 title=\"All articles by topic\" allLabel=\"All\" entries={[{ title: \"…\", excerpt: \"…\", topic: \"CSS\", date: \"4 March 2025\", readingTime: \"11 min\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "All articles by topic"
+              },
+              "allLabel": {
+                "label": "«All» caption",
+                "default": "All"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "blog-006",
+      "type": "registry:block",
+      "title": "Related Posts",
+      "description": "Похожие статьи с объяснением связи: у каждой карточки есть строка «почему рядом» — продолжение разбора, общая тема или противоположный вывод.",
+      "categories": ["blog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "blog-006/blog-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/blog-006.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-006-*. Серверный: хуков нет. Корень — <aside> с aria-label: это дополнение к статье, а не самостоятельный раздел. Ссылка заголовка растянута ::after на карточку, обводка держится на :focus-within. Порядковая подпись занимает место рубрики. Три колонки включаются container query.",
+      "meta": {
+        "tags": ["blog", "related", "recirculation", "cards"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Blog006",
+          "usage": "<Blog006 afterTitle=\"Контейнерные запросы\" items={[{ title: \"…\", reason: \"Продолжение разбора\", topic: \"Вёрстка\", readingTime: \"6 мин\" }]} />",
+          "summary": "Блок похожих статей под материалом: карточки с причиной связи, рубрикой, временем чтения и ссылкой на архив. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-blog-006-* и не подменять её токенами вашей темы",
+            "строку «почему рядом»: без объяснения связи блок похожих статей просто пролистывают",
+            "<aside> с aria-label — это дополнение к статье, а не равный ей раздел",
+            "порядковую подпись на месте рубрики: дочитавший чаще ищет продолжение",
+            "приглушённый фон и меньший кегль — блок не должен спорить с самой статьёй",
+            "растянутую ссылку на заголовке и обводку по :focus-within"
+          ],
+          "adapt": [
+            "массив items и текст причины у каждой статьи",
+            "title и afterTitle с названием прочитанного материала",
+            "allLabel и ссылку allHref",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Подбор статей блок не делает: он показывает то, что передал вызывающий код.",
+            "Порядковая подпись необязательна — без неё карточка выглядит как обычная рекомендация.",
+            "Три карточки — предел: четвёртая ломает ряд и превращает блок в ещё одну ленту.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что читать дальше",
+            "maxLength": 28
+          },
+          {
+            "prop": "afterTitle",
+            "label": "Прочитанная статья",
+            "type": "text",
+            "default": "Контейнерные запросы вместо брейкпоинтов",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Related articles that explain the link: every card carries a «why this one» line — a follow-up, a shared topic or the opposite conclusion.",
+            "ai": {
+              "summary": "A related-articles block under a piece: cards with the reason for the link, topic, reading time and a link to the archive. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-blog-006-* palette — do not swap it for your theme tokens",
+                "the «why this one» line: without an explained link a related block is simply scrolled past",
+                "the <aside> with aria-label — this supplements the article, it is not its equal",
+                "the sequence caption in place of the topic: a reader who finished usually wants the follow-up",
+                "the muted background and smaller type — the block must not compete with the article",
+                "the stretched heading link and the :focus-within ring"
+              ],
+              "adapt": [
+                "the items array and the reason text per article",
+                "title and afterTitle naming the piece just read",
+                "allLabel and the allHref link",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The block does not pick the articles: it renders whatever the caller passes.",
+                "The sequence caption is optional — without it the card reads as an ordinary recommendation.",
+                "Three cards is the limit: a fourth breaks the row and turns the block into another feed.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Blog006 afterTitle=\"Container queries\" items={[{ title: \"…\", reason: \"A follow-up\", topic: \"CSS\", readingTime: \"6 min\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "What to read next"
+              },
+              "afterTitle": {
+                "label": "Article just read",
+                "default": "Container queries over breakpoints"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

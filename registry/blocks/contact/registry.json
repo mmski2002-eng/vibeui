@@ -1,0 +1,623 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "contact-001",
+      "type": "registry:block",
+      "title": "Contact Form",
+      "description": "Форма связи, где тема обращения спрашивается первым полем, а рядом с ней стоят прямые контакты для тех, кто формы не заполняет никогда.",
+      "categories": ["contact"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-001/contact-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-001-*. Серверный: валидация нативная — required, type=\"email\", minLength у сообщения. Ошибка показывается по :user-invalid, а не :invalid: пустое поле не должно краснеть до первого ввода. Текст ошибки всегда есть в разметке, визуально скрыт clip-path и связан с полем через aria-describedby. Две колонки включаются container query. Отправку реализует вызывающий код.",
+      "meta": {
+        "tags": ["contact", "form", "support", "topics"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contact001",
+          "usage": "<Contact001 topics={[\"Новый проект\", \"Вопрос по счёту\"]} submitLabel=\"Отправить обращение\" />",
+          "summary": "Секция связи: тема обращения списком, имя, почта и задача плюс прямые контакты рядом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-contact-001-* и не подменять её токенами вашей темы",
+            "тему обращения первым полем: без неё письмо попадает не в тот отдел и лежит два дня",
+            ":user-invalid вместо :invalid — пустое поле не должно краснеть до первого ввода",
+            "текст ошибки в разметке всегда: появившийся из ниоткуда узел скринридер не найдёт",
+            "прямые контакты рядом с формой — часть людей форму не заполнит никогда",
+            "обещание срока ответа под кнопкой: без него обращение отправляют в пустоту"
+          ],
+          "adapt": [
+            "массив topics — темы обращения",
+            "массив channels с прямыми контактами",
+            "title, description и eyebrow",
+            "submitLabel, consentLabel, responseNote и акцент через проп accent"
+          ],
+          "notes": [
+            "Отправку, защиту от ботов и ответ пользователю реализует вызывающий код: блок несёт только разметку и проверку в браузере.",
+            "minLength у сообщения считает символы, а не слова: строка из двадцати пробелов пройдёт проверку.",
+            "Идентификаторы полей фиксированы: две такие формы на странице дадут дублирующиеся id.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Расскажите, что нужно сделать",
+            "maxLength": 40
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Отправить обращение",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A contact form that asks for the topic first, with direct contacts beside it for the people who never fill in forms.",
+            "ai": {
+              "summary": "A contact section: topic select, name, email and the task, plus direct contacts alongside. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-contact-001-* palette — do not swap it for your theme tokens",
+                "the topic as the first field: without it the message lands in the wrong inbox and sits for two days",
+                ":user-invalid instead of :invalid — an untouched field must not turn red",
+                "the error text always present in the markup: a node appearing from nowhere is not found by a screen reader",
+                "the direct contacts beside the form — some people will never fill it in",
+                "the promised reply time under the button: without it messages go into the void"
+              ],
+              "adapt": [
+                "the topics array — the request subjects",
+                "the channels array with direct contacts",
+                "title, description and eyebrow",
+                "submitLabel, consentLabel, responseNote and the accent through the accent prop"
+              ],
+              "notes": [
+                "Submission, bot protection and the confirmation belong to the caller: the block carries markup and in-browser validation only.",
+                "minLength counts characters, not words: twenty spaces pass the check.",
+                "Field ids are fixed: two of these forms on one page produce duplicate ids.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Contact001 topics={[\"New project\", \"Billing question\"]} submitLabel=\"Send the message\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Tell us what needs doing"
+              },
+              "submitLabel": {
+                "label": "Button caption",
+                "default": "Send the message"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contact-002",
+      "type": "registry:block",
+      "title": "Office Map Card",
+      "description": "Контакты офиса с нарисованной CSS-заглушкой карты: ни одного внешнего запроса, зато есть адрес текстом, часы работы таблицей и подсказка про вход.",
+      "categories": ["contact"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-002/contact-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-002-*. Серверный: хуков нет. Карта нарисована повторяющимися градиентами и не подключает внешний iframe — блок не тянет чужие скрипты и не ставит куки. Заглушка помечена aria-hidden, смысл несёт адрес текстом. Часы работы размечены таблицей с заголовками строк, телефон и почта — настоящими ссылками tel: и mailto:.",
+      "meta": {
+        "tags": ["contact", "office", "map", "hours"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contact002",
+          "usage": "<Contact002 address=\"Москва, Большая Дмитровка, 14\" hours={[{ days: \"Пн–Чт\", time: \"10:00 — 19:00\" }]} mapHref=\"https://maps.example\" />",
+          "summary": "Контакты офиса: адрес с подсказкой про вход, телефон, почта, часы работы, транспорт и заглушка карты со ссылкой в приложение. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-contact-002-* и не подменять её токенами вашей темы",
+            "адрес текстом рядом с картинкой: заглушка декоративна и помечена aria-hidden",
+            "подсказку про вход и этаж — теряются на последних тридцати метрах",
+            "часы работы таблицей: это данные в две колонки, и вслух они читаются парами",
+            "ссылки tel: и mailto: — на телефоне это разница между касанием и перенабором",
+            "ссылку «открыть в картах»: ради этого действия карту и смотрят"
+          ],
+          "adapt": [
+            "address, addressNote и pinLabel на метке",
+            "hours — часы работы и routes — подсказки про дорогу",
+            "phone, email и ссылку mapHref",
+            "mapLabel, mapCaption, legal и акцент через проп accent"
+          ],
+          "notes": [
+            "Заглушка не показывает настоящее положение офиса: точность даёт только ссылка в карты.",
+            "Ссылка tel: собирается вычищением всего, кроме цифр и плюса, — экзотические форматы проверьте руками.",
+            "Реквизиты в подвале блока выводятся как есть: за их актуальность отвечает вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "address",
+            "label": "Адрес",
+            "type": "text",
+            "default": "Москва, Большая Дмитровка, 14, строение 2",
+            "maxLength": 60
+          },
+          {
+            "prop": "pinLabel",
+            "label": "Подпись метки",
+            "type": "text",
+            "default": "Студия",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Office contacts with a CSS-drawn map placeholder: no external requests, plus the address in text, opening hours in a table and a hint about the entrance.",
+            "ai": {
+              "summary": "Office contacts: address with an entrance hint, phone, email, opening hours, travel notes and a map placeholder linking out to a maps app. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-contact-002-* palette — do not swap it for your theme tokens",
+                "the address in text beside the picture: the placeholder is decorative and aria-hidden",
+                "the hint about the entrance and floor — people get lost in the last thirty metres",
+                "the opening hours as a table: two columns of data, read aloud as pairs",
+                "the tel: and mailto: links — on a phone that is the difference between a tap and retyping",
+                "the «open in maps» link: that action is why the map is looked at"
+              ],
+              "adapt": [
+                "address, addressNote and pinLabel on the marker",
+                "hours — the opening times, and routes — the travel notes",
+                "phone, email and the mapHref link",
+                "mapLabel, mapCaption, legal and the accent through the accent prop"
+              ],
+              "notes": [
+                "The placeholder does not show the real location: only the maps link gives precision.",
+                "The tel: link is built by stripping everything but digits and a plus — check exotic formats by hand.",
+                "The legal line renders as-is: keeping it current is the caller's responsibility.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Contact002 address=\"14 Bolshaya Dmitrovka, Moscow\" hours={[{ days: \"Mon–Thu\", time: \"10:00 — 19:00\" }]} mapHref=\"https://maps.example\" />"
+            },
+            "controls": {
+              "address": {
+                "label": "Address",
+                "default": "14 Bolshaya Dmitrovka, bldg 2, Moscow"
+              },
+              "pinLabel": {
+                "label": "Marker caption",
+                "default": "Studio"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contact-003",
+      "type": "registry:block",
+      "title": "Demo Request",
+      "description": "Заявка на демо, где три шага встречи стоят над формой: человек решает, оставлять ли контакты, до того как начнёт заполнять поля.",
+      "categories": ["contact"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-003/contact-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-003-*. Серверный: валидация нативная, ошибка показывается по :user-invalid и связана с полем через aria-describedby. Цель встречи выбирается радиогруппой в чипах, состояние читается через :has(input:checked), радиокнопка уменьшена, но не спрятана. Шаги пронумерованы CSS-счётчиком. Поля встают попарно по container query.",
+      "meta": {
+        "tags": ["contact", "demo", "lead", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contact003",
+          "usage": "<Contact003 badge=\"30 минут\" goals={[\"Посмотреть возможности\", \"Обсудить внедрение\"]} submitLabel=\"Записаться на демо\" />",
+          "summary": "Форма заявки на демо: три шага встречи, контакты, размер команды и цель встречи чипами. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-contact-003-* и не подменять её токенами вашей темы",
+            "шаги над формой: решение оставлять заявку принимают до заполнения полей",
+            "цель встречи чипами, а не свободным полем — свободное заполняют словом «интересно»",
+            "видимую радиокнопку в чипе: display:none выбивает всю группу из клавиатуры",
+            ":user-invalid вместо :invalid, чтобы нетронутые поля не краснели заранее",
+            "строку о судьбе контактов под кнопкой: рабочую почту оставляют осторожно"
+          ],
+          "adapt": [
+            "массивы steps, goals и teamSizes",
+            "badge с длительностью и title",
+            "description, submitLabel и privacyNote",
+            "name радиогруппы и акцент через проп accent"
+          ],
+          "notes": [
+            "Отправку, защиту от ботов и подтверждение реализует вызывающий код: блок несёт только разметку и проверку в браузере.",
+            "Нативная проверка почты не отличает рабочий адрес от личного — если это важно, проверяйте домен на сервере.",
+            "Идентификаторы полей фиксированы: две такие формы на странице дадут дублирующиеся id.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "badge",
+            "label": "Метка длительности",
+            "type": "text",
+            "default": "30 минут",
+            "maxLength": 20
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Покажем продукт на ваших задачах",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A demo request where the three steps of the meeting sit above the form: people decide whether to leave their contacts before they start typing.",
+            "ai": {
+              "summary": "A demo request form: three meeting steps, contacts, team size and the goal of the call as chips. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-contact-003-* palette — do not swap it for your theme tokens",
+                "the steps above the form: the decision to apply is made before the fields",
+                "the goal as chips rather than a free field — a free field gets filled with «curious»",
+                "the visible radio inside a chip: display:none drops the group out of keyboard reach",
+                ":user-invalid instead of :invalid so untouched fields do not turn red",
+                "the line about what happens to the contacts: a work email is given cautiously"
+              ],
+              "adapt": [
+                "the steps, goals and teamSizes arrays",
+                "the duration badge and title",
+                "description, submitLabel and privacyNote",
+                "the radio group name and the accent through the accent prop"
+              ],
+              "notes": [
+                "Submission, bot protection and confirmation belong to the caller: the block carries markup and in-browser validation only.",
+                "Native email validation cannot tell a work address from a personal one — check the domain server-side if that matters.",
+                "Field ids are fixed: two of these forms on one page produce duplicate ids.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Contact003 badge=\"30 minutes\" goals={[\"See the features\", \"Discuss a rollout\"]} submitLabel=\"Book a demo\" />"
+            },
+            "controls": {
+              "badge": {
+                "label": "Duration badge",
+                "default": "30 minutes"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "We will show it on your own tasks"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contact-004",
+      "type": "registry:block",
+      "title": "Support FAQ Form",
+      "description": "Частые вопросы и короткая форма рядом: половина обращений закрывается списком, и форма стоит после него, а не вместо.",
+      "categories": ["contact"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-004/contact-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-004.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-004-*. Серверный: раскрытие держат нативные details/summary, поэтому браузер сам раскрывает раздел, найденный поиском по странице. Знак «плюс» собран из двух полос псевдоэлементами. Форма на три поля с нативной валидацией и ошибками по :user-invalid. На широком блоке container query делает форму липкой сбоку.",
+      "meta": {
+        "tags": ["contact", "faq", "support", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contact004",
+          "usage": "<Contact004 questions={[{ question: \"Сколько занимает подключение?\", answer: \"…\" }]} formTitle=\"Не нашли ответ?\" />",
+          "summary": "Секция поддержки: раскрывающиеся вопросы с ответами и короткая форма для тех, кто ответа не нашёл. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-contact-004-* и не подменять её токенами вашей темы",
+            "порядок «сначала ответы, потом форма»: форма вместо списка возвращает те же вопросы в поддержку",
+            "нативные details: браузер раскрывает раздел, найденный поиском по странице",
+            "независимые разделы — сравнивая два условия, их открывают одновременно",
+            "короткую форму на три поля: длинная читается как наказание за ненайденный ответ",
+            ":user-invalid вместо :invalid, чтобы нетронутые поля не краснели заранее"
+          ],
+          "adapt": [
+            "массив questions с вопросами и ответами",
+            "title, description и eyebrow",
+            "formTitle, formHint и submitLabel",
+            "responseNote и акцент через проп accent"
+          ],
+          "notes": [
+            "Отправку и ответ пользователю реализует вызывающий код: блок несёт только разметку и проверку в браузере.",
+            "Ответы выводятся как обычный текст: ссылки и списки внутри не разбираются.",
+            "Идентификаторы полей формы фиксированы: два таких блока на странице дадут дублирующиеся id.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Сначала посмотрите здесь",
+            "maxLength": 32
+          },
+          {
+            "prop": "formTitle",
+            "label": "Заголовок формы",
+            "type": "text",
+            "default": "Не нашли ответ?",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Frequent questions with a short form beside them: half of the requests are closed by the list, so the form comes after it, not instead of it.",
+            "ai": {
+              "summary": "A support section: expandable questions with answers and a short form for whoever did not find the answer. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-contact-004-* palette — do not swap it for your theme tokens",
+                "the order «answers first, form second»: a form instead of a list sends the same questions back to support",
+                "the native details: the browser expands a section found by page search",
+                "independent sections — comparing two conditions means opening both",
+                "the short three-field form: a long one reads as punishment for not finding the answer",
+                ":user-invalid instead of :invalid so untouched fields do not turn red"
+              ],
+              "adapt": [
+                "the questions array with questions and answers",
+                "title, description and eyebrow",
+                "formTitle, formHint and submitLabel",
+                "responseNote and the accent through the accent prop"
+              ],
+              "notes": [
+                "Submission and the reply belong to the caller: the block carries markup and in-browser validation only.",
+                "Answers render as plain text: links and lists inside are not parsed.",
+                "The form field ids are fixed: two of these blocks on one page produce duplicate ids.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Contact004 questions={[{ question: \"How long does onboarding take?\", answer: \"…\" }]} formTitle=\"Still stuck?\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Check here first"
+              },
+              "formTitle": {
+                "label": "Form heading",
+                "default": "Still stuck?"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contact-005",
+      "type": "registry:block",
+      "title": "Department Contacts",
+      "description": "Контакты отделов списком, где у каждого есть назначение и обещанное время ответа, а внизу — общий адрес на случай «не знаю, кому писать».",
+      "categories": ["contact"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-005/contact-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-005.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-005-*. Серверный: хуков нет. Адреса и телефоны выводятся настоящими ссылками mailto: и tel:, номер для ссылки вычищается до цифр и плюса. Время ответа набрано tabular-nums, чтобы колонка не прыгала. Список встаёт в две колонки по container query, запасной адрес всегда идёт последним отдельной карточкой.",
+      "meta": {
+        "tags": ["contact", "departments", "directory", "email"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contact005",
+          "usage": "<Contact005 departments={[{ name: \"Поддержка\", purpose: \"Ошибки и доступы\", email: \"help@studio.ru\", reply: \"Ответ за 2 часа\" }]} />",
+          "summary": "Список отделов: назначение, почта, телефон, часы и обещанное время ответа плюс общий адрес внизу. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-contact-005-* и не подменять её токенами вашей темы",
+            "строку назначения у отдела: без неё список превращается в набор одинаковых ящиков",
+            "обещанное время ответа — оно решает, писать сюда или звонить",
+            "запасной общий адрес внизу: без него пишут во все ящики сразу",
+            "настоящие ссылки mailto: и tel: вместо текста — на телефоне это одно касание",
+            "tabular-nums во времени ответа, иначе колонка прыгает от строки к строке"
+          ],
+          "adapt": [
+            "массив departments: названия, назначение, адреса и телефоны",
+            "title, description и eyebrow",
+            "fallbackTitle, fallbackText и fallbackEmail",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Ключом списка служит адрес почты: два отдела с одним ящиком сломают отрисовку.",
+            "Ссылка tel: собирается вычищением всего, кроме цифр и плюса, — экзотические форматы проверьте руками.",
+            "Обещание времени ответа — публичное обязательство: не ставьте цифру, которую не держите.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Напишите тому, кто ответит",
+            "maxLength": 32
+          },
+          {
+            "prop": "fallbackEmail",
+            "label": "Общий адрес",
+            "type": "text",
+            "default": "hello@studio.ru",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Department contacts as a list where each row carries its purpose and promised reply time, with a catch-all address at the bottom for «I am not sure who to write to».",
+            "ai": {
+              "summary": "A department list: purpose, email, phone, hours and the promised reply time, plus a catch-all address below. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-contact-005-* palette — do not swap it for your theme tokens",
+                "the purpose line per department: without it the list is a set of identical inboxes",
+                "the promised reply time — it decides between writing and calling",
+                "the catch-all address at the bottom: without it people write to every inbox at once",
+                "real mailto: and tel: links instead of plain text — on a phone that is one tap",
+                "tabular-nums on the reply time, or the column jumps from row to row"
+              ],
+              "adapt": [
+                "the departments array: names, purpose, addresses and phones",
+                "title, description and eyebrow",
+                "fallbackTitle, fallbackText and fallbackEmail",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The list key is the email address: two departments sharing an inbox break rendering.",
+                "The tel: link is built by stripping everything but digits and a plus — check exotic formats by hand.",
+                "A promised reply time is a public commitment: do not publish a number you cannot hold.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Contact005 departments={[{ name: \"Support\", purpose: \"Bugs and access\", email: \"help@studio.ru\", reply: \"Reply within 2 hours\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Write to whoever will answer"
+              },
+              "fallbackEmail": {
+                "label": "Catch-all address",
+                "default": "hello@studio.ru"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contact-006",
+      "type": "registry:block",
+      "title": "Callback Slots",
+      "description": "Заявка на обратный звонок с выбором дня и получасового окна: занятые слоты остаются в сетке и подписаны, а не исчезают.",
+      "categories": ["contact"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-006/contact-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-006.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-006-*. Серверный: день и слот выбираются радиогруппами, состояние читается через :has(input:checked), фокус — через :has(input:focus-visible). Радиокнопки визуально убраны, но остаются в потоке фокуса. Телефон — input type=\"tel\" с inputMode и pattern, ошибка показывается по :user-invalid. Сетка слотов строится auto-fill, поля встают попарно по container query.",
+      "meta": {
+        "tags": ["contact", "callback", "schedule", "phone"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contact006",
+          "usage": "<Contact006 days={[{ label: \"Сегодня\", note: \"14 мая\" }]} slots={[{ time: \"10:00\" }, { time: \"11:00\", taken: true }]} />",
+          "summary": "Форма обратного звонка: выбор дня, сетка временных окон с занятыми, телефон, часовой пояс и согласие. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-contact-006-* и не подменять её токенами вашей темы",
+            "занятый слот на месте и с подписью: пустое место читается как «сюда можно»",
+            "подпись «занято» рядом с disabled — серым цветом занятость не передать",
+            "радиокнопки в потоке фокуса: убраны визуально, но не display:none",
+            "отказ от маски телефона — она ломает вставку из буфера и международный формат",
+            "выбор часового пояса: «в 15:00» без пояса означает разное в разных городах"
+          ],
+          "adapt": [
+            "массивы days, slots и zones",
+            "title, description и eyebrow",
+            "phoneLabel, phoneHint и submitLabel",
+            "consentLabel, footNote и акцент через проп accent"
+          ],
+          "notes": [
+            "Отправку заявки и бронирование окна реализует вызывающий код: блок только показывает сетку.",
+            "Занятость приходит из данных и не обновляется сама — перезапрашивайте слоты перед отправкой.",
+            "pattern у телефона проверяет только состав символов и длину, а не существование номера.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Позвоним, когда вам удобно",
+            "maxLength": 32
+          },
+          {
+            "prop": "phoneLabel",
+            "label": "Подпись телефона",
+            "type": "text",
+            "default": "Телефон",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A callback request with a day and a half-hour window: taken slots stay in the grid and are labelled rather than disappearing.",
+            "ai": {
+              "summary": "A callback form: day picker, a grid of time windows including taken ones, phone, time zone and consent. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-contact-006-* palette — do not swap it for your theme tokens",
+                "the taken slot kept in place and labelled: an empty gap reads as «available»",
+                "the «taken» caption next to disabled — grey alone cannot carry unavailability",
+                "the radios kept in the focus order: visually removed, not display:none",
+                "no phone mask — it breaks pasting and international formats",
+                "the time zone picker: «at 15:00» means different things in different cities"
+              ],
+              "adapt": [
+                "the days, slots and zones arrays",
+                "title, description and eyebrow",
+                "phoneLabel, phoneHint and submitLabel",
+                "consentLabel, footNote and the accent through the accent prop"
+              ],
+              "notes": [
+                "Submitting the request and booking the slot belong to the caller: the block only renders the grid.",
+                "Availability comes from the data and does not refresh itself — re-fetch the slots before submitting.",
+                "The phone pattern only checks the character set and length, not that the number exists.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Contact006 days={[{ label: \"Today\", note: \"14 May\" }]} slots={[{ time: \"10:00\" }, { time: \"11:00\", taken: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "We will call when it suits you"
+              },
+              "phoneLabel": {
+                "label": "Phone caption",
+                "default": "Phone"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

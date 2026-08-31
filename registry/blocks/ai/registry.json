@@ -307,6 +307,1653 @@
           }
         }
       }
+    },
+    {
+      "name": "ai-004",
+      "type": "registry:block",
+      "title": "Chat Workspace",
+      "description": "Рабочее окно длинного диалога: закреплённый контекст задачи слева, разделители дней в переписке и действия над репликой ассистента.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-004/ai-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-004.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-004-*. Клиентский: \"use client\" ради поля ввода. Две колонки включаются container query от собственной ширины блока. Разделитель дня рисуется, когда день записи отличается от предыдущей, — отдельного массива групп нет. Панель действий над репликой показывается по :hover и по :focus-within, поэтому доступна с клавиатуры.",
+      "meta": {
+        "tags": ["ai", "chat", "workspace", "history"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai004",
+          "usage": "<Ai004 title=\"Диалог по проекту\" contextItems={[\"Бриф студии\"]} onSend={handleSend} />",
+          "summary": "Окно диалога с закреплённым контекстом, днями-разделителями, действиями над ответом и полем ввода. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-004-* и не подменять её токенами вашей темы",
+            "разделители дней: история за неделю без них читается как одна каша",
+            "закреплённый контекст на виду — иначе человек спорит с ответом, не понимая его источника",
+            ":focus-within у панели действий: по одному :hover она недоступна с клавиатуры",
+            "Enter на отправку и Shift+Enter на перенос строки",
+            "потолок высоты поля: растущий абзац иначе выталкивает кнопку за экран"
+          ],
+          "adapt": [
+            "массив entries и подписи дней",
+            "title и contextTitle над списком контекста",
+            "обработчик onSend и placeholder",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Лента не прокручивается к последней реплике сама: добавьте прокрутку при добавлении записи.",
+            "Дни группируются сравнением с предыдущей записью — массив должен быть отсортирован по времени.",
+            "Кнопки над репликой ничего не делают: обработчики вешает вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Диалог по проекту",
+            "maxLength": 28
+          },
+          {
+            "prop": "contextTitle",
+            "label": "Заголовок контекста",
+            "type": "text",
+            "default": "Контекст задачи",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A workspace for a long conversation: the pinned task context on the left, day separators in the thread and per-reply actions.",
+            "ai": {
+              "summary": "A conversation window with pinned context, day separators, actions over a reply and a composer. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-ai-004-* palette — do not swap it for your theme tokens",
+                "the day separators: a week of history reads as one blur without them",
+                "the pinned context in sight — otherwise people argue with an answer without knowing its source",
+                ":focus-within on the action bar: :hover alone leaves it unreachable by keyboard",
+                "Enter to send and Shift+Enter to break the line",
+                "the composer's height ceiling: a growing paragraph would push the button off screen"
+              ],
+              "adapt": [
+                "the entries array and the day captions",
+                "title and contextTitle above the context list",
+                "the onSend handler and the placeholder",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The thread does not auto-scroll to the newest entry: scroll it when appending.",
+                "Days are grouped by comparing with the previous entry — the array must be sorted by time.",
+                "The buttons above a reply do nothing: the caller wires the handlers.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai004 title=\"Project thread\" contextItems={[\"Studio brief\"]} onSend={handleSend} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Project thread"
+              },
+              "contextTitle": {
+                "label": "Context heading",
+                "default": "Task context"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-005",
+      "type": "registry:block",
+      "title": "Sourced Answer",
+      "description": "Ответ ассистента со сносками прямо в тексте и карточками источников, где у каждого есть цитата — тот самый фрагмент, на который опирается ответ.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-005/ai-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-005.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-005-*. Серверный: хуков нет. Сноски вырезаются из текста регулярным выражением по шаблону [1] и превращаются в <sup><a> с aria-label «Источник N»; якорь ведёт к карточке с id ai-005-source-N, у карточек есть scroll-margin-top и подсветка по :target. Источники раскладываются в две колонки container query.",
+      "meta": {
+        "tags": ["ai", "answer", "sources", "citations"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai005",
+          "usage": "<Ai005 question=\"Чем container queries отличаются от медиазапросов?\" sources={[{ index: 1, title: \"MDN\", site: \"developer.mozilla.org\", quote: \"…\" }]} />",
+          "summary": "Ответ модели со сносками в абзацах и списком источников: заголовок, домен и цитата у каждого. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-005-* и не подменять её токенами вашей темы",
+            "цитату в карточке источника: без неё проверка сводится к «откройте и поищите сами»",
+            "aria-label у сноски — голая цифра ничего не значит на слух",
+            "scroll-margin-top у карточек: без него якорь прилипает к кромке окна",
+            "нумерацию сносок и источников из одного набора — расхождение обесценивает весь блок",
+            "предупреждение под ответом: сборка по трём страницам не равна проверенному факту"
+          ],
+          "adapt": [
+            "массив paragraphs и разметку сносок в тексте",
+            "массив sources: заголовок, домен, цитату и ссылку",
+            "title, question и sourcesTitle над списком",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Сноска ищется по шаблону [1] в тексте: другой формат нумерации нужно менять и в разборе, и в данных.",
+            "Идентификаторы якорей фиксированы — два таких блока на одной странице дадут дублирующиеся id.",
+            "Цитаты не обрезаются: слишком длинная растянет карточку, режьте на стороне данных.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ответ с источниками",
+            "maxLength": 28
+          },
+          {
+            "prop": "sourcesTitle",
+            "label": "Заголовок списка",
+            "type": "text",
+            "default": "Источники",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An assistant answer with inline footnotes and source cards, each carrying the exact quote the answer leans on.",
+            "ai": {
+              "summary": "A model answer with footnotes in the paragraphs and a source list: title, domain and quote for each. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-ai-005-* palette — do not swap it for your theme tokens",
+                "the quote in the source card: without it checking means «open it and search yourself»",
+                "the aria-label on a footnote — a bare digit means nothing when read aloud",
+                "scroll-margin-top on the cards: without it the anchor sticks to the window edge",
+                "one shared numbering for footnotes and sources — a mismatch voids the whole block",
+                "the disclaimer under the answer: assembled from three pages is not a verified fact"
+              ],
+              "adapt": [
+                "the paragraphs array and the footnote markers in the text",
+                "the sources array: title, domain, quote and link",
+                "title, question and sourcesTitle above the list",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Footnotes are matched as [1] in the text: another numbering format needs changes in both the parser and the data.",
+                "Anchor ids are fixed — two of these blocks on one page produce duplicate ids.",
+                "Quotes are not truncated: a long one stretches the card, trim it in the data.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai005 question=\"How do container queries differ from media queries?\" sources={[{ index: 1, title: \"MDN\", site: \"developer.mozilla.org\", quote: \"…\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Answer with sources"
+              },
+              "sourcesTitle": {
+                "label": "List heading",
+                "default": "Sources"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-006",
+      "type": "registry:block",
+      "title": "Streaming Reply",
+      "description": "Ответ, который печатается: слова проявляются каскадом, каретка мигает, а при prefers-reduced-motion текст показывается целиком и сразу.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-006/ai-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-006.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-006-*. Серверный: анимацию целиком ведёт CSS, клиентского JS нет. Текст режется на слова, каждому слову проставляется animation-delay = позиция × speed. Каретка нарисована псевдоэлементом и помечена aria-hidden. В медиазапросе prefers-reduced-motion слова принудительно показываются: одного animation:none мало, потому что стартовое состояние слова — opacity 0.",
+      "meta": {
+        "tags": ["ai", "streaming", "animation", "answer"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai006",
+          "usage": "<Ai006 title=\"Ассистент печатает\" speed={55} text=\"Собрал структуру…\" />",
+          "summary": "Потоковая печать ответа словами с мигающей кареткой и кнопкой остановки. Ноль зависимостей, один файл, анимация на чистом CSS.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-006-* и не подменять её токенами вашей темы",
+            "правило prefers-reduced-motion с принудительным opacity:1 — иначе текст останется невидимым",
+            "проявление словами, а не буквами: на каждом символе строка дёргается",
+            "aria-hidden у каретки: скринридер должен читать текст, а не «палочку»",
+            "aria-live=\"polite\" у абзаца — ответ объявляется, но не перебивает",
+            "кнопку остановки: поток надо уметь прервать, не дожидаясь конца"
+          ],
+          "adapt": [
+            "text — сам ответ",
+            "speed — задержку между словами",
+            "title, status и stopLabel",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Анимация проигрывается один раз при монтировании: повтор нужно вызывать сменой ключа элемента.",
+            "На длинном тексте общая задержка растёт линейно — при 500 словах и speed 55 хвост появится через полминуты.",
+            "Блок не получает поток от модели: он показывает уже готовый текст как печатающийся.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ассистент печатает",
+            "maxLength": 28
+          },
+          {
+            "prop": "speed",
+            "label": "Задержка слова, мс",
+            "type": "number",
+            "default": 55,
+            "min": 10,
+            "max": 200
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A reply that types itself: words cascade in, the caret blinks, and under prefers-reduced-motion the text appears at once.",
+            "ai": {
+              "summary": "Word-by-word streaming of a reply with a blinking caret and a stop button. Zero dependencies, one file, animation in pure CSS.",
+              "preserve": [
+                "the local --vibeui-ai-006-* palette — do not swap it for your theme tokens",
+                "the prefers-reduced-motion rule forcing opacity:1 — otherwise the text stays invisible",
+                "revealing by words, not letters: per-character the line jitters",
+                "aria-hidden on the caret: a screen reader should read the text, not a bar",
+                "aria-live=\"polite\" on the paragraph — the answer is announced without interrupting",
+                "the stop button: a stream has to be interruptible before it ends"
+              ],
+              "adapt": [
+                "text — the answer itself",
+                "speed — the delay between words",
+                "title, status and stopLabel",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The animation plays once on mount: replay it by changing the element key.",
+                "On long text the total delay grows linearly — 500 words at speed 55 means half a minute to the tail.",
+                "The block does not consume a model stream: it renders ready text as if it were typing.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai006 title=\"Assistant is typing\" speed={55} text=\"Here is the structure…\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Assistant is typing"
+              },
+              "speed": {
+                "label": "Word delay, ms"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-007",
+      "type": "registry:block",
+      "title": "Prompt Library",
+      "description": "Библиотека готовых запросов с рубриками-вкладками: карточка — целиком кнопка, которая подставляет формулировку в поле ввода.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-007/ai-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-007.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-007-*. Клиентский: \"use client\" ради переключения рубрик через useState. Переключатель собран как tablist: кнопки несут role=\"tab\" и aria-selected, список — role=\"tabpanel\" с aria-live. Карточка промпта — одна кнопка целиком, вложенной интерактивности нет. Сетка на две и три колонки включается container query.",
+      "meta": {
+        "tags": ["ai", "prompts", "presets", "tabs"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai007",
+          "usage": "<Ai007 groups={[\"Сайт\", \"Код\"]} prompts={[{ group: \"Код\", title: \"Объясни диф\", body: \"…\" }]} onPick={setDraft} />",
+          "summary": "Панель заготовок запросов: рубрики-вкладки и карточки-кнопки с готовыми формулировками. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-007-* и не подменять её токенами вашей темы",
+            "карточку как одну кнопку: вложенная кнопка внутри не проходится клавиатурой",
+            "role=\"tab\" с aria-selected — цвет активной вкладки не читается вслух",
+            "aria-live у списка: смена рубрики иначе проходит незамеченной",
+            "полный текст запроса на карточке — название рубрики не объясняет, что подставится",
+            "пустое состояние: рубрика без заготовок не должна выглядеть поломкой"
+          ],
+          "adapt": [
+            "массивы groups и prompts",
+            "title и description над вкладками",
+            "actionLabel на карточке и emptyLabel",
+            "обработчик onPick и акцент через проп accent"
+          ],
+          "notes": [
+            "Вкладки не переключаются стрелками: для полного паттерна tablist добавьте обработчик клавиш.",
+            "Рубрика берётся из поля group у промпта — значение должно совпадать со строкой в groups буквально.",
+            "Первая рубрика выбирается при монтировании: смена массива groups активную вкладку не сбрасывает.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Заготовки запросов",
+            "maxLength": 28
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Подпись действия",
+            "type": "text",
+            "default": "Подставить в поле",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A library of ready-made prompts with topic tabs: each card is one button that drops the wording straight into the composer.",
+            "ai": {
+              "summary": "A prompt preset panel: topic tabs and card-buttons carrying ready wordings. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-ai-007-* palette — do not swap it for your theme tokens",
+                "the card as a single button: a nested button inside is unreachable by keyboard",
+                "role=\"tab\" with aria-selected — the active tab colour is not read aloud",
+                "aria-live on the list: otherwise switching topics passes unnoticed",
+                "the full prompt text on the card — a topic name does not say what will be inserted",
+                "the empty state: a topic with no presets must not look broken"
+              ],
+              "adapt": [
+                "the groups and prompts arrays",
+                "title and description above the tabs",
+                "actionLabel on the card and emptyLabel",
+                "the onPick handler and the accent through the accent prop"
+              ],
+              "notes": [
+                "Tabs do not respond to arrow keys: add a key handler for the full tablist pattern.",
+                "The topic comes from a prompt's group field — it must match a groups string exactly.",
+                "The first topic is selected on mount: changing the groups array does not reset it.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai007 groups={[\"Site\", \"Code\"]} prompts={[{ group: \"Code\", title: \"Explain the diff\", body: \"…\" }]} onPick={setDraft} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Prompt presets"
+              },
+              "actionLabel": {
+                "label": "Action caption",
+                "default": "Insert into the field"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-008",
+      "type": "registry:block",
+      "title": "Answer Compare",
+      "description": "Два ответа на один запрос рядом с разбором сильных и слабых сторон: выбор лучшего сделан радиогруппой без единой строки JS.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-008/ai-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-008.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-008-*. Серверный: выбор держат радиокнопки внутри <label>, обёрнутого вокруг всей колонки, состояние читается через :has(input:checked). Радиокнопка уменьшена, но не спрятана display:none, иначе группа выпадает из фокуса. Две колонки включаются container query: на узком блоке столбцы по 30 символов сравнивать невозможно.",
+      "meta": {
+        "tags": ["ai", "compare", "evaluation", "radio"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai008",
+          "usage": "<Ai008 question=\"Какой блок взять?\" name=\"answer-vote\" chooseLabel=\"Сохранить выбор\" />",
+          "summary": "Сравнение двух ответов модели: разбор по пунктам, время и расход у каждого, выбор радиогруппой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-008-* и не подменять её токенами вашей темы",
+            "радиокнопку видимой: display:none выбивает всю группу из обхода клавиатурой",
+            "<label> вокруг колонки — попасть в ответ можно кликом в любое место карточки",
+            "разбор по пунктам: без него выбор делается по длине ответа",
+            "время и расход у каждого варианта — «лучше» часто значит «дороже»",
+            "одну радиогруппу с общим name, иначе можно выбрать оба ответа"
+          ],
+          "adapt": [
+            "массив variants: тексты, разборы, время и расход",
+            "question над колонками и title",
+            "chooseLabel, footnote и name радиогруппы",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Блок ждёт ровно два варианта: третья колонка в тип не влезет и сетку сломает.",
+            "Выбор никуда не отправляется: обработчик submit добавляет вызывающий код.",
+            "Значение name должно быть уникальным на странице, иначе две пары ответов свяжутся в одну группу.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Какой ответ лучше?",
+            "maxLength": 28
+          },
+          {
+            "prop": "chooseLabel",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Сохранить выбор",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Two answers to one prompt side by side with their strong and weak points: the pick is a radio group with no JS at all.",
+            "ai": {
+              "summary": "A side-by-side comparison of two model answers: bullet breakdown, latency and cost for each, picked by a radio group. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-ai-008-* palette — do not swap it for your theme tokens",
+                "the radio kept visible: display:none drops the whole group out of keyboard reach",
+                "the <label> around the column — the answer is clickable anywhere in the card",
+                "the bullet breakdown: without it the pick is made by answer length",
+                "latency and cost per variant — «better» often means «pricier»",
+                "one radio group with a shared name, or both answers can be selected"
+              ],
+              "adapt": [
+                "the variants array: texts, breakdowns, latency and cost",
+                "question above the columns and title",
+                "chooseLabel, footnote and the radio group name",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The block expects exactly two variants: a third column does not fit the type or the grid.",
+                "The choice is not submitted anywhere: the caller adds the submit handler.",
+                "The name value must be unique on the page, or two answer pairs merge into one group.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai008 question=\"Which block should I use?\" name=\"answer-vote\" chooseLabel=\"Save the choice\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Which answer is better?"
+              },
+              "chooseLabel": {
+                "label": "Button caption",
+                "default": "Save the choice"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-009",
+      "type": "registry:block",
+      "title": "Tool Call",
+      "description": "Карточка вызова инструмента: аргументы словарём, результат рядом с ними, состояние формой значка и сырой ответ в раскрывающемся блоке.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-009/ai-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-009.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-009-*. Серверный: хуков нет, раскрытие держит нативный <details>. Аргументы размечены <dl> парами «имя — значение», результат лежит в <pre> с переносом длинных строк. Состояние вызова несут цвет, подпись и форма значка одновременно. Аргументы и результат встают в две колонки по container query.",
+      "meta": {
+        "tags": ["ai", "tools", "function-call", "debug"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai009",
+          "usage": "<Ai009 tool=\"catalog.search\" state=\"ok\" args={[{ name: \"limit\", value: \"3\" }]} result=\"[…]\" />",
+          "summary": "Разбор вызова инструмента: намерение, аргументы, результат, длительность и сырой ответ. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-009-* и не подменять её токенами вашей темы",
+            "форму значка на каждое состояние: цветом одним состояние не передать",
+            "аргументы в <dl>: пара «имя — значение» читается вслух целиком",
+            "результат рядом с аргументами — их сравнивают глазами, а не по вкладкам",
+            "перенос длинных строк в <pre>: горизонтальная прокрутка прячет хвост ответа",
+            "сырой ответ в <details> — он нужен редко, но целиком"
+          ],
+          "adapt": [
+            "tool, intent и duration",
+            "массив args и текст result",
+            "state — состояние вызова",
+            "rawTitle, raw и акцент через проп accent"
+          ],
+          "notes": [
+            "Значения аргументов не экранируются как JSON: форматируйте их до передачи в блок.",
+            "Длинный результат не сворачивается — обрежьте его на стороне данных или положите в details.",
+            "Состояние running не анимировано намеренно: мигающий значок в логе вызовов отвлекает.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tool",
+            "label": "Инструмент",
+            "type": "text",
+            "default": "catalog.search",
+            "maxLength": 32
+          },
+          {
+            "prop": "state",
+            "label": "Состояние",
+            "type": "select",
+            "default": "ok",
+            "options": ["ok", "running", "failed"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tool call card: arguments as a definition list, the result beside them, state carried by the badge shape and the raw response in a disclosure.",
+            "ai": {
+              "summary": "A tool call breakdown: intent, arguments, result, duration and the raw response. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-ai-009-* palette — do not swap it for your theme tokens",
+                "a distinct badge shape per state: colour alone cannot carry it",
+                "the arguments in a <dl>: a name–value pair is read aloud as one unit",
+                "the result beside the arguments — they are compared by eye, not across tabs",
+                "long-line wrapping in <pre>: horizontal scrolling hides the tail of the response",
+                "the raw response inside <details> — rarely needed, but needed whole"
+              ],
+              "adapt": [
+                "tool, intent and duration",
+                "the args array and the result text",
+                "state — the call state",
+                "rawTitle, raw and the accent through the accent prop"
+              ],
+              "notes": [
+                "Argument values are not JSON-escaped: format them before passing them in.",
+                "A long result is not collapsed — trim it in the data or move it into the details.",
+                "The running state is deliberately not animated: a blinking badge in a call log distracts.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai009 tool=\"catalog.search\" state=\"ok\" args={[{ name: \"limit\", value: \"3\" }]} result=\"[…]\" />"
+            },
+            "controls": {
+              "tool": {
+                "label": "Tool",
+                "default": "catalog.search"
+              },
+              "state": {
+                "label": "State"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-010",
+      "type": "registry:block",
+      "title": "Agent Plan Board",
+      "description": "План агента доской из трёх колонок: очередь, работа и готовое видны разом, сверху — доля выполненных задач.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-010/ai-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-010.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-010-*. Серверный: хуков нет. Доля выполненного считается из самих колонок — отдельного числа в пропсах нет, поэтому прогресс не может разойтись с задачами. Полоска объявлена role=\"progressbar\" с aria-valuenow и продублирована подписью. Три колонки включаются container query, на узком блоке они встают друг под друга.",
+      "meta": {
+        "tags": ["ai", "agent", "board", "progress"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai010",
+          "usage": "<Ai010 goal=\"Собрать лендинг\" columns={[{ key: \"done\", label: \"Готово\", tone: \"done\", tasks: [] }]} />",
+          "summary": "Доска плана агента: задачи по колонкам с инструментами и общий прогресс. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-010-* и не подменять её токенами вашей темы",
+            "подсчёт прогресса из самих колонок: отдельное число рано или поздно разойдётся с задачами",
+            "role=\"progressbar\" с aria-valuenow — доля не должна читаться только глазами",
+            "точку-маркер у заголовка колонки: тон колонки иначе передаётся одним цветом",
+            "зачёркивание только в колонке готового — в остальных оно врёт про состояние",
+            "счётчик задач у каждой колонки: объём работы виден до чтения карточек"
+          ],
+          "adapt": [
+            "массив columns и задачи внутри них",
+            "goal и title над доской",
+            "progressLabel у полосы прогресса",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Готовым считается столбец с tone \"done\" — без него прогресс всегда будет нулевым.",
+            "Порядок колонок берётся из массива: доска не сортирует их сама.",
+            "Названия инструментов не проверяются — это просто подпись, а не ссылка на вызов.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "План агента",
+            "maxLength": 28
+          },
+          {
+            "prop": "progressLabel",
+            "label": "Подпись прогресса",
+            "type": "text",
+            "default": "Выполнено задач",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An agent plan as a three-column board: queue, work in progress and done are visible at once, with the completed share on top.",
+            "ai": {
+              "summary": "An agent plan board: tasks per column with their tools plus overall progress. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-ai-010-* palette — do not swap it for your theme tokens",
+                "deriving progress from the columns: a separate number will drift from the tasks",
+                "role=\"progressbar\" with aria-valuenow — the share must not be visual only",
+                "the dot marker on a column heading: otherwise the tone is carried by colour alone",
+                "the strike-through only in the done column — elsewhere it lies about the state",
+                "the task counter per column: the workload is visible before reading the cards"
+              ],
+              "adapt": [
+                "the columns array and the tasks inside them",
+                "goal and title above the board",
+                "progressLabel on the progress bar",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Done is the column with tone \"done\" — without it progress is always zero.",
+                "Column order comes from the array: the board does not sort them.",
+                "Tool names are not validated — they are a caption, not a link to a call.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai010 goal=\"Build a landing page\" columns={[{ key: \"done\", label: \"Done\", tone: \"done\", tasks: [] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Agent plan"
+              },
+              "progressLabel": {
+                "label": "Progress caption",
+                "default": "Tasks completed"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-011",
+      "type": "registry:block",
+      "title": "Model Settings",
+      "description": "Настройки ответа модели, где каждый ползунок подписан следствием: видно, что изменится в ответе, а не только какое стало число.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-011/ai-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-011.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-011-*. Клиентский: \"use client\" ради значений ползунков в useState. Значение выводится в <output> с for на ползунок — браузер объявляет изменение сам, отдельный aria-live не нужен. Режим выбирается радиогруппой, состояние чипа читается через :has(input:checked). У <legend> проставлен clear:both у соседнего блока, иначе flex-дети обтекают его.",
+      "meta": {
+        "tags": ["ai", "settings", "sliders", "model"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai011",
+          "usage": "<Ai011 temperature={0.7} maxTokens={900} modes={[\"Точный\", \"Свободный\"]} />",
+          "summary": "Панель настроек модели: температура и длина ответа ползунками с объяснением следствий, режим радиогруппой. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-011-* и не подменять её токенами вашей темы",
+            "подпись следствия под ползунком: цифра без объяснения заставляет крутить ручку наугад",
+            "<output> с атрибутом for — значение объявляется браузером без aria-live",
+            "видимую радиокнопку в чипе режима: display:none выбивает группу из клавиатуры",
+            "шаг ползунка температуры в 0,1 — более мелкий шаг ничего не меняет в ответе",
+            "кнопку возврата к значениям по умолчанию: из настроек надо уметь выбраться"
+          ],
+          "adapt": [
+            "temperature и maxTokens — стартовые значения",
+            "массив modes и подписи режимов",
+            "title, description, applyLabel и resetLabel",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Значения живут в состоянии блока: чтобы получить их наружу, добавьте обработчик и поднимите состояние.",
+            "Тексты следствий зашиты в двух функциях — под свои диапазоны их придётся переписать.",
+            "Идентификаторы полей фиксированы: два таких блока на странице дадут дублирующиеся id.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "temperature",
+            "label": "Температура",
+            "type": "number",
+            "default": 0.7,
+            "min": 0,
+            "max": 2
+          },
+          {
+            "prop": "maxTokens",
+            "label": "Длина ответа",
+            "type": "number",
+            "default": 900,
+            "min": 200,
+            "max": 2000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Model answer settings where every slider is labelled with its consequence: you see what changes in the reply, not just the number.",
+            "ai": {
+              "summary": "A model settings panel: temperature and answer length as sliders with plain-language consequences, plus a mode radio group. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-ai-011-* palette — do not swap it for your theme tokens",
+                "the consequence line under a slider: a bare number makes people turn the knob blindly",
+                "<output> with the for attribute — the value is announced by the browser without aria-live",
+                "the visible radio inside a mode chip: display:none drops the group out of keyboard reach",
+                "the 0.1 step on temperature — a finer step changes nothing in the answer",
+                "the reset button: settings need a way back"
+              ],
+              "adapt": [
+                "temperature and maxTokens — the starting values",
+                "the modes array and their captions",
+                "title, description, applyLabel and resetLabel",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Values live in the block's state: lift the state and add a handler to read them outside.",
+                "The consequence texts are hard-coded in two functions — rewrite them for your ranges.",
+                "Field ids are fixed: two of these blocks on one page produce duplicate ids.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai011 temperature={0.7} maxTokens={900} modes={[\"Precise\", \"Free\"]} />"
+            },
+            "controls": {
+              "temperature": {
+                "label": "Temperature"
+              },
+              "maxTokens": {
+                "label": "Answer length"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-012",
+      "type": "registry:block",
+      "title": "Context Upload",
+      "description": "Сбор контекста файлами: зона перетаскивания, стадии чтения и индексации у каждого файла и доля занятого окна контекста.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-012/ai-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-012.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-012-*. Серверный: зона перетаскивания — обычный <label> вокруг <input type=\"file\">, поэтому диалог открывается по клику и с клавиатуры без JS. Полоски прогресса объявлены role=\"progressbar\" с aria-valuenow; состояние файла продублировано текстом. Список файлов встаёт в две колонки по container query.",
+      "meta": {
+        "tags": ["ai", "context", "upload", "files"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai012",
+          "usage": "<Ai012 files={[{ name: \"brief.pdf\", size: \"1,2 МБ\", progress: 100, state: \"indexed\" }]} budgetUsed={46} />",
+          "summary": "Экран загрузки контекста: дропзона, список файлов со стадиями обработки и бюджет окна контекста. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-012-* и не подменять её токенами вашей темы",
+            "<label> вокруг input[type=file]: фокус и клавиатура достаются даром",
+            "различие «прочитан» и «проиндексирован» — до индексации модель файл не видит",
+            "подпись состояния словами: цвет полоски сам по себе ничего не объясняет",
+            "строку файла с ошибкой на месте — исчезнувший файл оставляет ответ необъяснимо неполным",
+            "бюджет окна контекста внизу: без него непонятно, сколько ещё можно добавить"
+          ],
+          "adapt": [
+            "массив files и их состояния",
+            "budgetUsed — долю занятого окна",
+            "title, description, dropLabel и dropHint",
+            "accept — типы файлов и акцент через проп accent"
+          ],
+          "notes": [
+            "Загрузку, отмену и удаление файла реализует вызывающий код: блок только показывает список.",
+            "Значение accept — подсказка диалогу, а не проверка: тип файла всё равно проверяйте на сервере.",
+            "Прогресс не анимируется сам: обновляйте поле progress по мере чтения.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Контекст для ассистента",
+            "maxLength": 28
+          },
+          {
+            "prop": "budgetUsed",
+            "label": "Занято окна, %",
+            "type": "number",
+            "default": 46,
+            "min": 0,
+            "max": 100
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Building context from files: a drop zone, per-file reading and indexing stages, and the share of the context window in use.",
+            "ai": {
+              "summary": "A context upload screen: drop zone, file list with processing stages and the context window budget. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-ai-012-* palette — do not swap it for your theme tokens",
+                "the <label> around input[type=file]: focus and keyboard come for free",
+                "the difference between read and indexed — the model cannot see a file until it is indexed",
+                "the state spelled out in words: a coloured bar explains nothing on its own",
+                "the failed file kept in the list — a vanished file leaves the answer inexplicably incomplete",
+                "the context budget at the bottom: without it there is no telling how much more fits"
+              ],
+              "adapt": [
+                "the files array and their states",
+                "budgetUsed — the share of the window in use",
+                "title, description, dropLabel and dropHint",
+                "accept — the file types, and the accent through the accent prop"
+              ],
+              "notes": [
+                "Uploading, cancelling and removing files belong to the caller: the block only renders the list.",
+                "The accept value is a hint for the dialog, not a check: validate the type on the server anyway.",
+                "Progress does not animate itself: update the progress field as reading advances.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai012 files={[{ name: \"brief.pdf\", size: \"1.2 MB\", progress: 100, state: \"indexed\" }]} budgetUsed={46} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Context for the assistant"
+              },
+              "budgetUsed": {
+                "label": "Window used, %"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-013",
+      "type": "registry:block",
+      "title": "Answer Feedback",
+      "description": "Оценка ответа, у которой есть продолжение: палец вниз раскрывает список причин и поле комментария — раскрытие держит :has() без JS.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-013/ai-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-013.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-013-*. Серверный: подробности показываются селектором form:has([data-vote=\"down\"]:checked). Скрытая часть убрана display:none, а не прозрачностью, чтобы её поля не ловили Tab в пустоту. Причины — чекбоксы: у плохого ответа обычно несколько бед сразу. Причины встают в две колонки по container query.",
+      "meta": {
+        "tags": ["ai", "feedback", "rating", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai013",
+          "usage": "<Ai013 answer=\"Возьмите pricing-001…\" reasons={[\"Ответ не по вопросу\"]} name=\"answer-vote\" />",
+          "summary": "Оценка ответа модели: две кнопки, а при отрицательной — причины чекбоксами и поле комментария. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-013-* и не подменять её токенами вашей темы",
+            "display:none у скрытой части: прозрачные поля продолжают ловить фокус",
+            "чекбоксы у причин, а не радио — у плохого ответа обычно несколько бед сразу",
+            "поле комментария вместе с причинами: список никогда не покрывает всё",
+            "оцениваемый ответ рядом с формой — иначе оценивают по памяти",
+            "строку о том, что уходит с оценкой: без неё честную обратную связь не оставляют"
+          ],
+          "adapt": [
+            "массив reasons и текст answer",
+            "title, question и privacyNote",
+            "upLabel, downLabel, commentLabel и submitLabel",
+            "name радиогруппы и акцент через проп accent"
+          ],
+          "notes": [
+            "Раскрытие держится на :has() — в браузере без его поддержки подробности останутся скрытыми.",
+            "Форма ничего не отправляет: обработчик submit добавляет вызывающий код.",
+            "Идентификатор поля комментария фиксирован: два блока на странице дадут дублирующиеся id.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Оценка ответа",
+            "maxLength": 28
+          },
+          {
+            "prop": "downLabel",
+            "label": "Отрицательная оценка",
+            "type": "text",
+            "default": "Не помог",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A rating that goes somewhere: thumbs down reveals a reason list and a comment field, and the reveal runs on :has() with no JS.",
+            "ai": {
+              "summary": "Feedback on a model answer: two buttons, and on a negative one a reason checklist plus a comment field. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-ai-013-* palette — do not swap it for your theme tokens",
+                "display:none on the hidden part: transparent fields keep catching focus",
+                "checkboxes for the reasons, not radios — a bad answer usually fails in several ways",
+                "the comment field alongside the reasons: a list never covers everything",
+                "the rated answer next to the form — otherwise it is judged from memory",
+                "the line about what the rating carries: without it honest feedback does not come"
+              ],
+              "adapt": [
+                "the reasons array and the answer text",
+                "title, question and privacyNote",
+                "upLabel, downLabel, commentLabel and submitLabel",
+                "the radio group name and the accent through the accent prop"
+              ],
+              "notes": [
+                "The reveal relies on :has() — in a browser without it the details stay hidden.",
+                "The form submits nothing: the caller adds the submit handler.",
+                "The comment field id is fixed: two blocks on one page produce duplicate ids.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai013 answer=\"Use pricing-001…\" reasons={[\"Off topic\"]} name=\"answer-vote\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Rate the answer"
+              },
+              "downLabel": {
+                "label": "Negative rating",
+                "default": "Not helpful"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-014",
+      "type": "registry:block",
+      "title": "Token Budget",
+      "description": "Расход окна контекста долями: системная инструкция, файлы, переписка и остаток — с числами, объяснением и предупреждением у предела.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-014/ai-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-014.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-014-*. Серверный: доли рисуются grid-template-columns из процентов, а не абсолютными кусками, поэтому не разъезжаются при округлении. Занятое считается суммой всех долей, кроме tone \"free\". Полоса помечена role=\"img\" с aria-label, числа набраны tabular-nums. Легенда встаёт в две колонки по container query.",
+      "meta": {
+        "tags": ["ai", "tokens", "budget", "context"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai014",
+          "usage": "<Ai014 limit={128000} segments={[{ tone: \"chat\", label: \"Переписка\", tokens: 68400 }]} />",
+          "summary": "Окно контекста в разрезе: доли расхода с подписями, предупреждение у предела и две кнопки действий. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-014-* и не подменять её токенами вашей темы",
+            "разбивку по долям: одна полоска «занято 82%» не подсказывает, что резать",
+            "доли как колонки грида — абсолютные куски разъезжаются на округлении",
+            "объяснение у каждой доли: «переписка 68 400» само по себе ничего не значит",
+            "tabular-nums в числах, иначе колонка значений прыгает при обновлении",
+            "предупреждение о молчаливом выпадении старых сообщений — это происходит без спроса"
+          ],
+          "adapt": [
+            "массив segments и их подписи",
+            "limit — размер окна контекста",
+            "title, model и текст warning",
+            "trimLabel, newChatLabel и акцент через проп accent"
+          ],
+          "notes": [
+            "Свободный остаток — это доля с tone \"free\": без неё полоса окажется заполненной целиком.",
+            "Сумма долей не проверяется: если она больше limit, колонки вылезут за полосу.",
+            "Числа форматируются локалью ru-RU — для другой локали правьте функцию форматирования.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Окно контекста",
+            "maxLength": 28
+          },
+          {
+            "prop": "limit",
+            "label": "Размер окна",
+            "type": "number",
+            "default": 128000,
+            "min": 4000,
+            "max": 1000000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The context window broken into shares: system prompt, files, conversation and what is left — with numbers, explanations and a warning near the limit.",
+            "ai": {
+              "summary": "The context window in slices: usage shares with captions, a warning near the limit and two actions. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-ai-014-* palette — do not swap it for your theme tokens",
+                "the breakdown into shares: one bar reading «82% used» does not say what to cut",
+                "the shares as grid columns — absolute pieces drift on rounding",
+                "the explanation per share: «conversation 68,400» means nothing by itself",
+                "tabular-nums on the numbers, or the value column jumps on every update",
+                "the warning about old messages dropping silently — it happens without asking"
+              ],
+              "adapt": [
+                "the segments array and their captions",
+                "limit — the size of the context window",
+                "title, model and the warning text",
+                "trimLabel, newChatLabel and the accent through the accent prop"
+              ],
+              "notes": [
+                "The free remainder is the share with tone \"free\": without it the bar reads as completely full.",
+                "The sum of shares is not validated: above limit the columns overflow the bar.",
+                "Numbers are formatted with the ru-RU locale — change the formatter for another locale.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai014 limit={128000} segments={[{ tone: \"chat\", label: \"Conversation\", tokens: 68400 }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Context window"
+              },
+              "limit": {
+                "label": "Window size"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-015",
+      "type": "registry:block",
+      "title": "Chat History",
+      "description": "Боковая колонка истории диалогов: поиск идёт и по заголовку, и по первой реплике, а записи сгруппированы по закреплённым и датам.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-015/ai-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-015.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-015-*. Клиентский: \"use client\" ради поиска в useState. Фильтр смотрит и на title, и на preview — название диалога обычно сгенерировано моделью, и человек помнит не его. Группы собираются из поля group и выводятся отдельными <section> с заголовками. Активная запись помечена aria-current, а не только цветом.",
+      "meta": {
+        "tags": ["ai", "history", "sidebar", "search"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai015",
+          "usage": "<Ai015 threads={[{ id: \"t2\", title: \"Тарифы\", preview: \"Три плана…\", group: \"Сегодня\", time: \"11:20\" }]} activeId=\"t2\" />",
+          "summary": "История диалогов в боковой колонке: поиск, группы по датам, превью первой реплики и активная запись. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-015-* и не подменять её токенами вашей темы",
+            "поиск и по preview: сгенерированное название диалога человек не помнит",
+            "aria-current у активной записи — цвет подложки не читается вслух",
+            "группы как <section> с заголовком: по ним можно прыгать заголовками",
+            "обрезку превью двумя строками, иначе колонка превращается в ленту текста",
+            "пустое состояние с подсказкой — «ничего не найдено» без совета бесполезно"
+          ],
+          "adapt": [
+            "массив threads и названия групп",
+            "activeId — открытый диалог",
+            "title, newLabel и searchPlaceholder",
+            "emptyLabel и акцент через проп accent"
+          ],
+          "notes": [
+            "Порядок групп берётся из порядка записей в массиве: блок не сортирует их по дате.",
+            "Поиск регистронезависимый, но без учёта морфологии — «диалоги» не найдут «диалог».",
+            "Выбор диалога ничего не делает: обработчик вешает вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "История",
+            "maxLength": 24
+          },
+          {
+            "prop": "activeId",
+            "label": "Активный диалог",
+            "type": "text",
+            "default": "t2",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A conversation history sidebar: search covers both the title and the first message, and threads are grouped by pinned state and date.",
+            "ai": {
+              "summary": "Conversation history in a sidebar: search, date groups, a preview of the first message and the active thread. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-ai-015-* palette — do not swap it for your theme tokens",
+                "searching the preview too: a model-generated thread name is not what people remember",
+                "aria-current on the active row — a background tint is not read aloud",
+                "the groups as <section> with a heading: they can be jumped between by headings",
+                "clamping the preview to two lines, or the column turns into a wall of text",
+                "the empty state with a hint — «nothing found» without advice is useless"
+              ],
+              "adapt": [
+                "the threads array and the group names",
+                "activeId — the open thread",
+                "title, newLabel and searchPlaceholder",
+                "emptyLabel and the accent through the accent prop"
+              ],
+              "notes": [
+                "Group order follows the order of entries in the array: the block does not sort by date.",
+                "Search is case-insensitive but not morphological — a plural query misses the singular.",
+                "Selecting a thread does nothing: the caller wires the handler.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai015 threads={[{ id: \"t2\", title: \"Pricing\", preview: \"Three plans…\", group: \"Today\", time: \"11:20\" }]} activeId=\"t2\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "History"
+              },
+              "activeId": {
+                "label": "Active thread",
+                "default": "t2"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-016",
+      "type": "registry:block",
+      "title": "Action Approval",
+      "description": "Подтверждение действия ассистента: последствия списком, диф правки со знаками «плюс» и «минус» и три равнозначные кнопки решения.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-016/ai-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-016.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-016-*. Серверный: хуков нет. Строки дифа помечены и цветом, и знаком в отдельной колонке — цвет не переживает печать и не читается вслух. Кнопка отклонения стоит в одном ряду с подтверждением. Чекбокс «не спрашивать снова» намеренно последний. Последствия и диф встают в две колонки по container query.",
+      "meta": {
+        "tags": ["ai", "approval", "diff", "confirm"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai016",
+          "usage": "<Ai016 target=\"app/page.tsx\" diff={[{ kind: \"add\", text: \"  Новый заголовок\" }]} confirmLabel=\"Применить правку\" />",
+          "summary": "Экран подтверждения правки от ассистента: намерение, последствия, диф и кнопки применить, изменить или отклонить. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-016-* и не подменять её токенами вашей темы",
+            "знак «плюс» и «минус» отдельной колонкой: цветом одним строку дифа не пометить",
+            "видимую кнопку отклонения рядом с подтверждением — спрятанный отказ делает подтверждение формальностью",
+            "список последствий до кнопок: соглашаются с правкой, а не с кнопкой «продолжить»",
+            "адрес правки на виду — без файла и блока непонятно, где это произойдёт",
+            "чекбокс «не спрашивать снова» последним: до опасной настройки надо дочитать"
+          ],
+          "adapt": [
+            "массив diff и список effects",
+            "title, intent и target",
+            "confirmLabel, editLabel и rejectLabel",
+            "rememberLabel и акцент через проп accent"
+          ],
+          "notes": [
+            "Диф не разбирается из patch-формата: строки со знаками передаёт вызывающий код.",
+            "Кнопки ничего не делают: обработчики решения вешает вызывающий код.",
+            "Отступы внутри строк дифа сохраняются как есть — приводите их к одному виду заранее.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "confirmLabel",
+            "label": "Подпись подтверждения",
+            "type": "text",
+            "default": "Применить правку",
+            "maxLength": 28
+          },
+          {
+            "prop": "target",
+            "label": "Адрес правки",
+            "type": "text",
+            "default": "app/page.tsx · hero-002",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An approval screen for an assistant action: consequences as a list, a plus/minus diff of the edit and three equally weighted decisions.",
+            "ai": {
+              "summary": "An approval screen for an assistant edit: intent, consequences, diff and apply, edit or reject. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-ai-016-* palette — do not swap it for your theme tokens",
+                "the plus and minus in their own column: colour alone cannot mark a diff line",
+                "the visible reject button next to approve — a hidden refusal makes approval a formality",
+                "the consequence list before the buttons: people agree to an edit, not to a «continue» button",
+                "the edit target in sight — without a file and block it is unclear where this lands",
+                "the «do not ask again» checkbox last: a dangerous setting has to be read down to"
+              ],
+              "adapt": [
+                "the diff array and the effects list",
+                "title, intent and target",
+                "confirmLabel, editLabel and rejectLabel",
+                "rememberLabel and the accent through the accent prop"
+              ],
+              "notes": [
+                "The diff is not parsed from patch format: the caller passes the signed lines.",
+                "The buttons do nothing: the caller wires the decision handlers.",
+                "Indentation inside diff lines is kept as-is — normalise it before passing it in.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai016 target=\"app/page.tsx\" diff={[{ kind: \"add\", text: \"  New heading\" }]} confirmLabel=\"Apply the edit\" />"
+            },
+            "controls": {
+              "confirmLabel": {
+                "label": "Approve caption",
+                "default": "Apply the edit"
+              },
+              "target": {
+                "label": "Edit target",
+                "default": "app/page.tsx · hero-002"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-017",
+      "type": "registry:block",
+      "title": "Model Error",
+      "description": "Экран отказа модели, после которого понятно, что делать: объяснение без «что-то пошло не так», шаги, сохранённый черновик и код для поддержки.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-017/ai-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-017.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-017-*. Серверный: хуков нет, технические подробности спрятаны в нативный <details>. Корень объявлен role=\"alert\": ошибка должна быть услышана сразу. Код ошибки помечен user-select:all, чтобы выделяться одним кликом. Черновик запроса показан рядом с кнопкой повтора.",
+      "meta": {
+        "tags": ["ai", "error", "retry", "recovery"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai017",
+          "usage": "<Ai017 code=\"503 · req_8c41d9\" retryLabel=\"Повторить запрос\" draft=\"Собери страницу тарифов…\" />",
+          "summary": "Экран ошибки модели: причина человеческими словами, шаги выхода, сохранённый черновик, повтор и подробности для поддержки. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-017-* и не подменять её токенами вашей темы",
+            "role=\"alert\" на корне: ошибку надо услышать, а не найти прокруткой",
+            "сохранённый черновик рядом с повтором — потерянный абзац обиднее самой ошибки",
+            "шаги выхода: «что-то пошло не так» — это тупик, а не сообщение",
+            "код ошибки с user-select:all — именно его спросят в поддержке",
+            "технические подробности в <details>: они нужны одному из двадцати"
+          ],
+          "adapt": [
+            "title, explanation и массив steps",
+            "code и attempt в шапке",
+            "draft, draftLabel и текст details",
+            "retryLabel, switchLabel и акцент через проп accent"
+          ],
+          "notes": [
+            "Повтор запроса реализует вызывающий код: кнопка ничего не делает сама.",
+            "role=\"alert\" объявляет содержимое при появлении — не монтируйте блок заранее скрытым.",
+            "Черновик выводится как есть, без обрезки: длинный запрос растянет блок.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Модель не ответила",
+            "maxLength": 28
+          },
+          {
+            "prop": "code",
+            "label": "Код ошибки",
+            "type": "text",
+            "default": "503 · req_8c41d9",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A model failure screen that leaves you knowing what to do: a real explanation, next steps, the saved draft and a code for support.",
+            "ai": {
+              "summary": "A model error screen: the cause in plain words, recovery steps, the saved draft, a retry and details for support. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-ai-017-* palette — do not swap it for your theme tokens",
+                "role=\"alert\" on the root: an error must be heard, not found by scrolling",
+                "the saved draft next to retry — a lost paragraph stings more than the failure",
+                "the recovery steps: «something went wrong» is a dead end, not a message",
+                "the error code with user-select:all — this is what support will ask for",
+                "the technical details inside <details>: one in twenty people needs them"
+              ],
+              "adapt": [
+                "title, explanation and the steps array",
+                "code and attempt in the header",
+                "draft, draftLabel and the details text",
+                "retryLabel, switchLabel and the accent through the accent prop"
+              ],
+              "notes": [
+                "Retrying is the caller's job: the button does nothing by itself.",
+                "role=\"alert\" announces the content when it appears — do not mount the block hidden in advance.",
+                "The draft renders as-is without truncation: a long prompt stretches the block.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai017 code=\"503 · req_8c41d9\" retryLabel=\"Retry the request\" draft=\"Build a pricing page…\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "The model did not answer"
+              },
+              "code": {
+                "label": "Error code",
+                "default": "503 · req_8c41d9"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-018",
+      "type": "registry:block",
+      "title": "Document Citation",
+      "description": "Цитата из документа вместе с соседними предложениями и выводом, который на ней стоит: видно, что фрагмент не обрезан по удобному слову.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-018/ai-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-018.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-018-*. Серверный: хуков нет. Подсветка сделана тегом <mark> с box-decoration-break:clone, поэтому фон не рвётся на переносе строки. Цитата лежит в <figure> с <blockquote> и <cite> в подписи. Соседние предложения приглушены цветом, но оставлены на месте. Две колонки включаются container query.",
+      "meta": {
+        "tags": ["ai", "citation", "document", "evidence"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai018",
+          "usage": "<Ai018 source=\"Договор, редакция 4\" location=\"с. 7, п. 5.2\" quote=\"Исполнитель передаёт исходный код…\" />",
+          "summary": "Основание ответа: фрагмент документа с подсветкой, контекстом до и после и связанный с ним вывод модели. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-018-* и не подменять её токенами вашей темы",
+            "соседние предложения вокруг цитаты: вырванный фрагмент меняет смысл на противоположный",
+            "тег <mark>, а не покрашенный span — это семантика выделения, её понимает поиск по странице",
+            "box-decoration-break:clone: без него подсветка рвётся на переносе строки",
+            "<cite> в подписи — источник связан с текстом разметкой, а не только визуально",
+            "адрес фрагмента: страница и пункт превращают цитату в проверяемую ссылку"
+          ],
+          "adapt": [
+            "quote, before и after — сам фрагмент и его окружение",
+            "source и location в шапке",
+            "claim, claimTitle и confidence",
+            "openLabel, copyLabel и акцент через проп accent"
+          ],
+          "notes": [
+            "Подсвечивается ровно то, что пришло в quote: искать фрагмент внутри длинного текста блок не умеет.",
+            "Кнопки ничего не делают: открытие документа и копирование реализует вызывающий код.",
+            "Очень длинная цитата не сворачивается — режьте её на стороне данных.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "source",
+            "label": "Документ",
+            "type": "text",
+            "default": "Договор на разработку, редакция 4",
+            "maxLength": 40
+          },
+          {
+            "prop": "location",
+            "label": "Место в документе",
+            "type": "text",
+            "default": "с. 7, п. 5.2",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A document quote shown with its neighbouring sentences and the claim built on it — proof the fragment was not cut at a convenient word.",
+            "ai": {
+              "summary": "The grounding of an answer: a highlighted document fragment with context before and after, plus the model's claim tied to it. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-ai-018-* palette — do not swap it for your theme tokens",
+                "the sentences around the quote: a torn-out fragment can flip the meaning",
+                "the <mark> tag rather than a tinted span — it is highlight semantics and page search understands it",
+                "box-decoration-break:clone: without it the highlight breaks across lines",
+                "<cite> in the caption — the source is tied to the text in markup, not only visually",
+                "the fragment address: a page and clause turn the quote into a checkable reference"
+              ],
+              "adapt": [
+                "quote, before and after — the fragment and its surroundings",
+                "source and location in the header",
+                "claim, claimTitle and confidence",
+                "openLabel, copyLabel and the accent through the accent prop"
+              ],
+              "notes": [
+                "Exactly what arrives in quote is highlighted: the block cannot find a fragment inside a long text.",
+                "The buttons do nothing: opening the document and copying belong to the caller.",
+                "A very long quote is not collapsed — trim it in the data.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai018 source=\"Contract, revision 4\" location=\"p. 7, cl. 5.2\" quote=\"The contractor hands over the source code…\" />"
+            },
+            "controls": {
+              "source": {
+                "label": "Document",
+                "default": "Development contract, revision 4"
+              },
+              "location": {
+                "label": "Place in the document",
+                "default": "p. 7, cl. 5.2"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-019",
+      "type": "registry:block",
+      "title": "Empty Chat",
+      "description": "Первый экран чата: вместо перечня возможностей — готовые запросы, которые можно нажать, и честный список того, чего ассистент не умеет.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-019/ai-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-019.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-ai-019-*. Серверный: хуков нет, поле ввода — обычная форма. Примеры стоят в разметке до поля, поэтому в порядке обхода клавиатурой идут первыми. Рамка поля подсвечивается по :focus-within целиком. Примеры и список ограничений встают в две колонки по container query.",
+      "meta": {
+        "tags": ["ai", "empty-state", "onboarding", "examples"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Ai019",
+          "usage": "<Ai019 greeting=\"С чего начнём?\" examples={[{ kind: \"Собрать\", text: \"Собери лендинг студии\" }]} />",
+          "summary": "Пустой экран чата: приветствие, карточки готовых запросов, поле ввода и список ограничений. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-019-* и не подменять её токенами вашей темы",
+            "готовые запросы целиком, а не перечень умений: «умею писать тексты» не помогает начать",
+            "порядок разметки — примеры до поля, иначе клавиатурный обход идёт задом наперёд",
+            "честный список ограничений: узнать о них из неудачного ответа дороже",
+            ":focus-within на рамке поля — фокус внутри обводит весь блок ввода",
+            "aria-label у поля: подсказка внутри исчезает при первом же символе"
+          ],
+          "adapt": [
+            "массив examples и их рубрики",
+            "greeting и lede над примерами",
+            "массив limits и limitsTitle",
+            "placeholder, sendLabel и акцент через проп accent"
+          ],
+          "notes": [
+            "Нажатие примера ничего не подставляет: обработчик вешает вызывающий код.",
+            "Форма не перехватывает отправку — без обработчика submit страница перезагрузится.",
+            "Четыре примера — предел читаемости: с восемью экран снова превращается в список возможностей.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "greeting",
+            "label": "Приветствие",
+            "type": "text",
+            "default": "С чего начнём?",
+            "maxLength": 28
+          },
+          {
+            "prop": "sendLabel",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Спросить",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The first screen of a chat: clickable ready-made prompts instead of a feature list, plus an honest list of what the assistant cannot do.",
+            "ai": {
+              "summary": "An empty chat screen: a greeting, ready-made prompt cards, a composer and a list of limitations. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-ai-019-* palette — do not swap it for your theme tokens",
+                "whole ready-made prompts rather than a capability list: «I can write texts» does not help anyone start",
+                "the markup order — examples before the field, or keyboard order runs backwards",
+                "the honest list of limits: learning them from a failed answer costs more",
+                ":focus-within on the field frame — focus inside rings the whole input block",
+                "the aria-label on the field: the placeholder disappears at the first character"
+              ],
+              "adapt": [
+                "the examples array and their categories",
+                "greeting and lede above the examples",
+                "the limits array and limitsTitle",
+                "placeholder, sendLabel and the accent through the accent prop"
+              ],
+              "notes": [
+                "Clicking an example inserts nothing: the caller wires the handler.",
+                "The form does not intercept submission — without a submit handler the page reloads.",
+                "Four examples is the readable limit: at eight the screen becomes a feature list again.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Ai019 greeting=\"Where do we start?\" examples={[{ kind: \"Build\", text: \"Build a studio landing page\" }]} />"
+            },
+            "controls": {
+              "greeting": {
+                "label": "Greeting",
+                "default": "Where do we start?"
+              },
+              "sendLabel": {
+                "label": "Button caption",
+                "default": "Ask"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
