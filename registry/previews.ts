@@ -22,6 +22,14 @@ import { Dashboard003 } from "@/registry/blocks/dashboard/dashboard-003/dashboar
 import { Dashboard004 } from "@/registry/blocks/dashboard/dashboard-004/dashboard-004"
 import { Dashboard005 } from "@/registry/blocks/dashboard/dashboard-005/dashboard-005"
 import { Dashboard006 } from "@/registry/blocks/dashboard/dashboard-006/dashboard-006"
+import { Dashboard007 } from "@/registry/blocks/dashboard/dashboard-007/dashboard-007"
+import { Dashboard008 } from "@/registry/blocks/dashboard/dashboard-008/dashboard-008"
+import { Dashboard009 } from "@/registry/blocks/dashboard/dashboard-009/dashboard-009"
+import { Dashboard010 } from "@/registry/blocks/dashboard/dashboard-010/dashboard-010"
+import { Dashboard011 } from "@/registry/blocks/dashboard/dashboard-011/dashboard-011"
+import { Dashboard012 } from "@/registry/blocks/dashboard/dashboard-012/dashboard-012"
+import { Dashboard013 } from "@/registry/blocks/dashboard/dashboard-013/dashboard-013"
+import { Dashboard014 } from "@/registry/blocks/dashboard/dashboard-014/dashboard-014"
 import { Commerce001 } from "@/registry/blocks/commerce/commerce-001/commerce-001"
 import { Commerce002 } from "@/registry/blocks/commerce/commerce-002/commerce-002"
 import { Commerce003 } from "@/registry/blocks/commerce/commerce-003/commerce-003"
@@ -302,6 +310,14 @@ export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
   "dashboard-004": Dashboard004,
   "dashboard-005": Dashboard005,
   "dashboard-006": Dashboard006,
+  "dashboard-007": Dashboard007,
+  "dashboard-008": Dashboard008,
+  "dashboard-009": Dashboard009,
+  "dashboard-010": Dashboard010,
+  "dashboard-011": Dashboard011,
+  "dashboard-012": Dashboard012,
+  "dashboard-013": Dashboard013,
+  "dashboard-014": Dashboard014,
   "commerce-001": Commerce001,
   "commerce-002": Commerce002,
   "commerce-003": Commerce003,

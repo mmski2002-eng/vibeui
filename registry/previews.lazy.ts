@@ -110,6 +110,46 @@ export const LAZY_PREVIEWS = {
       (module) => module.Dashboard006,
     ),
   ),
+  "dashboard-007": dynamic(() =>
+    import("@/registry/blocks/dashboard/dashboard-007/dashboard-007").then(
+      (module) => module.Dashboard007,
+    ),
+  ),
+  "dashboard-008": dynamic(() =>
+    import("@/registry/blocks/dashboard/dashboard-008/dashboard-008").then(
+      (module) => module.Dashboard008,
+    ),
+  ),
+  "dashboard-009": dynamic(() =>
+    import("@/registry/blocks/dashboard/dashboard-009/dashboard-009").then(
+      (module) => module.Dashboard009,
+    ),
+  ),
+  "dashboard-010": dynamic(() =>
+    import("@/registry/blocks/dashboard/dashboard-010/dashboard-010").then(
+      (module) => module.Dashboard010,
+    ),
+  ),
+  "dashboard-011": dynamic(() =>
+    import("@/registry/blocks/dashboard/dashboard-011/dashboard-011").then(
+      (module) => module.Dashboard011,
+    ),
+  ),
+  "dashboard-012": dynamic(() =>
+    import("@/registry/blocks/dashboard/dashboard-012/dashboard-012").then(
+      (module) => module.Dashboard012,
+    ),
+  ),
+  "dashboard-013": dynamic(() =>
+    import("@/registry/blocks/dashboard/dashboard-013/dashboard-013").then(
+      (module) => module.Dashboard013,
+    ),
+  ),
+  "dashboard-014": dynamic(() =>
+    import("@/registry/blocks/dashboard/dashboard-014/dashboard-014").then(
+      (module) => module.Dashboard014,
+    ),
+  ),
   "commerce-001": dynamic(() =>
     import("@/registry/blocks/commerce/commerce-001/commerce-001").then(
       (module) => module.Commerce001,
