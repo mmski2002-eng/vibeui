@@ -1,0 +1,163 @@
+"use client"
+
+import { useState } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties, FormEvent } from "react"
+
+export type Field006Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children" | "defaultValue" | "onSubmit"
+> & {
+  label?: string
+  action?: string
+  placeholder?: string
+  onSubmit?: (value: string) => void
+  accent?: string
+}
+
+// Идея компонента: кнопка действия живёт внутри рамки поля, а не рядом с ней.
+// Промокод, приглашение, короткий поиск — это одно действие, и разрыв между
+// полем и кнопкой заставляет глаз прыгать. Обёртка — настоящий <form>, поэтому
+// Enter в поле нажимает кнопку без единого обработчика клавиш. Пока поле
+// пустое, кнопка выключена: нажимать нечего, и это видно.
+const STYLES = `
+:where([data-vibeui-block="field-006"]){
+--vibeui-field-006-bg:oklch(1 0 0);
+--vibeui-field-006-surface:oklch(1 0 0);
+--vibeui-field-006-fg:oklch(0.24 0.014 265);
+--vibeui-field-006-muted:oklch(0.55 0.014 265);
+--vibeui-field-006-border:oklch(0.88 0.008 265);
+--vibeui-field-006-shell:oklch(0.91 0.006 265);
+--vibeui-field-006-accent:oklch(0.52 0.19 285);
+--vibeui-field-006-ok:oklch(0.5 0.13 155);
+--vibeui-field-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+/* Своя светлая подложка: поле показывают поверх любого фона. */
+[data-vibeui-block="field-006"]{
+display:flex;flex-direction:column;gap:0.4375rem;
+width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
+background:var(--vibeui-field-006-surface);
+border:1px solid var(--vibeui-field-006-shell);border-radius:0.875rem;
+font-family:var(--vibeui-field-006-font);color:var(--vibeui-field-006-fg);
+}
+[data-vibeui-block="field-006"] *{box-sizing:border-box}
+[data-vibeui-block="field-006"] label{font-size:0.8125rem;font-weight:600}
+[data-vibeui-block="field-006"] form{display:block;margin:0}
+[data-vibeui-block="field-006"] [data-part="frame"]{
+display:flex;align-items:center;gap:0.375rem;
+padding:0.25rem 0.25rem 0.25rem 0.75rem;
+background:var(--vibeui-field-006-bg);
+border:1px solid var(--vibeui-field-006-border);border-radius:0.75rem;
+transition:border-color .16s ease,box-shadow .16s ease;
+}
+[data-vibeui-block="field-006"] [data-part="frame"]:focus-within{
+border-color:var(--vibeui-field-006-accent);
+box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-field-006-accent) 18%,transparent);
+}
+[data-vibeui-block="field-006"] input{
+flex:1;min-width:0;height:2rem;padding:0;
+border:0;background:none;color:inherit;
+font:inherit;font-size:0.875rem;letter-spacing:0.02em;
+}
+[data-vibeui-block="field-006"] input:focus{outline:none}
+[data-vibeui-block="field-006"] input::placeholder{color:var(--vibeui-field-006-muted);letter-spacing:normal}
+/* Кнопка внутри рамки: действие и поле читаются как одно целое. */
+[data-vibeui-block="field-006"] button{
+appearance:none;flex:none;cursor:pointer;
+height:2rem;padding:0 0.875rem;border:0;border-radius:0.5rem;
+background:var(--vibeui-field-006-accent);color:oklch(1 0 0);
+font:inherit;font-size:0.8125rem;font-weight:650;line-height:1;
+transition:opacity .16s ease,background-color .16s ease;
+}
+[data-vibeui-block="field-006"] button:hover:not(:disabled){background:color-mix(in oklab,var(--vibeui-field-006-accent) 88%,oklch(0 0 0))}
+[data-vibeui-block="field-006"] button:focus-visible{outline:2px solid var(--vibeui-field-006-accent);outline-offset:2px}
+/* Пустое поле — нажимать нечего, и это видно, а не только по отсутствию реакции. */
+[data-vibeui-block="field-006"] button:disabled{cursor:not-allowed;opacity:.4}
+[data-vibeui-block="field-006"] [data-part="note"]{
+display:flex;align-items:center;gap:0.375rem;margin:0;
+font-size:0.75rem;line-height:1.4;color:var(--vibeui-field-006-muted);
+}
+[data-vibeui-block="field-006"][data-done="true"] [data-part="note"]{color:var(--vibeui-field-006-ok);font-weight:600}
+[data-vibeui-block="field-006"] [data-part="tick"]{
+flex:none;width:0.875rem;height:0.875rem;border-radius:9999px;
+background:var(--vibeui-field-006-ok);
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="field-006"] *{animation:none!important;transition:none!important}}
+`
+
+/**
+ * Поле с кнопкой действия внутри рамки: Enter отправляет, пустое — выключает.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Field006({
+  label = "Промокод",
+  action = "Применить",
+  placeholder = "VIBEUI-2026",
+  onSubmit,
+  accent,
+  className,
+  style,
+  ...props
+}: Field006Props) {
+  const [value, setValue] = useState("")
+  const [applied, setApplied] = useState("")
+
+  const palette = {
+    ...(accent ? { "--vibeui-field-006-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  const submit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!value.trim()) return
+    setApplied(value.trim())
+    onSubmit?.(value.trim())
+  }
+
+  return (
+    <>
+      <style href="vibeui-field-006" precedence="medium">
+        {STYLES}
+      </style>
+      <div
+        {...props}
+        data-vibeui-block="field-006"
+        data-done={applied ? "true" : undefined}
+        className={className}
+        style={palette}
+      >
+        <label htmlFor="field-006-input">{label}</label>
+        {/* Настоящая форма: Enter нажимает кнопку без обработчика клавиш. */}
+        <form onSubmit={submit}>
+          <div data-part="frame">
+            <input
+              id="field-006-input"
+              name="promo"
+              type="text"
+              autoComplete="off"
+              placeholder={placeholder}
+              value={value}
+              aria-describedby="field-006-note"
+              onChange={(event) => {
+                setValue(event.target.value)
+                setApplied("")
+              }}
+            />
+            <button type="submit" disabled={!value.trim()}>
+              {action}
+            </button>
+          </div>
+        </form>
+        <p id="field-006-note" data-part="note" role="status">
+          {applied ? (
+            <>
+              <span data-part="tick" aria-hidden="true" />
+              Код «{applied}» принят
+            </>
+          ) : (
+            "Код появится в чеке, скидка пересчитается сразу."
+          )}
+        </p>
+      </div>
+    </>
+  )
+}
