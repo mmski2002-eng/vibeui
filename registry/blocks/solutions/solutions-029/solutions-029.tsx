@@ -1,0 +1,370 @@
+import type { CSSProperties } from "react"
+
+export type Solutions029Order = {
+  number: string
+  product: string
+  shop: string
+  planQty: number
+  producedQty: number
+  stage: number
+  dueDate: string
+  lineLoad: number
+}
+
+export type Solutions029Props = {
+  title?: string
+  hint?: string
+  stages?: string[]
+  orders?: Solutions029Order[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+// Весь CSS блока живёт здесь, а не в globals.css проекта.
+//
+// Идея блока: производственные заказы по цехам. Процент выполнения плана и
+// остаток к выпуску считаются из planQty/producedQty в компоненте, а не
+// приходят готовой строкой — план и факт легко разойдутся, если их писать
+// руками отдельно. Стадия обработки — не текст, а горизонтальный степпер из
+// точек: видно не только «где заказ сейчас», но и сколько шагов осталось.
+// Загрузка линии — вторая, отдельная полоса: путать её с выполнением плана
+// нельзя, они про разные вещи и могут расходиться в любую сторону.
+const STYLES = `
+:where([data-vibeui-block="solutions-029"]){
+--vibeui-solutions-029-bg:oklch(1 0 0);
+--vibeui-solutions-029-panel:oklch(0.977 0.004 255);
+--vibeui-solutions-029-fg:oklch(0.21 0.014 265);
+--vibeui-solutions-029-muted:oklch(0.54 0.014 265);
+--vibeui-solutions-029-border:oklch(0.9 0.006 265);
+--vibeui-solutions-029-accent:oklch(0.52 0.16 255);
+--vibeui-solutions-029-behind:oklch(0.6 0.18 40);
+--vibeui-solutions-029-load:oklch(0.6 0.14 300);
+--vibeui-solutions-029-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+container-type:inline-size;
+}
+[data-vibeui-block="solutions-029"]{
+box-sizing:border-box;overflow:hidden;
+background:var(--vibeui-solutions-029-bg);
+border:1px solid var(--vibeui-solutions-029-border);border-radius:1rem;
+font-family:var(--vibeui-solutions-029-sans);color:var(--vibeui-solutions-029-fg);
+}
+[data-vibeui-block="solutions-029"] *{box-sizing:border-box}
+[data-vibeui-block="solutions-029"] [data-part="head"]{
+display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:0.5rem;
+padding:0.875rem 1rem 0.75rem;
+}
+[data-vibeui-block="solutions-029"] h2{margin:0 0 0.125rem;font-size:1rem;font-weight:700;letter-spacing:-0.01em}
+[data-vibeui-block="solutions-029"] [data-part="hint"]{margin:0;font-size:0.75rem;color:var(--vibeui-solutions-029-muted)}
+[data-vibeui-block="solutions-029"] [data-part="summary"]{
+display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.5rem;padding:0 1rem 0.875rem;
+}
+[data-vibeui-block="solutions-029"] [data-part="tile"]{
+padding:0.625rem 0.75rem;border-radius:0.75rem;
+background:var(--vibeui-solutions-029-panel);border:1px solid var(--vibeui-solutions-029-border);
+}
+[data-vibeui-block="solutions-029"] [data-part="tile"] b{
+display:block;font-size:1rem;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-0.015em;
+}
+[data-vibeui-block="solutions-029"] [data-part="tile"] span{
+display:block;margin-top:0.125rem;font-size:0.6875rem;color:var(--vibeui-solutions-029-muted);
+}
+[data-vibeui-block="solutions-029"] [data-part="scroll"]{overflow-x:auto;scrollbar-width:thin}
+[data-vibeui-block="solutions-029"] [data-part="cards"]{
+display:flex;flex-direction:column;gap:0.625rem;padding:0 1rem 1rem;min-width:38rem;
+margin:0;list-style:none;
+}
+[data-vibeui-block="solutions-029"] [data-part="card"]{
+display:grid;gap:0.5rem 1rem;padding:0.75rem 0.875rem;border-radius:0.75rem;
+border:1px solid var(--vibeui-solutions-029-border);
+grid-template-columns:minmax(11rem,1fr) minmax(12rem,1.2fr) minmax(9rem,1fr);
+}
+[data-vibeui-block="solutions-029"] [data-behind="true"]{
+border-color:color-mix(in oklab,var(--vibeui-solutions-029-behind) 45%,transparent);
+background:color-mix(in oklab,var(--vibeui-solutions-029-behind) 6%,var(--vibeui-solutions-029-bg));
+}
+[data-vibeui-block="solutions-029"] [data-part="number"]{
+display:block;font-size:0.625rem;color:var(--vibeui-solutions-029-muted);
+}
+[data-vibeui-block="solutions-029"] [data-part="product"]{display:block;font-weight:650;font-size:0.875rem}
+[data-vibeui-block="solutions-029"] [data-part="shop"]{
+display:block;margin-top:0.125rem;font-size:0.6875rem;color:var(--vibeui-solutions-029-muted);
+}
+/* Степпер стадий: точки, а не слово — видно, сколько шагов осталось. */
+[data-vibeui-block="solutions-029"] [data-part="stages"]{
+display:flex;align-items:center;gap:0.25rem;margin:0.375rem 0 0;padding:0;list-style:none;
+}
+[data-vibeui-block="solutions-029"] [data-part="stages"] li{
+display:flex;align-items:center;gap:0.25rem;flex:1;font-size:0.5625rem;color:var(--vibeui-solutions-029-muted);
+}
+[data-vibeui-block="solutions-029"] [data-part="dot"]{
+width:0.5rem;height:0.5rem;border-radius:9999px;flex:none;
+background:var(--vibeui-solutions-029-border);
+}
+[data-vibeui-block="solutions-029"] [data-part="stages"] li[data-done="true"] [data-part="dot"]{
+background:var(--vibeui-solutions-029-accent);
+}
+[data-vibeui-block="solutions-029"] [data-part="stages"] li[data-current="true"]{
+color:var(--vibeui-solutions-029-fg);font-weight:650;
+}
+[data-vibeui-block="solutions-029"] [data-part="stages"] li[data-current="true"] [data-part="dot"]{
+outline:2px solid color-mix(in oklab,var(--vibeui-solutions-029-accent) 45%,transparent);outline-offset:2px;
+}
+[data-vibeui-block="solutions-029"] [data-part="stages"] li + li::before{
+content:"";flex:1;height:1px;background:var(--vibeui-solutions-029-border);
+}
+[data-vibeui-block="solutions-029"] [data-part="meter"]{
+display:flex;flex-direction:column;gap:0.25rem;
+}
+[data-vibeui-block="solutions-029"] [data-part="meter"] span[data-part="label"]{
+display:flex;justify-content:space-between;font-size:0.6875rem;color:var(--vibeui-solutions-029-muted);
+font-variant-numeric:tabular-nums;
+}
+[data-vibeui-block="solutions-029"] [data-part="track"]{
+position:relative;height:0.4375rem;border-radius:9999px;background:var(--vibeui-solutions-029-panel);
+border:1px solid var(--vibeui-solutions-029-border);overflow:hidden;
+}
+[data-vibeui-block="solutions-029"] [data-part="fill"]{
+position:absolute;inset:0;width:var(--vibeui-solutions-029-fill,0%);
+border-radius:9999px;background:var(--vibeui-solutions-029-accent);
+}
+[data-vibeui-block="solutions-029"] [data-part="fill"][data-part-kind="load"]{
+background:var(--vibeui-solutions-029-load);
+}
+[data-vibeui-block="solutions-029"] [data-part="due"]{
+font-size:0.75rem;color:var(--vibeui-solutions-029-muted);
+}
+[data-vibeui-block="solutions-029"] [data-part="foot"]{
+margin:0;padding:0 1rem 1rem;font-size:0.75rem;color:var(--vibeui-solutions-029-muted);
+}
+@container (min-width: 46rem){
+[data-vibeui-block="solutions-029"] [data-part="card"]{
+grid-template-columns:minmax(11rem,0.9fr) minmax(14rem,1.3fr) minmax(9rem,0.8fr) auto;align-items:center;
+}
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="solutions-029"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_STAGES = [
+  "Заготовка",
+  "Обработка",
+  "Сборка",
+  "Контроль",
+  "Готово",
+]
+
+const DEFAULT_ORDERS: Solutions029Order[] = [
+  {
+    number: "ПЗ-3141",
+    product: "Редуктор РЦД-250, партия 40 шт",
+    shop: "Цех механообработки №1",
+    planQty: 40,
+    producedQty: 34,
+    stage: 3,
+    dueDate: "6 марта",
+    lineLoad: 88,
+  },
+  {
+    number: "ПЗ-3147",
+    product: "Вал приводной ВП-12, партия 60 шт",
+    shop: "Цех механообработки №2",
+    planQty: 60,
+    producedQty: 12,
+    stage: 1,
+    dueDate: "9 марта",
+    lineLoad: 64,
+  },
+  {
+    number: "ПЗ-3152",
+    product: "Корпус насоса КН-08, партия 25 шт",
+    shop: "Литейный цех",
+    planQty: 25,
+    producedQty: 25,
+    stage: 4,
+    dueDate: "4 марта",
+    lineLoad: 40,
+  },
+  {
+    number: "ПЗ-3156",
+    product: "Муфта соединительная МС-40, партия 100 шт",
+    shop: "Цех сборки",
+    planQty: 100,
+    producedQty: 22,
+    stage: 2,
+    dueDate: "7 марта",
+    lineLoad: 96,
+  },
+  {
+    number: "ПЗ-3160",
+    product: "Крышка защитная КЗ-19, партия 80 шт",
+    shop: "Цех штамповки",
+    planQty: 80,
+    producedQty: 5,
+    stage: 0,
+    dueDate: "11 марта",
+    lineLoad: 52,
+  },
+]
+
+/**
+ * Производственные заказы: процент выполнения плана считается из плана и
+ * факта, стадия — степпер точек, загрузка линии — отдельная полоса.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Solutions029({
+  title = "Заказы в производстве",
+  hint = "Механосборочный участок · смена сегодня",
+  stages = DEFAULT_STAGES,
+  orders = DEFAULT_ORDERS,
+  accent,
+  className,
+  style,
+}: Solutions029Props) {
+  const avgLoad = Math.round(
+    orders.reduce((sum, order) => sum + order.lineLoad, 0) /
+      (orders.length || 1),
+  )
+  const behindCount = orders.filter((order) => {
+    const progress = order.planQty ? order.producedQty / order.planQty : 1
+    const stageShare = stages.length > 1 ? order.stage / (stages.length - 1) : 1
+    return progress + 0.15 < stageShare
+  }).length
+
+  const palette = {
+    ...(accent ? { "--vibeui-solutions-029-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-solutions-029" precedence="medium">
+        {STYLES}
+      </style>
+      <section
+        data-vibeui-block="solutions-029"
+        className={className}
+        style={palette}
+        aria-label={title}
+      >
+        <header data-part="head">
+          <div>
+            <h2>{title}</h2>
+            <p data-part="hint">{hint}</p>
+          </div>
+        </header>
+
+        <div data-part="summary">
+          <p data-part="tile">
+            <b>{orders.length}</b>
+            <span>заказов в цехах</span>
+          </p>
+          <p data-part="tile">
+            <b>{avgLoad}%</b>
+            <span>средняя загрузка линий</span>
+          </p>
+          <p data-part="tile">
+            <b>{behindCount}</b>
+            <span>отстают от плана</span>
+          </p>
+        </div>
+
+        <div data-part="scroll">
+          <ul data-part="cards">
+            {orders.map((order) => {
+              const remaining = Math.max(0, order.planQty - order.producedQty)
+              const progress = order.planQty
+                ? Math.min(
+                    100,
+                    Math.round((order.producedQty / order.planQty) * 100),
+                  )
+                : 0
+              const stageShare =
+                stages.length > 1 ? order.stage / (stages.length - 1) : 1
+              const behind = progress / 100 + 0.15 < stageShare
+
+              return (
+                <li
+                  data-part="card"
+                  key={order.number}
+                  data-behind={behind ? "true" : "false"}
+                >
+                  <div>
+                    <span data-part="number">{order.number}</span>
+                    <span data-part="product">{order.product}</span>
+                    <span data-part="shop">{order.shop}</span>
+                    <ol data-part="stages">
+                      {stages.map((stage, index) => (
+                        <li
+                          key={stage}
+                          data-done={index <= order.stage ? "true" : "false"}
+                          data-current={
+                            index === order.stage ? "true" : "false"
+                          }
+                        >
+                          <span data-part="dot" aria-hidden="true" />
+                          {index === order.stage ? stage : null}
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+
+                  <div data-part="meter">
+                    <span data-part="label">
+                      <span>Выполнено</span>
+                      <span>
+                        {order.producedQty} из {order.planQty} шт · осталось{" "}
+                        {remaining}
+                      </span>
+                    </span>
+                    <span
+                      data-part="track"
+                      role="progressbar"
+                      aria-valuenow={progress}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-label={`Выполнение плана по заказу ${order.number}`}
+                    >
+                      <span
+                        data-part="fill"
+                        style={{
+                          ["--vibeui-solutions-029-fill" as string]: `${progress}%`,
+                        }}
+                      />
+                    </span>
+                    <span data-part="label">
+                      <span>Загрузка линии</span>
+                      <span>{order.lineLoad}%</span>
+                    </span>
+                    <span
+                      data-part="track"
+                      role="progressbar"
+                      aria-valuenow={order.lineLoad}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-label={`Загрузка линии заказа ${order.number}`}
+                    >
+                      <span
+                        data-part="fill"
+                        data-part-kind="load"
+                        style={{
+                          ["--vibeui-solutions-029-fill" as string]: `${order.lineLoad}%`,
+                        }}
+                      />
+                    </span>
+                  </div>
+
+                  <p data-part="due">Отгрузка: {order.dueDate}</p>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+
+        <p data-part="foot">
+          Выполнение плана и загрузка линии — разные полосы: заказ может идти по
+          графику при перегруженной линии и наоборот.
+        </p>
+      </section>
+    </>
+  )
+}
