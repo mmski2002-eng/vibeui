@@ -1,0 +1,516 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "eventcalendar-001",
+      "type": "registry:component",
+      "title": "Month Overflow",
+      "description": "Месяц с событиями прямо в клетках: клетка держит фиксированную высоту, а всё лишнее сворачивается в «ещё N» и раскрывается нативным <details>.",
+      "categories": ["eventcalendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "eventcalendar-001/eventcalendar-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/eventcalendar-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-eventcalendar-001-*. Серверный: хуков нет. Сетка 7×6 строится от первого понедельника, названия дней и месяца берутся из Intl. Клетка имеет min-height, поэтому загруженный день не растягивает строку месяца; события сверх visible уходят в <details>/<summary>, а всплывающий список позиционируется абсолютно и в нижних строках разворачивается вверх правилом :nth-child(n+29). Тип события различается цветом левой границы и её стилем.",
+      "meta": {
+        "tags": ["calendar", "events", "month", "overflow"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Eventcalendar001",
+          "usage": "<Eventcalendar001\n  month=\"2026-03-01\"\n  visible={2}\n  events={[{ day: 5, time: \"14:00\", title: \"Ревью\", tone: \"work\" }]}\n/>",
+          "summary": "Месяц событий: до visible карточек в клетке, остальные — в раскрывающемся «ещё N». Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-eventcalendar-001-* и не подменять её токенами вашей темы",
+            "фиксированную min-height клетки: без неё один загруженный день растягивает всю строку месяца",
+            "переполнение через <details>, а не через overflow:hidden — скрытое событие обязано оставаться достижимым с клавиатуры",
+            "разворот всплывающего списка вверх в нижних строках: иначе он уходит за край карточки",
+            "цвет вместе со стилем границы события: одного оттенка мало на печати и при дальтонизме",
+            "собственную светлую подложку карточки: тёмный текст на тёмной витрине пропадает"
+          ],
+          "adapt": [
+            "массив events и месяц через month",
+            "число карточек в клетке через visible",
+            "акцент через accent и остальные цвета палитры",
+            "язык подписей через locale и заголовок через heading"
+          ],
+          "notes": [
+            "Многодневные события не поддерживаются: полоса через несколько клеток требует другой раскладки.",
+            "Открытые «ещё N» не закрываются друг другом — это цена решения без клиентского JS.",
+            "События сопоставляются с днями по номеру дня, поэтому массив относится к одному месяцу.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "visible",
+            "label": "Событий в клетке",
+            "type": "number",
+            "default": 2,
+            "min": 1,
+            "max": 4
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A month with events inside the cells: each cell keeps a fixed height and everything that does not fit folds into an expandable «more N» built on native <details>.",
+            "ai": {
+              "summary": "A month of events: up to `visible` chips per cell, the rest folded into an expandable «more N». Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-eventcalendar-001-* palette — do not swap it for your theme tokens",
+                "the fixed min-height of a cell: without it one busy day stretches the whole month row",
+                "the overflow handled by <details> rather than overflow:hidden — a hidden event must stay reachable from the keyboard",
+                "the popup flipping upwards in the bottom rows: otherwise it escapes the card",
+                "colour together with border style on an event: one hue alone dies in print and for colour blindness",
+                "the card's own light surface: dark text disappears on a dark showcase background"
+              ],
+              "adapt": [
+                "the events array and the month through month",
+                "how many chips a cell shows through visible",
+                "the accent through accent and the rest of the palette",
+                "the label language through locale and the caption through heading"
+              ],
+              "notes": [
+                "Multi-day events are not supported: a bar across several cells needs a different layout.",
+                "Open «more N» popups do not close each other — that is the price of having no client JS.",
+                "Events are matched to cells by day number, so the array belongs to a single month.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Eventcalendar001\n  month=\"2026-03-01\"\n  visible={2}\n  events={[{ day: 5, time: \"14:00\", title: \"Review\", tone: \"work\" }]}\n/>"
+            },
+            "controls": {
+              "visible": {
+                "label": "Chips per cell"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "eventcalendar-002",
+      "type": "registry:component",
+      "title": "Week Columns",
+      "description": "Неделя семью колонками времени: событие ставится в проценты от рабочего дня, поэтому встреча с 9:40 не округляется до строки сетки.",
+      "categories": ["eventcalendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "eventcalendar-002/eventcalendar-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/eventcalendar-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-eventcalendar-002-*. Серверный: хуков нет. Колонка дня — своя система координат: высота равна рабочему интервалу, а top и height события считаются в процентах от него. Часовые линии рисует repeating-linear-gradient, а не пустые ячейки. События на весь день вынесены в отдельную строку над шкалой, потому что положения во времени у них нет. Прокрутка вбок живёт в контейнере с tabindex=0 и видимым фокусом.",
+      "meta": {
+        "tags": ["calendar", "events", "week", "schedule"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Eventcalendar002",
+          "usage": "<Eventcalendar002\n  weekStart=\"2026-03-16\"\n  dayFrom={8}\n  dayTo={19}\n  events={[{ day: 1, from: \"10:15\", to: \"11:45\", title: \"Интервью\" }]}\n/>",
+          "summary": "Неделя колонками дней: временные события стоят по часам, события на весь день — отдельной строкой сверху. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-eventcalendar-002-* и не подменять её токенами вашей темы",
+            "положение события в процентах от рабочего дня: округление до строк сетки врёт про время начала",
+            "отдельную строку «весь день» — у такого события нет положения на шкале",
+            "контейнер прокрутки с tabindex=0 и видимым фокусом: неделя шире телефона всегда",
+            "min-width полотна: сжатые до 2 рем колонки перестают быть читаемыми",
+            "собственную светлую подложку карточки: тёмный текст на тёмной витрине пропадает"
+          ],
+          "adapt": [
+            "массив events и начало недели через weekStart",
+            "границы рабочего дня через dayFrom и dayTo",
+            "заголовок через heading и язык подписей через locale",
+            "акцент через accent и высоту часа в палитре"
+          ],
+          "notes": [
+            "Пересечения не разводятся по дорожкам: две встречи в одно время лягут друг на друга.",
+            "Событие короче двадцати минут поднимается до минимальной высоты, иначе подпись не поместится.",
+            "Красная черта «сейчас» задана фиксированным процентом: на реальном времени её придётся считать.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Неделя",
+            "maxLength": 24
+          },
+          {
+            "prop": "dayTo",
+            "label": "Конец дня",
+            "type": "number",
+            "default": 19,
+            "min": 13,
+            "max": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A week as seven columns of time: an event is placed as a percentage of the working day, so a 9:40 meeting is not rounded to a grid row.",
+            "ai": {
+              "summary": "A week as day columns: timed events sit on the hour scale, all-day events live in their own row above it. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-eventcalendar-002-* palette — do not swap it for your theme tokens",
+                "event placement as a percentage of the working day: snapping to grid rows misstates the start time",
+                "the separate all-day row — such an event has no position on the scale",
+                "the scroll container with tabindex=0 and a visible focus ring: a week is always wider than a phone",
+                "the min-width of the canvas: columns squeezed to 2rem stop being readable",
+                "the card's own light surface: dark text disappears on a dark showcase background"
+              ],
+              "adapt": [
+                "the events array and the week start through weekStart",
+                "the working-day bounds through dayFrom and dayTo",
+                "the caption through heading and the label language through locale",
+                "the accent through accent and the hour height in the palette"
+              ],
+              "notes": [
+                "Overlaps are not split into lanes: two meetings at the same time will sit on top of each other.",
+                "An event shorter than twenty minutes is raised to a minimum height, otherwise the label does not fit.",
+                "The red «now» line uses a fixed percentage: wiring it to real time takes a calculation.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Eventcalendar002\n  weekStart=\"2026-03-16\"\n  dayFrom={8}\n  dayTo={19}\n  events={[{ day: 1, from: \"10:15\", to: \"11:45\", title: \"Interview\" }]}\n/>"
+            },
+            "controls": {
+              "heading": {
+                "label": "Heading",
+                "default": "Week"
+              },
+              "dayTo": {
+                "label": "Day ends at"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "eventcalendar-003",
+      "type": "registry:component",
+      "title": "Day Lanes",
+      "description": "День с временной шкалой, где пересекающиеся события расходятся по дорожкам: ширина считается по своей группе наложений, а не по всему дню.",
+      "categories": ["eventcalendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "eventcalendar-003/eventcalendar-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/eventcalendar-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-eventcalendar-003-*. Серверный: хуков нет, вся раскладка считается при рендере чистой функцией layout(). События сортируются по началу, разбиваются на связные группы пересечений, внутри группы каждое занимает первую свободную дорожку; ширина берётся от числа дорожек именно этой группы, поэтому одно наложение утром не сужает спокойный вечер. Часовые линии рисует repeating-linear-gradient, тип события различается цветом и стилем рамки.",
+      "meta": {
+        "tags": ["calendar", "events", "day", "overlap"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Eventcalendar003",
+          "usage": "<Eventcalendar003\n  date=\"2026-03-17\"\n  dayFrom={8}\n  events={[{ from: \"10:00\", to: \"12:00\", title: \"Фокус\", tone: \"focus\" }]}\n/>",
+          "summary": "День на шкале часов: пересечения раскладываются по дорожкам жадным алгоритмом при рендере. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-eventcalendar-003-* и не подменять её токенами вашей темы",
+            "расчёт ширины по группе наложений, а не по всему дню: иначе спокойный вечер сужается из-за утра",
+            "разбиение на связные группы: без него дорожки не переиспользуются и день превращается в лапшу",
+            "просвет между соседними дорожками — два прижатых прямоугольника читаются как один",
+            "время текстом внутри события: по высоте прямоугольника длительность не назвать",
+            "собственную светлую подложку карточки: тёмный текст на тёмной витрине пропадает"
+          ],
+          "adapt": [
+            "массив events и дату через date",
+            "границы шкалы через dayFrom и dayTo",
+            "акцент через accent, высоту часа и остальные цвета палитры",
+            "подписи легенды и язык заголовка через locale"
+          ],
+          "notes": [
+            "Раскладка жадная: она гарантирует отсутствие наложений, но не самое красивое распределение.",
+            "Событие вне интервала dayFrom–dayTo не обрезается, а уезжает за полотно — фильтруйте данные заранее.",
+            "Больше трёх одновременных событий делают колонку слишком узкой для подписи.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "dayFrom",
+            "label": "Начало дня",
+            "type": "number",
+            "default": 8,
+            "min": 0,
+            "max": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A day timeline where overlapping events split into lanes: the width comes from their own overlap group, not from the whole day.",
+            "ai": {
+              "summary": "A day on an hour scale: overlaps are laid into lanes by a greedy pass at render time. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-eventcalendar-003-* palette — do not swap it for your theme tokens",
+                "width computed per overlap group, not per day: otherwise a quiet evening shrinks because of the morning",
+                "the split into connected groups: without it lanes are never reused and the day turns into noodles",
+                "the gap between neighbouring lanes — two rectangles pressed together read as one",
+                "the time as text inside an event: a rectangle's height does not state a duration",
+                "the card's own light surface: dark text disappears on a dark showcase background"
+              ],
+              "adapt": [
+                "the events array and the date through date",
+                "the scale bounds through dayFrom and dayTo",
+                "the accent through accent, the hour height and the rest of the palette",
+                "the legend captions and the heading language through locale"
+              ],
+              "notes": [
+                "The layout is greedy: it guarantees no overlap, not the prettiest distribution.",
+                "An event outside dayFrom–dayTo is not clipped but runs off the canvas — filter the data beforehand.",
+                "More than three simultaneous events make a column too narrow for its label.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Eventcalendar003\n  date=\"2026-03-17\"\n  dayFrom={8}\n  events={[{ from: \"10:00\", to: \"12:00\", title: \"Focus\", tone: \"focus\" }]}\n/>"
+            },
+            "controls": {
+              "dayFrom": {
+                "label": "Day starts at"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "eventcalendar-004",
+      "type": "registry:component",
+      "title": "Upcoming Feed",
+      "description": "Лента ближайших событий, сгруппированная по дням: заголовок дня липкий, «сегодня» и «завтра» названы словами, а не датой.",
+      "categories": ["eventcalendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "eventcalendar-004/eventcalendar-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/eventcalendar-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-eventcalendar-004-*. Серверный: хуков нет. События фильтруются по окну days от today, сортируются по строке ISO и группируются в один проход. Заголовок дня липкий внутри прокручиваемой ленты с ограниченной высотой, поэтому карточка в сайдбаре не растёт вместе с числом встреч. Время стоит отдельной колонкой с моноширинными цифрами, тип события различается стилем левой границы, дедлайн дополнительно помечен словом.",
+      "meta": {
+        "tags": ["calendar", "events", "agenda", "list"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Eventcalendar004",
+          "usage": "<Eventcalendar004\n  today=\"2026-03-17\"\n  days={7}\n  events={[{ at: \"2026-03-18T11:00\", minutes: 90, title: \"Ревью\" }]}\n/>",
+          "summary": "Ближайшие события лентой: группировка по дням, липкие заголовки, длительность словами. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-eventcalendar-004-* и не подменять её токенами вашей темы",
+            "липкий заголовок дня: при прокрутке иначе непонятно, к какому дню относится строка",
+            "подписи «Сегодня» и «Завтра» словами — в эти два дня дату никто не читает",
+            "моноширинные цифры времени в отдельной колонке: разной ширины цифры ломают вертикаль",
+            "стиль левой границы как признак типа события, а не только её цвет",
+            "собственную светлую подложку карточки: тёмный текст на тёмной витрине пропадает"
+          ],
+          "adapt": [
+            "массив events и точку отсчёта через today",
+            "глубину окна через days",
+            "заголовок через heading и язык подписей через locale",
+            "акцент через accent и максимальную высоту ленты"
+          ],
+          "notes": [
+            "Дни без событий не показываются: лента отвечает на вопрос «что дальше», а не «как выглядит неделя».",
+            "Время берётся из строки as-is, без часовых поясов — переводите данные заранее.",
+            "Слова «сегодня» и «завтра» зашиты по-русски: для другого языка их придётся вынести в пропсы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ближайшее",
+            "maxLength": 24
+          },
+          {
+            "prop": "days",
+            "label": "Дней вперёд",
+            "type": "number",
+            "default": 7,
+            "min": 1,
+            "max": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A feed of upcoming events grouped by day: the day header is sticky and «today» and «tomorrow» are named in words rather than dates.",
+            "ai": {
+              "summary": "Upcoming events as a feed: grouped by day, sticky day headers, durations in words. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-eventcalendar-004-* palette — do not swap it for your theme tokens",
+                "the sticky day header: while scrolling it is otherwise unclear which day a row belongs to",
+                "«Today» and «Tomorrow» spelled out — nobody reads a date for those two days",
+                "tabular figures in their own time column: proportional digits break the vertical rhythm",
+                "the left border style as the type marker, not only its colour",
+                "the card's own light surface: dark text disappears on a dark showcase background"
+              ],
+              "adapt": [
+                "the events array and the reference point through today",
+                "the window depth through days",
+                "the caption through heading and the label language through locale",
+                "the accent through accent and the maximum feed height"
+              ],
+              "notes": [
+                "Days without events are not shown: the feed answers «what is next», not «what does the week look like».",
+                "Time is taken from the string as-is, with no time zones — convert the data beforehand.",
+                "«Today» and «tomorrow» are hard-coded in Russian: another language needs them lifted into props.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Eventcalendar004\n  today=\"2026-03-17\"\n  days={7}\n  events={[{ at: \"2026-03-18T11:00\", minutes: 90, title: \"Review\" }]}\n/>"
+            },
+            "controls": {
+              "heading": {
+                "label": "Heading",
+                "default": "Upcoming"
+              },
+              "days": {
+                "label": "Days ahead"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "eventcalendar-005",
+      "type": "registry:component",
+      "title": "Source Legend",
+      "description": "Календарь нескольких источников: каждый различается и цветом, и формой метки, а показывать его или нет — переключается чекбоксом через :has().",
+      "categories": ["eventcalendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "eventcalendar-005/eventcalendar-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/eventcalendar-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-eventcalendar-005-*. Серверный: хуков нет, фильтрация целиком на CSS. Легенда — fieldset с чекбоксами, снятая галочка прячет и метки в сетке, и строки списка правилом [data-vibeui-block]:has([data-index=N]:not(:checked)) [data-source=N]{display:none}. Источник кодируется дважды: цветом из данных и формой метки (круг, квадрат, ромб, треугольник) через border-radius, rotate и clip-path. Под сеткой стоит прокручиваемый список тех же событий.",
+      "meta": {
+        "tags": ["calendar", "events", "legend", "filter"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Eventcalendar005",
+          "usage": "<Eventcalendar005\n  rangeStart=\"2026-03-16\"\n  weeks={3}\n  sources={[{ label: \"Работа\", color: \"oklch(0.55 0.16 262)\", shape: \"square\" }]}\n  events={[{ date: \"2026-03-17\", title: \"Ревью\", source: 0 }]}\n/>",
+          "summary": "Несколько календарей в одном: цвет плюс форма метки на источник и CSS-фильтрация чекбоксами без единой строки JS. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-eventcalendar-005-* и не подменять её токенами вашей темы",
+            "форму метки вместе с цветом: на монохромной печати и при дальтонизме четыре кружка сливаются в один",
+            "фильтрацию на :has() без состояния — она работает и до гидратации, и с выключенным JS",
+            "погашенный чип у снятого источника: иначе непонятно, что именно спрятано",
+            "дублирование сетки списком: по одной метке в клетке название события не прочесть",
+            "собственную светлую подложку карточки: тёмный текст на тёмной витрине пропадает"
+          ],
+          "adapt": [
+            "массивы sources и events, включая цвет и форму метки",
+            "начало диапазона через rangeStart",
+            "глубину сетки через weeks",
+            "заголовок через heading и язык подписей через locale"
+          ],
+          "notes": [
+            "Правил фильтрации четыре: пятый источник нужно добавить строкой в CSS вместе с формой метки.",
+            "Если снять все галочки, останется пустая сетка — состояния «ничего не выбрано» здесь нет.",
+            "Чекбоксы неуправляемые: серверу о выборе не сообщается, это чисто визуальный фильтр.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Все календари",
+            "maxLength": 24
+          },
+          {
+            "prop": "weeks",
+            "label": "Недель в сетке",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 6
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A calendar of several sources: each is told apart by colour and by marker shape, and its visibility toggles from a checkbox through :has().",
+            "ai": {
+              "summary": "Several calendars in one: colour plus marker shape per source and checkbox filtering done purely in CSS. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-eventcalendar-005-* palette — do not swap it for your theme tokens",
+                "the marker shape together with colour: in monochrome print and for colour blindness four dots merge into one",
+                "the stateless :has() filtering — it works before hydration and with JS disabled",
+                "the dimmed chip of an unchecked source: otherwise it is unclear what exactly is hidden",
+                "the list that duplicates the grid: a single marker in a cell does not spell out the event name",
+                "the card's own light surface: dark text disappears on a dark showcase background"
+              ],
+              "adapt": [
+                "the sources and events arrays, including marker colour and shape",
+                "the range start through rangeStart",
+                "the grid depth through weeks",
+                "the caption through heading and the label language through locale"
+              ],
+              "notes": [
+                "There are four filter rules: a fifth source needs its own CSS line together with a marker shape.",
+                "Unchecking everything leaves an empty grid — there is no «nothing selected» state here.",
+                "The checkboxes are uncontrolled: the server never learns the choice, this is a purely visual filter.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Eventcalendar005\n  rangeStart=\"2026-03-16\"\n  weeks={3}\n  sources={[{ label: \"Work\", color: \"oklch(0.55 0.16 262)\", shape: \"square\" }]}\n  events={[{ date: \"2026-03-17\", title: \"Review\", source: 0 }]}\n/>"
+            },
+            "controls": {
+              "heading": {
+                "label": "Heading",
+                "default": "All calendars"
+              },
+              "weeks": {
+                "label": "Weeks in grid"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
