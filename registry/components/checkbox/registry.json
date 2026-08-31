@@ -844,6 +844,1470 @@
           }
         }
       }
+    },
+    {
+      "name": "checkbox-009",
+      "type": "registry:component",
+      "categories": ["checkbox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "checkbox-009/checkbox-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/checkbox-009.tsx"
+        }
+      ],
+      "title": "Draft Settings",
+      "description": "Настройки с пояснением под каждой подписью: изменённые строки помечаются точкой, а черновик применяется кнопкой «Сохранить».",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-009-*. Клиентский: \"use client\". Держит два набора значений — сохранённый и черновик; их разница даёт точку у изменённой строки и число несохранённого в подвале. Строка — grid из квадрата, подписи с бейджем и пояснения; квадрат занимает обе строки сетки через grid-row: 1 / span 2. Счётчик несохранённого объявлен role=\"status\".",
+      "meta": {
+        "tags": ["checkbox", "settings", "draft", "form"],
+        "ai": {
+          "export": "Checkbox009",
+          "usage": "<Checkbox009\n  title=\"Уведомления\"\n  options={options}\n  defaultValue={[\"digest\"]}\n  onChange={setValue}\n/>",
+          "summary": "Панель настроек: у каждой галочки подпись, пояснение и необязательный бейдж. Изменения не применяются молча — они копятся черновиком, помечаются точкой и уходят по кнопке «Сохранить». Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-checkbox-009-* и не подменять её токенами вашей темы (bg-primary, border-input и подобными)",
+            "два набора значений — сохранённый и черновик: без них кнопка «Сохранить» не к чему относится",
+            "точку у изменённой строки: она отвечает на вопрос «что именно я поменял»",
+            "пояснение под подписью, а не в подсказке по наведению — на телефоне наведения нет",
+            "кнопку, выключенную при отсутствии изменений: активная кнопка без работы обманывает",
+            "role=\"status\" на счётчике несохранённого — число изменений должно проговариваться"
+          ],
+          "adapt": [
+            "массив options: подпись, пояснение и бейдж у каждой строки",
+            "title — заголовок панели",
+            "стартовый defaultValue и обработчик onChange",
+            "акцент через проп accent — цвет отметки, точки и кнопки"
+          ],
+          "notes": [
+            "Компонент ничего не отправляет: по нажатию «Сохранить» он лишь принимает черновик за новый базовый набор.",
+            "Для настроек, применяющихся мгновенно, черновик лишний — там уместнее checkbox-001.",
+            "Бейдж не заменяет пояснение: «beta» без текста ничего не объясняет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Уведомления",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Settings with a description under every label: changed rows get a dot, and the draft is applied with a Save button.",
+            "ai": {
+              "summary": "A settings panel: every checkbox carries a label, a description and an optional badge. Changes are not applied silently — they collect as a draft, get marked with a dot and go through the Save button. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-checkbox-009-* palette — do not swap it for your theme tokens (bg-primary, border-input and the like)",
+                "the two value sets — saved and draft: without them the Save button has nothing to act on",
+                "the dot on a changed row: it answers \"what exactly did I change\"",
+                "the description under the label rather than in a hover tooltip — phones have no hover",
+                "the button disabled when nothing changed: an active button with no work to do lies",
+                "role=\"status\" on the unsaved counter — the number of changes has to be announced"
+              ],
+              "adapt": [
+                "the options array: label, description and badge for every row",
+                "title — the panel heading",
+                "the initial defaultValue and the onChange handler",
+                "the accent through the accent prop — it colours the tick, the dot and the button"
+              ],
+              "notes": [
+                "The component sends nothing: Save merely accepts the draft as the new baseline.",
+                "For settings that apply instantly a draft is overhead — checkbox-001 fits better there.",
+                "A badge is not a description: \"beta\" on its own explains nothing.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Checkbox009\n  title=\"Notifications\"\n  options={options}\n  defaultValue={[\"digest\"]}\n  onChange={setValue}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Notifications"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "checkbox-010",
+      "type": "registry:component",
+      "categories": ["checkbox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "checkbox-010/checkbox-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/checkbox-010.tsx"
+        }
+      ],
+      "title": "Addon Cards",
+      "description": "Карточки-чекбоксы с ценой: выбор рисуется вложенной рамкой, поэтому карточка не дёргается, а суммы складываются в итог под списком.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-010-*. Клиентский: \"use client\". Настоящий input спрятан визуально (clip-path: inset(50%)), состояние карточки берётся через :has(input:checked). Выбор показан box-shadow inset в два пикселя вместо смены border — геометрия карточки не меняется и соседи не съезжают. Группа обёрнута в fieldset с legend, у legend стоит float и clear:both у карточек.",
+      "meta": {
+        "tags": ["checkbox", "cards", "pricing", "multiselect"],
+        "ai": {
+          "export": "Checkbox010",
+          "usage": "<Checkbox010\n  legend=\"Дополнения к тарифу\"\n  addons={addons}\n  currency=\"₽/мес\"\n  onChange={setExtras}\n/>",
+          "summary": "Карточки-чекбоксы для дополнений к заказу: заголовок, пояснение, цена и метка «советуем». Выбранная карточка получает вложенную рамку и круглую галочку, снизу считается итог. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-checkbox-010-* и не подменять её токенами вашей темы",
+            "рамку выбора через box-shadow inset: смена border меняет размеры и сдвигает соседние карточки",
+            "спрятанный, но настоящий input: Tab, пробел и объявление «отмечено» держатся на нём",
+            "круглую галочку рядом с заголовком — цвет фона один не читается при дальтонизме",
+            "итог под списком: выбор дополнений бессмыслен без суммы",
+            "clear:both у карточек — иначе они обтекают всплывший legend"
+          ],
+          "adapt": [
+            "массив addons: заголовок, пояснение, цену и признак recommended",
+            "legend — название группы",
+            "currency — подпись валюты рядом с числами",
+            "обработчик onChange и акцент через проп accent"
+          ],
+          "notes": [
+            "Цены — числа: округление и налоги считает вызывающий код, компонент только складывает.",
+            "Больше пяти карточек читаются хуже списка: там уместнее checkbox-004 или checkbox-016.",
+            "Метка «советуем» должна быть одна: две рекомендации не рекомендуют ничего.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Название группы",
+            "type": "text",
+            "default": "Дополнения к тарифу",
+            "maxLength": 30
+          },
+          {
+            "prop": "currency",
+            "label": "Валюта",
+            "type": "text",
+            "default": "₽/мес",
+            "maxLength": 10
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Checkbox cards with prices: selection is drawn as an inset ring so the card never shifts, and the prices add up to a total below.",
+            "ai": {
+              "summary": "Checkbox cards for order add-ons: a title, a note, a price and a \"recommended\" flag. A selected card gets an inset ring and a round tick, and the total is summed underneath. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-checkbox-010-* palette — do not swap it for your theme tokens",
+                "the selection ring via inset box-shadow: changing the border changes the size and shifts the neighbours",
+                "the hidden but real input: Tab, space and the \"checked\" announcement rest on it",
+                "the round tick beside the title — background colour alone fails colour-blind users",
+                "the total under the list: picking add-ons is pointless without a sum",
+                "clear:both on the cards — otherwise they wrap around the floated legend"
+              ],
+              "adapt": [
+                "the addons array: title, note, price and the recommended flag",
+                "legend — the group's name",
+                "currency — the unit shown next to the numbers",
+                "the onChange handler and the accent through the accent prop"
+              ],
+              "notes": [
+                "Prices are numbers: rounding and tax are the caller's job, the component only adds up.",
+                "Beyond five cards a list reads better: use checkbox-004 or checkbox-016.",
+                "Keep a single \"recommended\" flag: two recommendations recommend nothing.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Checkbox010\n  legend=\"Add-ons\"\n  addons={addons}\n  currency=\"$/mo\"\n  onChange={setExtras}\n/>"
+            },
+            "controls": {
+              "legend": {
+                "label": "Group name",
+                "default": "Add-ons"
+              },
+              "currency": {
+                "label": "Currency",
+                "default": "$/mo"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "checkbox-011",
+      "type": "registry:component",
+      "categories": ["checkbox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "checkbox-011/checkbox-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/checkbox-011.tsx"
+        }
+      ],
+      "title": "Select All Bar",
+      "description": "Панель «выбрать всё» над списком: промежуточное состояние, число выбранного и инверсия выбора одной кнопкой.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-011-*. Клиентский: \"use client\". Заголовочный чекбокс получает indeterminate эффектом по ссылке на узел — атрибутом это свойство не задаётся. Промежуточное состояние нарисовано чертой через ::after, отмеченное — галочкой из двух граней. Панель отделена от списка фоном и рамкой, счётчик объявлен role=\"status\".",
+      "meta": {
+        "tags": ["checkbox", "indeterminate", "toolbar", "selection"],
+        "ai": {
+          "export": "Checkbox011",
+          "usage": "<Checkbox011\n  title=\"Документы\"\n  items={items}\n  defaultValue={[\"Счёт за март\"]}\n  onChange={setValue}\n/>",
+          "summary": "Список с панелью управления выбором: «выбрать все на странице» с промежуточным состоянием, инверсия выбора и счётчик. Панель визуально отделена от пунктов, поэтому её нельзя принять за ещё одну строку списка. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-checkbox-011-* и не подменять её токенами вашей темы",
+            "установку indeterminate в эффекте: это свойство DOM, разметкой оно не задаётся",
+            "черту вместо бледной галки: промежуточное состояние должно отличаться формой, а не оттенком",
+            "подпись «на странице» — панель не выбирает записи за пределами списка",
+            "отделённую фоном панель: строка «выбрать всё» не должна выглядеть пунктом списка",
+            "счётчик с role=\"status\": после массового действия нужно услышать, сколько выбрано"
+          ],
+          "adapt": [
+            "массив items и стартовый defaultValue",
+            "title — доступное имя блока",
+            "обработчик onChange",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Инверсия выбора без числа опасна: держите счётчик рядом с кнопкой.",
+            "Для древовидных данных этого мало — наследование от родителя есть в checkbox-021.",
+            "Компонент не листает страницы: выбор относится к переданному массиву целиком.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Имя блока",
+            "type": "text",
+            "default": "Документы",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A select-all bar above the list: an indeterminate state, the selected count and one-click inversion.",
+            "ai": {
+              "summary": "A list with a selection toolbar: \"select all on this page\" with an indeterminate state, inversion and a counter. The bar is visually separated from the rows, so it cannot be mistaken for one of them. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-checkbox-011-* palette — do not swap it for your theme tokens",
+                "setting indeterminate in an effect: it is a DOM property and cannot be written in markup",
+                "the dash instead of a faded tick: a mixed state must differ in shape, not in shade",
+                "the \"on this page\" wording — the bar selects nothing beyond the list it holds",
+                "the bar separated by its own background: a select-all row must not look like a list item",
+                "the counter with role=\"status\": after a bulk action you need to hear how many are selected"
+              ],
+              "adapt": [
+                "the items array and the initial defaultValue",
+                "title — the accessible name of the block",
+                "the onChange handler",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Inverting without a count is risky: keep the counter next to the button.",
+                "Tree data needs more — parent inheritance lives in checkbox-021.",
+                "The component does not paginate: the selection covers the array you pass.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Checkbox011\n  title=\"Invoices\"\n  items={items}\n  defaultValue={[\"March invoice\"]}\n  onChange={setValue}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Block name",
+                "default": "Invoices"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "checkbox-012",
+      "type": "registry:component",
+      "categories": ["checkbox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "checkbox-012/checkbox-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/checkbox-012.tsx"
+        }
+      ],
+      "title": "Choice Limit",
+      "description": "Группа с потолком выбора: на лимите оставшиеся пункты выключаются, а полоса и счётчик заранее показывают, сколько ещё можно отметить.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-012-*. Клиентский: \"use client\". Достигнутый лимит ставит disabled только невыбранным пунктам, поэтому снять галочку можно всегда. Полоса заполнения — span с шириной в процентах (динамическое значение, класса для него нет). Текст под списком объясняет запрет словами, счётчик объявлен role=\"status\".",
+      "meta": {
+        "tags": ["checkbox", "limit", "survey", "group"],
+        "ai": {
+          "export": "Checkbox012",
+          "usage": "<Checkbox012\n  legend=\"Что для вас важнее всего\"\n  limit={3}\n  options={options}\n  onChange={setValue}\n/>",
+          "summary": "Группа чекбоксов с ограничением: счётчик «2 из 3», полоса заполнения и выключение невыбранных пунктов на лимите. Запрет объясняется до нажатия, а не сообщением об ошибке после. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-checkbox-012-* и не подменять её токенами вашей темы",
+            "выключение только невыбранных пунктов: снять свою галочку пользователь должен мочь всегда",
+            "счётчик «сколько из скольких» — без него лимит выглядит поломкой",
+            "полосу заполнения рядом со счётчиком: длину замечают раньше числа",
+            "текст под списком, объясняющий, что делать на лимите",
+            "оставшиеся в списке заблокированные пункты: убирать их нельзя, они снова доступны после снятия галочки"
+          ],
+          "adapt": [
+            "массив options и стартовый defaultValue",
+            "limit — потолок выбора",
+            "legend — название группы",
+            "обработчик onChange и акцент через проп accent"
+          ],
+          "notes": [
+            "Лимит меньше двух превращает группу в переключатель: там нужны radio, а не чекбоксы.",
+            "Компонент не сообщает о попытке превысить лимит: он её просто не допускает.",
+            "Если вариантов больше десяти, добавьте поиск — заблокированные строки в длинном списке раздражают.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Название группы",
+            "type": "text",
+            "default": "Что для вас важнее всего",
+            "maxLength": 40
+          },
+          {
+            "prop": "limit",
+            "label": "Лимит",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A group with a cap: at the limit the remaining options switch off, while a bar and a counter show in advance how many picks are left.",
+            "ai": {
+              "summary": "A checkbox group with a cap: a \"2 of 3\" counter, a fill bar and unchecked options disabled at the limit. The rule is explained before the tap, not as an error after it. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-checkbox-012-* palette — do not swap it for your theme tokens",
+                "disabling only the unchecked options: users must always be able to undo their own pick",
+                "the \"how many of how many\" counter — without it the limit looks like a bug",
+                "the fill bar next to the counter: length registers before the number does",
+                "the sentence under the list explaining what to do at the limit",
+                "keeping blocked options in the list: removing them is a lie, they return once a tick is cleared"
+              ],
+              "adapt": [
+                "the options array and the initial defaultValue",
+                "limit — the selection cap",
+                "legend — the group's name",
+                "the onChange handler and the accent through the accent prop"
+              ],
+              "notes": [
+                "A limit below two turns the group into a single choice: use radios, not checkboxes.",
+                "The component reports no over-limit attempt: it simply prevents one.",
+                "With more than ten options add a search — blocked rows in a long list irritate.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Checkbox012\n  legend=\"What matters most to you\"\n  limit={3}\n  options={options}\n  onChange={setValue}\n/>"
+            },
+            "controls": {
+              "legend": {
+                "label": "Group name",
+                "default": "What matters most to you"
+              },
+              "limit": {
+                "label": "Limit"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "checkbox-013",
+      "type": "registry:component",
+      "categories": ["checkbox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "checkbox-013/checkbox-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/checkbox-013.tsx"
+        }
+      ],
+      "title": "Required Consent",
+      "description": "Обязательная галочка как ворота формы: кнопка отправки выключена, пока условие не принято, и рядом написано, почему именно.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-013-*. Клиентский: \"use client\". Корень — form с onSubmit и preventDefault: отправка ничего не шлёт, а переводит блок в состояние «готово». У обязательного поля стоит нативный required и звёздочка на самой строке, у необязательного — подпись «необязательно». Причина выключенной кнопки показана текстом под ней.",
+      "meta": {
+        "tags": ["checkbox", "consent", "form", "validation"],
+        "ai": {
+          "export": "Checkbox013",
+          "usage": "<Checkbox013\n  title=\"Подтверждение заказа\"\n  terms=\"Я принимаю условия оферты\"\n  onConfirm={submitOrder}\n/>",
+          "summary": "Форма с обязательной галочкой и необязательной рядом: пока условие не принято, кнопка выключена, и под ней сказано почему. После отправки блок сообщает об успехе. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-checkbox-013-* и не подменять её токенами вашей темы",
+            "текст под выключенной кнопкой: выключенная кнопка без объяснения читается как поломка",
+            "нативный required на обязательной галочке — валидация браузера должна работать и без JS",
+            "звёздочку обязательности на самой строке, а не только у заголовка формы",
+            "непроставленные галочки: предвыбранное согласие незаконно в ЕС и нечестно везде",
+            "раздельные обязательное и необязательное согласия — рассылка не смешивается с офертой"
+          ],
+          "adapt": [
+            "terms и optional — тексты двух согласий",
+            "title — заголовок формы",
+            "submitLabel — подпись кнопки и обработчик onConfirm",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Компонент не отправляет данные: onConfirm вызывается после локальной проверки, запрос делает вызывающий код.",
+            "Выключенная кнопка не заменяет серверную проверку: согласие подтверждается на бэкенде.",
+            "Если условий несколько, каждому нужна своя галочка — одна на всё юридически ничего не значит.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "terms",
+            "label": "Обязательное условие",
+            "type": "text",
+            "default": "Я принимаю условия оферты и правила возврата",
+            "maxLength": 60
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Оформить",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A required tick as the gate of a form: the submit button stays off until the terms are accepted, with the reason written right beside it.",
+            "ai": {
+              "summary": "A form with one required checkbox and one optional beside it: until the terms are accepted the button is disabled and the reason is written under it. After submission the block confirms success. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-checkbox-013-* palette — do not swap it for your theme tokens",
+                "the sentence under the disabled button: a disabled button with no explanation reads as broken",
+                "the native required on the mandatory tick — browser validation has to work without JS too",
+                "the required asterisk on the row itself, not only next to the form heading",
+                "the unchecked defaults: pre-ticked consent is illegal in the EU and dishonest everywhere",
+                "keeping the required and the optional consent apart — marketing never rides on the terms"
+              ],
+              "adapt": [
+                "terms and optional — the copy of the two consents",
+                "title — the form heading",
+                "submitLabel — the button caption and the onConfirm handler",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The component sends nothing: onConfirm fires after the local check, the request is the caller's job.",
+                "A disabled button is not a server check: confirm the consent on the backend too.",
+                "Several terms need several ticks — one box for everything means nothing legally.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Checkbox013\n  title=\"Confirm your order\"\n  terms=\"I accept the terms of sale\"\n  onConfirm={submitOrder}\n/>"
+            },
+            "controls": {
+              "terms": {
+                "label": "Required term",
+                "default": "I accept the terms of sale and the refund policy"
+              },
+              "submitLabel": {
+                "label": "Button",
+                "default": "Place order"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "checkbox-014",
+      "type": "registry:component",
+      "categories": ["checkbox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "checkbox-014/checkbox-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/checkbox-014.tsx"
+        }
+      ],
+      "title": "Done Drawer",
+      "description": "Список задач, где выполненное уезжает в свёрнутый блок «Готово»: активный список остаётся коротким, а сделанное никуда не пропадает.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-014-*. Клиентский: \"use client\". Задачи делятся на два списка по состоянию, выполненные лежат в нативном <details> — сворачивание работает без JS и доступно с клавиатуры. Сверху полоса прогресса: span с шириной в процентах и role=\"progressbar\" с aria-valuenow. Маркер <summary> убран, стрелка нарисована псевдоэлементом.",
+      "meta": {
+        "tags": ["checkbox", "tasks", "progress", "details"],
+        "ai": {
+          "export": "Checkbox014",
+          "usage": "<Checkbox014\n  title=\"Запуск раздела\"\n  tasks={tasks}\n  defaultDone={[\"1\"]}\n  onChange={setDone}\n/>",
+          "summary": "Чеклист с полосой прогресса, где выполненные задачи собираются в свёрнутый блок «Готово». Активный список не растёт, а сделанное можно раскрыть и вернуть обратно снятием галочки. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-checkbox-014-* и не подменять её токенами вашей темы",
+            "нативный <details> для выполненных: сворачивание и клавиатура достаются бесплатно",
+            "возможность снять галочку у выполненной задачи — иначе ошибочная отметка необратима",
+            "полосу прогресса с role=\"progressbar\" и aria-valuenow: доля важнее списка",
+            "текст «Все задачи выполнены» вместо пустого места, когда активных не осталось",
+            "зачёркивание внутри блока «Готово»: там текст читают как историю, а не как задачу"
+          ],
+          "adapt": [
+            "массив tasks и стартовый defaultDone",
+            "title — название списка",
+            "обработчик onChange",
+            "акцент через проп accent — цвет отметки и полосы"
+          ],
+          "notes": [
+            "Перемещение строки при отметке — намеренное: если это мешает, возьмите checkbox-007, там порядок фиксирован.",
+            "Компонент ничего не сохраняет: состояние живёт до перезагрузки страницы.",
+            "Блок «Готово» лучше держать свёрнутым: раскрытый по умолчанию, он сводит идею на нет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Название списка",
+            "type": "text",
+            "default": "Запуск раздела",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A task list where finished items move into a collapsed \"Done\" drawer: the active list stays short and nothing disappears.",
+            "ai": {
+              "summary": "A checklist with a progress bar where completed tasks collect in a collapsed \"Done\" drawer. The active list never grows, and finished work can be reopened and unticked. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-checkbox-014-* palette — do not swap it for your theme tokens",
+                "the native <details> for finished tasks: collapsing and keyboard support come free",
+                "the ability to untick a finished task — otherwise a wrong tap is irreversible",
+                "the progress bar with role=\"progressbar\" and aria-valuenow: the ratio matters more than the list",
+                "the \"all tasks are done\" line instead of blank space when nothing is active",
+                "the strike-through inside the Done drawer: there the text reads as history, not as work"
+              ],
+              "adapt": [
+                "the tasks array and the initial defaultDone",
+                "title — the list's name",
+                "the onChange handler",
+                "the accent through the accent prop — the tick and the bar colour"
+              ],
+              "notes": [
+                "Rows moving on tick is deliberate: if it gets in the way use checkbox-007, where the order is fixed.",
+                "The component persists nothing: state lives until reload.",
+                "Keep the Done drawer collapsed: open by default it defeats the point.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Checkbox014\n  title=\"Section launch\"\n  tasks={tasks}\n  defaultDone={[\"1\"]}\n  onChange={setDone}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "List name",
+                "default": "Section launch"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "checkbox-015",
+      "type": "registry:component",
+      "categories": ["checkbox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "checkbox-015/checkbox-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/checkbox-015.tsx"
+        }
+      ],
+      "title": "Group Error",
+      "description": "Ошибка у всей группы, а не у строки: «отметьте хотя бы одно» показано рамкой, знаком и объяснением, что именно сделать.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-015-*. Клиентский: \"use client\". Ошибка живёт на fieldset: он получает data-invalid, aria-invalid и aria-describedby с идентификатором из useId. Сообщение объявлено role=\"alert\" и состоит из знака «!» кружком и двух строк — что не так и что сделать. Состояние ошибки пересчитывается при отправке и снимается сразу после первой отметки.",
+      "meta": {
+        "tags": ["checkbox", "validation", "error", "fieldset"],
+        "ai": {
+          "export": "Checkbox015",
+          "usage": "<Checkbox015\n  legend=\"Чем занимается ваша команда\"\n  options={options}\n  onSubmitValue={save}\n/>",
+          "summary": "Группа чекбоксов с проверкой «хотя бы одно»: ошибка относится к набору целиком, показана рамкой группы, знаком и текстом с подсказкой, что делать. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-checkbox-015-* и не подменять её токенами вашей темы",
+            "ошибку на уровне fieldset: требование «хотя бы одно» относится к набору, а не к отдельной строке",
+            "знак «!» рядом с текстом — одним красным цветом ошибку не показать",
+            "aria-invalid и aria-describedby на группе: связь с сообщением обязана быть в разметке",
+            "role=\"alert\" у сообщения, чтобы оно было услышано сразу после отправки",
+            "вторую строку с подсказкой: «ошибка» без «что делать» ничего не решает"
+          ],
+          "adapt": [
+            "массив options — варианты в группе",
+            "legend — название группы",
+            "error и hint — текст ошибки и подсказки",
+            "обработчик onSubmitValue и акцент через проп accent"
+          ],
+          "notes": [
+            "Ошибка снимается сразу после первой отметки — держать её до повторной отправки жестоко.",
+            "Компонент не отправляет форму: onSubmitValue вызывается только при непустом выборе.",
+            "Для согласия с документом это не подходит: там ошибка у одной галочки, возьмите checkbox-005.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Название группы",
+            "type": "text",
+            "default": "Чем занимается ваша команда",
+            "maxLength": 40
+          },
+          {
+            "prop": "error",
+            "label": "Текст ошибки",
+            "type": "text",
+            "default": "Отметьте хотя бы одно направление",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The error belongs to the group, not to a row: \"pick at least one\" is shown by a border, a sign and a line saying what to do.",
+            "ai": {
+              "summary": "A checkbox group validated as a whole: the \"at least one\" error applies to the set, shown by the group's border, an exclamation sign and a hint about what to do next. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-checkbox-015-* palette — do not swap it for your theme tokens",
+                "the error on the fieldset: \"at least one\" is a property of the set, not of a single row",
+                "the \"!\" sign next to the text — red alone cannot carry an error",
+                "aria-invalid and aria-describedby on the group: the link to the message must exist in markup",
+                "role=\"alert\" on the message so it is heard right after submission",
+                "the second line with the hint: an error without \"what to do\" solves nothing"
+              ],
+              "adapt": [
+                "the options array — the choices in the group",
+                "legend — the group's name",
+                "error and hint — the error and helper copy",
+                "the onSubmitValue handler and the accent through the accent prop"
+              ],
+              "notes": [
+                "The error clears on the first tick — holding it until the next submit is cruel.",
+                "The component submits nothing: onSubmitValue fires only with a non-empty selection.",
+                "Document consent is a different case: the error sits on one box there, use checkbox-005.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Checkbox015\n  legend=\"What does your team do\"\n  options={options}\n  onSubmitValue={save}\n/>"
+            },
+            "controls": {
+              "legend": {
+                "label": "Group name",
+                "default": "What does your team do"
+              },
+              "error": {
+                "label": "Error text",
+                "default": "Pick at least one area"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "checkbox-016",
+      "type": "registry:component",
+      "categories": ["checkbox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "checkbox-016/checkbox-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/checkbox-016.tsx"
+        }
+      ],
+      "title": "Searchable Options",
+      "description": "Длинный список чекбоксов с поиском по пунктам: отмеченные закреплены сверху и не исчезают при фильтрации.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-016-*. Клиентский: \"use client\". Поиск фильтрует только неотмеченные пункты; выбранные всегда идут первой группой, поэтому фильтр не выглядит сбросом выбора. Список прокручивается внутри себя (max-height + overscroll-behavior: contain), поле поиска и счётчик остаются на месте. Заголовки групп скрыты от скринридера как декоративные.",
+      "meta": {
+        "tags": ["checkbox", "search", "list", "filter"],
+        "ai": {
+          "export": "Checkbox016",
+          "usage": "<Checkbox016\n  label=\"Страны доставки\"\n  options={countries}\n  defaultValue={[\"Грузия\"]}\n  onChange={setValue}\n/>",
+          "summary": "Список чекбоксов с полем поиска: отмеченные пункты закреплены сверху отдельной группой, остальные фильтруются по подстроке. Список прокручивается внутри себя, снизу счётчик отмеченного. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-checkbox-016-* и не подменять её токенами вашей темы",
+            "закрепление отмеченных сверху: спрятанный фильтром выбор читается как сброшенный",
+            "прокрутку внутри списка — поле поиска и счётчик не должны уезжать вместе с ним",
+            "overscroll-behavior: contain, чтобы прокрутка списка не утаскивала страницу",
+            "сообщение «ничего не нашлось» вместо пустоты: пустой блок выглядит поломкой",
+            "input[type=search] с aria-label: поле поиска без имени бесполезно для скринридера"
+          ],
+          "adapt": [
+            "массив options и стартовый defaultValue",
+            "placeholder — подсказку в поле поиска",
+            "label — заголовок и доступное имя блока",
+            "обработчик onChange и акцент через проп accent"
+          ],
+          "notes": [
+            "Поиск идёт по подстроке без учёта регистра: морфологию и опечатки он не понимает.",
+            "Для сотен пунктов нужен серверный поиск — компонент фильтрует переданный массив целиком.",
+            "Порядок групп фиксирован: выбранные сверху, остальные ниже — менять его местами не стоит.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Страны доставки",
+            "maxLength": 30
+          },
+          {
+            "prop": "placeholder",
+            "label": "Подсказка поиска",
+            "type": "text",
+            "default": "Поиск по списку",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A long checkbox list with a search field: the checked options stay pinned at the top and never vanish while filtering.",
+            "ai": {
+              "summary": "A checkbox list with a search field: checked options are pinned at the top as their own group, the rest are filtered by substring. The list scrolls inside itself with a counter below. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-checkbox-016-* palette — do not swap it for your theme tokens",
+                "pinning the checked options on top: a selection hidden by a filter reads as a cleared one",
+                "scrolling inside the list — the search field and the counter must not scroll away",
+                "overscroll-behavior: contain so the list does not drag the page along",
+                "the \"nothing found\" line instead of blank space: an empty box looks broken",
+                "the search input with an aria-label: an unnamed field is useless to a screen reader"
+              ],
+              "adapt": [
+                "the options array and the initial defaultValue",
+                "placeholder — the hint inside the search field",
+                "label — the heading and accessible name of the block",
+                "the onChange handler and the accent through the accent prop"
+              ],
+              "notes": [
+                "The search is a case-insensitive substring match: it knows nothing about typos or morphology.",
+                "Hundreds of options need server-side search — this filters the array you pass in full.",
+                "The group order is fixed: selected first, the rest below; swapping them defeats the point.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Checkbox016\n  label=\"Delivery countries\"\n  options={countries}\n  defaultValue={[\"Georgia\"]}\n  onChange={setValue}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Heading",
+                "default": "Delivery countries"
+              },
+              "placeholder": {
+                "label": "Search hint",
+                "default": "Search the list"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "checkbox-017",
+      "type": "registry:component",
+      "categories": ["checkbox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "checkbox-017/checkbox-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/checkbox-017.tsx"
+        }
+      ],
+      "title": "Range Selection",
+      "description": "Таблица, где выбор ставится диапазоном: клик с Shift отмечает всё от прошлой отметки до текущей, а подсказка про жест написана явно.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-017-*. Клиентский: \"use client\". Логика диапазона висит на onClick (там доступен shiftKey), onChange оставлен пустым, чтобы React не ругался на управляемый input. Якорь — индекс последней одиночной отметки. Чекбокс шапки получает indeterminate эффектом, выбранные строки подсвечиваются через tr:has(input:checked), таблица завёрнута в контейнер с overflow-x.",
+      "meta": {
+        "tags": ["checkbox", "table", "range", "shift"],
+        "ai": {
+          "export": "Checkbox017",
+          "usage": "<Checkbox017\n  caption=\"Участники проекта\"\n  rows={rows}\n  onChange={setSelected}\n/>",
+          "summary": "Выбор строк таблицы диапазоном: обычный клик переключает строку и ставит якорь, клик с Shift добавляет всё от якоря до текущей строки. В шапке чекбокс с промежуточным состоянием, снизу число выбранного и подсказка про жест. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-checkbox-017-* и не подменять её токенами вашей темы",
+            "обработку диапазона в onClick: shiftKey доступен именно там, в onChange его нет",
+            "пустой onChange у управляемого input — без него React ругается на поле без обработчика",
+            "подсказку про Shift в подвале: скрытый жест не существует для того, кто о нём не знает",
+            "indeterminate в шапке при частичном выборе и подпись «на странице»",
+            "подсветку выбранных строк и aria-label у каждого чекбокса: «выбрать» без имени бесполезно"
+          ],
+          "adapt": [
+            "массив rows и набор колонок",
+            "caption — заголовок таблицы",
+            "обработчик onChange",
+            "акцент через проп accent — цвет отметки и подсветки строк"
+          ],
+          "notes": [
+            "Shift только добавляет диапазон и никогда не снимает: снятие диапазоном чаще ошибка, чем намерение.",
+            "Выбор относится к переданным строкам: «выбрать всё в базе» — отдельное действие с подтверждением.",
+            "На телефоне Shift недоступен — оставьте способ выбрать строки по одной.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Заголовок таблицы",
+            "type": "text",
+            "default": "Участники проекта",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A table where selection comes in ranges: Shift-click marks everything from the previous tick to the current row, and the gesture is spelled out.",
+            "ai": {
+              "summary": "Range selection for table rows: a plain click toggles a row and sets the anchor, a Shift-click adds everything from the anchor to the current row. The header checkbox carries an indeterminate state; the footer shows the count and the gesture hint. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-checkbox-017-* palette — do not swap it for your theme tokens",
+                "handling the range in onClick: shiftKey exists there, onChange never sees it",
+                "the empty onChange on the controlled input — without it React complains about a field with no handler",
+                "the Shift hint in the footer: a hidden gesture does not exist for anyone who was not told",
+                "the indeterminate header on partial selection and the \"on this page\" wording",
+                "the row highlight and an aria-label on every checkbox: a bare \"select\" is useless"
+              ],
+              "adapt": [
+                "the rows array and the set of columns",
+                "caption — the table heading",
+                "the onChange handler",
+                "the accent through the accent prop — the tick and row highlight colour"
+              ],
+              "notes": [
+                "Shift only adds a range and never clears it: clearing by range is more often a mistake than an intent.",
+                "The selection covers the rows you pass: \"select everything\" is a separate, confirmed action.",
+                "Phones have no Shift — always keep one-by-one selection available.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Checkbox017\n  caption=\"Project members\"\n  rows={rows}\n  onChange={setSelected}\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Table heading",
+                "default": "Project members"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "checkbox-018",
+      "type": "registry:component",
+      "categories": ["checkbox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "checkbox-018/checkbox-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/checkbox-018.tsx"
+        }
+      ],
+      "title": "Shape Checkboxes",
+      "description": "Чекбоксы, у которых вместо галочки фигура по смыслу отметки: звезда, флажок и молния вырезаны через clip-path.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-018-*. Клиентский: \"use client\". Настоящий input спрятан визуально (clip-path: inset(50%)), карточка реагирует через :has(input:checked). Иконки — квадраты с фоном, обрезанные clip-path: polygon по атрибуту data-shape, поэтому иконочная библиотека не нужна и цвет наследуется из палитры. Невыбранная фигура показана приглушённой, а не пустой рамкой.",
+      "meta": {
+        "tags": ["checkbox", "icons", "clip-path", "toggle"],
+        "ai": {
+          "export": "Checkbox018",
+          "usage": "<Checkbox018\n  legend=\"Отметки для карточки\"\n  options={marks}\n  defaultValue={[\"favorite\"]}\n  onChange={setMarks}\n/>",
+          "summary": "Ряд чекбоксов с фигурами вместо галочки: звезда, флажок и молния нарисованы clip-path из залитого квадрата. Отмеченная фигура заливается акцентом и слегка увеличивается, невыбранная остаётся видимой в сером. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-checkbox-018-* и не подменять её токенами вашей темы",
+            "фигуры через clip-path: они не тянут иконочную библиотеку и красятся переменной палитры",
+            "спрятанный, но настоящий input — Tab, пробел и объявление состояния держатся на нём",
+            "видимую приглушённую фигуру в невыбранном состоянии: пустая рамка не подсказывает, что появится",
+            "подпись под фигурой — иконка без слова понимается по-разному",
+            "фокус-кольцо на всей карточке через :has(input:focus-visible): сам input не виден"
+          ],
+          "adapt": [
+            "массив options: подпись и фигуру (star, flag, bolt) у каждой отметки",
+            "legend — название группы",
+            "стартовый defaultValue и обработчик onChange",
+            "акцент через проп accent — цвет отмеченной фигуры и рамки"
+          ],
+          "notes": [
+            "Фигур ровно три: новая форма — это ещё один polygon в CSS, придумать его в разметке нельзя.",
+            "Иконка не заменяет подпись: сама по себе звезда означает и «избранное», и «оценку».",
+            "Для длинного списка отметок форма перестаёт помогать — там нужен обычный список.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Название группы",
+            "type": "text",
+            "default": "Отметки для карточки",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Checkboxes whose tick is a shape that matches the mark: a star, a flag and a bolt cut out with clip-path.",
+            "ai": {
+              "summary": "A row of checkboxes with shapes instead of ticks: a star, a flag and a bolt cut from a filled square with clip-path. A checked shape fills with the accent and grows slightly; an unchecked one stays visible in grey. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-checkbox-018-* palette — do not swap it for your theme tokens",
+                "the shapes made with clip-path: they need no icon library and take their colour from the palette",
+                "the hidden but real input — Tab, space and the state announcement rest on it",
+                "the muted but visible shape when unchecked: an empty box does not hint at what appears",
+                "the caption under the shape — an icon alone is read differently by everyone",
+                "the focus ring on the whole card via :has(input:focus-visible): the input itself is invisible"
+              ],
+              "adapt": [
+                "the options array: a caption and a shape (star, flag, bolt) per mark",
+                "legend — the group's name",
+                "the initial defaultValue and the onChange handler",
+                "the accent through the accent prop — the checked shape and ring colour"
+              ],
+              "notes": [
+                "There are exactly three shapes: a new one means another polygon in the CSS, markup cannot invent it.",
+                "An icon does not replace the caption: a star means both \"favourite\" and \"rating\".",
+                "For a long list of marks the shape stops helping — use a plain list there.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Checkbox018\n  legend=\"Card marks\"\n  options={marks}\n  defaultValue={[\"favorite\"]}\n  onChange={setMarks}\n/>"
+            },
+            "controls": {
+              "legend": {
+                "label": "Group name",
+                "default": "Card marks"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "checkbox-019",
+      "type": "registry:component",
+      "categories": ["checkbox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "checkbox-019/checkbox-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/checkbox-019.tsx"
+        }
+      ],
+      "title": "Filter Chips",
+      "description": "Компактный ряд фильтров-таблеток с переносом: настоящие чекбоксы со спрятанным input, галочка у отмеченных и сброс.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-019-*. Клиентский: \"use client\". Таблетка — label со спрятанным input (clip-path: inset(50%)), состояние берётся через :has(input:checked). Галочка появляется анимацией ширины, а не opacity, поэтому невыбранная таблетка не резервирует пустое место. Группа обёрнута в fieldset с legend, кнопка сброса выключена при пустом выборе.",
+      "meta": {
+        "tags": ["checkbox", "chips", "filters", "compact"],
+        "ai": {
+          "export": "Checkbox019",
+          "usage": "<Checkbox019\n  legend=\"Быстрые фильтры\"\n  options={filters}\n  defaultValue={[\"В наличии\"]}\n  onChange={setFilters}\n/>",
+          "summary": "Ряд фильтров-таблеток в одну ленту с переносом: каждая таблетка — настоящий чекбокс, отмеченная заливается и получает галочку. Рядом кнопка сброса и счётчик выбранного. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-checkbox-019-* и не подменять её токенами вашей темы",
+            "настоящие input внутри таблеток: без них это кнопки, которые скринридер не назовёт отмеченными",
+            "галочку у отмеченной таблетки — одной заливкой состояние не показать при дальтонизме",
+            "рост галочки шириной, а не через opacity: иначе невыбранная таблетка резервирует пустое место",
+            "перенос строк (flex-wrap): лента фильтров не должна уезжать за край на телефоне",
+            "кнопку сброса, выключенную при пустом выборе, и счётчик рядом с ней"
+          ],
+          "adapt": [
+            "массив options и стартовый defaultValue",
+            "legend — название группы фильтров",
+            "обработчик onChange",
+            "акцент через проп accent — цвет отмеченной таблетки"
+          ],
+          "notes": [
+            "Таблетки хороши до десятка: дальше лента переносится на три строки и хуже списка.",
+            "Компонент ничего не фильтрует сам: он отдаёт выбранные значения в onChange.",
+            "Длинные подписи ломают компактность — держите их в два-три слова.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Название группы",
+            "type": "text",
+            "default": "Быстрые фильтры",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A compact wrapping row of filter chips: real checkboxes with a hidden input, a tick on the selected ones and a reset.",
+            "ai": {
+              "summary": "A row of filter chips that wraps: every chip is a real checkbox, a selected one fills in and gains a tick. A reset button and a counter sit alongside. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-checkbox-019-* palette — do not swap it for your theme tokens",
+                "the real inputs inside the chips: without them these are buttons a screen reader never calls checked",
+                "the tick on a selected chip — fill alone cannot carry the state for colour-blind users",
+                "growing the tick by width rather than opacity: otherwise an unselected chip reserves blank space",
+                "the wrapping (flex-wrap): a filter row must not run off the edge on a phone",
+                "the reset button disabled on an empty selection, and the counter beside it"
+              ],
+              "adapt": [
+                "the options array and the initial defaultValue",
+                "legend — the filter group's name",
+                "the onChange handler",
+                "the accent through the accent prop — the selected chip colour"
+              ],
+              "notes": [
+                "Chips work up to about ten: beyond that the row wraps three times and loses to a list.",
+                "The component filters nothing itself: it hands the selected values to onChange.",
+                "Long captions break the compactness — keep them to two or three words.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Checkbox019\n  legend=\"Quick filters\"\n  options={filters}\n  defaultValue={[\"In stock\"]}\n  onChange={setFilters}\n/>"
+            },
+            "controls": {
+              "legend": {
+                "label": "Group name",
+                "default": "Quick filters"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "checkbox-020",
+      "type": "registry:component",
+      "categories": ["checkbox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "checkbox-020/checkbox-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/checkbox-020.tsx"
+        }
+      ],
+      "title": "Scroll Consent",
+      "description": "Согласие с длинным документом: текст лежит в прокручиваемой рамке, а галочка включается только после того, как его долистали до конца.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-020-*. Клиентский: \"use client\". Обработчик onScroll сравнивает scrollTop + clientHeight со scrollHeight с запасом в восемь пикселей и разблокирует чекбокс. Рамка текста получает tabIndex и role=\"region\" с именем, чтобы её можно было листать с клавиатуры. Градиентная тень у нижнего края показывает продолжение и гаснет по data-read на корне.",
+      "meta": {
+        "tags": ["checkbox", "legal", "scroll", "consent"],
+        "ai": {
+          "export": "Checkbox020",
+          "usage": "<Checkbox020\n  title=\"Пользовательское соглашение\"\n  paragraphs={paragraphs}\n  onChange={setAccepted}\n/>",
+          "summary": "Юридический текст в прокручиваемой рамке и галочка согласия под ним. Пока документ не долистан до конца, галочка выключена, а рядом написано почему; после прокрутки текст об этом меняется. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-checkbox-020-* и не подменять её токенами вашей темы",
+            "tabIndex и role=\"region\" у рамки текста: иначе документ нельзя долистать с клавиатуры и согласие недостижимо",
+            "объяснение под галочкой, почему она выключена — иначе блок выглядит сломанным",
+            "запас в несколько пикселей при проверке конца прокрутки: дробные высоты не дают точного равенства",
+            "градиентную тень у нижнего края и её исчезновение после дочитывания",
+            "непроставленную галочку: предвыбранное согласие незаконно в ЕС и нечестно везде"
+          ],
+          "adapt": [
+            "массив paragraphs — текст документа по абзацам",
+            "title — заголовок документа",
+            "label — подпись рядом с галочкой",
+            "обработчик onChange и акцент через проп accent"
+          ],
+          "notes": [
+            "Требование долистать — приём убеждения, а не юридическое доказательство прочтения.",
+            "Очень длинный документ лучше открывать отдельной страницей: девять экранов в рамке никто не листает.",
+            "Компонент не хранит согласие: факт и время подтверждения записывает вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Пользовательское соглашение",
+            "maxLength": 40
+          },
+          {
+            "prop": "label",
+            "label": "Подпись согласия",
+            "type": "text",
+            "default": "Я прочитал соглашение и согласен с его условиями",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Consent to a long document: the text lives in a scrollable frame and the checkbox unlocks only once it has been scrolled to the end.",
+            "ai": {
+              "summary": "A legal text in a scrollable frame with a consent checkbox below it. Until the document is scrolled to the end the box stays disabled and the reason is written beside it; the line changes once it is read. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-checkbox-020-* palette — do not swap it for your theme tokens",
+                "tabIndex and role=\"region\" on the text frame: without them the document cannot be scrolled by keyboard and consent is unreachable",
+                "the explanation under the box for why it is disabled — otherwise the block looks broken",
+                "the few-pixel slack in the end-of-scroll check: fractional heights never match exactly",
+                "the gradient fade at the bottom edge and its disappearance once the text is read",
+                "the unchecked default: pre-ticked consent is illegal in the EU and dishonest everywhere"
+              ],
+              "adapt": [
+                "the paragraphs array — the document text, paragraph by paragraph",
+                "title — the document heading",
+                "label — the wording next to the checkbox",
+                "the onChange handler and the accent through the accent prop"
+              ],
+              "notes": [
+                "Requiring a scroll is persuasion, not legal proof that anything was read.",
+                "A very long document belongs on its own page: nobody scrolls nine screens inside a frame.",
+                "The component stores no consent: recording the fact and the timestamp is the caller's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Checkbox020\n  title=\"Terms of service\"\n  paragraphs={paragraphs}\n  onChange={setAccepted}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Terms of service"
+              },
+              "label": {
+                "label": "Consent wording",
+                "default": "I have read the terms and agree to them"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "checkbox-021",
+      "type": "registry:component",
+      "categories": ["checkbox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "checkbox-021/checkbox-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/checkbox-021.tsx"
+        }
+      ],
+      "title": "Permission Tree",
+      "description": "Дерево чекбоксов с наследованием: ветка переключает все свои листья разом, а её собственное состояние вычисляется из них.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-021-*. Клиентский: \"use client\". Состояние хранится только для листьев; ветка считает своё через список потомков, поэтому дерево работает на любой глубине. indeterminate выставляется эффектом в каждой строке. Ветки лежат в <details> со скрытым маркером, клик по галочке внутри <summary> останавливает всплытие, иначе он сворачивал бы ветку.",
+      "meta": {
+        "tags": ["checkbox", "tree", "permissions", "indeterminate"],
+        "ai": {
+          "export": "Checkbox021",
+          "usage": "<Checkbox021\n  title=\"Права доступа\"\n  nodes={nodes}\n  defaultValue={[\"pages-read\"]}\n  onChange={setRights}\n/>",
+          "summary": "Дерево прав с наследованием: отметка ветки включает все её листья, снятие — выключает, а частичный выбор показывается чертой. Ветки сворачиваются нативным <details>, снизу счётчик выданных прав. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-checkbox-021-* и не подменять её токенами вашей темы",
+            "хранение состояния только для листьев: состояние ветки обязано вычисляться, иначе дерево рассинхронизируется",
+            "остановку всплытия у галочки внутри <summary> — иначе клик по ней сворачивает ветку",
+            "установку indeterminate эффектом: разметкой это свойство не задаётся",
+            "линию слева у вложенных списков: на третьем уровне один отступ уже не читается",
+            "черту вместо бледной галки для частичного выбора — форма важнее оттенка"
+          ],
+          "adapt": [
+            "массив nodes — дерево любой глубины",
+            "title — заголовок блока",
+            "стартовый defaultValue из идентификаторов листьев",
+            "обработчик onChange и акцент через проп accent"
+          ],
+          "notes": [
+            "defaultValue содержит только листья: идентификатор ветки в нём ничего не включит.",
+            "Идентификаторы листьев должны быть уникальными во всём дереве, иначе ветки будут влиять друг на друга.",
+            "Для одного уровня вложенности дерево избыточно — там достаточно checkbox-003.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Права доступа",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A checkbox tree with inheritance: a branch toggles all of its leaves at once, and its own state is computed back from them.",
+            "ai": {
+              "summary": "A permission tree with inheritance: ticking a branch turns on every leaf under it, unticking clears them, and a partial selection shows as a dash. Branches collapse with a native <details>, and a counter sits below. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-checkbox-021-* palette — do not swap it for your theme tokens",
+                "keeping state for leaves only: a branch state must be derived, or the tree drifts out of sync",
+                "stopping propagation on the tick inside <summary> — otherwise clicking it collapses the branch",
+                "setting indeterminate in an effect: the property cannot be written in markup",
+                "the guide line on nested lists: at the third level indentation alone stops reading",
+                "the dash instead of a faded tick for a partial selection — shape beats shade"
+              ],
+              "adapt": [
+                "the nodes array — a tree of any depth",
+                "title — the block heading",
+                "the initial defaultValue built from leaf identifiers",
+                "the onChange handler and the accent through the accent prop"
+              ],
+              "notes": [
+                "defaultValue holds leaves only: a branch id in it turns nothing on.",
+                "Leaf identifiers must be unique across the whole tree, or branches start affecting each other.",
+                "For a single level of nesting a tree is overkill — checkbox-003 is enough.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Checkbox021\n  title=\"Permissions\"\n  nodes={nodes}\n  defaultValue={[\"pages-read\"]}\n  onChange={setRights}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Permissions"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "checkbox-022",
+      "type": "registry:component",
+      "categories": ["checkbox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "checkbox-022/checkbox-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/checkbox-022.tsx"
+        }
+      ],
+      "title": "Locked Settings",
+      "description": "Настройки, часть которых только для чтения: у заблокированной строки замок, приглушённый фон и причина прямо под подписью.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-022-*. Клиентский: \"use client\". Заблокированная строка помечена readOnly и aria-disabled, а не disabled: она остаётся в порядке табуляции и доступна скринридеру. Причина связана с полем через aria-describedby с идентификатором из useId. Замок нарисован корпусом и дужкой из ::before, поэтому иконочная библиотека не нужна.",
+      "meta": {
+        "tags": ["checkbox", "readonly", "policy", "settings"],
+        "ai": {
+          "export": "Checkbox022",
+          "usage": "<Checkbox022\n  legend=\"Безопасность аккаунта\"\n  options={options}\n  onChange={setValue}\n/>",
+          "summary": "Список настроек, где часть строк только для чтения: замок справа, приглушённая подложка и объяснение под подписью, а внизу общая сноска про политику организации. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-checkbox-022-* и не подменять её токенами вашей темы",
+            "readOnly и aria-disabled вместо disabled: выключенное поле выпадает из табуляции, и причину никто не прочитает",
+            "причину под подписью, связанную через aria-describedby — «нельзя» без объяснения читается как поломка",
+            "замок как вторую примету блокировки: приглушённый текст сам по себе можно принять за оформление",
+            "различимую отметку у заблокированной строки: её значение важно, даже если менять его нельзя",
+            "сноску внизу, называющую, кто именно управляет этими настройками"
+          ],
+          "adapt": [
+            "массив options: подпись, признак locked и причину блокировки",
+            "legend — название группы",
+            "footnote — сноску под списком",
+            "обработчик onChange и акцент через проп accent"
+          ],
+          "notes": [
+            "readOnly не мешает отправке формы: значение заблокированного поля уйдёт на сервер, и его надо проверять там.",
+            "Причина обязана быть конкретной: «недоступно» не объясняет, к кому идти.",
+            "Если менять настройку нельзя никому и никогда, её лучше не показывать вовсе.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Название группы",
+            "type": "text",
+            "default": "Безопасность аккаунта",
+            "maxLength": 30
+          },
+          {
+            "prop": "footnote",
+            "label": "Сноска",
+            "type": "text",
+            "default": "Строки с замком заданы политикой организации — их меняет администратор.",
+            "maxLength": 90
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Settings where some rows are read-only: a lock, a muted background and the reason written right under the label.",
+            "ai": {
+              "summary": "A settings list where some rows are read-only: a lock on the right, a muted background, an explanation under the label and a shared footnote about the org policy below. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-checkbox-022-* palette — do not swap it for your theme tokens",
+                "readOnly plus aria-disabled instead of disabled: a disabled field leaves the tab order and nobody reads the reason",
+                "the reason under the label, linked with aria-describedby — a bare \"no\" reads as a bug",
+                "the lock as a second cue: muted text alone can pass for styling",
+                "a legible tick on a locked row: its value matters even when it cannot be changed",
+                "the footnote naming who actually controls these settings"
+              ],
+              "adapt": [
+                "the options array: label, the locked flag and the reason",
+                "legend — the group's name",
+                "footnote — the line under the list",
+                "the onChange handler and the accent through the accent prop"
+              ],
+              "notes": [
+                "readOnly does not stop submission: a locked field still posts its value, so validate it on the server.",
+                "The reason must be specific: \"unavailable\" does not say whom to ask.",
+                "If nobody can ever change a setting, it is better not to show it at all.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Checkbox022\n  legend=\"Account security\"\n  options={options}\n  onChange={setValue}\n/>"
+            },
+            "controls": {
+              "legend": {
+                "label": "Group name",
+                "default": "Account security"
+              },
+              "footnote": {
+                "label": "Footnote",
+                "default": "Rows with a lock are set by the org policy — an admin changes them."
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
     }
   ]
 }
