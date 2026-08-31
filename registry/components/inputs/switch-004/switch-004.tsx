@@ -1,0 +1,136 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Switch004Props = Omit<
+  ComponentPropsWithoutRef<"input">,
+  "type" | "size"
+> & {
+  label?: string
+  /** Подписи состояний под названием: видима всегда ровно одна. */
+  onText?: string
+  offText?: string
+  accent?: string
+}
+
+// Идея компонента: состояние видно и без цвета. В бегунке едет значок —
+// галочка при включении, косой крест при выключении, — а под названием
+// стоит слово «включён» или «выключен». Значки нарисованы рамкой и
+// псевдоэлементами, поэтому иконочный пакет не нужен.
+const STYLES = `
+:where([data-vibeui-block="switch-004"]){
+--vibeui-switch-004-bg:oklch(1 0 0);
+--vibeui-switch-004-fg:oklch(0.22 0.014 265);
+--vibeui-switch-004-muted:oklch(0.55 0.014 265);
+--vibeui-switch-004-border:oklch(0.91 0.006 265);
+--vibeui-switch-004-track:oklch(0.72 0.02 265);
+--vibeui-switch-004-thumb:oklch(1 0 0);
+--vibeui-switch-004-accent:oklch(0.55 0.16 155);
+--vibeui-switch-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="switch-004"]{
+display:flex;align-items:center;justify-content:space-between;gap:1rem;
+width:100%;max-width:19rem;box-sizing:border-box;padding:0.875rem;
+background:var(--vibeui-switch-004-bg);
+border:1px solid var(--vibeui-switch-004-border);border-radius:0.875rem;
+font-family:var(--vibeui-switch-004-font);color:var(--vibeui-switch-004-fg);
+font-size:0.9375rem;cursor:pointer;
+}
+[data-vibeui-block="switch-004"] [data-part="text"]{display:flex;flex-direction:column;gap:0.125rem;min-width:0}
+[data-vibeui-block="switch-004"] [data-part="state"]{font-size:0.75rem;color:var(--vibeui-switch-004-muted)}
+/* Видима ровно одна подпись состояния: :has() смотрит на сам input,
+   поэтому текст и бегунок не могут разойтись. */
+[data-vibeui-block="switch-004"] [data-part="on-text"]{display:none}
+[data-vibeui-block="switch-004"]:has(input:checked) [data-part="on-text"]{display:inline}
+[data-vibeui-block="switch-004"]:has(input:checked) [data-part="off-text"]{display:none}
+[data-vibeui-block="switch-004"] [data-part="track"]{position:relative;display:flex;flex:none}
+[data-vibeui-block="switch-004"] input{
+appearance:none;-webkit-appearance:none;margin:0;
+width:3.5rem;height:1.875rem;border-radius:9999px;
+background:var(--vibeui-switch-004-track);cursor:inherit;
+transition:background-color .2s ease;
+}
+[data-vibeui-block="switch-004"] input:checked{background:var(--vibeui-switch-004-accent)}
+[data-vibeui-block="switch-004"] input:focus-visible{outline:2px solid var(--vibeui-switch-004-accent);outline-offset:2px}
+[data-vibeui-block="switch-004"] [data-part="thumb"]{
+position:absolute;left:0.1875rem;top:0.1875rem;
+display:grid;place-items:center;
+width:1.5rem;height:1.5rem;border-radius:9999px;pointer-events:none;
+background:var(--vibeui-switch-004-thumb);
+box-shadow:0 1px 3px oklch(0.2 0.02 265 / 30%);
+transition:transform .2s cubic-bezier(.32,.72,0,1);
+}
+[data-vibeui-block="switch-004"] input:checked + [data-part="thumb"]{transform:translateX(1.625rem)}
+/* Крест: две линии одного псевдоэлемента, повёрнутые в разные стороны. */
+[data-vibeui-block="switch-004"] [data-part="off-mark"]{
+position:relative;width:0.625rem;height:0.625rem;color:var(--vibeui-switch-004-muted);
+}
+[data-vibeui-block="switch-004"] [data-part="off-mark"]::before,
+[data-vibeui-block="switch-004"] [data-part="off-mark"]::after{
+content:"";position:absolute;left:50%;top:0;
+width:1.5px;height:100%;margin-left:-0.75px;background:currentColor;border-radius:1px;
+}
+[data-vibeui-block="switch-004"] [data-part="off-mark"]::before{transform:rotate(45deg)}
+[data-vibeui-block="switch-004"] [data-part="off-mark"]::after{transform:rotate(-45deg)}
+/* Галочка: угол квадрата, повёрнутый на 45°. */
+[data-vibeui-block="switch-004"] [data-part="on-mark"]{
+display:none;width:0.4375rem;height:0.6875rem;margin-top:-0.125rem;
+border-right:2px solid var(--vibeui-switch-004-accent);
+border-bottom:2px solid var(--vibeui-switch-004-accent);
+transform:rotate(45deg);
+}
+[data-vibeui-block="switch-004"] input:checked + [data-part="thumb"] [data-part="on-mark"]{display:block}
+[data-vibeui-block="switch-004"] input:checked + [data-part="thumb"] [data-part="off-mark"]{display:none}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="switch-004"] *{animation:none!important;transition:none!important}}
+`
+
+/**
+ * Переключатель со значками состояний в бегунке: галочка и крест на CSS.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Switch004({
+  label = "Приём заказов",
+  onText = "включён",
+  offText = "выключен",
+  accent,
+  defaultChecked = true,
+  className,
+  style,
+  ...props
+}: Switch004Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-switch-004-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-switch-004" precedence="medium">
+        {STYLES}
+      </style>
+      <label
+        data-vibeui-block="switch-004"
+        className={className}
+        style={palette}
+      >
+        <span data-part="text">
+          <span data-part="label">{label}</span>
+          <span data-part="state">
+            <span data-part="on-text">{onText}</span>
+            <span data-part="off-text">{offText}</span>
+          </span>
+        </span>
+        <span data-part="track">
+          <input
+            {...props}
+            type="checkbox"
+            role="switch"
+            defaultChecked={defaultChecked}
+          />
+          <span data-part="thumb" aria-hidden="true">
+            <span data-part="on-mark" />
+            <span data-part="off-mark" />
+          </span>
+        </span>
+      </label>
+    </>
+  )
+}
