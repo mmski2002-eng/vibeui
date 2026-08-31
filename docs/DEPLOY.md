@@ -187,7 +187,9 @@ curl -s https://<domain>/r/hero-001.json | head -c 120
 ## 7. Обновление
 
 ```bash
+set -e                       # без него рестарт случится и на упавшей сборке
 cd /srv/vibeui
+git checkout -- registry.json   # файл генерируется сборкой и мешает git pull
 git pull
 npm ci
 export REGISTRY_BASE_URL="https://<domain>/r"
@@ -196,6 +198,17 @@ cp -r public .next/standalone/public
 cp -r .next/static .next/standalone/.next/static
 sudo systemctl restart vibeui
 ```
+
+Три правила, купленные падением прода:
+
+- команды соединять через `set -e` или `&&`, но не через пайп в `grep`/`head`:
+  код возврата пайпа — это код **последней** команды, поэтому упавшая сборка
+  так не ловится, а сервис перезапускается на пустом `.next`;
+- не убивать зависшую сборку через `pkill -f "next build"`: шаблон совпадает
+  с собственной командной строкой ssh и убивает сам скрипт. Правильно —
+  `pgrep -f "[n]ext build" | xargs -r kill`;
+- «Another next build process is already running» означает застрявший lock:
+  лечится `rm -rf .next` перед сборкой, иначе сборки молча не будет.
 
 После обновления проверять не только код ответа, но и install-команду:
 
