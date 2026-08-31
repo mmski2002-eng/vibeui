@@ -110,6 +110,36 @@ export const LAZY_PREVIEWS = {
       (module) => module.Dashboard006,
     ),
   ),
+  "commerce-001": dynamic(() =>
+    import("@/registry/blocks/commerce/commerce-001/commerce-001").then(
+      (module) => module.Commerce001,
+    ),
+  ),
+  "commerce-002": dynamic(() =>
+    import("@/registry/blocks/commerce/commerce-002/commerce-002").then(
+      (module) => module.Commerce002,
+    ),
+  ),
+  "commerce-003": dynamic(() =>
+    import("@/registry/blocks/commerce/commerce-003/commerce-003").then(
+      (module) => module.Commerce003,
+    ),
+  ),
+  "commerce-004": dynamic(() =>
+    import("@/registry/blocks/commerce/commerce-004/commerce-004").then(
+      (module) => module.Commerce004,
+    ),
+  ),
+  "commerce-005": dynamic(() =>
+    import("@/registry/blocks/commerce/commerce-005/commerce-005").then(
+      (module) => module.Commerce005,
+    ),
+  ),
+  "commerce-006": dynamic(() =>
+    import("@/registry/blocks/commerce/commerce-006/commerce-006").then(
+      (module) => module.Commerce006,
+    ),
+  ),
   "button-001": dynamic(() =>
     import("@/registry/components/buttons/button-001/button-001").then(
       (module) => module.Button001,

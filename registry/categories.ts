@@ -40,6 +40,12 @@ export const CATEGORIES = [
   { slug: "footer", label: "Footer", group: "navigation" },
   { slug: "ai", label: "AI", group: "application" },
   { slug: "dashboard", label: "Dashboard", group: "data" },
+  { slug: "commerce", label: "Commerce", group: "commerce" },
+  { slug: "auth", label: "Auth", group: "application" },
+  { slug: "datagrid", label: "Data Grid", group: "data" },
+  { slug: "solutions", label: "Solutions", group: "application" },
+  { slug: "blog", label: "Blog", group: "marketing" },
+  { slug: "contact", label: "Contact", group: "marketing" },
   // Категории мелких компонентов. Появятся вместе с registry/components/*.
   { slug: "buttons", label: "Buttons", group: "application" },
   { slug: "accordion", label: "Accordion", group: "application" },

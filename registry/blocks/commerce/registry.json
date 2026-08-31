@@ -1,0 +1,634 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "commerce-001",
+      "type": "registry:block",
+      "title": "Product Grid",
+      "description": "Витрина товаров: карточка ведёт на товар, кнопка кладёт в корзину — два действия, которые нельзя объединять в одну цель.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-001/commerce-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-001-*. Серверный: хуков нет. Число колонок считается контейнерным запросом от ширины блока. Обложка нарисована градиентом по оттенку товара, поэтому блок не тянет чужие файлы. Кнопка корзины поднята над растянутой ссылкой через z-index.",
+      "meta": {
+        "tags": ["commerce", "product", "grid", "shop"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce001",
+          "usage": "<Commerce001 products={[{ title: \"Лампа\", price: \"4 900 ₽\", rating: 4.8 }]} />",
+          "summary": "Витрина товаров: карточки с обложкой, скидкой, рейтингом, ценой и кнопкой в корзину. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-001-* и не подменять её токенами вашей темы",
+            "две разные цели: карточка ведёт на товар, кнопка кладёт в корзину",
+            "тег s и подпись у старой цены — зачёркивание стилем вслух не читается",
+            "рейтинг числом рядом со звёздами: звёзды без цифры не дают точности",
+            "имя товара в подписи кнопки корзины — иначе в сетке неясно, что добавлено",
+            "контейнерные запросы вместо медиазапросов: витрина живёт и в узкой колонке"
+          ],
+          "adapt": [
+            "массив products и заголовок title",
+            "подпись кнопки cta",
+            "оттенок обложки через hue",
+            "число колонок в контейнерных запросах"
+          ],
+          "notes": [
+            "Обложка — градиент, а не картинка: подставьте свои изображения с той же пропорцией.",
+            "Скидку показывайте только со старой ценой: процент без базы ничего не значит.",
+            "Добавление в корзину не выполняется — обработчик за вызывающим кодом.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Хиты недели",
+            "maxLength": 28
+          },
+          {
+            "prop": "cta",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "В корзину",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A product grid: the card opens the product and the button adds to cart — two actions that must not share one target.",
+            "ai": {
+              "summary": "A product grid: cards with a cover, a discount badge, rating, price and an add-to-cart button. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-001-* palette — do not swap it for your theme tokens",
+                "the two distinct targets: the card opens the product, the button adds to cart",
+                "the s element and its label on the old price — a strike-through style is not read aloud",
+                "the rating as a number beside the stars: stars alone give no precision",
+                "the product name inside the cart button's label — otherwise the grid hides what was added",
+                "container queries instead of media queries: the grid survives a narrow column"
+              ],
+              "adapt": [
+                "the products array and the title",
+                "the cta label",
+                "the cover hue per product",
+                "the column counts in the container queries"
+              ],
+              "notes": [
+                "The cover is a gradient, not a photo: drop in your images at the same ratio.",
+                "Show a discount only alongside the old price: a percentage without a base means nothing.",
+                "Adding to cart does nothing here — the handler belongs to the caller.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce001 products={[{ title: \"Lamp\", price: \"$49\", rating: 4.8 }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "This week's picks"
+              },
+              "cta": {
+                "label": "Button",
+                "default": "Add to cart"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-002",
+      "type": "registry:block",
+      "title": "Product Detail",
+      "description": "Карточка товара: размеры радиокнопками, недоступный вариант остаётся видимым, срок доставки стоит рядом с кнопкой.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-002/commerce-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-002-*. Серверный: хуков нет, выбор размера держат радиокнопки. Раскладка на две колонки включается контейнерным запросом. Галерея нарисована градиентом, характеристики выведены списком определений.",
+      "meta": {
+        "tags": ["commerce", "product", "detail", "sizes"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce002",
+          "usage": "<Commerce002 title=\"Свитшот\" price=\"5 400 ₽\" sizes={[{ label: \"M\", value: \"m\", available: true }]} />",
+          "summary": "Страница товара: галерея, цена со старой, рейтинг, выбор размера, кнопки покупки и характеристики. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-002-* и не подменять её токенами вашей темы",
+            "радиокнопки под размеры: выбор одного варианта и клавиатуру держит браузер",
+            "видимый зачёркнутый недоступный размер — исчезнувший вариант ищут глазами",
+            "срок доставки рядом с кнопкой: решение принимают по нему",
+            "fieldset с legend вокруг размеров — вопрос объявляется до вариантов",
+            "характеристики списком определений, а не таблицей из div"
+          ],
+          "adapt": [
+            "brand, title, price, summary и delivery",
+            "массивы sizes и facts",
+            "подписи кнопок cta и secondary",
+            "оттенок галереи"
+          ],
+          "notes": [
+            "Галерея — заглушка: подставьте свои изображения, сохранив квадратную пропорцию.",
+            "Наличие размеров приходит пропом: проверка склада за вызывающим кодом.",
+            "Срок доставки должен быть настоящим: выдуманный обещает то, чего нет.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Товар",
+            "type": "text",
+            "default": "Свитшот «Тихий вечер»",
+            "maxLength": 32
+          },
+          {
+            "prop": "price",
+            "label": "Цена",
+            "type": "text",
+            "default": "5 400 ₽",
+            "maxLength": 16
+          },
+          {
+            "prop": "delivery",
+            "label": "Доставка",
+            "type": "text",
+            "default": "Доставка завтра, если заказать сегодня",
+            "maxLength": 44
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A product page: sizes as radios, the unavailable one still visible, and the delivery promise right beside the button.",
+            "ai": {
+              "summary": "A product page: gallery, price with the old one, rating, size choice, buy actions and specs. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-002-* palette — do not swap it for your theme tokens",
+                "radios for sizes: single selection and keyboard support come from the browser",
+                "keeping the unavailable size visible and struck through — a vanished option gets hunted for",
+                "the delivery promise beside the button: that is what the decision rests on",
+                "the fieldset and legend around the sizes — the question precedes the options",
+                "specs as a definition list rather than a table of divs"
+              ],
+              "adapt": [
+                "brand, title, price, summary and delivery",
+                "the sizes and facts arrays",
+                "the cta and secondary labels",
+                "the gallery hue"
+              ],
+              "notes": [
+                "The gallery is a placeholder: drop in your images keeping the square ratio.",
+                "Availability arrives as a prop: the stock check belongs to the caller.",
+                "The delivery promise must be real: an invented one promises what does not exist.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce002 title=\"Sweatshirt\" price=\"$54\" sizes={[{ label: \"M\", value: \"m\", available: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Product",
+                "default": "Quiet Evening sweatshirt"
+              },
+              "price": {
+                "label": "Price",
+                "default": "$54"
+              },
+              "delivery": {
+                "label": "Delivery",
+                "default": "Arrives tomorrow if ordered today"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-003",
+      "type": "registry:block",
+      "title": "Shopping Cart",
+      "description": "Корзина: итог считается из строк, а полоса до бесплатной доставки стоит над кнопкой — это причина добрать товар.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-003/commerce-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-003-*. Клиентский: \"use client\" ради количества и удаления. Сумма товаров, доставка и итог выводятся из массива строк, поэтому цифры не расходятся после правки. Полоса прогресса до бесплатной доставки исчезает при переходе порога.",
+      "meta": {
+        "tags": ["commerce", "cart", "checkout", "totals"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce003",
+          "usage": "<Commerce003 lines={[{ id: \"1\", title: \"Лампа\", price: 4900, count: 2 }]} freeFrom={15000} />",
+          "summary": "Корзина: строки с количеством и удалением, итог из строк, полоса до бесплатной доставки и кнопка оформления. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-003-* и не подменять её токенами вашей темы",
+            "расчёт итога из строк: отдельное число врёт после первой правки количества",
+            "имя товара в подписи удаления, а не «удалить»",
+            "полосу до бесплатной доставки над кнопкой и её исчезновение после порога",
+            "табличные цифры в суммах — колонка сумм должна читаться столбиком",
+            "внятное пустое состояние вместо пустой рамки"
+          ],
+          "adapt": [
+            "массив lines, shipping и freeFrom",
+            "подписи title и cta",
+            "акцент через проп accent",
+            "порог бесплатной доставки"
+          ],
+          "notes": [
+            "Цены хранятся числами, а не строками: иначе итог посчитать нечем.",
+            "Количество ограничено снизу единицей — обнуление делается удалением строки.",
+            "Промокоды и налоги не заложены: добавьте свои строки в блок итога.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Корзина",
+            "maxLength": 20
+          },
+          {
+            "prop": "freeFrom",
+            "label": "Бесплатно от",
+            "type": "number",
+            "default": 15000,
+            "min": 1000,
+            "max": 50000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A cart: the total is computed from the lines, and the free-shipping bar sits above the button — it is a reason to add more.",
+            "ai": {
+              "summary": "A cart: lines with quantity and removal, totals derived from the lines, a free-shipping bar and a checkout button. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-commerce-003-* palette — do not swap it for your theme tokens",
+                "computing totals from the lines: a stored number lies after the first quantity change",
+                "the product name inside the remove label rather than a bare \"remove\"",
+                "the free-shipping bar above the button and its disappearance past the threshold",
+                "tabular figures in the sums — the amount column must read as a column",
+                "a real empty state instead of an empty frame"
+              ],
+              "adapt": [
+                "the lines array, shipping and freeFrom",
+                "the title and cta labels",
+                "the accent through the accent prop",
+                "the free-shipping threshold"
+              ],
+              "notes": [
+                "Prices are numbers, not strings: otherwise there is nothing to total.",
+                "Quantity bottoms out at one — removing is done through the remove action.",
+                "Promo codes and taxes are not included: add your own rows to the totals block.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce003 lines={[{ id: \"1\", title: \"Lamp\", price: 4900, count: 2 }]} freeFrom={15000} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Cart"
+              },
+              "freeFrom": {
+                "label": "Free from"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-004",
+      "type": "registry:block",
+      "title": "Checkout Step",
+      "description": "Шаг оформления: способ доставки радиогруппой, итог рядом с формой, а кнопка оплаты подписана суммой.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-004/commerce-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-004.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-004-*. Серверный: хуков нет. Шаги помечены формой значка, способ доставки собран радиокнопками в fieldset, поля адреса разложены гридом с контейнерным запросом, итог вынесен в отдельную колонку рядом с формой.",
+      "meta": {
+        "tags": ["commerce", "checkout", "delivery", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce004",
+          "usage": "<Commerce004 total=\"14 690 ₽\" methods={[{ value: \"courier\", label: \"Курьером\", hint: \"490 ₽\" }]} />",
+          "summary": "Шаг оформления заказа: полоса шагов, выбор доставки, адрес и итог с кнопкой оплаты, подписанной суммой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-004-* и не подменять её токенами вашей темы",
+            "радиогруппу в fieldset под способ доставки: вопрос объявляется до вариантов",
+            "сумму в подписи кнопки — «Оплатить» без числа заставляет прокручивать назад",
+            "итог рядом с формой: на этом экране сумму сверяют чаще, чем читают поля",
+            "цену и срок в подписи способа, а не только его название",
+            "форму значка у шагов: пройденное с галочкой, текущее кольцом"
+          ],
+          "adapt": [
+            "массивы steps, methods и summary",
+            "total, cta и note",
+            "набор полей адреса",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Форма ничего не отправляет: обработчик submit добавляется в проекте.",
+            "Итоговая сумма приходит пропом — считайте её там же, где корзину, иначе цифры разойдутся.",
+            "Оплату картой этот блок не показывает: реквизиты требуют отдельного экрана и защиты.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "total",
+            "label": "К оплате",
+            "type": "text",
+            "default": "14 690 ₽",
+            "maxLength": 16
+          },
+          {
+            "prop": "cta",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Перейти к оплате",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A checkout step: delivery as a radio group, the summary beside the form and the pay button labelled with the amount.",
+            "ai": {
+              "summary": "A checkout step: a step bar, delivery choice, address fields and a summary whose pay button carries the amount. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-004-* palette — do not swap it for your theme tokens",
+                "the radio group inside a fieldset for delivery: the question precedes the options",
+                "the amount inside the button label — a bare \"Pay\" sends people scrolling back",
+                "the summary beside the form: here the total gets checked more often than the fields",
+                "the price and timing in each method's hint, not just its name",
+                "the badge shapes on the steps: done carries a tick, current a ring"
+              ],
+              "adapt": [
+                "the steps, methods and summary arrays",
+                "total, cta and note",
+                "the set of address fields",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The form submits nothing: add the submit handler in your project.",
+                "The total arrives as a prop — compute it where the cart lives or the figures will drift.",
+                "Card entry is deliberately absent: payment details need their own screen and protections.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce004 total=\"$146\" methods={[{ value: \"courier\", label: \"Courier\", hint: \"$5\" }]} />"
+            },
+            "controls": {
+              "total": {
+                "label": "Total",
+                "default": "$146"
+              },
+              "cta": {
+                "label": "Button",
+                "default": "Continue to payment"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-005",
+      "type": "registry:block",
+      "title": "Category Tiles",
+      "description": "Витрина категорий мозаикой: крупная плитка задаётся флагом в данных, а число товаров видно до перехода.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-005/commerce-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-005.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-005-*. Серверный: хуков нет. Сетка перестраивается контейнерными запросами, крупная плитка получает два столбца по флагу wide в данных. Ссылка растянута псевдоэлементом, а обводка фокуса ставится на плитку через :has().",
+      "meta": {
+        "tags": ["commerce", "category", "tiles", "navigation"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce005",
+          "usage": "<Commerce005 categories={[{ title: \"Свет\", count: \"128 товаров\", wide: true }]} />",
+          "summary": "Мозаика категорий: плитки с названием, числом товаров и пояснением, крупная плитка на два столбца. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-005-* и не подменять её токенами вашей темы",
+            "флаг wide в данных вместо ручной раскладки в CSS",
+            "число товаров в плитке: без него категория — просто картинка",
+            "растянутую ссылку и обводку фокуса на плитке через :has()",
+            "заголовок ссылкой, а не div с обработчиком — категория должна открываться в новой вкладке",
+            "контейнерные запросы вместо медиазапросов"
+          ],
+          "adapt": [
+            "массив categories и их оттенки",
+            "title и lead",
+            "минимальную высоту плитки",
+            "число колонок в запросах"
+          ],
+          "notes": [
+            "Фон плитки — градиент: подставляя фото, оставьте затемнение под текстом.",
+            "Число товаров должно обновляться вместе с каталогом — устаревшее хуже отсутствующего.",
+            "Больше восьми плиток не ставьте: мозаика перестаёт читаться как выбор.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Категории",
+            "maxLength": 24
+          },
+          {
+            "prop": "lead",
+            "label": "Подзаголовок",
+            "type": "text",
+            "default": "Каждая плитка ведёт в подборку — число товаров видно до перехода.",
+            "maxLength": 72
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A category mosaic: the wide tile is a flag in the data, and the item count is visible before the click.",
+            "ai": {
+              "summary": "A category mosaic: tiles with a name, an item count and a hint, one tile spanning two columns. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-005-* palette — do not swap it for your theme tokens",
+                "the wide flag in the data instead of a hand-built layout in CSS",
+                "the item count inside the tile: without it a category is just a picture",
+                "the stretched link and the focus ring on the tile via :has()",
+                "the heading as a link, not a div with a handler — a category must open in a new tab",
+                "container queries instead of media queries"
+              ],
+              "adapt": [
+                "the categories array and their hues",
+                "title and lead",
+                "the minimum tile height",
+                "the column counts in the queries"
+              ],
+              "notes": [
+                "The tile background is a gradient: if you swap in a photo, keep a scrim under the text.",
+                "Counts must track the catalog — a stale number is worse than none.",
+                "Do not go past eight tiles: the mosaic stops reading as a choice.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce005 categories={[{ title: \"Lighting\", count: \"128 items\", wide: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Categories"
+              },
+              "lead": {
+                "label": "Subheading",
+                "default": "Every tile opens a selection — the count is visible first."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "commerce-006",
+      "type": "registry:block",
+      "title": "Reviews Summary",
+      "description": "Отзывы с разбивкой по оценкам: доли считаются из массива, а пометка о покупке стоит у автора, а не под текстом.",
+      "categories": ["commerce"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "commerce-006/commerce-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/commerce-006.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-006-*. Серверный: хуков нет. Число оценок и доли полос считаются из массива spread, поэтому разбивка всегда сходится со средним. Оценка каждого отзыва продублирована числом, а полосы нарисованы фоном без библиотеки графиков.",
+      "meta": {
+        "tags": ["commerce", "reviews", "rating", "trust"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Commerce006",
+          "usage": "<Commerce006 average={4.7} spread={[142, 48, 14, 5, 4]} reviews={[{ author: \"Анна Р.\", date: \"12 марта\", rating: 5, text: \"…\" }]} />",
+          "summary": "Отзывы: средняя оценка, разбивка полосами по звёздам и карточки отзывов с пометкой о подтверждённой покупке. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-commerce-006-* и не подменять её токенами вашей темы",
+            "разбивку раньше отзывов: 4,7 из десяти оценок и из тысячи — разные вещи",
+            "расчёт долей из массива: заданные процентами, они перестают сходиться",
+            "пометку о покупке у автора — доверие решается до чтения текста",
+            "оценку числом рядом со звёздами в каждом отзыве",
+            "полосы фоном, а не библиотекой графиков"
+          ],
+          "adapt": [
+            "массивы reviews и spread",
+            "title, average, total и подпись cta",
+            "порядок и число отзывов",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Среднее приходит пропом: считайте его из тех же данных, что и разбивку.",
+            "Сортировка и фильтр отзывов не заложены — они требуют своего состояния.",
+            "Не показывайте только пятёрки: подборка без критики читается как реклама.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Отзывы",
+            "maxLength": 20
+          },
+          {
+            "prop": "average",
+            "label": "Средняя",
+            "type": "number",
+            "default": 4.7,
+            "min": 1,
+            "max": 5
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Reviews with a score breakdown: the shares are computed from the array, and the verified-purchase mark sits by the author.",
+            "ai": {
+              "summary": "Reviews: an average score, a star breakdown as bars and review cards with a verified-purchase mark. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-commerce-006-* palette — do not swap it for your theme tokens",
+                "the breakdown before the reviews: 4.7 from ten ratings and from a thousand differ",
+                "computing shares from the array: supplied as percentages they stop adding up",
+                "the purchase mark beside the author — trust is settled before the text is read",
+                "the numeric score next to the stars in every review",
+                "bars drawn as backgrounds rather than by a charting library"
+              ],
+              "adapt": [
+                "the reviews and spread arrays",
+                "title, average, total and the cta label",
+                "the order and number of reviews",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The average arrives as a prop: compute it from the same data as the breakdown.",
+                "Sorting and filtering are not included — they need their own state.",
+                "Do not show five-star reviews only: a selection without criticism reads as an ad.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Commerce006 average={4.7} spread={[142, 48, 14, 5, 4]} reviews={[{ author: \"Anna R.\", date: \"12 March\", rating: 5, text: \"…\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Reviews"
+              },
+              "average": {
+                "label": "Average"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

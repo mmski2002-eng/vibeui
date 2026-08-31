@@ -13,6 +13,7 @@ import ctaRegistry from "@/registry/blocks/cta/registry.json"
 import footerRegistry from "@/registry/blocks/footer/registry.json"
 import aiRegistry from "@/registry/blocks/ai/registry.json"
 import dashboardRegistry from "@/registry/blocks/dashboard/registry.json"
+import commerceRegistry from "@/registry/blocks/commerce/registry.json"
 import buttonsRegistry from "@/registry/components/buttons/registry.json"
 import accordionRegistry from "@/registry/components/accordion/registry.json"
 import alertRegistry from "@/registry/components/alert/registry.json"
@@ -93,6 +94,11 @@ export const SOURCES = [
     directory: "registry/blocks/dashboard",
     kind: "block",
     items: dashboardRegistry.items,
+  },
+  {
+    directory: "registry/blocks/commerce",
+    kind: "block",
+    items: commerceRegistry.items,
   },
   {
     directory: "registry/components/buttons",

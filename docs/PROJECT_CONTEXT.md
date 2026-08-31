@@ -289,13 +289,13 @@ Complete:
   темы проекта-хозяина, переменные без префикса `--vibeui-`, анимация без
   `prefers-reduced-motion`. Публикуемые `/r/*.json` при переходе не
   изменились ни на байт. Подробности — [PIPELINE.md](PIPELINE.md).
-- **Наполнение каталога волнами.** 265 items в 30 реестрах: компоненты —
+- **Наполнение каталога волнами.** 271 items в 31 реестре: компоненты —
   `buttons` (20), `accordion` (11), `alert` (20), `dialog` (14), `aspect` (8),
   `autocomplete` (12), `avatar` (12), `badge` (12), `breadcrumb` (12),
   `calendar` (10), `card` (10), `carousel` (8), `checkbox` (8), `menu` (8),
   `inputs` (22), `display` (15),
   `feedback` (11), `navigation` (12), `tables` (10), `charts` (11); блоки — `hero` (3), `features`, `pricing`, `navbar`, `cta`,
-  `faq`, `testimonials`, `footer`, `dashboard` (6), `ai` (3). Вместе с hero, features и pricing блоки
+  `faq`, `testimonials`, `footer`, `dashboard` (6), `ai` (3), `commerce` (6). Вместе с hero, features и pricing блоки
   собирают целый лендинг. Большинство items не несёт
   клиентского JS: раскрытие держат `details`, модалки и меню — HTML popover,
   графики считаются на сервере в SVG и разметке.
