@@ -176,8 +176,6 @@ export function Solutions030({
   const totalMinutes = operations.reduce((sum, op) => sum + op.normMinutes, 0)
   const grades = new Set(operations.map((op) => op.grade))
 
-  let running = 0
-
   const palette = {
     ...(accent ? { "--vibeui-solutions-030-accent": accent } : null),
     ...style,
@@ -219,8 +217,9 @@ export function Solutions030({
 
         <ol data-part="route">
           {operations.map((op, index) => {
-            running += op.normMinutes
-            const cumulative = running
+            const cumulative = operations
+              .slice(0, index + 1)
+              .reduce((sum, item) => sum + item.normMinutes, 0)
 
             return (
               <li data-part="step" key={`${op.name}-${index}`}>

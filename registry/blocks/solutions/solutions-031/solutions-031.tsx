@@ -239,7 +239,6 @@ export function Solutions031({
   const sortedCauses = [...causes].sort((a, b) => b.count - a.count)
   const causeTotal = sortedCauses.reduce((sum, cause) => sum + cause.count, 0)
   const maxCauseCount = Math.max(1, ...sortedCauses.map((cause) => cause.count))
-  let cumulativeCauses = 0
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-031-accent": accent } : null),
@@ -346,11 +345,13 @@ export function Solutions031({
           <div data-part="pareto">
             <h3>Причины брака (Парето)</h3>
             <ol data-part="causes">
-              {sortedCauses.map((cause) => {
+              {sortedCauses.map((cause, index) => {
                 const barWidth = Math.round((cause.count / maxCauseCount) * 100)
-                cumulativeCauses += cause.count
+                const runningCount = sortedCauses
+                  .slice(0, index + 1)
+                  .reduce((sum, item) => sum + item.count, 0)
                 const cumulativeShare = causeTotal
-                  ? (cumulativeCauses / causeTotal) * 100
+                  ? (runningCount / causeTotal) * 100
                   : 0
 
                 return (

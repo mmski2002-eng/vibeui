@@ -5,7 +5,6 @@ import type {
   ComponentPropsWithoutRef,
   CSSProperties,
   KeyboardEvent,
-  PointerEvent,
 } from "react"
 
 export type Resizable003Props = Omit<

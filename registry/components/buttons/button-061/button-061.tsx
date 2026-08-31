@@ -118,19 +118,30 @@ export function Button061({
   style,
   ...props
 }: Button061Props) {
-  const [seconds, setSeconds] = useState(0)
+  // В состоянии лежит отметка запуска вместе с числом секунд: сбрасывать
+  // счётчик отдельным вызовом из эффекта нельзя, а по паре видно, относится
+  // ли прошлое значение к текущему запуску.
+  const [tick, setTick] = useState<{ startedAt: number; seconds: number }>({
+    startedAt: 0,
+    seconds: 0,
+  })
 
   useEffect(() => {
     if (!running) return
 
-    setSeconds(0)
+    const startedAt = Date.now()
 
     const timer = window.setInterval(() => {
-      setSeconds((value) => value + 1)
+      setTick({
+        startedAt,
+        seconds: Math.round((Date.now() - startedAt) / 1000),
+      })
     }, 1000)
 
     return () => window.clearInterval(timer)
   }, [running])
+
+  const seconds = running ? tick.seconds : 0
 
   const slow = running && seconds >= slowAfter
 

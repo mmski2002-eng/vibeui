@@ -196,12 +196,13 @@ export function Dashboard026({
   style,
 }: Dashboard026Props) {
   const shades = sources.map((_, index) => 0.55 + index * 0.08)
-  let cursor = 0
   const ring = sources
     .map((source, index) => {
-      const from = cursor
-      cursor += source.share
-      return `oklch(${shades[index].toFixed(2)} 0.13 262) ${from}% ${cursor}%`
+      const from = sources
+        .slice(0, index)
+        .reduce((sum, item) => sum + item.share, 0)
+      const to = from + source.share
+      return `oklch(${shades[index].toFixed(2)} 0.13 262) ${from}% ${to}%`
     })
     .join(",")
 

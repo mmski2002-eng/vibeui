@@ -145,7 +145,10 @@ export function Combobox018({
   const id = useId()
   const [query, setQuery] = useState("")
   const [value, setValue] = useState(defaultValue)
-  const [state, setState] = useState<"idle" | "checking" | "ok" | "bad">("idle")
+  const [checked, setChecked] = useState<{
+    value: string
+    status: "ok" | "bad"
+  } | null>(null)
 
   const matches = useMemo(() => {
     const needle = query.trim().toLowerCase()
@@ -154,25 +157,27 @@ export function Combobox018({
   }, [query, options])
 
   // Проверка живёт в эффекте с очисткой: быстрый перебор вариантов не должен
-  // оставлять хвост из старых ответов, побеждает последний выбор.
+  // оставлять хвост из старых ответов, побеждает последний выбор. В состоянии
+  // лежит только ответ вместе со значением, для которого он получен, —
+  // «проверяется» и «пусто» выводятся из пропсов, а не досылаются эффектом.
   useEffect(() => {
-    if (!value) {
-      setState("idle")
-
-      return
-    }
-
-    setState("checking")
+    if (!value) return
 
     const timer = setTimeout(() => {
       const left = stock[value] ?? 0
 
-      setState(left > 0 ? "ok" : "bad")
+      setChecked({ value, status: left > 0 ? "ok" : "bad" })
       onSelect?.(value, left > 0)
     }, delay)
 
     return () => clearTimeout(timer)
   }, [value, delay, stock, onSelect])
+
+  const state = !value
+    ? "idle"
+    : checked?.value === value
+      ? checked.status
+      : "checking"
 
   const left = stock[value] ?? 0
 

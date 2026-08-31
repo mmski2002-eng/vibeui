@@ -16,6 +16,8 @@ import dashboardRegistry from "@/registry/blocks/dashboard/registry.json"
 import commerceRegistry from "@/registry/blocks/commerce/registry.json"
 import authRegistry from "@/registry/blocks/auth/registry.json"
 import solutionsRegistry from "@/registry/blocks/solutions/registry.json"
+import blogRegistry from "@/registry/blocks/blog/registry.json"
+import contactRegistry from "@/registry/blocks/contact/registry.json"
 import datagridRegistry from "@/registry/components/datagrid/registry.json"
 import buttonsRegistry from "@/registry/components/buttons/registry.json"
 import accordionRegistry from "@/registry/components/accordion/registry.json"
@@ -34,6 +36,12 @@ import carouselRegistry from "@/registry/components/carousel/registry.json"
 import checkboxRegistry from "@/registry/components/checkbox/registry.json"
 import codeblockRegistry from "@/registry/components/codeblock/registry.json"
 import comboboxRegistry from "@/registry/components/combobox/registry.json"
+import labelRegistry from "@/registry/components/label/registry.json"
+import nativeselectRegistry from "@/registry/components/nativeselect/registry.json"
+import phoneinputRegistry from "@/registry/components/phoneinput/registry.json"
+import resizableRegistry from "@/registry/components/resizable/registry.json"
+import toggleRegistry from "@/registry/components/toggle/registry.json"
+import togglegroupRegistry from "@/registry/components/togglegroup/registry.json"
 import eventcalendarRegistry from "@/registry/components/eventcalendar/registry.json"
 import menuRegistry from "@/registry/components/menu/registry.json"
 import inputsRegistry from "@/registry/components/inputs/registry.json"
@@ -117,6 +125,16 @@ export const SOURCES = [
     directory: "registry/blocks/solutions",
     kind: "block",
     items: solutionsRegistry.items,
+  },
+  {
+    directory: "registry/blocks/blog",
+    kind: "block",
+    items: blogRegistry.items,
+  },
+  {
+    directory: "registry/blocks/contact",
+    kind: "block",
+    items: contactRegistry.items,
   },
   {
     directory: "registry/components/datagrid",
@@ -207,6 +225,36 @@ export const SOURCES = [
     directory: "registry/components/combobox",
     kind: "component",
     items: comboboxRegistry.items,
+  },
+  {
+    directory: "registry/components/label",
+    kind: "component",
+    items: labelRegistry.items,
+  },
+  {
+    directory: "registry/components/nativeselect",
+    kind: "component",
+    items: nativeselectRegistry.items,
+  },
+  {
+    directory: "registry/components/phoneinput",
+    kind: "component",
+    items: phoneinputRegistry.items,
+  },
+  {
+    directory: "registry/components/resizable",
+    kind: "component",
+    items: resizableRegistry.items,
+  },
+  {
+    directory: "registry/components/toggle",
+    kind: "component",
+    items: toggleRegistry.items,
+  },
+  {
+    directory: "registry/components/togglegroup",
+    kind: "component",
+    items: togglegroupRegistry.items,
   },
   {
     directory: "registry/components/eventcalendar",

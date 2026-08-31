@@ -128,16 +128,6 @@ export function Resizable002({
     onChange?.([next[0], next[1] - next[0], 100 - next[1]])
   }
 
-  const dragTo = (index: number, event: PointerEvent<HTMLDivElement>) => {
-    const box = frame.current?.getBoundingClientRect()
-
-    if (!box || box.width === 0) {
-      return
-    }
-
-    apply(index, ((event.clientX - box.left) / box.width) * 100)
-  }
-
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>, index: number) => {
     const { low, high } = limits(index)
 
@@ -175,10 +165,16 @@ export function Resizable002({
       event.currentTarget.setPointerCapture(event.pointerId)
       setDragging(index)
     },
+    // Рамку меряем прямо в обработчике: ref читается вне рендера, иначе
+    // React не гарантирует, что значение соответствует показанной разметке.
     onPointerMove: (event: PointerEvent<HTMLDivElement>) => {
-      if (dragging === index) {
-        dragTo(index, event)
-      }
+      if (dragging !== index) return
+
+      const box = frame.current?.getBoundingClientRect()
+
+      if (!box || box.width === 0) return
+
+      apply(index, ((event.clientX - box.left) / box.width) * 100)
     },
     onPointerUp: (event: PointerEvent<HTMLDivElement>) => {
       event.currentTarget.releasePointerCapture(event.pointerId)
