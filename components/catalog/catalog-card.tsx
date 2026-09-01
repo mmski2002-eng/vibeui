@@ -1,10 +1,10 @@
 import { CardInteractive } from "@/components/catalog/card-interactive"
 import { CatalogThumbnail } from "@/components/catalog/catalog-thumbnail"
+import { pickCardControls } from "@/lib/card-controls"
 import { getControls } from "@/lib/controls"
 import { localePath, type Locale } from "@/lib/i18n"
 import { localizeItem } from "@/lib/localize"
 import { getInstallCommand, getItemDocUrl } from "@/lib/site"
-import { getCategoryLabel } from "@/registry/index"
 import type { CatalogItem } from "@/registry/meta"
 
 /**
@@ -22,7 +22,9 @@ export function CatalogCard({
   locale: Locale
 }) {
   const localized = localizeItem(item, locale)
-  const category = localized.categories?.[0]
+  // Английское имя показывается рядом с русским: по нему компонент ищут в
+  // чужих библиотеках и по нему же его называет агент.
+  const englishTitle = locale === "ru" ? item.meta?.i18n?.en?.title : undefined
 
   return (
     // Кадр превью не ведёт на страницу item'а: внутри живой компонент, и
@@ -32,15 +34,22 @@ export function CatalogCard({
       <CardInteractive
         name={localized.name}
         controls={getControls(localized)}
+        cardControls={pickCardControls(
+          getControls(localized),
+          localized.meta?.cardControls,
+        )}
         full={localized.meta?.preview?.width === "full"}
+        previewProps={localized.meta?.preview?.props}
         locale={locale}
         docUrl={getItemDocUrl(localized.name)}
         itemUrl={localePath(locale, `/components/${localized.name}`)}
         title={localized.title ?? localized.name}
-        categoryLabel={category ? getCategoryLabel(category) : null}
+        englishTitle={
+          englishTitle && englishTitle !== localized.title ? englishTitle : null
+        }
         installCommand={getInstallCommand(localized.name)}
       >
-        <CatalogThumbnail slug={localized.name} />
+        <CatalogThumbnail slug={localized.name} locale={locale} />
       </CardInteractive>
     </article>
   )

@@ -297,6 +297,54 @@ function validateSource(where, directory, item) {
   }
 }
 
+/**
+ * Значки настроек в шапке карточки. Кнопка одна на контрол и крутит значение
+ * по кругу, поэтому текст сюда не годится, а числу нужны обе границы —
+ * иначе круг не замкнуть.
+ */
+function validateCardControls(where, item, controls) {
+  const card = item.meta?.cardControls
+
+  if (card === undefined) {
+    return
+  }
+
+  if (!Array.isArray(card)) {
+    errors.push(`${where}: meta.cardControls должен быть массивом`)
+    return
+  }
+
+  // Пять значков плюс сброс и подложка — это семь кнопок в строке. Больше
+  // не влезает в самую узкую карточку сетки.
+  if (card.length > 5) {
+    errors.push(
+      `${where}: в шапке карточки ${card.length} значков, помещается не больше 5`,
+    )
+  }
+
+  for (const prop of card) {
+    const control = controls.find((entry) => entry.prop === prop)
+
+    if (!control) {
+      errors.push(
+        `${where}: cardControls ссылается на ${prop} вне meta.controls`,
+      )
+      continue
+    }
+
+    if (control.type === "text") {
+      errors.push(`${where}: текстовый контрол ${prop} не крутится кнопкой`)
+    }
+
+    if (
+      control.type === "number" &&
+      (control.min === undefined || control.max === undefined)
+    ) {
+      errors.push(`${where}: у числового ${prop} на карточке нужны min и max`)
+    }
+  }
+}
+
 function validateItem(file, item, { requireApi }) {
   const where = `${path.relative(process.cwd(), file)} → ${item.name}`
   const ai = item.meta?.ai
@@ -326,6 +374,8 @@ function validateItem(file, item, { requireApi }) {
   }
 
   const seen = new Set()
+
+  validateCardControls(where, item, controls)
 
   for (const control of controls) {
     validateControl(where, control, seen)
