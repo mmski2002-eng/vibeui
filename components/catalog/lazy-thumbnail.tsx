@@ -1,8 +1,16 @@
 "use client"
 
-import { useEffect, useRef, useState, type CSSProperties } from "react"
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ComponentType,
+  type CSSProperties,
+} from "react"
 
-import { LAZY_PREVIEWS } from "@/registry/previews.lazy"
+import { loadLazyPreviewMap } from "@/registry/preview-loaders-lazy"
+import type { ItemKind } from "@/registry/categories"
+import type { PreviewProps } from "@/registry/preview-types"
 
 const SECTION_WIDTH = 1280
 
@@ -25,17 +33,23 @@ const SECTION_WIDTH = 1280
  */
 export function LazyThumbnail({
   slug,
+  kind,
+  category,
   compact,
   full,
   props,
 }: {
   slug: string
+  kind: ItemKind
+  category: string
   compact: boolean
   full: boolean
   props?: Record<string, unknown>
 }) {
   const frameRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
+  const [Preview, setPreview] =
+    useState<ComponentType<PreviewProps> | null>(null)
 
   useEffect(() => {
     const frame = frameRef.current
@@ -61,7 +75,24 @@ export function LazyThumbnail({
     return () => observer.disconnect()
   }, [])
 
-  const Preview = LAZY_PREVIEWS[slug]
+  useEffect(() => {
+    if (!visible) {
+      return
+    }
+
+    let cancelled = false
+
+    loadLazyPreviewMap(kind, category).then((map) => {
+      if (!cancelled) {
+        setPreview(() => map?.[slug] ?? null)
+      }
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [category, kind, slug, visible])
+
   const content = visible && Preview ? <Preview {...(props ?? {})} /> : null
 
   if (compact) {

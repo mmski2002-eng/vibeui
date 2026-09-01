@@ -16,6 +16,7 @@ import {
   type PreviewTheme,
 } from "@/lib/controls"
 import { getDictionary, type Locale } from "@/lib/i18n"
+import type { ItemKind } from "@/registry/categories"
 import type { CatalogItem } from "@/registry/meta"
 
 /**
@@ -25,6 +26,8 @@ import type { CatalogItem } from "@/registry/meta"
  */
 export function ItemWorkbench({
   item,
+  kind,
+  category,
   locale,
   docUrl,
   fullPrompt,
@@ -33,6 +36,8 @@ export function ItemWorkbench({
   initialValues,
 }: {
   item: CatalogItem
+  kind: ItemKind
+  category: string
   locale: Locale
   docUrl: string | null
   fullPrompt: string
@@ -69,6 +74,8 @@ export function ItemWorkbench({
         <BlockPreview
           locale={locale}
           slug={item.name}
+          kind={kind}
+          category={category}
           compact={compact}
           theme={theme}
           onThemeChange={setTheme}
@@ -105,6 +112,8 @@ export function ItemWorkbench({
             <div className="bg-preview-surface flex min-h-32 items-center justify-center p-6">
               <ConfigurablePreview
                 slug={item.name}
+                kind={kind}
+                category={category}
                 full={item.meta?.preview?.width === "full"}
                 controls={controls}
                 values={values}

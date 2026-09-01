@@ -1,11 +1,13 @@
 "use client"
 
-import { useId } from "react"
+import { useEffect, useId, useState, type ComponentType } from "react"
 
 import { type ControlValues } from "@/lib/controls"
 import { getDictionary, type Locale } from "@/lib/i18n"
+import { loadLazyPreviewMap } from "@/registry/preview-loaders-lazy"
+import type { ItemKind } from "@/registry/categories"
 import type { ItemControl } from "@/registry/meta"
-import { LAZY_PREVIEWS } from "@/registry/previews.lazy"
+import type { PreviewProps } from "@/registry/preview-types"
 
 /**
  * Пустой цвет означает «не переопределять»: проп не передаётся вовсе, чтобы
@@ -127,12 +129,16 @@ function Control({
 /** Живое превью с выбранными значениями. Пропсы, не исходник. */
 export function ConfigurablePreview({
   slug,
+  kind,
+  category,
   full,
   controls,
   values,
   previewProps,
 }: {
   slug: string
+  kind: ItemKind
+  category: string
   // Та же оговорка, что и в миниатюре: ширину объявляет сам item.
   full: boolean
   controls: ItemControl[]
@@ -140,7 +146,22 @@ export function ConfigurablePreview({
   /** Демо-содержимое витрины: под ним лежат дефолты компонента, поверх — контролы. */
   previewProps?: Record<string, unknown>
 }) {
-  const Preview = LAZY_PREVIEWS[slug]
+  const [Preview, setPreview] =
+    useState<ComponentType<PreviewProps> | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+
+    loadLazyPreviewMap(kind, category).then((map) => {
+      if (!cancelled) {
+        setPreview(() => map?.[slug] ?? null)
+      }
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [category, kind, slug])
 
   if (!Preview) {
     return null

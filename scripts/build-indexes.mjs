@@ -1,4 +1,10 @@
-import { readFileSync, readdirSync, writeFileSync, existsSync } from "node:fs"
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  writeFileSync,
+} from "node:fs"
 import path from "node:path"
 import prettier from "prettier"
 
@@ -139,7 +145,13 @@ function previewOf(registry, item) {
     )
   }
 
-  return { slug: item.name, modulePath, symbol }
+  return {
+    slug: item.name,
+    modulePath,
+    symbol,
+    kind: registry.kind,
+    category: registry.category,
+  }
 }
 
 function collectPreviews(registries) {
@@ -150,6 +162,7 @@ function collectPreviews(registries) {
   )
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function renderPreviews(previews) {
   const imports = previews
     .map(
@@ -179,6 +192,7 @@ ${entries}
 `
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function renderLazyPreviews(previews) {
   const entries = previews
     .map(
@@ -211,6 +225,110 @@ export type PreviewProps = Record<string, unknown>
 export const LAZY_PREVIEWS = {
 ${entries}
 } as unknown as Record<string, ComponentType<PreviewProps>>
+`
+}
+
+function renderPreviewTypes() {
+  return `${GENERATED_HEADER}
+import type { ComponentType } from "react"
+
+export type PreviewProps = Record<string, unknown>
+export type PreviewMap = Record<string, ComponentType<PreviewProps>>
+export type PreviewMapModule = {
+  PREVIEWS: PreviewMap
+}
+`
+}
+
+function renderCategoryPreviews(registry) {
+  const previews = registry.items
+    .filter((item) => !item.meta?.internal)
+    .map((item) => previewOf(registry, item))
+
+  const imports = previews
+    .map(
+      (preview) => `import { ${preview.symbol} } from "${preview.modulePath}"`,
+    )
+    .join("\n")
+
+  const entries = previews
+    .map((preview) => `  "${preview.slug}": ${preview.symbol},`)
+    .join("\n")
+
+  return `${GENERATED_HEADER}
+import type { ComponentType } from "react"
+
+import type { PreviewProps } from "@/registry/preview-types"
+
+${imports}
+
+export const PREVIEWS = {
+${entries}
+} satisfies Record<string, ComponentType<PreviewProps>>
+`
+}
+
+function renderLazyCategoryPreviews(registry) {
+  const previews = registry.items
+    .filter((item) => !item.meta?.internal)
+    .map((item) => previewOf(registry, item))
+
+  const entries = previews
+    .map(
+      (preview) => `  "${preview.slug}": dynamic(() =>
+    import("${preview.modulePath}").then((module) => module.${preview.symbol}),
+  ),`,
+    )
+    .join("\n")
+
+  return `${GENERATED_HEADER}
+import dynamic from "next/dynamic"
+
+import type { PreviewMap } from "@/registry/preview-types"
+
+export const PREVIEWS = {
+${entries}
+} satisfies PreviewMap
+`
+}
+
+function renderPreviewLoaders(registries, lazy) {
+  const cases = registries
+    .filter((registry) => registry.items.some((item) => !item.meta?.internal))
+    .map((registry) => {
+      const pathPrefix = lazy ? "previews-lazy" : "previews"
+      return `    case "${registry.kind}/${registry.category}":
+      return (await import("@/registry/${pathPrefix}/${registry.kind}/${registry.category}")).PREVIEWS`
+    })
+    .join("\n")
+
+  const functionName = lazy ? "loadLazyPreviewMap" : "loadPreviewMap"
+
+  return `${GENERATED_HEADER}
+import type { ItemKind } from "@/registry/categories"
+import type { PreviewMap } from "@/registry/preview-types"
+
+export async function ${functionName}(
+  kind: ItemKind,
+  category: string,
+): Promise<PreviewMap | null> {
+  switch (\`\${kind}/\${category}\`) {
+${cases}
+    default:
+      return null
+  }
+}
+`
+}
+
+function renderLegacyPreviews(lazy) {
+  const exported = lazy ? "loadLazyPreviewMap" : "loadPreviewMap"
+  const targetModule = lazy
+    ? "@/registry/preview-loaders-lazy"
+    : "@/registry/preview-loaders"
+
+  return `${GENERATED_HEADER}
+export { ${exported} } from "${targetModule}"
 `
 }
 
@@ -288,6 +406,7 @@ function renderRootRegistry(registries) {
 
 async function emit(relativePath, contents) {
   const target = path.join(ROOT, relativePath)
+  mkdirSync(path.dirname(target), { recursive: true })
   const options = await prettier.resolveConfig(target)
   const formatted = await prettier.format(contents, {
     ...options,
@@ -314,8 +433,30 @@ const previews = collectPreviews(registries)
 
 const changed = [
   await emit("registry/sources.ts", renderSources(registries)),
-  await emit("registry/previews.ts", renderPreviews(previews)),
-  await emit("registry/previews.lazy.ts", renderLazyPreviews(previews)),
+  await emit("registry/preview-types.ts", renderPreviewTypes()),
+  await emit("registry/preview-loaders.ts", renderPreviewLoaders(registries)),
+  await emit(
+    "registry/preview-loaders-lazy.ts",
+    renderPreviewLoaders(registries, true),
+  ),
+  await emit("registry/previews.ts", renderLegacyPreviews()),
+  await emit("registry/previews.lazy.ts", renderLegacyPreviews(true)),
+  ...(await Promise.all(
+    registries.map((registry) =>
+      emit(
+        `registry/previews/${registry.kind}/${registry.category}.ts`,
+        renderCategoryPreviews(registry),
+      ),
+    ),
+  )),
+  ...(await Promise.all(
+    registries.map((registry) =>
+      emit(
+        `registry/previews-lazy/${registry.kind}/${registry.category}.ts`,
+        renderLazyCategoryPreviews(registry),
+      ),
+    ),
+  )),
   await emit("registry.json", renderRootRegistry(registries)),
 ].some(Boolean)
 

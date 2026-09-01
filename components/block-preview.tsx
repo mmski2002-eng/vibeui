@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 
 import { getDictionary, type Locale } from "@/lib/i18n"
+import type { ItemKind } from "@/registry/categories"
 
 const VIEWPORTS = [
   { id: "desktop", width: 1440 },
@@ -29,12 +30,16 @@ const NARROW_CONTAINER = 700
 // и переносится сюда ссылкой, иначе переход сбрасывал бы выбор пользователя.
 export function BlockPreview({
   slug,
+  kind,
+  category,
   compact = false,
   theme,
   locale,
   onThemeChange,
 }: {
   slug: string
+  kind: ItemKind
+  category: string
   compact?: boolean
   theme: HostTheme
   locale: Locale
@@ -75,6 +80,7 @@ export function BlockPreview({
   const scale =
     containerWidth === null ? null : Math.min(1, containerWidth / frameWidth)
   const measured = scale !== null
+  const previewPath = `/preview/${kind}/${category}/${slug}`
 
   return (
     <div>
@@ -134,7 +140,7 @@ export function BlockPreview({
         >
           <iframe
             title={`Preview of ${slug}`}
-            src={`/preview/${slug}?theme=${theme}&lang=${locale}`}
+            src={`${previewPath}?theme=${theme}&lang=${locale}`}
             width={frameWidth}
             height={frameHeight}
             className={

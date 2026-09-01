@@ -18,6 +18,7 @@ import {
   type PreviewTheme,
 } from "@/lib/controls"
 import { getDictionary, type Locale } from "@/lib/i18n"
+import type { ItemKind } from "@/registry/categories"
 import type { ItemControl } from "@/registry/meta"
 
 // Код компонента и панель контролов грузятся только по первому клику: пока
@@ -48,6 +49,8 @@ const TOGGLE =
  */
 export function CardInteractive({
   name,
+  kind,
+  category,
   controls,
   cardControls,
   full,
@@ -61,6 +64,8 @@ export function CardInteractive({
   children,
 }: {
   name: string
+  kind: ItemKind
+  category: string
   /** Контролы, а не item целиком: metadata сотен items не должна ехать в
       разметку витрины (см. lib/controls.ts). */
   controls: ItemControl[]
@@ -215,6 +220,8 @@ export function CardInteractive({
           <div className="bg-preview-surface flex min-h-32 flex-1 items-center justify-center overflow-hidden p-6">
             <ConfigurablePreview
               slug={name}
+              kind={kind}
+              category={category}
               full={full}
               controls={controls}
               values={values}

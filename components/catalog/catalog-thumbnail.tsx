@@ -34,11 +34,19 @@ export function CatalogThumbnail({
 }) {
   const item = getCatalogItem(slug)
   const preview = item ? localizeItem(item, locale).meta?.preview : undefined
+  const kind = getItemKind(slug)
+  const category = item?.categories?.[0]
+
+  if (!item || !kind || !category) {
+    return null
+  }
 
   return (
     <LazyThumbnail
       slug={slug}
-      compact={getItemKind(slug) === "component"}
+      kind={kind}
+      category={category}
+      compact={kind === "component"}
       // Компоненту, которому нужна настоящая ширина строки, её надо дать:
       // во flex-кадре он иначе схлопывается по содержимому и врёт про дизайн.
       full={preview?.width === "full"}

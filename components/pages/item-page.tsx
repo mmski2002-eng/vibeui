@@ -129,6 +129,8 @@ export async function ItemPage({
 
           <ItemWorkbench
             item={block}
+            kind={kind}
+            category={category ?? ""}
             locale={locale}
             docUrl={docUrl}
             fullPrompt={aiPrompt}
