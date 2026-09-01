@@ -1,0 +1,66 @@
+name: deploy
+
+# Сборка уехала с VPS в runner: на сервере одно ядро, 1 ГБ памяти и занятый
+# своп, там next build занимал десятки минут. Runner собирает Linux-релиз,
+# сервер только распаковывает его и переключает симлинк.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+env:
+  DEPLOY_HOST: 216.173.70.241
+  DEPLOY_USER: root
+  REGISTRY_BASE_URL: https://vibeui.ru/r
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Та же мажорная версия, что и на сервере: standalone не несёт свой node.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      - run: npm run typecheck
+
+      - run: npm run build
+
+      # Standalone не копирует статику сам.
+      - name: Собрать релиз
+        run: |
+          mkdir -p release
+          cp -a .next/standalone/. release/
+          mkdir -p release/.next
+          cp -a .next/static release/.next/static
+          cp -a public release/public
+          tar -czf release.tar.gz -C release .
+
+      - name: Ключ и known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+
+      - name: Залить и переключить релиз
+        run: |
+          scp release.tar.gz "$DEPLOY_USER@$DEPLOY_HOST:/tmp/vibeui-release.tar.gz"
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" 'bash -s' < scripts/deploy-remote.sh
+
+      - name: Проверить живой сайт
+        run: |
+          curl -fsS -o /dev/null -w 'components %{http_code}\n' https://vibeui.ru/components
+          curl -fsS https://vibeui.ru/c/hero-001 | grep -q "npx shadcn"
