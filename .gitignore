@@ -41,8 +41,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# omc
-/.omc/
+# omc: состояние пишется и во вложенных папках, поэтому шаблон не якорим
+.omc/
 
 # shadcn registry build output
 /public/r/
