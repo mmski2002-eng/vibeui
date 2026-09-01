@@ -23,10 +23,10 @@ const STYLES = `
 --vibeui-avatar-004-gap:0.125rem;
 --vibeui-avatar-004-value:0deg;
 --vibeui-avatar-004-hue:250;
---vibeui-avatar-004-bg:oklch(0.92 0.05 var(--vibeui-avatar-004-hue));
---vibeui-avatar-004-fg:oklch(0.38 0.09 var(--vibeui-avatar-004-hue));
---vibeui-avatar-004-track:oklch(0.9 0.006 265);
---vibeui-avatar-004-accent:oklch(0.62 0.17 265);
+--vibeui-avatar-004-bg:light-dark(oklch(0.92 0.05 var(--vibeui-avatar-004-hue)),oklch(0.34 0.065 var(--vibeui-avatar-004-hue)));
+--vibeui-avatar-004-fg:light-dark(oklch(0.38 0.09 var(--vibeui-avatar-004-hue)),oklch(0.88 0.063 var(--vibeui-avatar-004-hue)));
+--vibeui-avatar-004-track:light-dark(oklch(0.9 0.006 265),oklch(0.3 0.01 265));
+--vibeui-avatar-004-accent:light-dark(oklch(0.62 0.17 265),oklch(0.76 0.17 265));
 --vibeui-avatar-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-004"]{

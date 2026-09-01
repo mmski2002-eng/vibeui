@@ -17,10 +17,11 @@ export type Avatar011Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="avatar-011"]){
 --vibeui-avatar-011-size:2.75rem;
---vibeui-avatar-011-accent:oklch(0.55 0.13 255);
---vibeui-avatar-011-bg:color-mix(in oklab,var(--vibeui-avatar-011-accent) 16%,oklch(1 0 0));
---vibeui-avatar-011-fg:color-mix(in oklab,var(--vibeui-avatar-011-accent) 75%,oklch(0.2 0.02 265));
---vibeui-avatar-011-border:color-mix(in oklab,var(--vibeui-avatar-011-accent) 28%,oklch(1 0 0));
+--vibeui-avatar-011-accent:light-dark(oklch(0.55 0.13 255),oklch(0.69 0.13 255));
+--vibeui-avatar-011-surface:light-dark(oklch(1 0 0),oklch(0.2 0.01 265));
+--vibeui-avatar-011-bg:color-mix(in oklab,var(--vibeui-avatar-011-accent) 16%,var(--vibeui-avatar-011-surface));
+--vibeui-avatar-011-fg:color-mix(in oklab,var(--vibeui-avatar-011-accent) 75%,light-dark(oklch(0.2 0.02 265),oklch(0.96 0.01 265)));
+--vibeui-avatar-011-border:color-mix(in oklab,var(--vibeui-avatar-011-accent) 28%,var(--vibeui-avatar-011-surface));
 --vibeui-avatar-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-011"]{

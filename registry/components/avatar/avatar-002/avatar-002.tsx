@@ -17,9 +17,9 @@ const STYLES = `
 :where([data-vibeui-block="avatar-002"]){
 --vibeui-avatar-002-size:3rem;
 --vibeui-avatar-002-hue:250;
---vibeui-avatar-002-bg:oklch(0.92 0.05 var(--vibeui-avatar-002-hue));
---vibeui-avatar-002-fg:oklch(0.38 0.09 var(--vibeui-avatar-002-hue));
---vibeui-avatar-002-ring:oklch(1 0 0 / 65%);
+--vibeui-avatar-002-bg:light-dark(oklch(0.92 0.05 var(--vibeui-avatar-002-hue)),oklch(0.34 0.065 var(--vibeui-avatar-002-hue)));
+--vibeui-avatar-002-fg:light-dark(oklch(0.38 0.09 var(--vibeui-avatar-002-hue)),oklch(0.88 0.063 var(--vibeui-avatar-002-hue)));
+--vibeui-avatar-002-ring:light-dark(oklch(1 0 0 / 65%),oklch(0.19 0.01 265 / 65%));
 --vibeui-avatar-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-002"]{

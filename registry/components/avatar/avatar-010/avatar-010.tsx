@@ -13,12 +13,11 @@ export type Avatar010Props = Omit<
 // приглашённый по ссылке отличаются не только цветом: у каждого свой знак и
 // своя подпись для скринридера. Пунктирная граница у приглашённого говорит,
 // что место занято, но ещё пусто — сплошной круг обещал бы живого человека.
-const STYLES = `
-:where([data-vibeui-block="avatar-010"]){
+const STYLES = `:where([data-vibeui-block="avatar-010"]){
 --vibeui-avatar-010-size:2.75rem;
---vibeui-avatar-010-bg:oklch(0.95 0.004 265);
---vibeui-avatar-010-fg:oklch(0.58 0.014 265);
---vibeui-avatar-010-border:oklch(0.86 0.008 265);
+--vibeui-avatar-010-bg:light-dark(oklch(0.95 0.004 265),oklch(0.3 0.006 265));
+--vibeui-avatar-010-fg:light-dark(oklch(0.58 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-010-border:light-dark(oklch(0.86 0.008 265),oklch(0.31 0.013 265));
 --vibeui-avatar-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-010"]{
@@ -35,7 +34,7 @@ user-select:none;
 [data-vibeui-block="avatar-010"][data-size="lg"]{--vibeui-avatar-010-size:3.5rem}
 /* Пунктир у приглашённого: место занято, но человека там ещё нет. */
 [data-vibeui-block="avatar-010"][data-reason="invited"]{border-style:dashed;background:transparent}
-[data-vibeui-block="avatar-010"][data-reason="deleted"]{--vibeui-avatar-010-fg:oklch(0.64 0.012 265)}
+[data-vibeui-block="avatar-010"][data-reason="deleted"]{--vibeui-avatar-010-fg:light-dark(oklch(0.64 0.012 265),oklch(0.66 0.012 265))}
 /* Силуэт анонима: голова и плечи двумя фигурами, без иконочного пакета. */
 [data-vibeui-block="avatar-010"] [data-part="bust"]{
 position:relative;

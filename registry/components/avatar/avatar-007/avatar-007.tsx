@@ -6,28 +6,31 @@ export type Avatar007Props = Omit<
 > & {
   name?: string
   role?: string
+  /** Подписи состояний: компонент несёт русские, проект подставляет свои. */
+  statusText?: Record<string, string>
   meta?: string
   src?: string
   href?: string
   status?: "online" | "away" | "offline"
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: строка личности — аватар и три поля текста. Имя, роль и
 // служебная строка стоят в порядке убывания важности и режутся многоточием, а
 // не переносятся: в списке из тридцати человек строки обязаны быть одной
 // высоты. Статус подписан словом, а не только точкой — цвет не для всех.
-const STYLES = `
-:where([data-vibeui-block="avatar-007"]){
+const STYLES = `:where([data-vibeui-block="avatar-007"]){
 --vibeui-avatar-007-size:2.75rem;
---vibeui-avatar-007-bg:oklch(1 0 0);
---vibeui-avatar-007-fg:oklch(0.22 0.014 265);
---vibeui-avatar-007-muted:oklch(0.52 0.014 265);
---vibeui-avatar-007-border:oklch(0.9 0.006 265);
+--vibeui-avatar-007-bg:transparent;
+--vibeui-avatar-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-007-muted:light-dark(oklch(0.52 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-007-hue:250;
---vibeui-avatar-007-shape:oklch(0.92 0.05 var(--vibeui-avatar-007-hue));
---vibeui-avatar-007-initials:oklch(0.38 0.09 var(--vibeui-avatar-007-hue));
---vibeui-avatar-007-status:oklch(0.62 0.17 152);
---vibeui-avatar-007-accent:oklch(0.55 0.17 265);
+--vibeui-avatar-007-shape:light-dark(oklch(0.92 0.05 var(--vibeui-avatar-007-hue)),oklch(0.34 0.065 var(--vibeui-avatar-007-hue)));
+--vibeui-avatar-007-initials:light-dark(oklch(0.38 0.09 var(--vibeui-avatar-007-hue)),oklch(0.88 0.063 var(--vibeui-avatar-007-hue)));
+--vibeui-avatar-007-status:light-dark(oklch(0.62 0.17 152),oklch(0.76 0.17 152));
+--vibeui-avatar-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.69 0.17 265));
 --vibeui-avatar-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-007"]{
@@ -38,7 +41,7 @@ border:1px solid var(--vibeui-avatar-007-border);border-radius:0.75rem;
 color:var(--vibeui-avatar-007-fg);font-family:var(--vibeui-avatar-007-font);
 }
 [data-vibeui-block="avatar-007"][data-status="away"]{--vibeui-avatar-007-status:oklch(0.75 0.16 75)}
-[data-vibeui-block="avatar-007"][data-status="offline"]{--vibeui-avatar-007-status:oklch(0.72 0.012 265)}
+[data-vibeui-block="avatar-007"][data-status="offline"]{--vibeui-avatar-007-status:light-dark(oklch(0.72 0.012 265),oklch(0.42 0.012 265))}
 [data-vibeui-block="avatar-007"] [data-part="shape"]{
 position:relative;display:flex;align-items:center;justify-content:center;flex:none;
 width:var(--vibeui-avatar-007-size);height:var(--vibeui-avatar-007-size);
@@ -72,7 +75,7 @@ width:0.4375rem;height:0.4375rem;border-radius:9999px;background:var(--vibeui-av
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-007"] *{animation:none!important;transition:none!important}}
 `
 
-const STATUS_TEXT = {
+const STATUS_TEXT: Record<string, string> = {
   online: "в сети",
   away: "отошёл",
   offline: "не в сети",
@@ -101,22 +104,52 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Строка личности: аватар, имя, роль и подписанный словом статус.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar007({
+  background = "",
   name = "Мария Гурова",
   role = "Продуктовый дизайнер",
   meta = "Команда «Каталог» · Москва",
   src = "",
   href = "#",
   status = "online",
+  statusText = STATUS_TEXT,
   className,
   style,
   ...props
 }: Avatar007Props) {
   const palette = {
     "--vibeui-avatar-007-hue": hue(name),
+    ...(background
+      ? {
+          "--vibeui-avatar-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -148,7 +181,7 @@ export function Avatar007({
         </span>
         <span data-part="state">
           <span data-part="dot" aria-hidden="true" />
-          {STATUS_TEXT[status]}
+          {statusText[status] ?? STATUS_TEXT[status]}
         </span>
       </div>
     </>

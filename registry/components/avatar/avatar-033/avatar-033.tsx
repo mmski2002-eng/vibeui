@@ -6,6 +6,10 @@ export type Avatar033Props = Omit<
 > & {
   name?: string
   state?: "speaking" | "listening" | "muted"
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  stateText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: строка участника звонка. Кто говорит — видно по кольцу,
@@ -14,13 +18,12 @@ export type Avatar033Props = Omit<
 // единственным признаком: в prefers-reduced-motion пульс заменяется ровным
 // кольцом того же цвета, микрофон рисуется отдельным значком, а состояние
 // названо словом. Значок микрофона нарисован псевдоэлементами — без иконок.
-const STYLES = `
-:where([data-vibeui-block="avatar-033"]){
+const STYLES = `:where([data-vibeui-block="avatar-033"]){
 --vibeui-avatar-033-size:2.5rem;
---vibeui-avatar-033-bg:oklch(1 0 0);
---vibeui-avatar-033-fg:oklch(0.24 0.014 265);
---vibeui-avatar-033-muted:oklch(0.55 0.014 265);
---vibeui-avatar-033-border:oklch(0.91 0.006 265);
+--vibeui-avatar-033-bg:transparent;
+--vibeui-avatar-033-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-033-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-033-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-033-live:oklch(0.62 0.15 152);
 --vibeui-avatar-033-off:oklch(0.6 0.19 25);
 --vibeui-avatar-033-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -73,7 +76,7 @@ background:oklch(1 0 0);transform:translateY(0.3125rem);
 [data-vibeui-block="avatar-033"][data-state="muted"] [data-part="mic"]::after{
 width:0.75rem;transform:rotate(-45deg);
 }
-[data-vibeui-block="avatar-033"][data-state="listening"] [data-part="mic"]{background:oklch(0.62 0.02 265)}
+[data-vibeui-block="avatar-033"][data-state="listening"] [data-part="mic"]{background:light-dark(oklch(0.62 0.02 265),oklch(0.66 0.02 265))}
 [data-vibeui-block="avatar-033"] [data-part="text"]{display:flex;flex-direction:column;gap:0.0625rem;min-width:0;flex:1 1 auto}
 [data-vibeui-block="avatar-033"] [data-part="name"]{
 font-size:0.875rem;font-weight:650;
@@ -89,11 +92,11 @@ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 `
 
-const STATE_LABEL = {
+const STATE_LABEL: Record<string, string> = {
   speaking: "говорит",
   listening: "микрофон включён",
   muted: "микрофон выключен",
-} as const
+}
 
 function hue(name: string) {
   let hash = 2166136261
@@ -113,18 +116,48 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Строка участника звонка: пульс у говорящего, значок микрофона и состояние словом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar033({
+  background = "",
   name = "Ким Сон",
   state = "speaking",
+  stateText = STATE_LABEL,
   className,
   style,
   ...props
 }: Avatar033Props) {
   const palette = {
     "--vibeui-avatar-033-hue": hue(name),
+    ...(background
+      ? {
+          "--vibeui-avatar-033-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -150,7 +183,9 @@ export function Avatar033({
         <span data-part="text">
           <span data-part="name">{name}</span>
           {/* Состояние словом: пульс и цвет значка вслух не читаются. */}
-          <span data-part="state">{STATE_LABEL[state]}</span>
+          <span data-part="state">
+            {stateText[state] ?? STATE_LABEL[state]}
+          </span>
         </span>
       </div>
     </>

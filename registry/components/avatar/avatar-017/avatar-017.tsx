@@ -5,6 +5,8 @@ export type Avatar017Props = Omit<ComponentPropsWithoutRef<"a">, "children"> & {
   role?: string
   meta?: string
   action?: string
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: строка человека, кликабельная целиком. Ссылка растянута
@@ -16,12 +18,12 @@ export type Avatar017Props = Omit<ComponentPropsWithoutRef<"a">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="avatar-017"]){
 --vibeui-avatar-017-size:2.5rem;
---vibeui-avatar-017-bg:oklch(1 0 0);
---vibeui-avatar-017-fg:oklch(0.24 0.014 265);
---vibeui-avatar-017-muted:oklch(0.55 0.014 265);
---vibeui-avatar-017-border:oklch(0.91 0.006 265);
+--vibeui-avatar-017-bg:transparent;
+--vibeui-avatar-017-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-017-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-017-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-017-hover:oklch(0.55 0.02 265 / 5%);
---vibeui-avatar-017-accent:oklch(0.55 0.2 262);
+--vibeui-avatar-017-accent:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262));
 --vibeui-avatar-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Строка целиком — цель ссылки, кнопка поднята над ней z-index. */
@@ -86,10 +88,33 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Строка человека: ссылка на всю строку, кнопка действия — отдельная цель.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar017({
+  background = "",
   name = "Ким Сон",
   role = "Аналитик",
   meta = "был в сети 20 минут назад",
@@ -101,6 +126,12 @@ export function Avatar017({
 }: Avatar017Props) {
   const palette = {
     "--vibeui-avatar-017-hue": hue(name),
+    ...(background
+      ? {
+          "--vibeui-avatar-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -18,7 +18,7 @@ const STYLES = `
 :where([data-vibeui-block="avatar-003"]){
 --vibeui-avatar-003-size:2.25rem;
 --vibeui-avatar-003-overlap:0.75rem;
---vibeui-avatar-003-ring:oklch(1 0 0);
+--vibeui-avatar-003-ring:light-dark(oklch(1 0 0),oklch(0.19 0.01 265));
 --vibeui-avatar-003-more-bg:oklch(0.94 0.006 265);
 --vibeui-avatar-003-more-fg:oklch(0.38 0.014 265);
 --vibeui-avatar-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

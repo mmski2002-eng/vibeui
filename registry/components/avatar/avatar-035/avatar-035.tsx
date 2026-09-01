@@ -6,7 +6,11 @@ export type Avatar035Props = Omit<
 > & {
   name?: string
   kind?: "person" | "organisation" | "creator"
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  kindText?: Record<string, string>
   since?: string
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: знак подтверждения стоит после имени, а не в углу портрета.
@@ -19,10 +23,10 @@ const STYLES = `
 :where([data-vibeui-block="avatar-035"]){
 --vibeui-avatar-035-size:2.5rem;
 --vibeui-avatar-035-tick:1rem;
---vibeui-avatar-035-bg:oklch(1 0 0);
---vibeui-avatar-035-fg:oklch(0.24 0.014 265);
---vibeui-avatar-035-muted:oklch(0.55 0.014 265);
---vibeui-avatar-035-border:oklch(0.91 0.006 265);
+--vibeui-avatar-035-bg:transparent;
+--vibeui-avatar-035-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-035-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-035-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-035-person:oklch(0.55 0.2 262);
 --vibeui-avatar-035-org:oklch(0.55 0.13 195);
 --vibeui-avatar-035-creator:oklch(0.62 0.17 320);
@@ -80,11 +84,11 @@ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-035"] *{animation:none!important;transition:none!important}}
 `
 
-const KIND_LABEL = {
+const KIND_LABEL: Record<string, string> = {
   person: "Личность подтверждена",
   organisation: "Организация подтверждена",
   creator: "Автор подтверждён",
-} as const
+}
 
 function hue(name: string) {
   let hash = 2166136261
@@ -104,12 +108,36 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Аватар со знаком подтверждения в строке имени: вид различается формой знака.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar035({
+  background = "",
   name = "Анна Реброва",
   kind = "person",
+  kindText = KIND_LABEL,
   since = "с 12 марта 2025",
   className,
   style,
@@ -117,6 +145,12 @@ export function Avatar035({
 }: Avatar035Props) {
   const palette = {
     "--vibeui-avatar-035-hue": hue(name),
+    ...(background
+      ? {
+          "--vibeui-avatar-035-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -142,7 +176,7 @@ export function Avatar035({
             <span data-part="badge" aria-hidden="true" />
           </span>
           <span data-part="since">
-            {KIND_LABEL[kind]} {since}
+            {kindText[kind] ?? KIND_LABEL[kind]} {since}
           </span>
         </span>
       </div>

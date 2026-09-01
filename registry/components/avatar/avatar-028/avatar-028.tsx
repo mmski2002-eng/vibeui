@@ -8,6 +8,8 @@ export type Avatar028Props = Omit<
   email?: string
   items?: string[]
   signOutLabel?: string
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: аватар в шапке, который сам открывает меню профиля. Меню —
@@ -16,16 +18,15 @@ export type Avatar028Props = Omit<
 // В шапке меню повторены имя и почта — в продуктах с несколькими аккаунтами
 // это единственное место, где видно, под кем ты сидишь. Выход отделён чертой:
 // соседство с «настройками» стоит случайного выхода из системы.
-const STYLES = `
-:where([data-vibeui-block="avatar-028"]){
+const STYLES = `:where([data-vibeui-block="avatar-028"]){
 --vibeui-avatar-028-size:2.25rem;
---vibeui-avatar-028-bg:oklch(1 0 0);
---vibeui-avatar-028-fg:oklch(0.24 0.014 265);
---vibeui-avatar-028-muted:oklch(0.55 0.014 265);
---vibeui-avatar-028-border:oklch(0.91 0.006 265);
+--vibeui-avatar-028-bg:transparent;
+--vibeui-avatar-028-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-028-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-028-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-028-hover:oklch(0.55 0.02 265 / 9%);
---vibeui-avatar-028-accent:oklch(0.55 0.2 262);
---vibeui-avatar-028-danger:oklch(0.56 0.19 25);
+--vibeui-avatar-028-accent:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262));
+--vibeui-avatar-028-danger:light-dark(oklch(0.56 0.19 25),oklch(0.70 0.19 25));
 --vibeui-avatar-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-028"]{
@@ -41,7 +42,7 @@ background:oklch(0.9 0.06 var(--vibeui-avatar-028-hue,265));
 color:oklch(0.36 0.12 var(--vibeui-avatar-028-hue,265));
 font:inherit;font-size:calc(var(--vibeui-avatar-028-size) * 0.36);font-weight:700;line-height:1;
 }
-[data-vibeui-block="avatar-028"] [data-part="trigger"]:hover{box-shadow:0 0 0 0.1875rem oklch(0.55 0.02 265 / 16%)}
+[data-vibeui-block="avatar-028"] [data-part="trigger"]:hover{box-shadow:0 0 0 0.1875rem light-dark(oklch(0.55 0.02 265 / 16%),oklch(0.66 0.02 265 / 16%))}
 [data-vibeui-block="avatar-028"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-avatar-028-accent);outline-offset:2px}
 [data-vibeui-block="avatar-028"] [data-part="menu"]{
 position:fixed;margin:0;padding:0.3125rem;min-width:14rem;
@@ -108,10 +109,33 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Аватар-кнопка с меню профиля на нативном popover: состояния нет, компонент серверный.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar028({
+  background = "",
   name = "Анна Реброва",
   email = "anna@vibeui.dev",
   items = ["Профиль", "Настройки", "Оформление"],
@@ -122,6 +146,12 @@ export function Avatar028({
 }: Avatar028Props) {
   const palette = {
     "--vibeui-avatar-028-hue": hue(name),
+    ...(background
+      ? {
+          "--vibeui-avatar-028-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

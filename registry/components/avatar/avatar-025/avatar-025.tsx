@@ -8,6 +8,14 @@ export type Avatar025Props = Omit<
   level?: number
   progress?: number
   rank?: "bronze" | "silver" | "gold"
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  rankText?: Record<string, string>
+  /** Слово перед номером уровня. */
+  levelText?: string
+  /** Подпись под кольцом: «до следующего уровня 60 %». */
+  hintText?: string
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: аватар с уровнем и рангом. Кольцо здесь не сплошная дуга, а
@@ -16,17 +24,16 @@ export type Avatar025Props = Omit<
 // repeating-conic-gradient, заполнение отрезано conic-маской — ни SVG, ни
 // расчёта длины дуги. Номер уровня лежит в шестиугольнике под портретом, чтобы
 // не занимать угол, где обычно висит присутствие.
-const STYLES = `
-:where([data-vibeui-block="avatar-025"]){
+const STYLES = `:where([data-vibeui-block="avatar-025"]){
 --vibeui-avatar-025-size:3.5rem;
 --vibeui-avatar-025-ring:0.25rem;
 --vibeui-avatar-025-gap:0.25rem;
---vibeui-avatar-025-accent:oklch(0.7 0.13 75);
---vibeui-avatar-025-track:oklch(0.9 0.008 265);
---vibeui-avatar-025-bg:oklch(1 0 0);
---vibeui-avatar-025-fg:oklch(0.24 0.014 265);
---vibeui-avatar-025-muted:oklch(0.55 0.014 265);
---vibeui-avatar-025-border:oklch(0.91 0.006 265);
+--vibeui-avatar-025-accent:light-dark(oklch(0.7 0.13 75),oklch(0.84 0.13 75));
+--vibeui-avatar-025-track:light-dark(oklch(0.9 0.008 265),oklch(0.3 0.013 265));
+--vibeui-avatar-025-bg:transparent;
+--vibeui-avatar-025-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-025-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-025-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Своя светлая подложка: тёмный текст обязан читаться на любом фоне. */
@@ -39,7 +46,7 @@ font-family:var(--vibeui-avatar-025-font);color:var(--vibeui-avatar-025-fg);
 }
 [data-vibeui-block="avatar-025"] *{box-sizing:border-box}
 [data-vibeui-block="avatar-025"][data-rank="bronze"]{--vibeui-avatar-025-accent:oklch(0.62 0.11 55)}
-[data-vibeui-block="avatar-025"][data-rank="silver"]{--vibeui-avatar-025-accent:oklch(0.72 0.02 265)}
+[data-vibeui-block="avatar-025"][data-rank="silver"]{--vibeui-avatar-025-accent:light-dark(oklch(0.72 0.02 265),oklch(0.42 0.02 265))}
 [data-vibeui-block="avatar-025"][data-rank="gold"]{--vibeui-avatar-025-accent:oklch(0.78 0.14 85)}
 [data-vibeui-block="avatar-025"] [data-part="slot"]{
 position:relative;display:grid;place-items:center;flex:none;
@@ -86,11 +93,11 @@ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-025"] *{animation:none!important;transition:none!important}}
 `
 
-const RANK_LABEL = {
+const RANK_LABEL: Record<string, string> = {
   bronze: "Бронза",
   silver: "Серебро",
   gold: "Золото",
-} as const
+}
 
 function hue(name: string) {
   let hash = 2166136261
@@ -110,14 +117,40 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Аватар с уровнем: кольцо из десяти делений, ранг словом и номер в шестиугольнике.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar025({
+  background = "",
   name = "Пётр Гай",
   level = 7,
   progress = 60,
   rank = "silver",
+  rankText = RANK_LABEL,
+  levelText = "уровень",
+  hintText = "до следующего уровня",
   className,
   style,
   ...props
@@ -127,6 +160,12 @@ export function Avatar025({
   const palette = {
     "--vibeui-avatar-025-hue": hue(name),
     "--vibeui-avatar-025-fill": `${safeProgress * 3.6}deg`,
+    ...(background
+      ? {
+          "--vibeui-avatar-025-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -157,10 +196,12 @@ export function Avatar025({
         <span data-part="text">
           <span data-part="name">{name}</span>
           <span data-part="rank">
-            {RANK_LABEL[rank]}, уровень {level}
+            {rankText[rank] ?? RANK_LABEL[rank]}, {levelText} {level}
           </span>
           {/* Проценты словами: сегменты кольца скринридер не читает. */}
-          <span data-part="hint">до следующего уровня {safeProgress} %</span>
+          <span data-part="hint">
+            {hintText} {safeProgress} %
+          </span>
         </span>
       </div>
     </>

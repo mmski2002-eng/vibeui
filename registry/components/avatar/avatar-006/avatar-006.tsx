@@ -10,6 +10,8 @@ export type Avatar006Props = Omit<
   label?: string
   hint?: string
   accept?: string
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: смена фотографии без единой строки JS. Поле выбора файла
@@ -19,15 +21,15 @@ export type Avatar006Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="avatar-006"]){
 --vibeui-avatar-006-size:5rem;
---vibeui-avatar-006-bg:oklch(1 0 0);
---vibeui-avatar-006-fg:oklch(0.22 0.014 265);
---vibeui-avatar-006-muted:oklch(0.52 0.014 265);
---vibeui-avatar-006-border:oklch(0.9 0.006 265);
+--vibeui-avatar-006-bg:transparent;
+--vibeui-avatar-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-006-muted:light-dark(oklch(0.52 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-006-hue:250;
---vibeui-avatar-006-shape:oklch(0.92 0.05 var(--vibeui-avatar-006-hue));
---vibeui-avatar-006-initials:oklch(0.38 0.09 var(--vibeui-avatar-006-hue));
+--vibeui-avatar-006-shape:light-dark(oklch(0.92 0.05 var(--vibeui-avatar-006-hue)),oklch(0.34 0.065 var(--vibeui-avatar-006-hue)));
+--vibeui-avatar-006-initials:light-dark(oklch(0.38 0.09 var(--vibeui-avatar-006-hue)),oklch(0.88 0.063 var(--vibeui-avatar-006-hue)));
 --vibeui-avatar-006-veil:oklch(0.2 0.02 265 / 62%);
---vibeui-avatar-006-accent:oklch(0.55 0.17 265);
+--vibeui-avatar-006-accent:light-dark(oklch(0.55 0.17 265),oklch(0.69 0.17 265));
 --vibeui-avatar-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-006"]{
@@ -90,10 +92,33 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Смена фотографии профиля на label и скрытом input — без JS.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar006({
+  background = "",
   name = "Анна Петрова",
   src = "",
   label = "Сменить фото",
@@ -106,6 +131,12 @@ export function Avatar006({
   const id = useId()
   const palette = {
     "--vibeui-avatar-006-hue": hue(name),
+    ...(background
+      ? {
+          "--vibeui-avatar-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -6,6 +6,8 @@ export type Avatar032Props = Omit<
 > & {
   name?: string
   team?: string
+  /** Слово перед названием команды. */
+  teamText?: string
   size?: "sm" | "md" | "lg"
 }
 
@@ -86,6 +88,7 @@ function initials(name: string) {
 export function Avatar032({
   name = "Пётр Гай",
   team = "Платформа",
+  teamText = "команда",
   size = "md",
   className,
   style,
@@ -115,7 +118,7 @@ export function Avatar032({
             {initials(name)}
           </span>
           <span data-part="sr">
-            {name}, команда «{team}»
+            {name}, {teamText} «{team}»
           </span>
         </span>
         <span data-part="team" aria-hidden="true">

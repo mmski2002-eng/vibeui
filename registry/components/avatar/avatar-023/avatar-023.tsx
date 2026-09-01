@@ -6,7 +6,11 @@ export type Avatar023Props = Omit<
 > & {
   names?: string[]
   label?: string
+  /** Подпись перед перечислением: «Участников 5». */
+  membersText?: string
   size?: "sm" | "md" | "lg"
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: аватар группового чата — четыре лица внутри одного круга.
@@ -14,13 +18,12 @@ export type Avatar023Props = Omit<
 // участники сложены в мозаику: круг остаётся круглым, а раскладка мозаики
 // меняется от числа лиц (одно, два, три, четыре) — иначе при трёх участниках
 // в углу висела бы пустая клетка. Пятый и дальше сворачиваются в счётчик.
-const STYLES = `
-:where([data-vibeui-block="avatar-023"]){
+const STYLES = `:where([data-vibeui-block="avatar-023"]){
 --vibeui-avatar-023-size:3rem;
---vibeui-avatar-023-bg:oklch(1 0 0);
---vibeui-avatar-023-fg:oklch(0.24 0.014 265);
---vibeui-avatar-023-muted:oklch(0.55 0.014 265);
---vibeui-avatar-023-border:oklch(0.91 0.006 265);
+--vibeui-avatar-023-bg:transparent;
+--vibeui-avatar-023-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-023-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-023-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Своя светлая подложка: тёмный текст обязан читаться на любом фоне. */
@@ -52,7 +55,7 @@ font-size:calc(var(--vibeui-avatar-023-size) * 0.2);font-weight:700;line-height:
 }
 [data-vibeui-block="avatar-023"][data-count="1"] [data-part="tile"]{font-size:calc(var(--vibeui-avatar-023-size) * 0.34)}
 [data-vibeui-block="avatar-023"] [data-rest="true"]{
-background:oklch(0.93 0.008 265);color:oklch(0.42 0.014 265);
+background:light-dark(oklch(0.93 0.008 265),oklch(0.3 0.008 265));color:light-dark(oklch(0.42 0.014 265),oklch(0.86 0.014 265));
 font-size:calc(var(--vibeui-avatar-023-size) * 0.18);
 }
 [data-vibeui-block="avatar-023"] [data-part="text"]{display:flex;flex-direction:column;gap:0.0625rem;min-width:0}
@@ -87,17 +90,51 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Аватар группового чата: до четырёх лиц мозаикой в одном круге.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar023({
+  background = "",
   names = ["Анна Реброва", "Илья Мохов", "Ким Сон", "Пётр Гай", "Мария Лоза"],
   label = "Команда каталога",
+  membersText = "Участников",
   size = "md",
   className,
   style,
   ...props
 }: Avatar023Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-avatar-023-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   const rest = names.length - 4
   const shown = rest > 0 ? names.slice(0, 3) : names.slice(0, 4)
 
@@ -112,7 +149,7 @@ export function Avatar023({
         data-count={rest > 0 ? 4 : shown.length}
         data-size={size}
         className={className}
-        style={style}
+        style={palette}
       >
         <span data-part="mosaic" aria-hidden="true">
           {shown.map((person) => (
@@ -138,7 +175,7 @@ export function Avatar023({
           <span data-part="label">{label}</span>
           {/* Имена целиком — здесь, а не в мозаике: клетки нечитаемы. */}
           <span data-part="count">
-            Участников {names.length}: {names.join(", ")}
+            {membersText} {names.length}: {names.join(", ")}
           </span>
         </span>
       </div>

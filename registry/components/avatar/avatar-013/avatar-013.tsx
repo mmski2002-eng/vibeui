@@ -6,6 +6,8 @@ export type Avatar013Props = Omit<
 > & {
   name?: string
   status?: "online" | "away" | "busy" | "offline"
+  /** Подписи состояний: компонент несёт русские, проект подставляет свои. */
+  statusText?: Record<string, string>
   size?: "sm" | "md" | "lg"
 }
 
@@ -19,10 +21,10 @@ const STYLES = `
 :where([data-vibeui-block="avatar-013"]){
 --vibeui-avatar-013-size:2.75rem;
 --vibeui-avatar-013-dot:0.75rem;
---vibeui-avatar-013-online:oklch(0.62 0.15 152);
---vibeui-avatar-013-away:oklch(0.75 0.14 75);
+--vibeui-avatar-013-online:light-dark(oklch(0.62 0.15 152),oklch(0.76 0.15 152));
+--vibeui-avatar-013-away:light-dark(oklch(0.75 0.14 75),oklch(0.88 0.14 75));
 --vibeui-avatar-013-busy:oklch(0.6 0.19 25);
---vibeui-avatar-013-offline:oklch(0.7 0.014 265);
+--vibeui-avatar-013-offline:light-dark(oklch(0.7 0.014 265),oklch(0.84 0.014 265));
 --vibeui-avatar-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-013"]{
@@ -94,6 +96,7 @@ function initials(name: string) {
 export function Avatar013({
   name = "Анна Реброва",
   status = "online",
+  statusText = STATUS_LABEL,
   size = "md",
   className,
   style,
@@ -123,7 +126,7 @@ export function Avatar013({
         <span data-part="dot" aria-hidden="true" />
         {/* Состояние словом: точка сама по себе немая. */}
         <span data-part="sr">
-          {name}, {STATUS_LABEL[status]}
+          {name}, {statusText[status] ?? STATUS_LABEL[status]}
         </span>
       </span>
     </>

@@ -6,6 +6,8 @@ export type Avatar018Props = Omit<
 > & {
   name?: string
   role?: "owner" | "editor" | "reader" | "bot"
+  /** Подписи ролей: компонент несёт русские, проект подставляет свои. */
+  roleText?: Record<string, string>
   size?: "sm" | "md" | "lg"
 }
 
@@ -15,13 +17,12 @@ export type Avatar018Props = Omit<
 // размере и не требует SVG. Роли различаются длиной дуги, а не только цветом —
 // владелец полное кольцо, редактор три четверти, читатель половина. Роль
 // названа словом в подписи, потому что дуга без текста непонятна.
-const STYLES = `
-:where([data-vibeui-block="avatar-018"]){
+const STYLES = `:where([data-vibeui-block="avatar-018"]){
 --vibeui-avatar-018-size:3rem;
 --vibeui-avatar-018-ring:0.1875rem;
 --vibeui-avatar-018-arc:100%;
---vibeui-avatar-018-color:oklch(0.55 0.2 262);
---vibeui-avatar-018-track:oklch(0.92 0.006 265);
+--vibeui-avatar-018-color:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262));
+--vibeui-avatar-018-track:light-dark(oklch(0.92 0.006 265),oklch(0.3 0.01 265));
 --vibeui-avatar-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-018"]{
@@ -53,7 +54,7 @@ font-size:calc(var(--vibeui-avatar-018-size) * 0.3);font-weight:700;
 /* Длина дуги различает роли: одного цвета мало. */
 [data-vibeui-block="avatar-018"][data-role="owner"]{--vibeui-avatar-018-arc:100%;--vibeui-avatar-018-color:oklch(0.55 0.2 262)}
 [data-vibeui-block="avatar-018"][data-role="editor"]{--vibeui-avatar-018-arc:75%;--vibeui-avatar-018-color:oklch(0.58 0.14 152)}
-[data-vibeui-block="avatar-018"][data-role="reader"]{--vibeui-avatar-018-arc:50%;--vibeui-avatar-018-color:oklch(0.7 0.014 265)}
+[data-vibeui-block="avatar-018"][data-role="reader"]{--vibeui-avatar-018-arc:50%;--vibeui-avatar-018-color:light-dark(oklch(0.7 0.014 265),oklch(0.42 0.014 265))}
 [data-vibeui-block="avatar-018"][data-role="bot"]{--vibeui-avatar-018-arc:25%;--vibeui-avatar-018-color:oklch(0.72 0.15 75)}
 [data-vibeui-block="avatar-018"][data-size="sm"]{--vibeui-avatar-018-size:2.25rem;--vibeui-avatar-018-ring:0.125rem}
 [data-vibeui-block="avatar-018"][data-size="lg"]{--vibeui-avatar-018-size:4rem;--vibeui-avatar-018-ring:0.25rem}
@@ -96,6 +97,7 @@ function initials(name: string) {
 export function Avatar018({
   name = "Пётр Гай",
   role = "editor",
+  roleText = ROLE_LABEL,
   size = "md",
   className,
   style,
@@ -127,7 +129,7 @@ export function Avatar018({
         </span>
         <span data-part="text">
           <span data-part="name">{name}</span>
-          <span data-part="role">{ROLE_LABEL[role]}</span>
+          <span data-part="role">{roleText[role] ?? ROLE_LABEL[role]}</span>
         </span>
       </span>
     </>

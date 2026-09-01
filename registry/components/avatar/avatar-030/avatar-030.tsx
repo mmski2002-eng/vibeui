@@ -7,6 +7,8 @@ export type Avatar030Props = Omit<
   name?: string
   role?: string
   size?: "sm" | "md" | "lg"
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: карточка человека для сетки, где должность занимает ровно
@@ -19,10 +21,10 @@ const STYLES = `
 :where([data-vibeui-block="avatar-030"]){
 --vibeui-avatar-030-size:3.5rem;
 --vibeui-avatar-030-line:1.0625rem;
---vibeui-avatar-030-bg:oklch(1 0 0);
---vibeui-avatar-030-fg:oklch(0.24 0.014 265);
---vibeui-avatar-030-muted:oklch(0.5 0.014 265);
---vibeui-avatar-030-border:oklch(0.91 0.006 265);
+--vibeui-avatar-030-bg:transparent;
+--vibeui-avatar-030-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-030-muted:light-dark(oklch(0.5 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-030-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-030-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Своя светлая подложка: тёмный текст обязан читаться на любом фоне. */
@@ -78,10 +80,33 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Карточка человека с должностью ровно в две строки: сетка не пляшет по высоте.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar030({
+  background = "",
   name = "Мария Гурова",
   role = "Руководитель направления клиентского опыта",
   size = "md",
@@ -91,6 +116,12 @@ export function Avatar030({
 }: Avatar030Props) {
   const palette = {
     "--vibeui-avatar-030-hue": hue(name),
+    ...(background
+      ? {
+          "--vibeui-avatar-030-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

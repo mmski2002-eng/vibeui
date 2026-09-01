@@ -7,6 +7,8 @@ export type Avatar008Props = Omit<
   count?: number
   label?: string
   lines?: boolean
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: заглушка списка людей. Полосы имени разной длины — ровные
@@ -15,10 +17,10 @@ export type Avatar008Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="avatar-008"]){
 --vibeui-avatar-008-size:2.75rem;
---vibeui-avatar-008-bg:oklch(1 0 0);
---vibeui-avatar-008-border:oklch(0.9 0.006 265);
---vibeui-avatar-008-base:oklch(0.93 0.005 265);
---vibeui-avatar-008-shine:oklch(0.97 0.003 265);
+--vibeui-avatar-008-bg:transparent;
+--vibeui-avatar-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.31 0.01 265));
+--vibeui-avatar-008-base:light-dark(oklch(0.93 0.005 265),oklch(0.27 0.008 265));
+--vibeui-avatar-008-shine:light-dark(oklch(0.97 0.003 265),oklch(0.33 0.005 265));
 --vibeui-avatar-008-radius:0.75rem;
 }
 [data-vibeui-block="avatar-008"]{
@@ -63,10 +65,33 @@ border-radius:9999px;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Заглушка списка людей: круг под аватар и полосы под имя.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar008({
+  background = "",
   count = 3,
   label = "Загружаются участники",
   lines = true,
@@ -74,6 +99,16 @@ export function Avatar008({
   style,
   ...props
 }: Avatar008Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-avatar-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-avatar-008" precedence="medium">
@@ -83,7 +118,7 @@ export function Avatar008({
         {...props}
         data-vibeui-block="avatar-008"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
         role="status"
         aria-busy="true"
         aria-label={label}

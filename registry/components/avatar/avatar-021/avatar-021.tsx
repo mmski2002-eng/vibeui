@@ -6,6 +6,8 @@ export type Avatar021Props = Omit<
 > & {
   name?: string
   state?: "unseen" | "seen" | "none"
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  stateText?: Record<string, string>
   size?: "sm" | "md" | "lg"
 }
 
@@ -19,8 +21,8 @@ const STYLES = `
 --vibeui-avatar-021-size:3.25rem;
 --vibeui-avatar-021-ring:0.1875rem;
 --vibeui-avatar-021-gap:0.1875rem;
---vibeui-avatar-021-seen:oklch(0.78 0.012 265);
---vibeui-avatar-021-focus:oklch(0.55 0.2 262);
+--vibeui-avatar-021-seen:light-dark(oklch(0.78 0.012 265),oklch(0.45 0.012 265));
+--vibeui-avatar-021-focus:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262));
 --vibeui-avatar-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-021"]{
@@ -62,11 +64,11 @@ position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);whit
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-021"] *{animation:none!important;transition:none!important}}
 `
 
-const STATE_LABEL = {
+const STATE_LABEL: Record<string, string> = {
   unseen: "есть новая история",
   seen: "история просмотрена",
   none: "историй нет",
-} as const
+}
 
 function hue(name: string) {
   let hash = 2166136261
@@ -92,6 +94,7 @@ function initials(name: string) {
 export function Avatar021({
   name = "Анна Реброва",
   state = "unseen",
+  stateText = STATE_LABEL,
   size = "md",
   type = "button",
   className,
@@ -123,7 +126,7 @@ export function Avatar021({
         </span>
         {/* Состояние словом: цвет кольца скринридер не читает. */}
         <span data-part="sr">
-          {name}, {STATE_LABEL[state]}
+          {name}, {stateText[state] ?? STATE_LABEL[state]}
         </span>
       </button>
     </>

@@ -7,6 +7,8 @@ export type Avatar026Props = Omit<
   name?: string
   role?: string
   ready?: boolean
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: заглушка и готовая строка живут в одной коробке. Обычная
@@ -18,12 +20,12 @@ export type Avatar026Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="avatar-026"]){
 --vibeui-avatar-026-size:2.75rem;
---vibeui-avatar-026-bg:oklch(1 0 0);
---vibeui-avatar-026-fg:oklch(0.24 0.014 265);
---vibeui-avatar-026-muted:oklch(0.55 0.014 265);
---vibeui-avatar-026-border:oklch(0.91 0.006 265);
---vibeui-avatar-026-bone:oklch(0.93 0.006 265);
---vibeui-avatar-026-shine:oklch(0.97 0.004 265);
+--vibeui-avatar-026-bg:transparent;
+--vibeui-avatar-026-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-026-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-026-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
+--vibeui-avatar-026-bone:light-dark(oklch(0.93 0.006 265),oklch(0.27 0.01 265));
+--vibeui-avatar-026-shine:light-dark(oklch(0.97 0.004 265),oklch(0.33 0.006 265));
 --vibeui-avatar-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Своя светлая подложка: тёмный текст обязан читаться на любом фоне. */
@@ -92,10 +94,33 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Аватар в двух состояниях: заглушка и готовая строка в одной коробке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar026({
+  background = "",
   name = "Ким Сон",
   role = "Аналитик",
   ready = false,
@@ -105,6 +130,12 @@ export function Avatar026({
 }: Avatar026Props) {
   const palette = {
     "--vibeui-avatar-026-hue": hue(name),
+    ...(background
+      ? {
+          "--vibeui-avatar-026-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -6,7 +6,13 @@ export type Avatar027Props = Omit<
 > & {
   name?: string
   status?: "online" | "away" | "offline"
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  statusText?: Record<string, string>
   role?: "owner" | "editor" | "reader"
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  roleText?: Record<string, string>
+  /** Буква роли в значке: одна на язык, а не иконка из библиотеки. */
+  roleMark?: Record<string, string>
   size?: "sm" | "md" | "lg"
 }
 
@@ -16,15 +22,14 @@ export type Avatar027Props = Omit<
 // сливаются в одну догадку. Оба зазора вырезаны масками, но не одной: маска
 // роли висит на обёртке, маска точки — на самом портрете, и вложение даёт две
 // дырки без mask-composite, который поддержан не везде.
-const STYLES = `
-:where([data-vibeui-block="avatar-027"]){
+const STYLES = `:where([data-vibeui-block="avatar-027"]){
 --vibeui-avatar-027-size:2.75rem;
 --vibeui-avatar-027-dot:0.75rem;
 --vibeui-avatar-027-mark:1.0625rem;
---vibeui-avatar-027-online:oklch(0.62 0.15 152);
---vibeui-avatar-027-away:oklch(0.75 0.14 75);
---vibeui-avatar-027-offline:oklch(0.7 0.014 265);
---vibeui-avatar-027-role:oklch(0.55 0.2 262);
+--vibeui-avatar-027-online:light-dark(oklch(0.62 0.15 152),oklch(0.76 0.15 152));
+--vibeui-avatar-027-away:light-dark(oklch(0.75 0.14 75),oklch(0.88 0.14 75));
+--vibeui-avatar-027-offline:light-dark(oklch(0.7 0.014 265),oklch(0.84 0.014 265));
+--vibeui-avatar-027-role:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262));
 --vibeui-avatar-027-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-027"]{
@@ -68,7 +73,7 @@ background:var(--vibeui-avatar-027-role);color:oklch(1 0 0);
 font-size:calc(var(--vibeui-avatar-027-mark) * 0.6);font-weight:700;line-height:1;
 }
 [data-vibeui-block="avatar-027"][data-role="editor"] [data-part="mark"]{background:oklch(0.6 0.13 195)}
-[data-vibeui-block="avatar-027"][data-role="reader"] [data-part="mark"]{background:oklch(0.62 0.02 265)}
+[data-vibeui-block="avatar-027"][data-role="reader"] [data-part="mark"]{background:light-dark(oklch(0.62 0.02 265),oklch(0.66 0.02 265))}
 [data-vibeui-block="avatar-027"][data-size="sm"]{--vibeui-avatar-027-size:2.25rem;--vibeui-avatar-027-dot:0.625rem;--vibeui-avatar-027-mark:0.9375rem}
 [data-vibeui-block="avatar-027"][data-size="lg"]{--vibeui-avatar-027-size:3.75rem;--vibeui-avatar-027-dot:0.9375rem;--vibeui-avatar-027-mark:1.375rem}
 [data-vibeui-block="avatar-027"] [data-part="sr"]{
@@ -77,23 +82,23 @@ position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);whit
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-027"] *{animation:none!important;transition:none!important}}
 `
 
-const STATUS_LABEL = {
+const STATUS_LABEL: Record<string, string> = {
   online: "в сети",
   away: "отошёл",
   offline: "не в сети",
-} as const
+}
 
-const ROLE_LABEL = {
+const ROLE_LABEL: Record<string, string> = {
   owner: "владелец",
   editor: "редактор",
   reader: "читатель",
-} as const
+}
 
-const ROLE_MARK = {
+const ROLE_MARK: Record<string, string> = {
   owner: "В",
   editor: "Р",
   reader: "Ч",
-} as const
+}
 
 function hue(name: string) {
   let hash = 2166136261
@@ -119,7 +124,10 @@ function initials(name: string) {
 export function Avatar027({
   name = "Мария Лоза",
   status = "online",
+  statusText = STATUS_LABEL,
   role = "owner",
+  roleText = ROLE_LABEL,
+  roleMark = ROLE_MARK,
   size = "md",
   className,
   style,
@@ -148,12 +156,13 @@ export function Avatar027({
           <span data-part="face">{initials(name)}</span>
         </span>
         <span data-part="mark" aria-hidden="true">
-          {ROLE_MARK[role]}
+          {roleMark[role] ?? ROLE_MARK[role]}
         </span>
         <span data-part="dot" aria-hidden="true" />
         {/* Оба значка названы словами: буква и точка сами по себе немые. */}
         <span data-part="sr">
-          {name}, {ROLE_LABEL[role]}, {STATUS_LABEL[status]}
+          {name}, {roleText[role] ?? ROLE_LABEL[role]},{" "}
+          {statusText[status] ?? STATUS_LABEL[status]}
         </span>
       </span>
     </>

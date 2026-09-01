@@ -16,10 +16,9 @@ export type Avatar014Props = Omit<
 // не по видимой фигуре, поэтому у шестиугольника задан небольшой оптический
 // сдвиг — без него буквы кажутся смещёнными вверх. Обводка нарисована
 // подложкой под clip-path: обычный border режется вместе с фигурой.
-const STYLES = `
-:where([data-vibeui-block="avatar-014"]){
+const STYLES = `:where([data-vibeui-block="avatar-014"]){
 --vibeui-avatar-014-size:3rem;
---vibeui-avatar-014-ring:oklch(0.9 0.006 265);
+--vibeui-avatar-014-ring:light-dark(oklch(0.9 0.006 265),oklch(0.19 0.01 265));
 --vibeui-avatar-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-014"]{
@@ -61,7 +60,7 @@ border-radius:9999px;
 [data-vibeui-block="avatar-014"][data-size="lg"]{--vibeui-avatar-014-size:4rem}
 [data-vibeui-block="avatar-014"] [data-part="text"]{display:flex;flex-direction:column;gap:0.0625rem;min-width:0}
 [data-vibeui-block="avatar-014"] [data-part="name"]{font-size:0.875rem;font-weight:650}
-[data-vibeui-block="avatar-014"] [data-part="role"]{font-size:0.75rem;color:oklch(0.55 0.014 265)}
+[data-vibeui-block="avatar-014"] [data-part="role"]{font-size:0.75rem;color:light-dark(oklch(0.55 0.014 265),oklch(0.66 0.014 265))}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-014"] *{animation:none!important;transition:none!important}}
 `
 

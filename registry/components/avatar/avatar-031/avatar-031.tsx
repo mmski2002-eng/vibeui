@@ -20,7 +20,7 @@ const STYLES = `
 --vibeui-avatar-031-size:2.5rem;
 --vibeui-avatar-031-overlap:55;
 --vibeui-avatar-031-surface:oklch(1 0 0);
---vibeui-avatar-031-accent:oklch(0.55 0.2 262);
+--vibeui-avatar-031-accent:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262));
 --vibeui-avatar-031-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-031"]{

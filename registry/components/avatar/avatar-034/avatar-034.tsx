@@ -6,8 +6,14 @@ export type Avatar034Props = Omit<
 > & {
   name?: string
   when?: string
+  /** Слова перед временем: «был в сети вчера в 18:40». */
+  seenText?: string
   dateTime?: string
   freshness?: "today" | "week" | "long"
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  freshnessText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: аватар с датой последнего входа. «Был в сети недавно» —
@@ -19,10 +25,10 @@ export type Avatar034Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="avatar-034"]){
 --vibeui-avatar-034-size:2.5rem;
---vibeui-avatar-034-bg:oklch(1 0 0);
---vibeui-avatar-034-fg:oklch(0.24 0.014 265);
---vibeui-avatar-034-muted:oklch(0.55 0.014 265);
---vibeui-avatar-034-border:oklch(0.91 0.006 265);
+--vibeui-avatar-034-bg:transparent;
+--vibeui-avatar-034-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-034-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-034-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-034-fresh:oklch(0.62 0.15 152);
 --vibeui-avatar-034-stale:oklch(0.66 0.02 265);
 --vibeui-avatar-034-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -69,11 +75,11 @@ background:none;border:1px dashed var(--vibeui-avatar-034-stale);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-034"] *{animation:none!important;transition:none!important}}
 `
 
-const FRESHNESS_LABEL = {
+const FRESHNESS_LABEL: Record<string, string> = {
   today: "заходил сегодня",
   week: "заходил на этой неделе",
   long: "давно не заходил",
-} as const
+}
 
 function hue(name: string) {
   let hash = 2166136261
@@ -93,20 +99,51 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Аватар с датой последнего входа: подпись в <time>, давность различается формой метки.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar034({
+  background = "",
   name = "Мария Лоза",
   when = "вчера в 18:40",
+  seenText = "был в сети",
   dateTime = "2026-08-30T18:40",
   freshness = "week",
+  freshnessText = FRESHNESS_LABEL,
   className,
   style,
   ...props
 }: Avatar034Props) {
   const palette = {
     "--vibeui-avatar-034-hue": hue(name),
+    ...(background
+      ? {
+          "--vibeui-avatar-034-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -131,11 +168,13 @@ export function Avatar034({
             <span
               data-part="mark"
               role="img"
-              aria-label={FRESHNESS_LABEL[freshness]}
+              aria-label={
+                freshnessText[freshness] ?? FRESHNESS_LABEL[freshness]
+              }
             />
             {/* Машинная отметка рядом с человеческой: считать её нечем. */}
             <time data-part="time" dateTime={dateTime}>
-              был в сети {when}
+              {seenText} {when}
             </time>
           </span>
         </span>

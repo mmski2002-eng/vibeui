@@ -6,7 +6,8 @@ export type Avatar016Props = Omit<
 > & {
   names?: string[]
   title?: string
-  columns?: number
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: сетка лиц вместо стопки. Стопка экономит место, но прячет
@@ -18,10 +19,10 @@ export type Avatar016Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="avatar-016"]){
 --vibeui-avatar-016-size:3rem;
---vibeui-avatar-016-bg:oklch(1 0 0);
---vibeui-avatar-016-fg:oklch(0.24 0.014 265);
---vibeui-avatar-016-muted:oklch(0.55 0.014 265);
---vibeui-avatar-016-border:oklch(0.91 0.006 265);
+--vibeui-avatar-016-bg:transparent;
+--vibeui-avatar-016-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-016-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-016-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -89,16 +90,49 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сетка лиц: состав команды виден целиком, колонки считает браузер.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar016({
+  background = "",
   names = DEFAULT_NAMES,
   title = "В проекте",
   className,
   style,
   ...props
 }: Avatar016Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-avatar-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-avatar-016" precedence="medium">
@@ -108,7 +142,7 @@ export function Avatar016({
         {...props}
         data-vibeui-block="avatar-016"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <h3>
           {title} <span data-part="count">· {names.length}</span>

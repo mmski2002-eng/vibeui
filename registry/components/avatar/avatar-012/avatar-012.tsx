@@ -7,6 +7,10 @@ export type Avatar012Props = Omit<
   names?: string[]
   action?: string
   target?: string
+  /** Связка перед числом остальных: «и ещё 3». */
+  moreText?: string
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: стопка аватаров с подписью словами. Одни кружки не
@@ -17,11 +21,11 @@ const STYLES = `
 :where([data-vibeui-block="avatar-012"]){
 --vibeui-avatar-012-size:1.75rem;
 --vibeui-avatar-012-overlap:0.5rem;
---vibeui-avatar-012-bg:oklch(1 0 0);
---vibeui-avatar-012-fg:oklch(0.22 0.014 265);
---vibeui-avatar-012-muted:oklch(0.52 0.014 265);
---vibeui-avatar-012-border:oklch(0.9 0.006 265);
---vibeui-avatar-012-ring:oklch(1 0 0);
+--vibeui-avatar-012-bg:transparent;
+--vibeui-avatar-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-012-muted:light-dark(oklch(0.52 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.31 0.01 265));
+--vibeui-avatar-012-ring:light-dark(oklch(1 0 0),oklch(0.19 0.01 265));
 --vibeui-avatar-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-012"]{
@@ -89,17 +93,51 @@ function first(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Стопка аватаров с подписью словами: «Анна, Марк и ещё трое».
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar012({
+  background = "",
   names = DEFAULT_NAMES,
   action = "отметили",
   target = "макет каталога",
+  moreText = "и ещё",
   className,
   style,
   ...props
 }: Avatar012Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-avatar-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   const shown = names.slice(0, 3)
   const rest = names.length - 2
 
@@ -112,7 +150,7 @@ export function Avatar012({
         {...props}
         data-vibeui-block="avatar-012"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="stack" aria-hidden="true">
           {shown.map((name) => (
@@ -132,7 +170,7 @@ export function Avatar012({
               , <b>{first(names[1])}</b>
             </>
           ) : null}
-          {rest > 0 ? ` и ещё ${rest}` : ""} {action} {target}
+          {rest > 0 ? ` ${moreText} ${rest}` : ""} {action} {target}
         </span>
       </div>
     </>
