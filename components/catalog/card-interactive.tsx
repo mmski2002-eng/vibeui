@@ -5,7 +5,6 @@ import Link from "next/link"
 import { Moon, SlidersHorizontal, Sun, X } from "lucide-react"
 import { useState, type ReactNode } from "react"
 
-import { CodeSheet } from "@/components/catalog/code-sheet"
 import { CopyButton } from "@/components/copy-button"
 import {
   defaultValues,
@@ -14,7 +13,7 @@ import {
   type PreviewTheme,
 } from "@/lib/controls"
 import { getDictionary, type Locale } from "@/lib/i18n"
-import type { CatalogItem } from "@/registry/meta"
+import type { ItemControl } from "@/registry/meta"
 
 // Код компонента и панель контролов грузятся только по первому клику: пока
 // витрину просто просматривают, клиентского JS компонентов на ней нет.
@@ -30,6 +29,14 @@ const ItemControls = dynamic(() =>
   ),
 )
 
+// Панель кода — это ещё и разметка: шапка, секции, кнопки. Витрина держит
+// под тысячу карточек, поэтому пустой <dialog> у каждой стоил бы мегабайты
+// HTML. Панель появляется в дереве по первому Get Code и дальше остаётся:
+// иначе размонтирование съело бы анимацию закрытия.
+const CodeSheet = dynamic(() =>
+  import("@/components/catalog/code-sheet").then((module) => module.CodeSheet),
+)
+
 const TOGGLE =
   "border-shell-border bg-shell/70 text-shell-muted hover:text-shell-fg hover:border-shell-border-strong focus-visible:ring-shell-ring absolute top-2 z-10 inline-flex size-7 items-center justify-center rounded-md border backdrop-blur transition-colors focus-visible:ring-2 focus-visible:outline-none"
 
@@ -41,34 +48,41 @@ const TOGGLE =
  * ссылку заголовка, чтобы переход не сбрасывал то, что человек настроил.
  */
 export function CardInteractive({
-  item,
+  name,
+  controls,
+  full,
   locale,
   docUrl,
   itemUrl,
   title,
   categoryLabel,
-  configurable,
   installCommand,
   children,
 }: {
-  item: CatalogItem
+  name: string
+  /** Контролы, а не item целиком: metadata сотен items не должна ехать в
+      разметку витрины (см. lib/controls.ts). */
+  controls: ItemControl[]
+  full: boolean
   locale: Locale
   docUrl: string | null
   itemUrl: string
   title: string
   categoryLabel: string | null
-  configurable: boolean
   installCommand: string | null
   children: ReactNode
 }) {
   const t = getDictionary(locale)
   const [theme, setTheme] = useState<PreviewTheme>("dark")
-  const [values, setValues] = useState<ControlValues>(() => defaultValues(item))
+  const [values, setValues] = useState<ControlValues>(() =>
+    defaultValues(controls),
+  )
   const [open, setOpen] = useState(false)
   const [sheet, setSheet] = useState(false)
+  const [sheetMounted, setSheetMounted] = useState(false)
 
   const isDark = theme === "dark"
-  const params = toSearchParams(item, values)
+  const params = toSearchParams(controls, values)
 
   // Язык уезжает в ссылку вместе с настройкой: агент должен получить
   // инструкцию на том языке, на котором человек смотрел витрину.
@@ -100,18 +114,23 @@ export function CardInteractive({
         {open ? (
           <>
             <div className="bg-preview-surface flex min-h-32 flex-1 items-center justify-center overflow-hidden p-6">
-              <ConfigurablePreview item={item} values={values} />
+              <ConfigurablePreview
+                slug={name}
+                full={full}
+                controls={controls}
+                values={values}
+              />
             </div>
             <div className="border-shell-border border-t p-3">
               <ItemControls
-                item={item}
+                controls={controls}
                 values={values}
                 onChange={setValues}
                 locale={locale}
               />
               <button
                 type="button"
-                onClick={() => setValues(defaultValues(item))}
+                onClick={() => setValues(defaultValues(controls))}
                 className="text-shell-muted hover:text-shell-fg mt-3 text-xs"
               >
                 {t.card.reset}
@@ -138,7 +157,7 @@ export function CardInteractive({
           </span>
         </button>
 
-        {configurable ? (
+        {controls.length > 0 ? (
           <button
             type="button"
             onClick={() => setOpen(!open)}
@@ -176,7 +195,10 @@ export function CardInteractive({
           ) : null}
           <button
             type="button"
-            onClick={() => setSheet(true)}
+            onClick={() => {
+              setSheetMounted(true)
+              setSheet(true)
+            }}
             className="border-shell-border text-shell-fg hover:bg-shell-elevated hover:border-shell-border-strong focus-visible:ring-shell-ring inline-flex h-7 items-center rounded-md border px-3 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
           >
             {t.card.getCode}
@@ -190,15 +212,17 @@ export function CardInteractive({
         </div>
       </div>
 
-      <CodeSheet
-        name={item.name}
-        title={title}
-        installCommand={installCommand}
-        itemUrl={itemUrl}
-        locale={locale}
-        open={sheet}
-        onClose={() => setSheet(false)}
-      />
+      {sheetMounted ? (
+        <CodeSheet
+          name={name}
+          title={title}
+          installCommand={installCommand}
+          itemUrl={itemUrl}
+          locale={locale}
+          open={sheet}
+          onClose={() => setSheet(false)}
+        />
+      ) : null}
     </>
   )
 }

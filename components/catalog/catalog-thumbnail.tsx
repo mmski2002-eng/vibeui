@@ -1,15 +1,12 @@
-import type { ComponentType, CSSProperties } from "react"
-
+import { LazyThumbnail } from "@/components/catalog/lazy-thumbnail"
 import { getCatalogItem, getItemKind } from "@/registry/index"
-import { CATALOG_PREVIEWS } from "@/registry/previews"
-
-const SECTION_WIDTH = 1280
 
 /**
- * Миниатюра каталога рендерит тот самый компонент, который получает
+ * Миниатюра каталога показывает тот самый компонент, который получает
  * пользователь. Отдельной demo-копии нет и быть не должно.
  *
- * Режим зависит от kind:
+ * Здесь решается только режим кадра, сам компонент рендерит `LazyThumbnail`
+ * на клиенте по мере скролла:
  *
  * - `block` — секция полноширинная, поэтому рендерится в свои настоящие
  *   1280px и вписывается в карточку масштабированием;
@@ -20,46 +17,23 @@ const SECTION_WIDTH = 1280
  *   и «тихие» кнопки не читаются.
  *
  * Оба режима держат одинаковую пропорцию кадра, чтобы сетка каталога
- * не прыгала, и оба используют один и тот же файл из registry.
+ * не прыгала.
+ *
+ * Превью интерактивно: витрина показывает, как компонент себя ведёт, а не
+ * только как он выглядит. Поэтому inert не ставится — кнопки нажимаются,
+ * разделы раскрываются, и содержимое попадает в Tab-порядок.
  */
 export function CatalogThumbnail({ slug }: { slug: string }) {
-  const Preview = CATALOG_PREVIEWS[slug]
-
-  if (!Preview) {
-    return <div className="bg-shell-elevated aspect-[16/9] w-full" />
-  }
-
-  // Превью интерактивно: витрина показывает, как компонент себя ведёт, а не
-  // только как он выглядит. Поэтому inert снят — кнопки нажимаются, разделы
-  // раскрываются, и содержимое попадает в Tab-порядок, как на живой странице.
-  if (getItemKind(slug) === "component") {
-    // Компоненту, которому нужна настоящая ширина строки, её надо дать:
-    // во flex-кадре он иначе схлопывается по содержимому и врёт про дизайн.
-    const preview = getCatalogItem(slug)?.meta?.preview
-    const full = preview?.width === "full"
-    const Demo = Preview as ComponentType<Record<string, unknown>>
-
-    return (
-      <div className="bg-preview-surface flex min-h-44 w-full flex-1 items-center justify-center overflow-hidden p-6 lg:px-8 lg:py-10">
-        <div className={full ? "w-full max-w-[30rem]" : undefined}>
-          <Demo {...(preview?.props ?? {})} />
-        </div>
-      </div>
-    )
-  }
+  const preview = getCatalogItem(slug)?.meta?.preview
 
   return (
-    // Кадр 16/9 равен пропорции секции в 1280×720, поэтому блок заполняет его
-    // без полос и обрезки. Подложка следует переключателю темы на карточке.
-    <div
-      className="bg-preview-surface @container relative aspect-[16/9] w-full overflow-hidden"
-      style={{ "--thumbnail-width": `${SECTION_WIDTH}px` } as CSSProperties}
-    >
-      <div className="block-thumbnail-frame">
-        <div className="block-thumbnail-scale">
-          <Preview />
-        </div>
-      </div>
-    </div>
+    <LazyThumbnail
+      slug={slug}
+      compact={getItemKind(slug) === "component"}
+      // Компоненту, которому нужна настоящая ширина строки, её надо дать:
+      // во flex-кадре он иначе схлопывается по содержимому и врёт про дизайн.
+      full={preview?.width === "full"}
+      props={preview?.props}
+    />
   )
 }

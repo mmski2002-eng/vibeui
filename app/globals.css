@@ -192,6 +192,28 @@
     color-scheme: dark;
   }
 
+  /* Плавное появление подгруженного превью. Анимация висит не на кадре, а на
+     вставленном элементе: кадр существует с первой отрисовки, и transition на
+     нём отработал бы раньше, чем приедет чанк компонента. @starting-style даёт
+     стартовое состояние ровно в момент вставки. Только opacity: ненулевой
+     translate остался бы containing block'ом для fixed-потомков блока. */
+  .preview-fade > * {
+    opacity: 1;
+    transition: opacity 0.45s ease;
+  }
+
+  @starting-style {
+    .preview-fade > * {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .preview-fade > * {
+      transition: none;
+    }
+  }
+
   /* Миниатюра блока в каталоге: блок рендерится в свою «настоящую» ширину
      и вписывается в карточку масштабированием.
 

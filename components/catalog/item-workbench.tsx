@@ -45,7 +45,7 @@ export function ItemWorkbench({
   const [values, setValues] = useState<ControlValues>(initialValues)
   const controls = getControls(item)
 
-  const params = toSearchParams(item, values)
+  const params = toSearchParams(controls, values)
 
   if (locale !== "ru") {
     params.set("lang", locale)
@@ -102,18 +102,23 @@ export function ItemWorkbench({
           // файл обязан остаться тем же (см. docs/CONTROLS.md).
           <div className="border-shell-border bg-shell mt-5 overflow-hidden rounded-xl border">
             <div className="bg-preview-surface flex min-h-32 items-center justify-center p-6">
-              <ConfigurablePreview item={item} values={values} />
+              <ConfigurablePreview
+                slug={item.name}
+                full={item.meta?.preview?.width === "full"}
+                controls={controls}
+                values={values}
+              />
             </div>
             <div className="border-shell-border border-t p-4">
               <ItemControls
-                item={item}
+                controls={controls}
                 values={values}
                 onChange={setValues}
                 locale={locale}
               />
               <button
                 type="button"
-                onClick={() => setValues(defaultValues(item))}
+                onClick={() => setValues(defaultValues(controls))}
                 className="text-shell-muted hover:text-shell-fg mt-3 text-xs"
               >
                 {t.card.reset}

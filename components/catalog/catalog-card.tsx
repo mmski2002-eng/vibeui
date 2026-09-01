@@ -30,13 +30,14 @@ export function CatalogCard({
     // уводить с витрины. На страницу ведёт заголовок, код открывает Get Code.
     <article className="bg-shell border-shell-border relative flex h-full flex-col overflow-hidden rounded-2xl border p-0.5 shadow-sm shadow-black/5">
       <CardInteractive
-        item={localized}
+        name={localized.name}
+        controls={getControls(localized)}
+        full={localized.meta?.preview?.width === "full"}
         locale={locale}
         docUrl={getItemDocUrl(localized.name)}
         itemUrl={localePath(locale, `/components/${localized.name}`)}
         title={localized.title ?? localized.name}
         categoryLabel={category ? getCategoryLabel(category) : null}
-        configurable={getControls(localized).length > 0}
         installCommand={getInstallCommand(localized.name)}
       >
         <CatalogThumbnail slug={localized.name} />

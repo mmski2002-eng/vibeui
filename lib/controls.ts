@@ -13,10 +13,16 @@ export function getControls(item: CatalogItem): ItemControl[] {
   return item.meta?.controls ?? []
 }
 
-export function defaultValues(item: CatalogItem): ControlValues {
+/**
+ * Значения по умолчанию. На вход — сами контролы, а не item: витрина держит
+ * сотни карточек, и таскать в клиентский компонент всю metadata item'а
+ * (описания, ai-инструкции, переводы) значило бы сериализовать её в разметку
+ * страницы каталога целиком.
+ */
+export function defaultValues(controls: ItemControl[]): ControlValues {
   const values: ControlValues = {}
 
-  for (const control of getControls(item)) {
+  for (const control of controls) {
     values[control.prop] = control.default
   }
 
@@ -93,12 +99,12 @@ export function resolveControlValues(
 
 /** В ссылку пишутся только отличия от значений по умолчанию. */
 export function toSearchParams(
-  item: CatalogItem,
+  controls: ItemControl[],
   values: ControlValues,
 ): URLSearchParams {
   const params = new URLSearchParams()
 
-  for (const control of getControls(item)) {
+  for (const control of controls) {
     const value = values[control.prop]
 
     if (value !== undefined && value !== control.default) {

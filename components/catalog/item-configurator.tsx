@@ -2,9 +2,9 @@
 
 import { useId } from "react"
 
-import { getControls, type ControlValues } from "@/lib/controls"
+import { type ControlValues } from "@/lib/controls"
 import { getDictionary, type Locale } from "@/lib/i18n"
-import type { CatalogItem, ItemControl } from "@/registry/meta"
+import type { ItemControl } from "@/registry/meta"
 import { LAZY_PREVIEWS } from "@/registry/previews.lazy"
 
 /**
@@ -12,12 +12,12 @@ import { LAZY_PREVIEWS } from "@/registry/previews.lazy"
  * компонент остался на своей палитре.
  */
 function toProps(
-  item: CatalogItem,
+  controls: ItemControl[],
   values: ControlValues,
 ): Record<string, unknown> {
   const props: Record<string, unknown> = {}
 
-  for (const control of getControls(item)) {
+  for (const control of controls) {
     const value = values[control.prop]
 
     if (control.type === "color" && value === "") {
@@ -126,24 +126,26 @@ function Control({
 
 /** Живое превью с выбранными значениями. Пропсы, не исходник. */
 export function ConfigurablePreview({
-  item,
+  slug,
+  full,
+  controls,
   values,
 }: {
-  item: CatalogItem
+  slug: string
+  // Та же оговорка, что и в миниатюре: ширину объявляет сам item.
+  full: boolean
+  controls: ItemControl[]
   values: ControlValues
 }) {
-  const Preview = LAZY_PREVIEWS[item.name]
+  const Preview = LAZY_PREVIEWS[slug]
 
   if (!Preview) {
     return null
   }
 
-  // Та же оговорка, что и в миниатюре: ширину объявляет сам item.
-  const full = item.meta?.preview?.width === "full"
-
   return (
     <div className={full ? "w-full max-w-[30rem]" : undefined}>
-      <Preview {...toProps(item, values)} />
+      <Preview {...toProps(controls, values)} />
     </div>
   )
 }
@@ -153,19 +155,19 @@ export function ConfigurablePreview({
  * нужны и превью, и ссылке, и переносу на страницу item'а.
  */
 export function ItemControls({
-  item,
+  controls,
   values,
   onChange,
   locale,
 }: {
-  item: CatalogItem
+  controls: ItemControl[]
   values: ControlValues
   onChange: (next: ControlValues) => void
   locale: Locale
 }) {
   return (
     <div className="grid gap-3 sm:grid-cols-2">
-      {getControls(item).map((control) => (
+      {controls.map((control) => (
         <Control
           key={control.prop}
           control={control}
