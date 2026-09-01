@@ -242,7 +242,11 @@ export function Popover011({
               stroke="currentColor"
               strokeWidth="1.6"
             />
-            <path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" strokeWidth="1.6" />
+            <path
+              d="M3 9h18M8 3v4M16 3v4"
+              stroke="currentColor"
+              strokeWidth="1.6"
+            />
           </svg>
         </button>
 

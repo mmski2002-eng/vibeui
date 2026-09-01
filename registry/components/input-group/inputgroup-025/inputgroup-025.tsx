@@ -182,12 +182,20 @@ export function Inputgroup025({
               aria-hidden="true"
             >
               <rect x="4.5" y="3" width="7" height="11" rx="1.2" />
-              <path d="M6.5 3V2.2a.7.7 0 0 1 .7-.7h1.6a.7.7 0 0 1 .7.7V3" strokeLinecap="round" />
+              <path
+                d="M6.5 3V2.2a.7.7 0 0 1 .7-.7h1.6a.7.7 0 0 1 .7.7V3"
+                strokeLinecap="round"
+              />
             </svg>
             {buttonLabel}
           </button>
         </div>
-        <p data-part="status" id={`${id}-status`} data-status={status} aria-live="polite">
+        <p
+          data-part="status"
+          id={`${id}-status`}
+          data-status={status}
+          aria-live="polite"
+        >
           {STATUS_TEXT[status]}
         </p>
         <p data-part="hint" id={`${id}-hint`}>

@@ -1,6 +1,9 @@
 import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
-export type Rating009Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Rating009Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children"
+> & {
   votes?: number[]
   accent?: string
 }

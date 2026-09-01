@@ -120,8 +120,7 @@ const DEFAULT_STEPS: Stepper014Step[] = [
   { title: "Профиль", description: "Имя, фото и часовой пояс." },
   {
     title: "Импорт контактов",
-    description:
-      "Загрузите адресную книгу, чтобы не вводить контакты вручную.",
+    description: "Загрузите адресную книгу, чтобы не вводить контакты вручную.",
     optional: true,
     skipHref: "#tariff",
   },

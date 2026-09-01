@@ -149,9 +149,7 @@ export function Toast013({
           {returned ? "Письма возвращены из архива" : message}
           {!returned ? (
             <span data-part="sub">
-              {expired
-                ? "Время вышло"
-                : `Отменить можно ещё ${secondsLeft} с`}
+              {expired ? "Время вышло" : `Отменить можно ещё ${secondsLeft} с`}
             </span>
           ) : null}
         </span>

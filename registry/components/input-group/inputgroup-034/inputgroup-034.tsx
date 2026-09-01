@@ -158,7 +158,10 @@ export function Inputgroup034({
                 strokeWidth="1.6"
                 aria-hidden="true"
               >
-                <path d="M2 8s2.2-4.5 6-4.5S14 8 14 8s-2.2 4.5-6 4.5S2 8 2 8Z" strokeLinejoin="round" />
+                <path
+                  d="M2 8s2.2-4.5 6-4.5S14 8 14 8s-2.2 4.5-6 4.5S2 8 2 8Z"
+                  strokeLinejoin="round"
+                />
                 <path d="M2 2l12 12" strokeLinecap="round" />
               </svg>
             ) : (
@@ -169,7 +172,10 @@ export function Inputgroup034({
                 strokeWidth="1.6"
                 aria-hidden="true"
               >
-                <path d="M1.5 8S3.7 3.5 8 3.5 14.5 8 14.5 8 12.3 12.5 8 12.5 1.5 8 1.5 8Z" strokeLinejoin="round" />
+                <path
+                  d="M1.5 8S3.7 3.5 8 3.5 14.5 8 14.5 8 12.3 12.5 8 12.5 1.5 8 1.5 8Z"
+                  strokeLinejoin="round"
+                />
                 <circle cx="8" cy="8" r="2" />
               </svg>
             )}
@@ -177,7 +183,9 @@ export function Inputgroup034({
           </button>
         </div>
         <p data-part="hint" id={`${id}-hint`} data-visible={visible}>
-          {visible ? "Ключ виден на экране — не оставляйте его так надолго." : hint}
+          {visible
+            ? "Ключ виден на экране — не оставляйте его так надолго."
+            : hint}
         </p>
       </div>
     </>

@@ -136,7 +136,9 @@ export function Inputgroup040({
       >
         <label htmlFor={id}>{label}</label>
         <div data-part="group">
-          <span data-part="prefix" aria-hidden="true">$</span>
+          <span data-part="prefix" aria-hidden="true">
+            $
+          </span>
           <input
             ref={field}
             id={id}
@@ -153,13 +155,32 @@ export function Inputgroup040({
             onClick={copy}
           >
             {copied ? (
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                <path d="M3 8.5l3 3 7-7" strokeLinecap="round" strokeLinejoin="round" />
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                aria-hidden="true"
+              >
+                <path
+                  d="M3 8.5l3 3 7-7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             ) : (
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                aria-hidden="true"
+              >
                 <rect x="5.5" y="5.5" width="8" height="8" rx="1.2" />
-                <path d="M3 10.5V3.7a1.2 1.2 0 0 1 1.2-1.2H10" strokeLinecap="round" />
+                <path
+                  d="M3 10.5V3.7a1.2 1.2 0 0 1 1.2-1.2H10"
+                  strokeLinecap="round"
+                />
               </svg>
             )}
             {copied ? "Готово" : "Копировать"}

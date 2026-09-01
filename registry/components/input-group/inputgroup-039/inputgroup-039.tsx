@@ -159,8 +159,17 @@ export function Inputgroup039({
         />
         {file ? (
           <div data-part="chip">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-              <path d="M4 2h5l3 3v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z" strokeLinejoin="round" />
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              aria-hidden="true"
+            >
+              <path
+                d="M4 2h5l3 3v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z"
+                strokeLinejoin="round"
+              />
               <path d="M9 2v3h3" strokeLinejoin="round" />
             </svg>
             <div data-part="meta">
@@ -173,15 +182,31 @@ export function Inputgroup039({
               aria-label={`Удалить файл ${file.name}`}
               onClick={remove}
             >
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                aria-hidden="true"
+              >
                 <path d="M4 4l8 8M12 4l-8 8" strokeLinecap="round" />
               </svg>
             </button>
           </div>
         ) : (
           <label htmlFor={id} data-part="trigger">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-              <path d="M8 3v7M4.5 6.5 8 3l3.5 3.5" strokeLinecap="round" strokeLinejoin="round" />
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              aria-hidden="true"
+            >
+              <path
+                d="M8 3v7M4.5 6.5 8 3l3.5 3.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
               <path d="M3 12.5h10" strokeLinecap="round" />
             </svg>
             Выбрать файл

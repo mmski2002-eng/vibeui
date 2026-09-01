@@ -270,7 +270,9 @@ export function Dropdown018({
                   aria-checked={picked === person}
                   data-part="item"
                   style={
-                    { "--vibeui-dropdown-018-hue": hue(person) } as CSSProperties
+                    {
+                      "--vibeui-dropdown-018-hue": hue(person),
+                    } as CSSProperties
                   }
                   onClick={() => choose(person)}
                 >

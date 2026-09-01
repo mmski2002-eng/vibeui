@@ -125,8 +125,7 @@ export function Inputgroup027({
 
   const setUnitAndNotify = (next: Inputgroup027Unit) => {
     setUnit(next)
-    const clamped =
-      next === "percent" ? Math.min(value, maxPercent) : value
+    const clamped = next === "percent" ? Math.min(value, maxPercent) : value
     setValue(clamped)
     onChange?.(clamped, next)
   }

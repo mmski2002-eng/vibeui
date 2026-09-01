@@ -96,9 +96,17 @@ display:flex;align-items:center;justify-content:center;
 `
 
 const DEFAULT_ROLES: Empty011Role[] = [
-  { id: "viewer-plus", label: "Просмотр отчётов", hint: "Видеть аналитику без права менять её" },
+  {
+    id: "viewer-plus",
+    label: "Просмотр отчётов",
+    hint: "Видеть аналитику без права менять её",
+  },
   { id: "editor", label: "Редактор", hint: "Создавать и менять дашборды" },
-  { id: "temp", label: "Временный доступ на 7 дней", hint: "Снимается автоматически" },
+  {
+    id: "temp",
+    label: "Временный доступ на 7 дней",
+    hint: "Снимается автоматически",
+  },
 ]
 
 /**

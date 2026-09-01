@@ -115,7 +115,11 @@ export function Item011({
           <span data-part="title">{title}</span>
         </label>
         <span data-part="due">{due}</span>
-        <span data-part="assignee" aria-label={assigneeName} title={assigneeName}>
+        <span
+          data-part="assignee"
+          aria-label={assigneeName}
+          title={assigneeName}
+        >
           {assignee}
         </span>
       </li>

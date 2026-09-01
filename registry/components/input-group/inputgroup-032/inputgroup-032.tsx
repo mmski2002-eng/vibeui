@@ -20,9 +20,9 @@ export type Inputgroup032Props = Omit<
 }
 
 function randomCode() {
-  return Array.from({ length: 12 }, () =>
-    Math.floor(Math.random() * 10),
-  ).join("")
+  return Array.from({ length: 12 }, () => Math.floor(Math.random() * 10)).join(
+    "",
+  )
 }
 
 // Идея компонента: кнопка сканирования не работает вслепую — статус
@@ -236,7 +236,11 @@ export function Inputgroup032({
                 strokeWidth="1.6"
                 aria-hidden="true"
               >
-                <path d="M2 5V3.5A1.5 1.5 0 0 1 3.5 2H5M11 2h1.5A1.5 1.5 0 0 1 14 3.5V5M14 11v1.5a1.5 1.5 0 0 1-1.5 1.5H11M5 14H3.5A1.5 1.5 0 0 1 2 12.5V11" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M2 5V3.5A1.5 1.5 0 0 1 3.5 2H5M11 2h1.5A1.5 1.5 0 0 1 14 3.5V5M14 11v1.5a1.5 1.5 0 0 1-1.5 1.5H11M5 14H3.5A1.5 1.5 0 0 1 2 12.5V11"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
                 <path d="M4 8h8" strokeLinecap="round" />
               </svg>
             )}

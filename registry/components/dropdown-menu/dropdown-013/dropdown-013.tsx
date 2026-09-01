@@ -253,7 +253,12 @@ export function Dropdown013({
               {copied ? "Скопировано" : "Копировать"}
             </span>
           </button>
-          <button type="button" role="menuitem" data-part="item" onClick={close}>
+          <button
+            type="button"
+            role="menuitem"
+            data-part="item"
+            onClick={close}
+          >
             Настройки аккаунта
           </button>
           <div data-part="exit">

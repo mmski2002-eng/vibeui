@@ -93,7 +93,10 @@ font:inherit;font-size:0.75rem;font-weight:650;
 `
 
 const DEFAULT_GROUPS: Filters010Group[] = [
-  { title: "Категория", options: ["Формы", "Таблицы", "Навигация", "Карточки"] },
+  {
+    title: "Категория",
+    options: ["Формы", "Таблицы", "Навигация", "Карточки"],
+  },
   { title: "Лицензия", options: ["MIT", "Коммерческая"] },
 ]
 
@@ -172,11 +175,7 @@ export function Filters010({
         ))}
 
         {selected.length > 0 ? (
-          <button
-            type="button"
-            data-part="reset"
-            onClick={() => apply([])}
-          >
+          <button type="button" data-part="reset" onClick={() => apply([])}>
             {resetLabel}
           </button>
         ) : null}

@@ -96,7 +96,11 @@ export function Switch010({
       <style href="vibeui-switch-010" precedence="medium">
         {STYLES}
       </style>
-      <label data-vibeui-block="switch-010" className={className} style={palette}>
+      <label
+        data-vibeui-block="switch-010"
+        className={className}
+        style={palette}
+      >
         <span data-part="mark" aria-hidden="true" />
         <span data-part="text">
           <span data-part="title">{label}</span>

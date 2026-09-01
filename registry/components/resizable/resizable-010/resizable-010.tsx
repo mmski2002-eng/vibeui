@@ -98,7 +98,12 @@ outline:2px solid var(--vibeui-resizable-010-accent);outline-offset:2px;border-r
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="resizable-010"] *{animation:none!important;transition:none!important}}
 `
 
-const TASKS = ["Проверить макет", "Согласовать смету", "Написать отчёт", "Созвониться с клиентом"]
+const TASKS = [
+  "Проверить макет",
+  "Согласовать смету",
+  "Написать отчёт",
+  "Созвониться с клиентом",
+]
 
 /**
  * Вертикальное разделение списка задач и подробностей: доля в fr, горизонтальный
@@ -208,11 +213,15 @@ export function Resizable010({
             }}
             onPointerCancel={() => setDragging(false)}
           />
-          <section data-part="pane" data-role="details" aria-label="Подробности">
+          <section
+            data-part="pane"
+            data-role="details"
+            aria-label="Подробности"
+          >
             <h3>Согласовать смету</h3>
             <p>
-              Срок — пятница, исполнитель — бухгалтерия. Подробности растут
-              вниз вместе с высотой нижней доли.
+              Срок — пятница, исполнитель — бухгалтерия. Подробности растут вниз
+              вместе с высотой нижней доли.
             </p>
           </section>
         </div>

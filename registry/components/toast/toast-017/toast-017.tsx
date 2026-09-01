@@ -3,7 +3,10 @@
 import { useState } from "react"
 import type { ComponentPropsWithoutRef } from "react"
 
-export type Toast017Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Toast017Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children"
+> & {
   title?: string
   message?: string
   keepLabel?: string

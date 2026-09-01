@@ -16,10 +16,7 @@ function getInitials(name: string): string {
   return (words[0][0] + words[1][0]).toUpperCase()
 }
 
-const STATUS_LABEL: Record<
-  NonNullable<Icontile011Props["status"]>,
-  string
-> = {
+const STATUS_LABEL: Record<NonNullable<Icontile011Props["status"]>, string> = {
   connected: "Подключено",
   pending: "Ожидает подтверждения",
   disconnected: "Отключено",

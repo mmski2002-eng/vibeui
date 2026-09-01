@@ -149,7 +149,11 @@ export function Radio015({
                 value={option.value}
                 defaultChecked={option.value === defaultValue}
               />
-              <span data-part="thumb" data-variant={option.value} aria-hidden="true">
+              <span
+                data-part="thumb"
+                data-variant={option.value}
+                aria-hidden="true"
+              >
                 <span data-part="thumb-bar" />
                 <span data-part="thumb-body">
                   <span data-part="thumb-line" data-w="full" />

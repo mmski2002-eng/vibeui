@@ -233,11 +233,7 @@ export function Icontile015({
         <span data-part="legend" id={legendId}>
           {label}
         </span>
-        <div
-          data-part="group"
-          role="radiogroup"
-          aria-labelledby={legendId}
-        >
+        <div data-part="group" role="radiogroup" aria-labelledby={legendId}>
           {METHODS.map((item) => {
             const Icon = ICONS[item.value]
             const checked = item.value === current

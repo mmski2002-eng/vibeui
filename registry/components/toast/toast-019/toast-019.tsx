@@ -5,7 +5,10 @@ import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
 export type Toast019Status = "exporting" | "ready" | "cancelled"
 
-export type Toast019Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Toast019Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children"
+> & {
   fileName?: string
   fileSize?: string
   downloadHref?: string
@@ -170,7 +173,9 @@ export function Toast019({
         role="status"
         aria-live="polite"
         className={className}
-        style={{ "--vibeui-toast-019-percent": percent, ...style } as CSSProperties}
+        style={
+          { "--vibeui-toast-019-percent": percent, ...style } as CSSProperties
+        }
       >
         <span data-part="glyph" aria-hidden="true">
           {status === "ready" ? "✓" : status === "cancelled" ? "–" : "↓"}
@@ -213,11 +218,7 @@ export function Toast019({
 
           {status === "ready" ? (
             <span data-part="row">
-              <a
-                data-part="download"
-                href={downloadHref}
-                download={fileName}
-              >
+              <a data-part="download" href={downloadHref} download={fileName}>
                 Скачать
               </a>
             </span>

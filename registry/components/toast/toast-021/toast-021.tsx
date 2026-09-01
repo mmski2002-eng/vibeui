@@ -5,7 +5,10 @@ import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
 export type Toast021Tone = "neutral" | "success" | "warning"
 
-export type Toast021Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Toast021Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children"
+> & {
   message?: string
   tone?: Toast021Tone
   glyph?: string
@@ -144,7 +147,9 @@ export function Toast021({
               data-part="pill"
               role="status"
               aria-live="polite"
-              style={{ "--vibeui-toast-021-tone": TONE_COLOR[tone] } as CSSProperties}
+              style={
+                { "--vibeui-toast-021-tone": TONE_COLOR[tone] } as CSSProperties
+              }
             >
               {glyph ? (
                 <span data-part="glyph" aria-hidden="true">

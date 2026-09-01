@@ -101,9 +101,7 @@ export function Frame008({
         <div data-part="body">
           <span data-part="camera" aria-hidden="true" />
           <div data-part="screen">
-            {children ?? (
-              <div data-part="stub">Экран планшета</div>
-            )}
+            {children ?? <div data-part="stub">Экран планшета</div>}
             <span data-part="home" aria-hidden="true" />
           </div>
         </div>

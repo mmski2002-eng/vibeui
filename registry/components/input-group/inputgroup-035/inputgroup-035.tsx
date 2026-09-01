@@ -230,7 +230,11 @@ export function Inputgroup035({
                 strokeWidth="1.6"
                 aria-hidden="true"
               >
-                <path d="M2.5 8.5l3.5 3.5 7-8" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M2.5 8.5l3.5 3.5 7-8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             )}
             {status === "checking" ? "Проверяем…" : "Проверить"}

@@ -85,7 +85,10 @@ animation:vibeui-frame-007-blink 1.1s steps(1) infinite;
 
 const DEFAULT_LINES: Frame007Line[] = [
   { text: "npx shadcn@latest add frame-007", type: "command" },
-  { text: "Компонент установлен в components/vibeui/frame-007.tsx", type: "output" },
+  {
+    text: "Компонент установлен в components/vibeui/frame-007.tsx",
+    type: "output",
+  },
   { text: "Готово: зависимостей нет, палитра своя.", type: "output" },
 ]
 
@@ -126,7 +129,11 @@ export function Frame007({
             {children ?? (
               <pre data-part="output" aria-label="Вывод терминала">
                 {lines.map((line, index) => (
-                  <div data-part="line" data-type={line.type ?? "command"} key={index}>
+                  <div
+                    data-part="line"
+                    data-type={line.type ?? "command"}
+                    key={index}
+                  >
                     {(line.type ?? "command") === "command" ? (
                       <span data-part="prompt" aria-hidden="true">
                         {prompt}

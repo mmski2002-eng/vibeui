@@ -1,12 +1,7 @@
 import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
 export type Icontile008CategoryIcon =
-  | "code"
-  | "design"
-  | "chart"
-  | "rocket"
-  | "shield"
-  | "spark"
+  "code" | "design" | "chart" | "rocket" | "shield" | "spark"
 
 export type Icontile008Category = {
   label: string

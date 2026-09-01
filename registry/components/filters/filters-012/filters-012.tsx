@@ -176,10 +176,7 @@ export function Filters012({
                     checked={draftId === preset.id}
                     onChange={() => setDraftId(preset.id)}
                   />
-                  <label
-                    data-part="body"
-                    htmlFor={`${name}-${preset.id}`}
-                  >
+                  <label data-part="body" htmlFor={`${name}-${preset.id}`}>
                     <b>{preset.name}</b>
                     <span>{preset.summary}</span>
                   </label>

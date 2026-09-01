@@ -156,12 +156,7 @@ export function Toast014({
         <div data-part="stage">
           <p data-part="hint">область приложения</p>
           {visible ? (
-            <div
-              key={corner}
-              data-part="card"
-              role="status"
-              aria-live="polite"
-            >
+            <div key={corner} data-part="card" role="status" aria-live="polite">
               <span data-part="dot" aria-hidden="true" />
               <span>{message}</span>
               <button

@@ -150,9 +150,7 @@ export function Radio009({
                 value={bundle.value}
                 defaultChecked={bundle.value === defaultValue}
               />
-              {bundle.save ? (
-                <span data-part="save">{bundle.save}</span>
-              ) : null}
+              {bundle.save ? <span data-part="save">{bundle.save}</span> : null}
               <span data-part="qty">{bundle.qty}</span>
               <span data-part="price">{bundle.price}</span>
               <span data-part="unit">{bundle.perUnit}</span>

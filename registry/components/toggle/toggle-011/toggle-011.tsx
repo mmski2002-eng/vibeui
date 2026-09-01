@@ -95,7 +95,9 @@ export function Toggle011({
   const [pressed, setPressed] = useState(defaultPressed)
 
   const palette = {
-    ...(accentLight ? { "--vibeui-toggle-011-accent-light": accentLight } : null),
+    ...(accentLight
+      ? { "--vibeui-toggle-011-accent-light": accentLight }
+      : null),
     ...(accentDark ? { "--vibeui-toggle-011-accent-dark": accentDark } : null),
     ...style,
   } as CSSProperties
@@ -123,7 +125,12 @@ export function Toggle011({
               onChange?.(!pressed)
             }}
           >
-            <svg data-part="sun" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <svg
+              data-part="sun"
+              viewBox="0 0 20 20"
+              fill="none"
+              aria-hidden="true"
+            >
               <circle cx="10" cy="10" r="3.6" fill="currentColor" />
               <path
                 d="M10 2.4v2M10 15.6v2M17.6 10h-2M4.4 10h-2M15.4 4.6l-1.4 1.4M6 14l-1.4 1.4M15.4 15.4L14 14M6 6 4.6 4.6"
@@ -132,7 +139,12 @@ export function Toggle011({
                 strokeLinecap="round"
               />
             </svg>
-            <svg data-part="moon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <svg
+              data-part="moon"
+              viewBox="0 0 20 20"
+              fill="none"
+              aria-hidden="true"
+            >
               <path
                 d="M16.5 12.3A6.8 6.8 0 0 1 7.7 3.5a7 7 0 1 0 8.8 8.8z"
                 fill="currentColor"

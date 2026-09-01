@@ -93,9 +93,21 @@ outline:2px solid var(--vibeui-empty-013-accent);outline-offset:2px;
 `
 
 const DEFAULT_STEPS: Empty013Step[] = [
-  { id: "profile", title: "Заполните профиль", hint: "Имя и аватар видны команде" },
-  { id: "invite", title: "Пригласите команду", hint: "Можно позвать позже, из настроек" },
-  { id: "first-project", title: "Создайте первый проект", hint: "Пустой шаблон уже готов" },
+  {
+    id: "profile",
+    title: "Заполните профиль",
+    hint: "Имя и аватар видны команде",
+  },
+  {
+    id: "invite",
+    title: "Пригласите команду",
+    hint: "Можно позвать позже, из настроек",
+  },
+  {
+    id: "first-project",
+    title: "Создайте первый проект",
+    hint: "Пустой шаблон уже готов",
+  },
 ]
 
 /**
@@ -124,11 +136,7 @@ export function Empty013({
       <style href="vibeui-empty-013" precedence="medium">
         {STYLES}
       </style>
-      <div
-        data-vibeui-block="empty-013"
-        className={className}
-        style={palette}
-      >
+      <div data-vibeui-block="empty-013" className={className} style={palette}>
         <div data-part="head">
           <h3 data-part="title">{title}</h3>
           <div data-part="progress-row">

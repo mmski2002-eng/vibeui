@@ -249,10 +249,20 @@ export function Dropdown015({
             }
           }}
         >
-          <button type="button" role="menuitem" data-part="item" onClick={close}>
+          <button
+            type="button"
+            role="menuitem"
+            data-part="item"
+            onClick={close}
+          >
             Ссылка для просмотра
           </button>
-          <button type="button" role="menuitem" data-part="item" onClick={close}>
+          <button
+            type="button"
+            role="menuitem"
+            data-part="item"
+            onClick={close}
+          >
             Пригласить соавтора
           </button>
           <div data-part="rule" role="separator" />

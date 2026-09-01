@@ -155,7 +155,11 @@ export function Pagination012({
           </ul>
         </div>
         <p data-part="bottom">
-          <span data-part="dots" data-active={loading || undefined} aria-hidden="true">
+          <span
+            data-part="dots"
+            data-active={loading || undefined}
+            aria-hidden="true"
+          >
             <span />
             <span />
             <span />

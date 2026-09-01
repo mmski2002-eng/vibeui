@@ -169,7 +169,9 @@ export function Pagination015({
                 value={draft}
                 aria-label={`Номер страницы, от 1 до ${total}`}
                 aria-invalid={bad || undefined}
-                aria-describedby={bad ? "vibeui-pagination-015-error" : undefined}
+                aria-describedby={
+                  bad ? "vibeui-pagination-015-error" : undefined
+                }
                 onChange={(event) => {
                   setDraft(event.target.value)
                   setBad(false)

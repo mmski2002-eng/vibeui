@@ -3,7 +3,10 @@
 import { useEffect, useRef, useState } from "react"
 import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
-export type Toast020Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Toast020Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children"
+> & {
   message?: string
   expiredMessage?: string
   extendLabel?: string
@@ -147,7 +150,9 @@ export function Toast020({
         role="status"
         aria-live="polite"
         className={className}
-        style={{ "--vibeui-toast-020-percent": percent, ...style } as CSSProperties}
+        style={
+          { "--vibeui-toast-020-percent": percent, ...style } as CSSProperties
+        }
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
         onFocus={() => setPaused(true)}
@@ -155,9 +160,7 @@ export function Toast020({
       >
         <div data-part="head">
           <span data-part="text">{expired ? expiredMessage : message}</span>
-          {!expired ? (
-            <span data-part="clock">{formatClock(left)}</span>
-          ) : null}
+          {!expired ? <span data-part="clock">{formatClock(left)}</span> : null}
           <button
             type="button"
             data-part="close"

@@ -168,7 +168,13 @@ export function Phoneinput008({
           : `Лишних ${typed - expected} ${digitWord(typed - expected)}`
 
   const statusMark =
-    state === "valid" ? "✓" : state === "excess" ? "!" : state === "incomplete" ? "…" : null
+    state === "valid"
+      ? "✓"
+      : state === "excess"
+        ? "!"
+        : state === "incomplete"
+          ? "…"
+          : null
 
   const palette = {
     ...(accent ? { "--vibeui-phoneinput-008-accent": accent } : null),

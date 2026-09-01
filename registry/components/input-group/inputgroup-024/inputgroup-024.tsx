@@ -241,7 +241,12 @@ export function Inputgroup024({
             {status === "checking" ? "Проверяем…" : applyLabel}
           </button>
         </div>
-        <p data-part="status" id={`${id}-status`} data-status={status} role="status">
+        <p
+          data-part="status"
+          id={`${id}-status`}
+          data-status={status}
+          role="status"
+        >
           {status === "checking" ? (
             <svg
               data-part="spinner"
@@ -262,7 +267,11 @@ export function Inputgroup024({
               strokeWidth="2"
               aria-hidden="true"
             >
-              <path d="m3 8.5 3.2 3.2L13 5" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="m3 8.5 3.2 3.2L13 5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           ) : null}
           {status === "rejected" ? (

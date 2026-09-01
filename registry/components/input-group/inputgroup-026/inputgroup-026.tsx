@@ -211,7 +211,11 @@ export function Inputgroup026({
                         aria-hidden="true"
                       >
                         <circle cx="8" cy="8" r="5.5" />
-                        <path d="M8 5.2V8l2 1.4" strokeLinecap="round" strokeLinejoin="round" />
+                        <path
+                          d="M8 5.2V8l2 1.4"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                       {item}
                     </button>

@@ -112,7 +112,9 @@ export function Sortable008({
     setOrder(next)
     onChange?.(next)
     if (announceOrder) {
-      setAnnouncement(`Новый порядок: ${next.map((task) => task.text).join(", ")}.`)
+      setAnnouncement(
+        `Новый порядок: ${next.map((task) => task.text).join(", ")}.`,
+      )
     }
   }
 

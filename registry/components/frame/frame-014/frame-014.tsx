@@ -1,6 +1,9 @@
 import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
 
-export type Frame014Props = Omit<ComponentPropsWithoutRef<"figure">, "title"> & {
+export type Frame014Props = Omit<
+  ComponentPropsWithoutRef<"figure">,
+  "title"
+> & {
   sender?: string
   senderEmail?: string
   date?: string
@@ -127,7 +130,9 @@ export function Frame014({
           <h2 data-part="subject">{subject}</h2>
           <div data-part="body">
             {children ??
-              DEFAULT_BODY_LINES.map((line, index) => <p key={index}>{line}</p>)}
+              DEFAULT_BODY_LINES.map((line, index) => (
+                <p key={index}>{line}</p>
+              ))}
           </div>
         </div>
       </figure>

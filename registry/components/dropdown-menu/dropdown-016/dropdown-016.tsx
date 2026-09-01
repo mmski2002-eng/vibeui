@@ -266,7 +266,9 @@ export function Dropdown016({
               <span
                 data-part="dot"
                 aria-hidden="true"
-                style={{ "--vibeui-dropdown-016-dot": label.hue } as CSSProperties}
+                style={
+                  { "--vibeui-dropdown-016-dot": label.hue } as CSSProperties
+                }
               />
               <span data-part="label">{label.name}</span>
               <span data-part="tally">{label.count}</span>
@@ -279,11 +281,7 @@ export function Dropdown016({
                 : "Показаны все карточки"}
             </span>
             {on.length > 0 ? (
-              <button
-                type="button"
-                data-part="reset"
-                onClick={() => setOn([])}
-              >
+              <button type="button" data-part="reset" onClick={() => setOn([])}>
                 Сбросить
               </button>
             ) : null}

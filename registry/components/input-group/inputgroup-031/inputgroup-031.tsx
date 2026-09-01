@@ -147,11 +147,7 @@ export function Inputgroup031({
           ) : null}
         </div>
         <div data-part="group">
-          <span
-            data-part="counter"
-            data-limit={atLimit}
-            aria-hidden="true"
-          >
+          <span data-part="counter" data-limit={atLimit} aria-hidden="true">
             {value.length}/{maxLength}
           </span>
           <input

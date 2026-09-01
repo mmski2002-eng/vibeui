@@ -207,16 +207,36 @@ export function Dropdown014({
             }
           }}
         >
-          <button type="button" role="menuitem" data-part="item" onClick={close}>
+          <button
+            type="button"
+            role="menuitem"
+            data-part="item"
+            onClick={close}
+          >
             Открыть
           </button>
-          <button type="button" role="menuitem" data-part="item" onClick={close}>
+          <button
+            type="button"
+            role="menuitem"
+            data-part="item"
+            onClick={close}
+          >
             Переименовать
           </button>
-          <button type="button" role="menuitem" data-part="item" onClick={close}>
+          <button
+            type="button"
+            role="menuitem"
+            data-part="item"
+            onClick={close}
+          >
             Дублировать
           </button>
-          <button type="button" role="menuitem" data-part="item" onClick={close}>
+          <button
+            type="button"
+            role="menuitem"
+            data-part="item"
+            onClick={close}
+          >
             Скачать
           </button>
           <div data-part="rule" role="separator" />

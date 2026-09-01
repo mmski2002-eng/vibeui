@@ -130,7 +130,9 @@ export function Iconstack006({
             <span
               key={name}
               data-part="logo"
-              style={{ "--vibeui-iconstack-006-hue": hue(name) } as CSSProperties}
+              style={
+                { "--vibeui-iconstack-006-hue": hue(name) } as CSSProperties
+              }
             >
               {mark(name)}
             </span>

@@ -5,7 +5,10 @@ type Frame018Message = {
   from: "me" | "them"
 }
 
-export type Frame018Props = Omit<ComponentPropsWithoutRef<"figure">, "title"> & {
+export type Frame018Props = Omit<
+  ComponentPropsWithoutRef<"figure">,
+  "title"
+> & {
   contact?: string
   messages?: Frame018Message[]
   placeholder?: string
@@ -158,10 +161,18 @@ export function Frame018({
             </span>
             <p data-part="contact">{contact}</p>
           </div>
-          <div data-part="feed" role="log" aria-label={`Переписка с собеседником ${contact}`}>
+          <div
+            data-part="feed"
+            role="log"
+            aria-label={`Переписка с собеседником ${contact}`}
+          >
             {children ??
               messages.map((message, messageIndex) => (
-                <p key={messageIndex} data-part="bubble" data-from={message.from}>
+                <p
+                  key={messageIndex}
+                  data-part="bubble"
+                  data-from={message.from}
+                >
                   {message.text}
                 </p>
               ))}

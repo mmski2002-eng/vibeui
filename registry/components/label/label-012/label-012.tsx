@@ -90,12 +90,7 @@ export function Label012({
         <label htmlFor={id}>
           {label} <span data-part="hint">({optionalText})</span>
         </label>
-        <input
-          id={id}
-          type="text"
-          name="company"
-          placeholder={placeholder}
-        />
+        <input id={id} type="text" name="company" placeholder={placeholder} />
       </div>
     </>
   )

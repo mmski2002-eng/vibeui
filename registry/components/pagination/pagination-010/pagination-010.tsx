@@ -128,9 +128,7 @@ export function Pagination010({
   className,
   style,
 }: Pagination010Props) {
-  const [page, setPage] = useState(
-    Math.min(Math.max(initialPage, 1), total),
-  )
+  const [page, setPage] = useState(Math.min(Math.max(initialPage, 1), total))
   const [openGap, setOpenGap] = useState<string | null>(null)
   const [draft, setDraft] = useState(page)
 

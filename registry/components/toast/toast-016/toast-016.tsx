@@ -5,7 +5,10 @@ import type { ComponentPropsWithoutRef } from "react"
 
 export type Toast016Status = "offline" | "reconnecting" | "online"
 
-export type Toast016Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Toast016Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children"
+> & {
   offlineText?: string
   reconnectingText?: string
   onlineText?: string

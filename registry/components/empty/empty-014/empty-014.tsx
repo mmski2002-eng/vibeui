@@ -127,11 +127,7 @@ export function Empty014({
         {savedCount > 0 ? (
           <p data-part="saved">
             Сохранено в избранном: {savedCount}
-            <button
-              type="button"
-              data-part="saved-link"
-              onClick={onSavedClick}
-            >
+            <button type="button" data-part="saved-link" onClick={onSavedClick}>
               {savedLabel}
             </button>
           </p>

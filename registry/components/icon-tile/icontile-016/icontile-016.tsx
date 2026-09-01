@@ -1,4 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactElement } from "react"
+import type {
+  ComponentPropsWithoutRef,
+  CSSProperties,
+  ReactElement,
+} from "react"
 
 export type Icontile016Props = Omit<
   ComponentPropsWithoutRef<"button">,

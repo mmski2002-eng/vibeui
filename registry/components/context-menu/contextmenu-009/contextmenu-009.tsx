@@ -238,7 +238,9 @@ export function Contextmenu009({
               •••
             </button>
           </div>
-          <span data-part="hint">правый клик по карточке — или кнопка «•••»</span>
+          <span data-part="hint">
+            правый клик по карточке — или кнопка «•••»
+          </span>
           {open ? (
             <div
               ref={menu}
@@ -263,7 +265,9 @@ export function Contextmenu009({
                 }
 
                 const delta = event.key === "ArrowDown" ? 1 : -1
-                const from = items.indexOf(document.activeElement as HTMLElement)
+                const from = items.indexOf(
+                  document.activeElement as HTMLElement,
+                )
                 items[(from + delta + items.length) % items.length].focus()
               }}
             >

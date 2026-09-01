@@ -216,14 +216,22 @@ export function Inputgroup038({
                 strokeWidth="1.6"
                 aria-hidden="true"
               >
-                <path d="M8 14.5S13 9.8 13 6.3A5 5 0 0 0 3 6.3C3 9.8 8 14.5 8 14.5Z" strokeLinejoin="round" />
+                <path
+                  d="M8 14.5S13 9.8 13 6.3A5 5 0 0 0 3 6.3C3 9.8 8 14.5 8 14.5Z"
+                  strokeLinejoin="round"
+                />
                 <circle cx="8" cy="6.3" r="1.7" />
               </svg>
             )}
             {status === "locating" ? "Ищем…" : "Определить"}
           </button>
         </div>
-        <p data-part="status" id={`${id}-status`} data-status={status} aria-live="polite">
+        <p
+          data-part="status"
+          id={`${id}-status`}
+          data-status={status}
+          aria-live="polite"
+        >
           {status === "idle" ? hint : STATUS_TEXT[status]}
         </p>
       </div>

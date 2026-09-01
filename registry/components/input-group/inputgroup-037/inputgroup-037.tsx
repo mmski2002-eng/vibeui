@@ -24,9 +24,21 @@ export type Inputgroup037Props = Omit<
 }
 
 const TEMPLATES: Inputgroup037Template[] = [
-  { id: "greeting", title: "Приветствие", text: "Здравствуйте! Спасибо, что написали нам." },
-  { id: "wait", title: "Просьба подождать", text: "Уточняю детали, вернусь с ответом через пару минут." },
-  { id: "closed", title: "Вопрос решён", text: "Рад(а), что удалось помочь. Обращайтесь ещё!" },
+  {
+    id: "greeting",
+    title: "Приветствие",
+    text: "Здравствуйте! Спасибо, что написали нам.",
+  },
+  {
+    id: "wait",
+    title: "Просьба подождать",
+    text: "Уточняю детали, вернусь с ответом через пару минут.",
+  },
+  {
+    id: "closed",
+    title: "Вопрос решён",
+    text: "Рад(а), что удалось помочь. Обращайтесь ещё!",
+  },
 ]
 
 // Идея компонента: список шаблонов — не select, а собственный поповер с
@@ -211,12 +223,27 @@ export function Inputgroup037({
             onClick={() => setOpen((prev) => !prev)}
           >
             Шаблоны
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
-              <path d="M4 6l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.7"
+              aria-hidden="true"
+            >
+              <path
+                d="M4 6l4 4 4-4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </button>
           {open && (
-            <ul data-part="menu" id={`${id}-menu`} role="listbox" aria-label="Шаблоны ответа">
+            <ul
+              data-part="menu"
+              id={`${id}-menu`}
+              role="listbox"
+              aria-label="Шаблоны ответа"
+            >
               {templates.map((template) => (
                 <li key={template.id} role="presentation">
                   <button

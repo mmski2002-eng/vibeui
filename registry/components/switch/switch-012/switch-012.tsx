@@ -114,7 +114,10 @@ export function Switch012({
   const baseId = useId()
   const masterRef = useRef<HTMLInputElement>(null)
   const [checkedIds, setCheckedIds] = useState<Set<string>>(
-    () => new Set(items.filter((item) => item.defaultChecked).map((item) => item.id)),
+    () =>
+      new Set(
+        items.filter((item) => item.defaultChecked).map((item) => item.id),
+      ),
   )
 
   const total = items.length
@@ -174,7 +177,11 @@ export function Switch012({
         </label>
         <div data-part="list">
           {items.map((item) => (
-            <label key={item.id} data-part="row" htmlFor={`${baseId}-${item.id}`}>
+            <label
+              key={item.id}
+              data-part="row"
+              htmlFor={`${baseId}-${item.id}`}
+            >
               <span data-part="label">{item.label}</span>
               <span data-part="track">
                 <input

@@ -8,7 +8,10 @@ export type Toast018Item = {
   title: string
 }
 
-export type Toast018Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Toast018Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children"
+> & {
   groupTitle?: string
   items?: Toast018Item[]
   /** Сколько пунктов показывать свёрнутыми до счётчика «ещё N». */

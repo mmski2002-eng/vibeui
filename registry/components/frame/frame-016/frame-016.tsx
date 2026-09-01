@@ -1,6 +1,9 @@
 import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
 
-export type Frame016Props = Omit<ComponentPropsWithoutRef<"figure">, "title"> & {
+export type Frame016Props = Omit<
+  ComponentPropsWithoutRef<"figure">,
+  "title"
+> & {
   time?: string
   subtitle?: string
   caption?: string

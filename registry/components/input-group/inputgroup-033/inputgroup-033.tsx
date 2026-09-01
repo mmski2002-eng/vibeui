@@ -177,7 +177,10 @@ export function Inputgroup033({
           </select>
         </div>
         <p data-part="preview" id={`${id}-preview`}>
-          Напомнить через <strong>{value || "0"} {unitLabel}</strong>
+          Напомнить через{" "}
+          <strong>
+            {value || "0"} {unitLabel}
+          </strong>
         </p>
         <p data-part="hint" id={`${id}-hint`}>
           {hint}

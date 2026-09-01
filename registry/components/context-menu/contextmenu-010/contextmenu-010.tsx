@@ -249,7 +249,9 @@ export function Contextmenu010({
                 }
 
                 const delta = event.key === "ArrowDown" ? 1 : -1
-                const from = items.indexOf(document.activeElement as HTMLElement)
+                const from = items.indexOf(
+                  document.activeElement as HTMLElement,
+                )
                 items[(from + delta + items.length) % items.length].focus()
               }}
             >
