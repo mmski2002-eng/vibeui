@@ -107,7 +107,7 @@ export function CardInteractive({
       <div
         data-preview-theme={theme}
         className={
-          "border-shell-border bg-shell-panel relative flex min-h-44 min-w-0 flex-1 flex-col overflow-hidden rounded-xl border " +
+          "border-shell-border bg-shell relative flex min-h-44 min-w-0 flex-1 flex-col overflow-hidden rounded-xl border " +
           (open ? "z-10" : "")
         }
       >

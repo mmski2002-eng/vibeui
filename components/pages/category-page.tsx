@@ -1,0 +1,80 @@
+import Link from "next/link"
+import { notFound } from "next/navigation"
+
+import { CatalogChrome } from "@/components/catalog/catalog-chrome"
+import { CatalogGrid } from "@/components/catalog/catalog-grid"
+import { CatalogShell } from "@/components/catalog/catalog-shell"
+import { getDictionary, localePath, type Locale } from "@/lib/i18n"
+import type { ItemKind } from "@/registry/categories"
+import {
+  getCategoryCards,
+  getCategoryLabel,
+  getItemsByCategory,
+  getItemsByKind,
+} from "@/registry/index"
+
+/**
+ * Страница категории: все items одного типа секции. Сюда ведут карточки с
+ * витрины и список слева.
+ */
+export function CategoryPage({
+  locale,
+  kind,
+  category,
+}: {
+  locale: Locale
+  kind: ItemKind
+  category: string
+}) {
+  const items = getItemsByCategory(kind, category)
+
+  if (items.length === 0) {
+    notFound()
+  }
+
+  const t = getDictionary(locale)
+  const categories = getCategoryCards(kind)
+  const base = kind === "block" ? "/blocks" : "/components"
+  const label = getCategoryLabel(category)
+
+  const heading = (
+    <div key="heading" className="border-shell-border mb-6 border-b pb-6">
+      <nav aria-label="Breadcrumb" className="mb-3">
+        <ol className="text-shell-muted flex flex-wrap items-center gap-2 text-sm">
+          <li>
+            <Link
+              href={localePath(locale, base)}
+              className="hover:text-shell-fg"
+            >
+              {kind === "block" ? t.topbar.blocks : t.topbar.components}
+            </Link>
+          </li>
+          <li aria-hidden="true">/</li>
+          <li className="text-shell-fg font-medium">{label}</li>
+        </ol>
+      </nav>
+
+      <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
+        {label}
+      </h1>
+      <p className="text-shell-muted mt-2 text-sm">
+        {t.catalog.count(items.length)}
+      </p>
+    </div>
+  )
+
+  return (
+    <CatalogShell locale={locale}>
+      <CatalogChrome
+        locale={locale}
+        kind={kind === "block" ? "block" : "component"}
+        categories={categories}
+        total={getItemsByKind(kind).length}
+        active={category}
+        heading={heading}
+      >
+        <CatalogGrid items={items} locale={locale} />
+      </CatalogChrome>
+    </CatalogShell>
+  )
+}

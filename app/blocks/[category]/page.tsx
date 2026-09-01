@@ -1,0 +1,30 @@
+import { CategoryPage } from "@/components/pages/category-page"
+import { getCategoryCards, getCategoryLabel } from "@/registry/index"
+
+export const dynamicParams = false
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string }>
+}) {
+  const { category } = await params
+
+  return { title: getCategoryLabel(category) }
+}
+
+export function generateStaticParams() {
+  return getCategoryCards("block").map((category) => ({
+    category: category.slug,
+  }))
+}
+
+export default async function BlockCategoryPage({
+  params,
+}: {
+  params: Promise<{ category: string }>
+}) {
+  const { category } = await params
+
+  return <CategoryPage locale="ru" kind="block" category={category} />
+}

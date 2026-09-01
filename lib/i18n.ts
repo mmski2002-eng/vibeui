@@ -32,6 +32,18 @@ type Dictionary = {
   components: { title: string; description: string; metaTitle: string }
   blocks: { title: string; description: string; metaTitle: string }
   nav: { heading: string; all: string; filter: string }
+  catalog: {
+    filterCategories: string
+    search: string
+    searchHint: string
+    searchEmpty: string
+    compactView: string
+    comfortableView: string
+    all: string
+    /** «61 компонент» / «61 блок» — с русским склонением. */
+    count: (count: number) => string
+    inCategory: string
+  }
   card: {
     copy: string
     copied: string
@@ -94,6 +106,34 @@ const RU: Dictionary = {
       "Готовые секции лендинга целиком. Каждая ставится одной командой, не зависит от темы вашего проекта и приходит с инструкцией для AI-агента.",
   },
   nav: { heading: "Каталог", all: "Всё", filter: "Фильтр каталога" },
+  catalog: {
+    filterCategories: "Фильтр категорий…",
+    search: "Поиск компонентов…",
+    searchHint: "Начните вводить название или тег",
+    searchEmpty: "Ничего не найдено",
+    compactView: "Компактный вид",
+    comfortableView: "Обычный вид",
+    all: "Все категории",
+    count: (count) => {
+      const tail = count % 100
+      const last = count % 10
+
+      if (tail > 10 && tail < 20) {
+        return `${count} компонентов`
+      }
+
+      if (last === 1) {
+        return `${count} компонент`
+      }
+
+      if (last > 1 && last < 5) {
+        return `${count} компонента`
+      }
+
+      return `${count} компонентов`
+    },
+    inCategory: "в категории",
+  },
   card: {
     copy: "Copy for AI",
     copied: "Ссылка скопирована",
@@ -164,6 +204,17 @@ const EN: Dictionary = {
       "Whole landing page sections. Each one installs with a single command, carries its own palette instead of borrowing your theme, and ships with instructions your agent can follow.",
   },
   nav: { heading: "Catalog", all: "All", filter: "Filter the catalog" },
+  catalog: {
+    filterCategories: "Filter categories…",
+    search: "Search components…",
+    searchHint: "Start typing a name or a tag",
+    searchEmpty: "Nothing found",
+    compactView: "Compact view",
+    comfortableView: "Comfortable view",
+    all: "All categories",
+    count: (count) => `${count} component${count === 1 ? "" : "s"}`,
+    inCategory: "in",
+  },
   card: {
     copy: "Copy for AI",
     copied: "Link copied",

@@ -1,6 +1,12 @@
+import { CategoryPage } from "@/components/pages/category-page"
 import { ItemPage } from "@/components/pages/item-page"
 import { localizeItem } from "@/lib/localize"
-import { getCatalogItem, getCatalogItems } from "@/registry/index"
+import {
+  getCatalogItem,
+  getCatalogItems,
+  getCategoryCards,
+  getCategoryLabel,
+} from "@/registry/index"
 
 export const dynamicParams = false
 
@@ -13,7 +19,11 @@ export async function generateMetadata({
   const found = getCatalogItem(slug)
 
   if (!found) {
-    return {}
+    const category = getCategoryCards("component").find(
+      (entry) => entry.slug === slug,
+    )
+
+    return category ? { title: getCategoryLabel(category.slug) } : {}
   }
 
   const block = localizeItem(found, "en")
@@ -25,7 +35,12 @@ export async function generateMetadata({
 }
 
 export function generateStaticParams() {
-  return getCatalogItems().map((item) => ({ slug: item.name }))
+  return [
+    ...getCatalogItems().map((item) => ({ slug: item.name })),
+    ...getCategoryCards("component").map((category) => ({
+      slug: category.slug,
+    })),
+  ]
 }
 
 export default async function EnComponentDetailPage({
@@ -36,6 +51,10 @@ export default async function EnComponentDetailPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   const { slug } = await params
+
+  if (!getCatalogItem(slug)) {
+    return <CategoryPage locale="en" kind="component" category={slug} />
+  }
 
   return <ItemPage locale="en" slug={slug} query={await searchParams} />
 }

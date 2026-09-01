@@ -1,17 +1,17 @@
 import Link from "next/link"
 
-import { CatalogGrid } from "@/components/catalog/catalog-grid"
-import { CatalogNav } from "@/components/catalog/catalog-nav"
+import { CatalogChrome } from "@/components/catalog/catalog-chrome"
+import { CategoryGrid } from "@/components/catalog/catalog-grid"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
-import { getCatalogNavSections, getItemsByKind } from "@/registry/index"
+import { getCategoryCards, getItemsByKind } from "@/registry/index"
 
 export type CatalogVariant = "home" | "components" | "blocks"
 
 /**
- * Каталог. Один компонент на три маршрута: `/` и `/components` показывают
- * компоненты с разными заголовками, `/blocks` — блоки. Языковые версии
- * различаются только словарём и префиксом ссылок.
+ * Витрина верхнего уровня. Показывает не items, а категории: тысяча карточек
+ * на одной странице — это витрина, по которой невозможно выбирать, и
+ * мегабайты разметки. Внутрь категории ведёт своя страница.
  */
 export function CatalogPage({
   locale,
@@ -23,15 +23,11 @@ export function CatalogPage({
   const t = getDictionary(locale)
   const kind = variant === "blocks" ? "block" : "component"
   const items = getItemsByKind(kind)
-  const sections = getCatalogNavSections(kind)
-  const categoryCount = sections.reduce(
-    (total, section) => total + section.categories.length,
-    0,
-  )
+  const categories = getCategoryCards(kind)
 
   const heading =
     variant === "home" ? (
-      <div className="border-shell-border mb-6 border-b pb-6">
+      <div key="heading" className="border-shell-border mb-6 border-b pb-6">
         <h1 className="text-shell-fg text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
           {t.home.title}
         </h1>
@@ -46,11 +42,11 @@ export function CatalogPage({
           .
         </p>
         <p className="text-shell-muted mt-4 text-xs">
-          {t.home.counts(items.length, categoryCount)}
+          {t.home.counts(items.length, categories.length)}
         </p>
       </div>
     ) : (
-      <div className="border-shell-border mb-6 border-b pb-6">
+      <div key="heading" className="border-shell-border mb-6 border-b pb-6">
         <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
           {variant === "blocks" ? t.blocks.title : t.components.title}
         </h1>
@@ -64,14 +60,20 @@ export function CatalogPage({
 
   return (
     <CatalogShell locale={locale}>
-      <CatalogNav
+      <CatalogChrome
         locale={locale}
-        sections={sections}
+        kind={kind}
+        categories={categories}
         total={items.length}
+        active={null}
         heading={heading}
       >
-        <CatalogGrid items={items} locale={locale} />
-      </CatalogNav>
+        <CategoryGrid
+          categories={categories}
+          locale={locale}
+          base={kind === "block" ? "/blocks" : "/components"}
+        />
+      </CatalogChrome>
     </CatalogShell>
   )
 }

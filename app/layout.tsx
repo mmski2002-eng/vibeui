@@ -1,15 +1,17 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Geist_Mono, Inter } from "next/font/google"
 import "./globals.css"
 
-const geistSans = Geist({
+// Inter: тот же шрифт, что у образцов витрин компонентов, и с полной
+// кириллицей — подменять на похожий не пришлось.
+const inter = Inter({
   variable: "--font-sans",
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
 })
 
 const geistMono = Geist_Mono({
   variable: "--font-mono",
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
 })
 
 export const metadata: Metadata = {
@@ -25,7 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ru"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">{children}</body>
     </html>

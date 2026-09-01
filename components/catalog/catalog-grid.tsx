@@ -1,23 +1,37 @@
 import { CatalogCard } from "@/components/catalog/catalog-card"
+import { CategoryCard } from "@/components/catalog/category-card"
 import type { Locale } from "@/lib/i18n"
-import { CATEGORIES, KINDS } from "@/registry/categories"
-import { getItemKind } from "@/registry/index"
+import { localizeItem } from "@/lib/localize"
+import {
+  getCategoryLabel,
+  type CategoryCard as Category,
+} from "@/registry/index"
 import type { CatalogItem } from "@/registry/meta"
 
-// Правила фильтра выводятся из таксономии, а не пишутся руками: клиент
-// переключает только data-catalog-filter на обёртке сетки. Фильтр
-// одномерный — активен либо тип, либо категория.
-const FILTER_STYLES = [
-  ...KINDS.map(
-    (kind) =>
-      `[data-catalog-filter="kind:${kind.slug}"] li[data-kind]:not([data-kind="${kind.slug}"]){display:none}`,
-  ),
-  ...CATEGORIES.map(
-    (category) =>
-      `[data-catalog-filter="${category.slug}"] li[data-category]:not([data-category="${category.slug}"]){display:none}`,
-  ),
-].join("")
+/**
+ * Строка, по которой ищет поле поиска. Лежит атрибутом на элементе списка:
+ * так фильтрация не тянет данные items в клиентский бандл — обвязка просто
+ * прячет неподошедшие карточки.
+ */
+function searchText(item: CatalogItem, locale: Locale): string {
+  const localized = localizeItem(item, locale)
+  const category = localized.categories?.[0]
 
+  return [
+    localized.title ?? localized.name,
+    localized.name,
+    category ? getCategoryLabel(category) : "",
+    ...(localized.meta?.tags ?? []),
+  ]
+    .join(" ")
+    .toLowerCase()
+}
+
+/**
+ * Сетка витрины. Колонки считаются от ширины сетки, а не окна: рядом с
+ * колонкой категорий окно шире доступного места, и viewport-брейкпоинты
+ * давали бы лишнюю колонку.
+ */
 export function CatalogGrid({
   items,
   locale,
@@ -26,20 +40,34 @@ export function CatalogGrid({
   locale: Locale
 }) {
   return (
-    // Колонки считаются от ширины сетки, а не окна: рядом с sidebar окно
-    // шире доступного места, и viewport-брейкпоинты давали бы лишнюю колонку.
     <div className="@container/grid">
-      <style href="vibeui-catalog-filter" precedence="medium">
-        {FILTER_STYLES}
-      </style>
-      <ul className="grid grid-cols-1 items-stretch gap-6 @2xl/grid:grid-cols-2">
+      <ul className="catalog-grid">
         {items.map((item) => (
-          <li
-            key={item.name}
-            data-kind={getItemKind(item.name)}
-            data-category={item.categories?.[0]}
-          >
+          <li key={item.name} data-search={searchText(item, locale)}>
             <CatalogCard item={item} locale={locale} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+/** Та же сетка, но карточками категорий: витрина верхнего уровня. */
+export function CategoryGrid({
+  categories,
+  locale,
+  base,
+}: {
+  categories: Category[]
+  locale: Locale
+  base: string
+}) {
+  return (
+    <div className="@container/grid">
+      <ul className="catalog-grid">
+        {categories.map((category) => (
+          <li key={category.slug} data-search={category.search}>
+            <CategoryCard card={category} locale={locale} base={base} />
           </li>
         ))}
       </ul>

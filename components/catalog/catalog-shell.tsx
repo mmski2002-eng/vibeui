@@ -10,7 +10,9 @@ import { getCatalogItems } from "@/registry/index"
  * сайт остаётся светлым, поэтому registry-блоки внутри миниатюр и preview
  * не перекрашиваются от контекста каталога.
  *
- * Дети — колонки контентной области: `CatalogSidebar` и `<main>`.
+ * Оболочка даёт только шапку и фон. Ширину и колонки задаёт содержимое:
+ * строка инструментов витрины тянет свою границу на всю ширину окна, а
+ * колонки под ней ограничены контейнером.
  */
 export function CatalogShell({
   children,
@@ -22,9 +24,7 @@ export function CatalogShell({
   return (
     <div className="catalog-shell bg-shell text-shell-fg flex min-h-screen flex-col">
       <CatalogTopbar itemCount={getCatalogItems().length} locale={locale} />
-      <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col px-4 lg:flex-row lg:gap-8 lg:px-6">
-        {children}
-      </div>
+      {children}
     </div>
   )
 }

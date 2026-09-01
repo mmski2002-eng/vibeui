@@ -16,6 +16,11 @@
   --color-shell-surface: var(--shell-surface);
   --color-preview-surface: var(--preview-surface);
   --color-shell-border: var(--shell-border);
+  --color-shell-divider: var(--shell-divider);
+  --color-shell-scroll: var(--shell-scroll);
+  --color-shell-scroll-strong: var(--shell-scroll-strong);
+  --color-shell-card: var(--shell-card-border);
+  --color-shell-card-strong: var(--shell-card-border-strong);
   --color-shell-border-strong: var(--shell-border-strong);
   --color-shell-fg: var(--shell-fg);
   --color-shell-muted: var(--shell-muted);
@@ -54,8 +59,8 @@
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 }
@@ -166,14 +171,24 @@
     --shell-surface: oklch(0.97 0.002 265);
     --shell-border: oklch(1 0 0 / 10%);
     --shell-border-strong: oklch(1 0 0 / 22%);
+    /* Линия между колонками. Значение снято с образца: белый на 8%. */
+    --shell-divider: oklch(1 0 0 / 8%);
+    /* Рамки карточек. У образца обложка категории обведена слабее (6%),
+       карточка item'а — чуть заметнее (8%), кадр превью внутри — 10%. */
+    /* Ползунок своей полосы прокрутки: значение снято с образца. */
+    --shell-scroll: oklch(1 0 0 / 10%);
+    --shell-scroll-strong: oklch(1 0 0 / 20%);
+    --shell-card-border: oklch(1 0 0 / 6%);
+    --shell-card-border-strong: oklch(1 0 0 / 8%);
     --shell-fg: oklch(0.985 0 0);
     --shell-muted: oklch(0.708 0 0);
     --shell-accent: oklch(0.985 0 0);
     --shell-accent-fg: oklch(0.185 0 0);
     --shell-ring: oklch(0.708 0 0);
-    /* Дефолт кадра — тёмный, как и сама оболочка. Значение перекрывается
-       атрибутом data-preview-theme, который ставит переключатель карточки. */
-    --preview-surface: oklch(0.205 0 0);
+    /* Дефолт кадра — тот же почти-чёрный, что и страница: карточка не должна
+       быть светлее фона, её отделяет рамка. Значение перекрывается атрибутом
+       data-preview-theme, который ставит переключатель карточки. */
+    --preview-surface: oklch(0.145 0 0);
   }
 
   /* Подложка превью на карточке. Переключателем меняется только она:
@@ -188,8 +203,78 @@
   }
 
   [data-preview-theme="dark"] {
-    --preview-surface: oklch(0.205 0 0);
+    --preview-surface: oklch(0.145 0 0);
     color-scheme: dark;
+  }
+
+  /* Сетка витрины. Колонки считает container query по ширине самой сетки:
+     рядом с колонкой категорий окно шире доступного места, и брейкпоинты по
+     окну давали бы лишнюю колонку. */
+  .catalog-grid {
+    display: grid;
+    align-items: stretch;
+    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @container grid (min-width: 42rem) {
+    .catalog-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Список категорий и его плотность. Значения сняты с образца.
+
+     Обычный режим — вертикальный список во всю ширину колонки: пункт 36px,
+     padding 8/12, шрифт 14/20.
+
+     Компактный — не ужатый список, а чипы по ширине содержимого:
+     flex-wrap с зазором 6px, рамка, padding 4/8, шрифт 12/16, высота 26px.
+     В колонку тогда влезает вдвое больше категорий. */
+  .catalog-nav-list > li + li {
+    margin-top: 0.25rem;
+  }
+
+  [data-density="compact"] .catalog-nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+
+  [data-density="compact"] .catalog-nav-list > li + li {
+    margin-top: 0;
+  }
+
+  .catalog-nav-item {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  [data-density="compact"] .catalog-nav-list .catalog-nav-item {
+    width: auto;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    border: 1px solid var(--shell-border);
+  }
+
+  /* Счётчик рядом с категорией: приглушённый на 80%, как у образца. */
+  .catalog-nav-count {
+    color: color-mix(in oklab, var(--shell-muted) 80%, transparent);
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  [data-density="compact"] .catalog-nav-item {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    /* Рамка есть и у образца: в компактном режиме пункты читаются как чипы,
+       и она же даёт недостающие 2px до эталонных 26px высоты. */
+    border: 1px solid var(--shell-border);
   }
 
   /* Плавное появление подгруженного превью. Анимация висит не на кадре, а на
