@@ -43,6 +43,17 @@ export function localizeItem(item: CatalogItem, locale: Locale): CatalogItem {
       ...item.meta,
       ai: { ...item.meta.ai, ...translation.ai },
       ...(controls ? { controls } : null),
+      ...(translation.preview?.props
+        ? {
+            preview: {
+              ...item.meta.preview,
+              props: {
+                ...item.meta.preview?.props,
+                ...translation.preview.props,
+              },
+            },
+          }
+        : null),
     },
   }
 }

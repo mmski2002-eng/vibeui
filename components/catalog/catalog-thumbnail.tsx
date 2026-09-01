@@ -1,4 +1,6 @@
 import { LazyThumbnail } from "@/components/catalog/lazy-thumbnail"
+import type { Locale } from "@/lib/i18n"
+import { localizeItem } from "@/lib/localize"
 import { getCatalogItem, getItemKind } from "@/registry/index"
 
 /**
@@ -23,8 +25,15 @@ import { getCatalogItem, getItemKind } from "@/registry/index"
  * только как он выглядит. Поэтому inert не ставится — кнопки нажимаются,
  * разделы раскрываются, и содержимое попадает в Tab-порядок.
  */
-export function CatalogThumbnail({ slug }: { slug: string }) {
-  const preview = getCatalogItem(slug)?.meta?.preview
+export function CatalogThumbnail({
+  slug,
+  locale,
+}: {
+  slug: string
+  locale: Locale
+}) {
+  const item = getCatalogItem(slug)
+  const preview = item ? localizeItem(item, locale).meta?.preview : undefined
 
   return (
     <LazyThumbnail

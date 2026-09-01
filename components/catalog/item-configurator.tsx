@@ -130,12 +130,15 @@ export function ConfigurablePreview({
   full,
   controls,
   values,
+  previewProps,
 }: {
   slug: string
   // Та же оговорка, что и в миниатюре: ширину объявляет сам item.
   full: boolean
   controls: ItemControl[]
   values: ControlValues
+  /** Демо-содержимое витрины: под ним лежат дефолты компонента, поверх — контролы. */
+  previewProps?: Record<string, unknown>
 }) {
   const Preview = LAZY_PREVIEWS[slug]
 
@@ -145,7 +148,7 @@ export function ConfigurablePreview({
 
   return (
     <div className={full ? "w-full max-w-[30rem]" : undefined}>
-      <Preview {...toProps(controls, values)} />
+      <Preview {...previewProps} {...toProps(controls, values)} />
     </div>
   )
 }

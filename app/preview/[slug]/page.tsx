@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation"
 
-import { getItemKind } from "@/registry/index"
+import { isLocale } from "@/lib/i18n"
+import { localizeItem } from "@/lib/localize"
+import { getCatalogItem, getItemKind } from "@/registry/index"
 import { CATALOG_PREVIEWS } from "@/registry/previews"
 
 export function generateStaticParams() {
@@ -12,10 +14,17 @@ export default async function PreviewPage({
   searchParams,
 }: {
   params: Promise<{ slug: string }>
-  searchParams: Promise<{ theme?: string }>
+  searchParams: Promise<{ theme?: string; lang?: string }>
 }) {
   const { slug } = await params
-  const { theme } = await searchParams
+  const { theme, lang } = await searchParams
+  const locale = isLocale(lang) ? lang : "ru"
+  const item = getCatalogItem(slug)
+  // Демо-содержимое на языке витрины: сам файл компонента остаётся русским,
+  // меняются только пропсы, которыми его вызывает превью.
+  const props = item
+    ? localizeItem(item, locale).meta?.preview?.props
+    : undefined
   const Block = CATALOG_PREVIEWS[slug]
 
   if (!Block) {
@@ -34,7 +43,7 @@ export default async function PreviewPage({
         (centered ? " flex items-center justify-center p-10" : "")
       }
     >
-      <Block />
+      <Block {...props} />
     </div>
   )
 }

@@ -32,7 +32,9 @@ export function CategoryCard({
         className="border-shell-card bg-shell pointer-events-none relative flex aspect-[16/10] min-w-0 flex-col justify-center overflow-hidden rounded-xl border"
         inert
       >
-        {card.coverSlug ? <CatalogThumbnail slug={card.coverSlug} /> : null}
+        {card.coverSlug ? (
+          <CatalogThumbnail slug={card.coverSlug} locale={locale} />
+        ) : null}
       </div>
 
       <div className="flex flex-row items-center gap-3 py-2.5 pr-3 pl-4">

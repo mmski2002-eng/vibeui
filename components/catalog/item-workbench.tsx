@@ -67,6 +67,7 @@ export function ItemWorkbench({
           {t.item.preview}
         </h2>
         <BlockPreview
+          locale={locale}
           slug={item.name}
           compact={compact}
           theme={theme}
@@ -107,6 +108,7 @@ export function ItemWorkbench({
                 full={item.meta?.preview?.width === "full"}
                 controls={controls}
                 values={values}
+                previewProps={item.meta?.preview?.props}
               />
             </div>
             <div className="border-shell-border border-t p-4">
