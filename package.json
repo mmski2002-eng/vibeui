@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run indexes && npm run meta:validate && npm run registry:build && next build",
+    "build": "npm run indexes && npm run meta:validate && npm run registry:build && next build --turbopack",
     "meta:validate": "node scripts/validate-meta.mjs",
     "start": "next start",
     "lint": "eslint",
