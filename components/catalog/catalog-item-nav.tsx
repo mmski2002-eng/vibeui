@@ -1,18 +1,24 @@
 import Link from "next/link"
 
-import { localePath, type Locale } from "@/lib/i18n"
+import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { localizeItem } from "@/lib/localize"
 import {
+  getCatalogItem,
   getCatalogItems,
-  getCatalogNavSections,
-  getItemKind,
+  getCategoryLabel,
 } from "@/registry/index"
 
+const LINK =
+  "focus-visible:ring-shell-ring block truncate rounded-md px-3 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none "
+
 /**
- * Sidebar страницы item'а: та же таксономия, что в каталоге, но раскрытая до
- * самих items — отсюда нужен переход к соседнему item'у, а не фильтр.
- * Показывается только тип текущего item'а: блоки и компоненты разведены по
- * разным маршрутам, соседями считаются items своего типа.
+ * Sidebar страницы item'а: соседи по категории и выход обратно в каталог.
+ *
+ * Раньше здесь лежала вся таксономия, раскрытая до items: 1201 ссылка на
+ * каждой странице, 330 КБ разметки и столько же во flight-пейлоаде. Соседи
+ * нужны — весь каталог нет: за ним есть страница категории и витрина, и
+ * ссылки на них дешевле, чем список из тысячи items, который всё равно
+ * прокручивают мимо.
  */
 export function CatalogItemNav({
   activeSlug,
@@ -21,51 +27,51 @@ export function CatalogItemNav({
   activeSlug: string
   locale: Locale
 }) {
-  const items = getCatalogItems().map((item) => localizeItem(item, locale))
-  const sections = getCatalogNavSections(getItemKind(activeSlug))
-  const showKinds = sections.length > 1
+  const t = getDictionary(locale)
+  const category = getCatalogItem(activeSlug)?.categories?.[0]
+
+  if (!category) {
+    return null
+  }
+
+  const items = getCatalogItems()
+    .filter((item) => item.categories?.[0] === category)
+    .map((item) => localizeItem(item, locale))
 
   return (
-    <nav aria-label="Каталог" className="space-y-5">
-      {sections.map((section) => (
-        <div key={section.kind} className="space-y-4">
-          {showKinds ? (
-            <p className="text-shell-fg px-3 text-xs font-semibold tracking-wide uppercase">
-              {section.label}
-            </p>
-          ) : null}
+    <nav aria-label={t.nav.heading} className="space-y-4">
+      <Link
+        href={localePath(locale, `/components/${category}`)}
+        className="text-shell-muted hover:text-shell-fg focus-visible:ring-shell-ring block rounded-sm px-3 text-xs font-medium tracking-wide uppercase transition-colors focus-visible:ring-2 focus-visible:outline-none"
+      >
+        {getCategoryLabel(category, locale)}
+      </Link>
 
-          {section.categories.map((category) => (
-            <div key={category.slug}>
-              <p className="text-shell-muted mb-2 px-3 text-xs font-medium tracking-wide uppercase">
-                {category.label}
-              </p>
-              <ul className="space-y-1">
-                {items
-                  .filter((item) => item.categories?.[0] === category.slug)
-                  .map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={localePath(locale, `/components/${item.name}`)}
-                        aria-current={
-                          item.name === activeSlug ? "page" : undefined
-                        }
-                        className={
-                          "focus-visible:ring-shell-ring block truncate rounded-md px-3 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none " +
-                          (item.name === activeSlug
-                            ? "bg-shell-elevated text-shell-fg font-medium"
-                            : "text-shell-muted hover:text-shell-fg hover:bg-shell-panel")
-                        }
-                      >
-                        {item.title ?? item.name}
-                      </Link>
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      ))}
+      <ul className="space-y-1">
+        {items.map((item) => (
+          <li key={item.name}>
+            <Link
+              href={localePath(locale, `/components/${item.name}`)}
+              aria-current={item.name === activeSlug ? "page" : undefined}
+              className={
+                LINK +
+                (item.name === activeSlug
+                  ? "bg-shell-elevated text-shell-fg font-medium"
+                  : "text-shell-muted hover:text-shell-fg hover:bg-shell-panel")
+              }
+            >
+              {item.title ?? item.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      <Link
+        href={localePath(locale, "/components")}
+        className={`${LINK}border-shell-border text-shell-muted hover:text-shell-fg hover:bg-shell-panel mt-1 border-t pt-3`}
+      >
+        {t.nav.all} · {t.components.title}
+      </Link>
     </nav>
   )
 }
