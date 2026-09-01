@@ -121,3 +121,62 @@ export function getCatalogNavSections(kind?: ItemKind): CatalogNavSection[] {
     }))
     .filter((section) => section.count > 0)
 }
+
+/**
+ * Карточка категории для витрины: подпись, количество и item, чьё превью
+ * показывается на обложке. Обложка — первый featured item категории, иначе
+ * просто первый: он написан раньше остальных и обычно самый показательный.
+ */
+export type CategoryCard = {
+  slug: string
+  label: string
+  count: number
+  coverSlug: string | undefined
+  /** По чему ищет поле поиска: подпись, slug и заголовки items внутри. */
+  search: string
+}
+
+export function getCategoryCards(kind: ItemKind): CategoryCard[] {
+  // По алфавиту, а не в порядке объявления: порядок в `categories.ts` — это
+  // очередь работ, и глазами по нему категорию не найти.
+  return [...getUsedCategories(kind)]
+    .sort((first, second) =>
+      first.label.localeCompare(second.label, undefined, {
+        sensitivity: "base",
+      }),
+    )
+    .map((category) => {
+      const items = ITEMS.filter(
+        (entry) => entry.kind === kind && entry.category === category.slug,
+      )
+      const cover = items.find((entry) => entry.item.meta?.featured) ?? items[0]
+
+      return {
+        slug: category.slug,
+        label: category.label,
+        count: category.count,
+        coverSlug: cover?.item.name,
+        search: [
+          category.label,
+          category.slug,
+          ...items.map((entry) => entry.item.title ?? entry.item.name),
+        ]
+          .join(" ")
+          .toLowerCase(),
+      }
+    })
+}
+
+export function getItemsByCategory(
+  kind: ItemKind,
+  category: string,
+): CatalogItem[] {
+  return ITEMS.filter(
+    (entry) => entry.kind === kind && entry.category === category,
+  ).map((entry) => entry.item)
+}
+
+/** Тип, внутри которого живёт категория: по нему выбирается её маршрут. */
+export function getCategoryKind(category: string): ItemKind | undefined {
+  return ITEMS.find((entry) => entry.category === category)?.kind
+}

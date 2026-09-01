@@ -1,0 +1,263 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "sparkline-001",
+      "type": "registry:component",
+      "title": "Metric Sparkline",
+      "description": "Мини-график размером со строку: число отвечает «сколько», кривая — «куда идёт». Цвет считается из знака изменения, поэтому падение нельзя покрасить в зелёный.",
+      "categories": [
+        "sparkline"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sparkline-001/sparkline-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sparkline-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sparkline-001-*. Кривая — SVG-путь, посчитанный из массива значений на сервере: клиентского JS нет. Направление выводится из пропа delta и попадает в data-trend, от которого зависят и цвет линии, и поворот стрелки: цвет нельзя задать вручную вразрез со знаком. Компонент inline-flex, поэтому встаёт в ячейку таблицы и в строку карточки.",
+      "meta": {
+        "tags": [
+          "sparkline",
+          "metric",
+          "kpi",
+          "trend"
+        ],
+        "ai": {
+          "export": "Sparkline001",
+          "usage": "<Sparkline001\n  label=\"Установок за месяц\"\n  value=\"1 284\"\n  delta={12.4}\n  values={[12, 15, 13, 19, 24, 31, 41]}\n/>",
+          "summary": "Показатель со встроенным мини-графиком: подпись, крупное значение, кривая за период и изменение со стрелкой. Направление выводится из знака delta и красит и линию, и стрелку — рассинхронизировать цвет и смысл нельзя. Компонент inline, поэтому помещается в ячейку таблицы. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-sparkline-001-* и не подменять её токенами вашей темы (text-green-500, --chart-1 и подобными)",
+            "вывод цвета из знака delta через data-trend: цвет, заданный отдельно от значения, рано или поздно соврёт",
+            "порог «без изменений» в полпроцента: колебание в 0,1 % не должно окрашиваться как рост",
+            "число рядом с кривой: спарклайн отвечает на «куда идёт», а не на «сколько» — без числа он бесполезен",
+            "vector-effect:non-scaling-stroke и preserveAspectRatio=\"none\" — иначе при растяжении линия становится неровной",
+            "aria-label у svg со значением и изменением",
+            "inline-flex у корня: показатель обязан вставать в строку, а не разрывать её",
+            "блок <style> внутри компонента — в нём вся палитра и геометрия"
+          ],
+          "adapt": [
+            "values — ряд значений для кривой",
+            "label и value — подпись и текущее значение; value это строка, поэтому формат остаётся за вами",
+            "delta и unit — изменение за период и его единица",
+            "акцент через проп accent, если нужен один цвет вместо зелёного и красного",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "У кривой нет осей и подписей: это намеренно. Спарклайн показывает форму, а не значения точек.",
+            "Не используйте его как единственный график на дашборде — за формой не видно масштаба.",
+            "value — строка, а не число: форматирование остаётся за вызывающим кодом, компонент не угадывает разряды и валюту.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Установок за месяц",
+            "maxLength": 40
+          },
+          {
+            "prop": "value",
+            "label": "Значение",
+            "type": "text",
+            "default": "1 284",
+            "maxLength": 16
+          },
+          {
+            "prop": "delta",
+            "label": "Изменение",
+            "type": "number",
+            "default": 12.4,
+            "min": -99,
+            "max": 99
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "%",
+            "maxLength": 6
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A line-sized chart: the number says how much, the curve says where it is going. The colour is derived from the sign of the change, so a decline cannot be painted green.",
+            "ai": {
+              "summary": "A metric with an inline sparkline: label, large value, the period's curve and the change with an arrow. The direction is derived from the sign of delta and colours both line and arrow — colour and meaning cannot drift apart. The component is inline, so it fits a table cell. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-sparkline-001-* palette — do not swap it for your theme tokens (text-green-500, --chart-1 and the like)",
+                "deriving the colour from the sign of delta through data-trend: a colour set independently of the value eventually lies",
+                "the half-percent flat threshold: a 0.1 % wobble must not be coloured as growth",
+                "the number beside the curve: a sparkline answers \"where is it going\", not \"how much\" — without the number it is useless",
+                "vector-effect:non-scaling-stroke and preserveAspectRatio=\"none\" — otherwise stretching makes the stroke uneven",
+                "the aria-label on the svg carrying the value and the change",
+                "inline-flex on the root: the metric has to sit in a line rather than break it",
+                "the <style> block inside the component — it holds the palette and the geometry"
+              ],
+              "adapt": [
+                "values — the series behind the curve",
+                "label and value — the caption and the current figure; value is a string, so the format stays yours",
+                "delta and unit — the change over the period and its unit",
+                "the accent through the accent prop when one colour is wanted instead of green and red",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "The curve has no axes or labels, deliberately. A sparkline shows shape, not point values.",
+                "Do not make it the only chart on a dashboard — shape hides scale.",
+                "value is a string rather than a number: formatting belongs to the caller, the component does not guess digit grouping or currency.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sparkline001\n  label=\"Installs this month\"\n  value=\"1,284\"\n  delta={12.4}\n  values={[12, 15, 13, 19, 24, 31, 41]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Installs this month"
+              },
+              "value": {
+                "label": "Value",
+                "default": "1,284"
+              },
+              "delta": {
+                "label": "Change"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": "%"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sparkline-002",
+      "type": "registry:component",
+      "title": "Metric Table",
+      "description": "Таблица метрик, где динамика живёт прямо в строке: данные здесь уже текст, поэтому таблица и есть текстовая альтернатива кривым.",
+      "categories": [
+        "sparkline"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sparkline-002/sparkline-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sparkline-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sparkline-002-*. Серверный: хуков нет. Корень — настоящая таблица, поэтому текстовая альтернатива графикам не нужна отдельно: кривые помечены aria-hidden. Путь спарклайна считается из массива значений в системе 100×24 с preserveAspectRatio=\"none\", а толщина линии держится vector-effect: non-scaling-stroke. Направление выводится из знака delta с порогом в полпроцента и попадает в data-trend на строке, от которого зависят и цвет кривой, и цвет изменения.",
+      "meta": {
+        "tags": [
+          "sparkline",
+          "table",
+          "metrics",
+          "trend"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Sparkline002",
+          "usage": "<Sparkline002\n  caption=\"Ключевые метрики\"\n  period=\"за последние 7 дней\"\n  rows={[{ label: \"Визиты\", value: \"48 210\", delta: 8.4, values: [31, 34, 41, 48] }]}\n/>",
+          "summary": "Таблица метрик со спарклайном в каждой строке: подпись, значение, кривая за период и изменение со знаком. Направление выводится из знака delta и красит и кривую, и число, а сама таблица служит текстовой альтернативой графикам. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-sparkline-002-* и не подменять её токенами вашей темы (text-green-500, --chart-1 и подобными)",
+            "таблицу как корень компонента: данные обязаны быть доступны текстом, и здесь это получается само",
+            "aria-hidden на кривых: строка таблицы уже прочитана, картинка добавит только шум",
+            "вывод цвета из знака delta через data-trend на строке: цвет, заданный отдельно от значения, рано или поздно соврёт",
+            "порог «без изменений» в полпроцента: колебание в 0,1 % не должно окрашиваться как рост",
+            "vector-effect: non-scaling-stroke и preserveAspectRatio=\"none\" — иначе в узкой колонке кривая становится ниткой",
+            "табличные цифры в колонках значения и изменения: числа обязаны стоять ровным столбцом"
+          ],
+          "adapt": [
+            "массив rows: подпись, значение, delta и ряд values для кривой",
+            "caption — заголовок таблицы",
+            "period — пояснение периода под заголовком",
+            "акцент через проп accent — цвет роста, если зелёный не подходит бренду",
+            "набор колонок и их порядок"
+          ],
+          "notes": [
+            "value — строка, а не число: форматирование остаётся за вызывающим кодом, компонент не угадывает разряды и валюту.",
+            "У кривой нет осей: она показывает форму, а точные числа берут из соседних колонок.",
+            "Меньше двух значений в values дают точку вместо линии — такие строки лучше отфильтровать.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Заголовок таблицы",
+            "type": "text",
+            "default": "Ключевые метрики",
+            "maxLength": 40
+          },
+          {
+            "prop": "period",
+            "label": "Период",
+            "type": "text",
+            "default": "за последние 7 дней",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A metrics table where the trend lives inside the row: the data is already text, so the table itself is the text alternative to the curves.",
+            "ai": {
+              "summary": "A metrics table with a sparkline in every row: label, value, the period curve and the signed change. The direction is derived from the sign of delta and colours both the curve and the number, while the table itself serves as the text alternative to the charts. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-sparkline-002-* palette — do not swap it for your theme tokens (text-green-500, --chart-1 and the like)",
+                "the table as the component root: the data must be available as text, and here it comes for free",
+                "aria-hidden on the curves: the row has already been read, the picture would only add noise",
+                "deriving the colour from the sign of delta through data-trend on the row: a colour set independently of the value eventually lies",
+                "the half-percent flat threshold: a 0.1 % wobble must not be coloured as growth",
+                "vector-effect: non-scaling-stroke and preserveAspectRatio=\"none\" — otherwise the curve becomes a thread in a narrow column",
+                "tabular numerals in the value and change columns: the numbers must line up in a column"
+              ],
+              "adapt": [
+                "the rows array: label, value, delta and the values series behind the curve",
+                "caption — the table heading",
+                "period — the period note under the heading",
+                "the accent through the accent prop — the growth colour when green does not suit the brand",
+                "the set of columns and their order"
+              ],
+              "notes": [
+                "value is a string rather than a number: formatting belongs to the caller, the component does not guess digit grouping or currency.",
+                "The curve has no axes: it shows shape, and the exact numbers come from the neighbouring columns.",
+                "Fewer than two entries in values render a dot instead of a line — filter such rows out.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sparkline002\n  caption=\"Key metrics\"\n  period=\"over the last 7 days\"\n  rows={[{ label: \"Visits\", value: \"48,210\", delta: 8.4, values: [31, 34, 41, 48] }]}\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Table heading",
+                "default": "Key metrics"
+              },
+              "period": {
+                "label": "Period",
+                "default": "over the last 7 days"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,292 @@
+"use client"
+
+import { useEffect, useId, useRef, useState } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Inputgroup024Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children" | "defaultValue"
+> & {
+  name?: string
+  label?: string
+  placeholder?: string
+  applyLabel?: string
+  defaultValue?: string
+  validCodes?: string[]
+  delay?: number
+  hint?: string
+  accent?: string
+}
+
+type Status = "idle" | "checking" | "accepted" | "rejected"
+
+const DEFAULT_VALID_CODES = ["VIBEUI10", "SALE2026"]
+
+// Идея компонента: у промокода три исхода, а не два — идёт проверка,
+// принят, отклонён — и каждый должен быть виден без чтения текста статуса
+// (свой цвет и своя иконка). Проверка идёт по таймеру, имитируя запрос к
+// серверу: поле блокируется на время проверки и остаётся заблокированным
+// после успеха, а любое повторное редактирование сбрасывает статус в
+// исходный, потому что старая проверка больше не про новый текст.
+const STYLES = `
+:where([data-vibeui-block="inputgroup-024"]){
+--vibeui-inputgroup-024-surface:oklch(1 0 0);
+--vibeui-inputgroup-024-shell:oklch(0.91 0.006 265);
+--vibeui-inputgroup-024-fg:oklch(0.22 0.014 265);
+--vibeui-inputgroup-024-muted:oklch(0.55 0.014 265);
+--vibeui-inputgroup-024-field:oklch(0.99 0.002 265);
+--vibeui-inputgroup-024-fixed:oklch(0.96 0.004 265);
+--vibeui-inputgroup-024-border:oklch(0.86 0.008 265);
+--vibeui-inputgroup-024-accent:oklch(0.5 0.15 315);
+--vibeui-inputgroup-024-checking:oklch(0.6 0.02 265);
+--vibeui-inputgroup-024-accepted:oklch(0.56 0.14 155);
+--vibeui-inputgroup-024-rejected:oklch(0.56 0.19 25);
+--vibeui-inputgroup-024-radius:0.75rem;
+--vibeui-inputgroup-024-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+--vibeui-inputgroup-024-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+[data-vibeui-block="inputgroup-024"]{
+display:flex;flex-direction:column;gap:0.4375rem;margin:0;
+width:100%;max-width:23rem;box-sizing:border-box;padding:0.875rem;
+background:var(--vibeui-inputgroup-024-surface);
+border:1px solid var(--vibeui-inputgroup-024-shell);border-radius:0.875rem;
+font-family:var(--vibeui-inputgroup-024-font);color:var(--vibeui-inputgroup-024-fg);
+}
+[data-vibeui-block="inputgroup-024"] *{box-sizing:border-box}
+[data-vibeui-block="inputgroup-024"] label{font-size:0.8125rem;font-weight:600}
+[data-vibeui-block="inputgroup-024"] [data-part="group"]{display:flex;align-items:stretch}
+[data-vibeui-block="inputgroup-024"] [data-part="group"] > *{
+position:relative;height:2.75rem;
+border:1px solid var(--vibeui-inputgroup-024-border);
+border-radius:0;margin-left:-1px;font:inherit;color:inherit;
+}
+[data-vibeui-block="inputgroup-024"] [data-part="group"] > *:first-child{
+margin-left:0;
+border-radius:var(--vibeui-inputgroup-024-radius) 0 0 var(--vibeui-inputgroup-024-radius);
+}
+[data-vibeui-block="inputgroup-024"] [data-part="group"] > *:last-child{
+border-radius:0 var(--vibeui-inputgroup-024-radius) var(--vibeui-inputgroup-024-radius) 0;
+}
+[data-vibeui-block="inputgroup-024"] [data-part="group"] > *:focus,
+[data-vibeui-block="inputgroup-024"] [data-part="group"] > *:focus-visible{
+z-index:1;outline:2px solid var(--vibeui-inputgroup-024-accent);outline-offset:-1px;
+border-color:var(--vibeui-inputgroup-024-accent);
+}
+[data-vibeui-block="inputgroup-024"] [data-part="group"][data-status="accepted"] > *{
+border-color:var(--vibeui-inputgroup-024-accepted);
+}
+[data-vibeui-block="inputgroup-024"] [data-part="group"][data-status="rejected"] > *{
+border-color:var(--vibeui-inputgroup-024-rejected);
+}
+[data-vibeui-block="inputgroup-024"] input{
+flex:1;min-width:0;padding:0 0.75rem;
+background:var(--vibeui-inputgroup-024-field);
+font-family:var(--vibeui-inputgroup-024-mono);font-size:0.875rem;letter-spacing:0.03em;
+text-transform:uppercase;
+}
+[data-vibeui-block="inputgroup-024"] input:disabled{color:var(--vibeui-inputgroup-024-muted)}
+[data-vibeui-block="inputgroup-024"] [data-part="apply"]{
+appearance:none;flex:none;cursor:pointer;padding:0 1rem;min-width:6.5rem;
+background:var(--vibeui-inputgroup-024-fixed);
+font-size:0.8125rem;font-weight:650;color:inherit;
+transition:background-color .16s ease,opacity .16s ease;
+}
+[data-vibeui-block="inputgroup-024"] [data-part="apply"]:not(:disabled):hover{
+background:color-mix(in oklab,var(--vibeui-inputgroup-024-accent) 14%,var(--vibeui-inputgroup-024-fixed));
+}
+[data-vibeui-block="inputgroup-024"] [data-part="apply"]:disabled{opacity:0.55;cursor:not-allowed}
+[data-vibeui-block="inputgroup-024"] [data-part="status"]{
+display:flex;align-items:center;gap:0.375rem;margin:0;
+font-size:0.75rem;line-height:1.4;color:var(--vibeui-inputgroup-024-muted);
+}
+[data-vibeui-block="inputgroup-024"] [data-part="status"][data-status="accepted"]{
+color:var(--vibeui-inputgroup-024-accepted);font-weight:600;
+}
+[data-vibeui-block="inputgroup-024"] [data-part="status"][data-status="rejected"]{
+color:var(--vibeui-inputgroup-024-rejected);font-weight:600;
+}
+[data-vibeui-block="inputgroup-024"] [data-part="status"] svg{
+width:0.875rem;height:0.875rem;flex:none;display:block;
+}
+[data-vibeui-block="inputgroup-024"] [data-part="spinner"]{
+animation:vibeui-inputgroup-024-spin 0.8s linear infinite;
+}
+[data-vibeui-block="inputgroup-024"] [data-part="reset"]{
+appearance:none;cursor:pointer;color:var(--vibeui-inputgroup-024-accent);
+font:inherit;font-size:0.75rem;font-weight:650;text-decoration:underline;
+text-underline-offset:2px;
+}
+[data-vibeui-block="inputgroup-024"] [data-part="hint"]{
+margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-inputgroup-024-muted);
+}
+@keyframes vibeui-inputgroup-024-spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="inputgroup-024"] *{transition:none!important}
+[data-vibeui-block="inputgroup-024"] [data-part="spinner"]{animation:none!important}
+}
+`
+
+const STATUS_TEXT: Record<Status, string> = {
+  idle: "Введите промокод и нажмите «Применить»",
+  checking: "Проверяем код…",
+  accepted: "Промокод принят",
+  rejected: "Такой промокод не найден или уже истёк",
+}
+
+/**
+ * Сцепка «поле промокода + проверка»: три состояния статуса со своим цветом
+ * и иконкой, поле блокируется на время проверки и после успеха.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Inputgroup024({
+  name = "promo",
+  label = "Промокод",
+  placeholder = "Например, VIBEUI10",
+  applyLabel = "Применить",
+  defaultValue = "",
+  validCodes = DEFAULT_VALID_CODES,
+  delay = 900,
+  hint = "Демонстрационная проверка: подходит код VIBEUI10 или SALE2026, остальные будут отклонены.",
+  accent,
+  className,
+  style,
+  ...props
+}: Inputgroup024Props) {
+  const id = useId()
+  const field = useRef<HTMLInputElement | null>(null)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [code, setCode] = useState(defaultValue)
+  const [status, setStatus] = useState<Status>("idle")
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
+  const palette = {
+    ...(accent ? { "--vibeui-inputgroup-024-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  const apply = () => {
+    const trimmed = code.trim()
+    if (!trimmed || status === "checking") return
+
+    setStatus("checking")
+    timeoutRef.current = setTimeout(() => {
+      const ok = validCodes.some(
+        (valid) => valid.toLowerCase() === trimmed.toLowerCase(),
+      )
+      setStatus(ok ? "accepted" : "rejected")
+    }, delay)
+  }
+
+  const reset = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+    setStatus("idle")
+    setCode("")
+    field.current?.focus()
+  }
+
+  return (
+    <>
+      <style href="vibeui-inputgroup-024" precedence="medium">
+        {STYLES}
+      </style>
+      <div
+        {...props}
+        data-vibeui-block="inputgroup-024"
+        className={className}
+        style={palette}
+      >
+        <label htmlFor={id}>{label}</label>
+        <div data-part="group" data-status={status}>
+          <input
+            ref={field}
+            id={id}
+            name={name}
+            type="text"
+            placeholder={placeholder}
+            autoComplete="off"
+            spellCheck={false}
+            value={code}
+            disabled={status === "accepted"}
+            aria-describedby={`${id}-status ${id}-hint`}
+            onChange={(event) => {
+              setCode(event.target.value)
+              if (status === "rejected") {
+                setStatus("idle")
+              }
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                event.preventDefault()
+                apply()
+              }
+            }}
+          />
+          <button
+            type="button"
+            data-part="apply"
+            disabled={
+              status === "checking" || status === "accepted" || !code.trim()
+            }
+            onClick={apply}
+          >
+            {status === "checking" ? "Проверяем…" : applyLabel}
+          </button>
+        </div>
+        <p data-part="status" id={`${id}-status`} data-status={status} role="status">
+          {status === "checking" ? (
+            <svg
+              data-part="spinner"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              aria-hidden="true"
+            >
+              <path d="M8 2a6 6 0 1 1-6 6" strokeLinecap="round" />
+            </svg>
+          ) : null}
+          {status === "accepted" ? (
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              aria-hidden="true"
+            >
+              <path d="m3 8.5 3.2 3.2L13 5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          ) : null}
+          {status === "rejected" ? (
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              aria-hidden="true"
+            >
+              <path d="m4 4 8 8M12 4l-8 8" strokeLinecap="round" />
+            </svg>
+          ) : null}
+          <span>{STATUS_TEXT[status]}</span>
+          {status === "accepted" ? (
+            <button type="button" data-part="reset" onClick={reset}>
+              Ввести другой
+            </button>
+          ) : null}
+        </p>
+        <p data-part="hint" id={`${id}-hint`}>
+          {hint}
+        </p>
+      </div>
+    </>
+  )
+}

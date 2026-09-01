@@ -1,0 +1,1195 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "menu-002",
+      "type": "registry:component",
+      "title": "Context Menu",
+      "description": "Меню по правой кнопке: появляется там, где нажали, и закрывается выбором, Escape или уходом курсора.",
+      "categories": [
+        "context-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "menu-002/menu-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/menu-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-002-*. Клиентский: \"use client\". Координаты берутся из события contextmenu, стандартное меню браузера отменяется preventDefault. Меню позиционируется fixed по точке нажатия. Область, на которой работает правая кнопка, обозначена пунктиром и подписью.",
+      "meta": {
+        "tags": [
+          "menu",
+          "context",
+          "right-click",
+          "desktop"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Menu002",
+          "usage": "<Menu002 items={[{ label: \"Открыть\" }, { label: \"Удалить\", danger: true }]} />",
+          "summary": "Контекстное меню по правой кнопке: появляется у курсора, закрывается выбором, Escape и уходом мыши, показывает выбранное действие. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-menu-002-* и не подменять её токенами вашей темы",
+            "координаты из события: у позиции курсора нет якоря, который дал бы CSS",
+            "видимую область, на которой работает правая кнопка — иначе меню находят случайно",
+            "закрытие по Escape и уходу курсора, а не только по выбору",
+            "цвет только на тексте опасного пункта",
+            "дубль тех же действий в обычном меню: на телефоне правой кнопки нет"
+          ],
+          "adapt": [
+            "массив items",
+            "hint — подпись области",
+            "обработчики выбора",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "На телефоне контекстного меню нет вовсе: те же действия обязаны быть доступны иначе.",
+            "Меню может вылезти за край окна: для точного попадания добавьте проверку границ.",
+            "Отменять браузерное меню стоит только там, где вы даёте замену: на тексте и ссылках это раздражает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "hint",
+            "label": "Подпись области",
+            "type": "text",
+            "default": "Нажмите правой кнопкой по области",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A right-click menu: it appears where you clicked and closes on selection, Escape or when the pointer leaves.",
+            "ai": {
+              "summary": "A context menu on right click: it opens at the cursor, closes on selection, Escape and mouse-out, and reports the chosen action. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-menu-002-* palette — do not swap it for your theme tokens",
+                "coordinates from the event: a cursor position has no anchor CSS could use",
+                "a visible zone where right-click works — otherwise the menu is found by accident",
+                "closing on Escape and mouse-out, not only on selection",
+                "colour on the destructive item's text only",
+                "the same actions duplicated in a normal menu: phones have no right click"
+              ],
+              "adapt": [
+                "the items array",
+                "hint — the zone's caption",
+                "the selection handlers",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Phones have no context menu at all: the same actions must be reachable another way.",
+                "The menu can overflow the window: add bounds checking for exact placement.",
+                "Only override the browser menu where you replace it: on text and links it is an annoyance.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Menu002 items={[{ label: \"Open\" }, { label: \"Delete\", danger: true }]} />"
+            },
+            "controls": {
+              "hint": {
+                "label": "Zone caption",
+                "default": "Right-click inside the area"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contextmenu-001",
+      "type": "registry:component",
+      "title": "Context Menu",
+      "description": "Меню по правому клику на HTML popover, с кнопкой-дублёром: без неё меню недоступно тем, кто работает с клавиатуры.",
+      "categories": [
+        "context-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contextmenu-001/contextmenu-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contextmenu-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contextmenu-001-*. Клиентский: \"use client\" ради координат курсора. Меню — popover, поэтому закрытие по Escape и клику мимо достаётся от браузера, а положение подставляется переменными --vibeui-contextmenu-001-x/y. Кнопка «Действия» открывает то же меню без мыши.",
+      "meta": {
+        "tags": [
+          "context-menu",
+          "popover",
+          "right-click",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contextmenu001",
+          "usage": "<Contextmenu001 items={[{ label: \"Переименовать\", keys: \"F2\" }]} />",
+          "summary": "Меню по правому клику: открывается у курсора, закрывается по Escape и клику мимо, опасное действие выделено цветом. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-contextmenu-001-* и не подменять её токенами вашей темы",
+            "кнопку-дублёр: правый клик недоступен тем, кто работает без мыши",
+            "popover: Escape и клик мимо достаются от браузера",
+            "координаты в переменных — они известны только в момент события",
+            "выделение опасного пункта цветом и его место внизу списка",
+            "preventDefault на contextmenu только внутри своей области, а не на всей странице"
+          ],
+          "adapt": [
+            "массив items и обработчики",
+            "hint — подпись области",
+            "акцент через проп accent",
+            "размер области"
+          ],
+          "notes": [
+            "Перехват правого клика отбирает системное меню: делайте это только там, где ваше меню полезнее.",
+            "У края экрана меню может выйти за границу: добавьте зажим координат под свой макет.",
+            "Стрелки по пунктам компонент не обрабатывает — переход идёт по Tab.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "hint",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Правый клик по области — или кнопка ниже",
+            "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A right-click menu on the HTML popover, with a duplicate button: without it the menu is out of reach for keyboard users.",
+            "ai": {
+              "summary": "A right-click menu: opens at the cursor, closes on Escape and outside clicks, the destructive item is coloured. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-contextmenu-001-* palette — do not swap it for your theme tokens",
+                "the duplicate button: right-click is unavailable without a mouse",
+                "the popover: Escape and outside clicks come from the browser",
+                "the coordinates in variables — they are known only at event time",
+                "colouring the destructive item and keeping it last",
+                "preventDefault on contextmenu only inside your own area, never page-wide"
+              ],
+              "adapt": [
+                "the items array and their handlers",
+                "hint — the area's caption",
+                "the accent through the accent prop",
+                "the area size"
+              ],
+              "notes": [
+                "Hijacking right-click takes away the system menu: do it only where your menu is more useful.",
+                "Near a screen edge the menu can overflow: clamp the coordinates for your layout.",
+                "The component does not handle arrow keys between items — Tab moves between them.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Contextmenu001 items={[{ label: \"Rename\", keys: \"F2\" }]} />"
+            },
+            "controls": {
+              "hint": {
+                "label": "Caption",
+                "default": "Right-click the area — or use the button"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contextmenu-002",
+      "type": "registry:component",
+      "title": "File Tiles",
+      "description": "Контекстное меню файла в плиточном списке: правый клик у курсора, кнопка «•••» на плитке и долгое нажатие для телефона — три входа в одно меню.",
+      "categories": [
+        "context-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contextmenu-002/contextmenu-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contextmenu-002.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-contextmenu-002-*. Клиентский: координаты курсора и текущая плитка живут в useState. Меню — HTML popover, поэтому Escape и клик мимо достаются от браузера; координаты подставляются переменными --vibeui-contextmenu-002-x/y, потому что известны только в момент события. Долгое нажатие собрано на onPointerDown с проверкой pointerType и таймером в 500 мс, отменяется на onPointerUp и onPointerLeave. Плитка, к которой относится меню, подсвечивается через data-active и гасится на событии toggle попапа. В шапке меню стоит имя файла, ниже — действия и отделённое линией удаление.",
+      "meta": {
+        "tags": [
+          "contextmenu",
+          "files",
+          "popover",
+          "touch"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contextmenu002",
+          "usage": "<Contextmenu002\n  title=\"Документы\"\n  files={[\"Отчёт.pdf\", \"Смета.xlsx\"]}\n/>",
+          "summary": "Контекстное меню файла с тремя способами вызова: правый клик, кнопка на плитке и долгое нажатие. Подсвечивает цель и называет её в шапке. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-contextmenu-002-*: компонент обязан выглядеть одинаково в любом проекте",
+            "кнопку-дублёр и долгое нажатие: на телефоне правого клика нет, а меню — единственный путь к переименованию",
+            "HTML popover как основу — Escape и клик мимо тогда работают без вашего кода",
+            "подсветку плитки, к которой относится меню: при пяти одинаковых плитках иначе непонятно, что удаляется",
+            "имя файла в шапке меню — «удалить» без предмета это ловушка",
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "заголовок списка через title",
+            "состав файлов через files",
+            "цвет подсветки и фокуса через accent",
+            "набор действий и сочетаний прямо в таблице ACTIONS"
+          ],
+          "notes": [
+            "Меню не переворачивается у края экрана: у курсора внизу справа часть пунктов уедет, добавьте свою поправку.",
+            "Долгое нажатие ждёт 500 мс и отменяется движением пальца — это компромисс между случайным и намеренным.",
+            "preventDefault на contextmenu убирает системное меню браузера: пользователь теряет «сохранить изображение».",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Документы",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A file context menu in a tile list: a right click at the cursor, a \"•••\" button on the tile and a long press for phones — three ways into one menu.",
+            "ai": {
+              "summary": "A file context menu with three ways to open it: right click, a button on the tile and a long press. It highlights the target and names it in the header. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-contextmenu-002-* palette: the component must look the same in any project",
+                "the duplicate button and the long press: phones have no right click, and this menu is the only route to renaming",
+                "the HTML popover as the base — Escape and outside clicks then work without your code",
+                "the highlight on the tile the menu belongs to: with five identical tiles nothing else shows what is being deleted",
+                "the file name in the menu header — \"delete\" without a subject is a trap",
+                "the component's own light surface: on the dark catalog card dark text disappears"
+              ],
+              "adapt": [
+                "the list heading through title",
+                "the files through files",
+                "the highlight and focus colour through accent",
+                "the actions and shortcuts directly in the ACTIONS table"
+              ],
+              "notes": [
+                "The menu does not flip near the screen edge: at the bottom right some entries run off, add your own clamp.",
+                "The long press waits 500 ms and is cancelled by finger movement — a compromise between accidental and deliberate.",
+                "preventDefault on contextmenu removes the browser's own menu: the user loses \"save image\".",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Contextmenu002\n  title=\"Documents\"\n  files={[\"Report.pdf\", \"Budget.xlsx\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Documents"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contextmenu-003",
+      "type": "registry:component",
+      "title": "Open With",
+      "description": "Контекстное меню файла с подменю «Открыть с помощью»: список программ спрятан на второй уровень, куда ведут наведение и стрелка вправо.",
+      "categories": [
+        "context-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contextmenu-003/contextmenu-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contextmenu-003.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-contextmenu-003-*. Клиентский: раскрытие подменю и координаты курсора держит useState. Первый уровень — HTML popover у курсора через переменные x/y, второй — обычный абсолютный слой внутри него: вложенный popover=auto закрыл бы родителя. Родительский пункт помечен aria-haspopup=menu и aria-expanded, подменю — role=menu с aria-label. Стрелка вправо открывает подменю и уводит в него фокус, влево — закрывает и возвращает фокус на родителя. Кнопка «Действия» дублирует правый клик, иначе меню недоступно без мыши.",
+      "meta": {
+        "tags": [
+          "contextmenu",
+          "submenu",
+          "files",
+          "keyboard"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contextmenu003",
+          "usage": "<Contextmenu003\n  fileName=\"макет.svg\"\n  submenuLabel=\"Открыть с помощью\"\n  apps={[\"Просмотр\", \"Редактор кода\"]}\n/>",
+          "summary": "Контекстное меню с подменю выбора программы: второй уровень открывается наведением и стрелкой вправо, стрелка влево возвращает назад. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-contextmenu-003-*: компонент обязан выглядеть одинаково в любом проекте",
+            "подменю обычным слоем внутри popover: второй popover=auto закрыл бы первый, и меню замигает",
+            "кнопку-дублёр рядом с файлом — правый клик недоступен ни с клавиатуры, ни на телефоне",
+            "пару aria-haspopup и aria-expanded на родительском пункте: иначе о втором уровне знают только зрячие",
+            "возврат фокуса на родителя по стрелке влево — без него из подменю нет выхода",
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "имя файла через fileName",
+            "заголовок подменю через submenuLabel и список программ через apps",
+            "цвет значка и фокуса через accent",
+            "состав основного уровня прямо в разметке"
+          ],
+          "notes": [
+            "Подменю всегда раскрывается вправо: у правого края экрана оно уедет, переверните его своим правилом.",
+            "Уход курсора закрывает подменю сразу; если это слишком резко, добавьте задержку в onMouseLeave.",
+            "Пункт «Другое приложение…» с многоточием обещает диалог — не оставляйте его пустым.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "fileName",
+            "label": "Файл",
+            "type": "text",
+            "default": "макет-главной.svg",
+            "maxLength": 30
+          },
+          {
+            "prop": "submenuLabel",
+            "label": "Подменю",
+            "type": "text",
+            "default": "Открыть с помощью",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A file context menu with an \"Open with\" submenu: the list of applications is tucked into a second level reached by hover and the right arrow.",
+            "ai": {
+              "summary": "A context menu with an application submenu: the second level opens on hover and the right arrow, the left arrow walks back. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-contextmenu-003-* palette: the component must look the same in any project",
+                "the submenu as a plain layer inside the popover: a second popover=auto would close the first and make the menu blink",
+                "the duplicate button beside the file — a right click is available neither from the keyboard nor on a phone",
+                "the aria-haspopup and aria-expanded pair on the parent item: otherwise only sighted users learn about the second level",
+                "returning focus to the parent on the left arrow — without it there is no way out of the submenu",
+                "the component's own light surface: on the dark catalog card dark text disappears"
+              ],
+              "adapt": [
+                "the file name through fileName",
+                "the submenu heading through submenuLabel and the application list through apps",
+                "the icon and focus colour through accent",
+                "the first-level entries directly in the markup"
+              ],
+              "notes": [
+                "The submenu always opens to the right: near the right edge it runs off, flip it with your own rule.",
+                "Leaving with the pointer closes the submenu at once; add a delay in onMouseLeave if that feels abrupt.",
+                "The \"Other application…\" entry with an ellipsis promises a dialog — do not leave it empty.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Contextmenu003\n  fileName=\"mockup.svg\"\n  submenuLabel=\"Open with\"\n  apps={[\"Preview\", \"Code editor\"]}\n/>"
+            },
+            "controls": {
+              "fileName": {
+                "label": "File",
+                "default": "mockup-home.svg"
+              },
+              "submenuLabel": {
+                "label": "Submenu",
+                "default": "Open with"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contextmenu-004",
+      "type": "registry:component",
+      "title": "Clipboard Menu",
+      "description": "Контекстное меню буфера обмена с настоящим состоянием: «вставить» выключено, пока буфер пуст, вырезанная карточка исчезает и возвращается вставкой.",
+      "categories": [
+        "context-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contextmenu-004/contextmenu-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contextmenu-004.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-contextmenu-004-*. Клиентский: список карточек, содержимое буфера и текущая цель живут в useState. Меню — HTML popover у курсора через переменные x/y, вызывается правым кликом и кнопкой на карточке. Пункт «вставить» помечен aria-disabled при пустом буфере и остаётся видимым: спрятанный пункт не объясняет, почему действие недоступно. Вставка кладёт копию сразу после карточки, на которой вызвали меню, — буфер без места назначения бессмысленен. Содержимое буфера показано строкой с role=status под списком.",
+      "meta": {
+        "tags": [
+          "contextmenu",
+          "clipboard",
+          "state",
+          "board"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contextmenu004",
+          "usage": "<Contextmenu004\n  title=\"Доска\"\n  cards={[\"Бриф клиента\", \"Смета\"]}\n/>",
+          "summary": "Контекстное меню вырезать-копировать-вставить, где состояние буфера настоящее: пустой буфер гасит вставку, вырезание убирает карточку. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-contextmenu-004-*: компонент обязан выглядеть одинаково в любом проекте",
+            "выключение «вставить» при пустом буфере — пункт, который молча ничего не делает, читается как поломка",
+            "видимость выключенного пункта: спрятанный пункт меняет высоту меню и не объясняет причину",
+            "строку с содержимым буфера и role=status: иначе о вырезанной карточке узнают только по её пропаже",
+            "вставку относительно цели вызова — «вставить» без места назначения ничего не значит",
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "заголовок доски через title",
+            "состав карточек через cards",
+            "цвет метки и фокуса через accent",
+            "подписи пунктов и сочетания прямо в разметке"
+          ],
+          "notes": [
+            "Это внутренний буфер компонента, а не системный: чтобы работать с настоящим, добавьте navigator.clipboard.",
+            "aria-disabled не блокирует нажатие: проверка в обработчике обязательна, она здесь есть.",
+            "Копия получает пометку «— копия»: в бою имя должно приходить с сервера, иначе будут дубли имён.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Доска",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A clipboard context menu with real state: paste is disabled while the buffer is empty, a cut card disappears and comes back on paste.",
+            "ai": {
+              "summary": "A cut-copy-paste context menu whose buffer state is real: an empty buffer greys out paste, cutting removes the card. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-contextmenu-004-* palette: the component must look the same in any project",
+                "disabling paste on an empty buffer — an entry that silently does nothing reads as a bug",
+                "keeping the disabled entry visible: hiding it changes the menu height and explains nothing",
+                "the buffer line with role=status: otherwise a cut card is only noticed by its absence",
+                "pasting relative to the target of the call — paste without a destination means nothing",
+                "the component's own light surface: on the dark catalog card dark text disappears"
+              ],
+              "adapt": [
+                "the board heading through title",
+                "the cards through cards",
+                "the marker and focus colour through accent",
+                "the entry captions and shortcuts directly in the markup"
+              ],
+              "notes": [
+                "This is the component's own buffer, not the system one: reach for navigator.clipboard to use the real thing.",
+                "aria-disabled does not block the click: the guard in the handler is required, and it is there.",
+                "A copy gets a \"— copy\" suffix: in production the name should come from the server or duplicates pile up.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Contextmenu004\n  title=\"Board\"\n  cards={[\"Client brief\", \"Budget\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Board"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contextmenu-005",
+      "type": "registry:component",
+      "title": "Selection Menu",
+      "description": "Контекстное меню выделенного текста: оно читает выделение в момент вызова и показывает его в шапке, поэтому «перевести» всегда с предметом.",
+      "categories": [
+        "context-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contextmenu-005/contextmenu-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contextmenu-005.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-contextmenu-005-*. Клиентский: выделение и координаты курсора держит useState. Текст выделения берётся из window.getSelection() прямо в обработчике вызова — в рендере его ещё нет, а после закрытия меню оно уже сброшено. Меню — HTML popover у курсора через переменные x/y, с кнопкой-дублёром для клавиатуры и телефона. Пока ничего не выделено, пункты помечены aria-disabled, а шапка показывает причину. Цвет выделения задан правилом ::selection на самом абзаце, чтобы он совпадал с акцентом компонента.",
+      "meta": {
+        "tags": [
+          "contextmenu",
+          "selection",
+          "text",
+          "popover"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contextmenu005",
+          "usage": "<Contextmenu005\n  text=\"Выделите фразу и вызовите меню правой кнопкой.\"\n  emptyHint=\"Ничего не выделено\"\n/>",
+          "summary": "Меню для выделенного текста: читает выделение в момент вызова, показывает его в шапке и гасит пункты, когда выделять нечего. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-contextmenu-005-*: компонент обязан выглядеть одинаково в любом проекте",
+            "чтение выделения в обработчике вызова: в рендере его ещё нет, а после закрытия меню уже нет",
+            "кусок текста в шапке меню — «перевести» без предмета перевода бессмысленно",
+            "aria-disabled на пунктах при пустом выделении вместо молчаливого несрабатывания",
+            "кнопку-дублёр: правый клик недоступен с клавиатуры и на телефоне",
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "содержимое абзаца через text",
+            "подпись пустого состояния через emptyHint",
+            "цвет выделения и фокуса через accent",
+            "набор команд прямо в таблице ACTIONS"
+          ],
+          "notes": [
+            "getSelection() возвращает выделение всей страницы: если нужно ограничиться абзацем, сверьте anchorNode.",
+            "Длинное выделение обрезается многоточием в одну строку — меню не должно превращаться в цитатник.",
+            "preventDefault на contextmenu убирает системные пункты браузера, включая поиск по выделению.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "emptyHint",
+            "label": "Пустое выделение",
+            "type": "text",
+            "default": "Ничего не выделено",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A context menu for selected text: it reads the selection at the moment of the call and shows it in the header, so \"translate\" always has a subject.",
+            "ai": {
+              "summary": "A menu for a text selection: it reads the selection when called, shows it in the header and greys out entries when there is nothing to act on. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-contextmenu-005-* palette: the component must look the same in any project",
+                "reading the selection inside the handler: it does not exist during render and is gone once the menu closes",
+                "the snippet in the menu header — \"translate\" without something to translate is meaningless",
+                "aria-disabled on the entries with an empty selection instead of a silent no-op",
+                "the duplicate button: a right click is out of reach from the keyboard and on a phone",
+                "the component's own light surface: on the dark catalog card dark text disappears"
+              ],
+              "adapt": [
+                "the paragraph content through text",
+                "the empty-state caption through emptyHint",
+                "the selection and focus colour through accent",
+                "the command list directly in the ACTIONS table"
+              ],
+              "notes": [
+                "getSelection() returns the whole page selection: check anchorNode if it must be limited to the paragraph.",
+                "A long selection is clipped to one line with an ellipsis — the menu must not become a quote board.",
+                "preventDefault on contextmenu removes the browser's own entries, including search for the selection.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Contextmenu005\n  text=\"Select a phrase and call the menu with the right button.\"\n  emptyHint=\"Nothing selected\"\n/>"
+            },
+            "controls": {
+              "emptyHint": {
+                "label": "Empty selection",
+                "default": "Nothing selected"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contextmenu-006",
+      "type": "registry:component",
+      "title": "Table Row Menu",
+      "description": "Контекстное меню строки таблицы: строка получает фокус и подсветку, а вызов работает и мышью, и клавишей меню, у которой нет координат курсора.",
+      "categories": [
+        "context-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contextmenu-006/contextmenu-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contextmenu-006.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-contextmenu-006-*. Клиентский: текущая строка и координаты держит useState. Строки получают tabIndex и aria-selected, подсветка живёт, пока открыт popover, и гаснет на событии toggle. Клавиша вызова меню и Shift+F10 приходят тем же событием contextmenu, но с нулевыми координатами — при них меню встаёт по левому нижнему краю самой строки, а не в углу экрана. Меню — HTML popover, поэтому Escape и клик мимо от браузера; в шапке имя строки, удаление отделено линией и покрашено текстом.",
+      "meta": {
+        "tags": [
+          "contextmenu",
+          "table",
+          "row",
+          "keyboard"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contextmenu006",
+          "usage": "<Contextmenu006\n  caption=\"Счета за март\"\n  rows={[{ name: \"ООО «Полдень»\", status: \"Оплачен\", sum: \"84 000 ₽\" }]}\n/>",
+          "summary": "Контекстное меню строки таблицы с подсветкой цели и вызовом с клавиатуры: при нулевых координатах меню встаёт у края строки. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-contextmenu-006-*: компонент обязан выглядеть одинаково в любом проекте",
+            "обработку нулевых координат: клавиша меню и Shift+F10 не дают позиции курсора, и меню улетело бы в угол",
+            "tabIndex и aria-selected на строке — без фокуса на строке клавиатурный вызов невозможен",
+            "подсветку строки, пока меню открыто: в таблице из двадцати строк «удалить» без видимой цели это рулетка",
+            "имя строки в шапке меню — оно подтверждает, к чему относятся команды",
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+          ],
+          "adapt": [
+            "подпись таблицы через caption",
+            "состав строк через rows",
+            "цвет подсветки и фокуса через accent",
+            "набор команд прямо в таблице ACTIONS"
+          ],
+          "notes": [
+            "Строка с tabIndex попадает в обход табом: на длинной таблице подумайте про roving tabindex.",
+            "Меню не переворачивается у нижнего края окна — добавьте свою поправку координат, если таблица длинная.",
+            "Каждая команда закрывает меню: для массовых действий нужен другой компонент, не построчный.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись таблицы",
+            "type": "text",
+            "default": "Счета за март",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A context menu for a table row: the row takes focus and a highlight, and the call works both with the mouse and with the menu key, which carries no cursor coordinates.",
+            "ai": {
+              "summary": "A table row context menu that highlights its target and opens from the keyboard: with zero coordinates it lands at the row's edge. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-contextmenu-006-* palette: the component must look the same in any project",
+                "the zero-coordinate branch: the menu key and Shift+F10 carry no cursor position, and the menu would fly into the corner",
+                "tabIndex and aria-selected on the row — without focus on the row there is no keyboard call",
+                "the row highlight while the menu is open: in a twenty-row table \"delete\" without a visible target is roulette",
+                "the row name in the menu header — it confirms what the commands apply to",
+                "the component's own light surface: on the dark catalog card dark text disappears"
+              ],
+              "adapt": [
+                "the table caption through caption",
+                "the rows through rows",
+                "the highlight and focus colour through accent",
+                "the command list directly in the ACTIONS table"
+              ],
+              "notes": [
+                "A row with tabIndex joins the tab order: on a long table consider a roving tabindex.",
+                "The menu does not flip at the bottom edge — add your own clamp if the table is long.",
+                "Every command closes the menu: bulk actions need a different, non-per-row component.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Contextmenu006\n  caption=\"March invoices\"\n  rows={[{ name: \"Polden LLC\", status: \"Paid\", sum: \"84 000 ₽\" }]}\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Table caption",
+                "default": "March invoices"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contextmenu-007",
+      "type": "registry:component",
+      "title": "Column Toggles",
+      "description": "Контекстное меню шапки таблицы с чекбоксами видимости колонок: колонки действительно прячутся, а последнюю оставшуюся выключить нельзя.",
+      "categories": [
+        "context-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contextmenu-007/contextmenu-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contextmenu-007.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-contextmenu-007-*. Клиентский: набор видимых колонок держит useState, таблица рисуется из него, поэтому переключатель работает по-настоящему. Меню вызывается правым кликом по thead и кнопкой «Колонки» со счётчиком — на телефоне правого клика нет. Пункты размечены role=menuitemcheckbox с aria-checked, меню не закрывается по нажатию: колонки прячут пачкой. Последняя видимая колонка помечена aria-disabled и не выключается: таблица без колонок — пустой прямоугольник, из которого нечем вернуться. Порядок колонок при возвращении берётся из исходного списка, а не из порядка нажатий.",
+      "meta": {
+        "tags": [
+          "contextmenu",
+          "table",
+          "columns",
+          "checkbox"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contextmenu007",
+          "usage": "<Contextmenu007\n  caption=\"План недели\"\n  columns={[\"Задача\", \"Статус\", \"Срок\"]}\n/>",
+          "summary": "Меню видимости колонок по правому клику на шапке таблицы: чекбоксы реально скрывают колонки, последняя защищена. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-contextmenu-007-*: компонент обязан выглядеть одинаково в любом проекте",
+            "запрет на скрытие последней колонки: из пустой таблицы пользователю нечем вернуть содержимое",
+            "то, что меню не закрывается по нажатию — колонки прячут пачкой, а не по одной",
+            "роль menuitemcheckbox с aria-checked: переключатель обязан объявляться переключателем",
+            "кнопку «Колонки» со счётчиком рядом с таблицей — правого клика на телефоне нет",
+            "восстановление колонок в исходном порядке, а не в порядке нажатий: иначе таблица перетасовывается"
+          ],
+          "adapt": [
+            "подпись таблицы через caption",
+            "список колонок через columns",
+            "цвет отметки и фокуса через accent",
+            "содержимое ячеек в таблице CELLS"
+          ],
+          "notes": [
+            "Ячейки берутся из таблицы CELLS по имени колонки — в бою данные придут из вашего источника.",
+            "Состояние живёт внутри компонента: чтобы запомнить выбор между визитами, поднимите его наверх.",
+            "preventDefault на contextmenu убирает системное меню браузера на шапке таблицы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись таблицы",
+            "type": "text",
+            "default": "План недели",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A table-header context menu with column visibility checkboxes: columns really do disappear, and the last remaining one cannot be switched off.",
+            "ai": {
+              "summary": "A column visibility menu opened by right-clicking the table header: the checkboxes truly hide columns, the last one is protected. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-contextmenu-007-* palette: the component must look the same in any project",
+                "the ban on hiding the last column: from an empty table there is no way back to the content",
+                "the fact that the menu does not close on a click — columns are hidden in batches, not one by one",
+                "the menuitemcheckbox role with aria-checked: a toggle must be announced as a toggle",
+                "the \"Columns\" button with a counter beside the table — phones have no right click",
+                "restoring columns in their original order rather than in click order: otherwise the table reshuffles"
+              ],
+              "adapt": [
+                "the table caption through caption",
+                "the column list through columns",
+                "the check and focus colour through accent",
+                "the cell contents in the CELLS table"
+              ],
+              "notes": [
+                "Cells come from the CELLS table keyed by column name — in production the data comes from your source.",
+                "State lives inside the component: lift it up to remember the choice between visits.",
+                "preventDefault on contextmenu removes the browser's own menu over the table header.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Contextmenu007\n  caption=\"Week plan\"\n  columns={[\"Task\", \"Status\", \"Due\"]}\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Table caption",
+                "default": "Week plan"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contextmenu-008",
+      "type": "registry:component",
+      "title": "Right Click Hint",
+      "description": "Контекстное меню с сочетаниями клавиш и пульсирующей подсказкой о правом клике, которая гаснет после первого удачного вызова.",
+      "categories": [
+        "context-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contextmenu-008/contextmenu-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contextmenu-008.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-contextmenu-008-*. Клиентский: признак «меню уже открывали», координаты курсора и таймер долгого нажатия живут в useState и useRef. Правый клик не виден на экране, поэтому у области стоит подсказка с анимацией; после первого вызова data-used на корне гасит анимацию и приглушает её. Сочетания разложены по отдельным kbd с рамкой снизу — меню заодно работает шпаргалкой. Долгое нажатие собрано на onPointerDown с проверкой pointerType и таймером 500 мс. Анимация выключается правилом prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "contextmenu",
+          "hint",
+          "shortcuts",
+          "touch"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contextmenu008",
+          "usage": "<Contextmenu008\n  hint=\"Правый клик по холсту\"\n  items={[{ label: \"Вставить сюда\", keys: \"⌘ V\" }]}\n/>",
+          "summary": "Контекстное меню, которое само себя объясняет: пульсирующая подсказка до первого вызова, сочетания клавиш в пунктах, долгое нажатие для телефона. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-contextmenu-008-*: компонент обязан выглядеть одинаково в любом проекте",
+            "подсказку о правом клике: скрытый жест, о котором никто не сказал, для половины пользователей не существует",
+            "затухание подсказки после первого вызова — вечная анимация превращается в раздражитель",
+            "правило prefers-reduced-motion: пульсация обязана выключаться там, где движение мешает",
+            "долгое нажатие и кнопку-дублёр: на телефоне правого клика нет",
+            "разметку тегами kbd вместо span — это клавиши, а не оформление"
+          ],
+          "adapt": [
+            "текст подсказки через hint",
+            "состав пунктов и сочетаний через items",
+            "цвет курсора-значка и фокуса через accent",
+            "размер области прямо в CSS-правиле части area"
+          ],
+          "notes": [
+            "Символы ⌘ и ⇧ — маковские: для Windows подставьте Ctrl и Shift, иначе шпаргалка врёт.",
+            "Признак «уже открывали» живёт до перезагрузки страницы: чтобы помнить дольше, положите его в localStorage.",
+            "Долгое нажатие ждёт 500 мс и отменяется движением пальца — это компромисс, а не стандарт.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Правый клик по холсту",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A context menu with keyboard shortcuts and a pulsing right-click hint that fades away after the first successful call.",
+            "ai": {
+              "summary": "A context menu that explains itself: a pulsing hint until the first call, shortcuts on every entry, a long press for phones. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-contextmenu-008-* palette: the component must look the same in any project",
+                "the right-click hint: a hidden gesture nobody mentioned does not exist for half of the users",
+                "fading the hint after the first call — a permanent animation turns into an irritant",
+                "the prefers-reduced-motion rule: the pulse must switch off where motion gets in the way",
+                "the long press and the duplicate button: phones have no right click",
+                "the kbd markup instead of spans — these are keys, not decoration"
+              ],
+              "adapt": [
+                "the hint text through hint",
+                "the entries and their shortcuts through items",
+                "the cursor glyph and focus colour through accent",
+                "the area size directly in the CSS rule for the area part"
+              ],
+              "notes": [
+                "The ⌘ and ⇧ glyphs are Mac ones: on Windows substitute Ctrl and Shift or the cheat sheet lies.",
+                "The \"already used\" flag lives until a reload: put it in localStorage to remember longer.",
+                "The long press waits 500 ms and is cancelled by finger movement — a compromise, not a standard.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Contextmenu008\n  hint=\"Right click the canvas\"\n  items={[{ label: \"Paste here\", keys: \"⌘ V\" }]}\n/>"
+            },
+            "controls": {
+              "hint": {
+                "label": "Hint",
+                "default": "Right click the canvas"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contextmenu-009",
+      "type": "registry:component",
+      "title": "File Card Menu",
+      "description": "Меню на карточке файла с опасным пунктом внизу: собственный слой вместо HTML popover, зажатый в границах демонстрационной области, поэтому он не может выйти за карточку каталога.",
+      "categories": [
+        "context-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contextmenu-009/contextmenu-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contextmenu-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contextmenu-009-*. Клиентский: \"use client\" ради координат курсора и своего состояния открытия. Меню — не HTML popover, а обычный абсолютно спозиционированный слой внутри демонстрационной области с position:relative и overflow:hidden: координаты клика переводятся в систему отсчёта этой области и зажимаются её границами по известным размерам меню, поэтому оно физически не может выйти за карточку каталога. Открытие и закрытие компонент ведёт сам через useEffect: клик мимо и Escape закрывают меню, фокус возвращается на кнопку или карточку, которая его открыла.",
+      "meta": {
+        "tags": [
+          "contextmenu",
+          "files",
+          "danger",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contextmenu009",
+          "usage": "<Contextmenu009 fileName=\"Презентация Q3.pdf\" meta=\"4,1 МБ · изменён вчера\" />",
+          "summary": "Меню на карточке файла с опасным пунктом внизу: собственный слой зажат в границах демонстрационной области и не может выйти за карточку каталога. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-contextmenu-009-* и не подменять её токенами вашей темы",
+            "зажим координат меню в границах демонстрационной области — это условие, что меню не вылезет за карточку каталога",
+            "position:relative и overflow:hidden на демонстрационной области как вторую линию защиты от выхода за границы",
+            "кнопку-дублёр «•••»: правый клик недоступен тем, кто работает без мыши или с телефона",
+            "закрытие по Escape и клику мимо, реализованное вручную через useEffect, а не через popover",
+            "возврат фокуса на элемент, который открыл меню, — карточку или кнопку"
+          ],
+          "adapt": [
+            "имя файла через fileName и подпись через meta",
+            "состав действий и опасный пункт прямо в разметке",
+            "акцент через проп accent",
+            "размер демонстрационной области"
+          ],
+          "notes": [
+            "MENU_WIDTH и MENU_HEIGHT в файле — оценка размера ещё не отрисованного меню для зажима координат: при добавлении пунктов пересчитайте их.",
+            "Danger-пункт только красит текст, подтверждения не спрашивает: для необратимого действия добавьте отдельный диалог.",
+            "Стрелки вверх-вниз переключают пункты меню, но не открывают его — открытие только по клику или правой кнопке.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "fileName",
+            "label": "Файл",
+            "type": "text",
+            "default": "Презентация Q3.pdf",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A menu on a file card with a destructive entry at the bottom: its own layer instead of an HTML popover, clamped inside the demo area so it cannot escape the catalogue card.",
+            "ai": {
+              "summary": "A menu on a file card with a destructive entry at the bottom: its own layer clamped inside the demo area, unable to escape the catalogue card. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-contextmenu-009-* palette — do not swap it for your theme tokens",
+                "clamping the menu coordinates inside the demo area — this is what keeps the menu off the catalogue card",
+                "position:relative and overflow:hidden on the demo area as a second line of defence against overflow",
+                "the \"•••\" duplicate button: right-click is unreachable without a mouse or on a phone",
+                "closing on Escape and outside clicks, wired by hand through useEffect rather than a popover",
+                "returning focus to whatever opened the menu — the card or the button"
+              ],
+              "adapt": [
+                "the file name through fileName and the caption through meta",
+                "the action list and the destructive entry directly in the markup",
+                "the accent through the accent prop",
+                "the demo area size"
+              ],
+              "notes": [
+                "MENU_WIDTH and MENU_HEIGHT in the file estimate the not-yet-rendered menu size for clamping: recompute them if you add entries.",
+                "The destructive entry only colours its text and asks no confirmation: add a separate dialog for an irreversible action.",
+                "Up and down arrows move between entries but do not open the menu — only a click or right-click does that.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Contextmenu009 fileName=\"Q3 deck.pdf\" meta=\"4.1 MB · edited yesterday\" />"
+            },
+            "controls": {
+              "fileName": {
+                "label": "File",
+                "default": "Q3 deck.pdf"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contextmenu-010",
+      "type": "registry:component",
+      "title": "Selection Format Menu",
+      "description": "Меню форматирования выделенного текста с полужирным, курсивом, подчёркиванием и ссылкой: применённые метки собираются в список под абзацем, а меню не выходит за карточку каталога.",
+      "categories": [
+        "context-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contextmenu-010/contextmenu-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contextmenu-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contextmenu-010-*. Клиентский: \"use client\" ради window.getSelection() и своего состояния открытия. Выделение читается в обработчике вызова, а не в рендере: до события браузер не знает, что выбрал пользователь, а после закрытия меню оно уже сброшено. Меню — не HTML popover, а слой внутри демонстрационной области с position:relative и overflow:hidden; координаты клика переведены в систему отсчёта этой области и зажаты по известным размерам меню. Применённые форматы не меняют вёрстку абзаца, а добавляются меткой в список под ним — так виден результат действия без реального форматирования текста.",
+      "meta": {
+        "tags": [
+          "contextmenu",
+          "selection",
+          "formatting",
+          "text"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contextmenu010",
+          "usage": "<Contextmenu010 text=\"Выделите фразу и вызовите меню правой кнопкой.\" />",
+          "summary": "Меню форматирования на выделенном тексте: читает выделение при вызове, держит меню внутри демонстрационной области и собирает применённые форматы в список меток. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-contextmenu-010-* и не подменять её токенами вашей темы",
+            "чтение выделения в обработчике вызова: в рендере его ещё нет, а после закрытия меню уже нет",
+            "зажим координат меню в границах демонстрационной области — условие, что меню не вылезет за карточку каталога",
+            "aria-disabled на пунктах при пустом выделении вместо молчаливого несрабатывания",
+            "кнопку-дублёр «Форматирование»: правый клик недоступен с клавиатуры и на телефоне",
+            "закрытие по Escape и клику мимо, реализованное вручную через useEffect, а не через popover"
+          ],
+          "adapt": [
+            "содержимое абзаца через text",
+            "подпись пустого выделения через emptyHint",
+            "набор форматов прямо в таблице ACTIONS",
+            "цвет выделения и меток через accent"
+          ],
+          "notes": [
+            "Форматирование здесь декоративное: метки перечисляют применённые действия, но не меняют символы абзаца.",
+            "getSelection() возвращает выделение всей страницы: сверьте anchorNode, если нужно ограничиться абзацем.",
+            "MENU_WIDTH и MENU_HEIGHT в файле — оценка размера меню для зажима координат: при добавлении пунктов пересчитайте их.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "emptyHint",
+            "label": "Пустое выделение",
+            "type": "text",
+            "default": "Ничего не выделено",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A formatting menu for selected text with bold, italic, underline and link: applied marks collect in a list under the paragraph, and the menu never leaves the catalogue card.",
+            "ai": {
+              "summary": "A formatting menu on selected text: reads the selection when called, keeps the menu inside the demo area and lists applied formats as marks. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-contextmenu-010-* palette — do not swap it for your theme tokens",
+                "reading the selection inside the handler: it does not exist during render and is gone once the menu closes",
+                "clamping the menu coordinates inside the demo area — this is what keeps the menu off the catalogue card",
+                "aria-disabled on the entries with an empty selection instead of a silent no-op",
+                "the \"Formatting\" duplicate button: a right click is out of reach from the keyboard and on a phone",
+                "closing on Escape and outside clicks, wired by hand through useEffect rather than a popover"
+              ],
+              "adapt": [
+                "the paragraph content through text",
+                "the empty-selection caption through emptyHint",
+                "the format list directly in the ACTIONS table",
+                "the selection and mark colour through accent"
+              ],
+              "notes": [
+                "The formatting here is decorative: marks list the applied actions but do not change the paragraph's characters.",
+                "getSelection() returns the whole page selection: check anchorNode if it must be limited to the paragraph.",
+                "MENU_WIDTH and MENU_HEIGHT in the file estimate the menu size for clamping: recompute them if you add entries.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Contextmenu010 text=\"Select a phrase and call the menu with the right button.\" />"
+            },
+            "controls": {
+              "emptyHint": {
+                "label": "Empty selection",
+                "default": "Nothing selected"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

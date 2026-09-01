@@ -1,0 +1,164 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Select024Option = {
+  value: string
+  label: string
+  disabled?: boolean
+  reason?: string
+}
+
+export type Select024Props = Omit<
+  ComponentPropsWithoutRef<"select">,
+  "size" | "children"
+> & {
+  label?: string
+  options?: Select024Option[]
+  placeholder?: string
+  accent?: string
+}
+
+// Идея компонента: title на disabled-варианте показывает причину только
+// при наведении мышью и не доходит до скринридера и до тачскрина, поэтому
+// причины продублированы отдельным списком под полем — так недоступный
+// вариант не выглядит как баг каталога.
+const STYLES = `
+:where([data-vibeui-block="select-024"]){
+--vibeui-select-024-surface:oklch(1 0 0);
+--vibeui-select-024-surface-border:oklch(0.91 0.006 265);
+--vibeui-select-024-fg:oklch(0.23 0.016 265);
+--vibeui-select-024-muted:oklch(0.55 0.014 265);
+--vibeui-select-024-field:oklch(0.985 0.002 265);
+--vibeui-select-024-border:oklch(0.87 0.008 265);
+--vibeui-select-024-accent:oklch(0.55 0.19 262);
+--vibeui-select-024-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="select-024"]{
+display:flex;flex-direction:column;gap:0.5rem;
+width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
+background:var(--vibeui-select-024-surface);
+border:1px solid var(--vibeui-select-024-surface-border);border-radius:0.875rem;
+font-family:var(--vibeui-select-024-font);color:var(--vibeui-select-024-fg);
+container-type:inline-size;
+}
+[data-vibeui-block="select-024"] [data-part="label"]{font-size:0.8125rem;font-weight:600}
+[data-vibeui-block="select-024"] [data-part="field"]{position:relative;display:block}
+[data-vibeui-block="select-024"] select{
+appearance:none;-webkit-appearance:none;
+width:100%;box-sizing:border-box;margin:0;height:2.75rem;
+padding:0 2.5rem 0 0.875rem;
+border:1px solid var(--vibeui-select-024-border);border-radius:0.625rem;
+background:var(--vibeui-select-024-field);color:inherit;
+font:inherit;font-size:0.9375rem;cursor:pointer;
+transition:border-color .16s ease,box-shadow .16s ease;
+}
+[data-vibeui-block="select-024"] select:focus-visible{
+outline:none;border-color:var(--vibeui-select-024-accent);
+box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-select-024-accent) 22%,transparent);
+}
+[data-vibeui-block="select-024"] option:disabled{color:var(--vibeui-select-024-muted)}
+[data-vibeui-block="select-024"] [data-part="arrow"]{
+position:absolute;right:1rem;top:50%;
+width:0.4375rem;height:0.4375rem;margin-top:-0.3125rem;pointer-events:none;
+border-right:1.5px solid var(--vibeui-select-024-muted);
+border-bottom:1.5px solid var(--vibeui-select-024-muted);
+transform:rotate(45deg);
+}
+[data-vibeui-block="select-024"] [data-part="reasons"]{
+margin:0;padding:0;list-style:none;
+display:flex;flex-direction:column;gap:0.25rem;
+}
+[data-vibeui-block="select-024"] [data-part="reason"]{
+display:flex;gap:0.375rem;font-size:0.75rem;line-height:1.4;color:var(--vibeui-select-024-muted);
+}
+[data-vibeui-block="select-024"] [data-part="reason-name"]{
+flex:none;font-weight:600;color:var(--vibeui-select-024-fg);
+}
+@container (max-width: 14rem){
+[data-vibeui-block="select-024"] [data-part="reason"]{flex-direction:column;gap:0.0625rem}
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="select-024"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_OPTIONS: Select024Option[] = [
+  { value: "s", label: "S" },
+  { value: "m", label: "M" },
+  { value: "l", label: "L", disabled: true, reason: "нет в наличии" },
+  { value: "xl", label: "XL" },
+  { value: "xxl", label: "XXL", disabled: true, reason: "снят с продажи" },
+]
+
+/**
+ * Select с частично запрещёнными вариантами: disabled-опции остаются в
+ * списке и видны, а причина недоступности продублирована текстом под
+ * полем. Один файл, ноль зависимостей, серверный компонент.
+ */
+export function Select024({
+  label = "Размер",
+  options = DEFAULT_OPTIONS,
+  placeholder = "Выберите размер",
+  accent,
+  id,
+  className,
+  style,
+  defaultValue,
+  ...props
+}: Select024Props) {
+  const reasonsId = `${id ?? "select-024"}-reasons`
+  const disabledOptions = options.filter(
+    (option) => option.disabled && option.reason,
+  )
+
+  const palette = {
+    ...(accent ? { "--vibeui-select-024-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-select-024" precedence="medium">
+        {STYLES}
+      </style>
+      <div data-vibeui-block="select-024" className={className} style={palette}>
+        <label data-part="label" htmlFor={id}>
+          {label}
+        </label>
+        <span data-part="field">
+          <select
+            {...props}
+            id={id}
+            aria-describedby={disabledOptions.length ? reasonsId : undefined}
+            defaultValue={defaultValue ?? (placeholder ? "" : undefined)}
+          >
+            {placeholder ? (
+              <option value="" disabled>
+                {placeholder}
+              </option>
+            ) : null}
+            {options.map((option) => (
+              <option
+                key={option.value}
+                value={option.value}
+                disabled={option.disabled}
+                title={option.reason}
+              >
+                {option.label}
+                {option.disabled && option.reason ? ` — ${option.reason}` : ""}
+              </option>
+            ))}
+          </select>
+          <span data-part="arrow" aria-hidden="true" />
+        </span>
+        {disabledOptions.length ? (
+          <ul data-part="reasons" id={reasonsId}>
+            {disabledOptions.map((option) => (
+              <li key={option.value} data-part="reason">
+                <span data-part="reason-name">{option.label}:</span>
+                <span>{option.reason}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </div>
+    </>
+  )
+}

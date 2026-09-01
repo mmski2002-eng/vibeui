@@ -1,0 +1,848 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "hovercard-001",
+      "type": "registry:component",
+      "title": "Hover Card",
+      "description": "Карточка человека у упоминания: раскрывается по наведению и по фокусу, внутри только текст — до кнопок курсор не довести.",
+      "categories": ["hover-card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hovercard-001/hovercard-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hovercard-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-001-*. Серверный: хуков нет, кроме useId для связи через aria-describedby. Раскрытие идёт на :hover и :focus-within, поэтому клавиатура видит карточку. Внутри нет интерактивных элементов: карточка объявлена role=\"tooltip\".",
+      "meta": {
+        "tags": ["hover card", "mention", "profile", "no-js"],
+        "ai": {
+          "export": "Hovercard001",
+          "usage": "<Hovercard001 name=\"Мария Гурова\" handle=\"@masha\" />",
+          "summary": "Карточка профиля у упоминания: инициалы, имя, описание и пара цифр. Раскрывается по наведению и по фокусу, без клиентского кода. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-hovercard-001-* и не подменять её токенами вашей темы",
+            "раскрытие по :focus-within: с клавиатуры карточку иначе не увидеть",
+            "отсутствие кнопок внутри — довести курсор через зазор невозможно без ловли мыши",
+            "aria-describedby, связывающий упоминание и карточку",
+            "оттенок аватара из имени: один человек всегда одного цвета",
+            "видимость через visibility, а не display: иначе перехода не будет"
+          ],
+          "adapt": [
+            "name, handle и about",
+            "массив stats",
+            "акцент через проп accent",
+            "ширину карточки"
+          ],
+          "notes": [
+            "На телефоне наведения нет: карточка появится только при фокусе, поэтому дублируйте данные на странице профиля.",
+            "Задержки перед показом нет: при плотном тексте карточка будет мигать, добавьте её при необходимости.",
+            "Карточка не переворачивается у края экрана: рядом с правой границей она может обрезаться.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя",
+            "type": "text",
+            "default": "Мария Гурова",
+            "maxLength": 30
+          },
+          {
+            "prop": "handle",
+            "label": "Логин",
+            "type": "text",
+            "default": "@masha",
+            "maxLength": 20
+          },
+          {
+            "prop": "about",
+            "label": "Описание",
+            "type": "text",
+            "default": "Ведёт каталог и дизайн-систему, собирает интерфейсы без лишних слов.",
+            "maxLength": 80
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A profile card beside a mention: it opens on hover and focus, and holds text only — a cursor cannot reach buttons across the gap.",
+            "ai": {
+              "summary": "A profile hover card: initials, name, a short bio and a couple of figures. Opens on hover and focus, with no client code. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-hovercard-001-* palette — do not swap it for your theme tokens",
+                "opening on :focus-within: otherwise keyboard users never see the card",
+                "no buttons inside — a cursor cannot cross the gap without hover-intent tricks",
+                "aria-describedby linking the mention to the card",
+                "the name-derived avatar hue: one person keeps one colour",
+                "toggling with visibility rather than display: otherwise the transition never runs"
+              ],
+              "adapt": [
+                "name, handle and about",
+                "the stats array",
+                "the accent through the accent prop",
+                "the card width"
+              ],
+              "notes": [
+                "Phones have no hover: the card shows only on focus, so repeat the data on the profile page.",
+                "There is no open delay: in dense text the card will flicker — add one if needed.",
+                "The card does not flip at the viewport edge: near the right border it may clip.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Hovercard001 name=\"Maria Gurova\" handle=\"@masha\" />"
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Maria Gurova"
+              },
+              "handle": {
+                "label": "Handle",
+                "default": "@masha"
+              },
+              "about": {
+                "label": "Bio",
+                "default": "Runs the catalog and the design system, builds interfaces that explain themselves."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hovercard-002",
+      "type": "registry:component",
+      "title": "Link Preview",
+      "description": "Превью страницы у ссылки: обложка, домен, заголовок и отрывок — вместо скриншота градиент по оттенку домена, чтобы компонент работал без сети.",
+      "categories": ["hover-card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hovercard-002/hovercard-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hovercard-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-002-*. Серверный: раскрытие держится на :hover и :focus-within обёртки ссылки, а не всего абзаца — иначе карточка вылезала бы при наведении на любой текст. Оттенок обложки выводится из домена хешем FNV-1a и кладётся в --vibeui-hovercard-002-hue. Заголовок обрезан на двух строках, отрывок — на трёх через -webkit-line-clamp. Карточка скрыта visibility, поэтому не ловит курсор в закрытом виде.",
+      "meta": {
+        "tags": ["hovercard", "link", "preview", "article"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hovercard002",
+          "usage": "<Hovercard002\n  anchorText=\"разбор ошибок вёрстки\"\n  title=\"Двенадцать ошибок вёрстки\"\n  domain=\"web.dev.example\"\n  href=\"/blog/layout\"\n/>",
+          "summary": "Карточка превью страницы у ссылки в тексте. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-hovercard-002-* и не подменять её токенами вашей темы",
+            "привязку раскрытия к обёртке ссылки, а не к абзацу: иначе карточка вылезет при наведении на любой текст",
+            "раскрытие по :focus-within — с клавиатуры карточку иначе не увидеть вовсе",
+            "скрытие через visibility, а не только opacity: прозрачная карточка продолжает ловить курсор",
+            "обрезку заголовка и отрывка: длинный текст в карточке превращает её в статью",
+            "собственную светлую подложку абзаца: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "текст ссылки через anchorText и адрес через href",
+            "заголовок через title и отрывок через excerpt",
+            "адрес сайта через domain — от него же считается оттенок обложки",
+            "ширину карточки через width в правиле карточки"
+          ],
+          "notes": [
+            "Обложка нарисована градиентом: настоящий скриншот потребовал бы сети и сломал переносимость.",
+            "Внутри карточки нет ссылок и кнопок — до них не довести курсор через зазор.",
+            "На телефоне карточка не раскроется: сведения о ссылке дублируйте текстом рядом.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "domain",
+            "label": "Домен",
+            "type": "text",
+            "default": "web.dev.example",
+            "maxLength": 30
+          },
+          {
+            "prop": "anchorText",
+            "label": "Текст ссылки",
+            "type": "text",
+            "default": "разбор популярных ошибок вёрстки",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A page preview at a link: cover, domain, title and excerpt — instead of a screenshot a gradient keyed to the domain, so the component works offline.",
+            "ai": {
+              "summary": "A link preview card for a link in running text. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-hovercard-002-* palette — do not swap it for your theme tokens",
+                "binding the reveal to the link wrapper rather than the paragraph: otherwise the card pops up over any text",
+                "opening on :focus-within — from the keyboard the card is otherwise invisible",
+                "hiding with visibility rather than opacity alone: a transparent card still catches the pointer",
+                "the clamps on the title and excerpt: long copy turns the card into an article",
+                "the paragraph's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the link text through anchorText and the target through href",
+                "the title through title and the excerpt through excerpt",
+                "the site address through domain — the cover hue is derived from it",
+                "the card width through width in the card rule"
+              ],
+              "notes": [
+                "The cover is a gradient: a real screenshot would need the network and break portability.",
+                "There are no links or buttons inside the card — the pointer cannot cross the gap to reach them.",
+                "On a phone the card never opens: duplicate the link details in nearby text.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Hovercard002\n  anchorText=\"a review of layout mistakes\"\n  title=\"Twelve layout mistakes\"\n  domain=\"web.dev.example\"\n  href=\"/blog/layout\"\n/>"
+            },
+            "controls": {
+              "domain": {
+                "label": "Domain",
+                "default": "web.dev.example"
+              },
+              "anchorText": {
+                "label": "Link text",
+                "default": "a review of layout mistakes"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hovercard-003",
+      "type": "registry:component",
+      "title": "Product Card",
+      "description": "Карточка товара у названия в тексте: цена и наличие стоят выше отзывов, а дробный рейтинг залит градиентом по звёздам — 4,3 видно как 4,3.",
+      "categories": ["hover-card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hovercard-003/hovercard-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hovercard-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-003-*. Серверный: раскрытие держится на :hover и :focus-within обёртки ссылки. Рейтинг нарисован строкой из пяти звёзд в ::before, залитой линейным градиентом с точкой перелома calc(rating * 20%) и обрезанной по тексту — дробная оценка показывается честно, без набора полузвёзд. Значение приходит в --vibeui-hovercard-003-rating. Наличие подписано словом, а не только цветом.",
+      "meta": {
+        "tags": ["hovercard", "product", "price", "rating"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hovercard003",
+          "usage": "<Hovercard003\n  name=\"Клавиатура Kite 68\"\n  price=\"8 940 ₽\"\n  oldPrice=\"11 200 ₽\"\n  rating={4.3}\n/>",
+          "summary": "Карточка товара у названия: цена, наличие и дробный рейтинг звёздами. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-hovercard-003-* и не подменять её токенами вашей темы",
+            "порядок «цена, наличие, потом отзывы»: решение принимают по первым двум",
+            "заливку звёзд градиентом: набор полузвёзд врёт про дробную оценку",
+            "подпись наличия словами — зелёный цвет сам по себе ничего не сообщает",
+            "раскрытие по :focus-within, привязанное к обёртке ссылки, а не к абзацу",
+            "собственную светлую подложку абзаца: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "название через name, цены через price и oldPrice",
+            "строку наличия через stock",
+            "оценку через rating и число отзывов через reviews",
+            "цвет звёзд через переменную --vibeui-hovercard-003-star"
+          ],
+          "notes": [
+            "Цены передаются готовыми строками: компонент не форматирует валюту.",
+            "Оценка зажимается в 0–5; значение вне диапазона не сломает заливку.",
+            "Картинки товара нет намеренно — она потребовала бы сети и сломала переносимость.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "price",
+            "label": "Цена",
+            "type": "text",
+            "default": "8 940 ₽",
+            "maxLength": 16
+          },
+          {
+            "prop": "rating",
+            "label": "Оценка",
+            "type": "number",
+            "default": 4.3,
+            "min": 0,
+            "max": 5
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A product card at a name in running text: price and availability sit above reviews, and the fractional rating is painted with a gradient — 4.3 reads as 4.3.",
+            "ai": {
+              "summary": "A product card at a product name: price, availability and a fractional star rating. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-hovercard-003-* palette — do not swap it for your theme tokens",
+                "the order «price, availability, then reviews»: the decision is made on the first two",
+                "the gradient fill on the stars: a set of half-stars misstates a fractional score",
+                "spelling out availability — a green colour on its own communicates nothing",
+                "opening on :focus-within bound to the link wrapper rather than the paragraph",
+                "the paragraph's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the name through name, the prices through price and oldPrice",
+                "the availability line through stock",
+                "the score through rating and the review count through reviews",
+                "the star colour through the --vibeui-hovercard-003-star variable"
+              ],
+              "notes": [
+                "Prices arrive as ready strings: the component does not format currency.",
+                "The score is clamped to 0–5; a value out of range will not break the fill.",
+                "There is deliberately no product photo — it would need the network and break portability.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Hovercard003\n  name=\"Kite 68 keyboard\"\n  price=\"$99\"\n  oldPrice=\"$124\"\n  rating={4.3}\n/>"
+            },
+            "controls": {
+              "price": {
+                "label": "Price",
+                "default": "$99"
+              },
+              "rating": {
+                "label": "Score"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hovercard-004",
+      "type": "registry:component",
+      "title": "Repo Card",
+      "description": "Карточка репозитория у ссылки владелец/имя: владелец набран тонко, имя жирно, язык помечен точкой и словом, а не одной цветной точкой.",
+      "categories": ["hover-card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hovercard-004/hovercard-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hovercard-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-004-*. Серверный: раскрытие держится на :hover и :focus-within обёртки ссылки. Пара владелец/имя набрана одним размером, но разным весом — так она читается как одно целое и при этом видно, где имя. Цвет языка приходит пропом languageColor и кладётся в --vibeui-hovercard-004-lang. Ссылка в тексте набрана моноширинным шрифтом: путь узнают по форме.",
+      "meta": {
+        "tags": ["hovercard", "repository", "code", "stats"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hovercard004",
+          "usage": "<Hovercard004\n  owner=\"vibeui\"\n  repo=\"registry\"\n  language=\"TypeScript\"\n  stars=\"3.1k\"\n/>",
+          "summary": "Карточка репозитория у ссылки владелец/имя: описание, язык и счётчики. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-hovercard-004-* и не подменять её токенами вашей темы",
+            "разный вес владельца и имени: одинаковый вес превращает путь в кашу",
+            "подпись языка рядом с точкой — цветная точка без слова ничего не говорит",
+            "моноширинную ссылку в тексте: путь узнают по форме до наведения",
+            "раскрытие по :focus-within, привязанное к обёртке ссылки, а не к абзацу",
+            "собственную светлую подложку абзаца: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "путь через owner и repo, описание через about",
+            "язык через language и его цвет через languageColor",
+            "счётчики через stars и forks",
+            "акцент ссылки через переменную --vibeui-hovercard-004-accent"
+          ],
+          "notes": [
+            "Счётчики передаются готовыми строками: сокращение до «3.1k» делает вызывающий код.",
+            "Внутри карточки нет ссылок — до них не довести курсор через зазор.",
+            "Цвет языка задаётся вручную: списка соответствий компонент не ведёт.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "repo",
+            "label": "Репозиторий",
+            "type": "text",
+            "default": "registry",
+            "maxLength": 24
+          },
+          {
+            "prop": "stars",
+            "label": "Звёзды",
+            "type": "text",
+            "default": "3.1k",
+            "maxLength": 10
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A repository card at an owner/name link: the owner set light, the name bold, and the language marked with both a dot and a word rather than a dot alone.",
+            "ai": {
+              "summary": "A repository card at an owner/name link: description, language and counters. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-hovercard-004-* palette — do not swap it for your theme tokens",
+                "the different weights on owner and name: equal weight turns the path into mush",
+                "the language word next to the dot — a coloured dot alone says nothing",
+                "the monospaced link in the text: the path is recognised by shape before hovering",
+                "opening on :focus-within bound to the link wrapper rather than the paragraph",
+                "the paragraph's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the path through owner and repo, the description through about",
+                "the language through language and its colour through languageColor",
+                "the counters through stars and forks",
+                "the link accent through the --vibeui-hovercard-004-accent variable"
+              ],
+              "notes": [
+                "Counters arrive as ready strings: shortening to \"3.1k\" is the caller's job.",
+                "There are no links inside the card — the pointer cannot cross the gap to reach them.",
+                "The language colour is set by hand: the component keeps no lookup table.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Hovercard004\n  owner=\"vibeui\"\n  repo=\"registry\"\n  language=\"TypeScript\"\n  stars=\"3.1k\"\n/>"
+            },
+            "controls": {
+              "repo": {
+                "label": "Repository",
+                "default": "registry"
+              },
+              "stars": {
+                "label": "Stars",
+                "default": "3.1k"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hovercard-005",
+      "type": "registry:component",
+      "title": "Glossary Card",
+      "description": "Словарная статья у сокращения в тексте: расшифровка, раздел, определение и смежные термины — это справочник, а не короткая реплика.",
+      "categories": ["hover-card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hovercard-005/hovercard-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hovercard-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-005-*. Серверный: раскрытие держится на :hover и :focus-visible самого сокращения внутри обёртки. Сокращение остаётся строчным элементом с tabIndex=0 — не ссылка и не кнопка, поэтому набор текста не рвётся. Карточка помечена ролью tooltip и связана через aria-describedby. Левая грань окрашена акцентом: это признак словарной статьи, а не уведомления.",
+      "meta": {
+        "tags": ["hovercard", "glossary", "term", "definition"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hovercard005",
+          "usage": "<Hovercard005\n  term=\"CDN\"\n  full=\"Content Delivery Network\"\n  category=\"инфраструктура\"\n  related={[\"TTFB\", \"прогрев\"]}\n/>",
+          "summary": "Карточка термина глоссария: расшифровка, раздел, определение и смежные слова. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-hovercard-005-* и не подменять её токенами вашей темы",
+            "сокращение строчным элементом: ссылка или кнопка в середине абзаца рвёт набор",
+            "tabIndex=0 вместе с aria-describedby — иначе статья недоступна с клавиатуры",
+            "расшифровку первой строкой: без неё сокращение остаётся сокращением",
+            "раскрытие по фокусу, привязанное к обёртке слова, а не к абзацу",
+            "собственную светлую подложку абзаца: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "сокращение через term и расшифровку через full",
+            "определение через definition и раздел через category",
+            "список смежных слов через related",
+            "акцент через переменную --vibeui-hovercard-005-accent"
+          ],
+          "notes": [
+            "Смежные термины показаны текстом, а не ссылками: до ссылки в карточке не довести курсор.",
+            "Определение длиннее четырёх строк лучше вынести в справку и оставить в карточке первую фразу.",
+            "Пустой массив related убирает нижнюю строку вместе с разделителем.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "term",
+            "label": "Сокращение",
+            "type": "text",
+            "default": "CDN",
+            "maxLength": 16
+          },
+          {
+            "prop": "category",
+            "label": "Раздел",
+            "type": "text",
+            "default": "инфраструктура",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A glossary entry at an abbreviation in the text: the expansion, the section, the definition and related terms — a reference, not a short remark.",
+            "ai": {
+              "summary": "A glossary card: expansion, section, definition and related words. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-hovercard-005-* palette — do not swap it for your theme tokens",
+                "the abbreviation as an inline element: a link or button mid-paragraph breaks the setting",
+                "tabIndex=0 together with aria-describedby — otherwise the entry is unreachable by keyboard",
+                "the expansion on the first line: without it an abbreviation stays an abbreviation",
+                "opening on focus bound to the word wrapper rather than the paragraph",
+                "the paragraph's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the abbreviation through term and its expansion through full",
+                "the definition through definition and the section through category",
+                "the related words through related",
+                "the accent through the --vibeui-hovercard-005-accent variable"
+              ],
+              "notes": [
+                "Related terms are plain text, not links: a link inside the card is unreachable by pointer.",
+                "A definition longer than four lines belongs in help, with the first sentence left in the card.",
+                "An empty related array removes the bottom row together with its divider.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Hovercard005\n  term=\"CDN\"\n  full=\"Content Delivery Network\"\n  category=\"infrastructure\"\n  related={[\"TTFB\", \"warm-up\"]}\n/>"
+            },
+            "controls": {
+              "term": {
+                "label": "Abbreviation",
+                "default": "CDN"
+              },
+              "category": {
+                "label": "Section",
+                "default": "infrastructure"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hovercard-006",
+      "type": "registry:component",
+      "title": "Event Card",
+      "description": "Карточка события у названия встречи: дата вынесена в отрывной листок календаря, а участники сложены веером с остатком числом.",
+      "categories": ["hover-card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hovercard-006/hovercard-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hovercard-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-006-*. Серверный: раскрытие держится на :hover и :focus-within обёртки ссылки. Дата собрана из двух полос в отдельном блоке — узнаваемую форму читают быстрее строки. Аватары участников перекрываются отрицательным правым отступом и обведены рамкой цвета подложки, поэтому веер читается как группа; сверх трёх показывается счётчик. Ссылка в тексте подчёркнута внутренней тенью, а не подчёркиванием.",
+      "meta": {
+        "tags": ["hovercard", "calendar", "event", "people"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hovercard006",
+          "usage": "<Hovercard006\n  title=\"Разбор макетов каталога\"\n  day=\"14\"\n  month=\"сен\"\n  time=\"11:00 – 12:00\"\n/>",
+          "summary": "Карточка события календаря: листок с датой, время, место и участники. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-hovercard-006-* и не подменять её токенами вашей темы",
+            "отрывной листок вместо строки с датой: форму узнают быстрее, чем читают",
+            "рамку цвета подложки вокруг аватаров — без неё веер сливается в пятно",
+            "счётчик остальных участников: восемь кружков подряд перестают читаться",
+            "раскрытие по :focus-within, привязанное к обёртке ссылки, а не к абзацу",
+            "собственную светлую подложку абзаца: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "название через title, дату через day и month",
+            "время через time и место через place",
+            "состав участников через people — сверх трёх сворачивается в счётчик",
+            "акцент листка через переменную --vibeui-hovercard-006-accent"
+          ],
+          "notes": [
+            "Дата передаётся строками: часовой пояс и локаль компонент не подставляет.",
+            "Инициалы берутся из первых двух слов имени: односложный ник даст одну букву.",
+            "Внутри карточки нет кнопок — до них не довести курсор через зазор.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "day",
+            "label": "День",
+            "type": "text",
+            "default": "14",
+            "maxLength": 4
+          },
+          {
+            "prop": "time",
+            "label": "Время",
+            "type": "text",
+            "default": "11:00 – 12:00",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An event card at a meeting name: the date sits on a tear-off calendar sheet and the attendees are fanned out with the rest folded into a count.",
+            "ai": {
+              "summary": "A calendar event card: a date sheet, the time, the place and the attendees. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-hovercard-006-* palette — do not swap it for your theme tokens",
+                "the tear-off sheet instead of a date string: the shape is recognised faster than it is read",
+                "the surface-coloured ring around the avatars — without it the fan blurs into a blob",
+                "the count of remaining attendees: eight circles in a row stop being readable",
+                "opening on :focus-within bound to the link wrapper rather than the paragraph",
+                "the paragraph's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the name through title, the date through day and month",
+                "the time through time and the place through place",
+                "the attendees through people — anything past three folds into a count",
+                "the sheet accent through the --vibeui-hovercard-006-accent variable"
+              ],
+              "notes": [
+                "The date arrives as strings: the component adds no time zone or locale.",
+                "Initials come from the first two words of the name: a single-word handle gives one letter.",
+                "There are no buttons inside the card — the pointer cannot cross the gap to reach them.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Hovercard006\n  title=\"Catalog mockup review\"\n  day=\"14\"\n  month=\"sep\"\n  time=\"11:00 – 12:00\"\n/>"
+            },
+            "controls": {
+              "day": {
+                "label": "Day",
+                "default": "14"
+              },
+              "time": {
+                "label": "Time",
+                "default": "11:00 – 12:00"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hovercard-007",
+      "type": "registry:component",
+      "title": "Intent Card",
+      "description": "Карточка с намерением: пока курсор стоит на ссылке, под ней растёт полоска ожидания, и только потом карточка раскрывается — пролёт мышью ничего не открывает.",
+      "categories": ["hover-card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hovercard-007/hovercard-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hovercard-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-007-*. Серверный: задержка стоит только в правиле открытого состояния через transition-delay, а базовое правило обнуляет её, поэтому уход курсора отменяет и полоску, и раскрытие. Полоска — псевдоэлемент ::after ссылки, растянутый scaleX за то же время, что и задержка: ожидание становится видимым. Величина живёт в --vibeui-hovercard-007-delay и приходит пропом delay.",
+      "meta": {
+        "tags": ["hovercard", "delay", "hover intent", "progress"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hovercard007",
+          "usage": "<Hovercard007\n  label=\"тарифы на хранение\"\n  title=\"Хранение файлов\"\n  delay={0.45}\n/>",
+          "summary": "Карточка с задержкой раскрытия и видимой полоской ожидания. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-hovercard-007-* и не подменять её токенами вашей темы",
+            "задержку только в открытом состоянии: в базовом правиле она задержала бы и скрытие",
+            "совпадение длительности полоски с задержкой — иначе индикатор врёт про ожидание",
+            "нулевую задержку в базовом правиле: она и есть отмена при уходе курсора",
+            "раскрытие по :focus-within — с клавиатуры карточку иначе не увидеть",
+            "собственную светлую подложку абзаца: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "величину задержки через delay",
+            "текст ссылки через label",
+            "заголовок через title и объяснение через text",
+            "цвет полоски через переменную --vibeui-hovercard-007-accent"
+          ],
+          "notes": [
+            "Задержка больше секунды воспринимается как поломка: разумный диапазон — от 0,3 до 0,6 секунды.",
+            "При включённом prefers-reduced-motion переходы выключены, и карточка раскрывается сразу.",
+            "Полоска ожидания дублирует смысл задержки; убрав её, оставьте саму задержку.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "delay",
+            "label": "Задержка, с",
+            "type": "number",
+            "default": 0.45,
+            "min": 0,
+            "max": 2
+          },
+          {
+            "prop": "label",
+            "label": "Текст ссылки",
+            "type": "text",
+            "default": "тарифы на хранение",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A card with intent: while the pointer rests on the link a waiting bar grows beneath it, and only then does the card open — a passing sweep opens nothing.",
+            "ai": {
+              "summary": "A hover card with an opening delay and a visible waiting bar. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-hovercard-007-* palette — do not swap it for your theme tokens",
+                "the delay only in the open state: in the base rule it would also delay hiding",
+                "the bar duration matching the delay — otherwise the indicator lies about the wait",
+                "the zero delay in the base rule: that is the cancel-on-leave mechanism",
+                "opening on :focus-within — from the keyboard the card is otherwise invisible",
+                "the paragraph's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the delay length through delay",
+                "the link text through label",
+                "the heading through title and the explanation through text",
+                "the bar colour through the --vibeui-hovercard-007-accent variable"
+              ],
+              "notes": [
+                "A delay over a second reads as a bug: 0.3 to 0.6 seconds is the sane range.",
+                "With prefers-reduced-motion on, the transitions are off and the card opens immediately.",
+                "The waiting bar restates the delay; if you drop it, keep the delay itself.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Hovercard007\n  label=\"storage pricing\"\n  title=\"File storage\"\n  delay={0.45}\n/>"
+            },
+            "controls": {
+              "delay": {
+                "label": "Delay, s"
+              },
+              "label": {
+                "label": "Link text",
+                "default": "storage pricing"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "hovercard-008",
+      "type": "registry:component",
+      "title": "Repo Snapshot",
+      "description": "Снимок репозитория по наведению на пилюлю-ссылку: описание, язык, звёзды, открытые issue и время последнего коммита — больше, чем просто owner/name.",
+      "categories": ["hover-card"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hovercard-008/hovercard-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hovercard-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-008-*. Серверный: раскрытие держится на :hover и :focus-within обёртки триггера. Триггер — компактная пилюля с точкой языка, а не подчёркнутая ссылка внутри абзаца: её видно сразу, не дочитывая предложение. Карточка достаёт то, чего паспорту owner/name обычно не хватает: время последнего коммита в шапке и число открытых issue в подвале рядом с лицензией.",
+      "meta": {
+        "tags": ["hovercard", "repository", "activity", "stats"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hovercard008",
+          "usage": "<Hovercard008\n  owner=\"vibeui\"\n  repo=\"registry\"\n  language=\"TypeScript\"\n  stars=\"3.1k\"\n/>",
+          "summary": "Снимок репозитория по наведению на пилюлю-ссылку: описание, язык, звёзды, открытые issue, время последнего коммита и лицензия. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-hovercard-008-* и не подменять её токенами вашей темы",
+            "пилюлю-триггер с точкой языка вместо подчёркнутой ссылки в тексте — так её видно без чтения абзаца целиком",
+            "время последнего коммита в шапке карточки — паспорт owner/name сам по себе не говорит, жив ли репозиторий",
+            "число открытых issue в подвале своим акцентным цветом — оно предупреждает, а не просто информирует",
+            "раскрытие по :focus-within, привязанное к обёртке триггера, а не к абзацу",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "путь через owner и repo, описание через about",
+            "язык через language и его цвет через languageColor",
+            "звёзды через stars, issue через openIssues",
+            "время коммита через lastCommit и лицензию через license"
+          ],
+          "notes": [
+            "Счётчики передаются готовыми строками: сокращение до «3.1k» делает вызывающий код.",
+            "Внутри карточки нет ссылок — до них не довести курсор через зазор.",
+            "Цвет языка задаётся вручную: списка соответствий компонент не ведёт.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "repo",
+            "label": "Репозиторий",
+            "type": "text",
+            "default": "registry",
+            "maxLength": 24
+          },
+          {
+            "prop": "stars",
+            "label": "Звёзды",
+            "type": "text",
+            "default": "3.1k",
+            "maxLength": 10
+          },
+          {
+            "prop": "openIssues",
+            "label": "Открытые issue",
+            "type": "text",
+            "default": "12",
+            "maxLength": 6
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A repository snapshot on hovering a pill link: description, language, stars, open issues and the last commit time — more than just owner/name.",
+            "ai": {
+              "summary": "A repository snapshot on hovering a pill link: description, language, stars, open issues, last commit time and license. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-hovercard-008-* palette — do not swap it for your theme tokens",
+                "the pill trigger with a language dot instead of an underlined link in running text — it is visible without reading the whole paragraph",
+                "the last commit time in the card header — the owner/name pair alone does not say whether a repo is alive",
+                "the open issue count in its own accent colour in the footer — it warns rather than merely informs",
+                "opening on :focus-within bound to the trigger wrapper rather than the paragraph",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the path through owner and repo, the description through about",
+                "the language through language and its colour through languageColor",
+                "the stars through stars, the issues through openIssues",
+                "the commit time through lastCommit and the license through license"
+              ],
+              "notes": [
+                "Counters arrive as ready strings: shortening to \"3.1k\" is the caller's job.",
+                "There are no links inside the card — the pointer cannot cross the gap to reach them.",
+                "The language colour is set by hand: the component keeps no lookup table.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Hovercard008\n  owner=\"vibeui\"\n  repo=\"registry\"\n  language=\"TypeScript\"\n  stars=\"3.1k\"\n/>"
+            },
+            "controls": {
+              "repo": {
+                "label": "Repository",
+                "default": "registry"
+              },
+              "stars": {
+                "label": "Stars",
+                "default": "3.1k"
+              },
+              "openIssues": {
+                "label": "Open issues",
+                "default": "12"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

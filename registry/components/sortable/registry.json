@@ -1,0 +1,869 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "sortable-001",
+      "type": "registry:component",
+      "title": "Sortable List",
+      "description": "Список с ручной сортировкой: нативное перетаскивание плюс кнопки со стрелками — единственный путь для клавиатуры.",
+      "categories": [
+        "sortable"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sortable-001/sortable-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sortable-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-001-*. Клиентский: \"use client\" ради порядка. Перенос сделан на HTML5 drag and drop, поэтому библиотека не нужна; кнопки «выше» и «ниже» дают тот же результат с клавиатуры и называют текущую позицию строки вслух.",
+      "meta": {
+        "tags": [
+          "sortable",
+          "drag",
+          "list",
+          "a11y"
+        ],
+        "ai": {
+          "export": "Sortable001",
+          "usage": "<Sortable001 items={[\"Hero\", \"Тарифы\"]} onChange={save} />",
+          "summary": "Список с перетаскиванием: номер строки, ручка захвата, кнопки перемещения и линия места вставки. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sortable-001-* и не подменять её токенами вашей темы",
+            "кнопки перемещения: перетаскивание недоступно с клавиатуры в принципе",
+            "позицию строки в подписи кнопки — «сейчас 3 из 5» слышно, а порядок нет",
+            "линию места вставки вместо подсветки всей строки",
+            "нативный drag and drop: библиотека здесь не нужна",
+            "нумерацию строк — после переноса она подтверждает результат"
+          ],
+          "adapt": [
+            "массив items и title",
+            "обработчик onChange",
+            "акцент через проп accent",
+            "ширину блока"
+          ],
+          "notes": [
+            "Перетаскивание не работает на сенсорных экранах без своей эмуляции — кнопки закрывают этот случай.",
+            "Порядок хранится внутри компонента: сохранение на сервере делает вызывающий код.",
+            "Для сортировки между колонками берите kanban-001: тут один столбец.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Порядок секций",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A sortable list: native drag and drop plus arrow buttons — the only route available from a keyboard.",
+            "ai": {
+              "summary": "A drag-to-reorder list: row numbers, a grip, move buttons and an insertion line. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sortable-001-* palette — do not swap it for your theme tokens",
+                "the move buttons: dragging is fundamentally unavailable from a keyboard",
+                "the position inside the button label — \"now 3 of 5\" is audible, order is not",
+                "the insertion line instead of highlighting the whole row",
+                "native HTML5 drag and drop: no library is needed here",
+                "the row numbering — after a move it confirms the result"
+              ],
+              "adapt": [
+                "the items array and the title",
+                "the onChange handler",
+                "the accent through the accent prop",
+                "the block width"
+              ],
+              "notes": [
+                "Dragging does not work on touch screens without emulation — the buttons cover that case.",
+                "Order lives inside the component: persisting it is the caller's job.",
+                "For moving between columns use kanban-001: this is a single column.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sortable001 items={[\"Hero\", \"Pricing\"]} onChange={save} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Section order"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sortable-002",
+      "type": "registry:component",
+      "title": "Grip Keyboard Sort",
+      "description": "Список, где ручка сама является клавиатурным органом: пробел берёт строку, стрелки несут, пробел кладёт, Escape возвращает порядок на момент захвата.",
+      "categories": [
+        "sortable"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sortable-002/sortable-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sortable-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-002-*. Клиентский: \"use client\" ради порядка и режима переноса. Ручка — button с aria-pressed, обрабатывающая пробел, стрелки вверх и вниз и Escape; снимок порядка делается в момент захвата, поэтому отмена возвращает исходный вид. Мышиный путь — нативный HTML5 drag and drop с линией места вставки. Живая область role=status с aria-live=assertive называет позицию после каждого шага.",
+      "meta": {
+        "tags": [
+          "sortable",
+          "keyboard",
+          "drag",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Sortable002",
+          "usage": "<Sortable002 items={[\"Обложка\", \"Тарифы\"]} onChange={save} />",
+          "summary": "Список с ручкой, работающей и мышью, и клавиатурой по модели «взять — нести — положить», с отменой по Escape. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sortable-002-* и не подменять её токенами вашей темы",
+            "ручку тегом button: декоративный значок недостижим с клавиатуры",
+            "снимок порядка при захвате: без него Escape нечего восстанавливать",
+            "живую область с aria-live=assertive — при переносе вслепую важен каждый шаг",
+            "поднятый вид строки тенью и сдвигом, а не одним цветом рамки",
+            "линию места вставки вместо подсветки всей строки при переносе мышью"
+          ],
+          "adapt": [
+            "массив items и title",
+            "обработчик onChange",
+            "акцент через проп accent и текст подсказки",
+            "ширину блока"
+          ],
+          "notes": [
+            "Ключом строк служит их текст: одинаковые подписи в списке недопустимы.",
+            "Потеря фокуса кладёт строку: это защита от зависшего режима переноса.",
+            "Вариант с отдельными кнопками «выше» и «ниже» — sortable-001, здесь другой сценарий.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Порядок разделов",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A list whose grip is the keyboard control itself: space picks a row up, arrows carry it, space drops it and Escape restores the order from the moment of pick-up.",
+            "ai": {
+              "summary": "A list whose grip works with mouse and keyboard alike on a pick-up, carry, drop model, with Escape to cancel. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sortable-002-* palette — do not swap it for your theme tokens",
+                "the grip as a button element: a decorative glyph is unreachable from a keyboard",
+                "the order snapshot taken on pick-up: without it Escape has nothing to restore",
+                "the aria-live=assertive region — while moving blind every step matters",
+                "the lifted row look via shadow and offset, not the border colour alone",
+                "the insertion line instead of highlighting the whole row while dragging"
+              ],
+              "adapt": [
+                "the items array and the title",
+                "the onChange handler",
+                "the accent through the accent prop and the hint text",
+                "the block width"
+              ],
+              "notes": [
+                "The row key is its text: duplicate labels in the list are not allowed.",
+                "Losing focus drops the row: that guards against a stuck move mode.",
+                "For separate up and down buttons use sortable-001; this is a different scenario.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sortable002 items={[\"Cover\", \"Pricing\"]} onChange={save} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Section order"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sortable-003",
+      "type": "registry:component",
+      "title": "Sortable Table Columns",
+      "description": "Таблица, у которой переставляются колонки, а не строки: порядок живёт одним массивом, поэтому заголовок и данные не могут разъехаться.",
+      "categories": [
+        "sortable"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sortable-003/sortable-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sortable-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-003-*. Клиентский: \"use client\" ради порядка колонок. Ячейки тела рисуются по тому же массиву описаний колонок, что и заголовки, поэтому рассинхронизация невозможна. Заголовок остаётся тегом th со scope=\"col\": перетаскивание не повод превращать таблицу в набор div. Ручка внутри th — button со стрелками влево и вправо, мышиный путь — нативный drag с вертикальной линией места вставки, результат идёт в живую область role=status.",
+      "meta": {
+        "tags": [
+          "sortable",
+          "table",
+          "columns",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Sortable003",
+          "usage": "<Sortable003 columns={[{ key: \"name\", label: \"Название\" }]} rows={[{ sku: \"AL-118\", name: \"Кабель\" }]} />",
+          "summary": "Таблица с переставляемыми колонками: ручка в заголовке, drag мышью и стрелки с клавиатуры. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sortable-003-* и не подменять её токенами вашей темы",
+            "теги table, th и scope=\"col\": перетаскивание не повод ломать семантику таблицы",
+            "единый массив колонок для заголовка и тела — иначе данные разъедутся с подписями",
+            "ручку тегом button со стрелками влево и вправо: drag недоступен с клавиатуры",
+            "линию места вставки у края колонки вместо заливки всей ячейки",
+            "живую область role=status с новой позицией колонки"
+          ],
+          "adapt": [
+            "массивы columns и rows",
+            "caption — подпись таблицы",
+            "обработчик onChange, акцент через проп accent",
+            "ширину таблицы и выравнивание числовых колонок"
+          ],
+          "notes": [
+            "Ключ колонки обязан совпадать с ключом поля в строках данных.",
+            "Сортировки значений здесь нет: переставляется порядок колонок, а не порядок записей.",
+            "Ключом строк служит артикул: он обязан быть уникальным.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись таблицы",
+            "type": "text",
+            "default": "Порядок колонок меняется мышью или стрелками при фокусе на заголовке",
+            "maxLength": 96
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A table whose columns are reordered instead of its rows: the order lives in a single array, so headers and data cannot drift apart.",
+            "ai": {
+              "summary": "A table with reorderable columns: a grip in the header, mouse dragging and keyboard arrows. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sortable-003-* palette — do not swap it for your theme tokens",
+                "the table, th and scope=\"col\" markup: dragging is no reason to break table semantics",
+                "one shared column array for the header and the body — otherwise data drifts from labels",
+                "the grip as a button with left and right arrows: dragging is unavailable from a keyboard",
+                "the insertion line at the column edge instead of filling the whole cell",
+                "the role=status live region carrying the column's new position"
+              ],
+              "adapt": [
+                "the columns and rows arrays",
+                "caption — the table caption",
+                "the onChange handler and the accent through the accent prop",
+                "the table width and the alignment of numeric columns"
+              ],
+              "notes": [
+                "A column key must match the field key inside the data rows.",
+                "There is no value sorting here: the column order changes, not the record order.",
+                "The row key is the code: it has to be unique.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sortable003 columns={[{ key: \"name\", label: \"Name\" }]} rows={[{ sku: \"AL-118\", name: \"Cable\" }]} />"
+            },
+            "controls": {
+              "caption": {
+                "label": "Table caption",
+                "default": "Column order changes by dragging or with arrows while a header is focused"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sortable-004",
+      "type": "registry:component",
+      "title": "Two List Transfer",
+      "description": "Перенос между двумя списками, где приёмник не схлопывается в полоску: у пустого списка своя высота и объясняющая надпись, а у каждой строки — кнопка переноса.",
+      "categories": [
+        "sortable"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sortable-004/sortable-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sortable-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-004-*. Клиентский: \"use client\" ради состояния обоих списков. Панели описаны одним массивом и рисуются общей разметкой, поэтому обе стороны ведут себя одинаково. Минимальная высота панели задана явно, поэтому пустой список остаётся видимой целью для мыши. Кнопка со стрелкой у каждой строки называет обе стороны переноса, живая область role=status сообщает результат и остатки в обоих списках.",
+      "meta": {
+        "tags": [
+          "sortable",
+          "transfer",
+          "dual-list",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Sortable004",
+          "usage": "<Sortable004 source={[\"Артикул\", \"Поставщик\"]} target={[\"Название\"]} />",
+          "summary": "Две панели с переносом между ними: drag мышью, кнопка со стрелкой с клавиатуры, счётчики и объяснение в пустой панели. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sortable-004-* и не подменять её токенами вашей темы",
+            "минимальную высоту панели: схлопнувшийся приёмник — цель, в которую нельзя попасть мышью",
+            "надпись в пустой панели вместо пустоты — она объясняет, что делать дальше",
+            "кнопку со стрелкой у каждой строки: перетаскивание недоступно с клавиатуры",
+            "подпись кнопки с обеими сторонами переноса — «→» без контекста ничего не говорит",
+            "живую область role=status с числом строк в обоих списках после переноса"
+          ],
+          "adapt": [
+            "массивы source и target",
+            "sourceTitle и targetTitle — заголовки панелей",
+            "обработчик onChange, акцент через проп accent",
+            "ширину блока и минимальную высоту панели"
+          ],
+          "notes": [
+            "Порядок внутри панели не меняется: строка добавляется в конец списка-приёмника.",
+            "Ключом строк служит их текст: одинаковые подписи в двух панелях недопустимы.",
+            "Состояние живёт внутри компонента: сохранение делает вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "sourceTitle",
+            "label": "Левая панель",
+            "type": "text",
+            "default": "Доступные поля",
+            "maxLength": 24
+          },
+          {
+            "prop": "targetTitle",
+            "label": "Правая панель",
+            "type": "text",
+            "default": "В отчёте",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Transfer between two lists where the receiver never collapses into a strip: an empty list keeps its height and an explaining caption, and every row has a transfer button.",
+            "ai": {
+              "summary": "Two panels with transfer between them: mouse dragging, an arrow button from the keyboard, counters and an explanation in an empty panel. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sortable-004-* palette — do not swap it for your theme tokens",
+                "the minimum panel height: a collapsed target is a target you cannot hit with a mouse",
+                "the caption in an empty panel instead of blankness — it explains what to do next",
+                "the arrow button on every row: dragging is unavailable from a keyboard",
+                "the button label naming both sides of the transfer — a bare \"→\" says nothing",
+                "the role=status live region reporting the size of both lists after a transfer"
+              ],
+              "adapt": [
+                "the source and target arrays",
+                "sourceTitle and targetTitle — the panel headings",
+                "the onChange handler and the accent through the accent prop",
+                "the block width and the minimum panel height"
+              ],
+              "notes": [
+                "Order inside a panel does not change: a row is appended to the end of the receiving list.",
+                "The row key is its text: duplicate labels across the two panels are not allowed.",
+                "State lives inside the component: persisting it is the caller's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sortable004 source={[\"SKU\", \"Supplier\"]} target={[\"Name\"]} />"
+            },
+            "controls": {
+              "sourceTitle": {
+                "label": "Left panel",
+                "default": "Available fields"
+              },
+              "targetTitle": {
+                "label": "Right panel",
+                "default": "In the report"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sortable-005",
+      "type": "registry:component",
+      "title": "Reorderable Tile Grid",
+      "description": "Переупорядочивание в сетке, а не в столбце: стрелки влево и вправо двигают плитку на позицию, вверх и вниз — сразу на ширину ряда.",
+      "categories": [
+        "sortable"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sortable-005/sortable-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sortable-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-005-*. Клиентский: \"use client\" ради порядка плиток. Число колонок приходит пропом и подставляется и в grid-template-columns через переменную, и в шаг клавиатурного переноса, поэтому раскладка и клавиатура считают ряды одинаково. Плитка — button, поэтому фокус и стрелки работают без tabindex. Позиция называется рядом и колонкой, а не только номером; результат идёт в живую область role=status.",
+      "meta": {
+        "tags": [
+          "sortable",
+          "grid",
+          "tiles",
+          "keyboard"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Sortable005",
+          "usage": "<Sortable005 columns={4} tiles={[\"Обложка\", \"Галерея\"]} />",
+          "summary": "Сетка плиток с переупорядочиванием: drag мышью и двумерный перенос стрелками с клавиатуры. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sortable-005-* и не подменять её токенами вашей темы",
+            "одно число колонок для раскладки и для шага стрелок — иначе клавиатура считает ряды не так, как их видно",
+            "плитку тегом button: фокус и стрелки не должны держаться на tabindex",
+            "название ряда и колонки в озвучке: «шестая из восьми» в сетке не говорит ничего",
+            "стрелки вверх и вниз с шагом в ряд — построчный перенос в сетке бесполезен",
+            "живую область role=status: перестановка обязана быть слышна"
+          ],
+          "adapt": [
+            "массив tiles и title",
+            "columns — число колонок сетки",
+            "обработчик onChange, акцент через проп accent",
+            "пропорцию плитки и ширину блока"
+          ],
+          "notes": [
+            "Число колонок фиксировано пропом: адаптивная сетка сломала бы клавиатурный шаг.",
+            "Ключом плиток служит их текст: одинаковые подписи недопустимы.",
+            "Последний неполный ряд короче остальных — стрелка вниз с краю упрётся в границу списка.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "columns",
+            "label": "Колонок",
+            "type": "number",
+            "default": 3,
+            "min": 2,
+            "max": 5
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Плитки на главной",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Reordering in a grid rather than a column: left and right arrows move a tile one position, up and down move it a whole row at a time.",
+            "ai": {
+              "summary": "A reorderable tile grid: mouse dragging plus two-dimensional keyboard moving with arrows. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sortable-005-* palette — do not swap it for your theme tokens",
+                "one column count for both the layout and the arrow step — otherwise the keyboard counts rows differently from the eye",
+                "the tile as a button element: focus and arrows must not rest on tabindex",
+                "naming the row and the column in speech: \"sixth of eight\" says nothing in a grid",
+                "up and down arrows stepping a whole row — a one-by-one move is useless in a grid",
+                "the role=status live region: a reorder has to be audible"
+              ],
+              "adapt": [
+                "the tiles array and the title",
+                "columns — the number of grid columns",
+                "the onChange handler and the accent through the accent prop",
+                "the tile aspect ratio and the block width"
+              ],
+              "notes": [
+                "The column count is fixed by the prop: a responsive grid would break the keyboard step.",
+                "The tile key is its text: duplicate labels are not allowed.",
+                "The last row may be short — a down arrow near the edge simply hits the end of the list.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sortable005 columns={4} tiles={[\"Cover\", \"Gallery\"]} />"
+            },
+            "controls": {
+              "columns": {
+                "label": "Columns"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Home page tiles"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sortable-006",
+      "type": "registry:component",
+      "title": "Pinned First Row",
+      "description": "Список с закреплённой первой позицией: у закреплённой строки нет органов переноса, а подвижная не может встать выше неё — отказ проговаривается, а не игнорируется.",
+      "categories": [
+        "sortable"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sortable-006/sortable-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sortable-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-006-*. Клиентский: \"use client\" ради порядка. Закреплённая строка не входит в сортируемый массив: она отрисована отдельно, без ручки и кнопок, поэтому невозможных состояний просто не существует. Нумерация подвижных строк начинается с двойки, а попытка уйти выше первой позиции пишет причину в живую область role=status. Мышиный путь — нативный drag, клавиатурный — кнопки «выше» и «ниже».",
+      "meta": {
+        "tags": [
+          "sortable",
+          "pinned",
+          "list",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Sortable006",
+          "usage": "<Sortable006 pinned=\"Сводка за сегодня\" items={[\"Заявки\", \"Выручка\"]} />",
+          "summary": "Список с закреплённой первой строкой: она не двигается и не имеет ручки, остальные сортируются мышью и кнопками. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sortable-006-* и не подменять её токенами вашей темы",
+            "отсутствие ручки и кнопок у закреплённой строки: орган, который ничего не делает, обманывает",
+            "слово «закреплено» в разметке — значок без текста скринридер не читает",
+            "объяснение отказа в живой области: молча проигнорированное нажатие выглядит поломкой",
+            "нумерацию подвижных строк со второй позиции — она подтверждает, что первая занята",
+            "кнопки «выше» и «ниже»: перетаскивание недоступно с клавиатуры"
+          ],
+          "adapt": [
+            "массив items и title",
+            "pinned — текст закреплённой строки",
+            "обработчик onChange, акцент через проп accent",
+            "цвет закрепления и ширину блока"
+          ],
+          "notes": [
+            "Закреплённая строка не входит в массив items и не приходит в onChange.",
+            "Закрепление ровно одно и всегда первое: несколько закреплённых требуют другой модели.",
+            "Ключом строк служит их текст: одинаковые подписи недопустимы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "pinned",
+            "label": "Закреплённая строка",
+            "type": "text",
+            "default": "Сводка за сегодня",
+            "maxLength": 32
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Виджеты дашборда",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A list with a pinned first slot: the pinned row has no move controls, and a movable one cannot go above it — the refusal is spoken, not ignored.",
+            "ai": {
+              "summary": "A list with a pinned first row: it never moves and has no grip, the rest sort with mouse and buttons. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sortable-006-* palette — do not swap it for your theme tokens",
+                "the missing grip and buttons on the pinned row: a control that does nothing is a lie",
+                "the word \"pinned\" in the markup — an icon without text is not read aloud",
+                "the spoken refusal in the live region: a silently ignored press looks broken",
+                "numbering the movable rows from two — it confirms the first slot is taken",
+                "the up and down buttons: dragging is unavailable from a keyboard"
+              ],
+              "adapt": [
+                "the items array and the title",
+                "pinned — the text of the pinned row",
+                "the onChange handler and the accent through the accent prop",
+                "the pin colour and the block width"
+              ],
+              "notes": [
+                "The pinned row is not part of the items array and never reaches onChange.",
+                "There is exactly one pin and it is always first: several pins need a different model.",
+                "The row key is its text: duplicate labels are not allowed.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sortable006 pinned=\"Today at a glance\" items={[\"Leads\", \"Revenue\"]} />"
+            },
+            "controls": {
+              "pinned": {
+                "label": "Pinned row",
+                "default": "Today at a glance"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Dashboard widgets"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sortable-007",
+      "type": "registry:component",
+      "title": "Undoable Reorder",
+      "description": "Список с отменой последнего переноса: каждый перенос кладёт прежний порядок в стек, а полоса внизу называет действие словами и даёт кнопку возврата.",
+      "categories": [
+        "sortable"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sortable-007/sortable-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sortable-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-007-*. Клиентский: \"use client\" ради порядка и истории. Каждый перенос — мышью или кнопками — сохраняет прежний массив и подпись шага в стек, поэтому отмена не пересчитывает движение, а возвращает снимок. Полоса отмены отсутствует в разметке, пока история пуста: неактивная кнопка без причины сбивает с толку. Возвращённая строка подсвечивается, а отмена объявляется в живой области role=status.",
+      "meta": {
+        "tags": [
+          "sortable",
+          "undo",
+          "history",
+          "list"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Sortable007",
+          "usage": "<Sortable007 items={[\"Приветствие\", \"Напоминание\"]} undoLabel=\"Отменить\" />",
+          "summary": "Список с историей переносов: стек прежних порядков, полоса с описанием последнего шага и кнопка отмены. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sortable-007-* и не подменять её токенами вашей темы",
+            "стек прежних порядков: отмена обязана возвращать снимок, а не пересчитывать движение",
+            "исчезновение полосы при пустой истории — неактивная кнопка без причины сбивает с толку",
+            "описание шага словами: «отменить» без указания, что именно, — это лотерея",
+            "подсветку возвращённой строки: результат отмены должен быть виден",
+            "кнопки «выше» и «ниже»: перетаскивание недоступно с клавиатуры"
+          ],
+          "adapt": [
+            "массив items и title",
+            "undoLabel — подпись кнопки отмены",
+            "обработчик onChange, акцент через проп accent",
+            "глубину истории и ширину блока"
+          ],
+          "notes": [
+            "История не ограничена по длине: для длинных сессий обрежьте стек в вызывающем коде.",
+            "Повтора отменённого шага здесь нет: стек только разматывается.",
+            "Ключом строк служит их текст: одинаковые подписи недопустимы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Цепочка писем",
+            "maxLength": 28
+          },
+          {
+            "prop": "undoLabel",
+            "label": "Кнопка отмены",
+            "type": "text",
+            "default": "Отменить",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A list with undo for the last move: every move pushes the previous order onto a stack, and a bar below names the action in words and offers a way back.",
+            "ai": {
+              "summary": "A list with a move history: a stack of previous orders, a bar describing the last step and an undo button. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sortable-007-* palette — do not swap it for your theme tokens",
+                "the stack of previous orders: undo must restore a snapshot, not recompute a move",
+                "hiding the bar when the history is empty — a disabled button with no cause is confusing",
+                "the worded description of the step: \"undo\" without saying what is a lottery",
+                "the highlight on the restored row: the result of an undo has to be visible",
+                "the up and down buttons: dragging is unavailable from a keyboard"
+              ],
+              "adapt": [
+                "the items array and the title",
+                "undoLabel — the label of the undo button",
+                "the onChange handler and the accent through the accent prop",
+                "the history depth and the block width"
+              ],
+              "notes": [
+                "The history is unbounded: trim the stack in the caller for long sessions.",
+                "There is no redo here: the stack only unwinds.",
+                "The row key is its text: duplicate labels are not allowed.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sortable007 items={[\"Welcome\", \"Reminder\"]} undoLabel=\"Undo\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Email sequence"
+              },
+              "undoLabel": {
+                "label": "Undo button",
+                "default": "Undo"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sortable-008",
+      "type": "registry:component",
+      "title": "Task Checklist",
+      "description": "Список задач с перетаскиванием и кнопками «вверх / вниз» для клавиатуры: чекбокс готовности не двигает строку, а живая область называет новый порядок целиком.",
+      "categories": [
+        "sortable"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sortable-008/sortable-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sortable-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-sortable-008-*. Клиентский: порядок и готовность задач в состоянии. Чекбокс отмечает задачу выполненной и зачёркивает текст, но не переставляет строку — готовность и порядок разведены осознанно. Перенос сделан на нативном drag and drop с кнопками «выше»/«ниже» как единственным путём для клавиатуры; после каждого переноса aria-live проговаривает список целиком, а не только сдвинутую строку.",
+      "meta": {
+        "tags": [
+          "sortable",
+          "checklist",
+          "tasks",
+          "a11y"
+        ],
+        "ai": {
+          "export": "Sortable008",
+          "usage": "<Sortable008 tasks={[{ id: \"brief\", text: \"Собрать бриф\" }]} onChange={save} />",
+          "summary": "Список задач с чекбоксом готовности и ручной сортировкой: перетаскивание, кнопки для клавиатуры и живая область, называющая новый порядок целиком. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-sortable-008-* и не подменять её токенами вашей темы",
+            "разведение готовности и порядка: чекбокс зачёркивает текст, но не переставляет строку",
+            "кнопки перемещения: перетаскивание недоступно с клавиатуры в принципе",
+            "aria-live, называющий список целиком после переноса, а не только сдвинутую строку",
+            "нативный drag and drop: библиотека здесь не нужна",
+            "aria-label на чекбоксе с текстом задачи: голый чекбокс без подписи не называет, что именно отмечено"
+          ],
+          "adapt": [
+            "массив tasks — id, текст и готовность каждой задачи",
+            "заголовок title",
+            "обработчик onChange",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Готовые задачи не уезжают вниз списка: если это нужно, сортируйте tasks перед передачей в компонент.",
+            "onChange получает весь массив tasks при любом изменении — и при переносе, и при отметке готовности.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Задачи на сегодня",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A task checklist with drag-to-reorder and up/down buttons for the keyboard: the done checkbox never moves a row, and a live region names the whole new order.",
+            "ai": {
+              "summary": "A task checklist with a done checkbox and manual sorting: dragging, keyboard move buttons and a live region naming the full new order. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-sortable-008-* palette — do not swap it for your theme tokens",
+                "keeping completion and order apart: the checkbox strikes through the text but never reorders the row",
+                "the move buttons: dragging is not reachable from a keyboard at all",
+                "the aria-live region naming the whole list after a move, not just the shifted row",
+                "the native drag and drop: no library is needed here",
+                "the aria-label on the checkbox carrying the task text: a bare checkbox without a caption names nothing"
+              ],
+              "adapt": [
+                "the tasks array — the id, text and done flag for each task",
+                "the title heading",
+                "the onChange handler",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Completed tasks do not drop to the bottom: sort tasks yourself before passing them in if you need that.",
+                "onChange receives the whole tasks array on any change — both a move and a done toggle.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sortable008 tasks={[{ id: \"brief\", text: \"Write the brief\" }]} onChange={save} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Today's tasks"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

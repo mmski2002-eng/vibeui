@@ -1,0 +1,719 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "kanban-001",
+      "type": "registry:component",
+      "title": "Kanban Board",
+      "description": "Доска задач по колонкам: нативный перенос плюс выбор колонки списком, потому что drag недоступен с клавиатуры.",
+      "categories": [
+        "kanban"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kanban-001/kanban-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kanban-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-001-*. Клиентский: \"use client\" ради переноса. Колонки лежат в гриде с автоколонками и прокруткой по горизонтали. Счётчик в шапке считается из карточек, а не хранится отдельным числом.",
+      "meta": {
+        "tags": [
+          "kanban",
+          "board",
+          "drag",
+          "tasks"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kanban001",
+          "usage": "<Kanban001 columns={[\"Очередь\", \"В работе\"]} cards={[{ id: \"1\", title: \"Задача\", column: \"Очередь\" }]} />",
+          "summary": "Доска задач: колонки со счётчиком, карточки с меткой, перенос мышью и выбор колонки списком. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-kanban-001-* и не подменять её токенами вашей темы",
+            "выбор колонки списком: перенос мышью недоступен с клавиатуры и труден на телефоне",
+            "счётчик, посчитанный из карточек — отдельное число врёт после первого переноса",
+            "подсветку цели рамкой, а не заливкой: заливка спорит с карточками внутри",
+            "горизонтальную прокрутку колонок вместо их сжатия",
+            "aria-label колонки с числом карточек"
+          ],
+          "adapt": [
+            "массив columns и cards",
+            "обработчик onChange",
+            "акцент через проп accent",
+            "ширину колонки"
+          ],
+          "notes": [
+            "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
+            "Состояние живёт внутри компонента: сохранение делает вызывающий код.",
+            "Для длинных колонок добавьте свою прокрутку по вертикали — здесь её нет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A column board: native drag plus a column select, because dragging is unavailable from a keyboard.",
+            "ai": {
+              "summary": "A task board: columns with counters, tagged cards, mouse dragging and a column select. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-kanban-001-* palette — do not swap it for your theme tokens",
+                "the column select: dragging is unavailable from a keyboard and hard on a phone",
+                "the counter computed from the cards — a stored number lies after the first move",
+                "highlighting the target with a border, not a fill: a fill fights the cards inside",
+                "horizontal scrolling of columns instead of squeezing them",
+                "the column aria-label carrying the card count"
+              ],
+              "adapt": [
+                "the columns and cards arrays",
+                "the onChange handler",
+                "the accent through the accent prop",
+                "the column width"
+              ],
+              "notes": [
+                "Order inside a column does not change: the move only sets membership.",
+                "State lives inside the component: persisting it is the caller's job.",
+                "For long columns add your own vertical scrolling — there is none here.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kanban001 columns={[\"Queue\", \"Doing\"]} cards={[{ id: \"1\", title: \"Task\", column: \"Queue\" }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kanban-002",
+      "type": "registry:component",
+      "title": "WIP Limit Board",
+      "description": "Доска с лимитом карточек в колонке: заполнение видно до переноса, а перенос сверх лимита не отменяется молча, а объявляется отказом в живой области.",
+      "categories": [
+        "kanban"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kanban-002/kanban-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kanban-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-002-*. Клиентский: \"use client\" ради состояния доски. Колонка описана парой имя и лимит; заполнение считается из карточек и показывается числом «3 / 4» и полосой. Функция переноса одна для мыши и клавиатуры: она проверяет лимит и в случае отказа пишет причину в живую область role=status. Мышиный путь — нативный HTML5 drag and drop, клавиатурный — кнопки со стрелками на карточке.",
+      "meta": {
+        "tags": [
+          "kanban",
+          "wip",
+          "limit",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kanban002",
+          "usage": "<Kanban002 columns={[{ name: \"В работе\", limit: 2 }]} cards={[{ id: \"1\", title: \"Задача\", column: \"В работе\" }]} />",
+          "summary": "Доска с лимитом незавершённой работы: счётчик «занято из лимита», полоса заполнения, отказ в переносе с озвучкой. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-kanban-002-* и не подменять её токенами вашей темы",
+            "кнопки со стрелками: перетаскивание недоступно с клавиатуры в принципе",
+            "живую область role=status: молча отменённый перенос выглядит как поломка интерфейса",
+            "счётчик, посчитанный из карточек — отдельное число врёт после первого переноса",
+            "полосу заполнения рядом с числом: приближение к лимиту должно читаться без счёта",
+            "aria-label колонки с числом карточек и лимитом"
+          ],
+          "adapt": [
+            "массивы columns и cards вместе с лимитами",
+            "обработчик onChange",
+            "акцент через проп accent и цвет предупреждения",
+            "ширину колонки"
+          ],
+          "notes": [
+            "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
+            "Лимит проверяется и для мыши, и для клавиатуры — оба пути идут через одну функцию.",
+            "Состояние живёт внутри компонента: сохранение делает вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A board with a per-column card limit: the fill is visible before the move, and an over-limit move is refused out loud instead of being cancelled silently.",
+            "ai": {
+              "summary": "A work-in-progress limited board: an occupied-of-limit counter, a fill bar and a spoken refusal when the limit is reached. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-kanban-002-* palette — do not swap it for your theme tokens",
+                "the arrow buttons: dragging is fundamentally unavailable from a keyboard",
+                "the role=status live region: a silently cancelled move looks like a broken interface",
+                "the counter computed from the cards — a stored number lies after the first move",
+                "the fill bar next to the number: approaching the limit must read without counting",
+                "the column aria-label carrying the card count and the limit"
+              ],
+              "adapt": [
+                "the columns and cards arrays together with the limits",
+                "the onChange handler",
+                "the accent through the accent prop and the warning colour",
+                "the column width"
+              ],
+              "notes": [
+                "Order inside a column does not change: the move only sets membership.",
+                "The limit is checked for mouse and keyboard alike — both paths go through one function.",
+                "State lives inside the component: persisting it is the caller's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kanban002 columns={[{ name: \"Doing\", limit: 2 }]} cards={[{ id: \"1\", title: \"Task\", column: \"Doing\" }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kanban-003",
+      "type": "registry:component",
+      "title": "Assignee Due Board",
+      "description": "Доска, где карточка отвечает на два вопроса до открытия: кто делает и когда срок. Просрочка помечена словом, а оттенок инициалов считается из имени.",
+      "categories": [
+        "kanban"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kanban-003/kanban-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kanban-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-003-*. Клиентский: \"use client\" ради состояния доски. Оттенок кружка инициалов выводится хеш-функцией из имени исполнителя и подставляется переменной, поэтому палитру людей не нужно вести руками. Срок сравнивается со строкой даты из пропа today, а не с Date.now(): текущее время на сервере и на клиенте разное и ломает гидрацию. Перенос: нативный drag мышью и стрелки влево и вправо на самой карточке с клавиатуры, результат идёт в живую область.",
+      "meta": {
+        "tags": [
+          "kanban",
+          "assignee",
+          "due",
+          "board"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kanban003",
+          "usage": "<Kanban003 today=\"2026-03-18\" cards={[{ id: \"1\", title: \"Смета\", assignee: \"Ирина Лаптева\", due: \"2026-03-16\", column: \"Очередь\" }]} />",
+          "summary": "Доска с исполнителем и сроком на карточке: инициалы в цветном кружке, дата и признак просрочки. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-kanban-003-* и не подменять её токенами вашей темы",
+            "сравнение срока с пропом today: Date.now() на сервере и на клиенте разный и ломает гидрацию",
+            "слово «просрочен» рядом с датой — красным цветом одним пользоваться нельзя",
+            "оттенок инициалов из хеша имени: руками заведённая палитра расходится с составом команды",
+            "стрелки влево и вправо на карточке: перетаскивание недоступно с клавиатуры",
+            "живую область role=status: перенос обязан быть слышен, а не только виден"
+          ],
+          "adapt": [
+            "массивы columns и cards с исполнителями и сроками",
+            "today — дату, относительно которой считается просрочка",
+            "обработчик onChange, акцент через проп accent",
+            "формат даты и ширину колонки"
+          ],
+          "notes": [
+            "Даты сравниваются как строки: формат обязан быть ГГГГ-ММ-ДД, иначе сравнение неверно.",
+            "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
+            "Инициалы берутся из первых двух слов имени: одно слово даст одну букву.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "today",
+            "label": "Сегодня",
+            "type": "text",
+            "default": "2026-03-18",
+            "maxLength": 10
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A board where a card answers two questions before it is opened: who is on it and when it is due. Overdue is marked with a word, and initials are tinted from the name.",
+            "ai": {
+              "summary": "A board with an assignee and a due date on every card: initials in a tinted circle, the date and an overdue marker. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-kanban-003-* palette — do not swap it for your theme tokens",
+                "comparing the due date against the today prop: Date.now() differs on server and client and breaks hydration",
+                "the word \"overdue\" next to the date — red alone must not carry the meaning",
+                "the initials tint from a name hash: a hand-kept palette drifts away from the team roster",
+                "the left and right arrows on the card: dragging is unavailable from a keyboard",
+                "the role=status live region: a move has to be audible, not only visible"
+              ],
+              "adapt": [
+                "the columns and cards arrays with assignees and due dates",
+                "today — the date the overdue check is made against",
+                "the onChange handler and the accent through the accent prop",
+                "the date format and the column width"
+              ],
+              "notes": [
+                "Dates are compared as strings: the format must be YYYY-MM-DD or the comparison is wrong.",
+                "Order inside a column does not change: the move only sets membership.",
+                "Initials come from the first two words of the name: a single word yields one letter.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kanban003 today=\"2026-03-18\" cards={[{ id: \"1\", title: \"Estimate\", assignee: \"Irina Lapteva\", due: \"2026-03-16\", column: \"Queue\" }]} />"
+            },
+            "controls": {
+              "today": {
+                "label": "Today",
+                "default": "2026-03-18"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kanban-004",
+      "type": "registry:component",
+      "title": "Collapsible Columns",
+      "description": "Доска, где колонку сворачивают в узкую полосу с вертикальным именем и счётчиком, а перенос в свёрнутую колонку не отклоняется, а разворачивает её.",
+      "categories": [
+        "kanban"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kanban-004/kanban-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kanban-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-004-*. Клиентский: \"use client\" ради состояния доски и набора свёрнутых колонок. Колонки лежат во флексе, свёрнутая получает фиксированную узкую основу, а её заголовок переворачивается через writing-mode. Список карточек свёрнутой колонки помечен hidden, поэтому выпадает и из отрисовки, и из последовательности фокуса. Кнопка заголовка несёт aria-expanded, все изменения объявляются в живой области role=status.",
+      "meta": {
+        "tags": [
+          "kanban",
+          "collapse",
+          "column",
+          "board"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kanban004",
+          "usage": "<Kanban004 collapsed={[\"Готово\"]} columns={[\"Очередь\", \"Готово\"]} />",
+          "summary": "Доска со сворачиваемыми колонками: свёрнутая становится полосой с именем и счётчиком, но остаётся целью переноса. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-kanban-004-* и не подменять её токенами вашей темы",
+            "атрибут hidden на списке свёрнутой колонки: невидимые карточки не должны ловить фокус",
+            "aria-expanded на кнопке заголовка — иначе состояние свёртки не слышно",
+            "разворот колонки при переносе в неё: скрытая цель, куда нельзя попасть, — ловушка",
+            "счётчик на свёрнутой полосе: без него колонка выглядит пустой",
+            "кнопки со стрелками на карточке — перетаскивание недоступно с клавиатуры"
+          ],
+          "adapt": [
+            "массивы columns и cards",
+            "collapsed — какие колонки свёрнуты изначально",
+            "обработчик onChange, акцент через проп accent",
+            "ширину развёрнутой и свёрнутой колонки"
+          ],
+          "notes": [
+            "Свёрнутость хранится внутри компонента: начальное значение задаёт проп collapsed.",
+            "Вертикальное имя опирается на writing-mode — проверьте длинные названия колонок.",
+            "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A board where a column collapses into a narrow strip with a vertical name and a counter, and a move into a collapsed column expands it instead of failing.",
+            "ai": {
+              "summary": "A board with collapsible columns: a collapsed one turns into a strip with its name and counter yet stays a drop target. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-kanban-004-* palette — do not swap it for your theme tokens",
+                "the hidden attribute on a collapsed column's list: invisible cards must not catch focus",
+                "aria-expanded on the header button — otherwise the collapsed state is inaudible",
+                "expanding a column when a card is moved into it: a hidden target you cannot reach is a trap",
+                "the counter on the collapsed strip: without it the column looks empty",
+                "the arrow buttons on the card — dragging is unavailable from a keyboard"
+              ],
+              "adapt": [
+                "the columns and cards arrays",
+                "collapsed — which columns start collapsed",
+                "the onChange handler and the accent through the accent prop",
+                "the width of an expanded and of a collapsed column"
+              ],
+              "notes": [
+                "The collapsed set lives inside the component: the collapsed prop only seeds it.",
+                "The vertical name relies on writing-mode — check long column titles.",
+                "Order inside a column does not change: the move only sets membership.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kanban004 collapsed={[\"Done\"]} columns={[\"Queue\", \"Done\"]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kanban-005",
+      "type": "registry:component",
+      "title": "Assignee Filter Board",
+      "description": "Доска с фильтром по исполнителю, где счётчик колонки показывает «показано из всего», а опустевшая после фильтра колонка объясняет словами, что скрыто.",
+      "categories": [
+        "kanban"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kanban-005/kanban-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kanban-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-005-*. Клиентский: \"use client\" ради фильтра и состояния доски. Список исполнителей собирается из карточек через Set, поэтому его не надо вести отдельно. Фильтр — ряд кнопок с aria-pressed, а не набор ссылок: выбор не меняет адрес страницы. Счётчик колонки печатает видимое и общее число, пустая колонка показывает объяснение вместо пустоты, смена фильтра и перенос объявляются в живой области role=status.",
+      "meta": {
+        "tags": [
+          "kanban",
+          "filter",
+          "assignee",
+          "board"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kanban005",
+          "usage": "<Kanban005 everyone=\"Все\" columns={[\"Очередь\", \"В работе\"]} />",
+          "summary": "Доска с фильтром по исполнителю: чипсы выбора, счётчик «показано из всего» и объяснение в опустевшей колонке. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-kanban-005-* и не подменять её токенами вашей темы",
+            "счётчик «показано из всего»: одно число после фильтрации выглядит как пропажа задач",
+            "объяснение в опустевшей колонке вместо схлопывания — иначе фильтр читается как удаление",
+            "aria-pressed на чипсах: выбранный фильтр обязан быть слышен, а не только подсвечен",
+            "заливку и рамку выбранного чипса, а не один оттенок текста",
+            "кнопки со стрелками на карточке — перетаскивание недоступно с клавиатуры"
+          ],
+          "adapt": [
+            "массивы columns и cards с исполнителями",
+            "everyone — подпись чипса «без фильтра»",
+            "обработчик onChange, акцент через проп accent",
+            "ширину колонки"
+          ],
+          "notes": [
+            "Список исполнителей строится из исходного пропа cards, а не из текущего состояния доски.",
+            "Фильтр не меняет данные: скрытые карточки остаются в состоянии и учитываются в общем числе.",
+            "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "everyone",
+            "label": "Подпись «все»",
+            "type": "text",
+            "default": "Все",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A board filtered by assignee, where the column counter shows shown-of-total and a column emptied by the filter explains in words what is hidden.",
+            "ai": {
+              "summary": "A board filtered by assignee: filter chips, a shown-of-total counter and an explanation inside an emptied column. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-kanban-005-* palette — do not swap it for your theme tokens",
+                "the shown-of-total counter: a single number after filtering looks like tasks went missing",
+                "the explanation inside an emptied column instead of collapsing it — otherwise filtering reads as deletion",
+                "aria-pressed on the chips: the active filter has to be audible, not merely highlighted",
+                "the fill and border of the selected chip, not a lone text tint",
+                "the arrow buttons on the card — dragging is unavailable from a keyboard"
+              ],
+              "adapt": [
+                "the columns and cards arrays with assignees",
+                "everyone — the label of the no-filter chip",
+                "the onChange handler and the accent through the accent prop",
+                "the column width"
+              ],
+              "notes": [
+                "The assignee list is built from the original cards prop, not from the current board state.",
+                "Filtering changes no data: hidden cards stay in state and count towards the total.",
+                "Order inside a column does not change: the move only sets membership.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kanban005 everyone=\"All\" columns={[\"Queue\", \"Doing\"]} />"
+            },
+            "controls": {
+              "everyone": {
+                "label": "All-chip label",
+                "default": "All"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kanban-006",
+      "type": "registry:component",
+      "title": "Keyboard Card Move",
+      "description": "Доска, где перенос сделан клавиатурой в первую очередь: карточку берут пробелом, несут стрелками по колонкам и внутри колонки, кладут или отменяют Escape.",
+      "categories": [
+        "kanban"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kanban-006/kanban-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kanban-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-006-*. Клиентский: \"use client\" ради режима переноса. Карточка — button, поэтому фокус и клавиши достаются без tabindex. Пробел переключает захват и запоминает снимок доски, стрелки влево и вправо меняют колонку, вверх и вниз — место внутри колонки, Escape возвращает снимок. Живая область role=status с aria-live=assertive называет колонку и позицию после каждого шага, колонка «в руке» подсвечена.",
+      "meta": {
+        "tags": [
+          "kanban",
+          "keyboard",
+          "a11y",
+          "board"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kanban006",
+          "usage": "<Kanban006 columns={[\"Бэклог\", \"В работе\"]} onChange={save} />",
+          "summary": "Доска с клавиатурным переносом: взять пробелом, нести стрелками по колонкам и рядам, положить или отменить, с озвучкой каждого шага. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-kanban-006-* и не подменять её токенами вашей темы",
+            "карточку тегом button: без него стрелки и фокус пришлось бы чинить руками через tabindex",
+            "снимок доски при захвате: без него Escape нечего восстанавливать",
+            "живую область с aria-live=assertive: при переносе вслепую промежуточные шаги важнее вежливости",
+            "название колонки и позиции в каждом сообщении — «перемещено» без координат бесполезно",
+            "поднятый вид карточки тенью и сдвигом, а не только цветом рамки"
+          ],
+          "adapt": [
+            "массивы columns и cards",
+            "hint — текст подсказки о клавишах",
+            "обработчик onChange, акцент через проп accent",
+            "ширину колонки"
+          ],
+          "notes": [
+            "Мышиного перетаскивания здесь нет намеренно: блок показывает клавиатурную модель целиком.",
+            "Потеря фокуса кладёт карточку: это защита от зависшего режима переноса.",
+            "Перенос в соседнюю колонку ставит карточку в конец — внутри колонки её двигают стрелками вверх и вниз.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Пробел берёт карточку, стрелки несут, пробел кладёт, Escape отменяет.",
+            "maxLength": 96
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A board where moving is keyboard-first: space picks a card up, arrows carry it across columns and inside one, space drops it and Escape cancels.",
+            "ai": {
+              "summary": "A board with keyboard moving: pick up with space, carry with arrows across columns and rows, drop or cancel, every step announced. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-kanban-006-* palette — do not swap it for your theme tokens",
+                "the card as a button element: without it arrows and focus would need hand-made tabindex work",
+                "the board snapshot taken on pick-up: without it Escape has nothing to restore",
+                "the aria-live=assertive region: while moving blind, intermediate steps matter more than politeness",
+                "the column and position in every message — \"moved\" without coordinates is useless",
+                "the lifted card look via shadow and offset, not the border colour alone"
+              ],
+              "adapt": [
+                "the columns and cards arrays",
+                "hint — the text explaining the keys",
+                "the onChange handler and the accent through the accent prop",
+                "the column width"
+              ],
+              "notes": [
+                "Mouse dragging is deliberately absent: the block demonstrates the keyboard model in full.",
+                "Losing focus drops the card: that guards against a stuck move mode.",
+                "Moving to a neighbouring column appends the card — inside the column it is moved with up and down arrows.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kanban006 columns={[\"Backlog\", \"Doing\"]} onChange={save} />"
+            },
+            "controls": {
+              "hint": {
+                "label": "Hint",
+                "default": "Space picks the card up, arrows carry it, space drops it, Escape cancels."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "kanban-007",
+      "type": "registry:component",
+      "title": "Column Totals Board",
+      "description": "Доска, которая считает не карточки, а часы: итог колонки, её доля от общего и итоговая строка выводятся из карточек при каждом рендере.",
+      "categories": [
+        "kanban"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "kanban-007/kanban-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/kanban-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-007-*. Клиентский: \"use client\" ради состояния доски. Итог колонки, доля и общий итог считаются из массива карточек, а не хранятся числом: сохранённая сумма расходится с содержимым после первого переноса. Доля показана и процентом, и полосой, чтобы колонки сравнивались с одного взгляда. Итоговая строка вынесена в тег footer. Перенос: нативный drag мышью и список колонок на карточке с клавиатуры, результат объявляется в живой области.",
+      "meta": {
+        "tags": [
+          "kanban",
+          "totals",
+          "estimate",
+          "board"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Kanban007",
+          "usage": "<Kanban007 unit=\"ч\" cards={[{ id: \"1\", title: \"Каталог\", hours: 12, column: \"Оценено\" }]} />",
+          "summary": "Доска с итогами по колонкам: сумма часов, доля колонки полосой и процентом, общий итог в подвале. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-kanban-007-* и не подменять её токенами вашей темы",
+            "подсчёт итогов из карточек: сохранённая сумма разойдётся с доской после первого переноса",
+            "долю и полосой, и цифрой — полоса даёт сравнение, цифра даёт точность",
+            "список выбора колонки на карточке: перенос мышью недоступен с клавиатуры",
+            "живую область role=status с новым итогом колонки после переноса",
+            "итоговую строку тегом footer со сводкой словами"
+          ],
+          "adapt": [
+            "массивы columns и cards с оценками в часах",
+            "unit — единицу измерения оценки",
+            "обработчик onChange, акцент через проп accent",
+            "ширину колонки"
+          ],
+          "notes": [
+            "Оценка обязана быть числом: строка сломает суммирование.",
+            "Доля округляется до целых процентов, поэтому сумма долей может дать 99 или 101.",
+            "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "ч",
+            "maxLength": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A board that counts hours rather than cards: the column total, its share and the grand total are derived from the cards on every render.",
+            "ai": {
+              "summary": "A board with column totals: summed hours, the column share as a bar and a percentage, and a grand total in the footer. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-kanban-007-* palette — do not swap it for your theme tokens",
+                "computing the totals from the cards: a stored sum drifts from the board after the first move",
+                "the share as both a bar and a number — the bar gives comparison, the number gives precision",
+                "the column select on the card: mouse dragging is unavailable from a keyboard",
+                "the role=status live region carrying the column's new total after a move",
+                "the footer element for the grand total with a worded summary"
+              ],
+              "adapt": [
+                "the columns and cards arrays with estimates in hours",
+                "unit — the unit of the estimate",
+                "the onChange handler and the accent through the accent prop",
+                "the column width"
+              ],
+              "notes": [
+                "The estimate has to be a number: a string breaks the summation.",
+                "The share is rounded to whole percents, so the shares may add up to 99 or 101.",
+                "Order inside a column does not change: the move only sets membership.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Kanban007 unit=\"h\" cards={[{ id: \"1\", title: \"Catalogue\", hours: 12, column: \"Estimated\" }]} />"
+            },
+            "controls": {
+              "unit": {
+                "label": "Unit",
+                "default": "h"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

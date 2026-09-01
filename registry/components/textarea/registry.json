@@ -1,0 +1,943 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "textarea-001",
+      "type": "registry:component",
+      "title": "Auto Grow Textarea",
+      "description": "Многострочное поле, которое растёт под текст до заданного числа строк, а дальше прокручивается. Высоту держит CSS, React-состояния нет.",
+      "categories": [
+        "textarea"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "textarea-001/textarea-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/textarea-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-textarea-001-*. Рост держится на приёме с grid: textarea и псевдоэлемент ::after с тем же текстом лежат в одной ячейке, высоту ячейки задаёт копия. Обработчик onInput только переписывает data-value обёртки — React-состояния нет, перерисовки дерева тоже. Потолок задаётся пропом maxRows через переменную --vibeui-textarea-001-max-rows.",
+      "meta": {
+        "tags": [
+          "textarea",
+          "auto grow",
+          "form",
+          "multiline"
+        ],
+        "ai": {
+          "export": "Textarea001",
+          "usage": "<Textarea001\n  id=\"brief\"\n  name=\"brief\"\n  label=\"Что нужно сделать\"\n  maxRows={12}\n/>",
+          "summary": "Многострочное поле, которое растёт под содержимое. Высоту задаёт невидимая копия текста в той же ячейке grid, а обработчик ввода лишь переписывает data-value обёртки — состояния в React нет, перерисовки тоже. До maxRows поле растёт, дальше прокручивается. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-textarea-001-* и не подменять её токенами вашей темы (bg-background, border-input и подобными)",
+            "механику роста: display:grid у обёртки, ::after с content:attr(data-value) \" \" и одинаковый grid-area у копии и у textarea — из-за расхождения высота перестанет совпадать с текстом",
+            "одинаковые padding, font-size и line-height у textarea и у копии: копия должна переносить строки ровно там же",
+            "пробел в content: без него последняя пустая строка не считается и поле дёргается на Enter",
+            "resize:none у textarea — размер задаёт содержимое, ручка ломает раскладку",
+            "white-space:pre-wrap и word-break:break-word у копии: иначе длинное слово посчитается в одну строку",
+            "потолок max-height через --vibeui-textarea-001-max-rows и прокрутку после него",
+            "блок <style> внутри компонента — в нём вся палитра, геометрия и механика роста"
+          ],
+          "adapt": [
+            "тексты label, hint и placeholder",
+            "maxRows — сколько строк поле показывает до появления прокрутки",
+            "акцент через проп accent — цвет рамки и кольца при фокусе",
+            "любые нативные пропсы textarea: name, value, defaultValue, onChange, onKeyDown, required, maxLength, disabled",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Компонент клиентский: директива \"use client\" нужна ради onInput. Не убирайте её.",
+            "Не переводите поле в контролируемое через value без onChange — React заблокирует ввод, и высота застынет.",
+            "Для контролируемого варианта передавайте value и onChange: обработчик роста вызывается до вашего onInput и ему не мешает.",
+            "Не заменяйте приём на пересчёт scrollHeight в useEffect: это лишний рендер на каждый символ.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Что нужно сделать",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Одно поле, растёт под текст. Ctrl + Enter — отправить.",
+            "maxLength": 80
+          },
+          {
+            "prop": "placeholder",
+            "label": "Плейсхолдер",
+            "type": "text",
+            "default": "Опишите задачу своими словами",
+            "maxLength": 60
+          },
+          {
+            "prop": "maxRows",
+            "label": "Потолок, строк",
+            "type": "number",
+            "default": 10,
+            "min": 3,
+            "max": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "disabled",
+            "label": "Выключено",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A multiline field that grows with the text up to a set number of rows and scrolls after that. CSS holds the height; there is no React state.",
+            "ai": {
+              "summary": "A multiline field that grows with its content. The height comes from an invisible copy of the text sharing one grid cell, and the input handler only rewrites the wrapper's data-value — no React state, no re-render. It grows up to maxRows and scrolls beyond. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-textarea-001-* palette — do not swap it for your theme tokens (bg-background, border-input and the like)",
+                "the growth mechanism: display:grid on the wrapper, ::after with content:attr(data-value) \" \" and the same grid-area on both copy and textarea — if they drift apart the height stops matching the text",
+                "identical padding, font-size and line-height on the textarea and the copy: the copy has to wrap lines in exactly the same places",
+                "the space inside content: without it the last empty line is not counted and the field jumps on Enter",
+                "resize:none on the textarea — the content sets the size, and the drag handle breaks the layout",
+                "white-space:pre-wrap and word-break:break-word on the copy: otherwise a long word counts as a single line",
+                "the max-height ceiling through --vibeui-textarea-001-max-rows and the scrolling past it",
+                "the <style> block inside the component — it holds the palette, the geometry and the growth mechanism"
+              ],
+              "adapt": [
+                "the label, hint and placeholder copy",
+                "maxRows — how many rows the field shows before it starts scrolling",
+                "the accent through the accent prop — it colours the border and ring on focus",
+                "any native textarea props: name, value, defaultValue, onChange, onKeyDown, required, maxLength, disabled",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "The component is a client one: the \"use client\" directive is there for onInput. Do not remove it.",
+                "Do not make it controlled with value and no onChange — React blocks typing and the height freezes.",
+                "For a controlled version pass value and onChange: the growth handler runs before your onInput and does not get in its way.",
+                "Do not swap the technique for recalculating scrollHeight in useEffect: that is an extra render per keystroke.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Textarea001\n  id=\"brief\"\n  name=\"brief\"\n  label=\"What needs doing\"\n  maxRows={12}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "What needs doing"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "One field, grows with the text. Ctrl + Enter to send."
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Describe the task in your own words"
+              },
+              "maxRows": {
+                "label": "Row ceiling"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "disabled": {
+                "label": "Disabled"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "textarea-002",
+      "type": "registry:component",
+      "title": "Limited Textarea",
+      "description": "Поле с ограничением, которое не обрезает текст молча: счётчик краснеет, а сокращать решает человек.",
+      "categories": [
+        "textarea"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "textarea-002/textarea-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/textarea-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-textarea-002-*. Клиентский: \"use client\". Атрибут maxlength намеренно не используется: он молча запрещает ввод. Превышение выносится в data-over, поле помечается aria-invalid, счётчик объявлен role=\"status\" и связан с полем через aria-describedby.",
+      "meta": {
+        "tags": [
+          "input",
+          "textarea",
+          "limit",
+          "counter"
+        ],
+        "ai": {
+          "export": "Textarea002",
+          "usage": "<Textarea002 limit={180} onChange={setText} />",
+          "summary": "Многострочное поле с ограничением: счётчик символов, красная рамка при превышении и подсказка, что сократить. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-textarea-002-* и не подменять её токенами вашей темы",
+            "отказ от maxlength: он молча перестаёт принимать ввод и не объясняет почему",
+            "счётчик с role=\"status\" и связь с полем через aria-describedby",
+            "aria-invalid при превышении вместо одной только красной рамки",
+            "возможность вертикального изменения размера",
+            "подпись рядом со счётчиком: что делать, а не только сколько осталось"
+          ],
+          "adapt": [
+            "limit — предел в символах",
+            "label и placeholder",
+            "обработчик onChange",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Отправку формы при превышении должна блокировать сама форма: поле только показывает состояние.",
+            "Считаются символы, а не байты: для ограничений базы это разные величины.",
+            "Мягкое ограничение уместно для описаний; для строгих полей вроде СМС нужен другой подход.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Описание компонента",
+            "maxLength": 30
+          },
+          {
+            "prop": "limit",
+            "label": "Предел",
+            "type": "number",
+            "default": 180,
+            "min": 40,
+            "max": 500
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A limited textarea that never truncates silently: the counter turns red and the person decides what to cut.",
+            "ai": {
+              "summary": "A multiline field with a limit: a character counter, a red border past the limit and a line saying what to do. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-textarea-002-* palette — do not swap it for your theme tokens",
+                "avoiding maxlength: it silently stops accepting input and explains nothing",
+                "the counter with role=\"status\" tied to the field via aria-describedby",
+                "aria-invalid past the limit rather than a red border alone",
+                "vertical resizing",
+                "the line beside the counter: what to do, not only how many are left"
+              ],
+              "adapt": [
+                "limit — the character cap",
+                "label and placeholder",
+                "the onChange handler",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Blocking submission past the limit is the form's job: the field only shows state.",
+                "Characters are counted, not bytes: database limits often mean the latter.",
+                "A soft limit suits descriptions; strict fields like SMS need another approach.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Textarea002 limit={180} onChange={setText} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Component description"
+              },
+              "limit": {
+                "label": "Limit"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "textarea-003",
+      "type": "registry:component",
+      "title": "Autogrow Textarea",
+      "description": "Поле, которое растёт вместе с текстом: высоту считает сама раскладка по невидимой копии содержимого, без измерения scrollHeight и без дрожания.",
+      "categories": [
+        "textarea"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "textarea-003/textarea-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/textarea-003.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: useState хранит текст, который дублируется в data-value на обёртке. Обёртка — grid, textarea и псевдоэлемент ::after с content:attr(data-value) занимают одну ячейку, поэтому высота ячейки всегда равна высоте текста. Копия скрыта visibility:hidden и наследует шрифт и межстрочный интервал — иначе высоты разойдутся. Прокрутка у поля отключена, изменение размера мышью тоже. Палитра в --vibeui-textarea-003-*.",
+      "meta": {
+        "tags": [
+          "textarea",
+          "autogrow",
+          "grid",
+          "form"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Textarea003",
+          "usage": "<Textarea003\n  label=\"Задача для команды\"\n  rows={3}\n/>",
+          "summary": "Авторастущее поле на grid-копии текста, без замеров высоты. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-textarea-003-* — не заменять её токенами темы проекта",
+            "приём с grid и копией текста: ручное измерение scrollHeight даёт дрожание и лишний layout на каждом нажатии",
+            "пробел в конце content:attr(data-value): без него последняя пустая строка не учитывается и поле не дорастает",
+            "одинаковый шрифт и line-height у копии и поля — иначе высоты расходятся и текст обрезается",
+            "overflow:hidden и resize:none у textarea: полоса прокрутки внутри растущего поля бессмысленна",
+            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "подпись через label и текст-заглушку через placeholder",
+            "стартовую высоту через rows",
+            "подпись под полем через hint",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Поле растёт без предела: при длинном тексте карточка становится очень высокой — ограничивайте max-height, если это важно.",
+            "Копия текста дублирует содержимое в атрибуте: для очень больших текстов это лишний вес разметки.",
+            "Рамка и кольцо фокуса живут на обёртке, а не на textarea: свои стили вешать туда же.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "rows",
+            "label": "Стартовая высота",
+            "type": "number",
+            "default": 2,
+            "min": 1,
+            "max": 6
+          },
+          {
+            "prop": "hint",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Растёт по мере набора",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A field that grows with its text: the layout itself computes the height from an invisible copy of the content, with no scrollHeight measuring and no jitter.",
+            "ai": {
+              "summary": "An autogrowing field built on a grid text copy, with no height measuring. One file, zero dependencies, a client component.",
+              "preserve": [
+                "the local --vibeui-textarea-003-* palette — do not swap it for your theme tokens",
+                "the grid-and-copy technique: measuring scrollHeight by hand causes jitter and an extra layout on every keystroke",
+                "the trailing space in content:attr(data-value): without it a final empty line is ignored and the field stops growing",
+                "the identical font and line-height on the copy and the field — otherwise the heights diverge and text is clipped",
+                "overflow:hidden and resize:none on the textarea: a scrollbar inside a growing field makes no sense",
+                "the component's own light surface — without it the dark text disappears on a dark page"
+              ],
+              "adapt": [
+                "the caption through label and the placeholder text through placeholder",
+                "the starting height through rows",
+                "the line under the field through hint",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "The field grows without limit: long text makes the card very tall — cap it with max-height if that matters.",
+                "The text copy duplicates the content in an attribute: for very large texts that is extra markup weight.",
+                "The border and focus ring live on the wrapper, not the textarea: put your own styles there too.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Textarea003\n  label=\"Task for the team\"\n  rows={3}\n/>"
+            },
+            "controls": {
+              "rows": {
+                "label": "Starting height",
+                "default": 2
+              },
+              "hint": {
+                "label": "Caption",
+                "default": "Grows as you type"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "textarea-004",
+      "type": "registry:component",
+      "title": "Markdown Toolbar Textarea",
+      "description": "Поле с панелью форматирования: кнопки оборачивают выделение символами markdown через setRangeText, поэтому история отмены браузера остаётся живой.",
+      "categories": [
+        "textarea"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "textarea-004/textarea-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/textarea-004.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: useRef на textarea, useState на текст. Обёртка выделения сделана setRangeText, а не сборкой новой строки: только так браузер сохраняет собственную историю отмены и Ctrl+Z продолжает работать; после вставки выделение возвращается на место. Кнопка списка ставит префикс в начало текущей строки, найденной по последнему переводу строки. Панель объявлена role=\"toolbar\". Палитра в --vibeui-textarea-004-*.",
+      "meta": {
+        "tags": [
+          "textarea",
+          "toolbar",
+          "markdown",
+          "editor"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Textarea004",
+          "usage": "<Textarea004\n  label=\"Описание релиза\"\n  hint=\"Поддерживается разметка markdown\"\n/>",
+          "summary": "Поле с панелью markdown-форматирования поверх обычного textarea. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-textarea-004-* — не заменять её токенами темы проекта",
+            "setRangeText вместо сборки новой строки: прямая запись в value стирает историю отмены браузера",
+            "возврат выделения после вставки — иначе второе нажатие кнопки промахивается мимо текста",
+            "role=\"toolbar\" на панели: набор кнопок над полем должен объявляться группой",
+            "обычный textarea вместо contenteditable: он отправляется формой и не требует санитайзера",
+            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "подпись через label и текст-заглушку через placeholder",
+            "подсказку под полем через hint",
+            "набор кнопок в константе TOOLS",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Компонент не рисует предпросмотр: он редактирует исходник, разметку разбирает тот, кто её показывает.",
+            "Повторное нажатие не снимает форматирование — обёртка только добавляется.",
+            "Кнопка списка ставит дефис в начало текущей строки, а не всех выделенных: для многострочного случая логику придётся расширить.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Поддерживается разметка markdown",
+            "maxLength": 40
+          },
+          {
+            "prop": "placeholder",
+            "label": "Заглушка",
+            "type": "text",
+            "default": "Что изменилось в этой версии",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A field with a formatting toolbar: the buttons wrap the selection in markdown characters through setRangeText, so the browser's undo history stays alive.",
+            "ai": {
+              "summary": "A field with a markdown toolbar over a plain textarea. One file, zero dependencies, a client component.",
+              "preserve": [
+                "the local --vibeui-textarea-004-* palette — do not swap it for your theme tokens",
+                "setRangeText instead of rebuilding the string: writing straight into value wipes the browser's undo history",
+                "restoring the selection after insertion — otherwise a second button press misses the text",
+                "role=\"toolbar\" on the panel: a set of buttons above the field has to be announced as a group",
+                "the plain textarea instead of contenteditable: it submits with the form and needs no sanitiser",
+                "the component's own light surface — without it the dark text disappears on a dark page"
+              ],
+              "adapt": [
+                "the caption through label and the placeholder text through placeholder",
+                "the hint under the field through hint",
+                "the set of buttons in the TOOLS constant",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "The component renders no preview: it edits the source, and whoever displays it parses the markup.",
+                "Pressing again does not remove formatting — the wrapper is only added.",
+                "The list button prefixes the current line, not every selected one: multi-line support needs extending the logic.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Textarea004\n  label=\"Release notes\"\n  hint=\"Markdown is supported\"\n/>"
+            },
+            "controls": {
+              "hint": {
+                "label": "Hint",
+                "default": "Markdown is supported"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "What changed in this version"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "textarea-005",
+      "type": "registry:component",
+      "title": "Mention Textarea",
+      "description": "Поле с упоминаниями по «@»: список коллег открывается, только когда символ стоит в начале слова, и выбор подставляет ник прямо в текст.",
+      "categories": [
+        "textarea"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "textarea-005/textarea-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/textarea-005.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: useRef на поле, useState на текст и на текущий запрос после «@». Запрос ищется регулярным выражением по тексту до каретки и только в начале слова — иначе подсказка вылезала бы на каждом почтовом адресе. Вставка идёт через setRangeText, поэтому история отмены сохраняется, а каретка встаёт за ником. Кнопки списка гасят mousedown, чтобы поле не теряло фокус до клика. Палитра в --vibeui-textarea-005-*.",
+      "meta": {
+        "tags": [
+          "textarea",
+          "mention",
+          "autocomplete",
+          "comment"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Textarea005",
+          "usage": "<Textarea005\n  label=\"Комментарий к задаче\"\n  placeholder=\"Наберите @, чтобы позвать коллегу\"\n/>",
+          "summary": "Поле комментария с подсказкой упоминаний по «@». Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-textarea-005-* — не заменять её токенами темы проекта",
+            "условие «@ в начале слова»: без него подсказка выскакивает на каждом почтовом адресе",
+            "preventDefault на mousedown у пунктов списка — иначе поле теряет фокус раньше, чем произойдёт клик",
+            "setRangeText при вставке: он сохраняет историю отмены и ставит каретку за ником",
+            "список под полем, а не над кареткой: точное позиционирование в textarea требует измерения текста и промахивается",
+            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "подпись через label и текст-заглушку через placeholder",
+            "справочник коллег через people",
+            "акцентный цвет через accent",
+            "число видимых подсказок ограничением списка перед отрисовкой"
+          ],
+          "notes": [
+            "Клавиатурной навигации по списку здесь нет: стрелки двигают каретку в тексте, выбор делается мышью.",
+            "Справочник статичен: для живого поиска people заменяется загруженным списком у владельца данных.",
+            "Компонент не разбирает упоминания обратно — распознавание ников остаётся на стороне, которая сохраняет комментарий.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Комментарий к задаче",
+            "maxLength": 30
+          },
+          {
+            "prop": "placeholder",
+            "label": "Заглушка",
+            "type": "text",
+            "default": "Наберите @, чтобы позвать коллегу",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A field with @-mentions: the list of colleagues opens only when the character starts a word, and picking someone inserts the handle straight into the text.",
+            "ai": {
+              "summary": "A comment field with an @-mention suggestion list. One file, zero dependencies, a client component.",
+              "preserve": [
+                "the local --vibeui-textarea-005-* palette — do not swap it for your theme tokens",
+                "the \"@ starts a word\" condition: without it the suggestion pops up inside every email address",
+                "preventDefault on mousedown for the list items — otherwise the field loses focus before the click happens",
+                "setRangeText on insertion: it keeps the undo history and puts the caret after the handle",
+                "the list under the field rather than at the caret: precise positioning inside a textarea needs text measuring and misses",
+                "the component's own light surface — without it the dark text disappears on a dark page"
+              ],
+              "adapt": [
+                "the caption through label and the placeholder text through placeholder",
+                "the directory of colleagues through people",
+                "the accent colour through accent",
+                "the number of visible suggestions by capping the list before rendering"
+              ],
+              "notes": [
+                "There is no keyboard navigation in the list: arrows move the caret in the text, selection is done with the mouse.",
+                "The directory is static: for live search replace people with a list fetched by the data owner.",
+                "The component does not parse mentions back — resolving handles is left to whoever stores the comment.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Textarea005\n  label=\"Task comment\"\n  placeholder=\"Type @ to call a colleague\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Task comment"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Type @ to call a colleague"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "textarea-006",
+      "type": "registry:component",
+      "title": "Draft Autosave Textarea",
+      "description": "Поле с автосохранением черновика: запись уходит по паузе в наборе, а строка под полем показывает «есть правки», «сохранён» и время сохранения.",
+      "categories": [
+        "textarea"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "textarea-006/textarea-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/textarea-006.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: useState на текст, фазу и время, useRef на таймер, useEffect снимает его при размонтировании. Пауза обязательна — сохранять на каждое нажатие значит слать запрос на каждую букву. Время собирается собственной функцией, а не toLocaleTimeString: локальный формат сервера и браузера различается и ломает гидрацию. Строка статуса объявлена role=\"status\" и держит минимальную высоту. Палитра в --vibeui-textarea-006-*.",
+      "meta": {
+        "tags": [
+          "textarea",
+          "autosave",
+          "draft",
+          "status"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Textarea006",
+          "usage": "<Textarea006\n  label=\"Черновик ответа\"\n  delay={1200}\n/>",
+          "summary": "Поле, сохраняющее черновик по паузе в наборе, со статусом и временем. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-textarea-006-* — не заменять её токенами темы проекта",
+            "паузу перед сохранением: запись на каждое нажатие превращается в запрос на каждую букву",
+            "снятие таймера в useEffect — иначе setState зовут у уже размонтированного компонента",
+            "собственное форматирование времени вместо toLocaleTimeString: локальный формат сервера и браузера различается и ломает гидрацию",
+            "минимальную высоту строки статуса — без неё карточка прыгает при смене фазы",
+            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "подпись через label и текст-заглушку через placeholder",
+            "паузу до сохранения через delay",
+            "акцентный цвет через accent",
+            "формулировки фаз в тексте компонента"
+          ],
+          "notes": [
+            "Компонент ничего не отправляет: настоящую запись подключает владелец данных на месте таймера.",
+            "Ошибку сохранения этот вариант не показывает — для неё нужна четвёртая фаза и кнопка повтора.",
+            "Черновик живёт только в памяти страницы: при перезагрузке он теряется, пока не подключено хранилище.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "delay",
+            "label": "Пауза, мс",
+            "type": "number",
+            "default": 1200,
+            "min": 300,
+            "max": 5000
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Черновик ответа",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A field with draft autosave: the write fires after a pause in typing, and the line below shows \"unsaved edits\", \"saved\" and the time it happened.",
+            "ai": {
+              "summary": "A field that saves its draft after a typing pause, with status and time. One file, zero dependencies, a client component.",
+              "preserve": [
+                "the local --vibeui-textarea-006-* palette — do not swap it for your theme tokens",
+                "the pause before saving: writing on every keystroke turns into a request per letter",
+                "clearing the timer in useEffect — otherwise setState is called on an unmounted component",
+                "the own time formatting instead of toLocaleTimeString: server and browser formats differ and break hydration",
+                "the minimum height of the status line — without it the card jumps when the phase changes",
+                "the component's own light surface — without it the dark text disappears on a dark page"
+              ],
+              "adapt": [
+                "the caption through label and the placeholder text through placeholder",
+                "the pause before saving through delay",
+                "the accent colour through accent",
+                "the phase wording inside the component text"
+              ],
+              "notes": [
+                "The component sends nothing: the data owner wires a real write in place of the timer.",
+                "This variant shows no save error — that needs a fourth phase and a retry button.",
+                "The draft lives only in page memory: it is lost on reload until storage is wired up.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Textarea006\n  label=\"Reply draft\"\n  delay={1200}\n/>"
+            },
+            "controls": {
+              "delay": {
+                "label": "Pause, ms",
+                "default": 1200
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Reply draft"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "textarea-007",
+      "type": "registry:component",
+      "title": "Reading Time Textarea",
+      "description": "Поле для редактора: под текстом стоят слова, знаки и время чтения, а полоса показывает, далеко ли до целевого объёма.",
+      "categories": [
+        "textarea"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "textarea-007/textarea-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/textarea-007.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: useState хранит текст, из него считаются слова, минуты и доля от цели. Слова считаются разбиением по разделителям, а не подсчётом пробелов — иначе двойной пробел добавлял бы лишнее слово. Полоса объёма — обычный узел с шириной от CSS-переменной и ролью progressbar: <progress> пришлось бы перекрашивать тремя вендорными псевдоэлементами. Статистика связана с полем через aria-describedby. Палитра в --vibeui-textarea-007-*.",
+      "meta": {
+        "tags": [
+          "textarea",
+          "counter",
+          "reading-time",
+          "editor"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Textarea007",
+          "usage": "<Textarea007\n  label=\"Текст статьи\"\n  target={200}\n  wordsPerMinute={200}\n/>",
+          "summary": "Поле со счётчиком слов, знаков и времени чтения и полосой до цели. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-textarea-007-* — не заменять её токенами темы проекта",
+            "счёт слов разбиением по разделителям: подсчёт пробелов завышает результат на каждом двойном пробеле",
+            "слова и минуты вместо голых символов: автор думает объёмом текста, а не количеством знаков",
+            "роль progressbar с aria-valuenow на полосе — иначе прогресс виден только зрячим",
+            "aria-describedby, связывающий поле со статистикой: цифры должны читаться вместе с полем",
+            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "подпись через label и текст-заглушку через placeholder",
+            "целевой объём через target",
+            "скорость чтения через wordsPerMinute",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Скорость чтения — оценка: 200 слов в минуту это средний темп для русского текста, для технического он ниже.",
+            "Минимум одна минута выводится даже для двух слов: «0 мин чтения» выглядит как ошибка.",
+            "Полоса упирается в сто процентов и дальше не растёт — превышение цели она не показывает.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "target",
+            "label": "Цель, слов",
+            "type": "number",
+            "default": 120,
+            "min": 20,
+            "max": 600
+          },
+          {
+            "prop": "wordsPerMinute",
+            "label": "Слов в минуту",
+            "type": "number",
+            "default": 200,
+            "min": 100,
+            "max": 400
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A field for editors: words, characters and reading time sit under the text, and a bar shows how far the target volume still is.",
+            "ai": {
+              "summary": "A field counting words, characters and reading time with a progress bar. One file, zero dependencies, a client component.",
+              "preserve": [
+                "the local --vibeui-textarea-007-* palette — do not swap it for your theme tokens",
+                "counting words by splitting on separators: counting spaces overshoots on every double space",
+                "words and minutes instead of bare characters: an author thinks in volume, not in glyphs",
+                "the progressbar role with aria-valuenow on the bar — otherwise progress is visible to sighted users only",
+                "the aria-describedby link between field and statistics: the figures must be read together with the field",
+                "the component's own light surface — without it the dark text disappears on a dark page"
+              ],
+              "adapt": [
+                "the caption through label and the placeholder text through placeholder",
+                "the target volume through target",
+                "the reading speed through wordsPerMinute",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "Reading speed is an estimate: 200 words per minute is an average pace, technical prose runs slower.",
+                "At least one minute is shown even for two words: \"0 min read\" looks like a bug.",
+                "The bar stops at one hundred percent and grows no further — it does not show overshoot.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Textarea007\n  label=\"Article body\"\n  target={200}\n  wordsPerMinute={200}\n/>"
+            },
+            "controls": {
+              "target": {
+                "label": "Target, words",
+                "default": 120
+              },
+              "wordsPerMinute": {
+                "label": "Words per minute",
+                "default": 200
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "textarea-008",
+      "type": "registry:component",
+      "title": "Readonly Copy Textarea",
+      "description": "Поле только для чтения с кнопкой копирования: текст можно выделить и прочитать, а при недоступном буфере обмена он просто выделяется целиком.",
+      "categories": [
+        "textarea"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "textarea-008/textarea-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/textarea-008.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: useRef на поле, useState на признак «скопировано». Поле помечено readOnly, а не disabled: выключенное поле нельзя выделить и прочитать скринридером, а здесь текст и есть содержимое. Копирование идёт через navigator.clipboard с запасным путём — без защищённого соединения API недоступен, и тогда текст выделяется целиком. Значок кнопки превращается в галочку правилом по data-copied на корне. Палитра в --vibeui-textarea-008-*.",
+      "meta": {
+        "tags": [
+          "textarea",
+          "readonly",
+          "clipboard",
+          "snippet"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Textarea008",
+          "usage": "<Textarea008\n  label=\"Команда установки\"\n  copyText=\"Копировать\"\n  copiedText=\"Скопировано\"\n/>",
+          "summary": "Поле только для чтения с копированием в буфер и запасным выделением. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-textarea-008-* — не заменять её токенами темы проекта",
+            "readOnly вместо disabled: выключенное поле нельзя выделить и прочитать скринридером, а здесь текст и есть содержимое",
+            "запасной путь с выделением текста — без защищённого соединения буфер обмена недоступен, и кнопка иначе молча не работает",
+            "подтверждение «Скопировано» текстом, а не только сменой значка: беззвучное копирование выглядит как отсутствие реакции",
+            "кнопку в шапке, а не поверх текста: наложенная кнопка перекрывает первую строку и мешает выделять руками",
+            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "подпись через label и пояснение через hint",
+            "надпись кнопки через copyText",
+            "надпись подтверждения через copiedText",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Содержимое задано константой в файле: подставляя своё, следите за длиной строк — поле моноширинное и не переносит команды красиво.",
+            "Подтверждение держится меньше двух секунд: за это время его должен успеть объявить скринридер.",
+            "Выделение всего текста по фокусу помогает мышью, но мешает читать поле с клавиатуры по частям.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "copyText",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Копировать",
+            "maxLength": 20
+          },
+          {
+            "prop": "hint",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Поле доступно для чтения и выделения, но не для правки",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A read-only field with a copy button: the text can be selected and read, and when the clipboard is unavailable it is simply selected in full.",
+            "ai": {
+              "summary": "A read-only field with clipboard copying and a selection fallback. One file, zero dependencies, a client component.",
+              "preserve": [
+                "the local --vibeui-textarea-008-* palette — do not swap it for your theme tokens",
+                "readOnly rather than disabled: a disabled field cannot be selected or read by a screen reader, and here the text is the content",
+                "the fallback that selects the text — without a secure connection the clipboard is unavailable and the button would fail silently",
+                "the \"Copied\" confirmation as text, not only an icon swap: a silent copy looks like no reaction at all",
+                "the button in the header rather than over the text: an overlaid button covers the first line and blocks manual selection",
+                "the component's own light surface — without it the dark text disappears on a dark page"
+              ],
+              "adapt": [
+                "the caption through label and the explanation through hint",
+                "the button caption through copyText",
+                "the confirmation caption through copiedText",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "The content is a constant in the file: when substituting your own watch the line length — the field is monospaced and wraps commands badly.",
+                "The confirmation lasts under two seconds: a screen reader has to announce it within that window.",
+                "Selecting everything on focus helps mouse users but hinders reading the field piece by piece from the keyboard.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Textarea008\n  label=\"Install command\"\n  copyText=\"Copy\"\n  copiedText=\"Copied\"\n/>"
+            },
+            "controls": {
+              "copyText": {
+                "label": "Button",
+                "default": "Copy"
+              },
+              "hint": {
+                "label": "Explanation",
+                "default": "The field is readable and selectable, but not editable"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

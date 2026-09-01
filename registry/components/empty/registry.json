@@ -1,0 +1,2268 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "empty-001",
+      "type": "registry:component",
+      "title": "Empty State",
+      "description": "Пустой экран, который объясняет следующий шаг, а не сообщает об отсутствии данных. Рисунок собран на CSS и намекает на будущий список.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-001/empty-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-001-*. Рисунок — три плитки на CSS с поворотом и разной прозрачностью: он намекает на список, который здесь появится, и не требует иллюстрации из библиотеки. Пунктирная рамка отделяет пустое состояние от заполненного экрана. Отступы и кегль заголовка считаются от собственной ширины через @container.",
+      "meta": {
+        "tags": [
+          "empty state",
+          "onboarding",
+          "placeholder",
+          "cta"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Empty001",
+          "usage": "<Empty001\n  title=\"Здесь пока пусто\"\n  description=\"Создайте первый проект — он появится в этом списке.\"\n  actionLabel=\"Создать проект\"\n  onAction={createProject}\n/>",
+          "summary": "Пустое состояние с рисунком из трёх плиток, заголовком, объяснением, главным действием и подсказкой под ним. Главное здесь — действие: экран говорит, что сделать, а не констатирует отсутствие данных. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-001-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
+            "порядок: заголовок, объяснение, действие — действие обязано быть последним и самым заметным",
+            "рисунок на CSS с aria-hidden: он декоративный и не должен читаться скринридером",
+            "пунктирную рамку: она отличает пустое состояние от обычной карточки",
+            "ограничение ширины описания в ch: длинная строка по центру читается плохо",
+            "@container-запрос вместо медиазапроса: пустое состояние живёт и в узкой панели, и на всю страницу",
+            "блок <style> внутри компонента — в нём вся палитра, рисунок и раскладка"
+          ],
+          "adapt": [
+            "тексты title, description и actionLabel",
+            "hint — вторая подсказка под кнопкой: горячая клавиша, ссылка на импорт; это ReactNode",
+            "onAction — обработчик главного действия",
+            "акцент через проп accent — цвет кнопки и нижней плитки рисунка",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Не пишите в заголовке «Нет данных»: это констатация, а не помощь. Заголовок должен подводить к действию.",
+            "Не показывайте пустое состояние вместо ошибки загрузки: пользователь решит, что данных нет, и уйдёт.",
+            "Не ставьте больше одного главного действия: второе делает выбор, а не помогает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Здесь пока пусто",
+            "maxLength": 50
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Создайте первый проект — он появится в этом списке вместе с адресом и историей публикаций.",
+            "maxLength": 140
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Создать проект",
+            "maxLength": 30
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Или перетащите сюда папку с готовым сайтом",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An empty state that explains the next step instead of reporting missing data. The illustration is CSS and hints at the list to come.",
+            "ai": {
+              "summary": "An empty state with a three-tile illustration, a heading, an explanation, a primary action and a hint beneath it. The action is the point: the screen says what to do rather than noting that nothing is there. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-empty-001-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
+                "the order: heading, explanation, action — the action has to come last and read strongest",
+                "the CSS illustration with aria-hidden: it is decorative and must not be announced",
+                "the dashed border: it is what separates an empty state from an ordinary card",
+                "the ch-based width limit on the description: a long centred line reads poorly",
+                "the @container query instead of a media query: an empty state lives both in a narrow panel and full page",
+                "the <style> block inside the component — it holds the palette, the illustration and the layout"
+              ],
+              "adapt": [
+                "the title, description and actionLabel copy",
+                "hint — the secondary line under the button: a shortcut, an import link; it is a ReactNode",
+                "onAction — the primary action handler",
+                "the accent through the accent prop — it colours the button and the bottom tile",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "Do not write \"No data\" as the heading: that is a statement, not help. The heading should lead to the action.",
+                "Do not show an empty state in place of a load error: people conclude there is nothing there and leave.",
+                "Do not offer more than one primary action: the second one creates a decision instead of helping.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty001\n  title=\"Nothing here yet\"\n  description=\"Create your first project and it shows up in this list.\"\n  actionLabel=\"Create project\"\n  onAction={createProject}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Nothing here yet"
+              },
+              "description": {
+                "label": "Description",
+                "default": "Create your first project — it will appear in this list with its address and publish history."
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Create project"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "Or drop a folder with an existing site here"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-002",
+      "type": "registry:component",
+      "title": "No Results",
+      "description": "Пустая выдача поиска: сам запрос, причина и готовые ходы вместо совета «попробуйте другой запрос».",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-002/empty-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-002-*. Серверный: хуков нет. Блок объявлен role=\"status\": исчезновение результатов должно быть услышано. Знак нарисован кругом и чертой псевдоэлементами. Подсказки — кнопки, а не текст, поэтому по ним можно нажать.",
+      "meta": {
+        "tags": [
+          "empty",
+          "search",
+          "no results",
+          "recovery"
+        ],
+        "ai": {
+          "export": "Empty002",
+          "usage": "<Empty002 query=\"карточка товара\" suggestions={[\"кнопка\"]} />",
+          "summary": "Экран пустой выдачи: знак поиска, сам запрос в тексте, готовые варианты запросов и сброс фильтров. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-002-* и не подменять её токенами вашей темы",
+            "сам запрос в тексте: без него непонятно, что именно не нашлось",
+            "готовые ходы кнопками вместо совета «попробуйте другой запрос»",
+            "сброс фильтров отдельным действием — чаще всего мешают именно они",
+            "role=\"status\": пропажа результатов должна быть услышана",
+            "отличие от пустого раздела: здесь данные есть, но не подошли"
+          ],
+          "adapt": [
+            "title, text и query",
+            "массив suggestions",
+            "resetLabel — подпись сброса",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Подсказки должны что-то находить: предлагать заведомо пустой запрос хуже, чем не предлагать ничего.",
+            "Если фильтров нет, уберите кнопку сброса — она обещает несуществующее действие.",
+            "Для пустого раздела без запроса возьмите empty-001: там нужен первый шаг, а не спасение поиска.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "query",
+            "label": "Запрос",
+            "type": "text",
+            "default": "карточкa товара",
+            "maxLength": 30
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ничего не нашлось",
+            "maxLength": 30
+          },
+          {
+            "prop": "resetLabel",
+            "label": "Сброс",
+            "type": "text",
+            "default": "Сбросить фильтры",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An empty search result: the query itself, the likely cause and ready moves instead of \"try another search\".",
+            "ai": {
+              "summary": "A no-results screen: a search mark, the query quoted in the text, ready-made queries as buttons and a filter reset. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-empty-002-* palette — do not swap it for your theme tokens",
+                "quoting the query: without it nothing says what failed",
+                "ready moves as buttons instead of advising \"try another query\"",
+                "the filter reset as its own action — filters are the usual culprit",
+                "role=\"status\": losing the results has to be heard",
+                "the distinction from an empty section: here data exists, it just did not match"
+              ],
+              "adapt": [
+                "title, text and query",
+                "the suggestions array",
+                "resetLabel — the reset wording",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The suggestions must find something: offering a knowingly empty query is worse than offering none.",
+                "With no filters, drop the reset button — it promises an action that does not exist.",
+                "For an empty section without a query use empty-001: that needs a first step, not search recovery.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty002 query=\"product card\" suggestions={[\"button\"]} />"
+            },
+            "controls": {
+              "query": {
+                "label": "Query",
+                "default": "product card"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Nothing found"
+              },
+              "resetLabel": {
+                "label": "Reset",
+                "default": "Clear filters"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-003",
+      "type": "registry:component",
+      "title": "Query Breakdown",
+      "description": "Пустой поиск, который разбирает сам запрос: слова показаны чипами, лишние зачёркнуты, и одно действие повторяет поиск по укороченному запросу.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-003/empty-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-003-*. Серверный: хуков нет, состояния нет. Запрос режется по пробелам, первые keep слов считаются основой, остальные помечаются data-extra и зачёркиваются. Блок объявлен role=\"status\": пропажа результатов должна быть услышана. Подложка светлая и своя, поэтому карточка читается и на тёмном фоне витрины.",
+      "meta": {
+        "tags": [
+          "empty",
+          "search",
+          "query",
+          "recovery"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Empty003",
+          "usage": "<Empty003 query=\"карточка товара с ценой и рейтингом\" keep={2} onAction={searchShort} />",
+          "summary": "Пустая выдача с разбором запроса: слова запроса выложены чипами, лишние зачёркнуты, ниже — объяснение и ровно одно действие «искать по укороченному запросу». Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-003-* и не подменять её токенами вашей темы",
+            "разбор запроса на слова: он показывает причину пустоты, а не пересказывает её словами",
+            "зачёркивание лишних слов вместо совета «попробуйте иначе» — видно, что именно убрать",
+            "ровно одно главное действие: второй вариант превращает спасение поиска в выбор",
+            "подстановку укороченного запроса в подпись кнопки — человек видит, что именно запустится",
+            "role=\"status\": исчезновение результатов должно быть услышано, а не только показано"
+          ],
+          "adapt": [
+            "query — сам запрос; слова разбираются автоматически",
+            "keep — сколько первых слов считать основой запроса",
+            "title и text — заголовок и объяснение",
+            "обработчик onAction — он и запускает укороченный поиск",
+            "ширину карточки и её радиусы через палитру"
+          ],
+          "notes": [
+            "Укороченный запрос должен что-то находить: предлагать заведомо пустой поиск хуже, чем не предлагать ничего.",
+            "Для пустого раздела без запроса нужен другой экран: там первый шаг, а не спасение поиска.",
+            "Разбор по пробелам не понимает кавычек и операторов: для сложного синтаксиса нужен свой разбор.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "query",
+            "label": "Запрос",
+            "type": "text",
+            "default": "карточка товара с ценой и рейтингом",
+            "maxLength": 60
+          },
+          {
+            "prop": "keep",
+            "label": "Слов в основе",
+            "type": "number",
+            "default": 2,
+            "min": 1,
+            "max": 6
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An empty search that takes the query apart: the words become chips, the excess ones are struck through, and one action repeats the search with a shorter query.",
+            "ai": {
+              "summary": "A no-results state with a query breakdown: the words are laid out as chips, the extra ones struck through, with an explanation below and exactly one action — search the shortened query. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-empty-003-* palette — do not swap it for your theme tokens",
+                "taking the query apart: it shows the cause of the emptiness instead of describing it",
+                "striking out the extra words instead of advising \"try something else\" — it is visible what to drop",
+                "exactly one primary action: a second option turns search recovery into a decision",
+                "putting the shortened query into the button label — people see what will actually run",
+                "role=\"status\": losing the results has to be heard, not only shown"
+              ],
+              "adapt": [
+                "query — the query itself; the words are split automatically",
+                "keep — how many leading words count as the core of the query",
+                "title and text — the heading and the explanation",
+                "the onAction handler — it is what runs the shortened search",
+                "the card width and its radii through the palette"
+              ],
+              "notes": [
+                "The shortened query must find something: offering a knowingly empty search is worse than offering none.",
+                "An empty section without a query needs a different screen: that is a first step, not search recovery.",
+                "Splitting on spaces knows nothing of quotes or operators: complex syntax needs its own parser.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty003 query=\"product card with price and rating\" keep={2} onAction={searchShort} />"
+            },
+            "controls": {
+              "query": {
+                "label": "Query",
+                "default": "product card with price and rating"
+              },
+              "keep": {
+                "label": "Core words"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-004",
+      "type": "registry:component",
+      "title": "Empty Folder",
+      "description": "Пустая папка, которая сама и есть область загрузки: пунктирная рамка и стрелка в лоток обещают перетаскивание раньше любого текста.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-004/empty-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-004-*. Серверный: хуков нет. Пунктирная рамка лежит на самом блоке, стрелка нарисована псевдоэлементами и вложенным i, подсветка сверху — радиальный градиент от акцента. Обработчик перетаскивания не входит в компонент: он остаётся за вызывающим кодом, а кнопка даёт тот же путь для тех, кто не тащит файлы мышью.",
+      "meta": {
+        "tags": [
+          "empty",
+          "upload",
+          "dropzone",
+          "files"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Empty004",
+          "usage": "<Empty004 title=\"В папке пока пусто\" actionLabel=\"Выбрать файлы\" onAction={pickFiles} />",
+          "summary": "Пустая папка как область загрузки: пунктирная рамка, стрелка в лоток, объяснение, одна кнопка выбора файлов и строка допустимых форматов. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-004-* и не подменять её токенами вашей темы",
+            "пунктирную рамку: она и есть обещание, что сюда можно бросить файл",
+            "рисунок стрелки в лоток на CSS с aria-hidden — он декоративный и не должен читаться",
+            "одну кнопку: перетаскивание и выбор с диска — два входа в одно действие, а не два действия",
+            "строку форматов и предельного размера: отказ после загрузки раздражает сильнее запрета до неё",
+            "светлую подложку блока — на тёмном фоне карточка обязана нести свой фон"
+          ],
+          "adapt": [
+            "title и text — заголовок и объяснение",
+            "actionLabel — подпись кнопки выбора файлов",
+            "formats — строка про допустимые форматы и размер",
+            "обработчик onAction — открытие системного диалога выбора файлов",
+            "акцент через проп accent — цвет стрелки, подсветки и кнопки"
+          ],
+          "notes": [
+            "Перетаскивание не реализовано: обработчики onDragOver и onDrop вешает вызывающий код.",
+            "Не показывайте это состояние во время загрузки списка: пустая папка и «ещё не загрузилось» — разные вещи.",
+            "Если загрузка запрещена правами, вместо этого экрана нужен экран отказа с объяснением.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "В папке пока пусто",
+            "maxLength": 40
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Выбрать файлы",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An empty folder that is itself the drop zone: the dashed border and the tray arrow promise dragging before any text does.",
+            "ai": {
+              "summary": "An empty folder as an upload area: a dashed border, an arrow into a tray, an explanation, one file-picking button and a line of accepted formats. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-empty-004-* palette — do not swap it for your theme tokens",
+                "the dashed border: it is the promise that a file can be dropped here",
+                "the CSS arrow with aria-hidden — it is decorative and must not be announced",
+                "the single button: dragging and picking from disk are two doors into one action, not two actions",
+                "the formats and size limit line: a rejection after uploading annoys more than a rule before it",
+                "the light card background — on a dark surface the card has to carry its own"
+              ],
+              "adapt": [
+                "title and text — the heading and the explanation",
+                "actionLabel — the wording of the file-picking button",
+                "formats — the accepted formats and size line",
+                "the onAction handler — opening the system file dialog",
+                "the accent through the accent prop — it colours the arrow, the glow and the button"
+              ],
+              "notes": [
+                "Dragging is not implemented: onDragOver and onDrop belong to the calling code.",
+                "Do not show this state while the list is loading: an empty folder and \"not loaded yet\" are different things.",
+                "When uploading is forbidden by permissions, show a refusal screen with an explanation instead.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty004 title=\"This folder is empty\" actionLabel=\"Choose files\" onAction={pickFiles} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "This folder is empty"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Choose files"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-005",
+      "type": "registry:component",
+      "title": "First Run",
+      "description": "Первый запуск, где пусто не потому, что данных нет, а потому, что работа не начата: три шага с нумерацией, текущий выделен, действие одно.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-005/empty-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-005-*. Серверный: хуков нет. Шаги — ol с номерами в кружках; соединительная линия нарисована псевдоэлементом у всех элементов, кроме последнего, поэтому лишний хвост под последним номером не появляется. Текущий шаг помечен data-current, остальные приглушены цветом подписи.",
+      "meta": {
+        "tags": [
+          "empty",
+          "onboarding",
+          "steps",
+          "first run"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Empty005",
+          "usage": "<Empty005 title=\"Начнём с трёх шагов\" steps={steps} actionLabel=\"Подключить репозиторий\" onAction={connect} />",
+          "summary": "Пустое состояние первого запуска: заголовок, счётчик готовности, три пронумерованных шага с пояснениями и одна кнопка, запускающая первый шаг. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-005-* и не подменять её токенами вашей темы",
+            "нумерованный список ol, а не набор карточек: порядок шагов — это смысл, а не оформление",
+            "выделение текущего шага: без него непонятно, с чего начинать",
+            "линию между номерами — она показывает, что шаги идут подряд, а не выбираются",
+            "одну кнопку на весь экран: она запускает первый шаг, остальные ждут своей очереди",
+            "счётчик готовности: он обещает конец пути и показывает, сколько всего работы"
+          ],
+          "adapt": [
+            "title — заголовок пустого состояния",
+            "массив steps: заголовок шага и пояснение под ним",
+            "actionLabel — подпись кнопки первого шага",
+            "обработчик onAction — начало первого шага",
+            "акцент через проп accent — цвет текущего номера и кнопки"
+          ],
+          "notes": [
+            "Больше трёх-четырёх шагов на первом экране отпугивают: остальное показывайте после первого успеха.",
+            "Прогресс не считается сам: номер текущего шага и счётчик задаёт вызывающий код.",
+            "Не показывайте этот экран опытному пользователю: после первого проекта он бесполезен.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Начнём с трёх шагов",
+            "maxLength": 40
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Подключить репозиторий",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A first run where the emptiness is not missing data but work not yet started: three numbered steps, the current one highlighted, one action.",
+            "ai": {
+              "summary": "A first-run empty state: a heading, a readiness counter, three numbered steps with explanations and one button that starts the first step. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-empty-005-* palette — do not swap it for your theme tokens",
+                "a numbered ol rather than a set of cards: the order of the steps is the meaning, not the decoration",
+                "highlighting the current step: without it nothing says where to begin",
+                "the line between the numbers — it shows the steps run in sequence rather than being picked",
+                "one button for the whole screen: it starts the first step, the rest wait their turn",
+                "the readiness counter: it promises an end and shows how much work there is"
+              ],
+              "adapt": [
+                "title — the empty state heading",
+                "the steps array: the step heading and the explanation under it",
+                "actionLabel — the wording of the first-step button",
+                "the onAction handler — starting the first step",
+                "the accent through the accent prop — it colours the current number and the button"
+              ],
+              "notes": [
+                "More than three or four steps on the first screen scares people off: show the rest after the first success.",
+                "Progress is not computed here: the current step and the counter come from the caller.",
+                "Do not show this screen to an experienced user: after the first project it is useless.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty005 title=\"Three steps to start\" steps={steps} actionLabel=\"Connect a repository\" onAction={connect} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Three steps to start"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Connect a repository"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-006",
+      "type": "registry:component",
+      "title": "Filtered Out",
+      "description": "Список опустел из-за фильтров, а не сам по себе: на экране перечислены включённые условия и сказано, сколько записей вернётся после сброса.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-006/empty-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-006-*. Серверный: хуков нет. Знак-воронка собран из двух псевдоэлементов, верхний обрезан clip-path. Условия выложены списком ul с чипами, число записей печатается через toLocaleString. Блок объявлен role=\"status\", подложка своя и светлая.",
+      "meta": {
+        "tags": [
+          "empty",
+          "filters",
+          "reset",
+          "list"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Empty006",
+          "usage": "<Empty006 filters={[\"Статус: черновик\"]} total={248} onReset={clearFilters} />",
+          "summary": "Пустой список после фильтров: воронка, заголовок, включённые условия чипами, число записей без фильтров и одна кнопка сброса со счётчиком условий. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-006-* и не подменять её токенами вашей темы",
+            "перечисление включённых условий: без них человек не знает, что именно сбрасывает",
+            "число записей без фильтров — оно объясняет, что данные есть, и делает сброс осмысленным",
+            "одну кнопку сброса: предлагать здесь «создать запись» вредно, данные ведь никуда не делись",
+            "счётчик условий на кнопке: он показывает объём отмены",
+            "role=\"status\": исчезновение списка должно быть услышано"
+          ],
+          "adapt": [
+            "массив filters — подписи включённых условий",
+            "total — сколько записей вернётся после сброса",
+            "title — заголовок пустого состояния",
+            "обработчик onReset — он и снимает фильтры",
+            "акцент через проп accent — цвет воронки, чипов и кнопки"
+          ],
+          "notes": [
+            "Если фильтров нет, этот экран не нужен: пустой раздел выглядит иначе и предлагает первый шаг.",
+            "Условия должны совпадать с реально включёнными: расхождение хуже, чем их отсутствие.",
+            "Сброс не должен трогать поисковый запрос молча — иначе выдача изменится дважды.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Под фильтры ничего не подошло",
+            "maxLength": 50
+          },
+          {
+            "prop": "total",
+            "label": "Всего записей",
+            "type": "number",
+            "default": 248,
+            "min": 0,
+            "max": 100000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The list is empty because of the filters, not by itself: the active conditions are listed and the number of records waiting after a reset is named.",
+            "ai": {
+              "summary": "An empty list after filtering: a funnel, a heading, the active conditions as chips, the unfiltered record count and one reset button with a condition counter. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-empty-006-* palette — do not swap it for your theme tokens",
+                "listing the active conditions: without them nobody knows what a reset removes",
+                "the unfiltered record count — it proves the data is there and makes the reset worth pressing",
+                "the single reset action: offering \"create a record\" here is harmful, nothing was lost",
+                "the condition counter on the button: it shows the size of the undo",
+                "role=\"status\": the list disappearing has to be heard"
+              ],
+              "adapt": [
+                "the filters array — the labels of the active conditions",
+                "total — how many records come back after the reset",
+                "title — the empty state heading",
+                "the onReset handler — it is what clears the filters",
+                "the accent through the accent prop — it colours the funnel, the chips and the button"
+              ],
+              "notes": [
+                "With no filters this screen is wrong: an empty section looks different and offers a first step.",
+                "The conditions must match the ones actually applied: a mismatch is worse than showing none.",
+                "The reset should not silently drop the search query — the results would change twice.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty006 filters={[\"Status: draft\"]} total={248} onReset={clearFilters} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Nothing matches these filters"
+              },
+              "total": {
+                "label": "Records in total"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-007",
+      "type": "registry:component",
+      "title": "Load Error",
+      "description": "Ошибка загрузки, а не пустой раздел: данные есть, их не удалось получить, поэтому главное действие — повторить, а подробности спрятаны в details.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-007/empty-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-007-*. Серверный: хуков нет, раскрытие подробностей держит нативный details, поэтому клиентского кода не требуется. Блок объявлен role=\"alert\". Знак нарисован псевдоэлементами, код и текст ошибки набраны моноширинным шрифтом с white-space:pre-line.",
+      "meta": {
+        "tags": [
+          "empty",
+          "error",
+          "retry",
+          "details"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Empty007",
+          "usage": "<Empty007 title=\"Не удалось загрузить список\" code=\"504 Gateway Timeout\" onRetry={reload} />",
+          "summary": "Экран ошибки загрузки: знак тревоги, заголовок, объяснение, кнопка повтора и раскрывающиеся технические подробности с кодом ответа. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-007-* и не подменять её токенами вашей темы",
+            "отличие от пустого раздела: пустота и ошибка требуют разных действий, а выглядят похоже",
+            "повтор единственным действием: всё остальное человек сделать всё равно не может",
+            "подробности внутри details: разработчику код нужен, остальным он мешает",
+            "role=\"alert\": об ошибке должно быть объявлено, а не только нарисовано",
+            "форму знака, а не только его цвет — тревога должна читаться без различения цветов"
+          ],
+          "adapt": [
+            "title и text — заголовок и объяснение простым языком",
+            "code и detail — код ответа и техническая строка внутри details",
+            "retryLabel — подпись кнопки повтора",
+            "обработчик onRetry — он и перезапрашивает данные",
+            "тёмную кнопку повтора: её тон намеренно нейтральный, а не тревожный"
+          ],
+          "notes": [
+            "Не показывайте вместо ошибки пустое состояние: человек решит, что данных нет, и уйдёт.",
+            "Автоповтор компонент не делает: интервал и число попыток задаёт вызывающий код.",
+            "Технические подробности не должны содержать персональных данных и токенов — их видно всем.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Не удалось загрузить список",
+            "maxLength": 50
+          },
+          {
+            "prop": "code",
+            "label": "Код ошибки",
+            "type": "text",
+            "default": "504 Gateway Timeout",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A load error rather than an empty section: the data exists but did not arrive, so the primary action is retry and the technical detail hides in a details element.",
+            "ai": {
+              "summary": "A load error screen: an alert mark, a heading, an explanation, a retry button and expandable technical detail with the response code. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-empty-007-* palette — do not swap it for your theme tokens",
+                "the distinction from an empty section: emptiness and failure need different actions but look alike",
+                "retry as the only action: there is nothing else a person can do here anyway",
+                "the detail inside a details element: a developer needs the code, everyone else does not",
+                "role=\"alert\": an error has to be announced, not only drawn",
+                "the shape of the mark, not just its colour — alarm must read without colour vision"
+              ],
+              "adapt": [
+                "title and text — the heading and a plain-language explanation",
+                "code and detail — the response code and the technical line inside details",
+                "retryLabel — the retry button wording",
+                "the onRetry handler — it is what refetches the data",
+                "the dark retry button: its tone is deliberately neutral rather than alarming"
+              ],
+              "notes": [
+                "Do not show an empty state in place of an error: people conclude there is nothing there and leave.",
+                "The component does not retry by itself: the interval and attempt count belong to the caller.",
+                "The technical detail must not carry personal data or tokens — everyone can open it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty007 title=\"Could not load the list\" code=\"504 Gateway Timeout\" onRetry={reload} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Could not load the list"
+              },
+              "code": {
+                "label": "Error code",
+                "default": "504 Gateway Timeout"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-008",
+      "type": "registry:component",
+      "title": "No Access",
+      "description": "Закрытый раздел вместо пустого: названа причина отказа, назван владелец доступа и есть одно действие — попросить у него.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-008/empty-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-008-*. Серверный: хуков нет. Замок нарисован двумя псевдоэлементами: дужка — бордюр с радиусом сверху, корпус — прямоугольник в цвете акцента. Причина вынесена в отдельную пилюлю над объяснением, блок объявлен role=\"status\", подложка светлая и своя.",
+      "meta": {
+        "tags": [
+          "empty",
+          "access",
+          "permissions",
+          "request"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Empty008",
+          "usage": "<Empty008 reason=\"Ваша роль: наблюдатель\" actionLabel=\"Запросить доступ\" onAction={requestAccess} />",
+          "summary": "Экран отказа в доступе: замок, заголовок, причина отдельной пилюлей, объяснение правил, одна кнопка запроса и строка о том, кто выдаёт доступ. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-008-* и не подменять её токенами вашей темы",
+            "названную причину: отказ без причины выглядит сбоем, и человек идёт в поддержку",
+            "имя того, кто выдаёт доступ — иначе просить не у кого и запрос уходит в пустоту",
+            "одно действие: запросить доступ, а не «вернуться» и «написать в поддержку» одновременно",
+            "отличие от пустого состояния: данные есть, их просто не отдают, и создавать ничего не нужно",
+            "нейтральный тон: отказ по правам — не ошибка пользователя и не должен выглядеть тревогой"
+          ],
+          "adapt": [
+            "title и text — заголовок и объяснение правил доступа",
+            "reason — короткая причина в пилюле, обычно роль или тариф",
+            "owner — строка о том, кто выдаёт доступ",
+            "actionLabel и обработчик onAction — подпись и отправка запроса",
+            "акцент через проп accent — цвет замка и кнопки"
+          ],
+          "notes": [
+            "Не подменяйте отказ пустым списком: человек решит, что данных нет, и не станет просить доступ.",
+            "Не раскрывайте в объяснении содержимое закрытого раздела — иначе запрет теряет смысл.",
+            "После отправки запроса состояние должно смениться: повторная кнопка «Запросить» вводит в заблуждение.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Раздел закрыт для вашей роли",
+            "maxLength": 50
+          },
+          {
+            "prop": "reason",
+            "label": "Причина",
+            "type": "text",
+            "default": "Ваша роль: наблюдатель",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A closed section rather than an empty one: the reason for the refusal is named, so is the person who grants access, and there is one action — ask them.",
+            "ai": {
+              "summary": "An access refusal screen: a padlock, a heading, the reason as a pill, an explanation of the rules, one request button and a line naming who grants access. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-empty-008-* palette — do not swap it for your theme tokens",
+                "naming the reason: a refusal without one reads as a fault and sends people to support",
+                "naming who grants access — otherwise there is nobody to ask and the request goes nowhere",
+                "a single action: request access, not \"go back\" and \"contact support\" at once",
+                "the difference from an empty state: the data exists, it is simply withheld, and nothing needs creating",
+                "the neutral tone: a permissions refusal is not the user's mistake and must not look like alarm"
+              ],
+              "adapt": [
+                "title and text — the heading and the explanation of the access rules",
+                "reason — the short cause in the pill, usually a role or a plan",
+                "owner — the line naming who grants access",
+                "actionLabel and the onAction handler — the wording and sending of the request",
+                "the accent through the accent prop — it colours the padlock and the button"
+              ],
+              "notes": [
+                "Do not replace a refusal with an empty list: people conclude there is no data and never ask for access.",
+                "Do not reveal the contents of the closed section in the explanation — that defeats the restriction.",
+                "After the request is sent the state has to change: a second \"Request\" button misleads.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty008 reason=\"Your role: viewer\" actionLabel=\"Request access\" onAction={requestAccess} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "This section is closed to your role"
+              },
+              "reason": {
+                "label": "Reason",
+                "default": "Your role: viewer"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-009",
+      "type": "registry:component",
+      "title": "Offline State",
+      "description": "Офлайн-состояние, которое не выглядит поломкой приложения: видно, что попытки продолжаются сами, и сказано, насколько устарели данные на экране.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-009/empty-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-009-*. Серверный: хуков нет. Облако с перечёркиванием нарисовано псевдоэлементами, точка ожидания пульсирует ключевыми кадрами vibeui-empty-009-pulse, и правило prefers-reduced-motion её останавливает. Блок объявлен role=\"status\" с aria-live=\"polite\", подложка своя и светлая.",
+      "meta": {
+        "tags": [
+          "empty",
+          "offline",
+          "network",
+          "retry"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Empty009",
+          "usage": "<Empty009 title=\"Нет соединения\" updatedAt=\"Данные на экране от 14:08\" onRetry={reconnect} />",
+          "summary": "Офлайн-состояние: знак разорванной связи, заголовок, пульсирующая метка «пробуем переподключиться», объяснение, кнопка ручного повтора и время последнего обновления. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-009-* и не подменять её токенами вашей темы",
+            "видимое ожидание: пульсирующая точка обещает, что попытки идут сами",
+            "время последнего обновления — оно говорит, насколько устарело то, что на экране",
+            "обещание, что введённое не потеряно: без него человек начинает всё заново",
+            "кнопку ручного повтора для тех, кто не хочет ждать очередной попытки",
+            "правило prefers-reduced-motion, которое останавливает пульсацию",
+            "role=\"status\" с aria-live: смена состояния связи должна быть услышана"
+          ],
+          "adapt": [
+            "title и text — заголовок и объяснение",
+            "updatedAt — строка о возрасте данных на экране",
+            "retryLabel — подпись кнопки ручного повтора",
+            "обработчик onRetry — он и запускает попытку подключения",
+            "скорость пульсации и цвет ожидания через палитру"
+          ],
+          "notes": [
+            "Состояние сети компонент не определяет: следите за navigator.onLine или ответами запросов сами.",
+            "Не подменяйте офлайном ошибку сервера: у них разные причины и разные действия.",
+            "Кнопка повтора должна что-то делать при отсутствии сети: показывайте отказ, а не тишину.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Нет соединения",
+            "maxLength": 40
+          },
+          {
+            "prop": "updatedAt",
+            "label": "Возраст данных",
+            "type": "text",
+            "default": "Данные на экране от 14:08",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An offline state that does not look like a broken app: the retries are visibly ongoing, and the age of the data on screen is spelled out.",
+            "ai": {
+              "summary": "An offline state: a broken-connection mark, a heading, a pulsing \"reconnecting\" label, an explanation, a manual retry button and the time of the last update. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-empty-009-* palette — do not swap it for your theme tokens",
+                "visible waiting: the pulsing dot promises that retries are happening on their own",
+                "the last update time — it says how stale what is on screen has become",
+                "the promise that nothing typed is lost: without it people start over",
+                "the manual retry button for those who will not wait for the next attempt",
+                "the prefers-reduced-motion rule that stops the pulse",
+                "role=\"status\" with aria-live: a change in connection has to be heard"
+              ],
+              "adapt": [
+                "title and text — the heading and the explanation",
+                "updatedAt — the line about how old the data on screen is",
+                "retryLabel — the manual retry wording",
+                "the onRetry handler — it is what attempts the connection",
+                "the pulse speed and the waiting colour through the palette"
+              ],
+              "notes": [
+                "The component does not detect the network: watch navigator.onLine or your request results yourself.",
+                "Do not use offline in place of a server error: different causes, different actions.",
+                "The retry button has to do something with no network: show a refusal rather than silence.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty009 title=\"No connection\" updatedAt=\"Screen data from 14:08\" onRetry={reconnect} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "No connection"
+              },
+              "updatedAt": {
+                "label": "Data age",
+                "default": "Screen data from 14:08"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-010",
+      "type": "registry:component",
+      "title": "Search Retry",
+      "description": "Пустая выдача поиска с редактируемым полем: чипы подставляют слово, кнопка возвращает исходный запрос вместо статичной подписи.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-010/empty-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-010.tsx"
+        }
+      ],
+      "docs": "Компонент клиентский: useState держит значение поля. Форма отправляет запрос по submit, чипы подставляют слово в поле одним кликом, кнопка сброса возвращает исходный запрос и блокируется, если поле и так совпадает с ним. Ширина и раскладка формы считаются от собственного контейнера через @container: на узкой ширине поле и кнопка поиска встают друг под другом. Иконка лупы — инлайновый svg.",
+      "meta": {
+        "tags": [
+          "empty",
+          "search",
+          "no results",
+          "recovery"
+        ],
+        "ai": {
+          "export": "Empty010",
+          "usage": "<Empty010 initialQuery=\"карточка товара\" suggestions={[\"кнопка\"]} onSearch={runSearch} />",
+          "summary": "Экран пустой выдачи поиска с редактируемым полем: знак поиска, заголовок, форма повторного поиска, чипы-подсказки, подставляющие слово в поле, и кнопка возврата к исходному запросу. Один файл, клиентский компонент на useState, без внешних зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-010-* и не подменять её токенами вашей темы",
+            "редактируемое поле, а не статичный текст запроса: сброс здесь — реальное действие с полем",
+            "чипы как кнопки, подставляющие слово в поле, а не подписи-советы",
+            "кнопку возврата к исходному запросу и её disabled-состояние, когда поле уже совпадает с ним",
+            "@container-раскладку формы: на узкой ширине поле и кнопка идут друг под другом",
+            "role=\"status\" на корневом блоке: пропажа результатов должна быть услышана"
+          ],
+          "adapt": [
+            "title, text и initialQuery",
+            "массив suggestions",
+            "placeholder, searchLabel и resetLabel",
+            "обработчик onSearch — что делать с новым запросом",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "onSearch не выполняет запрос сам — это должен сделать вызывающий код.",
+            "Подсказки должны что-то находить: предлагать заведомо пустой запрос хуже, чем не предлагать ничего.",
+            "Для статичного экрана без ввода возьмите empty-002: там запрос — это текст, а не форма.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ничего не нашлось",
+            "maxLength": 30
+          },
+          {
+            "prop": "initialQuery",
+            "label": "Запрос",
+            "type": "text",
+            "default": "карточкa товара",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An empty search result with an editable field: chips fill in a word, and the reset button restores the original query instead of a static caption.",
+            "ai": {
+              "summary": "A no-results screen with an editable search field: a search mark, a heading, a retry form, suggestion chips that fill the field, and a button restoring the original query. One file, a client component using useState, no external dependencies.",
+              "preserve": [
+                "the local --vibeui-empty-010-* palette — do not swap it for your theme tokens",
+                "the editable field rather than static query text: the reset here is a real action on the field",
+                "the chips as buttons that fill the field, not advice captions",
+                "the restore-query button and its disabled state once the field already matches it",
+                "the @container layout of the form: on a narrow width the field and button stack",
+                "role=\"status\" on the root block: losing the results has to be heard"
+              ],
+              "adapt": [
+                "title, text and initialQuery",
+                "the suggestions array",
+                "placeholder, searchLabel and resetLabel",
+                "the onSearch handler — what to do with the new query",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "onSearch does not run the query itself — the caller has to.",
+                "The suggestions must find something: offering a knowingly empty query is worse than offering none.",
+                "For a static screen without input use empty-002: there the query is text, not a form.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty010 initialQuery=\"product card\" suggestions={[\"button\"]} onSearch={runSearch} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Nothing found"
+              },
+              "initialQuery": {
+                "label": "Query",
+                "default": "product card"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-011",
+      "type": "registry:component",
+      "title": "Permission Request",
+      "description": "Закрытый раздел с формой запроса доступа: выбор нужной роли из списка, отправка и смена карточки на подтверждение.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-011/empty-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-011.tsx"
+        }
+      ],
+      "docs": "Компонент клиентский: useState хранит выбранную роль и флаг отправки. Роли — радиогруппа в fieldset с легендой, у каждой опции своя подпись и объяснение. После submit форма скрывается и её место занимает подтверждение с галочкой — повторный клик по «Запросить» больше невозможен. Замок нарисован инлайновым svg.",
+      "meta": {
+        "tags": [
+          "empty",
+          "access",
+          "permissions",
+          "request"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Empty011",
+          "usage": "<Empty011 roles={roles} defaultRoleId=\"editor\" onRequest={requestAccess} />",
+          "summary": "Экран отказа в доступе с формой запроса: замок, заголовок, объяснение, радиогруппа ролей с подписями и кнопка отправки; после отправки карточка сменяется подтверждением. Один файл, клиентский компонент на useState, без внешних зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-011-* и не подменять её токенами вашей темы",
+            "радиогруппу ролей с объяснением у каждой: без объяснения выбор случаен",
+            "смену формы на подтверждение после отправки — повторная кнопка «Запросить» вводит в заблуждение",
+            "fieldset и legend: группа переключателей должна объявляться скринридером как единое целое",
+            "одно действие на экране: отправить запрос, а не «вернуться» и «написать в поддержку» одновременно",
+            "нейтральный тон обеих стадий: отказ по правам — не ошибка пользователя"
+          ],
+          "adapt": [
+            "title и text — заголовок и объяснение правил доступа",
+            "массив roles: подпись и пояснение каждой роли",
+            "defaultRoleId — какая роль выбрана по умолчанию",
+            "pendingTitle и pendingText — текст подтверждения после отправки",
+            "actionLabel и обработчик onRequest — подпись кнопки и отправка запроса",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "onRequest не меняет доступ сам — только сообщает вызывающему коду о выборе.",
+            "Подтверждение не откатывается назад в этом компоненте: обновление статуса — за пределами карточки.",
+            "Не раскрывайте в объяснении содержимое закрытого раздела — иначе запрет теряет смысл.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Раздел закрыт для вашей роли",
+            "maxLength": 50
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Запросить доступ",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A closed section with an access-request form: pick the needed role from a list, submit it, and the card switches to a confirmation.",
+            "ai": {
+              "summary": "An access-refusal screen with a request form: a padlock, a heading, an explanation, a role radio group with descriptions and a submit button; after sending, the card switches to a confirmation. One file, a client component using useState, no external dependencies.",
+              "preserve": [
+                "the local --vibeui-empty-011-* palette — do not swap it for your theme tokens",
+                "the role radio group with a description for each — without it the choice is a guess",
+                "switching the form to a confirmation after submit — a repeated \"Request\" button misleads",
+                "the fieldset and legend: a group of radios has to be announced as one unit by a screen reader",
+                "a single action on screen: submit the request, not \"go back\" and \"contact support\" at once",
+                "the neutral tone at both stages: a permissions refusal is not the user's mistake"
+              ],
+              "adapt": [
+                "title and text — the heading and the explanation of the access rules",
+                "the roles array: the label and description of each role",
+                "defaultRoleId — which role is preselected",
+                "pendingTitle and pendingText — the confirmation copy after submitting",
+                "actionLabel and the onRequest handler — the button wording and the request submission",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "onRequest does not change access itself — it only tells the caller what was chosen.",
+                "The confirmation does not roll back inside this component: status updates live outside the card.",
+                "Do not reveal the contents of the closed section in the explanation — that defeats the restriction.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty011 roles={roles} defaultRoleId=\"editor\" onRequest={requestAccess} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "This section is closed to your role"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Request access"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-012",
+      "type": "registry:component",
+      "title": "Retry Countdown",
+      "description": "Ошибка загрузки с автоповтором: код ответа виден сразу на карточке, отсчёт до следующей попытки и ручной повтор в любой момент.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-012/empty-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-012.tsx"
+        }
+      ],
+      "docs": "Компонент клиентский: useState и useEffect держат обратный отсчёт и вызывают onRetry, когда он доходит до нуля, после чего отсчёт стартует заново. Кнопка «Повторить сейчас» сбрасывает отсчёт и вызывает onRetry немедленно. Проп autoRetry=false отключает таймер и полосу прогресса, оставляя только ручной повтор. Знак тревоги — инлайновый svg, код ответа показан прямо на карточке, не спрятан в details.",
+      "meta": {
+        "tags": [
+          "empty",
+          "error",
+          "retry",
+          "auto-retry"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Empty012",
+          "usage": "<Empty012 code=\"504 Gateway Timeout\" seconds={10} onRetry={reload} />",
+          "summary": "Экран ошибки загрузки с автоповтором: знак тревоги, заголовок, объяснение, код ответа пилюлей, кнопка ручного повтора, отсчёт до следующей попытки и полоса прогресса. Один файл, клиентский компонент на useState/useEffect, без внешних зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-012-* и не подменять её токенами вашей темы",
+            "код ответа прямо на карточке: здесь он важен не только разработчику",
+            "ручной повтор, доступный в любой момент, даже пока идёт отсчёт",
+            "сброс отсчёта после каждого повтора — ручного и автоматического",
+            "role=\"alert\": об ошибке должно быть объявлено, а не только нарисовано",
+            "прогресс-полосу с transition внутри prefers-reduced-motion"
+          ],
+          "adapt": [
+            "title и text — заголовок и объяснение простым языком",
+            "code — код ответа в пилюле",
+            "retryLabel — подпись кнопки ручного повтора",
+            "seconds — длительность отсчёта до автоповтора",
+            "autoRetry — выключает таймер и полосу прогресса, оставляя только ручной повтор",
+            "обработчик onRetry — он и перезапрашивает данные"
+          ],
+          "notes": [
+            "Автоповтор не считает попытки и не останавливается сам — предел попыток задаёт вызывающий код через autoRetry.",
+            "Не показывайте вместо ошибки пустое состояние: человек решит, что данных нет, и уйдёт.",
+            "Код ответа не должен содержать персональных данных и токенов — он виден всем.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Не удалось загрузить список",
+            "maxLength": 50
+          },
+          {
+            "prop": "code",
+            "label": "Код ошибки",
+            "type": "text",
+            "default": "504 Gateway Timeout",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A load error with auto-retry: the response code shows right on the card, a countdown to the next attempt, and a manual retry at any time.",
+            "ai": {
+              "summary": "A load-error screen with auto-retry: an alert mark, a heading, an explanation, the response code as a pill, a manual retry button, a countdown to the next attempt and a progress bar. One file, a client component using useState/useEffect, no external dependencies.",
+              "preserve": [
+                "the local --vibeui-empty-012-* palette — do not swap it for your theme tokens",
+                "the response code right on the card: here it matters to more than just developers",
+                "the manual retry available at any time, even mid-countdown",
+                "resetting the countdown after every retry, manual and automatic alike",
+                "role=\"alert\": an error has to be announced, not only drawn",
+                "the progress bar transition wrapped in prefers-reduced-motion"
+              ],
+              "adapt": [
+                "title and text — the heading and a plain-language explanation",
+                "code — the response code shown in the pill",
+                "retryLabel — the manual retry button wording",
+                "seconds — the length of the auto-retry countdown",
+                "autoRetry — turns off the timer and progress bar, leaving only manual retry",
+                "the onRetry handler — it is what refetches the data"
+              ],
+              "notes": [
+                "Auto-retry does not count attempts or stop by itself — the caller sets the limit through autoRetry.",
+                "Do not show an empty state in place of an error: people conclude there is nothing there and leave.",
+                "The response code must not carry personal data or tokens — everyone can see it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty012 code=\"504 Gateway Timeout\" seconds={10} onRetry={reload} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Could not load the list"
+              },
+              "code": {
+                "label": "Error code",
+                "default": "504 Gateway Timeout"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-013",
+      "type": "registry:component",
+      "title": "Onboarding Checklist",
+      "description": "Первый запуск как чек-лист: шаги отмечаются в любом порядке, прогресс-бар считает готовность, а действие одно и не ждёт, пока отметят всё.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-013/empty-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-013.tsx"
+        }
+      ],
+      "docs": "Компонент клиентский: useState хранит отметки по id шага. Каждый шаг — кнопка с aria-pressed, а не чекбокс: клик переключает состояние, зачёркнутый текст и заливка отмечают выполненное. Прогресс-бар и счётчик считаются от количества отмеченных шагов. Галочка внутри отметки — инлайновый svg, рисуется только когда шаг выполнен.",
+      "meta": {
+        "tags": [
+          "empty",
+          "onboarding",
+          "checklist",
+          "first run"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Empty013",
+          "usage": "<Empty013 title=\"С чего начать\" steps={steps} actionLabel=\"Перейти к проекту\" onAction={openProject} />",
+          "summary": "Пустое состояние первого запуска в виде чек-листа: заголовок, счётчик и полоса прогресса, шаги-кнопки, которые отмечаются в любом порядке, и одна кнопка главного действия. Один файл, клиентский компонент на useState, без внешних зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-013-* и не подменять её токенами вашей темы",
+            "шаги как кнопки с aria-pressed, а не декоративные карточки: состояние должно быть доступно с клавиатуры",
+            "возможность отмечать шаги в любом порядке — это чек-лист, а не строго линейный сценарий",
+            "прогресс-бар и счётчик, посчитанные от количества отмеченных шагов",
+            "одну кнопку главного действия, не заблокированную незавершёнными шагами",
+            "зачёркнутый текст отмеченного шага как второй, не цветовой, сигнал завершения"
+          ],
+          "adapt": [
+            "title — заголовок пустого состояния",
+            "массив steps: заголовок шага и пояснение под ним",
+            "actionLabel и обработчик onAction — подпись и запуск главного действия",
+            "акцент через проп accent — цвет отметки и кнопки"
+          ],
+          "notes": [
+            "Компонент не сохраняет отметки между визитами: персистентность — за пределами карточки.",
+            "Больше четырёх-пяти шагов в чек-листе перестают восприниматься как быстрый список.",
+            "Не показывайте этот экран опытному пользователю: после первого успеха он бесполезен.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "С чего начать",
+            "maxLength": 40
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Перейти к проекту",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A first run as a checklist: steps can be ticked in any order, a progress bar counts readiness, and there is one action that does not wait for everything to be checked.",
+            "ai": {
+              "summary": "A first-run empty state shaped as a checklist: a heading, a counter and progress bar, step buttons that can be ticked in any order, and one primary-action button. One file, a client component using useState, no external dependencies.",
+              "preserve": [
+                "the local --vibeui-empty-013-* palette — do not swap it for your theme tokens",
+                "the steps as buttons with aria-pressed rather than decorative cards: the state must be reachable by keyboard",
+                "ticking steps in any order — this is a checklist, not a strictly linear flow",
+                "the progress bar and counter computed from the number of ticked steps",
+                "the single primary-action button, never gated by unfinished steps",
+                "the strikethrough on a ticked step's text as a second, non-colour, completion signal"
+              ],
+              "adapt": [
+                "title — the empty state heading",
+                "the steps array: the step heading and the explanation under it",
+                "actionLabel and the onAction handler — the wording and firing of the primary action",
+                "the accent through the accent prop — it colours the tick mark and the button"
+              ],
+              "notes": [
+                "The component does not persist ticks between visits — persistence lives outside the card.",
+                "More than four or five steps in a checklist stop reading as a quick list.",
+                "Do not show this screen to an experienced user: it is useless after the first success.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty013 title=\"Get started\" steps={steps} actionLabel=\"Open project\" onAction={openProject} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Get started"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Open project"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-014",
+      "type": "registry:component",
+      "title": "Empty Cart",
+      "description": "Пустая корзина с единственным действием — вернуться в каталог; отложенные в избранное товары не теряются молча, если они есть.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-014/empty-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-014.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-014-*. Серверный: хуков нет. Значок корзины — инлайновый svg. Ширина карточки считается от собственного контейнера через @container: на узкой ширине строка про избранное переходит в столбец.",
+      "meta": {
+        "tags": [
+          "empty",
+          "cart",
+          "commerce",
+          "cta"
+        ],
+        "ai": {
+          "export": "Empty014",
+          "usage": "<Empty014 actionLabel=\"Перейти в каталог\" onAction={goToCatalog} savedCount={3} onSavedClick={openWishlist} />",
+          "summary": "Пустая корзина: значок корзины, заголовок, объяснение и одна кнопка возврата в каталог; если есть отложенные в избранное товары, под кнопкой появляется отдельная ссылка на них. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-014-* и не подменять её токенами вашей темы",
+            "одно главное действие — переход в каталог: второе действие на этом экране только мешает выбору",
+            "строку про избранное как отдельный необязательный блок, а не часть основного текста",
+            "@container-раскладку строки про избранное: на узкой ширине счётчик и ссылка идут друг под другом",
+            "role=\"status\" на корневом блоке: очистку корзины стоит объявлять, а не только рисовать"
+          ],
+          "adapt": [
+            "title и text — заголовок и объяснение",
+            "actionLabel и обработчик onAction — подпись и переход в каталог",
+            "savedCount — число отложенных в избранное товаров; при 0 строка не показывается",
+            "savedLabel и обработчик onSavedClick — подпись и переход к избранному",
+            "акцент через проп accent — цвет кнопки"
+          ],
+          "notes": [
+            "Не показывайте это состояние при загрузке корзины: пустая корзина и «ещё не загрузилось» — разные вещи.",
+            "Не предлагайте случайные товары вместо перехода в каталог — это другой сценарий и другой компонент.",
+            "Если избранного нет, не выводите пустую строку про него — проп savedCount управляет этим сам.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Корзина пуста",
+            "maxLength": 40
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Перейти в каталог",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An empty cart with a single action — go back to the catalog; wishlist items, if any, are not silently lost.",
+            "ai": {
+              "summary": "An empty cart: a cart mark, a heading, an explanation and one button back to the catalog; if there are wishlist items, a separate link to them appears under the button. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-empty-014-* palette — do not swap it for your theme tokens",
+                "the single primary action — going to the catalog: a second action here only complicates the choice",
+                "the wishlist line as a separate, optional block rather than part of the main text",
+                "the @container layout of the wishlist line: on a narrow width the count and the link stack",
+                "role=\"status\" on the root block: clearing a cart is worth announcing, not only drawing"
+              ],
+              "adapt": [
+                "title and text — the heading and the explanation",
+                "actionLabel and the onAction handler — the wording and navigation to the catalog",
+                "savedCount — the number of wishlist items; at 0 the line does not render",
+                "savedLabel and the onSavedClick handler — the wording and navigation to the wishlist",
+                "the accent through the accent prop — it colours the button"
+              ],
+              "notes": [
+                "Do not show this state while the cart is loading: an empty cart and \"not loaded yet\" are different things.",
+                "Do not suggest random products instead of the catalog link — that is a different scenario and component.",
+                "With no wishlist items, do not render an empty line for it — the savedCount prop already controls that.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty014 actionLabel=\"Browse catalog\" onAction={goToCatalog} savedCount={3} onSavedClick={openWishlist} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Your cart is empty"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Browse catalog"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-015",
+      "type": "registry:component",
+      "title": "Offline Cache Banner",
+      "description": "Офлайн-баннер поверх сохранённых данных: список остаётся на экране, каждая запись помечена временем кэша, повтор подключения — вручную.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-015/empty-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-015-*. Серверный: хуков нет. Значок разрыва связи — инлайновый svg, блок объявлен role=\"status\" с aria-live=\"polite\". Баннер и список считаются от собственного контейнера через @container: на узкой ширине кнопка повтора переносится под текст.",
+      "meta": {
+        "tags": [
+          "empty",
+          "offline",
+          "network",
+          "cache"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Empty015",
+          "usage": "<Empty015 items={cachedItems} retryLabel=\"Обновить\" onRetry={reconnect} />",
+          "summary": "Офлайн-баннер над списком сохранённых данных: знак разрыва связи, заголовок, объяснение, кнопка ручного повтора и сам список записей, где у каждой — метка времени кэша. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-015-* и не подменять её токенами вашей темы",
+            "список записей на экране: отличие от полноэкранного офлайн-состояния в том, что данные остаются видны",
+            "метку времени у каждой записи — без неё непонятно, насколько устарело то, что на экране",
+            "баннер отдельным блоком сверху, а не подменяющим список целиком",
+            "кнопку ручного повтора для тех, кто не хочет ждать переподключения",
+            "role=\"status\" с aria-live: смена состояния связи должна быть услышана",
+            "@container-раскладку баннера: на узкой ширине кнопка повтора переносится под текст"
+          ],
+          "adapt": [
+            "title и text — заголовок и объяснение",
+            "массив items — записи с их временем кэша",
+            "retryLabel — подпись кнопки ручного повтора",
+            "обработчик onRetry — он и запускает попытку подключения",
+            "акцент через проп accent — цвет знака и меток времени"
+          ],
+          "notes": [
+            "Состояние сети компонент не определяет: следите за navigator.onLine или ответами запросов сами.",
+            "Метки времени кэша не обновляются сами — их считает и передаёт вызывающий код.",
+            "Не подменяйте этим баннером ошибку сервера: у офлайна и отказа сервера разные причины.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Нет соединения",
+            "maxLength": 40
+          },
+          {
+            "prop": "retryLabel",
+            "label": "Повтор",
+            "type": "text",
+            "default": "Обновить",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An offline banner over cached data: the list stays on screen, each record carries a cache timestamp, reconnecting is manual.",
+            "ai": {
+              "summary": "An offline banner above a list of cached data: a broken-connection mark, a heading, an explanation, a manual retry button, and the list itself with a cache timestamp on every record. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-empty-015-* palette — do not swap it for your theme tokens",
+                "the list of records on screen: unlike a full-screen offline state, the data stays visible",
+                "the timestamp on every record — without it nobody knows how stale what is on screen has become",
+                "the banner as its own block on top, not a replacement for the whole list",
+                "the manual retry button for those who will not wait for reconnecting",
+                "role=\"status\" with aria-live: a change in connection has to be heard",
+                "the @container layout of the banner: on a narrow width the retry button wraps under the text"
+              ],
+              "adapt": [
+                "title and text — the heading and the explanation",
+                "the items array — the records and their cache timestamps",
+                "retryLabel — the manual retry wording",
+                "the onRetry handler — it is what attempts the connection",
+                "the accent through the accent prop — it colours the mark and the timestamp pills"
+              ],
+              "notes": [
+                "The component does not detect the network: watch navigator.onLine or your request results yourself.",
+                "Cache timestamps do not update themselves — the caller computes and passes them.",
+                "Do not use this banner in place of a server error: offline and a server failure have different causes.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty015 items={cachedItems} retryLabel=\"Refresh\" onRetry={reconnect} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "No connection"
+              },
+              "retryLabel": {
+                "label": "Retry",
+                "default": "Refresh"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-016",
+      "type": "registry:component",
+      "title": "Filter Chips Reset",
+      "description": "Пустой список после фильтров с посортовым сбросом: каждое условие снимается своей кнопкой на чипе, общий сброс остаётся рядом.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-016/empty-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-016.tsx"
+        }
+      ],
+      "docs": "Компонент клиентский: useState хранит список активных условий, инициализированный пропом filters. Каждый чип несёт свою кнопку снятия с инлайновым svg-крестиком и aria-label с названием условия; общий сброс снимает все условия разом. Раскладка кнопки сброса считается от собственного контейнера через @container. Значок воронки — инлайновый svg.",
+      "meta": {
+        "tags": [
+          "empty",
+          "filters",
+          "reset",
+          "list"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Empty016",
+          "usage": "<Empty016 filters={filters} total={248} onRemoveFilter={removeFilter} onReset={clearFilters} />",
+          "summary": "Пустой список после фильтров: воронка, заголовок, объяснение с числом записей без фильтров, чипы условий со своей кнопкой снятия у каждого и общий сброс со счётчиком. Один файл, клиентский компонент на useState, без внешних зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-016-* и не подменять её токенами вашей темы",
+            "кнопку снятия на каждом чипе: человек убирает мешающее условие, не трогая остальные",
+            "aria-label кнопки снятия с названием условия — иконка-крестик сама по себе не читается",
+            "число записей без фильтров в тексте — оно объясняет, что данные есть, и делает сброс осмысленным",
+            "текст emptyLabel, когда условий не осталось: пустой список и «фильтров нет» — разные состояния",
+            "общий сброс со счётчиком условий рядом с посортовым — это быстрый путь, а не замена",
+            "@container-раскладку кнопки сброса: на узкой ширине она растягивается на всю ширину"
+          ],
+          "adapt": [
+            "title, text и emptyLabel",
+            "массив filters — условия с их подписями",
+            "total — сколько записей вернётся без фильтров",
+            "resetLabel — подпись общей кнопки сброса",
+            "обработчики onRemoveFilter и onReset — снятие одного условия и всех сразу",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Компонент хранит список условий во внутреннем состоянии: проп filters задаёт только начальный набор.",
+            "onRemoveFilter и onReset не меняют данные сами — синхронизация с реальным запросом на стороне вызывающего кода.",
+            "Если снятие условий по одному не нужно, возьмите empty-006: там один общий сброс без чипов-кнопок.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Под фильтры ничего не подошло",
+            "maxLength": 50
+          },
+          {
+            "prop": "total",
+            "label": "Всего записей",
+            "type": "number",
+            "default": 248,
+            "min": 0,
+            "max": 100000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An empty list after filtering with per-condition reset: every condition clears with its own chip button, a bulk reset stays alongside.",
+            "ai": {
+              "summary": "An empty list after filtering: a funnel, a heading, an explanation with the unfiltered record count, condition chips each with their own remove button, and a bulk reset with a counter. One file, a client component using useState, no external dependencies.",
+              "preserve": [
+                "the local --vibeui-empty-016-* palette — do not swap it for your theme tokens",
+                "the remove button on every chip: people can drop the one condition in the way without touching the rest",
+                "the aria-label on the remove button naming the condition — the cross icon alone is not announced",
+                "the unfiltered record count in the text — it proves the data is there and makes the reset worth pressing",
+                "the emptyLabel text once no conditions remain: an empty list and \"no filters\" are different states",
+                "the bulk reset with a condition counter next to the per-chip one — it is a shortcut, not a replacement",
+                "the @container layout of the reset button: on a narrow width it stretches full width"
+              ],
+              "adapt": [
+                "title, text and emptyLabel",
+                "the filters array — the conditions and their labels",
+                "total — how many records come back with no filters",
+                "resetLabel — the bulk reset wording",
+                "the onRemoveFilter and onReset handlers — clearing one condition and all of them",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The component keeps the condition list in internal state: the filters prop only seeds the initial set.",
+                "onRemoveFilter and onReset do not change the data themselves — sync with the real query is the caller's job.",
+                "If per-condition removal is not needed, use empty-006: one bulk reset there, no chip buttons.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty016 filters={filters} total={248} onRemoveFilter={removeFilter} onReset={clearFilters} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Nothing matches these filters"
+              },
+              "total": {
+                "label": "Records in total"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-017",
+      "type": "registry:component",
+      "title": "Inbox Zero",
+      "description": "Пустой почтовый ящик: все письма прочитаны, время последней проверки видно сразу, а действие одно — написать новое письмо.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-017/empty-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-017.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-017-*. Серверный: хуков нет. Знак — конверт с галочкой, инлайновый svg. Блок объявлен role=\"status\": опустевший ящик стоит объявлять, а не только рисовать. Ширина и кегль заголовка считаются от собственной ширины через @container.",
+      "meta": {
+        "tags": [
+          "empty",
+          "inbox",
+          "mail",
+          "cta"
+        ],
+        "ai": {
+          "export": "Empty017",
+          "usage": "<Empty017 actionLabel=\"Написать\" onAction={openComposer} checkedAt=\"Проверено в 14:32\" />",
+          "summary": "Пустой почтовый ящик: конверт с галочкой, заголовок, объяснение, одна кнопка «Написать» и строка времени последней проверки. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-017-* и не подменять её токенами вашей темы",
+            "одно главное действие — написать письмо: второе действие здесь только мешает выбору",
+            "время последней проверки под кнопкой: без него пустота читается как сбой синхронизации",
+            "@container-раскладку заголовка: карточка живёт и в узкой панели, и на всю ширину",
+            "role=\"status\" на корневом блоке: обнуление ящика стоит объявлять, а не только рисовать"
+          ],
+          "adapt": [
+            "title и text — заголовок и объяснение",
+            "actionLabel и обработчик onAction — подпись и открытие письма",
+            "checkedAt — строка о времени последней проверки",
+            "акцент через проп accent — цвет кнопки"
+          ],
+          "notes": [
+            "Не показывайте это состояние во время загрузки писем: пустой ящик и «ещё не загрузилось» — разные вещи.",
+            "Не путайте с отсутствием доступа к почте: там нужен экран отказа, а не пустое состояние.",
+            "checkedAt не обновляется сам — время передаёт вызывающий код по факту синхронизации.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Все письма прочитаны",
+            "maxLength": 40
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Написать",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An empty inbox: everything is read, the last-checked time shows right away, and there is one action — write a new message.",
+            "ai": {
+              "summary": "An empty inbox: an envelope with a checkmark, a heading, an explanation, one \"Compose\" button and a last-checked line. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-empty-017-* palette — do not swap it for your theme tokens",
+                "the single primary action — writing a message: a second action here only complicates the choice",
+                "the last-checked line under the button: without it the emptiness reads as a sync failure",
+                "the @container layout of the heading: the card lives both in a narrow panel and full width",
+                "role=\"status\" on the root block: an inbox reaching zero is worth announcing, not only drawing"
+              ],
+              "adapt": [
+                "title and text — the heading and the explanation",
+                "actionLabel and the onAction handler — the wording and opening the composer",
+                "checkedAt — the last-checked time line",
+                "the accent through the accent prop — it colours the button"
+              ],
+              "notes": [
+                "Do not show this state while mail is loading: an empty inbox and \"not loaded yet\" are different things.",
+                "Do not confuse it with lost mail access: that needs a refusal screen, not an empty state.",
+                "checkedAt does not update itself — the caller passes the time after a sync.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty017 actionLabel=\"Compose\" onAction={openComposer} checkedAt=\"Checked at 14:32\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "All caught up"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Compose"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-018",
+      "type": "registry:component",
+      "title": "No Notifications",
+      "description": "Тихое состояние без уведомлений: статус включённых каналов подтверждает, что оповещения работают, а действие ведёт в их настройку.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-018/empty-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-018.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-018-*. Серверный: хуков нет. Знак — перечёркнутый колокольчик, инлайновый svg. Статус включённых каналов показан пилюлей с точкой-индикатором. Ширина и кегль заголовка считаются от собственной ширины через @container.",
+      "meta": {
+        "tags": [
+          "empty",
+          "notifications",
+          "quiet",
+          "settings"
+        ],
+        "ai": {
+          "export": "Empty018",
+          "usage": "<Empty018 status=\"Email и push включены\" actionLabel=\"Настроить уведомления\" onAction={openSettings} />",
+          "summary": "Пустой список уведомлений: перечёркнутый колокольчик, заголовок, объяснение, пилюля со статусом каналов и кнопка перехода в настройку. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-018-* и не подменять её токенами вашей темы",
+            "нейтральный, не тревожный тон: перечёркнутый колокольчик остаётся приглушённого цвета, а не цвета ошибки",
+            "пилюлю со статусом каналов — она подтверждает, что оповещения включены и просто нечего показать",
+            "кнопку без заливки: действие здесь сопутствующее, а не главное на экране",
+            "role=\"status\" на корневом блоке"
+          ],
+          "adapt": [
+            "title и text — заголовок и объяснение",
+            "status — строка статуса включённых каналов",
+            "actionLabel и обработчик onAction — подпись и переход в настройку",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Не показывайте это состояние при ошибке доставки уведомлений — там нужен экран с причиной отказа, а не тишина.",
+            "status не проверяет реальные настройки сам: строку собирает вызывающий код.",
+            "Если уведомления выключены целиком, пилюля должна сообщать об этом, а не молчать о причине пустоты.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Пока нет уведомлений",
+            "maxLength": 40
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Настроить уведомления",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A quiet state with no notifications: the status of the enabled channels confirms alerts are working, and the action leads to their settings.",
+            "ai": {
+              "summary": "An empty notifications list: a crossed-out bell, a heading, an explanation, a channel-status pill and a button into notification settings. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-empty-018-* palette — do not swap it for your theme tokens",
+                "the neutral, non-alarming tone: the crossed-out bell stays a muted colour, not an error colour",
+                "the channel-status pill — it confirms alerts are on and there is simply nothing to show",
+                "the outline button: the action here is secondary, not the main point of the screen",
+                "role=\"status\" on the root block"
+              ],
+              "adapt": [
+                "title and text — the heading and the explanation",
+                "status — the enabled-channels status line",
+                "actionLabel and the onAction handler — the wording and navigation to settings",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Do not show this state on a delivery failure — that needs a screen naming the cause, not silence.",
+                "status does not check real settings itself: the caller assembles the line.",
+                "If notifications are fully disabled, the pill has to say so rather than staying quiet about the cause.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty018 status=\"Email and push are on\" actionLabel=\"Manage notifications\" onAction={openSettings} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "No notifications yet"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Manage notifications"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-019",
+      "type": "registry:component",
+      "title": "Project Dropzone",
+      "description": "Пустой проект как рабочая зона загрузки: рамка подсвечивается прямо во время перетаскивания файлов, а не только по факту их сброса.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-019/empty-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-019.tsx"
+        }
+      ],
+      "docs": "Компонент клиентский: useState хранит флаг isDragging, который переключают обработчики onDragOver, onDragLeave и onDrop на корневом блоке — подсветка рамки меняется в реальном времени, а не только по факту сброса файла. Файлы передаются наружу через onDropFiles, разбор FileList остаётся за вызывающим кодом. Кнопка — второй вход в то же действие для тех, кто не перетаскивает мышью. Иконка — инлайновый svg, отступы считаются от собственной ширины через @container.",
+      "meta": {
+        "tags": [
+          "empty",
+          "project",
+          "upload",
+          "dropzone"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Empty019",
+          "usage": "<Empty019 actionLabel=\"Выбрать файлы\" onAction={pickFiles} onDropFiles={handleFiles} />",
+          "summary": "Пустой проект как зона загрузки: рамка, которая подсвечивается во время перетаскивания файлов, значок, объяснение, кнопка выбора с диска и строка допустимых форматов. Один файл, клиентский компонент на useState, без внешних зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-019-* и не подменять её токенами вашей темы",
+            "реальную подсветку рамки через data-dragging во время перетаскивания, а не только пунктирную рамку как обещание",
+            "одну кнопку как второй вход в то же действие, что и перетаскивание, а не отдельное действие",
+            "строку форматов и предельного размера файла",
+            "@container-отступы блока: на узкой ширине padding уменьшается",
+            "preventDefault в onDragOver и onDrop — без него браузер откроет файл вместо сброса в зону"
+          ],
+          "adapt": [
+            "title и text — заголовок и объяснение",
+            "actionLabel и обработчик onAction — подпись и открытие системного диалога выбора файлов",
+            "formats — строка про допустимые форматы и размер",
+            "onDropFiles — обработчик перетащенных файлов, получает FileList",
+            "акцент через проп accent — цвет значка, рамки при перетаскивании и кнопки"
+          ],
+          "notes": [
+            "Компонент не читает содержимое файлов сам: FileList из onDropFiles разбирает вызывающий код.",
+            "Не показывайте это состояние во время загрузки списка файлов проекта: пустой проект и «ещё не загрузилось» — разные вещи.",
+            "Для простой загрузки в папку без контекста проекта возьмите empty-004 — там нет состояния перетаскивания.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "В проекте пока пусто",
+            "maxLength": 40
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Выбрать файлы",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An empty project as a live drop zone: the border lights up while files are being dragged over it, not only once they are dropped.",
+            "ai": {
+              "summary": "An empty project as an upload zone: a border that lights up while files are dragged over it, a mark, an explanation, a file-picking button and a formats line. One file, a client component using useState, no external dependencies.",
+              "preserve": [
+                "the local --vibeui-empty-019-* palette — do not swap it for your theme tokens",
+                "the live border highlight through data-dragging while dragging, not just a dashed border as a promise",
+                "the single button as a second door into the same action as dragging, not a separate action",
+                "the formats and size limit line",
+                "the @container padding of the block: it shrinks on a narrow width",
+                "preventDefault in onDragOver and onDrop — without it the browser opens the file instead of dropping it"
+              ],
+              "adapt": [
+                "title and text — the heading and the explanation",
+                "actionLabel and the onAction handler — the wording and opening the system file dialog",
+                "formats — the accepted formats and size line",
+                "onDropFiles — the dropped-files handler, receives a FileList",
+                "the accent through the accent prop — it colours the mark, the dragging border and the button"
+              ],
+              "notes": [
+                "The component does not read file contents itself: the caller parses the FileList from onDropFiles.",
+                "Do not show this state while the project's file list is loading: empty and \"not loaded yet\" are different things.",
+                "For a plain folder upload with no project context use empty-004 — it has no dragging state.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty019 actionLabel=\"Choose files\" onAction={pickFiles} onDropFiles={handleFiles} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "This project is empty"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Choose files"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-020",
+      "type": "registry:component",
+      "title": "Coming Soon",
+      "description": "Раздел в разработке: обещанный срок, форма подписки на уведомление и подтверждение вместо повторно нажимаемой кнопки после отправки.",
+      "categories": [
+        "empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "empty-020/empty-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/empty-020.tsx"
+        }
+      ],
+      "docs": "Компонент клиентский: useState хранит значение поля почты и флаг отправки. Форма сабмитится по submit, email проверяется нативным required и type=\"email\"; после отправки форма скрывается и её место занимает подтверждение — повторно нажать кнопку невозможно. Подпись поля спрятана визуально через clip-path в собственном CSS, а не через утилитный класс темы. Иконка часов — инлайновый svg, раскладка формы считается от собственной ширины через @container.",
+      "meta": {
+        "tags": [
+          "empty",
+          "coming soon",
+          "subscribe",
+          "onboarding"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Empty020",
+          "usage": "<Empty020 eta=\"Ожидается в этом квартале\" onSubscribe={subscribeToRelease} />",
+          "summary": "Раздел в разработке: значок часов, пилюля со сроком, заголовок, объяснение и форма подписки на email; после отправки форма сменяется подтверждением. Один файл, клиентский компонент на useState, без внешних зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-empty-020-* и не подменять её токенами вашей темы",
+            "пилюлю со сроком отдельно от заголовка: конкретное обещание работает лучше, чем общее «скоро»",
+            "смену формы на подтверждение после отправки — повторная кнопка отправки вводит в заблуждение",
+            "визуально скрытый label поля через clip-path в собственном CSS, а не через класс темы — подпись остаётся доступной скринридеру",
+            "@container-раскладку формы: на узкой ширине поле и кнопка встают друг под другом"
+          ],
+          "adapt": [
+            "title, text и eta",
+            "placeholder, submitLabel и confirmText",
+            "обработчик onSubscribe — получает введённый email",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "onSubscribe не отправляет запрос сам: рассылку и хранение адреса делает вызывающий код.",
+            "Подтверждение не откатывается назад внутри компонента: повторная подписка требует пересоздания карточки.",
+            "Не показывайте этот экран для раздела, уже доступного части пользователей — там нужен экран отказа в доступе.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Скоро здесь появится новый раздел",
+            "maxLength": 50
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка подписки",
+            "type": "text",
+            "default": "Уведомить меня",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A section still in progress: a promised timeframe, a notify-me subscription form, and a confirmation instead of a repeatedly clickable button after submitting.",
+            "ai": {
+              "summary": "A section under construction: a clock mark, an ETA pill, a heading, an explanation and an email subscription form; after submitting, the form switches to a confirmation. One file, a client component using useState, no external dependencies.",
+              "preserve": [
+                "the local --vibeui-empty-020-* palette — do not swap it for your theme tokens",
+                "the ETA pill separate from the heading: a concrete promise works better than a vague \"soon\"",
+                "switching the form to a confirmation after submitting — a repeated submit button misleads",
+                "the visually-hidden field label via clip-path in the component's own CSS, not a theme utility class — it stays announced to screen readers",
+                "the @container layout of the form: on a narrow width the field and button stack"
+              ],
+              "adapt": [
+                "title, text and eta",
+                "placeholder, submitLabel and confirmText",
+                "the onSubscribe handler — receives the entered email",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "onSubscribe does not send anything itself: storing the address and mailing belong to the caller.",
+                "The confirmation does not roll back inside the component: a repeat subscription needs the card recreated.",
+                "Do not show this screen for a section already available to some users — that needs an access-refusal screen.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Empty020 eta=\"Expected this quarter\" onSubscribe={subscribeToRelease} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "A new section is coming soon"
+              },
+              "submitLabel": {
+                "label": "Subscribe button",
+                "default": "Notify me"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,772 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "tags-001",
+      "type": "registry:component",
+      "title": "Tag Input",
+      "description": "Поле тегов: Enter и запятая добавляют, Backspace на пустом поле убирает последний — целиться в крестик не нужно.",
+      "categories": [
+        "tags-input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tags-001/tags-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tags-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tags-001-*. Клиентский: \"use client\" ради ввода. Теги и черновик хранятся раздельно, повторы отсекаются молча. Поле ввода растягивается по остатку строки и переносится вместе с тегами, а счётчик показывает предел.",
+      "meta": {
+        "tags": [
+          "tags",
+          "chips",
+          "input",
+          "form"
+        ],
+        "ai": {
+          "export": "Tags001",
+          "usage": "<Tags001 label=\"Теги\" defaultValue={[\"форма\"]} max={8} />",
+          "summary": "Поле тегов: чипы с крестиком, ввод по Enter и запятой, счётчик и предел. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-tags-001-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: поле показывают поверх любого фона",
+            "добавление и по Enter, и по запятой: обе привычки встречаются одинаково часто",
+            "Backspace на пустом поле — без него приходится целиться в крестик",
+            "молчаливое отсечение повторов: второй такой же тег не ошибка, а шум",
+            "aria-label на крестике с именем тега",
+            "счётчик у предела: иначе непонятно, почему поле перестало принимать ввод"
+          ],
+          "adapt": [
+            "label, hint и стартовые теги",
+            "max — предел количества",
+            "акцент через проп accent",
+            "ширину поля"
+          ],
+          "notes": [
+            "Подсказок и автодополнения нет: для выбора из готового списка берите autocomplete-001.",
+            "Регистр не нормализуется: «Форма» и «форма» останутся разными тегами, если это не нужно — приведите сами.",
+            "Значение наружу не отдаётся: добавьте свой обработчик или скрытое поле для формы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Теги компонента",
+            "maxLength": 24
+          },
+          {
+            "prop": "max",
+            "label": "Предел",
+            "type": "number",
+            "default": 8,
+            "min": 2,
+            "max": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tag input: Enter and comma add, Backspace on an empty field removes the last one — no aiming at the little cross.",
+            "ai": {
+              "summary": "A tag input: chips with a remove cross, Enter and comma to add, a counter and a limit. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-tags-001-* palette — do not swap it for your theme tokens",
+                "its own light surface: the field gets shown over any background",
+                "adding on both Enter and comma: both habits are equally common",
+                "Backspace on an empty field — otherwise you have to aim at the cross",
+                "silently dropping duplicates: a repeated tag is noise, not a user error",
+                "the aria-label on the cross naming the tag",
+                "the counter at the limit: otherwise the field just stops accepting input"
+              ],
+              "adapt": [
+                "label, hint and the initial tags",
+                "max — the count limit",
+                "the accent through the accent prop",
+                "the field width"
+              ],
+              "notes": [
+                "There are no suggestions: to pick from a known list use autocomplete-001.",
+                "Case is not normalised: \"Form\" and \"form\" stay distinct — fold them yourself if that is wrong.",
+                "The value is not exposed: add your own handler or a hidden field for the form.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tags001 label=\"Tags\" defaultValue={[\"form\"]} max={8} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Component tags"
+              },
+              "max": {
+                "label": "Limit"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tags-002",
+      "type": "registry:component",
+      "title": "Suggested Tags",
+      "description": "Теги из готового списка: свободный ввод плодит «react», «React» и «reactjs» — три тега вместо одного, и поиск по ним перестаёт работать.",
+      "categories": [
+        "tags-input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tags-002/tags-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tags-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-tags-002-*. Клиентский: список выбранного и черновик в состоянии. Подсказки отданы нативному datalist — он сам фильтрует по набранному, знает клавиатуру и на телефоне показывается системным способом, поэтому выпадающий список писать не нужно. Совпадение ищется без учёта регистра, а в список попадает канонический вариант из options. Рядом лежат кнопками ещё не выбранные варианты: до первой буквы человек не знает, что вообще можно выбрать.",
+      "meta": {
+        "tags": [
+          "tags",
+          "autocomplete",
+          "datalist",
+          "form"
+        ],
+        "ai": {
+          "export": "Tags002",
+          "usage": "<Tags002 label=\"Стек проекта\" options={[\"React\", \"TypeScript\", \"CSS\"]} defaultValue={[\"React\"]} />",
+          "summary": "Поле тегов с подсказками из фиксированного списка на нативном datalist, плюс кнопки ещё не выбранных вариантов. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-tags-002-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: поле показывают поверх любого фона",
+            "закрытый список значений: свободный ввод разводит «react», «React» и «reactjs» как три разных тега",
+            "нативный datalist вместо своего выпадающего списка: он умеет фильтрацию, клавиатуру и мобильный вид",
+            "сравнение без учёта регистра с подстановкой канонического варианта: в данные должен уходить один вид написания",
+            "кнопки невыбранных вариантов: пустое поле не подсказывает, что вообще можно выбрать",
+            "aria-label на кнопках удаления: внутри них только крестик"
+          ],
+          "adapt": [
+            "label — подпись поля",
+            "options — сам список допустимых тегов",
+            "defaultValue — стартовый набор",
+            "число вариантов, показанных кнопками",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Оформление выпадающего списка datalist задаёт браузер: стилизовать его нельзя, и это плата за нативность.",
+            "Длинный список options лучше грузить с сервера: сотни вариантов в разметке тормозят страницу.",
+            "Ввод, которого нет в списке, отбрасывается — покажите пользователю сообщение, если это неочевидно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Стек проекта",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Tags from a fixed list: free input breeds \"react\", \"React\" and \"reactjs\" — three tags instead of one, and search stops working.",
+            "ai": {
+              "summary": "A tag field with suggestions from a fixed list via native datalist, plus buttons for the options not yet picked. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-tags-002-* palette — do not swap it for your theme tokens",
+                "its own light surface: the field gets shown over any background",
+                "the closed value list: free input splits \"react\", \"React\" and \"reactjs\" into three different tags",
+                "the native datalist instead of a custom dropdown: it already filters, handles the keyboard and looks right on phones",
+                "the case-insensitive match with the canonical value substituted: one spelling has to reach the data",
+                "the buttons for unpicked options: an empty field does not hint at what can be chosen",
+                "the aria-labels on the remove buttons: they contain only a cross"
+              ],
+              "adapt": [
+                "label — the field caption",
+                "options — the list of allowed tags itself",
+                "defaultValue — the starting set",
+                "how many options are shown as buttons",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The datalist dropdown is styled by the browser: it cannot be themed, which is the price of going native.",
+                "Load a long options list from the server: hundreds of entries in the markup slow the page down.",
+                "Input outside the list is dropped — show a message if that is not obvious to your users.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tags002 label=\"Project stack\" options={[\"React\", \"TypeScript\", \"CSS\"]} defaultValue={[\"React\"]} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Project stack"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tags-003",
+      "type": "registry:component",
+      "title": "Queue Limit",
+      "description": "Лимит-очередь вместо запертого поля: на пределе новый тег вытесняет самый старый, и кандидат на вылет подсвечен заранее.",
+      "categories": [
+        "tags-input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tags-003/tags-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tags-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-tags-003-*. Клиентский: список тегов и черновик в состоянии. На пределе поле не блокируется: новый тег добавляется, а список обрезается с конца методом slice(-max), то есть первый уходит. Пока в черновике есть текст, первый чип помечается data-doomed и перечёркивается — вытеснение обязано быть предсказуемым. Полоса заполненности и счётчик показывают лимит без пересчёта чипов глазами.",
+      "meta": {
+        "tags": [
+          "tags",
+          "limit",
+          "queue",
+          "form"
+        ],
+        "ai": {
+          "export": "Tags003",
+          "usage": "<Tags003 label=\"Интересы в ленте\" max={5} defaultValue={[\"дизайн\", \"интерфейсы\"]} />",
+          "summary": "Теги с лимитом, который работает как очередь: новый вытесняет самый старый, а не блокирует ввод. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-tags-003-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: поле показывают поверх любого фона",
+            "очередь вместо блокировки: заблокированное поле требует сначала догадаться, что удалить",
+            "подсветку кандидата на вылет: вытеснение без предупреждения выглядит как потеря данных",
+            "полосу и счётчик: заполненность лимита не должна пересчитываться глазами",
+            "приведение тегов к нижнему регистру: иначе лимит съедят дубликаты в разных написаниях",
+            "aria-live на подсказке: текст меняется в момент достижения лимита"
+          ],
+          "adapt": [
+            "label — подпись поля",
+            "max — сам лимит",
+            "defaultValue — стартовый набор тегов",
+            "формулировки подсказки под полем",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Очередь подходит не всем сценариям: там, где теги дорогие, лучше запретить добавление явным сообщением.",
+            "Вытесняется первый в списке, а не самый редкий: приоритеты компонент не знает.",
+            "Лимит меньше трёх делает полосу бессмысленной — оставьте один счётчик.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Интересы в ленте",
+            "maxLength": 24
+          },
+          {
+            "prop": "max",
+            "label": "Лимит",
+            "type": "number",
+            "default": 5,
+            "min": 2,
+            "max": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A queue limit instead of a locked field: at the cap a new tag pushes out the oldest one, and the doomed chip is highlighted in advance.",
+            "ai": {
+              "summary": "Tags with a limit that behaves as a queue: a new tag evicts the oldest instead of blocking input. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-tags-003-* palette — do not swap it for your theme tokens",
+                "its own light surface: the field gets shown over any background",
+                "the queue instead of a lock: a locked field first requires guessing what to delete",
+                "highlighting the eviction candidate: an unannounced eviction looks like data loss",
+                "the bar and the counter: limit usage should not be recounted by eye",
+                "lowercasing the tags: otherwise duplicates in different spellings eat the limit",
+                "aria-live on the hint: its text changes the moment the limit is reached"
+              ],
+              "adapt": [
+                "label — the field caption",
+                "max — the limit itself",
+                "defaultValue — the starting tag set",
+                "the wording of the hint under the field",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "A queue does not suit every scenario: where tags are expensive, refuse the addition with a clear message.",
+                "The first tag in the list is evicted, not the least used: the component knows no priorities.",
+                "A limit below three makes the bar pointless — keep the counter alone.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tags003 label=\"Feed interests\" max={5} defaultValue={[\"design\", \"interfaces\"]} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Feed interests"
+              },
+              "max": {
+                "label": "Limit"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tags-004",
+      "type": "registry:component",
+      "title": "Duplicate Guard",
+      "description": "Проверка дубликатов, которая не молчит: повтор подсвечивает уже существующий тег вспышкой и объясняет отказ словами.",
+      "categories": [
+        "tags-input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tags-004/tags-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tags-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-tags-004-*. Клиентский: список тегов, черновик и имя подсвеченного тега в состоянии. Сравнение идёт по приведённому виду — нижний регистр, схлопнутые пробелы, снятая пунктуация по краям, — поэтому «Ремонт», «ремонт» и «ремонт.» считаются одним тегом; показывается вариант, сохранённый первым. Подсветка снимается по onAnimationEnd, иначе вспышка сыграет один раз и больше не повторится. Сообщение лежит в области aria-live=\"assertive\": отказ надо услышать сразу.",
+      "meta": {
+        "tags": [
+          "tags",
+          "duplicate",
+          "validation",
+          "form"
+        ],
+        "ai": {
+          "export": "Tags004",
+          "usage": "<Tags004 label=\"Теги объявления\" defaultValue={[\"ремонт\", \"своими руками\"]} />",
+          "summary": "Поле тегов, где повтор подсвечивает существующий чип и объясняет, почему тег не добавился. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-tags-004-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: поле показывают поверх любого фона",
+            "видимую реакцию на повтор: молчаливое отбрасывание читается как поломка поля",
+            "нормализацию перед сравнением: «Ремонт» и «ремонт.» — один тег, а не три",
+            "сохранение первого написания: подменять его новым вводом значит переписывать чужие данные",
+            "снятие флага по onAnimationEnd: без этого вспышка сыграет ровно один раз",
+            "aria-live=\"assertive\" на сообщении: отказ важно услышать сразу, а не в очереди"
+          ],
+          "adapt": [
+            "label — подпись поля",
+            "defaultValue — стартовый набор тегов",
+            "правило нормализации в функции normalize",
+            "длительность и цвет вспышки",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Нормализация не трогает середину строки: «своими руками» и «своимируками» останутся разными тегами.",
+            "Вспышка отключается при prefers-reduced-motion — текстовое объяснение поэтому обязательно.",
+            "Ключ списка — сам тег: при переименовании тегов используйте стабильный идентификатор.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Теги объявления",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Duplicate checking that does not stay silent: a repeat flashes the existing tag and explains the refusal in words.",
+            "ai": {
+              "summary": "A tag field where a duplicate highlights the existing chip and explains why nothing was added. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-tags-004-* palette — do not swap it for your theme tokens",
+                "its own light surface: the field gets shown over any background",
+                "the visible reaction to a repeat: silently dropping it reads as a broken field",
+                "normalising before comparing: \"Repair\" and \"repair.\" are one tag, not three",
+                "keeping the first spelling: overwriting it with the new input rewrites someone's data",
+                "clearing the flag on onAnimationEnd: without it the flash plays exactly once",
+                "aria-live=\"assertive\" on the message: a refusal has to be heard immediately, not queued"
+              ],
+              "adapt": [
+                "label — the field caption",
+                "defaultValue — the starting tag set",
+                "the normalisation rule inside the normalize helper",
+                "the duration and colour of the flash",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Normalisation leaves the middle of the string alone: \"do it yourself\" and \"doityourself\" stay different tags.",
+                "The flash is disabled under prefers-reduced-motion, which is why the text explanation is mandatory.",
+                "The list key is the tag itself: use a stable id if tags can be renamed.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tags004 label=\"Listing tags\" defaultValue={[\"repair\", \"diy\"]} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Listing tags"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tags-005",
+      "type": "registry:component",
+      "title": "Paste Splitter",
+      "description": "Теги по Enter, запятой и точке с запятой, а вставка списка из буфера разбирается тем же правилом и превращается в готовые чипы.",
+      "categories": [
+        "tags-input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tags-005/tags-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tags-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-tags-005-*. Клиентский: список, черновик и число добавленных из последней вставки в состоянии. Разбор один на все случаи — функция split по запятой, точке с запятой, переводу строки и табу, — поэтому набор с клавиатуры и вставка из письма ведут себя одинаково. Обработчик onPaste перехватывает только текст с разделителями: обычная вставка одного слова должна работать как обычно. Backspace на пустом поле удаляет последний чип.",
+      "meta": {
+        "tags": [
+          "tags",
+          "paste",
+          "keyboard",
+          "email"
+        ],
+        "ai": {
+          "export": "Tags005",
+          "usage": "<Tags005 label=\"Кому отправить\" defaultValue={[\"anna@example.com\"]} />",
+          "summary": "Поле тегов с тремя разделителями и разбором вставленного списка: адреса из письма становятся чипами за одну вставку. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-tags-005-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: поле показывают поверх любого фона",
+            "три разделителя сразу: привычки к Enter, запятой и точке с запятой встречаются одинаково часто",
+            "разбор вставки тем же правилом: иначе список из письма превращается в один гигантский тег",
+            "перехват вставки только при наличии разделителей: обычная вставка слова обязана работать как обычно",
+            "удаление последнего чипа по Backspace на пустом поле: иначе приходится целиться в крестик",
+            "обрезку длинного текста в чипе: адрес на сорок символов иначе растягивает поле в строку"
+          ],
+          "adapt": [
+            "label — подпись поля",
+            "defaultValue — стартовый список",
+            "набор разделителей в функции split",
+            "ширину, на которой обрезается текст чипа",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Проверки адреса тут нет: добавьте свою, если поле принимает почту.",
+            "Пробел разделителем не считается намеренно: теги из двух слов иначе развалились бы.",
+            "Повторы отсекаются молча — для видимой реакции на дубликат нужен отдельный вариант компонента.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Кому отправить",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Tags on Enter, comma and semicolon, with a pasted list parsed by the same rule and turned into ready-made chips.",
+            "ai": {
+              "summary": "A tag field with three delimiters and paste parsing: addresses from an email become chips in one paste. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-tags-005-* palette — do not swap it for your theme tokens",
+                "its own light surface: the field gets shown over any background",
+                "all three delimiters: the Enter, comma and semicolon habits are equally common",
+                "parsing the paste with the same rule: otherwise a list from an email becomes one giant tag",
+                "intercepting a paste only when it contains delimiters: pasting a single word must behave normally",
+                "deleting the last chip on Backspace in an empty field: otherwise the cross has to be aimed at",
+                "truncating long chip text: a forty-character address would otherwise stretch the field into a line"
+              ],
+              "adapt": [
+                "label — the field caption",
+                "defaultValue — the starting list",
+                "the delimiter set inside the split helper",
+                "the width at which chip text is truncated",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "There is no address validation here: add your own if the field takes email.",
+                "A space is deliberately not a delimiter: two-word tags would fall apart.",
+                "Duplicates are dropped silently — a visible duplicate reaction needs a different variant.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tags005 label=\"Send to\" defaultValue={[\"anna@example.com\"]} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Send to"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tags-006",
+      "type": "registry:component",
+      "title": "Colored Categories",
+      "description": "Теги с цветными категориями: плоский список из пятнадцати одинаковых чипов не читается, а цвет группирует быстрее текста.",
+      "categories": [
+        "tags-input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tags-006/tags-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tags-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-tags-006-*. Клиентский: список тегов с категориями, черновик и выбранная категория в состоянии. Оттенок не выбирается вручную, а считается из названия категории хеш-функцией FNV и подставляется в --vibeui-tags-006-hue, поэтому новая категория сразу получает стабильный цвет и палитру не нужно вести отдельным списком. Все три цвета чипа — фон, текст и точка — строятся из одного оттенка в oklch, поэтому контраст не ломается на любом hue.",
+      "meta": {
+        "tags": [
+          "tags",
+          "categories",
+          "color",
+          "form"
+        ],
+        "ai": {
+          "export": "Tags006",
+          "usage": "<Tags006 label=\"Метки задачи\" groups={[\"команда\", \"срочность\"]} defaultValue={[{ text: \"дизайн\", group: \"команда\" }]} />",
+          "summary": "Теги с категориями, где цвет чипа вычисляется из названия категории, а категория выбирается до ввода. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-tags-006-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: поле показывают поверх любого фона",
+            "вычисление оттенка из названия: список цветов пришлось бы вести руками и синхронизировать с категориями",
+            "построение всех трёх цветов из одного оттенка в oklch: так контраст держится на любом hue",
+            "точку рядом с текстом: цвет фона не должен оставаться единственным носителем смысла",
+            "категорию в aria-label кнопки удаления: цвет скринридеру недоступен",
+            "выбор категории до ввода: назначать её после набора значит делать лишний шаг"
+          ],
+          "adapt": [
+            "label — подпись поля",
+            "groups — список категорий",
+            "defaultValue — стартовые теги вместе с их категориями",
+            "константы светлоты и насыщенности в цветах чипа",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Хеш даёт 12 оттенков: у тринадцатой категории цвет повторится, и это осознанный компромисс.",
+            "Переименование категории меняет её цвет — для стабильности храните категорию идентификатором.",
+            "Цвет не заменяет подпись: категория обязана быть доступна текстом.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Метки задачи",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Tags with coloured categories: a flat row of fifteen identical chips does not read, while colour groups faster than text.",
+            "ai": {
+              "summary": "Tags with categories where the chip colour is derived from the category name and the category is chosen before typing. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-tags-006-* palette — do not swap it for your theme tokens",
+                "its own light surface: the field gets shown over any background",
+                "deriving the hue from the name: a colour list would have to be maintained and kept in sync with the categories",
+                "building all three colours from one hue in oklch: contrast then holds at any hue",
+                "the dot next to the text: background colour must not be the only carrier of meaning",
+                "the category inside the remove button's aria-label: colour is unavailable to a screen reader",
+                "picking the category before typing: assigning it afterwards adds an extra step"
+              ],
+              "adapt": [
+                "label — the field caption",
+                "groups — the category list",
+                "defaultValue — the starting tags together with their categories",
+                "the lightness and chroma constants of the chip colours",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The hash gives 12 hues: the thirteenth category repeats a colour, which is a deliberate trade-off.",
+                "Renaming a category changes its colour — store the category as an id for stability.",
+                "Colour does not replace the caption: the category has to be available as text.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tags006 label=\"Task labels\" groups={[\"team\", \"urgency\"]} defaultValue={[{ text: \"design\", group: \"team\" }]} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Task labels"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tags-007",
+      "type": "registry:component",
+      "title": "Readonly Overflow",
+      "description": "Список тегов только для чтения со счётчиком скрытых: молча обрезанный список читается как полный, и «+3» это чинит.",
+      "categories": [
+        "tags-input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tags-007/tags-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tags-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-tags-007-*. Серверный: раскрывать список некуда, это витрина, а не форма. Видимые теги показаны обычным ul, а лишние свёрнуты в счётчик «+N»; их названия перечислены в title и aria-label, поэтому скрытое можно узнать наведением и услышать скринридером. Разметка списком, а не набором span: это перечисление, и скринридер должен назвать число элементов.",
+      "meta": {
+        "tags": [
+          "tags",
+          "readonly",
+          "overflow",
+          "list"
+        ],
+        "ai": {
+          "export": "Tags007",
+          "usage": "<Tags007 label=\"Метки объявления\" tags={[\"макбук\", \"2024\", \"гарантия\", \"торг\"]} visible={4} />",
+          "summary": "Витрина тегов только для чтения: первые N видны, остальные свёрнуты в счётчик со списком в подсказке. Серверный, ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-tags-007-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: список показывают поверх любого фона",
+            "счётчик скрытых: молча обрезанный список читается как полный, и данные выглядят иначе, чем есть",
+            "перечисление скрытых в title и aria-label: свёрнутое должно быть доступно и мышью, и скринридером",
+            "разметку списком ul и li: это перечисление, и число элементов должно быть названо",
+            "отсутствие интерактивных элементов: витрина не притворяется полем ввода",
+            "серверную природу компонента — состояние тут не нужно"
+          ],
+          "adapt": [
+            "label — заголовок над списком",
+            "tags — сам список меток",
+            "visible — сколько тегов показывать до сворачивания",
+            "оформление чипов и счётчика",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Атрибут title показывается только по наведению мышью: на телефоне скрытые теги остаются недоступными.",
+            "Если скрытых много, лучше вести на отдельную страницу, а не растить подсказку.",
+            "Число visible стоит подбирать под ширину карточки: при переносе строки смысл сворачивания теряется.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Метки объявления",
+            "maxLength": 24
+          },
+          {
+            "prop": "visible",
+            "label": "Видимых",
+            "type": "number",
+            "default": 4,
+            "min": 1,
+            "max": 10
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A read-only tag list with a hidden counter: a silently truncated list reads as complete, and \"+3\" fixes that.",
+            "ai": {
+              "summary": "A read-only tag display: the first N are shown, the rest collapse into a counter that lists them in its tooltip. Server component, zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-tags-007-* palette — do not swap it for your theme tokens",
+                "its own light surface: the list gets shown over any background",
+                "the hidden counter: a silently truncated list reads as complete and misrepresents the data",
+                "listing the hidden tags in title and aria-label: what is collapsed must stay reachable by mouse and by screen reader",
+                "the ul and li markup: this is an enumeration and the item count has to be announced",
+                "the absence of interactive elements: a display must not pretend to be an input",
+                "the server nature of the component — no state is needed here"
+              ],
+              "adapt": [
+                "label — the heading above the list",
+                "tags — the label list itself",
+                "visible — how many tags to show before collapsing",
+                "the styling of the chips and the counter",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The title attribute only appears on mouse hover: on a phone the hidden tags stay unreachable.",
+                "With many hidden tags, link to a separate page instead of growing the tooltip.",
+                "Tune visible to the card width: once the row wraps, collapsing loses its point.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tags007 label=\"Listing labels\" tags={[\"macbook\", \"2024\", \"warranty\", \"negotiable\"]} visible={4} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Heading",
+                "default": "Listing labels"
+              },
+              "visible": {
+                "label": "Visible"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

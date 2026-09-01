@@ -1,0 +1,3100 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "datagrid-001",
+      "type": "registry:component",
+      "title": "Priority Sort",
+      "description": "Сетка с сортировкой сразу по нескольким колонкам: порядок кликов задаёт приоритет ключей, и он показан цифрой в заголовке и фишками в панели.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-001/datagrid-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-datagrid-001-*. Клиентский: useState держит упорядоченный список ключей сортировки, третий клик по колонке убирает её ключ. Заголовок — кнопка на всю ячейку, направление объявлено через aria-sort на th и продублировано текстовой стрелкой в разметке: её читают вслух вместе с названием колонки. Приоритет показан цифрой в кружке и повторён фишками в панели — без него порядок строк выглядит случайным; каждая фишка снимает свой ключ и несёт явный aria-label. Прокрутка вынесена в контейнер с role=region, aria-label и tabindex=0, поэтому таблицу листают и с клавиатуры. Плотность строк переключается атрибутом data-density, который меняет одну переменную отступа.",
+      "meta": {
+        "tags": ["datagrid", "sorting", "aria-sort", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid001",
+          "usage": "<Datagrid001\n  caption=\"Клик по заголовку добавляет колонку в сортировку\"\n  density=\"compact\"\n/>",
+          "summary": "Сетка данных с сортировкой по нескольким колонкам: приоритет ключей виден цифрой и фишками, состояние объявлено через aria-sort. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-001-* и не подменять её токенами вашей темы",
+            "aria-sort на th: без него скринридер не сообщит, по чему отсортирована таблица",
+            "заголовок-кнопку на всю ячейку — сортировка обязана работать с клавиатуры, а не только мышью",
+            "цифру приоритета: при двух и более ключах без неё порядок строк выглядит случайным",
+            "контейнер прокрутки с tabindex=0 и aria-label — иначе широкую таблицу не пролистать без мыши",
+            "собственную светлую подложку сетки: на тёмной карточке каталога тёмный текст иначе пропадает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "плотность строк через density: comfortable или compact",
+            "набор позиций и числа через rows",
+            "акцентный цвет через accent и ширину сетки через max-width"
+          ],
+          "notes": [
+            "Текст сравнивается строкой, числа — числом: даты храните числом или ISO-строкой, иначе «9 марта» встанет после «12 марта».",
+            "Третий клик по колонке убирает её из сортировки — это способ снять ключ, не заходя в панель.",
+            "Число ключей не ограничено: на пяти колонках цифры приоритета перестают помогать, ограничьте его у себя.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Клик по заголовку добавляет колонку в сортировку",
+            "maxLength": 120
+          },
+          {
+            "prop": "density",
+            "label": "Плотность",
+            "type": "select",
+            "default": "comfortable",
+            "options": ["comfortable", "compact"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid that sorts by several columns at once: the click order sets key priority, shown as a number in the header and as chips in the toolbar.",
+            "ai": {
+              "summary": "A data grid with multi-column sorting: key priority is visible as a number and as chips, and the state is announced through aria-sort. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-001-* palette — do not swap it for your theme tokens",
+                "aria-sort on th: without it a screen reader never says what the table is sorted by",
+                "the full-cell header button — sorting must work from the keyboard, not only by mouse",
+                "the priority number: with two or more keys the row order looks random without it",
+                "the scroll container with tabindex=0 and aria-label — otherwise a wide table cannot be panned without a mouse",
+                "the grid's own light surface: on the dark catalog card dark text disappears without it"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "row density through density: comfortable or compact",
+                "the items and figures through rows",
+                "the accent color through accent and the grid width through max-width"
+              ],
+              "notes": [
+                "Text is compared as a string and numbers as numbers: store dates as numbers or ISO strings, otherwise «9 March» sorts after «12 March».",
+                "A third click on a column drops it from the sort — that is how a key is removed without touching the toolbar.",
+                "The number of keys is unbounded: past five columns the priority numbers stop helping, so cap it on your side.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid001\n  caption=\"Click a header to add the column to the sort\"\n  density=\"compact\"\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Click a header to add the column to the sort"
+              },
+              "density": {
+                "label": "Density",
+                "default": "comfortable"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-002",
+      "type": "registry:component",
+      "title": "Bulk Action Bar",
+      "description": "Сетка с выбором строк: шапка превращается в панель массовых действий со счётчиком и суммой по выбранному, не сдвигая таблицу.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-002/datagrid-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-002-*. Клиентский: useState хранит список выбранных id. Флажок шапки получает indeterminate через ref-колбэк — из разметки это состояние задать нельзя. Панель действий занимает то же место, что и обычная шапка, и держит min-height, поэтому при первой же отметке строки не прыгают. Счётчик выбранного объявлен aria-live=polite и сразу показывает сумму — ради неё выбор строк обычно и делают. Выбранная строка помечена и заливкой, и полосой слева через inset box-shadow: одной заливки мало рядом с наведённой мышью строкой. У каждого флажка строки свой aria-label с именем клиента.",
+      "meta": {
+        "tags": ["datagrid", "selection", "bulk-actions", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid002",
+          "usage": "<Datagrid002\n  caption=\"Отметьте строки, чтобы шапка стала панелью действий\"\n  actionLabel=\"Выставить счёт\"\n/>",
+          "summary": "Сетка с выбором строк и панелью массовых действий: счётчик, сумма по выбору и промежуточное состояние флажка шапки. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-002-* и не подменять её токенами вашей темы",
+            "indeterminate у флажка шапки: частичный выбор нельзя выразить разметкой, только из кода",
+            "min-height панели: без него первая отметка сдвигает таблицу на высоту панели",
+            "aria-live у счётчика — иначе смена выбора для скринридера проходит бесследно",
+            "личный aria-label у каждого флажка строки: «флажок» без имени клиента бесполезен",
+            "полосу у выбранной строки, а не только заливку: заливка совпадает с наведением мыши"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "подпись главной кнопки через actionLabel",
+            "договоры и суммы через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "В панели три действия: четвёртое лучше убрать в меню, иначе на телефоне она переносится в две строки.",
+            "Компонент не подтверждает разрушительные действия — диалог подтверждения вешайте снаружи.",
+            "Итог в tfoot считается по выбранным строкам: при пустом выборе он равен нулю, это ожидаемо.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Отметьте строки, чтобы шапка превратилась в панель действий",
+            "maxLength": 120
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Выставить счёт",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid with row selection: the toolbar turns into a bulk-action bar with a counter and the total of what is selected, without shifting the table.",
+            "ai": {
+              "summary": "A grid with row selection and a bulk-action bar: a counter, the selected total and a mixed-state header checkbox. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-002-* palette — do not swap it for your theme tokens",
+                "the header checkbox's indeterminate state: partial selection cannot be expressed in markup, only from code",
+                "the bar's min-height: without it the first tick shifts the table by the bar's height",
+                "aria-live on the counter — otherwise a change of selection passes silently for a screen reader",
+                "a personal aria-label on every row checkbox: a bare «checkbox» without the client name is useless",
+                "the stripe on a selected row, not only the fill: the fill matches the hover state"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the primary button caption through actionLabel",
+                "the contracts and amounts through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "The bar carries three actions: a fourth belongs in a menu, otherwise it wraps to two lines on phones.",
+                "The component does not confirm destructive actions — put the confirmation dialog around it.",
+                "The tfoot total counts the selected rows: with an empty selection it is zero, and that is expected.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid002\n  caption=\"Tick rows to turn the toolbar into an action bar\"\n  actionLabel=\"Issue invoice\"\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Tick rows to turn the toolbar into an action bar"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Issue invoice"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-003",
+      "type": "registry:component",
+      "title": "Frozen Edges",
+      "description": "Широкая сетка с закреплёнными крайними колонками: подпись строки слева и ответственный справа стоят на месте, а недели уезжают между ними.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-003/datagrid-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-003-*. Серверный: состояния нет, всё держится на CSS. Крайние колонки закреплены position:sticky с left:0 и right:0 и несут собственный фон — без него уезжающие ячейки видно насквозь. Таблица собрана с border-collapse:separate: со схлопнутыми границами липкая ячейка теряет свою линию. Прокрутка живёт в контейнере с role=region, aria-label и tabindex=0, поэтому работает с клавиатуры. Тень у закреплённых краёв появляется по прокрутке через animation-timeline:scroll под @supports — там, где его нет, тени просто нет, и вёрстка не страдает. Максимум недели помечен пилюлей на color-mix от акцента.",
+      "meta": {
+        "tags": ["datagrid", "sticky-column", "scroll", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid003",
+          "usage": "<Datagrid003\n  caption=\"Заказы по неделям, штук\"\n  scrollHint=\"Прокрутите вбок: крайние колонки закреплены\"\n/>",
+          "summary": "Широкая сетка с двумя закреплёнными колонками и доступной с клавиатуры горизонтальной прокруткой. Серверный компонент, ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-003-* и не подменять её токенами вашей темы",
+            "собственный фон у липких ячеек: без него уезжающие строки видно насквозь",
+            "border-collapse:separate — со схлопнутыми границами липкая колонка теряет свою линию",
+            "контейнер прокрутки с role=region, aria-label и tabindex=0: иначе листать можно только мышью",
+            "z-index липкой шапки выше, чем у липких колонок, иначе они перекрывают заголовок",
+            "светлую подложку сетки: на тёмной карточке каталога тёмный текст иначе пропадает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "подсказку о прокрутке через scrollHint",
+            "названия колонок через weeks и данные через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Две липкие колонки съедают ширину: на экране 360 px между ними остаётся мало места, проверьте.",
+            "Тень у краёв появляется по прокрутке только там, где поддержан scroll-timeline; в остальных браузерах её нет.",
+            "min-width таблицы задан в rem: при пяти колонках уменьшите его, иначе таблица прокручивается впустую.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Заказы по неделям, штук",
+            "maxLength": 80
+          },
+          {
+            "prop": "scrollHint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Прокрутите вбок: крайние колонки закреплены",
+            "maxLength": 80
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A wide grid with both edge columns frozen: the row label on the left and the owner on the right stay put while the weeks scroll between them.",
+            "ai": {
+              "summary": "A wide grid with two frozen columns and horizontal scrolling that works from the keyboard. Server component, zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-003-* palette — do not swap it for your theme tokens",
+                "the sticky cells' own background: without it the scrolling rows show straight through",
+                "border-collapse:separate — with collapsed borders a sticky column loses its own line",
+                "the scroll container with role=region, aria-label and tabindex=0: otherwise only a mouse can pan it",
+                "the sticky header's z-index above the sticky columns, or they cover the heading",
+                "the grid's own light surface: on the dark catalog card dark text disappears without it"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the scrolling hint through scrollHint",
+                "the column names through weeks and the data through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "Two sticky columns eat width: on a 360 px screen little room is left between them, so check it.",
+                "The edge shadow appears on scroll only where scroll-timeline is supported; elsewhere there simply is none.",
+                "The table min-width is set in rem: with five columns lower it, otherwise the table scrolls for nothing.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid003\n  caption=\"Orders by week, units\"\n  scrollHint=\"Scroll sideways: the edge columns are frozen\"\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Orders by week, units"
+              },
+              "scrollHint": {
+                "label": "Hint",
+                "default": "Scroll sideways: the edge columns are frozen"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-004",
+      "type": "registry:component",
+      "title": "Pinned Totals",
+      "description": "Длинная сетка с прокруткой внутри рамки: шапка липнет сверху, строка итога — снизу, поэтому сумма видна и на середине списка.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-004/datagrid-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-004-*. Серверный: состояния нет. Высота окна прокрутки приходит числом в rem и попадает в переменную --vibeui-datagrid-004-height, поэтому окно растёт вместе со шрифтом пользователя. Шапка и tfoot закреплены position:sticky с собственным фоном; таблица собрана с border-collapse:separate, иначе липкие ячейки теряют границы. Контейнер прокрутки помечен role=region, aria-label и tabindex=0 — вертикальный список тоже листают с клавиатуры. Суммы выведены tabular-nums, расход помечен знаком минуса и цветом одновременно.",
+      "meta": {
+        "tags": ["datagrid", "sticky-header", "totals", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid004",
+          "usage": "<Datagrid004 caption=\"Движение по счетам за март\" height={20} />",
+          "summary": "Сетка с закреплённой шапкой и закреплённой строкой итога при вертикальной прокрутке. Серверный компонент, ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-004-* и не подменять её токенами вашей темы",
+            "фон у липкой шапки и липкого итога: прозрачные ячейки просвечивают строками",
+            "высоту окна в rem, а не в px — окно должно расти вместе со шрифтом пользователя",
+            "tabindex=0 и aria-label на контейнере прокрутки: вертикальный список тоже листают с клавиатуры",
+            "знак минуса у расхода, а не только цвет: один цвет не читается при дальтонизме",
+            "tabular-nums в колонке сумм, иначе разряды пляшут при прокрутке"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "высоту окна прокрутки через height, в rem",
+            "операции и суммы через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Липкий tfoot работает только внутри контейнера с прокруткой: без max-height он уедет вниз страницы.",
+            "На трёх строках окно выглядит пустым — уменьшите height или откажитесь от прокрутки.",
+            "Итог считается по всем строкам, а не по видимым: добавите фильтр — пересчитайте его сами.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Движение по счетам за март",
+            "maxLength": 80
+          },
+          {
+            "prop": "height",
+            "label": "Высота окна, rem",
+            "type": "number",
+            "default": 16,
+            "min": 8,
+            "max": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A long grid that scrolls inside its own frame: the header sticks to the top and the totals row to the bottom, so the sum stays visible mid-list.",
+            "ai": {
+              "summary": "A grid with a pinned header and a pinned totals row under vertical scrolling. Server component, zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-004-* palette — do not swap it for your theme tokens",
+                "the background on the sticky header and sticky totals: transparent cells let rows show through",
+                "the viewport height in rem rather than px — it must grow with the reader's font size",
+                "tabindex=0 and aria-label on the scroll container: a vertical list is paged from the keyboard too",
+                "the minus sign on outgoings, not just the color: color alone fails for color blindness",
+                "tabular-nums in the amount column, otherwise the digits jitter while scrolling"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the scroll viewport height through height, in rem",
+                "the operations and amounts through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "A sticky tfoot only works inside a scrolling container: without max-height it drifts to the page bottom.",
+                "With three rows the viewport looks empty — lower height or drop the scrolling entirely.",
+                "The total counts every row, not the visible ones: add a filter and you must recompute it yourself.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid004 caption=\"Cash movements, March\" height={20} />"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Cash movements, March"
+              },
+              "height": {
+                "label": "Viewport height, rem",
+                "default": 16
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-005",
+      "type": "registry:component",
+      "title": "Inline Cell Edit",
+      "description": "Сетка с правкой значения прямо в ячейке: Enter подтверждает, Escape возвращает прежнее, а изменённые ячейки помечены до нажатия «Сохранить».",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-005/datagrid-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-005-*. Клиентский: базовые строки лежат в одном состоянии, правки — накладкой в другом, поэтому «Отменить» возвращает всё одним действием, а «Сохранить» переносит накладку в базу. Ячейка в покое — кнопка на всю ширину: только так правка открывается с клавиатуры, div с onClick этого не даёт. Поле ввода получает фокус при появлении и несёт aria-label с названием колонки и строки. Enter подтверждает, Escape отменяет, потеря фокуса сохраняет. Изменённые ячейки помечены заливкой и точкой, а счётчик несохранённого объявлен aria-live.",
+      "meta": {
+        "tags": ["datagrid", "inline-edit", "form", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid005",
+          "usage": "<Datagrid005\n  caption=\"Нажмите на ячейку или дойдите до неё табом\"\n  hint=\"Цена и остаток редактируются\"\n/>",
+          "summary": "Сетка с правкой ячейки на месте: клавиатура, отмена по Escape и видимые пометки несохранённых изменений. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-005-* и не подменять её токенами вашей темы",
+            "ячейку-кнопку в покое: правка обязана открываться с клавиатуры, div с onClick этого не даёт",
+            "пару Enter и Escape — без отмены правка на месте превращается в ловушку",
+            "пометку изменённых ячеек до сохранения: иначе непонятно, что именно уедет на сервер",
+            "aria-label у поля ввода с названием колонки и строки — одинокое поле в таблице ничего не сообщает",
+            "светлую подложку сетки: на тёмной карточке каталога тёмный текст иначе пропадает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "поясняющую строку в панели через hint",
+            "состав прайса через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Компонент ничего не отправляет: «Сохранить» переносит правки в состояние, запрос вешайте сами.",
+            "Пустое значение не принимается — это защита от случайного стирания, а не валидация полей.",
+            "Потеря фокуса сохраняет значение: если нужна отмена по клику мимо, поменяйте обработчик onBlur.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Нажмите на ячейку или дойдите до неё табом и нажмите Enter",
+            "maxLength": 120
+          },
+          {
+            "prop": "hint",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Цена и остаток редактируются",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid that edits a value in place: Enter commits, Escape restores the previous value, and changed cells stay marked until Save is pressed.",
+            "ai": {
+              "summary": "A grid with in-place cell editing: keyboard access, Escape to cancel and visible marks on unsaved changes. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-005-* palette — do not swap it for your theme tokens",
+                "the resting cell as a button: editing must open from the keyboard, which a div with onClick cannot do",
+                "the Enter and Escape pair — without a cancel, in-place editing becomes a trap",
+                "the marks on changed cells before saving: otherwise it is unclear what will reach the server",
+                "the input's aria-label naming the column and the row — a lone field in a table says nothing",
+                "the grid's own light surface: on the dark catalog card dark text disappears without it"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the explanatory line in the bar through hint",
+                "the price list content through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "The component sends nothing: Save moves the edits into state, and the request is yours to add.",
+                "An empty value is rejected — that guards against accidental erasure, it is not field validation.",
+                "Losing focus commits the value: if you want a click-away cancel, change the onBlur handler.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid005\n  caption=\"Click a cell or tab to it and press Enter\"\n  hint=\"Price and stock are editable\"\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Click a cell or tab to it and press Enter"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "Price and stock are editable"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-006",
+      "type": "registry:component",
+      "title": "Header Filters",
+      "description": "Сетка, у которой фильтр стоит в шапке своей колонки: текстовые поля и список статусов вместо одной общей строки поиска.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-006/datagrid-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-006-*. Клиентский: три состояния фильтров, отбор идёт по подстроке без учёта регистра и по точному совпадению статуса. Второй ряд thead отдан полям: поле стоит ровно под своей колонкой, поэтому не нужно гадать, что ищет общий поиск. У каждого поля свой aria-label — placeholder исчезает при вводе и подписью не является. Счётчик найденного объявлен aria-live=polite. Пустой результат показан строкой внутри tbody: шапка и фильтры остаются на месте намеренно. Статус помечен точкой через ::before, а не только цветом текста.",
+      "meta": {
+        "tags": ["datagrid", "filters", "search", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid006",
+          "usage": "<Datagrid006\n  caption=\"Фильтры стоят в шапке колонок\"\n  placeholder=\"Начните вводить\"\n/>",
+          "summary": "Сетка с фильтром в шапке каждой колонки и живым счётчиком найденного. Ноль зависимостей, один файл, клиентское состояние на useState.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-006-* и не подменять её токенами вашей темы",
+            "ряд фильтров внутри thead: поле обязано стоять под своей колонкой, иначе связь теряется",
+            "aria-label у каждого поля — placeholder исчезает при вводе и подписью не является",
+            "aria-live у счётчика найденного: правка фильтра иначе не объявляется вслух",
+            "точку у статуса рядом с текстом, а не только цвет: цвет один не читается при дальтонизме",
+            "светлую подложку сетки: на тёмной карточке каталога тёмный текст иначе пропадает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "текст-подсказку полей через placeholder",
+            "набор заказов и статусов через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Отбор идёт по подстроке на клиенте: для больших списков выносите его на сервер.",
+            "Ряд фильтров прибавляет шапке высоту — при липкой шапке закрепляйте оба ряда, иначе поля уедут.",
+            "Пустой результат показан строкой внутри tbody, шапка и поля остаются на месте намеренно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Фильтры стоят в шапке: каждое поле относится к своей колонке",
+            "maxLength": 120
+          },
+          {
+            "prop": "placeholder",
+            "label": "Подсказка полей",
+            "type": "text",
+            "default": "Начните вводить",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid whose filter lives in its own column header: text fields and a status list instead of one shared search box.",
+            "ai": {
+              "summary": "A grid with a filter in every column header and a live count of matches. Zero dependencies, one file, client state on useState.",
+              "preserve": [
+                "the local --vibeui-datagrid-006-* palette — do not swap it for your theme tokens",
+                "the filter row inside thead: a field must sit under its own column or the link is lost",
+                "an aria-label on every field — a placeholder vanishes on typing and is not a label",
+                "aria-live on the match counter: otherwise a filter change is never announced",
+                "the dot beside the status text, not only the color: color alone fails for color blindness",
+                "the grid's own light surface: on the dark catalog card dark text disappears without it"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the field hint text through placeholder",
+                "the orders and statuses through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "Matching is a client-side substring test: move it to the server for large lists.",
+                "The filter row makes the header taller — with a sticky header pin both rows or the fields scroll away.",
+                "The empty result is a row inside tbody; the header and the fields deliberately stay put.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid006\n  caption=\"Filters live in the column headers\"\n  placeholder=\"Start typing\"\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Filters live in the header: each field owns its column"
+              },
+              "placeholder": {
+                "label": "Field hint",
+                "default": "Start typing"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-007",
+      "type": "registry:component",
+      "title": "Grouped Rows",
+      "description": "Сетка с группировкой строк: у каждой группы своя строка-заголовок с числом задач и суммой часов, а сама группа сворачивается одной кнопкой.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-007/datagrid-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-007-*. Клиентский: useState хранит список свёрнутых групп. Каждая группа — отдельный tbody, поэтому группировка выражена разметкой, а не отступами. Строка-заголовок группы использует th scope=colgroup, внутри неё кнопка с aria-expanded; стрелка поворачивается transform, поэтому состояние видно и без чтения текста. Итоги по группе и по спринту считаются из тех же строк — свёрнутая группа без суммы теряет смысл. Прокрутка вынесена в контейнер с role=region, aria-label и tabindex=0.",
+      "meta": {
+        "tags": ["datagrid", "grouping", "collapse", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid007",
+          "usage": "<Datagrid007\n  caption=\"Часы по задачам, сгруппированные по направлению\"\n  startCollapsed={false}\n/>",
+          "summary": "Сетка с группировкой строк и свёрткой групп: итог считается по группе, состояние объявлено через aria-expanded. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-007-* и не подменять её токенами вашей темы",
+            "отдельный tbody на группу: так группировка выражена разметкой, а не отступами",
+            "aria-expanded на кнопке группы — свёрнутое состояние иначе не объявляется вслух",
+            "итог в строке группы: свёрнутая группа без суммы перестаёт что-либо сообщать",
+            "scope=\"colgroup\" у заголовка группы, чтобы связь ячеек с группой была явной",
+            "светлую подложку сетки: на тёмной карточке каталога тёмный текст иначе пропадает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "стартовое состояние групп через startCollapsed",
+            "состав групп и задач через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Группы идут в порядке первого появления в rows — сортируйте данные заранее, компонент их не переставляет.",
+            "Уровень вложенности один: для дерева нужна другая структура данных и отступ по уровню.",
+            "«Свернуть все» и «Развернуть все» работают на все группы сразу и не помнят прежнее состояние.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Часы по задачам, сгруппированные по направлению",
+            "maxLength": 100
+          },
+          {
+            "prop": "startCollapsed",
+            "label": "Начать свёрнутыми",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid that groups rows: each group gets a header row with its task count and hour total, and collapses with a single button.",
+            "ai": {
+              "summary": "A grid with row grouping and collapsible groups: totals are computed per group and the state is announced through aria-expanded. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-007-* palette — do not swap it for your theme tokens",
+                "one tbody per group: that expresses grouping in markup rather than with indentation",
+                "aria-expanded on the group button — otherwise the collapsed state is never announced",
+                "the total in the group row: a collapsed group without a sum stops saying anything",
+                "scope=\"colgroup\" on the group heading so the cells belong to the group explicitly",
+                "the grid's own light surface: on the dark catalog card dark text disappears without it"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the initial group state through startCollapsed",
+                "the groups and tasks through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "Groups follow the order of first appearance in rows — sort the data first, the component will not reorder it.",
+                "There is a single nesting level: a tree needs a different data shape and per-level indentation.",
+                "«Collapse all» and «Expand all» hit every group at once and do not remember the previous state.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid007\n  caption=\"Hours by task, grouped by discipline\"\n  startCollapsed={false}\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Hours by task, grouped by discipline"
+              },
+              "startCollapsed": {
+                "label": "Start collapsed",
+                "default": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-008",
+      "type": "registry:component",
+      "title": "Detail Row",
+      "description": "Сетка, у которой строка раскрывает подробности прямо под собой: панель на всю ширину, а связь кнопки и панели объявлена через aria-controls.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-008/datagrid-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-008-*. Клиентский: useState держит список раскрытых строк, useId даёт стабильные id панелей для aria-controls. Кнопка раскрытия несёт aria-expanded и собственный aria-label с именем партии. Детали лежат в отдельной строке с colSpan на всю ширину — вложенная таблица сломала бы навигацию по ячейкам. Пары «термин — значение» собраны в dl, обёртка пары получает display:contents, иначе колонки разъезжаются. Появление панели плавное через @starting-style: где он не поддержан, панель просто появляется сразу. Режим single держит открытой одну строку.",
+      "meta": {
+        "tags": ["datagrid", "expandable", "details", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid008",
+          "usage": "<Datagrid008\n  caption=\"Нажмите на стрелку, чтобы раскрыть подробности\"\n  single={false}\n/>",
+          "summary": "Сетка с раскрывающейся строкой-деталями: панель на всю ширину под своей строкой, связь объявлена через aria-controls. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-008-* и не подменять её токенами вашей темы",
+            "пару aria-expanded и aria-controls: без id панели связь кнопки и деталей теряется",
+            "строку-деталь на всю ширину через colSpan — вложенная таблица ломает навигацию по ячейкам",
+            "отдельный aria-label у кнопки раскрытия с именем строки, иначе кнопок-стрелок много и все одинаковые",
+            "поворот стрелки как второй признак состояния, кроме самого появления панели",
+            "светлую подложку сетки: на тёмной карточке каталога тёмный текст иначе пропадает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "режим одной открытой строки через single",
+            "отгрузки и пары «термин — значение» через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "При single={false} десяток раскрытых строк превращает таблицу в список — включайте это осознанно.",
+            "Плавное появление держится на @starting-style: где он не поддержан, панель появляется сразу.",
+            "Пары деталей разъедутся, если убрать display:contents у обёртки внутри dl.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Нажмите на стрелку, чтобы раскрыть подробности партии",
+            "maxLength": 120
+          },
+          {
+            "prop": "single",
+            "label": "Только одна строка",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid where a row opens its details right underneath: a full-width panel, with the button-to-panel link declared through aria-controls.",
+            "ai": {
+              "summary": "A grid with an expandable detail row: a full-width panel under its own row and the relationship declared through aria-controls. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-008-* palette — do not swap it for your theme tokens",
+                "the aria-expanded and aria-controls pair: without the panel id the button loses its link to the details",
+                "the full-width detail row via colSpan — a nested table breaks cell navigation",
+                "a separate aria-label on the disclosure button naming the row, or every arrow button reads the same",
+                "the arrow rotation as a second signal of state beyond the panel appearing",
+                "the grid's own light surface: on the dark catalog card dark text disappears without it"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the one-row-at-a-time mode through single",
+                "the shipments and term-value pairs through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "With single={false} a dozen open rows turn the table into a list — enable it deliberately.",
+                "The fade-in rests on @starting-style: where it is unsupported the panel simply appears at once.",
+                "The detail pairs fall apart if you drop display:contents from the wrapper inside the dl.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid008\n  caption=\"Click the arrow to open the details\"\n  single={false}\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Click the arrow to open the shipment details"
+              },
+              "single": {
+                "label": "One row at a time",
+                "default": true
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-009",
+      "type": "registry:component",
+      "title": "Resizable Columns",
+      "description": "Сетка с изменением ширины колонок: разделитель между заголовками тянется мышью и настраивается стрелками с клавиатуры.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-009/datagrid-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-009-*. Клиентский: ширины лежат в состоянии, черновик перетаскивания — в ref, чтобы движение указателя не гоняло лишние рендеры. Разделитель — кнопка с role=separator, aria-orientation, aria-valuenow, aria-valuemin и aria-valuemax; стрелки влево и вправо меняют ширину шагом 16 px, поэтому колонку можно настроить без мыши. Захват указателя через setPointerCapture: без него перетаскивание рвётся, стоит курсору выйти за заголовок. Ширины применяются к colgroup при table-layout:fixed, иначе браузер пересчитает их по содержимому. Содержимое ячейки обрезается многоточием, полное значение остаётся в title.",
+      "meta": {
+        "tags": ["datagrid", "resize", "columns", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid009",
+          "usage": "<Datagrid009\n  caption=\"Потяните разделитель между заголовками\"\n  minWidth={120}\n/>",
+          "summary": "Сетка с перетаскиваемыми границами колонок и клавиатурной настройкой ширины через role=separator. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-009-* и не подменять её токенами вашей темы",
+            "role=\"separator\" с aria-valuenow и стрелками: без клавиатуры ширину колонки не выставить",
+            "setPointerCapture — без него перетаскивание рвётся, стоит курсору выйти за заголовок",
+            "table-layout:fixed вместе с colgroup: иначе браузер пересчитает ширины по содержимому",
+            "нижний предел ширины: колонка в ноль пикселей исчезает вместе со своим содержимым",
+            "светлую подложку сетки: на тёмной карточке каталога тёмный текст иначе пропадает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "нижний предел ширины колонки через minWidth, в пикселях",
+            "список файлов через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Ширины живут в состоянии компонента и сбрасываются при перезагрузке — сохраняйте их сами.",
+            "Шаг клавиатуры 16 px: для точной настройки добавьте модификатор, но не убирайте сам шаг.",
+            "Содержимое ячейки обрезается многоточием, полное значение остаётся в атрибуте title.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Потяните разделитель между заголовками или наведите на него фокус и жмите стрелки",
+            "maxLength": 140
+          },
+          {
+            "prop": "minWidth",
+            "label": "Минимум ширины, px",
+            "type": "number",
+            "default": 96,
+            "min": 60,
+            "max": 240
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid with resizable columns: the separator between headers is dragged with the mouse and nudged with the arrow keys.",
+            "ai": {
+              "summary": "A grid with draggable column edges and keyboard width control through role=separator. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-009-* palette — do not swap it for your theme tokens",
+                "role=\"separator\" with aria-valuenow and arrow keys: without them a column width cannot be set from the keyboard",
+                "setPointerCapture — without it the drag breaks the moment the cursor leaves the header",
+                "table-layout:fixed together with colgroup: otherwise the browser recomputes widths from content",
+                "the lower width bound: a zero-pixel column disappears along with its content",
+                "the grid's own light surface: on the dark catalog card dark text disappears without it"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the lower column width bound through minWidth, in pixels",
+                "the file list through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "Widths live in component state and reset on reload — persist them yourself if you need them remembered.",
+                "The keyboard step is 16 px: add a modifier for fine tuning, but do not remove the step itself.",
+                "Cell content is clipped with an ellipsis; the full value stays in the title attribute.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid009\n  caption=\"Drag the separator between the headers\"\n  minWidth={120}\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Drag the separator between headers, or focus it and press the arrow keys"
+              },
+              "minWidth": {
+                "label": "Minimum width, px",
+                "default": 96
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-010",
+      "type": "registry:component",
+      "title": "Paged Grid",
+      "description": "Сетка с постраничным просмотром: выбор числа строк на странице, диапазон записей и номера страниц в настоящей навигации.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-010/datagrid-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-010-*. Клиентский: страница и размер страницы лежат в состоянии, видимые строки берутся срезом массива. Номера страниц собраны в nav с aria-label, текущая помечена aria-current=page — цвет один состояние не сообщает. Смена размера страницы возвращает на первую: иначе пользователь оказывается на несуществующей странице. Диапазон «показано N–M из K» объявлен aria-live=polite. Кнопки «назад» и «вперёд» отключаются на краях и несут собственные aria-label вместо одних стрелок.",
+      "meta": {
+        "tags": ["datagrid", "pagination", "page-size", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid010",
+          "usage": "<Datagrid010 caption=\"Список участников программы\" pageSize={10} />",
+          "summary": "Сетка с пагинацией и выбором размера страницы: диапазон записей, номера страниц с aria-current и навигация в nav. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-010-* и не подменять её токенами вашей темы",
+            "aria-current=\"page\" на текущей странице: один цвет состояние не сообщает",
+            "номера страниц внутри nav с aria-label — это навигация, а не набор кнопок",
+            "сброс на первую страницу при смене размера, иначе пользователь окажется на несуществующей странице",
+            "диапазон «показано N–M из K» с aria-live: после перехода иначе непонятно, куда уехали строки",
+            "светлую подложку сетки: на тёмной карточке каталога тёмный текст иначе пропадает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "стартовое число строк на странице через pageSize",
+            "список участников через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Все страницы выводятся списком: на сотне страниц добавьте свёртку с многоточием.",
+            "Пагинация клиентская, режется массив rows; для серверной подмените срез запросом.",
+            "Список размеров страницы задан константой: меняйте её вместе с pageSize, иначе стартовое значение выпадет из списка.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Список участников программы",
+            "maxLength": 80
+          },
+          {
+            "prop": "pageSize",
+            "label": "Строк на странице",
+            "type": "number",
+            "default": 5,
+            "min": 3,
+            "max": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid with page-by-page browsing: a rows-per-page choice, the record range and page numbers inside a real navigation landmark.",
+            "ai": {
+              "summary": "A grid with pagination and a page-size choice: the record range, page numbers with aria-current and navigation inside nav. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-010-* palette — do not swap it for your theme tokens",
+                "aria-current=\"page\" on the current page: color alone does not report state",
+                "the page numbers inside a nav with aria-label — this is navigation, not a row of buttons",
+                "the reset to page one when the size changes, or the reader lands on a page that no longer exists",
+                "the «showing N–M of K» range with aria-live: otherwise it is unclear where the rows went",
+                "the grid's own light surface: on the dark catalog card dark text disappears without it"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the initial rows per page through pageSize",
+                "the participant list through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "Every page is listed: past a hundred pages add an ellipsis collapse.",
+                "Pagination is client-side and slices the rows array; swap the slice for a request to go server-side.",
+                "The page-size list is a constant: change it together with pageSize or the initial value falls outside the options.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid010 caption=\"Programme participants\" pageSize={10} />"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Programme participants"
+              },
+              "pageSize": {
+                "label": "Rows per page",
+                "default": 5
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-011",
+      "type": "registry:component",
+      "title": "Empty Result",
+      "description": "Сетка с пустым состоянием: когда фильтры сошлись в ноль, тело таблицы называет причину, перечисляет активные фильтры и предлагает их сбросить.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-011/datagrid-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-011-*. Клиентский: активные фильтры лежат списком идентификаторов, каждый несёт свой предикат. Фишка фильтра — кнопка со своим aria-label, снимающая ровно один фильтр. Пустое состояние показано строкой внутри tbody с colSpan на всю ширину: шапка остаётся на месте, иначе кажется, что таблица пропала. Текст перечисляет действующие фильтры — «ничего не найдено» без причины бесполезно; блок объявлен aria-live=polite. Значок нарисован рамками и псевдоэлементом, чтобы компонент оставался одним файлом без картинок. Стартовое состояние намеренно пустое: так вариант виден на витрине.",
+      "meta": {
+        "tags": ["datagrid", "empty-state", "filters", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid011",
+          "usage": "<Datagrid011\n  caption=\"Заявки сервисной службы\"\n  emptyTitle=\"Ни одной заявки не подошло\"\n/>",
+          "summary": "Сетка с пустым состоянием и сбросом фильтров: причина названа списком фильтров, выход предложен рядом. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-011-* и не подменять её токенами вашей темы",
+            "пустое состояние внутри tbody: шапка обязана остаться, иначе кажется, что таблица пропала",
+            "перечисление активных фильтров в тексте — «ничего не найдено» без причины бесполезно",
+            "кнопку сброса рядом с объяснением, а не только в шапке: выход должен быть под рукой",
+            "aria-live на блоке пустого состояния, иначе смена набора строк не объявляется",
+            "значок из рамок вместо картинки: компонент обязан оставаться одним файлом без ресурсов"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "заголовок пустого состояния через emptyTitle",
+            "набор заявок через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Стартовое состояние намеренно пустое: так вариант виден на витрине, в бою начинайте без фильтров.",
+            "Предикаты фильтров зашиты в файле: под свои поля переписывайте массив FILTERS, а не оборачивайте компонент.",
+            "Пустое состояние занимает всю ширину через colSpan — при смене числа колонок поправьте его.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Заявки сервисной службы",
+            "maxLength": 80
+          },
+          {
+            "prop": "emptyTitle",
+            "label": "Заголовок пустого",
+            "type": "text",
+            "default": "Ни одной заявки не подошло",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid with an empty state: when the filters meet at zero, the table body names the cause, lists the active filters and offers to clear them.",
+            "ai": {
+              "summary": "A grid with an empty state and filter reset: the cause is named by listing the filters and the way out sits right beside it. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-011-* palette — do not swap it for your theme tokens",
+                "the empty state inside tbody: the header has to stay or the table looks gone",
+                "the list of active filters in the text — «nothing found» without a cause is useless",
+                "the reset button beside the explanation, not only in the toolbar: the way out must be at hand",
+                "aria-live on the empty-state block, otherwise the change of rows is never announced",
+                "the glyph drawn from borders instead of an image: the component must stay one file with no assets"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the empty-state heading through emptyTitle",
+                "the request list through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "The initial state is deliberately empty so the variant is visible in the catalog; in production start with no filters.",
+                "The filter predicates are baked into the file: rewrite the FILTERS array for your fields instead of wrapping the component.",
+                "The empty state spans the full width via colSpan — update it when the column count changes.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid011\n  caption=\"Service desk requests\"\n  emptyTitle=\"No request matched\"\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Service desk requests"
+              },
+              "emptyTitle": {
+                "label": "Empty heading",
+                "default": "No request matched"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-012",
+      "type": "registry:component",
+      "title": "Loading Skeleton",
+      "description": "Сетка со скелетоном загрузки: полоски повторяют раскладку колонок и разной длины, область помечена aria-busy, а статус продублирован текстом.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-012/datagrid-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-012-*. Клиентский: одно булево состояние переключает скелетон и данные, число строк скелетона приходит пропом. Полоска — span с шириной из переменной --vibeui-datagrid-012-w: длина считается от номера строки, поэтому строки не выглядят напечатанными под копирку. Блик собран linear-gradient и одним keyframes по background-position, правило prefers-reduced-motion его гасит. Область прокрутки помечена aria-busy, рядом лежит текстовый статус с role=status: анимация ничего не сообщает скринридеру. Шапка и tfoot остаются на месте во время загрузки, итоги показаны прочерком.",
+      "meta": {
+        "tags": ["datagrid", "skeleton", "loading", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid012",
+          "usage": "<Datagrid012 caption=\"Кампании за март\" rowCount={8} />",
+          "summary": "Сетка со скелетоном строк: полоски повторяют колонки, область помечена aria-busy, статус продублирован текстом. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-012-* и не подменять её токенами вашей темы",
+            "aria-busy на области и текстовый статус рядом: анимация ничего не сообщает скринридеру",
+            "шапку таблицы во время загрузки — она объясняет, что именно грузится",
+            "разную длину полосок: одинаковые прямоугольники читаются как поломка вёрстки",
+            "правило prefers-reduced-motion — бесконечный блик сильный раздражитель",
+            "светлую подложку сетки: на тёмной карточке каталога тёмный текст иначе пропадает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "число строк скелетона через rowCount",
+            "состав кампаний через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Переключатель загрузки нужен витрине: в бою состояние приходит от запроса, кнопку уберите.",
+            "Число строк скелетона держите близким к обычной длине списка, иначе после загрузки таблица прыгает.",
+            "Полоски не подписаны текстом «Загрузка» намеренно: для этого над таблицей есть статус.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Кампании за март",
+            "maxLength": 80
+          },
+          {
+            "prop": "rowCount",
+            "label": "Строк скелетона",
+            "type": "number",
+            "default": 6,
+            "min": 3,
+            "max": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid with a loading skeleton: the bars mirror the column layout at varying lengths, the region is marked aria-busy and the status is repeated in text.",
+            "ai": {
+              "summary": "A grid with skeleton rows: the bars mirror the columns, the region is marked aria-busy and the status is repeated in text. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-012-* palette — do not swap it for your theme tokens",
+                "aria-busy on the region plus the text status beside it: animation tells a screen reader nothing",
+                "the table header during loading — it explains what exactly is being fetched",
+                "the varying bar lengths: identical rectangles read as broken layout",
+                "the prefers-reduced-motion rule — an endless shimmer is a strong irritant",
+                "the grid's own light surface: on the dark catalog card dark text disappears without it"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the number of skeleton rows through rowCount",
+                "the campaign list through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "The loading toggle exists for the catalog: in production the state comes from the request, so drop the button.",
+                "Keep the skeleton row count close to the usual list length, otherwise the table jumps once data arrives.",
+                "The bars deliberately carry no «Loading» label: the status above the table does that job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid012 caption=\"Campaigns, March\" rowCount={8} />"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Campaigns, March"
+              },
+              "rowCount": {
+                "label": "Skeleton rows",
+                "default": 6
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-013",
+      "type": "registry:component",
+      "title": "Column Visibility",
+      "description": "Сетка с меню видимости колонок: читатель сам собирает набор столбцов флажками, а последнюю оставшуюся колонку выключить нельзя.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-013/datagrid-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-013-*. Клиентский: useState хранит список скрытых ключей колонок и состояние меню. Меню — не список ссылок, а fieldset с legend и настоящими чекбоксами: скринридер объявляет и группу, и каждое имя колонки. Чекбокс последней видимой колонки блокируется, иначе таблица схлопывается до одного столбца артикулов. Escape на корне закрывает меню — открытая панель поверх таблицы обязана закрываться с клавиатуры. Счётчик показанных колонок объявлен aria-live: смена набора иначе проходит бесследно. Прокрутка вынесена в контейнер с role=region, aria-label и tabindex=0.",
+      "meta": {
+        "tags": ["datagrid", "columns", "visibility", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid013",
+          "usage": "<Datagrid013\n  caption=\"Колонки настраиваются в меню\"\n  menuLabel=\"Показать колонки\"\n/>",
+          "summary": "Сетка с меню видимости колонок: набор столбцов собирается флажками, последняя колонка защищена от выключения. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-013-* и не подменять её токенами вашей темы",
+            "меню как fieldset с legend и чекбоксами: список кнопок не сообщит, что это одна группа настроек",
+            "блокировку последней видимой колонки — пустая таблица без столбцов ничего не показывает",
+            "закрытие меню по Escape: панель поверх таблицы обязана убираться с клавиатуры",
+            "aria-live у счётчика колонок, иначе смена набора для скринридера проходит бесследно",
+            "светлую подложку сетки: на тёмной карточке каталога тёмный текст иначе пропадает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "подпись кнопки меню через menuLabel",
+            "состав склада через rows",
+            "акцентный цвет через accent и ширину сетки через max-width"
+          ],
+          "notes": [
+            "Набор колонок живёт в состоянии и сбрасывается при перезагрузке — сохраняйте его сами.",
+            "Колонка артикула вынесена из списка намеренно: это заголовок строки, без него таблица теряет опору.",
+            "Меню не закрывается по клику мимо: добавьте обработчик на документ, если это нужно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Набор колонок настраивается в меню «Колонки»",
+            "maxLength": 120
+          },
+          {
+            "prop": "menuLabel",
+            "label": "Кнопка меню",
+            "type": "text",
+            "default": "Колонки",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid with a column-visibility menu: the reader assembles the set of columns with checkboxes, and the last remaining column cannot be switched off.",
+            "ai": {
+              "summary": "A grid with a column-visibility menu: the column set is built from checkboxes and the last column is protected from being hidden. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-013-* palette — do not swap it for your theme tokens",
+                "the menu as a fieldset with a legend and checkboxes: a row of buttons never says this is one settings group",
+                "the lock on the last visible column — a table with no columns shows nothing at all",
+                "closing the menu on Escape: a panel over the table has to dismiss from the keyboard",
+                "aria-live on the column counter, otherwise the change of set passes silently for a screen reader",
+                "the grid's own light surface: on the dark catalog card dark text disappears without it"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the menu button caption through menuLabel",
+                "the stock list through rows",
+                "the accent color through accent and the grid width through max-width"
+              ],
+              "notes": [
+                "The column set lives in state and resets on reload — persist it yourself if it must be remembered.",
+                "The SKU column is deliberately outside the list: it is the row heading, and the table loses its anchor without it.",
+                "The menu does not close on an outside click: add a document handler if you need that.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid013\n  caption=\"Columns are configured in the menu\"\n  menuLabel=\"Show columns\"\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "The column set is configured in the «Columns» menu"
+              },
+              "menuLabel": {
+                "label": "Menu button",
+                "default": "Columns"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-014",
+      "type": "registry:component",
+      "title": "Pin On Demand",
+      "description": "Широкая сетка, где закрепить колонку решает читатель: булавка в заголовке переводит столбец в липкий режим, а смещение считается от уже закреплённых соседей.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-014/datagrid-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-014.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-014-*. Клиентский: useState хранит список закреплённых ключей, но порядок берётся из порядка колонок, а не кликов — иначе столбцы менялись бы местами под курсором. Ширина колонки фиксирована переменной --vibeui-datagrid-014-col вместе с table-layout:fixed: только так left считается формулой calc, без измерений в браузере. Липкая ячейка несёт собственный фон, таблица собрана с border-collapse:separate. Булавка — кнопка с aria-pressed и собственным aria-label, число закреплений ограничено пропом. Прокрутка живёт в контейнере с role=region, aria-label и tabindex=0.",
+      "meta": {
+        "tags": ["datagrid", "sticky-column", "pinning", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid014",
+          "usage": "<Datagrid014 caption=\"Закрепите нужные колонки\" maxPinned={3} />",
+          "summary": "Сетка с закреплением колонки по требованию: булавка в заголовке переводит столбец в position:sticky. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-014-* и не подменять её токенами вашей темы",
+            "aria-pressed на булавке: это переключатель состояния, а не обычная кнопка действия",
+            "собственный фон у липких ячеек — без него уезжающие строки видно насквозь",
+            "table-layout:fixed вместе с фиксированной шириной колонки: иначе смещение left посчитать нечем",
+            "порядок закрепления по порядку колонок, а не по порядку кликов — иначе столбцы прыгают местами",
+            "светлую подложку сетки: на тёмной карточке каталога тёмный текст иначе пропадает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "предел числа закреплённых колонок через maxPinned",
+            "состав филиалов через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Закрепление работает только слева: для правого края нужна вторая переменная смещения и right вместо left.",
+            "Все колонки одной ширины: под разноширинные колонки считайте смещение суммой, а не умножением.",
+            "На экране 360 px две закреплённые колонки не оставляют места — снизьте maxPinned для мобильной вёрстки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Нажмите булавку в заголовке, чтобы закрепить колонку слева",
+            "maxLength": 120
+          },
+          {
+            "prop": "maxPinned",
+            "label": "Максимум закреплённых",
+            "type": "number",
+            "default": 2,
+            "min": 1,
+            "max": 4
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A wide grid where pinning is the reader's call: a pin in the header makes the column sticky, and its offset is derived from the columns already pinned.",
+            "ai": {
+              "summary": "A grid with on-demand column pinning: a pin in the header switches the column to position:sticky. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-014-* palette — do not swap it for your theme tokens",
+                "aria-pressed on the pin: it is a state toggle, not a plain action button",
+                "the sticky cells' own background — without it the scrolling rows show straight through",
+                "table-layout:fixed together with a fixed column width: otherwise there is nothing to compute the left offset from",
+                "the pin order following the column order rather than the click order — otherwise columns swap places",
+                "the grid's own light surface: on the dark catalog card dark text disappears without it"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the cap on pinned columns through maxPinned",
+                "the branch list through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "Pinning works from the left only: the right edge needs a second offset variable and right instead of left.",
+                "Every column shares one width: for mixed widths compute the offset as a sum rather than a multiplication.",
+                "On a 360 px screen two pinned columns leave no room — lower maxPinned for mobile layouts.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid014 caption=\"Pin the columns you need\" maxPinned={3} />"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Press the pin in a header to freeze the column on the left"
+              },
+              "maxPinned": {
+                "label": "Maximum pinned",
+                "default": 2
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-015",
+      "type": "registry:component",
+      "title": "Reorder Rows",
+      "description": "Сетка с перестановкой строк: ручка захвата тянется мышью, а стрелки, Home и End двигают строку с клавиатуры, объявляя новую позицию вслух.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-015/datagrid-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-015-*. Клиентский: useState хранит порядок строк, идентификатор перетаскиваемой строки и строки под курсором. Ручка захвата — кнопка с draggable: стрелки вверх и вниз двигают строку на шаг, Home и End отправляют её в начало и конец, поэтому порядок меняется без мыши. Каждое перемещение пишется в область с role=status и aria-live: для скринридера строка иначе просто исчезает с прежнего места. Строка под курсором помечена и заливкой, и полосой сверху через inset box-shadow — одна заливка совпадает с наведением. Номер позиции пересчитывается из индекса, а не хранится в данных.",
+      "meta": {
+        "tags": ["datagrid", "drag-and-drop", "reorder", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid015",
+          "usage": "<Datagrid015\n  caption=\"Порядок шагов задаёте вы\"\n  liveTemplate=\"{шаг}: позиция {позиция} из {всего}\"\n/>",
+          "summary": "Сетка с перестановкой строк перетаскиванием и с клавиатуры: позиция объявляется через aria-live. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-015-* и не подменять её токенами вашей темы",
+            "клавиатурный путь на ручке: перетаскивание мышью без стрелок отрезает часть пользователей",
+            "объявление новой позиции через aria-live — иначе строка для скринридера просто исчезает",
+            "aria-label ручки с названием шага и текущей позицией: одинаковые ручки без контекста бесполезны",
+            "подсветку строки под курсором полосой, а не только заливкой: заливка совпадает с наведением",
+            "светлую подложку сетки: на тёмной карточке каталога тёмный текст иначе пропадает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "формулировку объявления через liveTemplate с подстановками",
+            "состав маршрута через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Порядок живёт в состоянии компонента: отправку нового порядка на сервер вешайте сами.",
+            "Перетаскивание опирается на HTML-события drag: на сенсорных экранах остаются стрелки, и это осознанный компромисс.",
+            "Строка целиком принимает drop, а не только ручка — иначе попасть в цель мышью слишком трудно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Тяните ручку слева или наведите на неё фокус и жмите стрелки",
+            "maxLength": 120
+          },
+          {
+            "prop": "liveTemplate",
+            "label": "Шаблон объявления",
+            "type": "text",
+            "default": "«{шаг}» теперь на позиции {позиция} из {всего}",
+            "maxLength": 80
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid that reorders rows: the grip drags with the mouse while the arrows, Home and End move a row from the keyboard and announce its new position.",
+            "ai": {
+              "summary": "A grid that reorders rows by dragging and from the keyboard: the position is announced through aria-live. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-015-* palette — do not swap it for your theme tokens",
+                "the keyboard path on the grip: mouse dragging alone cuts off part of your users",
+                "announcing the new position through aria-live — otherwise the row simply vanishes for a screen reader",
+                "the grip's aria-label naming the step and its current position: identical grips without context are useless",
+                "highlighting the drop target with a stripe, not only a fill: the fill matches the hover state",
+                "the grid's own light surface: on the dark catalog card dark text disappears without it"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the wording of the announcement through liveTemplate with its placeholders",
+                "the route steps through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "The order lives in component state: sending the new order to the server is yours to add.",
+                "Dragging rests on the HTML drag events: on touch screens the arrow keys remain, and that is a deliberate trade-off.",
+                "The whole row accepts the drop, not just the grip — otherwise the target is too hard to hit with a mouse.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid015\n  caption=\"You set the order of the steps\"\n  liveTemplate=\"{шаг}: position {позиция} of {всего}\"\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Drag the grip on the left, or focus it and press the arrows"
+              },
+              "liveTemplate": {
+                "label": "Announcement template",
+                "default": "«{шаг}» is now at position {позиция} of {всего}"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-016",
+      "type": "registry:component",
+      "title": "Selection Summary",
+      "description": "Сетка, где строка итога считается только по отмеченным строкам, а функцию свёртки — сумму, среднее, минимум или максимум — выбирает читатель.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-016/datagrid-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-016.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-016-*. Клиентский: useState хранит список отмеченных id и выбранную функцию свёртки. Итог живёт в tfoot и меняет подпись вместе с функцией — «Итого» над средним значением врало бы. Флажок строки несёт собственный aria-label с названием кампании, а заголовок итога объявлен aria-live, поэтому смена выбора слышна. Выбранная строка помечена и заливкой, и полосой слева через inset box-shadow. При пустом выборе в числовых ячейках стоит прочерк, а не ноль: ноль читается как посчитанный результат.",
+      "meta": {
+        "tags": ["datagrid", "selection", "aggregation", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid016",
+          "usage": "<Datagrid016 caption=\"Итог по выбранным кампаниям\" aggregate=\"avg\" />",
+          "summary": "Сетка со строкой итога по выделенным строкам и переключаемой функцией свёртки. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-016-* и не подменять её токенами вашей темы",
+            "смену подписи итога вместе с функцией: «Итого» над средним значением прямо врёт",
+            "прочерк вместо нуля при пустом выборе — ноль читается как посчитанный результат",
+            "личный aria-label у каждого флажка: «флажок» без имени кампании ничего не сообщает",
+            "aria-live у заголовка итога, иначе пересчёт после отметки строки проходит беззвучно",
+            "полосу у выбранной строки, а не только заливку: заливка совпадает с наведением мыши"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "стартовую функцию свёртки через aggregate: sum, avg, min или max",
+            "состав кампаний через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Среднее и минимум считаются по колонке независимо: средняя цена лида не равна расходу, делённому на лиды.",
+            "Округление до целого сделано ради ширины колонок — для валют держите копейки сами.",
+            "Функция свёртки одна на все колонки: под колонку со своей формулой заведите отдельное поле в данных.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Итог в подвале считается только по отмеченным строкам",
+            "maxLength": 120
+          },
+          {
+            "prop": "aggregate",
+            "label": "Свёртка",
+            "type": "select",
+            "default": "sum",
+            "options": ["sum", "avg", "min", "max"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid whose totals row counts only the ticked rows, with the fold — sum, average, minimum or maximum — chosen by the reader.",
+            "ai": {
+              "summary": "A grid with a totals row over the selected rows and a switchable aggregate function. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-016-* palette — do not swap it for your theme tokens",
+                "the totals label changing with the function: «Total» above an average is an outright lie",
+                "the dash instead of a zero on an empty selection — a zero reads as a computed result",
+                "a personal aria-label on every checkbox: a bare «checkbox» without the campaign name says nothing",
+                "aria-live on the totals heading, or the recount after a tick passes in silence",
+                "the stripe on a selected row, not only the fill: the fill matches the hover state"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the initial fold through aggregate: sum, avg, min or max",
+                "the campaign list through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "Average and minimum are computed per column independently: the average cost per lead is not spend divided by leads.",
+                "Rounding to whole units keeps the columns narrow — keep the cents yourself for currency.",
+                "One fold serves every column: give a column with its own formula a separate field in the data.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid016 caption=\"Total for the selected campaigns\" aggregate=\"avg\" />"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "The footer total counts only the ticked rows"
+              },
+              "aggregate": {
+                "label": "Fold",
+                "default": "sum"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-017",
+      "type": "registry:component",
+      "title": "Export Confirm",
+      "description": "Сетка с выгрузкой отмеченных строк через подтверждение: нативный диалог называет число строк, сумму, формат и примерный размер файла до начала экспорта.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-017/datagrid-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-017.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-017-*. Клиентский: useState хранит выбранные строки, формат и текст результата, ref держит нативный dialog. showModal сам ловит фокус, закрывает по Escape и рисует ::backdrop, поэтому свой оверлей не нужен; диалогу задан margin:auto — без него он липнет к левому верхнему углу. Форматы собраны радиокнопками внутри fieldset; у legend стоит float:left с width:100%, поэтому соседние подписи получают clear:both, иначе они обтекали бы легенду. Результат объявлен role=status. Диалог показывает сумму и оценку размера: подтверждение без цифр — лишний клик.",
+      "meta": {
+        "tags": ["datagrid", "export", "dialog", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid017",
+          "usage": "<Datagrid017\n  caption=\"Отметьте строки для выгрузки\"\n  exportLabel=\"Выгрузить в файл\"\n/>",
+          "summary": "Сетка с экспортом выделенных строк и подтверждением в нативном диалоге с выбором формата. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-017-* и не подменять её токенами вашей темы",
+            "нативный dialog с showModal: он сам ловит фокус и закрывается по Escape, самодельный оверлей — нет",
+            "margin:auto у диалога, иначе он липнет к левому верхнему углу окна",
+            "clear:both у подписей внутри fieldset: legend с float:left иначе заставит их обтекать себя",
+            "цифры в подтверждении — число строк, сумму и размер: подтверждение без них лишь лишний клик",
+            "role=status у сообщения о результате, иначе итог выгрузки нигде не объявляется"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "подпись главной кнопки через exportLabel",
+            "список договоров через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Компонент ничего не скачивает: соберите файл и отдайте его сами, здесь только подтверждение.",
+            "Оценка размера считается по числу строк и формату — под свои данные поправьте константы FORMATS.",
+            "Кнопка выгрузки заблокирована при пустом выборе: это защита от диалога, который нечем наполнить.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Отметьте договоры и нажмите «Экспортировать»",
+            "maxLength": 120
+          },
+          {
+            "prop": "exportLabel",
+            "label": "Кнопка выгрузки",
+            "type": "text",
+            "default": "Экспортировать",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid that exports the ticked rows behind a confirmation: a native dialog names the row count, the total, the format and the estimated file size before anything happens.",
+            "ai": {
+              "summary": "A grid that exports the selected rows with a native confirmation dialog and a format choice. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-017-* palette — do not swap it for your theme tokens",
+                "the native dialog with showModal: it traps focus and closes on Escape, a hand-rolled overlay does not",
+                "margin:auto on the dialog, or it sticks to the top-left corner of the window",
+                "clear:both on the labels inside the fieldset: a legend with float:left would otherwise make them wrap around it",
+                "the figures in the confirmation — row count, total and size: without them it is just an extra click",
+                "role=status on the result message, or the outcome of the export is never announced"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the primary button caption through exportLabel",
+                "the contract list through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "The component downloads nothing: build the file and hand it over yourself, this is only the confirmation.",
+                "The size estimate comes from the row count and the format — adjust the FORMATS constants for your data.",
+                "The export button is disabled on an empty selection: that guards against a dialog with nothing to fill it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid017\n  caption=\"Tick the rows to export\"\n  exportLabel=\"Save to file\"\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Tick the contracts and press «Export»"
+              },
+              "exportLabel": {
+                "label": "Export button",
+                "default": "Export"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-018",
+      "type": "registry:component",
+      "title": "Grid Search",
+      "description": "Сетка со сквозным поиском по всем колонкам: найденное подсвечено тегом mark, а счётчик отдельно считает совпадения и строки, в которых они нашлись.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-018/datagrid-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-018.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-018-*. Клиентский: useState хранит запрос и режим «только совпавшие», useId связывает поле со скрытой подписью. Значение ячейки режется на куски вокруг совпадений и подсвечивается настоящим тегом mark — семантика подсветки достаётся бесплатно, а под ним лежит своя переменная фона. Совпадения и строки считаются раздельно: одно число «найдено 4» не отвечает, четыре это строки или вхождения. Счётчик объявлен role=status и aria-live. Строки без совпадений приглушены, а не спрятаны, пока не включён режим отбора; прокрутка вынесена в контейнер с role=region и tabindex=0.",
+      "meta": {
+        "tags": ["datagrid", "search", "highlight", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid018",
+          "usage": "<Datagrid018\n  caption=\"Поиск по всей сетке\"\n  placeholder=\"Введите слово\"\n/>",
+          "summary": "Сетка с поиском по всем колонкам и подсветкой совпадений тегом mark. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-018-* и не подменять её токенами вашей темы",
+            "настоящий тег mark для подсветки: span с фоном не несёт смысла «найденное»",
+            "раздельный счёт совпадений и строк — одно число не отвечает, что именно посчитано",
+            "role=status у счётчика, иначе результат правки запроса нигде не объявляется",
+            "подпись поля отдельно от placeholder: placeholder исчезает при вводе и подписью не является",
+            "светлую подложку сетки: на тёмной карточке каталога тёмный текст иначе пропадает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "текст-подсказку поля через placeholder",
+            "список обращений через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Поиск идёт по подстроке без учёта регистра и без нормализации: «ё» и «е» останутся разными буквами.",
+            "Разбор строки на куски выполняется при каждом рендере — на тысячах строк выносите его в мемоизацию.",
+            "Строки без совпадений приглушены, а не спрятаны: режим отбора включается флажком осознанно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Поиск идёт по всем колонкам сразу, найденное подсвечено",
+            "maxLength": 120
+          },
+          {
+            "prop": "placeholder",
+            "label": "Подсказка поля",
+            "type": "text",
+            "default": "Искать по таблице",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid with search across every column: matches are highlighted with a real mark tag, and the counter separates the number of hits from the number of rows.",
+            "ai": {
+              "summary": "A grid with search across all columns and matches highlighted with a mark tag. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-018-* palette — do not swap it for your theme tokens",
+                "the real mark tag for highlighting: a span with a background carries no «found» meaning",
+                "counting hits and rows separately — one number never says which of the two it is",
+                "role=status on the counter, or the result of editing the query is never announced",
+                "a label on the field separate from the placeholder: a placeholder vanishes on typing and is not a label",
+                "the grid's own light surface: on the dark catalog card dark text disappears without it"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the field hint text through placeholder",
+                "the request list through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "Matching is a case-insensitive substring test with no normalisation: «ё» and «е» stay different letters.",
+                "The string is split on every render — memoise it once you reach thousands of rows.",
+                "Rows without a match are dimmed rather than hidden: the filter mode is a deliberate checkbox.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid018\n  caption=\"Search the whole grid\"\n  placeholder=\"Type a word\"\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Search runs across all columns, matches are highlighted"
+              },
+              "placeholder": {
+                "label": "Field hint",
+                "default": "Search the table"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-019",
+      "type": "registry:component",
+      "title": "Filter Builder",
+      "description": "Сетка с конструктором условий: поле, оператор и значение в каждой строке, одна связка «и/или» на весь набор и живой счётчик подошедших строк.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-019/datagrid-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-019.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-019-*. Клиентский: useState хранит массив условий и связку; смена поля сбрасывает оператор и значение, потому что для числа и текста наборы операторов разные. Конструктор собран в fieldset с legend — для скринридера это одна группа, а не россыпь полей; у legend стоит float:left с width:100%, поэтому строки условий получают clear:both. Связка показана отдельной строкой между условиями и не встроена в них: иначе «и» читается как часть соседнего условия. У каждого поля свой aria-label с номером условия, счётчик найденного объявлен role=status.",
+      "meta": {
+        "tags": ["datagrid", "filters", "query-builder", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid019",
+          "usage": "<Datagrid019 caption=\"Отбор по набору условий\" joiner=\"or\" />",
+          "summary": "Сетка с конструктором условий «и/или»: поле, оператор и значение в каждой строке. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-019-* и не подменять её токенами вашей темы",
+            "конструктор внутри fieldset с legend: россыпь полей не читается как одна группа отбора",
+            "clear:both у строк условий — legend с float:left иначе заставит их обтекать себя",
+            "связку отдельной строкой между условиями, а не внутри них: иначе «и» кажется частью соседнего условия",
+            "сброс оператора при смене поля: у числа и текста разные наборы операторов",
+            "aria-label с номером условия у каждого поля, иначе три одинаковых списка неразличимы"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "стартовую связку через joiner: and или or",
+            "список контрагентов через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Связка одна на весь набор: вложенные скобки потребуют дерева условий, а не плоского массива.",
+            "Пустое значение условие пропускает — это защита от исчезновения всех строк при вводе.",
+            "Число условий ограничено четырьмя: дальше конструктор перестаёт помещаться в одну колонку.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Строки отбираются набором условий из конструктора",
+            "maxLength": 120
+          },
+          {
+            "prop": "joiner",
+            "label": "Связка",
+            "type": "select",
+            "default": "and",
+            "options": ["and", "or"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid with a condition builder: field, operator and value on every line, one and/or joiner for the whole set and a live count of matching rows.",
+            "ai": {
+              "summary": "A grid with an and/or condition builder: field, operator and value on every line. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-019-* palette — do not swap it for your theme tokens",
+                "the builder inside a fieldset with a legend: a scatter of fields never reads as one filter group",
+                "clear:both on the condition rows — a legend with float:left would otherwise make them wrap around it",
+                "the joiner on its own line between conditions rather than inside them: otherwise «and» looks like part of a neighbour",
+                "resetting the operator when the field changes: numbers and text take different operator sets",
+                "an aria-label with the condition number on every field, or three identical selects are indistinguishable"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the initial joiner through joiner: and or or",
+                "the counterparty list through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "One joiner covers the whole set: nested brackets need a condition tree rather than a flat array.",
+                "An empty value lets the condition pass — that guards against every row vanishing mid-typing.",
+                "The condition count is capped at four: beyond that the builder stops fitting in one column.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid019 caption=\"Filtered by a set of conditions\" joiner=\"or\" />"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Rows are filtered by the set of conditions in the builder"
+              },
+              "joiner": {
+                "label": "Joiner",
+                "default": "and"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-020",
+      "type": "registry:component",
+      "title": "Saved Views",
+      "description": "Сетка с сохранёнными представлениями: вкладка восстанавливает фильтр и сортировку разом, а отклонение от сохранённого набора помечено словом «изменено».",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-020/datagrid-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-020.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-020-*. Клиентский: useState держит список представлений, активное имя и текущее состояние отдельно от него. Сравнение текущего состояния с сохранённым даёт признак «изменено» — без него непонятно, смотришь ты представление или уже что-то своё; кнопка сохранения заблокирована, пока изменений нет. Вкладки лежат в nav с aria-label, активная помечена aria-current, а не одним цветом. Представление хранит и фильтр, и сортировку: половина восстановленного состояния хуже, чем ничего.",
+      "meta": {
+        "tags": ["datagrid", "views", "presets", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid020",
+          "usage": "<Datagrid020 caption=\"Представления сделок\" startView=\"all\" />",
+          "summary": "Сетка с сохранёнными представлениями: фильтр и сортировка восстанавливаются одной вкладкой. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-020-* и не подменять её токенами вашей темы",
+            "aria-current на активной вкладке: один цвет состояние не сообщает",
+            "вкладки внутри nav с aria-label — это навигация по представлениям, а не набор кнопок",
+            "признак «изменено»: без него непонятно, смотришь ты представление или уже свой набор",
+            "хранение фильтра и сортировки вместе: половина восстановленного состояния хуже, чем ничего",
+            "блокировку кнопки сохранения при отсутствии изменений, иначе она сохраняет то же самое"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "стартовое представление через startView",
+            "список сделок через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Представления живут в состоянии и сбрасываются при перезагрузке — храните их у себя.",
+            "Создание нового представления не сделано намеренно: набор задаётся кодом, кнопка сохраняет в существующее.",
+            "Сортировка по названию идёт через localeCompare с русской локалью: для других языков задайте свою.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Представление хранит фильтр по этапу и порядок сортировки",
+            "maxLength": 120
+          },
+          {
+            "prop": "startView",
+            "label": "Представление",
+            "type": "select",
+            "default": "hot",
+            "options": ["all", "hot", "new", "won"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid with saved views: a tab restores the filter and the sort at once, and any drift from the saved set is marked «changed».",
+            "ai": {
+              "summary": "A grid with saved views: the filter and the sort come back with a single tab. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-020-* palette — do not swap it for your theme tokens",
+                "aria-current on the active tab: color alone does not report state",
+                "the tabs inside a nav with aria-label — this is navigation between views, not a row of buttons",
+                "the «changed» marker: without it there is no telling a view from your own ad-hoc set",
+                "storing the filter and the sort together: half a restored state is worse than none",
+                "disabling the save button with no changes pending, or it just saves the same thing again"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the initial view through startView",
+                "the deal list through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "Views live in state and reset on reload — persist them on your side.",
+                "Creating a new view is deliberately absent: the set comes from code and the button saves into an existing one.",
+                "Sorting by name uses localeCompare with the Russian locale: set your own for other languages.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid020 caption=\"Deal views\" startView=\"all\" />"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "A view stores the stage filter and the sort order"
+              },
+              "startView": {
+                "label": "View",
+                "default": "hot"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-021",
+      "type": "registry:component",
+      "title": "Batch Edit",
+      "description": "Сетка с пакетной правкой: числовые ячейки редактируются разом, журнал показывает «было → стало» с точечной отменой, а сохранение одно на весь черновик.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-021/datagrid-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-021.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-021-*. Клиентский: базовые строки лежат в одном состоянии, черновик правок — плоской картой «строка:поле → значение» в другом. Такое разделение даёт три вещи бесплатно: подсветку изменённых ячеек, журнал с исходным значением и отмену одной правки без потери остальных. Значение, вернувшееся к исходному, само выпадает из черновика — иначе счётчик врал бы. Строкам задана фиксированная высота, поэтому включение режима правки не двигает таблицу. Счётчик несохранённого объявлен role=status.",
+      "meta": {
+        "tags": ["datagrid", "batch-edit", "undo", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid021",
+          "usage": "<Datagrid021\n  caption=\"Правки уезжают одним сохранением\"\n  editLabel=\"Править\"\n/>",
+          "summary": "Сетка с правкой нескольких ячеек и общим сохранением: журнал «было → стало» с точечной отменой. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-021-* и не подменять её токенами вашей темы",
+            "разделение базовых строк и черновика: без него нельзя показать «было» и отменить одну правку",
+            "выпадение правки из черновика при возврате к исходному значению, иначе счётчик врёт",
+            "журнал «было → стало»: одна подсветка ячейки не говорит, каким значение было раньше",
+            "фиксированную высоту строк — иначе включение режима правки двигает всю таблицу",
+            "aria-label у каждого поля с названием колонки и позиции: одинокое поле в таблице ничего не сообщает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "подпись переключателя режима через editLabel",
+            "состав спецификации через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Компонент ничего не отправляет: «Сохранить всё» переносит черновик в состояние, запрос вешайте сами.",
+            "Валидации нет — отрицательное количество компонент примет: проверку добавляйте до сохранения.",
+            "Ключ ячейки собран строкой «id:поле»: не используйте двоеточие в идентификаторах строк.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Правки копятся в черновике и уезжают одним сохранением",
+            "maxLength": 120
+          },
+          {
+            "prop": "editLabel",
+            "label": "Режим правки",
+            "type": "text",
+            "default": "Режим правки",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid with batch editing: numeric cells become fields at once, a log shows «before → after» with per-entry undo, and one save covers the whole draft.",
+            "ai": {
+              "summary": "A grid that edits several cells behind one save: a «before → after» log with per-entry undo. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-021-* palette — do not swap it for your theme tokens",
+                "the split between base rows and the draft: without it you cannot show «before» or undo one edit",
+                "dropping an edit from the draft once the value returns to the original, or the counter lies",
+                "the «before → after» log: a highlighted cell alone never says what the value used to be",
+                "the fixed row height — otherwise entering edit mode shifts the whole table",
+                "an aria-label on every field naming the column and the row: a lone field in a table says nothing"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the mode toggle caption through editLabel",
+                "the specification content through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "The component sends nothing: «Save all» moves the draft into state, and the request is yours to add.",
+                "There is no validation — a negative quantity is accepted: add the checks before saving.",
+                "The cell key is the string «id:field»: do not use a colon inside row identifiers.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid021\n  caption=\"Edits leave in a single save\"\n  editLabel=\"Edit\"\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Edits pile up in a draft and leave in a single save"
+              },
+              "editLabel": {
+                "label": "Edit mode",
+                "default": "Edit mode"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-022",
+      "type": "registry:component",
+      "title": "Cell Validation",
+      "description": "Сетка с валидацией на месте: ошибка стоит под самим значением, поле помечено aria-invalid и связано с текстом ошибки, а сохранение заблокировано до починки.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-022/datagrid-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-022.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-022-*. Клиентский: значения лежат в состоянии, проверка считается на каждом рендере, useId даёт стабильные идентификаторы для aria-describedby. Поле с ошибкой получает aria-invalid и ссылку на текст ошибки — одна красная рамка скринридеру ничего не сообщает. Под каждой ячейкой зарезервирована строка высотой с сообщение, поэтому появление ошибки не двигает соседние строки. Кнопка сохранения выключена, пока ошибки есть, а их число объявлено role=status. Ячейки выровнены по верхнему краю: иначе строка с ошибкой перекашивает соседей.",
+      "meta": {
+        "tags": ["datagrid", "validation", "inline-error", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid022",
+          "usage": "<Datagrid022 caption=\"Проверка табеля\" maxHours={160} />",
+          "summary": "Сетка с валидацией ячейки на месте: aria-invalid, текст ошибки под значением и блокировка сохранения. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-022-* и не подменять её токенами вашей темы",
+            "пару aria-invalid и aria-describedby: одна красная рамка скринридеру ничего не сообщает",
+            "текст ошибки рядом с полем, а не в сводке наверху — иначе непонятно, какую ячейку чинить",
+            "зарезервированную строку под сообщением: без неё появление ошибки двигает соседние строки",
+            "блокировку сохранения при ошибках, иначе форма уедет заведомо кривой",
+            "выравнивание ячеек по верхнему краю: ячейка с ошибкой иначе перекашивает всю строку"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "верхний предел часов через maxHours",
+            "состав табеля через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Проверка почты сделана простым выражением: для боевой формы полагайтесь на подтверждение письмом.",
+            "Ошибки считаются на каждом рендере — на сотнях строк выносите их в мемоизацию.",
+            "Стартовые данные намеренно содержат три ошибки: так состояние видно на витрине, в бою начинайте с чистых.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Ошибка показывается в той же ячейке, где стоит значение",
+            "maxLength": 120
+          },
+          {
+            "prop": "maxHours",
+            "label": "Максимум часов",
+            "type": "number",
+            "default": 200,
+            "min": 40,
+            "max": 400
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid that validates in place: the error sits under the value itself, the field carries aria-invalid and a link to the message, and saving is blocked until it is fixed.",
+            "ai": {
+              "summary": "A grid with in-place cell validation: aria-invalid, the error under the value and a blocked save. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-022-* palette — do not swap it for your theme tokens",
+                "the aria-invalid and aria-describedby pair: a red border alone tells a screen reader nothing",
+                "the error text beside the field rather than in a summary on top — otherwise the broken cell is unclear",
+                "the reserved line under the message: without it an appearing error shifts the neighbouring rows",
+                "blocking the save while errors remain, or the form leaves knowingly broken",
+                "top-aligned cells: a cell with an error would otherwise skew the whole row"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the upper bound on hours through maxHours",
+                "the timesheet content through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "The email check is a simple expression: for a production form rely on a confirmation letter.",
+                "Errors are computed on every render — memoise them once you reach hundreds of rows.",
+                "The initial data deliberately holds three errors so the state is visible in the catalog; start clean in production.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid022 caption=\"Timesheet check\" maxHours={160} />"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "The error shows in the very cell that holds the value"
+              },
+              "maxHours": {
+                "label": "Maximum hours",
+                "default": 200
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-023",
+      "type": "registry:component",
+      "title": "Paste Rows",
+      "description": "Сетка со вставкой нескольких строк из буфера: текст разбирается по разделителям, битые строки называются с номером и причиной, а в таблицу уходят только целые.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-023/datagrid-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-023.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-023-*. Клиентский: useState хранит таблицу, текст вставки и список только что добавленных идентификаторов; useId связывает поле с подписью. Разбор режет текст по переводам строк, а поля — по табуляции, точке с запятой или двум пробелам подряд: так выдерживаются и вставка из таблицы, и текст из письма. Битые строки не отбрасываются молча, а показываются в теле таблицы с номером и причиной — иначе половина вставки пропадает незаметно. Добавленные строки помечены заливкой до следующей вставки. Отчёт о разборе объявлен role=status.",
+      "meta": {
+        "tags": ["datagrid", "paste", "import", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid023",
+          "usage": "<Datagrid023\n  caption=\"Вставка строк из буфера\"\n  separatorHint=\"код ⇥ имя ⇥ штук\"\n/>",
+          "summary": "Сетка со вставкой нескольких строк из буфера и разбором с пометкой битых строк. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-023-* и не подменять её токенами вашей темы",
+            "показ битых строк с номером и причиной: молча отброшенная половина вставки — худший исход",
+            "разбор до добавления, а не после: строки должны попадать в таблицу уже проверенными",
+            "пометку только что добавленных строк, иначе после вставки непонятно, что именно приехало",
+            "role=status у отчёта о разборе — счёт разобранных и битых строк надо объявлять",
+            "светлую подложку сетки: на тёмной карточке каталога тёмный текст иначе пропадает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "описание формата строки через separatorHint",
+            "стартовый список номенклатуры через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Разделителями считаются табуляция, точка с запятой и два пробела подряд: запятая не годится из-за дробных чисел.",
+            "Дубли по артикулу не отсекаются — сверяйтесь с существующими строками у себя.",
+            "Пометка новых строк держится до следующей вставки и не сохраняется между перезагрузками.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Вставленные строки помечены заливкой до следующей вставки",
+            "maxLength": 120
+          },
+          {
+            "prop": "separatorHint",
+            "label": "Формат строки",
+            "type": "text",
+            "default": "артикул ⇥ название ⇥ количество",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid that pastes several rows from the clipboard: the text is parsed by separators, broken lines are named with their number and reason, and only whole rows reach the table.",
+            "ai": {
+              "summary": "A grid that pastes several rows from the clipboard and parses them, flagging the broken lines. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-023-* palette — do not swap it for your theme tokens",
+                "showing broken lines with their number and reason: half a paste dropped in silence is the worst outcome",
+                "parsing before adding rather than after: rows must reach the table already checked",
+                "marking the freshly added rows, otherwise it is unclear what actually arrived",
+                "role=status on the parse report — the count of parsed and broken lines has to be announced",
+                "the grid's own light surface: on the dark catalog card dark text disappears without it"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the line format description through separatorHint",
+                "the initial item list through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "The separators are a tab, a semicolon and two consecutive spaces: a comma will not do because of decimals.",
+                "Duplicate SKUs are not filtered — reconcile them against your existing rows.",
+                "The «new» marking lasts until the next paste and does not survive a reload.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid023\n  caption=\"Paste rows from the clipboard\"\n  separatorHint=\"code ⇥ name ⇥ units\"\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Pasted rows stay highlighted until the next paste"
+              },
+              "separatorHint": {
+                "label": "Line format",
+                "default": "sku ⇥ name ⇥ quantity"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-024",
+      "type": "registry:component",
+      "title": "Tree Grid",
+      "description": "Сетка-дерево с раскрывающимися дочерними строками: уровень объявлен через aria-level, отступ считается из него, а сумма родителя пересчитывается по ветке.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-024/datagrid-024.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-024.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-024-*. Клиентский: useState хранит список раскрытых ветвей, обход дерева разворачивает его в плоский список строк. Уровень заявлен разметкой: у строки стоит aria-level, у родителя — aria-expanded, отступ приходит переменной --vibeui-datagrid-024-depth и умножается на шаг. Итог родителя всегда считается по потомкам рекурсивно: свёрнутая ветка без собственной суммы прячет данные, а не сворачивает их. Кнопка раскрытия несёт свой aria-label с именем ветки, стрелка поворачивается transform. Прокрутка вынесена в контейнер с role=region и tabindex=0.",
+      "meta": {
+        "tags": ["datagrid", "tree", "hierarchy", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid024",
+          "usage": "<Datagrid024 caption=\"Дерево статей сметы\" depthStep={28} />",
+          "summary": "Сетка-дерево с раскрывающимися дочерними строками и итогом родителя по ветке. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-024-* и не подменять её токенами вашей темы",
+            "aria-level на строке и aria-expanded на родителе: отступ сам по себе иерархию не сообщает",
+            "пересчёт суммы родителя по потомкам — свёрнутая ветка без итога прячет данные, а не сворачивает их",
+            "отступ через переменную уровня, а не отдельным классом на каждую глубину",
+            "aria-label кнопки с именем ветки, иначе десяток одинаковых стрелок неразличим",
+            "светлую подложку сетки: на тёмной карточке каталога тёмный текст иначе пропадает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "шаг отступа уровня через depthStep, в пикселях",
+            "структуру статей через tree",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Собственная сумма родителя игнорируется, если у него есть потомки: итог всегда считается по ветке.",
+            "Глубина не ограничена, но с четвёртого уровня отступ съедает колонку — уменьшите depthStep.",
+            "Обход дерева выполняется при каждом рендере: на тысячах узлов разворачивайте список заранее.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Сумма родителя пересчитывается по вложенным строкам",
+            "maxLength": 120
+          },
+          {
+            "prop": "depthStep",
+            "label": "Шаг отступа, px",
+            "type": "number",
+            "default": 20,
+            "min": 8,
+            "max": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tree grid with expandable child rows: the level is declared through aria-level, the indent is derived from it, and a parent's total is recomputed from its branch.",
+            "ai": {
+              "summary": "A tree grid with expandable child rows and a parent total computed from the branch. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-024-* palette — do not swap it for your theme tokens",
+                "aria-level on the row and aria-expanded on the parent: indentation alone never conveys hierarchy",
+                "recomputing the parent total from its children — a collapsed branch without a sum hides data rather than folding it",
+                "the indent through a level variable rather than one class per depth",
+                "the button's aria-label naming the branch, or a dozen identical arrows are indistinguishable",
+                "the grid's own light surface: on the dark catalog card dark text disappears without it"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the per-level indent through depthStep, in pixels",
+                "the item hierarchy through tree",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "A parent's own amount is ignored when it has children: the total always comes from the branch.",
+                "Depth is unbounded, but past the fourth level the indent eats the column — lower depthStep.",
+                "The tree is walked on every render: flatten the list ahead of time once you reach thousands of nodes.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid024 caption=\"Estimate item tree\" depthStep={28} />"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "A parent total is recomputed from its nested rows"
+              },
+              "depthStep": {
+                "label": "Indent step, px",
+                "default": 20
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-025",
+      "type": "registry:component",
+      "title": "Infinite Scroll",
+      "description": "Длинная сетка с догрузкой по прокрутке: счётчик и полоса показывают, сколько строк уже подгружено, а кнопка «Загрузить ещё» повторяет автозагрузку для клавиатуры.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-025/datagrid-025.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-025.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-025-*. Клиентский: useState хранит число показанных строк, срез массива даёт видимые. Автозагрузка висит на onScroll контейнера и срабатывает за 24 px до дна — без запаса порог не ловится при быстрой прокрутке. Кнопка «Загрузить ещё» оставлена намеренно: она дублирует автозагрузку для клавиатуры и для тех, кто прыгнул к концу списка. Доля загруженного показана и числом, и полосой с role=progressbar и aria-valuenow: бесконечный список без дна дезориентирует. Шапка липнет сверху, поэтому колонки видны на любой глубине.",
+      "meta": {
+        "tags": ["datagrid", "infinite-scroll", "progress", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid025",
+          "usage": "<Datagrid025 caption=\"Лента событий\" batchSize={20} />",
+          "summary": "Сетка с бесконечной прокруткой, счётчиком загруженного и полосой прогресса. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-025-* и не подменять её токенами вашей темы",
+            "кнопку «Загрузить ещё» рядом с автозагрузкой: одна прокрутка отрезает клавиатуру",
+            "запас в 24 px до дна — без него порог не ловится при быстрой прокрутке",
+            "счётчик и полосу с aria-valuenow: бесконечный список без видимого дна дезориентирует",
+            "липкую шапку с собственным фоном, иначе на глубине непонятно, что за колонки",
+            "aria-live у счётчика загруженного, чтобы догрузка была слышна, а не только видна"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "размер порции догрузки через batchSize",
+            "ленту событий через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Данные лежат в памяти целиком: под настоящую подгрузку замените срез запросом за следующей страницей.",
+            "Порог догрузки в пикселях, а не в процентах: при высоте окна больше порции список догрузится сразу дважды.",
+            "Состояния «загружается» нет — при реальном запросе добавьте флаг, иначе повтор уйдёт дважды.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Порция догружается у нижней кромки окна прокрутки",
+            "maxLength": 120
+          },
+          {
+            "prop": "batchSize",
+            "label": "Строк в порции",
+            "type": "number",
+            "default": 12,
+            "min": 4,
+            "max": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A long grid that loads on scroll: a counter and a bar show how many rows have arrived, and a «Load more» button repeats the auto-load for the keyboard.",
+            "ai": {
+              "summary": "A grid with infinite scrolling, a loaded-rows counter and a progress bar. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-025-* palette — do not swap it for your theme tokens",
+                "the «Load more» button beside the auto-load: scrolling alone cuts off the keyboard",
+                "the 24 px margin before the bottom — without it the threshold is missed on a fast scroll",
+                "the counter and the bar with aria-valuenow: an endless list with no visible bottom disorients",
+                "the sticky header with its own background, or the columns are a mystery deep in the list",
+                "aria-live on the loaded counter so a fetch is heard and not only seen"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the batch size through batchSize",
+                "the event feed through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "All data sits in memory: swap the slice for a request for the next page to load for real.",
+                "The threshold is in pixels, not per cent: with a viewport taller than a batch the list loads twice at once.",
+                "There is no «loading» state — add a flag for a real request, or the fetch fires twice.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid025 caption=\"Event feed\" batchSize={20} />"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "A batch loads at the bottom edge of the scroll viewport"
+              },
+              "batchSize": {
+                "label": "Rows per batch",
+                "default": 12
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-026",
+      "type": "registry:component",
+      "title": "Compare Row",
+      "description": "Сетка с закреплённой строкой сравнения: выбранная радиокнопкой модель липнет под шапкой, а остальные строки показывают отклонение от неё со знаком.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-026/datagrid-026.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-026.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-026-*. Клиентский: useState хранит идентификатор эталона и режим показа отклонений. Эталон выбирается радиокнопкой — это выбор одного из многих, флажок здесь соврал бы; строка эталона выводится первой и закреплена position:sticky под липкой шапкой, поэтому смещение top задано явно. Таблица собрана с border-collapse:separate: со схлопнутыми границами липкая строка теряет линию. Отклонение подписано знаком плюс или минус вместе с цветом: цвет один при дальтонизме не читается, а «дешевле» и «дороже» здесь противоположны по смыслу.",
+      "meta": {
+        "tags": ["datagrid", "compare", "sticky-row", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid026",
+          "usage": "<Datagrid026 caption=\"Сравнение моделей\" showDelta={false} />",
+          "summary": "Сетка с закреплённой строкой-эталоном и отклонениями остальных строк от неё. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-026-* и не подменять её токенами вашей темы",
+            "радиокнопку для выбора эталона: эталон один, флажок обещал бы множественный выбор",
+            "знак плюс или минус у отклонения, а не только цвет: цвет один при дальтонизме не читается",
+            "border-collapse:separate — со схлопнутыми границами липкая строка теряет свою линию",
+            "явный top у закреплённой строки: она обязана вставать точно под липкой шапкой",
+            "собственный фон у липких ячеек, иначе уезжающие строки видно насквозь"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "показ отклонений по умолчанию через showDelta",
+            "список моделей через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Отклонение считается вычитанием, а не в процентах: для долей поделите на значение эталона сами.",
+            "Знак не означает «лучше» или «хуже»: у массы и гарантии выгодные направления разные, подписывайте их.",
+            "Смещение top закреплённой строки подобрано под высоту шапки: поменяете отступы — поправьте и его.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Выберите эталон радиокнопкой — остальные строки покажут отклонение",
+            "maxLength": 120
+          },
+          {
+            "prop": "showDelta",
+            "label": "Показывать отклонение",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid with a pinned comparison row: the model picked by radio button sticks under the header while every other row shows its signed deviation from it.",
+            "ai": {
+              "summary": "A grid with a pinned reference row and the deviation of every other row from it. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-026-* palette — do not swap it for your theme tokens",
+                "a radio button for the reference: there is exactly one, and a checkbox would promise multiple",
+                "the plus or minus sign on the delta, not only the color: color alone fails for color blindness",
+                "border-collapse:separate — with collapsed borders the sticky row loses its own line",
+                "the explicit top on the pinned row: it has to land exactly under the sticky header",
+                "the sticky cells' own background, or the scrolling rows show straight through"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "whether deltas show by default through showDelta",
+                "the model list through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "The delta is a subtraction, not a percentage: divide by the reference value yourself for shares.",
+                "The sign does not mean «better» or «worse»: mass and warranty run in opposite directions, so label them.",
+                "The pinned row's top offset is tuned to the header height: change the padding and you must change it too.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid026 caption=\"Model comparison\" showDelta={false} />"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Pick a reference with the radio — other rows show the delta"
+              },
+              "showDelta": {
+                "label": "Show deviation",
+                "default": true
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-027",
+      "type": "registry:component",
+      "title": "Density Switch",
+      "description": "Сетка с переключателем плотности: компактно, обычно и просторно меняют отступ, кегль и высоту строки разом, а на просторной плотности появляется примечание.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-027/datagrid-027.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-027.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-027-*. Клиентский: useState хранит режим, который попадает в data-density на корне; три переменные — отступ, кегль и интерлиньяж — переопределяются одним селектором на режим, поэтому новых правил для ячеек не нужно. Плотность здесь не только про отступ: на просторном режиме показывается вторая строка с примечанием, которой в компактном нет, — иначе «просторно» это просто воздух. Переключатель собран радиокнопками внутри fieldset: это выбор одного из трёх, а не три независимые кнопки. Текущее состояние продублировано текстом с role=status.",
+      "meta": {
+        "tags": ["datagrid", "density", "settings", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid027",
+          "usage": "<Datagrid027 caption=\"Документы сделки\" density=\"compact\" />",
+          "summary": "Сетка с тремя уровнями плотности: отступ, кегль и высота строки меняются вместе. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-027-* и не подменять её токенами вашей темы",
+            "переключатель радиокнопками в fieldset: это выбор одного из трёх, а не три кнопки",
+            "смену кегля и интерлиньяжа вместе с отступом — одна высота строки плотности не делает",
+            "переменные плотности на корне через data-density, а не отдельные правила для каждой ячейки",
+            "текстовое дублирование состояния с role=status, иначе смена плотности нигде не объявляется",
+            "светлую подложку сетки: на тёмной карточке каталога тёмный текст иначе пропадает"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "стартовую плотность через density: compact, regular или roomy",
+            "список документов через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Примечание показывается только на просторной плотности: это часть режима, а не отдельный переключатель.",
+            "Компактный режим уменьшает кегль до 12 px — ниже опускаться не стоит, текст перестаёт читаться.",
+            "Плотность живёт в состоянии и сбрасывается при перезагрузке: сохраняйте выбор пользователя сами.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Плотность меняет отступ, кегль и высоту строки одновременно",
+            "maxLength": 120
+          },
+          {
+            "prop": "density",
+            "label": "Плотность",
+            "type": "select",
+            "default": "regular",
+            "options": ["compact", "regular", "roomy"]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid with a density switch: compact, regular and roomy change the padding, the type size and the row height at once, and the roomy setting reveals a note.",
+            "ai": {
+              "summary": "A grid with three density levels: padding, type size and row height change together. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-027-* palette — do not swap it for your theme tokens",
+                "the switch as radio buttons inside a fieldset: this is one choice of three, not three buttons",
+                "changing the type size and leading along with the padding — row height alone is not density",
+                "the density variables on the root through data-density rather than per-cell rules",
+                "repeating the state in text with role=status, or a density change is never announced",
+                "the grid's own light surface: on the dark catalog card dark text disappears without it"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the initial density through density: compact, regular or roomy",
+                "the document list through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "The note only appears at roomy density: it is part of the mode, not a separate toggle.",
+                "Compact drops the type to 12 px — do not go lower, the text stops being readable.",
+                "Density lives in state and resets on reload: persist the reader's choice yourself.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid027 caption=\"Deal documents\" density=\"compact\" />"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Density changes padding, type size and row height at once"
+              },
+              "density": {
+                "label": "Density",
+                "default": "regular"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-028",
+      "type": "registry:component",
+      "title": "Row Actions Menu",
+      "description": "Сетка с колонкой действий: пять команд убраны в меню, оно ходит стрелками, закрывается по Escape с возвратом фокуса, а удаление отделено линией.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-028/datagrid-028.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-028.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-028-*. Клиентский: useState хранит идентификатор открытой строки, ref держит кнопки-триггеры, useId даёт стабильные id панелей для aria-controls. Меню собрано по клавиатурной модели: стрелка вниз на кнопке открывает его, стрелки водят по пунктам, Home и End прыгают к краям, Escape закрывает и возвращает фокус на кнопку — без возврата фокус улетает в начало страницы. Разметка честная: список с role=menu и кнопки с role=menuitem. Разрушительный пункт отделён линией и помечен цветом вместе со словом «Удалить»: один цвет предупреждением не является.",
+      "meta": {
+        "tags": ["datagrid", "menu", "row-actions", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid028",
+          "usage": "<Datagrid028\n  caption=\"Действия строки в меню\"\n  triggerLabel=\"Ещё\"\n/>",
+          "summary": "Сетка с колонкой действий и меню с клавиатурной навигацией и возвратом фокуса. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-028-* и не подменять её токенами вашей темы",
+            "возврат фокуса на кнопку при закрытии: без него фокус улетает в начало страницы",
+            "стрелки, Home и End внутри меню — мышиное меню без клавиатуры отрезает часть пользователей",
+            "role=menu и role=menuitem на настоящих кнопках, а не div со слушателем клика",
+            "отделение разрушительного пункта линией и словом «Удалить», а не одним красным цветом",
+            "aria-haspopup вместе с aria-expanded на кнопке, иначе меню не объявляется как всплывающее"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "подпись кнопки меню через triggerLabel",
+            "список заказов через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Меню не закрывается по клику мимо: добавьте обработчик на документ, если это нужно.",
+            "Удаление ничего не удаляет — подтверждение и сам запрос вешайте снаружи.",
+            "Контейнер прокрутки оставлен с overflow-y:visible, иначе меню обрезалось бы его нижней кромкой.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Действия строки убраны в меню, оно управляется стрелками",
+            "maxLength": 120
+          },
+          {
+            "prop": "triggerLabel",
+            "label": "Кнопка меню",
+            "type": "text",
+            "default": "Действия",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid with an actions column: five commands live in a menu that walks with the arrows, closes on Escape returning focus, and keeps deletion behind a divider.",
+            "ai": {
+              "summary": "A grid with a row-actions column and a menu with keyboard navigation and focus return. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-028-* palette — do not swap it for your theme tokens",
+                "returning focus to the trigger on close: without it focus flies to the top of the page",
+                "the arrows, Home and End inside the menu — a mouse-only menu cuts off part of your users",
+                "role=menu and role=menuitem on real buttons rather than divs with a click listener",
+                "separating the destructive item with a divider and the word «Delete», not with red alone",
+                "aria-haspopup alongside aria-expanded on the trigger, or the menu is never announced as a popup"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the menu button caption through triggerLabel",
+                "the order list through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "The menu does not close on an outside click: add a document handler if you need that.",
+                "Delete deletes nothing — put the confirmation and the request around it.",
+                "The scroll container keeps overflow-y:visible, otherwise the menu would be clipped by its bottom edge.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid028\n  caption=\"Row actions live in a menu\"\n  triggerLabel=\"More\"\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Row actions live in a menu driven by the arrow keys"
+              },
+              "triggerLabel": {
+                "label": "Menu button",
+                "default": "Actions"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-030",
+      "type": "registry:component",
+      "title": "Frozen Lead Column",
+      "description": "График смен с закреплённой только первой колонкой: имя сотрудника остаётся на месте, а дни прокручиваются вбок без второй закреплённой границы справа.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-030/datagrid-030.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-030.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-030-*. Серверный: состояния нет, всё держится на CSS. Закреплена только первая колонка (position:sticky, left:0) — в отличие от сеток с двумя липкими краями, здесь справа закреплять нечего: важен день, до которого долистали, а не итоговая колонка. Липкая ячейка несёт собственный фон и border-collapse:separate, иначе прокрученные дни просвечивают сквозь неё и колонка теряет линию. Прокрутка живёт в контейнере с role=region, aria-label и tabindex=0, поэтому работает с клавиатуры. Код смены у каждой ячейки продублирован словом в aria-label — цветной пилюли самой по себе недостаточно.",
+      "meta": {
+        "tags": ["datagrid", "sticky-column", "scroll", "schedule"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid030",
+          "usage": "<Datagrid030\n  caption=\"График смен на две недели\"\n  scrollHint=\"Прокрутите вбок: колонка с именем закреплена\"\n/>",
+          "summary": "График смен с одной закреплённой первой колонкой и доступной с клавиатуры горизонтальной прокруткой остальных дней. Серверный компонент, ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-030-* и не подменять её токенами вашей темы",
+            "закрепление только первой колонки — вторая липкая граница справа тут не нужна и не добавляется",
+            "собственный фон у липкой ячейки: без него прокрученные дни видно насквозь",
+            "border-collapse:separate — со схлопнутыми границами липкая колонка теряет свою линию",
+            "контейнер прокрутки с role=region, aria-label и tabindex=0: иначе листать можно только мышью",
+            "словесный aria-label у кода смены — цветная пилюля без подписи ничего не говорит"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "подсказку о прокрутке через scrollHint",
+            "названия дней через days и данные через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Липкая колонка задана в rem: на очень узком экране под неё остаётся мало места для первого дня, проверьте.",
+            "Тень у закреплённого края появляется по прокрутке только там, где поддержан scroll-timeline; в остальных браузерах её нет.",
+            "min-width таблицы задан под 14 дней: при другом числе колонок скорректируйте его, иначе таблица прокручивается впустую.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "График смен на две недели",
+            "maxLength": 80
+          },
+          {
+            "prop": "scrollHint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Прокрутите вбок: колонка с именем закреплена",
+            "maxLength": 80
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A shift schedule with only the first column frozen: the employee name stays put while the days scroll sideways, with no second sticky edge on the right.",
+            "ai": {
+              "summary": "A shift schedule with a single frozen lead column and horizontal scrolling that works from the keyboard. Server component, zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-030-* palette — do not swap it for your theme tokens",
+                "freezing only the first column — a second sticky edge on the right is not needed and not added",
+                "the sticky cell's own background: without it the scrolled days show straight through",
+                "border-collapse:separate — with collapsed borders a sticky column loses its own line",
+                "the scroll container with role=region, aria-label and tabindex=0: otherwise only a mouse can pan it",
+                "the word-level aria-label on the shift code — a coloured pill alone says nothing"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the scrolling hint through scrollHint",
+                "the day names through days and the data through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "The sticky column is set in rem: on a very narrow screen little room is left for the first day, so check it.",
+                "The sticky edge shadow appears on scroll only where scroll-timeline is supported; elsewhere there simply is none.",
+                "The table min-width is tuned for 14 days: adjust it for a different column count, otherwise the table scrolls for nothing.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid030\n  caption=\"Two-week shift schedule\"\n  scrollHint=\"Scroll sideways: the name column is frozen\"\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Two-week shift schedule"
+              },
+              "scrollHint": {
+                "label": "Hint",
+                "default": "Scroll sideways: the name column is frozen"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "datagrid-029",
+      "type": "registry:component",
+      "title": "Load Error",
+      "description": "Сетка с состоянием ошибки загрузки: шапка остаётся на месте, а в теле стоит объяснение с кодом ошибки, кнопкой повтора и счётчиком попыток.",
+      "categories": ["data-grid"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "datagrid-029/datagrid-029.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/datagrid-029.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-datagrid-029-*. Клиентский: одно булево состояние переключает сбой и данные, второе считает попытки повтора. Ошибка показана строкой внутри tbody с colSpan на всю ширину: шапка остаётся, поэтому видно, что именно не загрузилось — иначе кажется, что таблица пропала. Блок помечен role=alert, потому что пользователь мог уже увести взгляд. Счётчик попыток объявлен aria-live: без него кнопка повтора выглядит неработающей. Значок нарисован рамками и псевдоэлементами, чтобы компонент оставался одним файлом без картинок; третья попытка в демонстрации завершается успехом.",
+      "meta": {
+        "tags": ["datagrid", "error-state", "retry", "table"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Datagrid029",
+          "usage": "<Datagrid029\n  caption=\"Список узлов\"\n  errorCode=\"ERR_TIMEOUT\"\n/>",
+          "summary": "Сетка с состоянием ошибки загрузки и повтором: код ошибки, объяснение и счётчик попыток. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-datagrid-029-* и не подменять её токенами вашей темы",
+            "шапку таблицы во время ошибки: без неё кажется, что таблица пропала целиком",
+            "role=alert на блоке ошибки — пользователь мог увести взгляд до момента сбоя",
+            "код ошибки рядом с объяснением: без него в поддержку не с чем обратиться",
+            "счётчик попыток с aria-live, иначе кнопка повтора выглядит неработающей",
+            "значок из рамок вместо картинки: компонент обязан оставаться одним файлом без ресурсов"
+          ],
+          "adapt": [
+            "подпись под шапкой через caption",
+            "код ошибки через errorCode",
+            "список узлов через rows",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Кнопка «Симулировать сбой» нужна витрине: в бою состояние приходит от запроса, уберите её.",
+            "Третья попытка в демонстрации завершается успехом — в бою вешайте на кнопку настоящий повтор.",
+            "Состояния «повторяем» нет: при реальном запросе добавьте флаг, иначе повтор уйдёт дважды.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Шапка остаётся на месте: понятно, что именно не загрузилось",
+            "maxLength": 120
+          },
+          {
+            "prop": "errorCode",
+            "label": "Код ошибки",
+            "type": "text",
+            "default": "ERR_GATEWAY_504",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid with a load-error state: the header stays put while the body carries the explanation, the error code, a retry button and an attempt counter.",
+            "ai": {
+              "summary": "A grid with a load-error state and a retry: the error code, an explanation and an attempt counter. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-datagrid-029-* palette — do not swap it for your theme tokens",
+                "the table header during the error: without it the table looks gone entirely",
+                "role=alert on the error block — the reader may have looked away before the failure",
+                "the error code beside the explanation: without it there is nothing to give support",
+                "the attempt counter with aria-live, or the retry button looks broken",
+                "the glyph drawn from borders instead of an image: the component must stay one file with no assets"
+              ],
+              "adapt": [
+                "the line under the toolbar through caption",
+                "the error code through errorCode",
+                "the node list through rows",
+                "the accent color through accent"
+              ],
+              "notes": [
+                "The «simulate failure» button exists for the catalog: in production the state comes from the request, so drop it.",
+                "The third attempt succeeds in the demo — wire the button to a real retry in production.",
+                "There is no «retrying» state: add a flag for a real request, or the retry fires twice.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Datagrid029\n  caption=\"Node list\"\n  errorCode=\"ERR_TIMEOUT\"\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "The header stays put: it is clear what failed to load"
+              },
+              "errorCode": {
+                "label": "Error code",
+                "default": "ERR_GATEWAY_504"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

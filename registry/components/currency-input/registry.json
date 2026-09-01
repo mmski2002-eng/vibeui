@@ -1,0 +1,799 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "currency-001",
+      "type": "registry:component",
+      "title": "Amount Field",
+      "description": "Поле суммы: разряды появляются по уходу из поля, а не под курсором, и рядом стоят частые значения.",
+      "categories": [
+        "currency-input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "currency-001/currency-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/currency-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-currency-001-*. Клиентский: \"use client\". Во время ввода в поле остаются только цифры, форматирование через toLocaleString происходит на blur. Кнопки быстрых сумм объявлены aria-pressed. Значение выравнено по правому краю табличными цифрами.",
+      "meta": {
+        "tags": [
+          "input",
+          "currency",
+          "money",
+          "format"
+        ],
+        "ai": {
+          "export": "Currency001",
+          "usage": "<Currency001 currency=\"₽\" presets={[1000, 5000]} onChange={setAmount} />",
+          "summary": "Поле суммы: крупное значение справа, знак валюты рядом, разряды по уходу из поля и кнопки частых сумм. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-currency-001-* и не подменять её токенами вашей темы",
+            "форматирование по blur: разряды под курсором прыгают и мешают править число",
+            "цифровую клавиатуру через inputMode",
+            "выравнивание по правому краю и табличные цифры — так сравнивают суммы",
+            "быстрые значения рядом: чаще всего вводят одно из нескольких круглых",
+            "знак валюты вне поля ввода, чтобы его не стирали"
+          ],
+          "adapt": [
+            "currency — знак валюты",
+            "presets — частые суммы",
+            "label и hint",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Копейки не поддержаны: для них нужен разделитель и другая логика разбора.",
+            "Локаль форматирования зашита в ru-RU: смените её вместе с валютой.",
+            "Минимальную сумму проверяет форма: подпись под полем ничего не гарантирует.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Сумма пополнения",
+            "maxLength": 30
+          },
+          {
+            "prop": "currency",
+            "label": "Валюта",
+            "type": "text",
+            "default": "₽",
+            "maxLength": 4
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Минимум 100 ₽, зачислится в течение минуты",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An amount field: thousands separators appear on blur rather than under the caret, with common amounts beside it.",
+            "ai": {
+              "summary": "An amount field: a large right-aligned value, the currency sign beside it, grouping applied on blur and quick-amount buttons. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-currency-001-* palette — do not swap it for your theme tokens",
+                "formatting on blur: separators under the caret jump and fight editing",
+                "the numeric keypad through inputMode",
+                "right alignment and tabular figures — that is how amounts get compared",
+                "the quick amounts beside the field: people usually pick a round number",
+                "the currency sign outside the input so it cannot be deleted"
+              ],
+              "adapt": [
+                "currency — the sign",
+                "presets — the common amounts",
+                "label and hint",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Decimals are unsupported: they need a separator and different parsing.",
+                "The formatting locale is hardcoded to ru-RU: change it with the currency.",
+                "The minimum is enforced by the form: the hint guarantees nothing.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Currency001 currency=\"$\" presets={[10, 50]} onChange={setAmount} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Top-up amount"
+              },
+              "currency": {
+                "label": "Currency",
+                "default": "$"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "Minimum $5, credited within a minute"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "currency-002",
+      "type": "registry:component",
+      "title": "Currency Select",
+      "description": "Сумма с выбором валюты в том же поле: знак слева меняется вместе с выбором, поэтому строка всегда читается целиком.",
+      "categories": [
+        "currency-input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "currency-002/currency-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/currency-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-currency-002-*. Клиентский: сумма и код валюты в состоянии. Список валют вынесен не над полем, а внутрь общей рамки: сумма в валюте — одно значение, а отдельный контрол читается как второй вопрос. Список нативный, поэтому даёт поиск по первой букве на десктопе и системное колесо на телефоне без единой строки кода. Знак валюты стоит слева от числа и меняется вместе с выбором.",
+      "meta": {
+        "tags": [
+          "currency",
+          "money",
+          "select",
+          "form"
+        ],
+        "ai": {
+          "export": "Currency002",
+          "usage": "<Currency002 label=\"Сумма счёта\" defaultValue={1200} defaultCurrency=\"EUR\" />",
+          "summary": "Поле суммы со встроенным выбором валюты: знак слева и подпись под полем следуют за выбранным кодом. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-currency-002-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: поле показывают поверх любого фона",
+            "валюту внутри рамки поля: отдельный контрол сверху читается как второй вопрос",
+            "нативный select: он даёт поиск по первой букве и системное колесо на телефоне даром",
+            "знак слева от числа: «€ 1 200» читается одной строкой, а знак справа отрывается",
+            "aria-label на списке валют: рядом с ним нет видимой подписи",
+            "подпись под полем на живой области: она меняется вместе с валютой"
+          ],
+          "adapt": [
+            "label — подпись поля",
+            "currencies — список валют, их знаки и склонения",
+            "defaultValue и defaultCurrency — стартовые сумма и валюта",
+            "текст подписи под полем",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Сумма при смене валюты не пересчитывается намеренно: это ввод счёта, а не конвертер.",
+            "Знаки валют разной ширины — поле не должно от этого прыгать, поэтому у знака фиксированный отступ.",
+            "Наружу отдавайте пару «сумма и код», иначе принимающая сторона не знает валюту.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Сумма счёта",
+            "maxLength": 24
+          },
+          {
+            "prop": "defaultCurrency",
+            "label": "Валюта",
+            "type": "select",
+            "default": "EUR",
+            "options": [
+              "RUB",
+              "USD",
+              "EUR",
+              "CNY"
+            ]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An amount with the currency picked inside the same field: the sign on the left follows the choice, so the line always reads as one value.",
+            "ai": {
+              "summary": "An amount field with a built-in currency picker: the leading sign and the caption follow the selected code. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-currency-002-* palette — do not swap it for your theme tokens",
+                "its own light surface: the field gets shown over any background",
+                "the currency inside the field frame: a separate control above reads as a second question",
+                "the native select: it hands over first-letter search and a phone wheel picker for free",
+                "the sign to the left of the number: \"€ 1,200\" reads as one line while a trailing sign detaches",
+                "the aria-label on the currency list: it has no visible caption next to it",
+                "the live region under the field: its text changes together with the currency"
+              ],
+              "adapt": [
+                "label — the field caption",
+                "currencies — the currency list, their signs and word forms",
+                "defaultValue and defaultCurrency — the starting amount and currency",
+                "the caption text under the field",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The amount is deliberately not converted on a currency change: this is invoice entry, not a converter.",
+                "Currency signs differ in width — the field must not jump, hence the fixed padding on the sign.",
+                "Emit the amount and the code together, or the receiving side cannot tell the currency.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Currency002 label=\"Invoice amount\" defaultValue={1200} defaultCurrency=\"EUR\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Invoice amount"
+              },
+              "defaultCurrency": {
+                "label": "Currency"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "currency-003",
+      "type": "registry:component",
+      "title": "Cash Register Input",
+      "description": "Кассовый ввод справа налево: сумма хранится в копейках, каждая цифра сдвигает её на разряд, а запятую вводить не нужно вовсе.",
+      "categories": [
+        "currency-input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "currency-003/currency-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/currency-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-currency-003-*. Клиентский: сумма в состоянии, целым числом копеек. Ввод идёт справа налево, как на кассовом терминале: из строки берутся только цифры, поэтому разделители не редактируются и промахнуться мимо запятой невозможно. Целые копейки заодно снимают главную беду денег в JS — дробную арифметику: складываются копейки, а не 0.1 и 0.2. Разряды расставляются на каждом нажатии, но курсор всегда в конце строки, поэтому ничего не прыгает.",
+      "meta": {
+        "tags": [
+          "currency",
+          "money",
+          "mask",
+          "cents"
+        ],
+        "ai": {
+          "export": "Currency003",
+          "usage": "<Currency003 label=\"Сумма чека\" currency=\"₽\" defaultValue={1499.9} />",
+          "summary": "Поле суммы с вводом справа налево: копейки и разделители разрядов встают сами, значение хранится целым числом копеек. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-currency-003-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: поле показывают поверх любого фона",
+            "хранение в целых копейках: дробная арифметика в деньгах рано или поздно даёт копейку расхождения",
+            "ввод справа налево: без разделителя, который надо ставить руками, промахнуться некуда",
+            "выборку только цифр из строки: иначе пользователь сотрёт пробел-разделитель и сломает формат",
+            "выравнивание числа вправо и tabular-nums: при вводе справа налево дрожание разрядов особенно заметно",
+            "inputMode=\"numeric\": на телефоне открывается цифровая клавиатура, а не буквенная"
+          ],
+          "adapt": [
+            "label — подпись поля",
+            "currency — знак валюты",
+            "defaultValue — стартовая сумма в рублях",
+            "hint — пояснение под полем",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Тип поля именно text: у number нельзя показать собственный формат с пробелами.",
+            "Наружу отдавайте копейки: деление на сто перед отправкой возвращает ту же дробную беду.",
+            "Ввод ограничен одиннадцатью цифрами — этого хватает до сотен миллионов рублей.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Сумма чека",
+            "maxLength": 24
+          },
+          {
+            "prop": "currency",
+            "label": "Знак валюты",
+            "type": "text",
+            "default": "₽",
+            "maxLength": 4
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Cash-register entry from the right: the amount lives in whole cents, each digit shifts it one place, and the separator never needs typing.",
+            "ai": {
+              "summary": "An amount field typed right to left: cents and thousand separators appear on their own, the value is kept as whole cents. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-currency-003-* palette — do not swap it for your theme tokens",
+                "its own light surface: the field gets shown over any background",
+                "storing whole cents: floating-point money eventually drifts by a cent",
+                "the right-to-left entry: with no separator to place by hand there is nothing to mis-aim",
+                "extracting digits only from the string: otherwise a user deletes the separator and breaks the format",
+                "the right alignment with tabular-nums: right-to-left entry makes digit jitter especially visible",
+                "inputMode=\"numeric\": phones open the numeric keypad instead of the letters"
+              ],
+              "adapt": [
+                "label — the field caption",
+                "currency — the currency sign",
+                "defaultValue — the starting amount in whole units",
+                "hint — the explanation under the field",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The input type is text on purpose: a number input cannot show a custom spaced format.",
+                "Emit cents outwards: dividing by a hundred before sending brings the float problem back.",
+                "Input is capped at eleven digits, which covers hundreds of millions.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Currency003 label=\"Receipt total\" currency=\"₽\" defaultValue={1499.9} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Receipt total"
+              },
+              "currency": {
+                "label": "Currency sign",
+                "default": "₽"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "currency-004",
+      "type": "registry:component",
+      "title": "Rate Converter",
+      "description": "Две суммы, связанные курсом: править можно любую, база хранится одна, поэтому суммы не расходятся при правках туда-обратно.",
+      "categories": [
+        "currency-input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "currency-004/currency-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/currency-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-currency-004-*. Клиентский: в состоянии лежит только сумма отправления. Второе поле вычисляемое, но редактируемое: правка нижнего делит введённое на курс и кладёт результат в ту же базу, поэтому округление случается один раз, а не на каждом переходе. Курс подписан вместе со временем обновления — без времени он выглядит как обещание, а не как справка.",
+      "meta": {
+        "tags": [
+          "currency",
+          "converter",
+          "rate",
+          "exchange"
+        ],
+        "ai": {
+          "export": "Currency004",
+          "usage": "<Currency004 label=\"Перевод за границу\" rate={0.0104} from=\"RUB\" to=\"EUR\" defaultValue={50000} />",
+          "summary": "Конвертер из двух связанных полей: править можно любое, база одна, курс подписан со временем обновления. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-currency-004-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: конвертер показывают поверх любого фона",
+            "правку в обе стороны: тот, кто знает нужную сумму в валюте зачисления, иначе подбирает её делением в уме",
+            "единую базу в валюте отправления: два независимых состояния разойдутся после пары правок",
+            "одно место округления: округление на каждом переходе уводит сумму при правках туда-обратно",
+            "подпись курса со временем обновления: курс без времени выглядит обещанием",
+            "aria-label на обоих полях: подписи заменены кодами валют"
+          ],
+          "adapt": [
+            "label — заголовок блока",
+            "rate — курс пересчёта",
+            "from и to — коды валют",
+            "defaultValue — стартовая сумма",
+            "updatedAt — строка о времени обновления курса",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Курс задаётся как множитель из первой валюты во вторую: обратный курс компонент считает сам.",
+            "Комиссии здесь нет: для перевода с комиссией нужен отдельный расчёт итога.",
+            "Округление до сотых достаточно для валют с копейками, но не для криптовалют.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Перевод за границу",
+            "maxLength": 28
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Сумма",
+            "type": "number",
+            "default": 50000,
+            "min": 0,
+            "max": 1000000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Two amounts linked by a rate: either one is editable, a single base is stored, so the pair never drifts apart after back-and-forth edits.",
+            "ai": {
+              "summary": "A converter of two linked fields: edit either one, one source of truth, and the rate is captioned with its update time. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-currency-004-* palette — do not swap it for your theme tokens",
+                "its own light surface: the converter gets shown over any background",
+                "editing in both directions: someone who knows the target amount otherwise divides in their head",
+                "the single base in the source currency: two independent states drift apart after a couple of edits",
+                "the single rounding point: rounding on every hop walks the amount away during back-and-forth edits",
+                "the rate caption with its update time: a rate without a time reads as a promise",
+                "the aria-labels on both fields: their captions are currency codes"
+              ],
+              "adapt": [
+                "label — the block heading",
+                "rate — the conversion rate",
+                "from and to — the currency codes",
+                "defaultValue — the starting amount",
+                "updatedAt — the line about the rate update time",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The rate is a multiplier from the first currency to the second: the inverse is computed for you.",
+                "There is no fee here: a transfer with a fee needs a separate total.",
+                "Rounding to hundredths suits currencies with cents but not crypto.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Currency004 label=\"Transfer abroad\" rate={0.0104} from=\"RUB\" to=\"EUR\" defaultValue={50000} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Heading",
+                "default": "Transfer abroad"
+              },
+              "defaultValue": {
+                "label": "Amount"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "currency-005",
+      "type": "registry:component",
+      "title": "Budget Limit",
+      "description": "Бюджет с потолком, который виден до ошибки: полоса заполняется по мере ввода, а превышение подсвечивается сразу, а не при отправке формы.",
+      "categories": [
+        "currency-input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "currency-005/currency-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/currency-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-currency-005-*. Клиентский: сумма в состоянии, состояние блока считается от доли лимита. Три положения — в норме, на подходе, превышено — помечаются data-state на корне и переопределяют одну переменную акцента, поэтому полоса, рамка и текст меняются разом. Ввод выше лимита не запрещается: он помечается aria-invalid, потому что человек часто сначала набирает нужную сумму, а потом идёт повышать лимит.",
+      "meta": {
+        "tags": [
+          "currency",
+          "budget",
+          "limit",
+          "validation"
+        ],
+        "ai": {
+          "export": "Currency005",
+          "usage": "<Currency005 label=\"Бюджет кампании\" limit={100000} defaultValue={68000} currency=\"₽\" />",
+          "summary": "Поле бюджета с потолком: полоса расхода, три состояния и понятный остаток вместо молчаливого max. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-currency-005-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: поле показывают поверх любого фона",
+            "полосу остатка: доля израсходованного читается площадью быстрее, чем разностью чисел",
+            "предупреждение на подходе к лимиту, а не только после него: узнать о потолке в момент превышения поздно",
+            "разрешённый ввод сверх лимита с пометкой aria-invalid: сумму часто набирают до повышения лимита",
+            "data-state с одной переменной акцента: иначе цвет придётся править в пяти правилах",
+            "aria-live на пояснении: остаток меняется без перезагрузки"
+          ],
+          "adapt": [
+            "label — подпись поля",
+            "limit — сам потолок",
+            "defaultValue — стартовая сумма",
+            "currency — знак валюты",
+            "порог предупреждения в 85 процентов",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Компонент не блокирует отправку: проверьте превышение снаружи перед submit.",
+            "Полоса ограничена сотней процентов, иначе при превышении она вылезает за рамку.",
+            "Порог «на подходе» зашит в код: вынесите его в проп, если он должен настраиваться.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Бюджет кампании",
+            "maxLength": 24
+          },
+          {
+            "prop": "limit",
+            "label": "Потолок",
+            "type": "number",
+            "default": 100000,
+            "min": 1000,
+            "max": 10000000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A budget with a ceiling visible before the mistake: the bar fills as you type and an overrun is highlighted instantly, not at submit time.",
+            "ai": {
+              "summary": "A budget field with a ceiling: a spend bar, three states and a readable remainder instead of a silent max. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-currency-005-* palette — do not swap it for your theme tokens",
+                "its own light surface: the field gets shown over any background",
+                "the remainder bar: a spent share reads faster as an area than as a subtraction",
+                "the warning on approach, not only after the fact: learning about a ceiling while crossing it is too late",
+                "allowing input above the limit while flagging aria-invalid: the amount is often typed before the limit is raised",
+                "data-state driving a single accent variable: otherwise the colour has to be patched in five rules",
+                "aria-live on the explanation: the remainder changes without a reload"
+              ],
+              "adapt": [
+                "label — the field caption",
+                "limit — the ceiling itself",
+                "defaultValue — the starting amount",
+                "currency — the currency sign",
+                "the 85 percent warning threshold",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The component does not block submission: check the overrun on your side before submit.",
+                "The bar is capped at a hundred percent, otherwise an overrun escapes the frame.",
+                "The \"approaching\" threshold is hard-coded: lift it into a prop if it needs configuring.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Currency005 label=\"Campaign budget\" limit={100000} defaultValue={68000} currency=\"₽\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Campaign budget"
+              },
+              "limit": {
+                "label": "Ceiling"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "currency-006",
+      "type": "registry:component",
+      "title": "Transfer Fee",
+      "description": "Сумма перевода вместе с комиссией и итогом к списанию: поле, показывающее только введённое число, врёт — со счёта уйдёт больше.",
+      "categories": [
+        "currency-input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "currency-006/currency-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/currency-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-currency-006-*. Клиентский: сумма в состоянии, комиссия и итог вычисляются на лету. Комиссия считается по правилу «процент, но не меньше минимума», как её и берут в жизни: на маленьких переводах работает минимум, на больших — процент. Чек из трёх строк лежит в области aria-live, поэтому изменения озвучиваются; итог набран крупнее остального, потому что именно его сверяют с остатком на карте.",
+      "meta": {
+        "tags": [
+          "currency",
+          "transfer",
+          "fee",
+          "checkout"
+        ],
+        "ai": {
+          "export": "Currency006",
+          "usage": "<Currency006 label=\"Сумма перевода\" percent={1.5} minFee={50} defaultValue={12000} />",
+          "summary": "Поле перевода с расчётом комиссии и итога к списанию по правилу «процент, но не меньше минимума». Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-currency-006-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: чек показывают поверх любого фона",
+            "показ итога до подтверждения: узнать о комиссии на последнем экране — повод отменить перевод",
+            "правило «процент, но не меньше минимума»: на маленьких суммах работает минимум, и это надо считать",
+            "разделение на три строки: сумма получателю, комиссия и списание — разные числа, и их путают",
+            "крупный итог: это то число, которое сверяют с остатком на карте",
+            "aria-live на чеке: строки пересчитываются на каждый ввод"
+          ],
+          "adapt": [
+            "label — подпись поля",
+            "percent — ставка комиссии",
+            "minFee — минимальная комиссия",
+            "defaultValue — стартовая сумма",
+            "currency — знак валюты",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Комиссия считается сверху суммы: если она берётся изнутри, формулу надо перевернуть.",
+            "Копейки не округляются до целых — добавьте округление, если банк округляет комиссию.",
+            "При нулевой сумме комиссия обнуляется намеренно: минимум на пустом поле пугает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Сумма перевода",
+            "maxLength": 24
+          },
+          {
+            "prop": "percent",
+            "label": "Комиссия, %",
+            "type": "number",
+            "default": 1.5,
+            "min": 0,
+            "max": 10
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A transfer amount with its fee and the total debit: a field showing only the typed number lies, because more leaves the account.",
+            "ai": {
+              "summary": "A transfer field computing the fee and the total debit under a \"percent, but no less than a minimum\" rule. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-currency-006-* palette — do not swap it for your theme tokens",
+                "its own light surface: the receipt gets shown over any background",
+                "showing the total before confirmation: learning about a fee on the last screen is a reason to cancel",
+                "the \"percent, but no less than a minimum\" rule: small transfers are billed by the minimum and that has to be computed",
+                "the split into three lines: what the recipient gets, the fee and the debit are different numbers people confuse",
+                "the larger total: that is the number checked against the card balance",
+                "aria-live on the receipt: the lines recompute on every keystroke"
+              ],
+              "adapt": [
+                "label — the field caption",
+                "percent — the fee rate",
+                "minFee — the minimum fee",
+                "defaultValue — the starting amount",
+                "currency — the currency sign",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The fee is added on top of the amount: flip the formula if it is taken out of it instead.",
+                "Cents are not rounded to whole units — add rounding if your bank rounds the fee.",
+                "At a zero amount the fee is zeroed on purpose: a minimum fee on an empty field is alarming.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Currency006 label=\"Transfer amount\" percent={1.5} minFee={50} defaultValue={12000} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Transfer amount"
+              },
+              "percent": {
+                "label": "Fee, %"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "currency-007",
+      "type": "registry:component",
+      "title": "Price From To",
+      "description": "Цена «от» и «до» двумя полями: обе границы необязательны, а перепутанный порядок молча меняется местами по уходу из поля.",
+      "categories": [
+        "currency-input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "currency-007/currency-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/currency-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-currency-007-*. Клиентский: обе границы хранятся строками, поэтому пустое поле остаётся пустым и не превращается в ноль. Порядок чинится обменом значений на blur, а не сообщением об ошибке: ругаться на «от 12000 до 3000» бессмысленно — человек уже сказал, чего хочет, и просто набрал не в том поле. Итоговая формулировка собирается словами и меняется в зависимости от того, какие границы заполнены. legend лежит во float, поэтому у пары полей стоит clear:both.",
+      "meta": {
+        "tags": [
+          "currency",
+          "filter",
+          "range",
+          "price"
+        ],
+        "ai": {
+          "export": "Currency007",
+          "usage": "<Currency007 legend=\"Цена\" defaultFrom=\"3000\" defaultTo=\"12000\" currency=\"₽\" />",
+          "summary": "Фильтр цены «от» и «до»: границы необязательны, перепутанный порядок меняется местами, итог формулируется словами. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-currency-007-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: фильтр показывают поверх любого фона",
+            "обмен значений вместо ошибки: перепутанные поля — это опечатка, а не намерение",
+            "необязательность обеих границ: «до 5000» — самый частый фильтр, и нижнюю границу выдумывать не за что",
+            "хранение строками: числовое состояние превращает пустое поле в ноль и меняет смысл фильтра",
+            "обмен по blur, а не на каждое нажатие: иначе поля начнут прыгать прямо во время набора",
+            "clear:both у пары полей: legend с float:left иначе заставляет их обтекать себя"
+          ],
+          "adapt": [
+            "legend — заголовок фильтра",
+            "defaultFrom и defaultTo — стартовые границы",
+            "currency — знак валюты",
+            "формулировки итоговой строки",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Пустая строка и ноль — разные состояния: не приводите значения к числу раньше отправки.",
+            "Знак бесконечности в placeholder — намёк на необязательность верхней границы, а не значение.",
+            "Компонент не знает о доступном диапазоне цен: подставьте свои min и max, если он ограничен.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Цена",
+            "maxLength": 24
+          },
+          {
+            "prop": "defaultTo",
+            "label": "Верхняя граница",
+            "type": "text",
+            "default": "12000",
+            "maxLength": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A price from-to pair: both bounds are optional, and a reversed order quietly swaps itself on blur.",
+            "ai": {
+              "summary": "A price filter with from and to bounds: both optional, a reversed order swaps, and the result is spelled out in words. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-currency-007-* palette — do not swap it for your theme tokens",
+                "its own light surface: the filter gets shown over any background",
+                "swapping the values instead of raising an error: reversed fields are a typo, not an intent",
+                "both bounds staying optional: \"under 5000\" is the most common filter and a lower bound would be invented",
+                "storing strings: numeric state turns an empty field into zero and changes what the filter means",
+                "swapping on blur rather than on every keystroke: otherwise the fields jump while you type",
+                "clear:both on the field pair: a legend with float:left otherwise makes them wrap around it"
+              ],
+              "adapt": [
+                "legend — the filter heading",
+                "defaultFrom and defaultTo — the starting bounds",
+                "currency — the currency sign",
+                "the wording of the summary line",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "An empty string and a zero are different states: do not coerce to numbers before submitting.",
+                "The infinity sign in the placeholder hints that the upper bound is optional; it is not a value.",
+                "The component knows nothing about the available price range: pass your own min and max when it is bounded.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Currency007 legend=\"Price\" defaultFrom=\"3000\" defaultTo=\"12000\" currency=\"₽\" />"
+            },
+            "controls": {
+              "legend": {
+                "label": "Heading",
+                "default": "Price"
+              },
+              "defaultTo": {
+                "label": "Upper bound",
+                "default": "12000"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

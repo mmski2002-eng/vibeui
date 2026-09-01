@@ -1,0 +1,768 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "scrollspy-001",
+      "type": "registry:component",
+      "title": "Scrollspy Contents",
+      "description": "Оглавление подсвечивает раздел, видимый сейчас: слежение на IntersectionObserver, а не на обработчике прокрутки.",
+      "categories": [
+        "scrollspy"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollspy-001/scrollspy-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollspy-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-scrollspy-001-*. Клиентский: \"use client\" ради IntersectionObserver. Наблюдатель ограничен областью текста через root, а rootMargin отрезает нижние 60%, иначе активным становится раздел, который только показался снизу. У последнего раздела есть запас снизу — без него он не долистывается.",
+      "meta": {
+        "tags": [
+          "scrollspy",
+          "toc",
+          "reading",
+          "observer"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Scrollspy001",
+          "usage": "<Scrollspy001 sections={[{ id: \"install\", title: \"Установка\", text: \"…\" }]} />",
+          "summary": "Оглавление с подсветкой текущего раздела: список слева, прокручиваемый текст справа, полоса у активного пункта. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollspy-001-* и не подменять её токенами вашей темы",
+            "IntersectionObserver вместо обработчика scroll: пересчёт делает браузер",
+            "rootMargin, отрезающий низ: иначе активным становится едва показавшийся раздел",
+            "запас под последним разделом — без него он не долистывается и не подсвечивается",
+            "полосу у активного пункта, а не только цвет текста",
+            "обычные ссылки с href: оглавление должно работать и без JS"
+          ],
+          "adapt": [
+            "массив sections и их тексты",
+            "title — заголовок оглавления",
+            "высоту области текста",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Компонент следит за своей областью прокрутки: для слежения за страницей уберите root.",
+            "Подсветка отстаёт на кадр при мгновенном перескоке — это поведение наблюдателя, а не ошибка.",
+            "Оглавление из двух пунктов не нужно: оно окупается от четырёх разделов.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "На странице",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A table of contents that highlights the section in view: tracking runs on IntersectionObserver, not a scroll handler.",
+            "ai": {
+              "summary": "A table of contents with current-section highlighting: the list on the left, scrollable text on the right, a bar on the active item. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-scrollspy-001-* palette — do not swap it for your theme tokens",
+                "IntersectionObserver instead of a scroll handler: the browser decides when to recompute",
+                "the rootMargin cutting off the bottom: otherwise a barely visible section becomes active",
+                "the tail space under the last section — without it it never scrolls into view",
+                "the bar on the active item rather than colour alone",
+                "plain links with href: the contents must work without JS too"
+              ],
+              "adapt": [
+                "the sections array and their text",
+                "title — the contents heading",
+                "the text area height",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The component watches its own scroll area: drop root to watch the page instead.",
+                "The highlight lags a frame on an instant jump — that is observer behaviour, not a bug.",
+                "A two-item contents list is pointless: it pays off from four sections up.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollspy001 sections={[{ id: \"install\", title: \"Install\", text: \"…\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "On this page"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollspy-002",
+      "type": "registry:component",
+      "title": "Article Outline",
+      "description": "Оглавление статьи стоит не сбоку, а над текстом: пункты пронумерованы, у активного номер заливается, а ряд прокручивается пальцем.",
+      "categories": [
+        "scrollspy"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollspy-002/scrollspy-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollspy-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-002-*. Клиентский (\"use client\") — нужен IntersectionObserver. Наблюдатель следит за разделами внутри собственной области прокрутки: root — сам блок текста, rootMargin обрезает нижние 65%, поэтому активным становится раздел у верхней кромки, а не любой видимый. Ссылки — обычные якоря без preventDefault: без JS они по-прежнему доводят до раздела, наблюдатель добавляет только подсветку. Активный пункт помечен aria-current и залитым кружком номера: в горизонтальном ряду цвета текста мало.",
+      "meta": {
+        "tags": [
+          "scrollspy",
+          "toc",
+          "article",
+          "navigation"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Scrollspy002",
+          "usage": "<Scrollspy002\n  title=\"Содержание\"\n  sections={[\n    { id: \"why\", title: \"Зачем\", text: \"Почему оглавление нужно длинной странице\" },\n    { id: \"how\", title: \"Как устроено\", text: \"Якоря плюс наблюдатель пересечений\" },\n  ]}\n/>",
+          "summary": "Оглавление статьи в строку: якорные ссылки работают без JS, подсветку текущего раздела добавляет IntersectionObserver. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollspy-002-* и не подменять её токенами вашей темы",
+            "обычные якоря без preventDefault: без JS оглавление обязано остаться рабочим",
+            "IntersectionObserver вместо обработчика scroll — иначе браузер считает раскладку на каждый пиксель",
+            "rootMargin с отрицательным низом: без него активным становится раздел, уже ушедший вверх",
+            "aria-current на активной ссылке: залитый номер скринридеру недоступен",
+            "запас снизу у последнего раздела — иначе он не долистывается и никогда не подсвечивается"
+          ],
+          "adapt": [
+            "заголовок оглавления через title",
+            "разделы через sections: идентификатор, заголовок и текст",
+            "цвет акцента через accent",
+            "высоту области чтения в правиле height у [data-part=\"body\"]"
+          ],
+          "notes": [
+            "Идентификаторы разделов должны быть уникальны на странице: два блока с одинаковыми id перебьют якоря.",
+            "Оглавление в строку рассчитано на пять-шесть пунктов: длинный список превращается в бесконечную прокрутку.",
+            "Область чтения здесь своя; для оглавления по всей странице уберите root у наблюдателя.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Содержание",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An article outline placed above the text rather than beside it: the items are numbered, the active one gets a filled number, and the row scrolls by touch.",
+            "ai": {
+              "summary": "A single-row article outline: the anchor links work without JS and an IntersectionObserver adds the current-section highlight. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-scrollspy-002-* palette — do not swap it for your theme tokens",
+                "plain anchors without preventDefault: the outline must keep working without JS",
+                "the IntersectionObserver instead of a scroll handler — otherwise the browser recomputes layout on every pixel",
+                "the negative bottom rootMargin: without it a section that already scrolled past becomes active",
+                "aria-current on the active link: a filled number is invisible to a screen reader",
+                "the bottom padding on the last section — without it it never scrolls up and never lights up"
+              ],
+              "adapt": [
+                "the outline heading through title",
+                "the sections through sections: id, title and text",
+                "the accent colour through accent",
+                "the reading area height in the height rule of [data-part=\"body\"]"
+              ],
+              "notes": [
+                "Section ids must be unique on the page: two blocks with the same ids break the anchors.",
+                "A single-row outline suits five or six items: a long list turns into endless scrolling.",
+                "The reading area is local here; for a whole-page outline drop the observer's root.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollspy002\n  title=\"Contents\"\n  sections={[\n    { id: \"why\", title: \"Why\", text: \"Why a long page needs an outline\" },\n    { id: \"how\", title: \"How it works\", text: \"Anchors plus an intersection observer\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Contents"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollspy-003",
+      "type": "registry:component",
+      "title": "Nested Contents",
+      "description": "Двухуровневое оглавление, которое не вываливает сразу все подпункты: раскрыта только глава, внутри которой читатель сейчас находится.",
+      "categories": [
+        "scrollspy"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollspy-003/scrollspy-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollspy-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-003-*. Клиентский (\"use client\") — нужен IntersectionObserver. Наблюдатель следит за разделами обоих уровней сразу, поэтому активным может стать и глава, и её подпункт. Раскрытие второго уровня не хранится состоянием: список показывается правилом li[data-open=\"true\"] > [data-part=\"sub\"], где data-open вычисляется из того, активна ли глава или любой её потомок. Ссылки — обычные якоря, подсветка идёт через aria-current на обоих уровнях.",
+      "meta": {
+        "tags": [
+          "scrollspy",
+          "toc",
+          "nested",
+          "docs"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Scrollspy003",
+          "usage": "<Scrollspy003\n  title=\"Разделы\"\n  chapters={[\n    { id: \"start\", title: \"Начало\", text: \"Что понадобится до установки\", children: [{ id: \"start-install\", title: \"Установка\", text: \"Одна команда\" }] },\n  ]}\n/>",
+          "summary": "Оглавление на два уровня: подпункты видны только у текущей главы, подсветка идёт по обоим уровням. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollspy-003-* и не подменять её токенами вашей темы",
+            "раскрытие только текущей главы: развёрнутое дерево оказывается длиннее самого текста",
+            "наблюдение за обоими уровнями сразу — иначе подпункт никогда не станет активным",
+            "обычные якоря без preventDefault: без JS оглавление обязано остаться рабочим",
+            "aria-current на ссылке текущего раздела, а не только жирное начертание",
+            "вычисление data-open из активного раздела вместо отдельного состояния раскрытия"
+          ],
+          "adapt": [
+            "заголовок оглавления через title",
+            "главы и подпункты через chapters и вложенный children",
+            "цвет акцента через accent",
+            "ширину колонки оглавления в grid-template-columns"
+          ],
+          "notes": [
+            "Третий уровень вложенности компонент не рисует: для него нужна другая раскладка.",
+            "Идентификаторы глав и подпунктов должны быть уникальны на всей странице.",
+            "Глава без children ведёт себя как обычный пункт — это нормально и специально.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Разделы",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A two-level outline that does not dump every sub-item at once: only the chapter the reader is currently inside stays expanded.",
+            "ai": {
+              "summary": "A two-level outline: sub-items show only for the current chapter and the highlight covers both levels. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-scrollspy-003-* palette — do not swap it for your theme tokens",
+                "expanding only the current chapter: a fully expanded tree ends up longer than the text",
+                "observing both levels at once — otherwise a sub-item never becomes active",
+                "plain anchors without preventDefault: the outline must keep working without JS",
+                "aria-current on the current link, not just a bolder weight",
+                "deriving data-open from the active section instead of keeping separate open state"
+              ],
+              "adapt": [
+                "the outline heading through title",
+                "the chapters and sub-items through chapters and the nested children",
+                "the accent colour through accent",
+                "the outline column width in grid-template-columns"
+              ],
+              "notes": [
+                "The component does not draw a third nesting level: that needs a different layout.",
+                "Chapter and sub-item ids must be unique across the whole page.",
+                "A chapter without children behaves like a plain item — that is intentional.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollspy003\n  title=\"Sections\"\n  chapters={[\n    { id: \"start\", title: \"Getting started\", text: \"What you need first\", children: [{ id: \"start-install\", title: \"Install\", text: \"A single command\" }] },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Sections"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollspy-004",
+      "type": "registry:component",
+      "title": "Reading Progress",
+      "description": "Боковое оглавление документации отвечает на два вопроса сразу: подсветка говорит «где я», а вертикальная полоса — сколько текста осталось.",
+      "categories": [
+        "scrollspy"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollspy-004/scrollspy-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollspy-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-004-*. Клиентский (\"use client\") — нужны IntersectionObserver и обработчик прокрутки. Активный раздел ищет наблюдатель, а процент прочитанного считается от scrollTop и scrollHeight области чтения и уезжает в CSS переменной --vibeui-scrollspy-004-progress: доля текста и номер раздела — разные величины, потому что разделы разной длины. Полоса помечена role=\"progressbar\" с aria-valuenow, ссылки остаются обычными якорями.",
+      "meta": {
+        "tags": [
+          "scrollspy",
+          "docs",
+          "progress",
+          "sidebar"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Scrollspy004",
+          "usage": "<Scrollspy004\n  title=\"Документация\"\n  sections={[\n    { id: \"install\", title: \"Установка\", text: \"Компонент копируется в проект одной командой\" },\n    { id: \"theming\", title: \"Тема\", text: \"Цвета живут в локальных переменных\" },\n  ]}\n/>",
+          "summary": "Оглавление документации с процентом прочитанного: прогресс считается от прокрутки, а не от номера раздела. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollspy-004-* и не подменять её токенами вашей темы",
+            "расчёт прогресса от прокрутки: «третий из шести» не равен половине текста",
+            "role=\"progressbar\" с aria-valuenow — полоса без роли скринридеру ничего не сообщает",
+            "процент числом рядом с полосой: одна полоса не даёт точности",
+            "обычные якоря без preventDefault: без JS оглавление обязано остаться рабочим",
+            "aria-current на активной ссылке, а не только заливку фона"
+          ],
+          "adapt": [
+            "заголовок колонки через title",
+            "разделы через sections: идентификатор, заголовок и текст",
+            "цвет акцента через accent",
+            "высоту области чтения в правиле height у [data-part=\"body\"]"
+          ],
+          "notes": [
+            "Процент считается по своей области прокрутки: для всей страницы обработчик придётся повесить на window.",
+            "Сто процентов достигаются только в самом низу — короткий текст сразу покажет 100%.",
+            "Идентификаторы разделов должны быть уникальны на странице.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Документация",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A documentation sidebar that answers two questions at once: the highlight says where you are, the vertical bar says how much text is left.",
+            "ai": {
+              "summary": "A documentation outline with a read percentage: progress comes from scrolling, not from the section number. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-scrollspy-004-* palette — do not swap it for your theme tokens",
+                "computing progress from scrolling: \"third of six\" is not half of the text",
+                "role=\"progressbar\" with aria-valuenow — a bar without a role tells a screen reader nothing",
+                "the percentage in figures next to the bar: the bar alone is not precise",
+                "plain anchors without preventDefault: the outline must keep working without JS",
+                "aria-current on the active link, not just the background fill"
+              ],
+              "adapt": [
+                "the column heading through title",
+                "the sections through sections: id, title and text",
+                "the accent colour through accent",
+                "the reading area height in the height rule of [data-part=\"body\"]"
+              ],
+              "notes": [
+                "The percentage is measured inside this scroll area: for the whole page the handler must move to window.",
+                "A hundred percent is only reached at the very bottom — a short text shows 100% immediately.",
+                "Section ids must be unique on the page.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollspy004\n  title=\"Documentation\"\n  sections={[\n    { id: \"install\", title: \"Install\", text: \"One command copies the component into the project\" },\n    { id: \"theming\", title: \"Theming\", text: \"Colours live in local variables\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Documentation"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollspy-005",
+      "type": "registry:component",
+      "title": "Sticky Section Bar",
+      "description": "Горизонтальная панель разделов, прилипшая к верху длинной страницы: активный пункт сам доезжает до центра панели, когда уходит за край.",
+      "categories": [
+        "scrollspy"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollspy-005/scrollspy-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollspy-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-005-*. Клиентский (\"use client\") — нужны IntersectionObserver и scrollIntoView. Панель липнет к верху области чтения: sticky стоит на обёртке nav, а прокручивается внутренний ul, потому что липнуть может только элемент, у родителя которого есть запас высоты. Активный пункт доводится до центра вызовом scrollIntoView({block:\"nearest\",inline:\"center\"}) — block:\"nearest\" обязателен, иначе браузер подтянет к центру всю страницу. Подсветка — подчёркивание псевдоэлементом плюс aria-current.",
+      "meta": {
+        "tags": [
+          "scrollspy",
+          "sticky",
+          "tabs",
+          "navigation"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Scrollspy005",
+          "usage": "<Scrollspy005\n  label=\"Разделы страницы\"\n  sections={[\n    { id: \"menu\", title: \"Меню\", text: \"Кофе, чай и выпечка\" },\n    { id: \"prices\", title: \"Цены\", text: \"Час работы за общим столом\" },\n  ]}\n/>",
+          "summary": "Липкая панель разделов с автоцентрированием активного пункта и подчёркиванием текущего. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollspy-005-* и не подменять её токенами вашей темы",
+            "sticky на обёртке панели, а не на самом списке: у списка нет запаса высоты, и он уедет сразу",
+            "block:\"nearest\" в scrollIntoView — иначе к центру подтянется вся страница",
+            "непрозрачный фон панели: текст под ней не должен просвечивать сквозь подписи",
+            "обычные якоря без preventDefault: без JS панель обязана остаться рабочей",
+            "aria-current на активном пункте: подчёркивание скринридеру недоступно"
+          ],
+          "adapt": [
+            "подпись панели для скринридера через label",
+            "разделы через sections: идентификатор, заголовок и текст",
+            "цвет акцента через accent",
+            "высоту области чтения в правиле height у [data-part=\"body\"]"
+          ],
+          "notes": [
+            "scroll-margin-top у разделов должен быть не меньше высоты панели, иначе якорь спрячет заголовок под ней.",
+            "Автоцентрирование срабатывает на каждую смену раздела: при очень быстрой прокрутке панель заметно ездит.",
+            "Идентификаторы разделов должны быть уникальны на странице.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись панели",
+            "type": "text",
+            "default": "Разделы страницы",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A horizontal section bar stuck to the top of a long page: the active item scrolls itself to the centre of the bar when it drifts off the edge.",
+            "ai": {
+              "summary": "A sticky section bar that auto-centres the active item and underlines the current one. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-scrollspy-005-* palette — do not swap it for your theme tokens",
+                "sticky on the bar wrapper rather than the list: the list has no spare height and would scroll away at once",
+                "block:\"nearest\" in scrollIntoView — otherwise the whole page is pulled to centre",
+                "the bar's opaque background: the text below must not show through the labels",
+                "plain anchors without preventDefault: the bar must keep working without JS",
+                "aria-current on the active item: the underline is invisible to a screen reader"
+              ],
+              "adapt": [
+                "the bar's screen-reader label through label",
+                "the sections through sections: id, title and text",
+                "the accent colour through accent",
+                "the reading area height in the height rule of [data-part=\"body\"]"
+              ],
+              "notes": [
+                "The sections' scroll-margin-top must be at least the bar height, or the anchor hides the heading behind it.",
+                "Auto-centring fires on every section change: during very fast scrolling the bar visibly shifts.",
+                "Section ids must be unique on the page.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollspy005\n  label=\"Page sections\"\n  sections={[\n    { id: \"menu\", title: \"Menu\", text: \"Coffee, tea and pastry\" },\n    { id: \"prices\", title: \"Prices\", text: \"An hour at the shared table\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Bar label",
+                "default": "Page sections"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollspy-006",
+      "type": "registry:component",
+      "title": "Back To Top",
+      "description": "Оглавление с возвратом к началу: кнопка «наверх» — обычная якорная ссылка, которая прячется, пока начало текста и так на экране.",
+      "categories": [
+        "scrollspy"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollspy-006/scrollspy-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollspy-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-006-*. Клиентский (\"use client\") — нужен IntersectionObserver. Наблюдателей два: первый подсвечивает активный раздел, второй следит за меткой-сентинелом в самом верху текста и прячет ссылку возврата, пока начало видно. Начальное состояние — ссылка показана, поэтому при отключённом JS она остаётся на месте и работает как обычный якорь. Прячется она атрибутом hidden, а не прозрачностью: невидимая ссылка не должна ловить фокус табом.",
+      "meta": {
+        "tags": [
+          "scrollspy",
+          "toc",
+          "back-to-top",
+          "anchor"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Scrollspy006",
+          "usage": "<Scrollspy006\n  title=\"Содержание\"\n  topLabel=\"Наверх\"\n  sections={[\n    { id: \"intro\", title: \"Введение\", text: \"Зачем длинной странице возврат к началу\" },\n    { id: \"usage\", title: \"Использование\", text: \"Ссылки остаются ссылками\" },\n  ]}\n/>",
+          "summary": "Оглавление и кнопка возврата: якорь на первый раздел, скрываемый наблюдателем, пока начало видно. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollspy-006-* и не подменять её токенами вашей темы",
+            "возврат обычной якорной ссылкой: кнопка со скриптом без JS не работает вовсе",
+            "начальное состояние «показана»: при отключённом JS ссылка обязана остаться на месте",
+            "сокрытие атрибутом hidden, а не прозрачностью — иначе таб уходит в невидимую ссылку",
+            "отдельный наблюдатель на сентинел: ссылка не должна предлагать то, что уже сделано",
+            "ссылку поверх области чтения, а не в потоке: появление не должно двигать текст"
+          ],
+          "adapt": [
+            "заголовок оглавления через title и подпись возврата через topLabel",
+            "разделы через sections: идентификатор, заголовок и текст",
+            "цвет акцента через accent",
+            "положение кнопки возврата в правилах right и bottom"
+          ],
+          "notes": [
+            "Сентинел высотой в один пиксель: нулевая высота в некоторых браузерах не даёт пересечения.",
+            "Возврат ведёт на первый раздел из sections — пустой массив оставит ссылку без цели.",
+            "Идентификаторы разделов должны быть уникальны на странице.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "topLabel",
+            "label": "Подпись возврата",
+            "type": "text",
+            "default": "Наверх",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An outline with a return to the top: the \"back to top\" button is a plain anchor link that hides itself while the start of the text is still on screen.",
+            "ai": {
+              "summary": "An outline plus a return control: an anchor to the first section, hidden by an observer while the start is visible. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-scrollspy-006-* palette — do not swap it for your theme tokens",
+                "the return as a plain anchor link: a script-only button does nothing without JS",
+                "the initial \"visible\" state: with JS disabled the link must stay in place",
+                "hiding with the hidden attribute rather than opacity — otherwise Tab lands on an invisible link",
+                "the separate observer on the sentinel: the link must not offer what is already done",
+                "the link floating above the reading area, not in the flow: appearing must not move the text"
+              ],
+              "adapt": [
+                "the outline heading through title and the return caption through topLabel",
+                "the sections through sections: id, title and text",
+                "the accent colour through accent",
+                "the position of the return button in its right and bottom rules"
+              ],
+              "notes": [
+                "The sentinel is one pixel tall: zero height gives no intersection in some browsers.",
+                "The return points at the first item of sections — an empty array leaves the link without a target.",
+                "Section ids must be unique on the page.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollspy006\n  title=\"Contents\"\n  topLabel=\"Back to top\"\n  sections={[\n    { id: \"intro\", title: \"Intro\", text: \"Why a long page needs a way back\" },\n    { id: \"usage\", title: \"Usage\", text: \"Links stay links\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "topLabel": {
+                "label": "Return caption",
+                "default": "Back to top"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "scrollspy-007",
+      "type": "registry:component",
+      "title": "Compact Contents",
+      "description": "Одно оглавление в двух видах: широкий блок держит его колонкой слева, узкий сворачивает в раскрывающийся список с названием текущего раздела в заголовке.",
+      "categories": [
+        "scrollspy"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scrollspy-007/scrollspy-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/scrollspy-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-007-*. Клиентский (\"use client\") — нужны IntersectionObserver и ResizeObserver. Порог сворачивания считается от ширины самого блока, а не от ширины окна: тот же компонент может стоять в узкой колонке на большом экране. В компактном виде список живёт внутри <details>, а в заголовке summary стоит текущий раздел — свёрнутое оглавление обязано отвечать «где я». Ссылки остаются обычными якорями и закрывают список после выбора.",
+      "meta": {
+        "tags": [
+          "scrollspy",
+          "toc",
+          "responsive",
+          "details"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Scrollspy007",
+          "usage": "<Scrollspy007\n  title=\"Содержание\"\n  compactAt={420}\n  sections={[\n    { id: \"payment\", title: \"Оплата\", text: \"Платёж проходит на стороне банка\" },\n    { id: \"refund\", title: \"Возврат\", text: \"Четырнадцать дней на возврат\" },\n  ]}\n/>",
+          "summary": "Оглавление, сворачивающееся по ширине блока: в компактном виде текущий раздел написан в заголовке списка. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-scrollspy-007-* и не подменять её токенами вашей темы",
+            "порог по ширине блока (ResizeObserver), а не по ширине окна: блок бывает в узкой колонке",
+            "название текущего раздела в заголовке свёрнутого списка — иначе он бесполезен",
+            "обычные якоря без preventDefault: без JS оглавление обязано остаться рабочим",
+            "серверный вид по умолчанию развёрнутый: при отключённом JS список должен быть виден",
+            "aria-current на активной ссылке: заливка фона скринридеру недоступна"
+          ],
+          "adapt": [
+            "заголовок оглавления через title",
+            "порог сворачивания через compactAt в пикселях",
+            "разделы через sections: идентификатор, заголовок и текст",
+            "цвет акцента через accent"
+          ],
+          "notes": [
+            "До первого измерения блок считается широким: на сервере рисуется развёрнутый вид.",
+            "Порог задан в пикселях, а не в rem: при крупном системном шрифте его стоит поднять.",
+            "Идентификаторы разделов должны быть уникальны на странице.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "compactAt",
+            "label": "Порог сворачивания",
+            "type": "number",
+            "default": 420,
+            "min": 240,
+            "max": 900
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "One outline in two shapes: a wide block keeps it as a left column, a narrow one folds it into a disclosure whose summary names the current section.",
+            "ai": {
+              "summary": "An outline that collapses by block width: in compact mode the summary names the current section. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-scrollspy-007-* palette — do not swap it for your theme tokens",
+                "the threshold on the block width (ResizeObserver), not the window width: the block may sit in a narrow column",
+                "the current section's name in the collapsed summary — without it the collapsed outline is useless",
+                "plain anchors without preventDefault: the outline must keep working without JS",
+                "the expanded server-rendered default: with JS disabled the list must be visible",
+                "aria-current on the active link: the background fill is invisible to a screen reader"
+              ],
+              "adapt": [
+                "the outline heading through title",
+                "the collapse threshold through compactAt, in pixels",
+                "the sections through sections: id, title and text",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "Before the first measurement the block counts as wide: the server renders the expanded shape.",
+                "The threshold is in pixels, not rem: with a large system font it is worth raising.",
+                "Section ids must be unique on the page.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Scrollspy007\n  title=\"Contents\"\n  compactAt={420}\n  sections={[\n    { id: \"payment\", title: \"Payment\", text: \"The payment runs on the bank side\" },\n    { id: \"refund\", title: \"Refund\", text: \"Fourteen days to return\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "compactAt": {
+                "label": "Collapse width",
+                "default": 420
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

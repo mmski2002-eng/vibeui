@@ -1,0 +1,888 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "drawer-001",
+      "type": "registry:component",
+      "title": "Side Drawer",
+      "description": "Панель, выезжающая сбоку, на нативном dialog: ловушка фокуса, затемнение и Escape достаются без единой строки логики.",
+      "categories": [
+        "drawer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "drawer-001/drawer-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/drawer-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-001-*. Клиентский: \"use client\" — нужен только ref для showModal и close. Выезд сделан переходом translate с transition-behavior для overlay и display, стартовое положение задано в @starting-style. Действия прижаты к низу панели через margin-top: auto.",
+      "meta": {
+        "tags": [
+          "drawer",
+          "dialog",
+          "panel",
+          "modal"
+        ],
+        "ai": {
+          "export": "Drawer001",
+          "usage": "<Drawer001 triggerLabel=\"Открыть панель\" title=\"Настройки\" />",
+          "summary": "Боковая панель: нативный модальный dialog, выезд справа, заголовок с крестиком и действия у нижнего края. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-drawer-001-* и не подменять её токенами вашей темы",
+            "нативный dialog: ловушка фокуса, затемнение и Escape стоят сотен строк вручную",
+            "@starting-style: без него панель появляется рывком без выезда",
+            "действия у нижнего края — до них дотягиваются, не прокручивая панель",
+            "ширину в 28rem: панель перекрывает часть страницы, а не всю",
+            "правило prefers-reduced-motion, снимающее выезд"
+          ],
+          "adapt": [
+            "triggerLabel, title и text",
+            "primaryLabel — главное действие",
+            "ширину панели",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Панель модальная: страница под ней недоступна. Если нужно работать с обеими, это не drawer, а колонка.",
+            "Содержимое панели прокручивается само: длинные формы не растягивают её выше экрана.",
+            "Закрытие по клику на затемнение не включено: добавьте обработчик, если оно нужно.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "triggerLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Открыть панель",
+            "maxLength": 24
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Настройки каталога",
+            "maxLength": 30
+          },
+          {
+            "prop": "primaryLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Сохранить",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A side panel on the native dialog: focus trapping, the backdrop and Escape come without a line of logic.",
+            "ai": {
+              "summary": "A side drawer: a native modal dialog, sliding in from the right, a heading with a close button and actions pinned to the bottom. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-drawer-001-* palette — do not swap it for your theme tokens",
+                "the native dialog: focus trapping, backdrop and Escape cost hundreds of lines by hand",
+                "@starting-style: without it the panel appears abruptly instead of sliding",
+                "the actions at the bottom edge — reachable without scrolling the panel",
+                "the 28rem width: a drawer covers part of the page, not all of it",
+                "the prefers-reduced-motion rule that drops the slide"
+              ],
+              "adapt": [
+                "triggerLabel, title and text",
+                "primaryLabel — the main action",
+                "the panel width",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The drawer is modal: the page behind is unreachable. If both must work, it is a column, not a drawer.",
+                "The content scrolls on its own: long forms do not stretch it past the viewport.",
+                "Closing on backdrop click is not wired: add a handler if you want it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Drawer001 triggerLabel=\"Open panel\" title=\"Settings\" />"
+            },
+            "controls": {
+              "triggerLabel": {
+                "label": "Button",
+                "default": "Open panel"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Catalog settings"
+              },
+              "primaryLabel": {
+                "label": "Action",
+                "default": "Save"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "drawer-002",
+      "type": "registry:component",
+      "title": "Action Drawer",
+      "description": "Список действий, выезжающий снизу под большой палец: на телефоне контекстное меню у края экрана недостижимо, а крупные строки — да.",
+      "categories": [
+        "drawer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "drawer-002/drawer-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/drawer-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-002-*. Клиентский: \"use client\" — нужен ref для showModal и close. Ящик прижат к низу нативным dialog с явным inset, поэтому margin:auto не требуется. Escape и клик по затемнению закрывают лист: первое даёт браузер, второе — сравнение event.target с самим dialog. Карта действий и кнопка отмены разделены зазором, у опасного действия свой тон через data-tone.",
+      "meta": {
+        "tags": [
+          "drawer",
+          "action sheet",
+          "mobile",
+          "dialog"
+        ],
+        "ai": {
+          "export": "Drawer002",
+          "usage": "<Drawer002\n  triggerLabel=\"Действия\"\n  title=\"Проект «Витрина»\"\n  actions={[{ label: \"Переименовать\" }, { label: \"Удалить\", tone: \"danger\" }]}\n/>",
+          "summary": "Нижний ящик действий: ручка, подпись объекта, крупные строки действий и отдельная кнопка отмены под ними. Держится на нативном модальном dialog, поэтому ловушка фокуса, затемнение и Escape достаются от браузера. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-drawer-002-* и не подменять её токенами вашей темы: ящик обязан выглядеть одинаково в любом проекте",
+            "нативный dialog с showModal: ловушка фокуса, затемнение и Escape стоят сотен строк, если писать их руками",
+            "высоту строки не меньше 3.25rem: лист живёт под большим пальцем, а не под курсором",
+            "отдельную карту «Отмена» с зазором: промах по ней должен быть безопасным, а не попадать в удаление",
+            "подпись объекта над списком — иначе непонятно, к чему относятся действия",
+            "опасное действие тоном, а не только текстом: цвет предупреждает раньше, чем прочитано слово"
+          ],
+          "adapt": [
+            "title — подпись объекта над списком и имя ящика для скринридера",
+            "массив actions: подпись, пояснение hint и тон каждого действия",
+            "triggerLabel и cancelLabel — подписи кнопки-триггера и отмены",
+            "обработчики: сейчас строки только закрывают лист, действие вешает вызывающий код",
+            "радиусы и ширину карт через переменные палитры"
+          ],
+          "notes": [
+            "Больше шести строк в списке — уже меню, а не быстрые действия: остальное убирайте на страницу объекта.",
+            "Опасное действие не должно быть первым в списке: палец попадает по верхней строке чаще всего.",
+            "Ручка обещает жест, но перетаскивание не реализовано — добавьте обработчик, если ждёте свайп.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "triggerLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Действия",
+            "maxLength": 24
+          },
+          {
+            "prop": "title",
+            "label": "Объект",
+            "type": "text",
+            "default": "Проект «Витрина»",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A list of actions sliding up from the bottom under the thumb: a context menu at the screen edge is out of reach on a phone, large rows are not.",
+            "ai": {
+              "summary": "A bottom action drawer: a grabber, the object's name, large action rows and a separate cancel button below them. It rests on a native modal dialog, so focus trapping, the backdrop and Escape come from the browser. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-drawer-002-* palette — do not swap it for your theme tokens: the drawer must look the same in any project",
+                "the native dialog with showModal: focus trapping, the backdrop and Escape cost hundreds of lines by hand",
+                "the 3.25rem minimum row height: this sheet lives under a thumb, not under a cursor",
+                "the separate Cancel card with a gap: a miss there has to be harmless, not land on delete",
+                "the object name above the list — otherwise nothing says what the actions apply to",
+                "marking the destructive action by tone, not by wording alone: colour warns before the word is read"
+              ],
+              "adapt": [
+                "title — the object name above the list and the drawer's accessible name",
+                "the actions array: label, hint and tone of each action",
+                "triggerLabel and cancelLabel — the trigger and cancel wording",
+                "the handlers: rows only close the sheet, the action itself belongs to the caller",
+                "radii and card width through the palette variables"
+              ],
+              "notes": [
+                "More than six rows is a menu, not quick actions: move the rest to the object's page.",
+                "Do not put the destructive action first: the top row catches the thumb most often.",
+                "The grabber promises a gesture, but dragging is not implemented — add a handler if you expect swipe.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Drawer002\n  triggerLabel=\"Actions\"\n  title=\"Project Vitrina\"\n  actions={[{ label: \"Rename\" }, { label: \"Delete\", tone: \"danger\" }]}\n/>"
+            },
+            "controls": {
+              "triggerLabel": {
+                "label": "Button",
+                "default": "Actions"
+              },
+              "title": {
+                "label": "Object",
+                "default": "Project Vitrina"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "drawer-003",
+      "type": "registry:component",
+      "title": "Filter Drawer",
+      "description": "Боковой ящик фильтров, который ничего не применяет сам: выбор копится внутри и уходит одной кнопкой, поэтому список за спиной не перестраивается после каждой галочки.",
+      "categories": [
+        "drawer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "drawer-003/drawer-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/drawer-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-003-*. Клиентский: \"use client\", useState держит выбранные значения, useRef — showModal и close. Ящик выезжает слева, прокручивается только средняя область (flex + min-height:0), шапка со сбросом и подвал с кнопкой применения стоят на месте. Галочка нарисована псевдоэлементом на appearance:none — иконок нет.",
+      "meta": {
+        "tags": [
+          "drawer",
+          "filters",
+          "sidebar",
+          "dialog"
+        ],
+        "ai": {
+          "export": "Drawer003",
+          "usage": "<Drawer003\n  triggerLabel=\"Фильтры\"\n  title=\"Фильтры\"\n  groups={groups}\n  applyLabel=\"Показать результаты\"\n/>",
+          "summary": "Ящик фильтров слева: группы флажков со счётчиками, счётчик выбранного на триггере, сброс в шапке и кнопка применения в подвале. Выбор не уходит наружу, пока не нажата кнопка. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-drawer-003-* и не подменять её токенами вашей темы",
+            "отложенное применение: список под ящиком не должен перестраиваться после каждой галочки",
+            "счётчик выбранного на триггере и на кнопке применения — иначе непонятно, сколько условий включено",
+            "прокрутку только средней области: шапка со сбросом и кнопка применения обязаны быть на виду",
+            "числа рядом с вариантами: выбор без предполагаемого количества — выбор вслепую",
+            "неактивный сброс, когда ничего не выбрано: кнопка, которая ничего не делает, обманывает"
+          ],
+          "adapt": [
+            "title — заголовок ящика и его имя для скринридера",
+            "массив groups: заголовки групп, варианты и их счётчики",
+            "triggerLabel и applyLabel — подписи триггера и кнопки применения",
+            "ширину ящика: 20rem держит одну колонку вариантов",
+            "сторону выезда — левая выбрана потому, что фильтры привычно живут у левого края списка"
+          ],
+          "notes": [
+            "Выбор живёт внутри компонента: чтобы применить фильтры, поднимите состояние наружу в обработчике кнопки.",
+            "Больше пяти групп в одном ящике не читается — сворачивайте редкие условия в details.",
+            "На широком экране фильтры лучше держать колонкой рядом со списком: ящик нужен там, где места нет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Фильтры",
+            "maxLength": 30
+          },
+          {
+            "prop": "applyLabel",
+            "label": "Применить",
+            "type": "text",
+            "default": "Показать результаты",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A filter drawer that applies nothing on its own: choices collect inside and leave with one button, so the list behind it does not rebuild after every checkbox.",
+            "ai": {
+              "summary": "A left-hand filter drawer: checkbox groups with counts, a selected counter on the trigger, a reset in the header and an apply button in the footer. Nothing leaves the drawer until the button is pressed. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-drawer-003-* palette — do not swap it for your theme tokens",
+                "deferred application: the list behind must not rebuild after every checkbox",
+                "the selected counter on the trigger and on the apply button — otherwise nothing says how many conditions are on",
+                "scrolling the middle area only: the reset header and the apply button have to stay in view",
+                "the counts beside the options: choosing without an expected result count is choosing blind",
+                "the disabled reset when nothing is selected: a button that does nothing lies"
+              ],
+              "adapt": [
+                "title — the drawer heading and its accessible name",
+                "the groups array: group headings, options and their counts",
+                "triggerLabel and applyLabel — the trigger and apply wording",
+                "the drawer width: 20rem holds a single column of options",
+                "the side it slides from — left was chosen because filters usually live at the left edge of a list"
+              ],
+              "notes": [
+                "The selection lives inside the component: lift the state out in the apply handler to actually filter.",
+                "More than five groups in one drawer stops being readable — fold rare conditions into details.",
+                "On a wide screen filters belong in a column beside the list: a drawer is for where there is no room.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Drawer003\n  triggerLabel=\"Filters\"\n  title=\"Filters\"\n  groups={groups}\n  applyLabel=\"Show results\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Filters"
+              },
+              "applyLabel": {
+                "label": "Apply",
+                "default": "Show results"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "drawer-004",
+      "type": "registry:component",
+      "title": "Detail Drawer",
+      "description": "Ящик деталей одной записи: строку списка не нужно открывать отдельной страницей — детали приезжают сбоку, а список остаётся на месте.",
+      "categories": [
+        "drawer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "drawer-004/drawer-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/drawer-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-004-*. Клиентский: \"use client\" — ref для showModal и close. Поля выложены словарём dl с сеткой из двух колонок, история событий — списком с вертикальной линией на border-left и точками-псевдоэлементами. Инициалы в метке считаются из заголовка, цвет метки — color-mix от акцента.",
+      "meta": {
+        "tags": [
+          "drawer",
+          "details",
+          "record",
+          "dialog"
+        ],
+        "ai": {
+          "export": "Drawer004",
+          "usage": "<Drawer004\n  triggerLabel=\"Открыть заказ\"\n  title=\"Заказ ORD-2481\"\n  status=\"Оплачен\"\n  fields={fields}\n  events={events}\n/>",
+          "summary": "Ящик деталей записи: метка с инициалами, заголовок со статусом, поля словарём и история событий вертикальной лентой. После закрытия человек продолжает с той же строки списка. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-drawer-004-* и не подменять её токенами вашей темы",
+            "модальный dialog: список под ящиком должен оставаться на месте, а не перезагружаться страницей",
+            "поля словарём dt/dd: пары «подпись — значение» так читаются скринридером, а не как две колонки текста",
+            "фиксированную ширину колонки подписей: рваная сетка полей мешает сравнивать записи",
+            "историю снизу, а не сверху: сначала отвечают на «что это», потом на «что с этим было»",
+            "табличные цифры в значениях — суммы и даты не должны прыгать по ширине"
+          ],
+          "adapt": [
+            "title и status — заголовок записи и подпись состояния",
+            "массивы fields и events: любые поля и любая история",
+            "triggerLabel — подпись кнопки, открывающей ящик",
+            "ширину ящика: 26rem вмещает подпись и значение в одну строку",
+            "действия в подвале — сейчас они только закрывают ящик"
+          ],
+          "notes": [
+            "Ящик деталей не заменяет страницу записи: для длинной истории и вложенных таблиц нужна страница.",
+            "Не кладите сюда форму редактирования: в модальном ящике потерять несохранённое проще, чем на странице.",
+            "Статус лучше держать словом, а не только цветом: цвет читают не все.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Заказ ORD-2481",
+            "maxLength": 40
+          },
+          {
+            "prop": "status",
+            "label": "Статус",
+            "type": "text",
+            "default": "Оплачен",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A record detail drawer: a row does not need its own page — the details slide in from the side while the list stays where it was.",
+            "ai": {
+              "summary": "A record drawer: an initials badge, a heading with a status, fields as a definition list and a vertical event history. After closing, you carry on from the same row. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-drawer-004-* palette — do not swap it for your theme tokens",
+                "the modal dialog: the list behind has to stay put rather than being replaced by a page",
+                "fields as dt/dd pairs: that is how a screen reader hears label and value, not two columns of text",
+                "the fixed label column width: a ragged field grid makes records hard to compare",
+                "history below rather than above: answer \"what is this\" first, \"what happened to it\" second",
+                "tabular figures in the values — sums and dates must not jump in width"
+              ],
+              "adapt": [
+                "title and status — the record heading and its state label",
+                "the fields and events arrays: any fields, any history",
+                "triggerLabel — the wording of the button that opens the drawer",
+                "the drawer width: 26rem fits label and value on one line",
+                "the footer actions — right now they only close the drawer"
+              ],
+              "notes": [
+                "A detail drawer does not replace the record page: long histories and nested tables need a page.",
+                "Do not put an edit form here: unsaved work is easier to lose in a modal drawer than on a page.",
+                "Keep the status as a word, not only a colour: not everyone reads colour.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Drawer004\n  triggerLabel=\"Open order\"\n  title=\"Order ORD-2481\"\n  status=\"Paid\"\n  fields={fields}\n  events={events}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Order ORD-2481"
+              },
+              "status": {
+                "label": "Status",
+                "default": "Paid"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "drawer-005",
+      "type": "registry:component",
+      "title": "Cart Drawer",
+      "description": "Ящик корзины, где итог всегда на экране: количество меняется в строке, сумма пересчитывается тут же, а подвал с итогом не уезжает при прокрутке.",
+      "categories": [
+        "drawer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "drawer-005/drawer-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/drawer-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-005-*. Клиентский: \"use client\", useState держит количество по строкам, useRef — showModal и close. Суммы считаются на лету и печатаются через toLocaleString, миниатюры нарисованы градиентом. Список прокручивается, подвал с итогом и кнопкой оформления прижат к низу flex-колонки.",
+      "meta": {
+        "tags": [
+          "drawer",
+          "cart",
+          "checkout",
+          "commerce"
+        ],
+        "ai": {
+          "export": "Drawer005",
+          "usage": "<Drawer005\n  triggerLabel=\"Корзина\"\n  title=\"Корзина\"\n  lines={lines}\n  delivery={390}\n/>",
+          "summary": "Ящик корзины: строки с миниатюрой, количеством и суммой, счётчик товаров на триггере и липкий подвал с итогом и кнопкой оформления. Итог виден всегда, сколько бы строк ни было. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-drawer-005-* и не подменять её токенами вашей темы",
+            "липкий подвал с итогом: после третьей строки человек перестаёт понимать, сколько платит",
+            "изменение количества прямо в строке — уходить за этим на страницу товара незачем",
+            "сумму на кнопке оформления: последнее, что видит человек перед оплатой, — это число",
+            "табличные цифры во всех суммах, иначе итог дрожит при пересчёте",
+            "подписи кнопкам количества с именем товара: «плюс» без контекста ничего не говорит скринридеру"
+          ],
+          "adapt": [
+            "title — заголовок ящика и его имя для скринридера",
+            "массив lines: название, пояснение, цена и стартовое количество",
+            "delivery — стоимость доставки в итоге; поставьте 0, если её нет",
+            "triggerLabel — подпись кнопки со счётчиком товаров",
+            "верхнюю границу количества: сейчас девять штук на строку"
+          ],
+          "notes": [
+            "Корзина не ходит в API: пересчёт локальный, отправку заказа делает вызывающий код.",
+            "Строки не удаляются — минимум единица; удаление добавьте отдельной кнопкой, если оно нужно.",
+            "Пустую корзину показывайте отдельным пустым состоянием: список из нуля строк выглядит поломкой.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Корзина",
+            "maxLength": 30
+          },
+          {
+            "prop": "delivery",
+            "label": "Доставка",
+            "type": "number",
+            "default": 390,
+            "min": 0,
+            "max": 5000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A cart drawer that keeps the total on screen: quantity changes inline, the sum recalculates at once, and the footer does not scroll away.",
+            "ai": {
+              "summary": "A cart drawer: rows with a thumbnail, a stepper and a line sum, an item counter on the trigger and a sticky footer with the total and the checkout button. The total stays visible no matter how many rows there are. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-drawer-005-* palette — do not swap it for your theme tokens",
+                "the sticky total footer: past the third row people lose track of what they are paying",
+                "changing quantity inside the row — there is no reason to leave for the product page",
+                "the sum on the checkout button: the last thing seen before paying is a number",
+                "tabular figures in every sum, otherwise the total shivers on each recount",
+                "naming the product in the stepper button labels: a bare \"plus\" tells a screen reader nothing"
+              ],
+              "adapt": [
+                "title — the drawer heading and its accessible name",
+                "the lines array: name, note, price and starting quantity",
+                "delivery — the shipping cost in the total; set 0 when there is none",
+                "triggerLabel — the wording of the trigger that carries the item counter",
+                "the quantity ceiling: nine per row right now"
+              ],
+              "notes": [
+                "The cart talks to no API: the maths is local, submitting the order is the caller's job.",
+                "Rows cannot be removed — one is the minimum; add a remove button if you need it.",
+                "Show an empty cart as a proper empty state: a list of zero rows reads as a breakage.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Drawer005\n  triggerLabel=\"Cart\"\n  title=\"Cart\"\n  lines={lines}\n  delivery={390}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Cart"
+              },
+              "delivery": {
+                "label": "Delivery"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "drawer-006",
+      "type": "registry:component",
+      "title": "Guarded Form Drawer",
+      "description": "Ящик с формой, который не даёт закрыть себя молча: первое нажатие Escape при заполненной форме поднимает предупреждение, а не теряет введённое.",
+      "categories": [
+        "drawer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "drawer-006/drawer-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/drawer-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-006-*. Клиентский: \"use client\", useState хранит признак изменений и показ предупреждения. Escape перехватывается штатным событием cancel у dialog: event.preventDefault() отменяет закрытие. Форма объявлена method=\"dialog\", поэтому отправка закрывает ящик без обработчика. Признак изменений ставится одним onInput на форме, а не подпиской на каждое поле.",
+      "meta": {
+        "tags": [
+          "drawer",
+          "form",
+          "unsaved",
+          "dialog"
+        ],
+        "ai": {
+          "export": "Drawer006",
+          "usage": "<Drawer006\n  triggerLabel=\"Редактировать профиль\"\n  title=\"Профиль\"\n  warning=\"Изменения не сохранены. Закрыть панель и потерять их?\"\n/>",
+          "summary": "Ящик с формой и защитой от случайного закрытия: пока поля не тронуты, Escape закрывает панель как обычно, после первой правки — поднимает полосу с выбором «уйти без сохранения» или «остаться». Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-drawer-006-* и не подменять её токенами вашей темы",
+            "перехват события cancel: без него Escape уносит несохранённое молча",
+            "отсутствие предупреждения у нетронутой формы — спрашивать не о чем, и лишний вопрос обесценивает нужный",
+            "полосу предупреждения над кнопками: выбор должен стоять рядом с причиной, а не всплывать вторым окном",
+            "role=\"alert\" у полосы: предупреждение обязано быть услышано, а не только показано",
+            "отметку «Не сохранено» в шапке: признак изменений виден до попытки уйти",
+            "один onInput на форме вместо подписок на каждое поле: меньше состояния — меньше рассинхрона"
+          ],
+          "adapt": [
+            "title — заголовок ящика и его имя для скринридера",
+            "warning — текст предупреждения о несохранённом",
+            "состав полей формы: сейчас это имя, почта и текстовое поле",
+            "triggerLabel и saveLabel — подписи триггера и кнопки сохранения",
+            "поведение отправки: сейчас форма просто закрывает ящик"
+          ],
+          "notes": [
+            "Компонент ничего не сохраняет: обработчик отправки формы — на вызывающем коде.",
+            "Не превращайте предупреждение во второй диалог: окно поверх окна ломает возврат фокуса.",
+            "Признак изменений ставится по первому вводу и не сбрасывается, если значение вернули вручную.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Профиль",
+            "maxLength": 30
+          },
+          {
+            "prop": "warning",
+            "label": "Предупреждение",
+            "type": "text",
+            "default": "Изменения не сохранены. Закрыть панель и потерять их?",
+            "maxLength": 90
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A form drawer that refuses to close silently: with a touched form the first Escape raises a warning instead of losing what was typed.",
+            "ai": {
+              "summary": "A form drawer guarded against accidental closing: while the fields are untouched Escape closes it as usual, after the first edit it raises a bar offering \"leave without saving\" or \"stay\". Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-drawer-006-* palette — do not swap it for your theme tokens",
+                "intercepting the cancel event: without it Escape takes unsaved work silently",
+                "no warning on an untouched form — there is nothing to ask, and a needless question devalues the real one",
+                "the warning bar above the buttons: the choice belongs beside its cause, not in a second window",
+                "role=\"alert\" on the bar: a warning has to be heard, not merely shown",
+                "the \"Unsaved\" mark in the header: the dirty state is visible before anyone tries to leave",
+                "a single onInput on the form instead of per-field subscriptions: less state, less drift"
+              ],
+              "adapt": [
+                "title — the drawer heading and its accessible name",
+                "warning — the unsaved-changes wording",
+                "the set of fields: name, email and a text area right now",
+                "triggerLabel and saveLabel — the trigger and save wording",
+                "what submitting does: the form just closes the drawer today"
+              ],
+              "notes": [
+                "The component saves nothing: the submit handler belongs to the calling code.",
+                "Do not turn the warning into a second dialog: a window over a window breaks focus return.",
+                "The dirty flag is set on first input and does not clear when a value is typed back by hand.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Drawer006\n  triggerLabel=\"Edit profile\"\n  title=\"Profile\"\n  warning=\"Changes are not saved. Close the panel and lose them?\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Profile"
+              },
+              "warning": {
+                "label": "Warning",
+                "default": "Changes are not saved. Close the panel and lose them?"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "drawer-007",
+      "type": "registry:component",
+      "title": "Reading Drawer",
+      "description": "Ящик во всю высоту для длинного текста: заголовки разделов прилипают к верху, а подвал с согласием стоит на месте — до действия не нужно доезжать до конца.",
+      "categories": [
+        "drawer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "drawer-007/drawer-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/drawer-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-007-*. Клиентский: \"use client\", useState держит согласие, useRef — showModal и close. Прокручивается только средняя колонка (flex:1 и min-height:0), заголовки разделов держатся на position:sticky с непрозрачным фоном, иначе текст просвечивает под ними. Кнопка принятия заблокирована, пока флажок не отмечен.",
+      "meta": {
+        "tags": [
+          "drawer",
+          "long read",
+          "sticky",
+          "consent"
+        ],
+        "ai": {
+          "export": "Drawer007",
+          "usage": "<Drawer007\n  triggerLabel=\"Читать условия\"\n  title=\"Обновлённые условия\"\n  sections={sections}\n  acceptLabel=\"Принять\"\n/>",
+          "summary": "Ящик во всю высоту: длинный текст с липкими заголовками разделов, а внизу — флажок согласия и кнопка принятия, которая до отметки заблокирована. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-drawer-007-* и не подменять её токенами вашей темы",
+            "min-height:0 у прокручиваемой колонки: без него flex-контейнер растягивается и прокрутка уезжает наружу",
+            "непрозрачный фон у липкого заголовка — иначе текст просвечивает сквозь него при прокрутке",
+            "подвал вне прокрутки: до согласия не должно быть нужно доезжать до конца документа",
+            "заблокированную кнопку принятия до отметки флажка: согласие обязано быть осознанным действием",
+            "ширину в 30rem: строка длиннее читается тяжело даже в ящике"
+          ],
+          "adapt": [
+            "title — заголовок ящика и его имя для скринридера",
+            "массив sections: заголовки и абзацы любого объёма",
+            "triggerLabel, agreeLabel и acceptLabel — подписи триггера, флажка и кнопки",
+            "ширину ящика и размер шрифта текста",
+            "поведение принятия: сейчас кнопка только закрывает ящик"
+          ],
+          "notes": [
+            "Прокрутка до конца не отслеживается: если нужен факт прочтения, ловите прокрутку отдельно.",
+            "Не заменяйте этим ящиком страницу документа: длинный текст должен иметь свой адрес и печататься.",
+            "Флажок не запоминается между открытиями — состояние согласия хранит вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Обновлённые условия",
+            "maxLength": 40
+          },
+          {
+            "prop": "acceptLabel",
+            "label": "Принять",
+            "type": "text",
+            "default": "Принять",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A full-height drawer for long text: section headings stick to the top and the consent footer stays put — reaching the action does not require reaching the end.",
+            "ai": {
+              "summary": "A full-height drawer: long text with sticky section headings, and at the bottom a consent checkbox with an accept button that stays disabled until it is ticked. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-drawer-007-* palette — do not swap it for your theme tokens",
+                "min-height:0 on the scrolling column: without it the flex container stretches and the scroll escapes",
+                "the opaque background on the sticky heading — otherwise text shows through it while scrolling",
+                "the footer outside the scroll: consent must not require scrolling to the end of the document",
+                "the accept button disabled until the box is ticked: consent has to be a deliberate act",
+                "the 30rem width: a longer line is hard to read even inside a drawer"
+              ],
+              "adapt": [
+                "title — the drawer heading and its accessible name",
+                "the sections array: headings and paragraphs of any length",
+                "triggerLabel, agreeLabel and acceptLabel — the trigger, checkbox and button wording",
+                "the drawer width and the body font size",
+                "what accepting does: the button only closes the drawer today"
+              ],
+              "notes": [
+                "Scrolling to the end is not tracked: catch the scroll yourself if you need proof of reading.",
+                "Do not use this drawer instead of a document page: long text deserves its own address and printing.",
+                "The checkbox does not persist between openings — the consent state belongs to the caller.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Drawer007\n  triggerLabel=\"Read the terms\"\n  title=\"Updated terms\"\n  sections={sections}\n  acceptLabel=\"Accept\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Updated terms"
+              },
+              "acceptLabel": {
+                "label": "Accept",
+                "default": "Accept"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "drawer-008",
+      "type": "registry:component",
+      "title": "Step Drawer",
+      "description": "Ящик с несколькими шагами вместо длинной формы: за раз виден один вопрос, полоса сверху показывает, сколько осталось, «Назад» возвращает на шаг, а не закрывает панель.",
+      "categories": [
+        "drawer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "drawer-008/drawer-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/drawer-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-008-*. Клиентский: \"use client\", useState держит номер шага, useId — имя группы радиокнопок, useRef — showModal и close. Полоса шагов сделана сегментами и объявлена role=\"progressbar\" с aria-valuenow. Варианты — радиокнопки с подсветкой выбранной карточки через :has(input:checked).",
+      "meta": {
+        "tags": [
+          "drawer",
+          "wizard",
+          "steps",
+          "onboarding"
+        ],
+        "ai": {
+          "export": "Drawer008",
+          "usage": "<Drawer008\n  triggerLabel=\"Подключить проект\"\n  title=\"Подключение проекта\"\n  steps={steps}\n  finishLabel=\"Готово\"\n/>",
+          "summary": "Ящик-мастер: сегментная полоса прогресса, счётчик «шаг N из M», один вопрос на экран и раздельные кнопки «Назад» и «Закрыть». Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-drawer-008-* и не подменять её токенами вашей темы",
+            "раздельные «Назад» и «Закрыть»: у мастера это разные операции, и вешать их на одну кнопку нельзя",
+            "сегментную полосу вместо процентов: шагов заведомо немного, и целое число понятнее доли",
+            "role=\"progressbar\" с aria-valuenow — прогресс должен читаться, а не только рисоваться",
+            "один вопрос на шаг: два вопроса на экране превращают мастер обратно в форму",
+            "сброс шага при открытии: мастер, открывшийся посередине, дезориентирует"
+          ],
+          "adapt": [
+            "title — заголовок ящика и его имя для скринридера",
+            "массив steps: заголовок шага, пояснение и варианты выбора",
+            "triggerLabel и finishLabel — подписи триггера и последней кнопки",
+            "число шагов: полоса подстраивается сама",
+            "поля внутри шага — вместо радиокнопок может быть любая форма"
+          ],
+          "notes": [
+            "Ответы не собираются в объект: состояние формы поднимайте наружу, если оно нужно после закрытия.",
+            "Больше пяти шагов — это уже страница с прогрессом, а не ящик.",
+            "Кнопка «Далее» ничего не проверяет: валидацию шага добавляйте перед переходом.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Подключение проекта",
+            "maxLength": 40
+          },
+          {
+            "prop": "finishLabel",
+            "label": "Финал",
+            "type": "text",
+            "default": "Готово",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A multi-step drawer instead of one long form: one question at a time, a bar showing what is left, and a Back button that steps back rather than closing the panel.",
+            "ai": {
+              "summary": "A wizard drawer: a segmented progress bar, a \"step N of M\" counter, one question per screen and separate Back and Close buttons. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-drawer-008-* palette — do not swap it for your theme tokens",
+                "separate Back and Close: in a wizard these are different operations and must not share a button",
+                "segments instead of a percentage: there are few steps, and a whole number beats a fraction",
+                "role=\"progressbar\" with aria-valuenow — progress has to be readable, not only drawn",
+                "one question per step: two questions on screen turn the wizard back into a form",
+                "resetting to the first step on open: a wizard opening mid-way disorients"
+              ],
+              "adapt": [
+                "title — the drawer heading and its accessible name",
+                "the steps array: step heading, explanation and choices",
+                "triggerLabel and finishLabel — the trigger and final button wording",
+                "the number of steps: the bar adjusts itself",
+                "the fields inside a step — any form can replace the radio buttons"
+              ],
+              "notes": [
+                "Answers are not collected into an object: lift the form state out if you need it after closing.",
+                "More than five steps is a page with progress, not a drawer.",
+                "The Next button validates nothing: add step validation before advancing.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Drawer008\n  triggerLabel=\"Connect a project\"\n  title=\"Project setup\"\n  steps={steps}\n  finishLabel=\"Done\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Project setup"
+              },
+              "finishLabel": {
+                "label": "Finish",
+                "default": "Done"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

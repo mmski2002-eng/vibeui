@@ -1,0 +1,789 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "range-001",
+      "type": "registry:component",
+      "title": "Price Range",
+      "description": "Диапазон двумя нативными ползунками: границы упираются друг в друга, поэтому «от» никогда не становится больше «до».",
+      "categories": [
+        "range"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "range-001/range-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/range-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-range-001-*. Клиентский: \"use client\" ради двух границ. Ползунки лежат друг на друге: дорожка не ловит события, а ручки ловят, поэтому обе доступны мышью. Закрашенный отрезок рисуется градиентом по двум переменным процента.",
+      "meta": {
+        "tags": [
+          "range",
+          "filter",
+          "price",
+          "slider"
+        ],
+        "ai": {
+          "export": "Range001",
+          "usage": "<Range001 label=\"Цена\" min={0} max={20000} step={500} defaultFrom={4000} defaultTo={14000} />",
+          "summary": "Диапазон цены: две границы на нативных ползунках, закрашенный отрезок между ними и подписи краёв. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-range-001-* и не подменять её токенами вашей темы",
+            "два нативных ползунка: свой драг пришлось бы учить клавиатуре и касаниям",
+            "pointer-events только на ручках — иначе верхний ползунок съедает клики по нижнему",
+            "упор границ друг в друга: перепрыгивание даёт пустую выборку",
+            "aria-label на каждой границе: два одинаковых ползунка неразличимы на слух",
+            "текущие значения в заголовке, а не только положение ручек"
+          ],
+          "adapt": [
+            "label, min, max и step",
+            "defaultFrom и defaultTo",
+            "unit — единицу измерения",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Ручки на одинаковых значениях наложатся: минимальный зазор задаёт step.",
+            "Стилизация ручек идёт через префиксы: правила ::-webkit- и ::-moz- нельзя объединять в один селектор.",
+            "Для точных сумм рядом с фильтром оставьте два числовых поля.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Цена",
+            "maxLength": 20
+          },
+          {
+            "prop": "defaultFrom",
+            "label": "От",
+            "type": "number",
+            "default": 4000,
+            "min": 0,
+            "max": 19000
+          },
+          {
+            "prop": "defaultTo",
+            "label": "До",
+            "type": "number",
+            "default": 14000,
+            "min": 1000,
+            "max": 20000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A range on two native sliders: the bounds stop against each other, so \"from\" never exceeds \"to\".",
+            "ai": {
+              "summary": "A price range: two bounds on native sliders, a filled segment between them and the edge labels. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-range-001-* palette — do not swap it for your theme tokens",
+                "two native sliders: a custom drag would need keyboard and touch support",
+                "pointer-events on the thumbs only — otherwise the top slider eats the clicks",
+                "the bounds stopping against each other: crossing them yields an empty result",
+                "an aria-label on each bound: two identical sliders are indistinguishable by ear",
+                "the current values in the heading, not just the handle positions"
+              ],
+              "adapt": [
+                "label, min, max and step",
+                "defaultFrom and defaultTo",
+                "unit — the unit of measure",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Thumbs at equal values overlap: step sets the minimum gap.",
+                "Thumb styling is vendor-prefixed: ::-webkit- and ::-moz- rules cannot share a selector.",
+                "For exact amounts keep two number fields beside the filter.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Range001 label=\"Price\" min={0} max={20000} step={500} defaultFrom={4000} defaultTo={14000} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Price"
+              },
+              "defaultFrom": {
+                "label": "From"
+              },
+              "defaultTo": {
+                "label": "To"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "range-002",
+      "type": "registry:component",
+      "title": "Price Histogram",
+      "description": "Диапазон цены с гистограммой предложений: голая шкала не говорит, что под фильтр «до 5 000» попадают три варианта из тысячи.",
+      "categories": [
+        "range"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "range-002/range-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/range-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-range-002-*. Клиентский: обе границы в состоянии. Диапазон собран двумя нативными ползунками, лежащими друг на друге: дорожка отключена для событий, а ручки — нет, поэтому обе доступны мышью. Над дорожкой стоит гистограмма: столбики вне выбранного отрезка приглушены, а число подходящих вариантов пересчитывается по тем же корзинам, что и рисуются. Данные гистограммы приходят пропом — рисовать её случайными числами нельзя, она обязана соответствовать выдаче.",
+      "meta": {
+        "tags": [
+          "range",
+          "slider",
+          "histogram",
+          "filter"
+        ],
+        "ai": {
+          "export": "Range002",
+          "usage": "<Range002 label=\"Цена за ночь\" min={0} max={16000} step={500} defaultFrom={3000} defaultTo={11000} />",
+          "summary": "Двойной ползунок цены с гистограммой распределения и счётчиком подходящих вариантов. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-range-002-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: фильтр показывают поверх любого фона",
+            "гистограмму рядом со шкалой: без плотности предложений диапазон не говорит ничего о рынке",
+            "приглушение столбиков вне отрезка: видно не только выбранное, но и отсечённое",
+            "pointer-events на ручках при отключённой дорожке: иначе верхний ползунок съедает все клики",
+            "упор границ друг в друга: «от» больше «до» превращает фильтр в пустую выдачу",
+            "aria-label на обоих ползунках: два одинаковых range без подписей неразличимы"
+          ],
+          "adapt": [
+            "label — подпись фильтра",
+            "min, max, step и стартовые defaultFrom и defaultTo",
+            "histogram — сами данные распределения",
+            "unit — знак валюты",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Гистограмма должна приходить с сервера вместе с выдачей: выдуманные столбики обманывают сильнее, чем их отсутствие.",
+            "Корзины считаются равными по ширине: для логарифмической шкалы формулу надо менять.",
+            "Счётчик вариантов складывается по пересечению корзин с отрезком — это оценка, а не точное число.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Цена за ночь",
+            "maxLength": 24
+          },
+          {
+            "prop": "step",
+            "label": "Шаг",
+            "type": "number",
+            "default": 500,
+            "min": 100,
+            "max": 2000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A price range with a histogram of listings: a bare scale never says that \"under 5,000\" leaves three options out of a thousand.",
+            "ai": {
+              "summary": "A dual price slider with a distribution histogram and a count of matching options. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-range-002-* palette — do not swap it for your theme tokens",
+                "its own light surface: the filter gets shown over any background",
+                "the histogram next to the scale: without listing density a range says nothing about the market",
+                "dimming the bars outside the span: what got cut off stays visible too",
+                "pointer-events on the thumbs while the track is disabled: otherwise the top slider swallows every click",
+                "the bounds stopping at each other: a from above a to turns the filter into an empty result set",
+                "the aria-labels on both sliders: two identical ranges are indistinguishable without them"
+              ],
+              "adapt": [
+                "label — the filter caption",
+                "min, max, step and the starting defaultFrom and defaultTo",
+                "histogram — the distribution data itself",
+                "unit — the currency sign",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The histogram has to arrive from the server with the results: invented bars mislead worse than no bars.",
+                "The buckets are equal width: a logarithmic scale needs a different formula.",
+                "The option count sums buckets intersecting the span — it is an estimate, not an exact number.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Range002 label=\"Price per night\" min={0} max={16000} step={500} defaultFrom={3000} defaultTo={11000} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Price per night"
+              },
+              "step": {
+                "label": "Step"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "range-003",
+      "type": "registry:component",
+      "title": "Date Range Slider",
+      "description": "Диапазон дат ползунком: когда даты плавающие — «где-то в конце сентября, на неделю» — календарь требует точности, которой ещё нет.",
+      "categories": [
+        "range"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "range-003/range-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/range-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-range-003-*. Клиентский: в состоянии лежат номера дней от базовой даты, а не сами даты — целые числа сравниваются и шагают без арифметики с датами. Подписи собираются через Date.UTC и печатаются с timeZone UTC, иначе на минусовых поясах дата съезжает на день назад. Ползунков два, они лежат друг на друге: дорожка отключена для событий, ручки — нет. Каждому ползунку задан aria-valuetext, поэтому скринридер читает дату, а не номер дня.",
+      "meta": {
+        "tags": [
+          "range",
+          "date",
+          "slider",
+          "travel"
+        ],
+        "ai": {
+          "export": "Range003",
+          "usage": "<Range003 label=\"Когда поедем\" startDate=\"2026-09-01\" days={60} defaultFrom={12} defaultTo={19} />",
+          "summary": "Диапазон дат двойным ползунком: внутри номера дней, снаружи подписи датами и счёт ночей. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-range-003-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: фильтр показывают поверх любого фона",
+            "хранение номеров дней вместо дат: арифметика дат в состоянии — источник ошибок на переходах месяцев",
+            "сборку дат через Date.UTC и печать в UTC: иначе на минусовых поясах подпись съезжает на день",
+            "aria-valuetext с датой: без него скринридер читает «двенадцать» вместо «12 сентября»",
+            "pointer-events на ручках при отключённой дорожке: иначе верхний ползунок съедает все клики",
+            "счёт ночей: диапазон дат всё равно мысленно переводят в длительность"
+          ],
+          "adapt": [
+            "label — подпись фильтра",
+            "startDate — базовая дата шкалы",
+            "days — длина шкалы в днях",
+            "defaultFrom и defaultTo — стартовые смещения",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Наружу отдавайте даты, а не номера дней: принимающая сторона о базовой дате не знает.",
+            "Шкала длиннее трёх месяцев становится неточной: один пиксель начинает стоить несколько дней.",
+            "Занятые даты компонент не знает — отсекайте их после выбора диапазона.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Когда поедем",
+            "maxLength": 24
+          },
+          {
+            "prop": "days",
+            "label": "Дней на шкале",
+            "type": "number",
+            "default": 60,
+            "min": 14,
+            "max": 120
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A date range on a slider: when the dates are still fuzzy — \"late September, about a week\" — a calendar demands precision nobody has yet.",
+            "ai": {
+              "summary": "A date range on a dual slider: day numbers inside, date captions and a night count outside. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-range-003-* palette — do not swap it for your theme tokens",
+                "its own light surface: the filter gets shown over any background",
+                "keeping day numbers instead of dates: date arithmetic in state is a source of month-boundary bugs",
+                "building dates through Date.UTC and printing in UTC: otherwise negative offsets shift the caption a day back",
+                "aria-valuetext with the date: without it a screen reader says \"twelve\" instead of \"12 September\"",
+                "pointer-events on the thumbs while the track is disabled: otherwise the top slider swallows every click",
+                "the night count: a date range gets mentally converted into a duration anyway"
+              ],
+              "adapt": [
+                "label — the filter caption",
+                "startDate — the base date of the scale",
+                "days — the scale length in days",
+                "defaultFrom and defaultTo — the starting offsets",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Emit dates outwards, not day numbers: the receiving side knows nothing about the base date.",
+                "A scale longer than three months turns imprecise: one pixel starts costing several days.",
+                "The component knows nothing about taken dates — filter them after the range is picked.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Range003 label=\"When to go\" startDate=\"2026-09-01\" days={60} defaultFrom={12} defaultTo={19} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "When to go"
+              },
+              "days": {
+                "label": "Days on scale"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "range-004",
+      "type": "registry:component",
+      "title": "Range With Inputs",
+      "description": "Диапазон с полями ввода по краям: ползунком удобно прикидывать, но ровно в 120 000 им не попасть, а поле принимает точное число сразу.",
+      "categories": [
+        "range"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "range-004/range-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/range-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-range-004-*. Клиентский: границы лежат числами, а тексты полей — отдельными строками, поэтому во время набора поле можно очистить, не получив ноль. Приведение к границам и к соседней ручке происходит по blur, а не на каждой букве: иначе «12» на пути к «120000» мгновенно превращается в минимум. Ползунок и поля правят одни и те же значения, поэтому расхождения между ними не бывает.",
+      "meta": {
+        "tags": [
+          "range",
+          "slider",
+          "input",
+          "filter"
+        ],
+        "ai": {
+          "export": "Range004",
+          "usage": "<Range004 label=\"Зарплатные ожидания\" min={0} max={400000} step={5000} defaultFrom={120000} defaultTo={260000} />",
+          "summary": "Двойной ползунок с числовыми полями по краям: точное значение вводится с клавиатуры, приблизительное — мышью. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-range-004-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: фильтр показывают поверх любого фона",
+            "две руки управления: ползунком не попасть ровно в 120 000, а полем — сразу",
+            "текстовые состояния полей: числовое состояние превращает пустое поле в ноль прямо во время набора",
+            "приведение по blur, а не на каждой букве: иначе «12» на пути к «120000» схлопывается в минимум",
+            "упор границ друг в друга через шаг: «от» больше «до» превращает фильтр в пустую выдачу",
+            "pointer-events на ручках при отключённой дорожке: иначе верхний ползунок съедает все клики"
+          ],
+          "adapt": [
+            "label — подпись фильтра",
+            "min, max, step и стартовые defaultFrom и defaultTo",
+            "unit — знак валюты или единицу",
+            "ширину полей по краям",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Поля не форматируют разряды: разделители во время ввода прыгают под курсором.",
+            "Пустое поле по blur приводится к границе шкалы, а не к нулю — так фильтр остаётся осмысленным.",
+            "Шаг применяется и к полям: значение между шагами приведётся к соседней ручке.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Зарплатные ожидания",
+            "maxLength": 28
+          },
+          {
+            "prop": "step",
+            "label": "Шаг",
+            "type": "number",
+            "default": 5000,
+            "min": 1000,
+            "max": 50000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A range with number inputs at both ends: a slider is fine for guessing, but it cannot land exactly on 120,000 while a field takes it instantly.",
+            "ai": {
+              "summary": "A dual slider with number fields at both ends: exact values by keyboard, approximate ones by mouse. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-range-004-* palette — do not swap it for your theme tokens",
+                "its own light surface: the filter gets shown over any background",
+                "the two hands of control: a slider cannot land on exactly 120,000, a field can",
+                "the text state of the fields: numeric state turns an empty field into zero while typing",
+                "clamping on blur rather than per keystroke: otherwise \"12\" on the way to \"120000\" collapses to the minimum",
+                "the bounds stopping at each other by one step: a from above a to turns the filter into an empty result set",
+                "pointer-events on the thumbs while the track is disabled: otherwise the top slider swallows every click"
+              ],
+              "adapt": [
+                "label — the filter caption",
+                "min, max, step and the starting defaultFrom and defaultTo",
+                "unit — the currency sign or unit",
+                "the width of the end fields",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The fields do not group thousands: separators jump under the caret while typing.",
+                "An empty field clamps to the scale bound on blur rather than to zero, keeping the filter meaningful.",
+                "The step applies to the fields too: an off-step value snaps against the neighbouring thumb.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Range004 label=\"Salary expectations\" min={0} max={400000} step={5000} defaultFrom={120000} defaultTo={260000} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Salary expectations"
+              },
+              "step": {
+                "label": "Step"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "range-005",
+      "type": "registry:component",
+      "title": "Labelled Stops",
+      "description": "Диапазон по подписанным делениям: «студия» и «5 и больше» — не числа, но лежат на одной шкале, и промежуточных значений на ней нет.",
+      "categories": [
+        "range"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "range-005/range-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/range-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-range-005-*. Клиентский: в состоянии лежат номера остановок, а подписи берутся из массива по индексу. Шаг равен единице, поэтому попасть между делениями нельзя ни мышью, ни стрелками. Подписи выровнены по центрам делений: у области ползунка отступы в половину деления через переменную --vibeui-range-005-gutter, иначе крайние подписи уезжают за края дорожки. Каждому ползунку задан aria-valuetext, поэтому скринридер читает слово, а не номер.",
+      "meta": {
+        "tags": [
+          "range",
+          "steps",
+          "ticks",
+          "filter"
+        ],
+        "ai": {
+          "export": "Range005",
+          "usage": "<Range005 label=\"Комнат в квартире\" stops={[\"Студия\", \"1\", \"2\", \"3\", \"4\", \"5 и больше\"]} defaultFrom={1} defaultTo={3} />",
+          "summary": "Диапазон по дискретным подписанным делениям: ползунок ходит по номерам остановок, подписи стоят под дорожкой. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-range-005-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: фильтр показывают поверх любого фона",
+            "шаг в одно деление: между «двумя» и «тремя» комнатами значения не существует",
+            "подписи прямо под дорожкой: числа на ползунке без подписей ничего не сообщают о шкале",
+            "отступы в половину деления: без них крайние подписи уезжают за края дорожки",
+            "aria-valuetext со словом: скринридер иначе читает «единица» вместо «студия»",
+            "подсветку делений внутри отрезка: выбранное множество должно читаться целиком"
+          ],
+          "adapt": [
+            "label — подпись фильтра",
+            "stops — сами деления и их подписи",
+            "defaultFrom и defaultTo — стартовые номера остановок",
+            "длину подписей: короткие читаются лучше",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Границы могут совпасть: тогда выбрана одна остановка, и подпись показывает её одну.",
+            "Больше восьми делений на узком экране не помещаются — подписи начинают наезжать друг на друга.",
+            "Наружу отдавайте значения остановок, а не их номера: индексы поедут при правке списка.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Комнат в квартире",
+            "maxLength": 28
+          },
+          {
+            "prop": "defaultTo",
+            "label": "Верхнее деление",
+            "type": "number",
+            "default": 3,
+            "min": 0,
+            "max": 5
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A range over labelled stops: \"studio\" and \"5 or more\" are not numbers, yet they sit on one scale that has no in-between values.",
+            "ai": {
+              "summary": "A range over discrete labelled stops: the slider walks stop indexes, the captions sit under the track. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-range-005-* palette — do not swap it for your theme tokens",
+                "its own light surface: the filter gets shown over any background",
+                "the one-stop step: there is no value between two and three rooms",
+                "the captions directly under the track: numbers on a slider say nothing about this scale",
+                "the half-stop gutters: without them the outer captions run off the track edges",
+                "aria-valuetext with the word: otherwise a screen reader says \"one\" instead of \"studio\"",
+                "highlighting the stops inside the span: the selected set has to read as a whole"
+              ],
+              "adapt": [
+                "label — the filter caption",
+                "stops — the stops themselves and their captions",
+                "defaultFrom and defaultTo — the starting stop indexes",
+                "the caption length: shorter reads better",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The bounds may coincide: one stop is then selected and the caption shows it alone.",
+                "More than eight stops do not fit a narrow screen — the captions start colliding.",
+                "Emit stop values outwards rather than indexes: indexes shift when the list is edited.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Range005 label=\"Rooms\" stops={[\"Studio\", \"1\", \"2\", \"3\", \"4\", \"5 or more\"]} defaultFrom={1} defaultTo={3} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Rooms"
+              },
+              "defaultTo": {
+                "label": "Upper stop"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "range-006",
+      "type": "registry:component",
+      "title": "Open Ended Area",
+      "description": "Диапазон площади с единицами и открытым верхом: на последнем делении фильтр перестаёт врать — «200 м² и больше» вместо тихого отсечения.",
+      "categories": [
+        "range"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "range-006/range-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/range-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-range-006-*. Клиентский: обе границы в состоянии. Верхняя ручка на максимуме означает «и больше»: подпись меняется словами, и то же самое уходит в aria-valuetext, поэтому и глазами, и на слух видно, что верхняя граница снята. Единица подписана у каждого края, а не один раз в заголовке: числа на дорожке читают отдельно от подписи. Ползунков два, они лежат друг на друге: дорожка отключена для событий, ручки — нет.",
+      "meta": {
+        "tags": [
+          "range",
+          "area",
+          "units",
+          "filter"
+        ],
+        "ai": {
+          "export": "Range006",
+          "usage": "<Range006 label=\"Площадь дома\" min={20} max={200} step={5} defaultFrom={40} defaultTo={120} unit=\"м²\" />",
+          "summary": "Двойной ползунок площади: единица подписана у обеих границ, а верхний край означает «и больше». Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-range-006-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: фильтр показывают поверх любого фона",
+            "открытый верх шкалы: иначе «до 200 м²» тихо отсекает дом на 300",
+            "единицу у каждой границы: «40 — 120» без «м²» превращается в загадку",
+            "aria-valuetext на ручках: смысл «и больше» обязан быть доступен на слух",
+            "объяснение под шкалой: снятую границу не угадывают, о ней надо сказать словами",
+            "pointer-events на ручках при отключённой дорожке: иначе верхний ползунок съедает все клики"
+          ],
+          "adapt": [
+            "label — подпись фильтра",
+            "min, max, step и стартовые defaultFrom и defaultTo",
+            "unit — единицу измерения",
+            "формулировки подписи и пояснения",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Открытый верх надо повторить в запросе: на сервер уходит условие «больше или равно», а не диапазон.",
+            "Шаг в пять единиц подобран под площадь: для соток нужен шаг помельче.",
+            "Нижняя граница остаётся закрытой намеренно: «меньше минимума» в таких фильтрах обычно не бывает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Площадь дома",
+            "maxLength": 24
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "м²",
+            "maxLength": 8
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An area range with units and an open top: at the last notch the filter stops lying — \"200 m² and up\" instead of a silent cut-off.",
+            "ai": {
+              "summary": "A dual area slider: the unit is captioned at both bounds and the top edge means \"and up\". Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-range-006-* palette — do not swap it for your theme tokens",
+                "its own light surface: the filter gets shown over any background",
+                "the open top of the scale: otherwise \"up to 200 m²\" quietly hides a 300 m² house",
+                "the unit at each bound: \"40 — 120\" without \"m²\" is a riddle",
+                "aria-valuetext on the thumbs: the \"and up\" meaning has to be available aloud",
+                "the explanation under the scale: a lifted bound is not guessed, it has to be stated",
+                "pointer-events on the thumbs while the track is disabled: otherwise the top slider swallows every click"
+              ],
+              "adapt": [
+                "label — the filter caption",
+                "min, max, step and the starting defaultFrom and defaultTo",
+                "unit — the unit of measure",
+                "the wording of the caption and the note",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The open top must be mirrored in the query: send a \"greater or equal\" condition, not a range.",
+                "A step of five suits square metres: smaller plots need a finer step.",
+                "The lower bound stays closed on purpose: \"less than the minimum\" rarely exists in such filters.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Range006 label=\"House area\" min={20} max={200} step={5} defaultFrom={40} defaultTo={120} unit=\"m²\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "House area"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": "m²"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "range-007",
+      "type": "registry:component",
+      "title": "Preset Range",
+      "description": "Диапазон с пресетами: человек думает «эконом» или «премиум», а перевод в числа делает система — ползунок при этом остаётся рабочим.",
+      "categories": [
+        "range"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "range-007/range-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/range-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-range-007-*. Клиентский: обе границы в состоянии, отдельного состояния «выбранный пресет» нет. Отметка кнопки вычисляется сравнением текущих границ с её значениями, поэтому после ручной правки ползунка отметка гаснет сама и не врёт о текущем фильтре. Ползунков два, они лежат друг на друге: дорожка отключена для событий, ручки — нет.",
+      "meta": {
+        "tags": [
+          "range",
+          "presets",
+          "slider",
+          "filter"
+        ],
+        "ai": {
+          "export": "Range007",
+          "usage": "<Range007 label=\"Бюджет на ночь\" min={0} max={20000} step={500} presets={[{ text: \"Эконом\", from: 0, to: 4000 }]} />",
+          "summary": "Двойной ползунок с кнопками-пресетами: кнопка задаёт обе границы, отметка снимается сама после ручной правки. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-range-007-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: фильтр показывают поверх любого фона",
+            "пресеты словами: человек думает «эконом», а не «до 4 000»",
+            "вычисление отметки из текущих границ: отдельное состояние пресета рассинхронизируется после первой правки",
+            "рабочий ползунок рядом с пресетами: кнопка — быстрый старт, а не единственный способ ответить",
+            "aria-pressed на кнопках: это состояние выбора, а не разовое нажатие",
+            "pointer-events на ручках при отключённой дорожке: иначе верхний ползунок съедает все клики"
+          ],
+          "adapt": [
+            "label — подпись фильтра",
+            "presets — названия и границы быстрых вариантов",
+            "min, max и step шкалы",
+            "unit — знак валюты",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Границы пресетов должны попадать в шаг шкалы, иначе отметка не загорится никогда.",
+            "Стартовый диапазон берётся из середины списка пресетов: пустой фильтр ничего не сообщает.",
+            "Пресеты стоит держать непересекающимися: у двух одинаковых диапазонов загорятся обе кнопки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Бюджет на ночь",
+            "maxLength": 24
+          },
+          {
+            "prop": "step",
+            "label": "Шаг",
+            "type": "number",
+            "default": 500,
+            "min": 100,
+            "max": 2000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A range with presets: people think \"budget\" or \"premium\" while the system does the conversion to numbers — and the slider still works.",
+            "ai": {
+              "summary": "A dual slider with preset buttons: a button sets both bounds and its mark clears itself after a manual edit. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-range-007-* palette — do not swap it for your theme tokens",
+                "its own light surface: the filter gets shown over any background",
+                "presets in words: people think \"budget\", not \"under 4,000\"",
+                "deriving the mark from the current bounds: a separate preset state desynchronises after the first edit",
+                "the working slider next to the presets: a button is a quick start, not the only way to answer",
+                "aria-pressed on the buttons: this is a selection state, not a one-off press",
+                "pointer-events on the thumbs while the track is disabled: otherwise the top slider swallows every click"
+              ],
+              "adapt": [
+                "label — the filter caption",
+                "presets — the names and bounds of the quick options",
+                "min, max and step of the scale",
+                "unit — the currency sign",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Preset bounds must land on the scale step, otherwise the mark never lights up.",
+                "The starting range comes from the middle of the preset list: an empty filter says nothing.",
+                "Keep presets non-overlapping: two identical ranges light up two buttons at once.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Range007 label=\"Budget per night\" min={0} max={20000} step={500} presets={[{ text: \"Budget\", from: 0, to: 4000 }]} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Budget per night"
+              },
+              "step": {
+                "label": "Step"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

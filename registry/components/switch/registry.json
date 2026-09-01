@@ -1,0 +1,1613 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "switch-001",
+      "type": "registry:component",
+      "title": "Setting Switch",
+      "description": "Переключатель настройки строкой: подпись и пояснение слева, тумблер прижат к краю. Внутри нативный checkbox, поэтому клавиатура и форма работают сами.",
+      "categories": [
+        "switch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "switch-001/switch-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/switch-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-switch-001-*. Корень — <label>, поэтому мишень это вся строка. Внутри нативный input[type=checkbox] с role=\"switch\" и appearance:none: дорожка — сам input, кружок — соседний span, который сдвигается по :checked. Пропом align тумблер переносится в начало строки для настроек в узкой колонке.",
+      "meta": {
+        "tags": [
+          "switch",
+          "toggle",
+          "settings",
+          "form"
+        ],
+        "ai": {
+          "export": "Switch001",
+          "usage": "<Switch001\n  name=\"twofa\"\n  defaultChecked\n  label=\"Двухфакторная защита\"\n  description=\"Запрашивать код при входе с нового устройства.\"\n/>",
+          "summary": "Переключатель настройки, а не поле формы: строка во всю ширину, подпись и пояснение слева, тумблер у края. Дорожка — нативный checkbox с appearance:none, кружок ездит по transform. Мишень — вся строка, состояние и клавиатура нативные, роль объявлена через role=\"switch\". Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-switch-001-* и не подменять её токенами вашей темы (bg-primary, bg-muted и подобными)",
+            "корень-<label> и ширину во всю строку: так переключатель читается в столбце настроек",
+            "нативный input[type=checkbox] с role=\"switch\": роль объявляет поведение, а состояние остаётся настоящим",
+            "сдвиг кружка через transform, а не через left: transform не вызывает пересчёт раскладки",
+            "outline focus-visible у дорожки — переключатель нажимают пробелом с клавиатуры",
+            "тень под кружком: без неё белый кружок теряется на светлой дорожке",
+            "правила :has(input:disabled), гасящие всю строку целиком",
+            "блок <style> внутри компонента — в нём вся палитра, геометрия и анимация тумблера"
+          ],
+          "adapt": [
+            "тексты label и description; без description строка становится однострочной",
+            "align: end — тумблер справа, start — слева, для узкой колонки",
+            "акцент через проп accent — цвет включённой дорожки и кольца фокуса",
+            "любые нативные пропсы input: name, checked, defaultChecked, onChange, disabled, value",
+            "внешние отступы и ширину через className"
+          ],
+          "notes": [
+            "Переключатель применяет настройку сразу. Если изменение вступает в силу только по кнопке «Сохранить» — это чекбокс, а не тумблер.",
+            "Не оборачивайте компонент в свой <label>: он уже внутри, вложенные label ломают клик.",
+            "Не подписывайте состояния словами «вкл» и «выкл» внутри дорожки: место рассчитано под кружок, текст в него не поместится.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Двухфакторная защита",
+            "maxLength": 40
+          },
+          {
+            "prop": "description",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Запрашивать код из приложения при входе с нового устройства.",
+            "maxLength": 90
+          },
+          {
+            "prop": "align",
+            "label": "Тумблер",
+            "type": "select",
+            "default": "end",
+            "options": [
+              "end",
+              "start"
+            ]
+          },
+          {
+            "prop": "defaultChecked",
+            "label": "Включено",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "disabled",
+            "label": "Выключено",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A setting toggle as a row: label and description on the left, the switch pinned to the edge. A native checkbox inside keeps keyboard and form behaviour free.",
+            "ai": {
+              "summary": "A setting toggle rather than a form field: a full-width row with the label and description on the left and the switch at the edge. The track is a native checkbox with appearance:none and the thumb rides on transform. The whole row is the target, state and keyboard stay native, and the role is declared with role=\"switch\". Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-switch-001-* palette — do not swap it for your theme tokens (bg-primary, bg-muted and the like)",
+                "the <label> root and the full-width row: that is what makes it read as a settings row",
+                "the native input[type=checkbox] with role=\"switch\": the role announces the behaviour while the state stays real",
+                "moving the thumb with transform rather than left: transform does not trigger layout",
+                "the focus-visible outline on the track — the switch is toggled with the space key",
+                "the shadow under the thumb: without it a white thumb disappears on a light track",
+                "the :has(input:disabled) rules that dim the entire row",
+                "the <style> block inside the component — it holds the palette, the geometry and the thumb animation"
+              ],
+              "adapt": [
+                "the label and description copy; without description the row becomes single-line",
+                "align: end puts the switch on the right, start on the left for a narrow column",
+                "the accent through the accent prop — it colours the on-state track and the focus ring",
+                "any native input props: name, checked, defaultChecked, onChange, disabled, value",
+                "outer spacing and width through className"
+              ],
+              "notes": [
+                "A switch applies its setting immediately. If the change only takes effect on a Save button, that is a checkbox, not a switch.",
+                "Do not wrap the component in your own <label> — there is one inside, and nested labels break clicking.",
+                "Do not put On/Off wording inside the track: the room in there is sized for the thumb, not for text.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Switch001\n  name=\"twofa\"\n  defaultChecked\n  label=\"Two-factor protection\"\n  description=\"Ask for a code when signing in from a new device.\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Two-factor protection"
+              },
+              "description": {
+                "label": "Description",
+                "default": "Ask for a code from the app when signing in from a new device."
+              },
+              "align": {
+                "label": "Switch side"
+              },
+              "defaultChecked": {
+                "label": "On"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "disabled": {
+                "label": "Disabled"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "switch-002",
+      "type": "registry:component",
+      "title": "Switch Tile",
+      "description": "Переключатель-плитка: заголовок, объяснение и тумблер в углу, а включённое состояние перекрашивает карточку целиком.",
+      "categories": [
+        "switch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "switch-002/switch-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/switch-002.tsx"
+        }
+      ],
+      "docs": "Серверный компонент: состояние держит нативный checkbox с role=\"switch\", JS не нужен. Корень — <label>, поэтому нажатие в любой точке плитки переключает опцию. Рамка, фон и бейдж «Включено» переключаются правилами :has(input:checked) на корне; фокус ловится через :has(input:focus-visible), потому что сам input визуально мал. Бегунок — псевдоузел рядом с input'ом, сдвиг задан transform. Палитра в --vibeui-switch-002-*.",
+      "meta": {
+        "tags": [
+          "switch",
+          "card",
+          "settings",
+          "toggle"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Switch002",
+          "usage": "<Switch002\n  title=\"Умные напоминания\"\n  description=\"Присылаем задачу за час до дедлайна.\"\n  badge=\"Включено\"\n/>",
+          "summary": "Плитка-переключатель с заголовком, описанием и заливкой всей карточки при включении. Один файл, ноль зависимостей, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-switch-002-* — не заменять её токенами темы проекта",
+            "нативный checkbox с role=\"switch\": он даёт клавиатуру, форму и объявление состояния бесплатно",
+            "корневой <label>: цель нажатия — вся плитка, а не бегунок шириной в палец",
+            "переключение фона и рамки через :has(input:checked) — среди нескольких плиток положение бегунка читается хуже цвета",
+            "кольцо фокуса на плитке через :has(input:focus-visible): сам input визуально крошечный",
+            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "заголовок плитки через title",
+            "объяснение через description",
+            "надпись в бейдже через badge",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Бейдж появляется только у включённой плитки: пустая строка в badge убирает его совсем.",
+            "Плитка расширяется до max-width — в сетке из нескольких карточек ширину задаёт родитель.",
+            "Описание короткое не случайно: длинный абзац превращает плитку в статью и ломает ритм сетки.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Умные напоминания",
+            "maxLength": 32
+          },
+          {
+            "prop": "badge",
+            "label": "Бейдж",
+            "type": "text",
+            "default": "Включено",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A switch tile: heading, explanation and a toggle in the corner, with the whole card recoloured when the option is on.",
+            "ai": {
+              "summary": "A tile switch with heading, description and a full-card tint when enabled. One file, zero dependencies, a server component.",
+              "preserve": [
+                "the local --vibeui-switch-002-* palette — do not swap it for your theme tokens",
+                "the native checkbox with role=\"switch\": it brings keyboard, form support and state announcement for free",
+                "the root <label>: the tap target is the whole tile, not a thumb the width of a finger",
+                "the background and border driven by :has(input:checked) — across several tiles colour reads better than thumb position",
+                "the focus ring on the tile via :has(input:focus-visible): the input itself is visually tiny",
+                "the component's own light surface — without it the dark text disappears on a dark page"
+              ],
+              "adapt": [
+                "the tile heading through title",
+                "the explanation through description",
+                "the badge caption through badge",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "The badge only shows on an enabled tile: an empty badge removes it entirely.",
+                "The tile stretches to its max-width — in a grid of cards the parent decides the width.",
+                "The description is short on purpose: a long paragraph turns the tile into an article and breaks the grid rhythm.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Switch002\n  title=\"Smart reminders\"\n  description=\"We ping you an hour before the deadline.\"\n  badge=\"On\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Smart reminders"
+              },
+              "badge": {
+                "label": "Badge",
+                "default": "On"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "switch-003",
+      "type": "registry:component",
+      "title": "Settings Switch List",
+      "description": "Раздел настроек: список строк с переключателями, тонкими разделителями и текстовым статусом «Вкл/Выкл» справа от каждой подписи.",
+      "categories": [
+        "switch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "switch-003/switch-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/switch-003.tsx"
+        }
+      ],
+      "docs": "Серверный компонент на fieldset с legend: скринридер объявляет название раздела перед строками. Легенда прижата float:left, а список получает clear:both — иначе следующие блоки обтекают её. Статус подставляется псевдоэлементом ::after, а переключается правилом :has(input:checked) в границах строки, поэтому JS не нужен. Разделители — inset box-shadow на соседних строках, чтобы не заводить лишние узлы. Палитра в --vibeui-switch-003-*.",
+      "meta": {
+        "tags": [
+          "switch",
+          "settings",
+          "list",
+          "fieldset"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Switch003",
+          "usage": "<Switch003\n  legend=\"Уведомления\"\n/>",
+          "summary": "Раздел настроек со списком переключателей и текстовым статусом каждой строки. Один файл, ноль зависимостей, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-switch-003-* — не заменять её токенами темы проекта",
+            "fieldset с legend: без них список строк не объявляется как один раздел настроек",
+            "float:left у легенды вместе с clear:both у списка — иначе легенда садится на рамку, а строки её обтекают",
+            "текстовый статус «Вкл/Выкл»: цвет бегунка сам по себе не говорит, что включено",
+            "нативные checkbox с role=\"switch\" в каждой строке: клавиатура и форма достаются даром",
+            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "название раздела через legend",
+            "состав строк, подписи и начальные состояния через items",
+            "акцентный цвет через accent",
+            "ширину карточки через max-width в CSS блока"
+          ],
+          "notes": [
+            "Статус нарисован через content в CSS — при переводе интерфейса эти две строки правятся в стилях, а не в разметке.",
+            "Каждый переключатель получает свой name из items: без него форма отправит одно поле на всю группу.",
+            "Разделитель нарисован тенью, поэтому первая строка остаётся без линии — так и задумано.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Раздел",
+            "type": "text",
+            "default": "Уведомления",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A settings section: rows with switches, hairline dividers and a textual On/Off status to the right of every caption.",
+            "ai": {
+              "summary": "A settings section listing switch rows with a textual status on each row. One file, zero dependencies, a server component.",
+              "preserve": [
+                "the local --vibeui-switch-003-* palette — do not swap it for your theme tokens",
+                "the fieldset with a legend: without them the rows are not announced as one settings section",
+                "float:left on the legend together with clear:both on the list — otherwise the legend sits on the border and rows wrap around it",
+                "the textual On/Off status: the thumb colour alone does not say what is enabled",
+                "native checkboxes with role=\"switch\" in every row: keyboard and form support come for free",
+                "the component's own light surface — without it the dark text disappears on a dark page"
+              ],
+              "adapt": [
+                "the section title through legend",
+                "the rows, captions and initial states through items",
+                "the accent colour through accent",
+                "the card width through max-width in the block CSS"
+              ],
+              "notes": [
+                "The status is drawn with CSS content — when localising the UI those two strings live in the styles, not the markup.",
+                "Every switch takes its name from items: without it the form submits a single field for the whole group.",
+                "The divider is a shadow, so the first row has no line above it — that is intentional.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Switch003\n  legend=\"Notifications\"\n/>"
+            },
+            "controls": {
+              "legend": {
+                "label": "Section",
+                "default": "Notifications"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "switch-004",
+      "type": "registry:component",
+      "title": "Icon State Switch",
+      "description": "Переключатель со значками состояний: в бегунке едет галочка или косой крест, а под названием стоит слово «включён» или «выключен».",
+      "categories": [
+        "switch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "switch-004/switch-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/switch-004.tsx"
+        }
+      ],
+      "docs": "Серверный компонент. Значки нарисованы рамками и псевдоэлементами: крест — две повёрнутые полоски, галочка — угол квадрата под 45°. Видимый значок выбирается правилом input:checked + [data-part=thumb], а подпись состояния — правилом :has(input:checked) на корне, поэтому текст и бегунок не могут разойтись. Скрытая подпись выключена display:none, значит и в доступное имя она не попадает. Палитра в --vibeui-switch-004-*.",
+      "meta": {
+        "tags": [
+          "switch",
+          "icon",
+          "state",
+          "toggle"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Switch004",
+          "usage": "<Switch004\n  label=\"Приём заказов\"\n  onText=\"включён\"\n  offText=\"выключен\"\n/>",
+          "summary": "Переключатель, состояние которого видно по значку в бегунке и слову под названием. Один файл, ноль зависимостей, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-switch-004-* — не заменять её токенами темы проекта",
+            "два способа показать состояние — значок и слово: одним цветом состояние не передаётся",
+            "переключение подписи через :has(input:checked): текст обязан следовать за реальным состоянием input'а, а не за отдельным флагом",
+            "display:none у скрытой подписи — так она не попадает ни на экран, ни в доступное имя",
+            "нативный checkbox с role=\"switch\": он даёт клавиатуру, форму и объявление состояния",
+            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "подпись переключателя через label",
+            "слово включённого состояния через onText",
+            "слово выключенного состояния через offText",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Значки нарисованы CSS: при смене размера бегунка их геометрию придётся пересчитать вручную.",
+            "Слова состояния попадают в доступное имя переключателя — писать их коротко и по делу.",
+            "Крупный бегунок здесь не украшение: значку внутри нужно место, меньше 28 пикселей он не читается.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Приём заказов",
+            "maxLength": 30
+          },
+          {
+            "prop": "onText",
+            "label": "Состояние «вкл»",
+            "type": "text",
+            "default": "включён",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A switch with state marks: a tick or a cross rides inside the thumb, and the word \"on\" or \"off\" sits under the caption.",
+            "ai": {
+              "summary": "A switch whose state is visible from the mark in the thumb and the word under the caption. One file, zero dependencies, a server component.",
+              "preserve": [
+                "the local --vibeui-switch-004-* palette — do not swap it for your theme tokens",
+                "two ways of showing the state — a mark and a word: colour alone does not carry it",
+                "the caption swap via :has(input:checked): the text must follow the real input state, not a separate flag",
+                "display:none on the hidden caption — that keeps it off the screen and out of the accessible name",
+                "the native checkbox with role=\"switch\": it brings keyboard, form support and state announcement",
+                "the component's own light surface — without it the dark text disappears on a dark page"
+              ],
+              "adapt": [
+                "the switch caption through label",
+                "the word for the on state through onText",
+                "the word for the off state through offText",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "The marks are drawn in CSS: change the thumb size and their geometry has to be recomputed by hand.",
+                "The state words end up in the switch's accessible name — keep them short and literal.",
+                "The large thumb is not decoration: the mark inside needs room and stops reading below 28 pixels.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Switch004\n  label=\"Taking orders\"\n  onText=\"on\"\n  offText=\"off\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Taking orders"
+              },
+              "onText": {
+                "label": "On state",
+                "default": "on"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "switch-005",
+      "type": "registry:component",
+      "title": "Confirmed Danger Switch",
+      "description": "Переключатель опасного действия: выключение разворачивает панель с последствием и двумя кнопками, а безопасное включение срабатывает сразу.",
+      "categories": [
+        "switch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "switch-005/switch-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/switch-005.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: useState на само состояние и на показ панели. Обработчик onChange асимметричен — включение применяется мгновенно, выключение только открывает вопрос, поэтому тумблер физически не двигается до подтверждения. Панель встроена в поток, а не в диалог: модальное окно перекрыло бы саму настройку, о которой спрашивают. Появление анимировано и гасится prefers-reduced-motion. Палитра в --vibeui-switch-005-*.",
+      "meta": {
+        "tags": [
+          "switch",
+          "confirm",
+          "danger",
+          "settings"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Switch005",
+          "usage": "<Switch005\n  label=\"Защита от удаления\"\n  question=\"Выключить защиту?\"\n  confirmText=\"Выключить\"\n/>",
+          "summary": "Переключатель, который спрашивает подтверждение только в опасную сторону. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-switch-005-* — не заменять её токенами темы проекта",
+            "асимметрию подтверждения: вопрос задаётся только в опасную сторону, обратное действие безопасно и должно быть мгновенным",
+            "тумблер, который не двигается до подтверждения — иначе состояние на экране расходится с реальным",
+            "текст последствия в панели: «вы уверены?» без последствия ничего не объясняет",
+            "две отдельные кнопки вместо одной: отмена обязана быть таким же явным действием",
+            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "подпись настройки через label и пояснение через description",
+            "текст вопроса через question",
+            "надписи кнопок через confirmText и cancelText",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Панель встроена в карточку — при узкой колонке проверить, что кнопки не наезжают друг на друга.",
+            "Фокус после открытия панели не переносится: для по-настоящему разрушительных действий уместнее модальный диалог с ловушкой фокуса.",
+            "Отмена возвращает исходное состояние молча, без всплывающих сообщений: лишний тост здесь только раздражает.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "question",
+            "label": "Вопрос",
+            "type": "text",
+            "default": "Выключить защиту? Любой участник команды сможет удалить проект целиком.",
+            "maxLength": 80
+          },
+          {
+            "prop": "confirmText",
+            "label": "Кнопка действия",
+            "type": "text",
+            "default": "Выключить",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A switch for a dangerous action: turning it off unfolds a panel with the consequence and two buttons, while turning it back on applies instantly.",
+            "ai": {
+              "summary": "A switch that asks for confirmation only in the dangerous direction. One file, zero dependencies, a client component.",
+              "preserve": [
+                "the local --vibeui-switch-005-* palette — do not swap it for your theme tokens",
+                "the asymmetry of confirmation: only the dangerous direction asks, the safe one has to be instant",
+                "the thumb that does not move until confirmation — otherwise the screen state disagrees with the real one",
+                "the consequence spelled out in the panel: \"are you sure?\" without a consequence explains nothing",
+                "two separate buttons rather than one: cancelling must be an equally explicit action",
+                "the component's own light surface — without it the dark text disappears on a dark page"
+              ],
+              "adapt": [
+                "the setting caption through label and the explanation through description",
+                "the question text through question",
+                "the button captions through confirmText and cancelText",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "The panel is inline — in a narrow column check that the buttons do not collide.",
+                "Focus is not moved when the panel opens: for truly destructive actions a modal dialog with a focus trap fits better.",
+                "Cancelling restores the state silently, with no toast: an extra notification here is only noise.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Switch005\n  label=\"Deletion protection\"\n  question=\"Turn protection off?\"\n  confirmText=\"Turn off\"\n/>"
+            },
+            "controls": {
+              "question": {
+                "label": "Question",
+                "default": "Turn protection off? Any teammate will be able to delete the whole project."
+              },
+              "confirmText": {
+                "label": "Action button",
+                "default": "Turn off"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "switch-006",
+      "type": "registry:component",
+      "title": "Autosave Switch",
+      "description": "Переключатель с отложенным сохранением: тумблер двигается сразу, а строка под ним честно проходит «сохраняем» и «сохранено».",
+      "categories": [
+        "switch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "switch-006/switch-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/switch-006.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: useState на состояние и на фазу записи, useRef хранит таймеры, useEffect снимает их при размонтировании. Строка статуса объявлена role=\"status\" и имеет фиксированную минимальную высоту, чтобы карточка не прыгала. Индикатор — кольцо с окрашенной верхней гранью, галочка — угол квадрата под 45°; обе анимации гасятся prefers-reduced-motion. Палитра в --vibeui-switch-006-*.",
+      "meta": {
+        "tags": [
+          "switch",
+          "autosave",
+          "status",
+          "async"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Switch006",
+          "usage": "<Switch006\n  label=\"Синхронизация с календарём\"\n  delay={900}\n/>",
+          "summary": "Переключатель, показывающий фазы записи настройки на сервер. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-switch-006-* — не заменять её токенами темы проекта",
+            "снятие таймеров в useEffect: без него setState зовут у уже размонтированного компонента",
+            "фиксированную высоту строки статуса — иначе карточка прыгает на каждом переключении и прыжок читается как ошибка",
+            "role=\"status\" на строке: смена фазы объявляется без кражи фокуса",
+            "три честные фазы вместо мгновенного «сохранено»: оптимистичный ответ без записи теряет настройку",
+            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "подпись настройки через label и спокойный текст через description",
+            "паузу до состояния «сохранено» через delay",
+            "акцентный цвет через accent",
+            "формулировки фаз в тексте компонента"
+          ],
+          "notes": [
+            "Запрос компонент не делает: delay имитирует его — подключая настоящую запись, состояние переводит владелец данных.",
+            "Ошибку записи этот вариант не показывает: для неё нужна четвёртая фаза и кнопка повтора.",
+            "Быстрые повторные переключения сбрасывают прежние таймеры — иначе статусы наложатся друг на друга.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Синхронизация с календарём",
+            "maxLength": 40
+          },
+          {
+            "prop": "delay",
+            "label": "Пауза, мс",
+            "type": "number",
+            "default": 900,
+            "min": 200,
+            "max": 4000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A switch with deferred saving: the thumb moves at once, while the line beneath honestly goes through \"saving\" and \"saved\".",
+            "ai": {
+              "summary": "A switch that shows the phases of writing a setting to the server. One file, zero dependencies, a client component.",
+              "preserve": [
+                "the local --vibeui-switch-006-* palette — do not swap it for your theme tokens",
+                "clearing the timers in useEffect: without it setState is called on an unmounted component",
+                "the fixed height of the status line — otherwise the card jumps on every toggle and the jump reads as an error",
+                "role=\"status\" on the line: the phase change is announced without stealing focus",
+                "three honest phases instead of an instant \"saved\": an optimistic answer without a write loses the setting",
+                "the component's own light surface — without it the dark text disappears on a dark page"
+              ],
+              "adapt": [
+                "the setting caption through label and the calm text through description",
+                "the pause before \"saved\" through delay",
+                "the accent colour through accent",
+                "the phase wording inside the component text"
+              ],
+              "notes": [
+                "The component issues no request: delay imitates it — wire a real write and let the data owner drive the state.",
+                "This variant shows no write error: that needs a fourth phase and a retry button.",
+                "Rapid re-toggling clears the previous timers — otherwise the statuses stack on each other.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Switch006\n  label=\"Calendar sync\"\n  delay={900}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Calendar sync"
+              },
+              "delay": {
+                "label": "Pause, ms",
+                "default": 900
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "switch-007",
+      "type": "registry:component",
+      "title": "Switch Size Scale",
+      "description": "Размерная шкала переключателя: sm, md и lg собраны из одной CSS-переменной, от которой считаются дорожка, бегунок и его сдвиг.",
+      "categories": [
+        "switch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "switch-007/switch-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/switch-007.tsx"
+        }
+      ],
+      "docs": "Серверный компонент на fieldset с legend. Все три размера строятся от --vibeui-switch-007-unit: ширина дорожки — 1.85 единицы, бегунок на четверть rem меньше, сдвиг 0.85 единицы, всё через calc. Поэтому новый размер — одна строка с другим значением переменной, а не копия всего блока правил. Легенда прижата float:left, список получает clear:both. Палитра в --vibeui-switch-007-*.",
+      "meta": {
+        "tags": [
+          "switch",
+          "sizes",
+          "scale",
+          "tokens"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Switch007",
+          "usage": "<Switch007\n  legend=\"Размер переключателя\"\n  checkedSize=\"lg\"\n/>",
+          "summary": "Три размера переключателя от одной переменной с расчётом через calc. Один файл, ноль зависимостей, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-switch-007-* — не заменять её токенами темы проекта",
+            "расчёт всех размеров от одной переменной unit: иначе новый размер требует копии всего блока правил",
+            "пропорции 1.85 и 0.85 в calc — бегунок должен доезжать ровно до края дорожки при любом размере",
+            "fieldset с legend: три строки объявляются как одна размерная шкала",
+            "float:left у легенды вместе с clear:both у списка — иначе строки обтекают легенду",
+            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "название шкалы через legend",
+            "изначально включённый размер через checkedSize",
+            "акцентный цвет через accent",
+            "сами значения размеров в CSS-переменной unit"
+          ],
+          "notes": [
+            "Размер sm — 18 пикселей: это ниже рекомендованной цели нажатия, поэтому строка целиком остаётся кликабельной.",
+            "Три переключателя здесь независимы и служат демонстрацией шкалы, а не группой настроек.",
+            "Тень бегунка не масштабируется вместе с размером: на lg её стоит немного усилить.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Размер переключателя",
+            "maxLength": 30
+          },
+          {
+            "prop": "checkedSize",
+            "label": "Включён размер",
+            "type": "select",
+            "default": "md",
+            "options": [
+              "sm",
+              "md",
+              "lg"
+            ]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A size scale for a switch: sm, md and lg all derive from a single CSS variable that drives track, thumb and travel.",
+            "ai": {
+              "summary": "Three switch sizes derived from one variable with calc. One file, zero dependencies, a server component.",
+              "preserve": [
+                "the local --vibeui-switch-007-* palette — do not swap it for your theme tokens",
+                "deriving every size from the single unit variable: otherwise a new size means copying the whole rule block",
+                "the 1.85 and 0.85 ratios in calc — the thumb has to land exactly at the track edge at every size",
+                "the fieldset with a legend: the three rows are announced as one size scale",
+                "float:left on the legend together with clear:both on the list — otherwise the rows wrap around the legend",
+                "the component's own light surface — without it the dark text disappears on a dark page"
+              ],
+              "adapt": [
+                "the scale title through legend",
+                "the size that starts enabled through checkedSize",
+                "the accent colour through accent",
+                "the size values themselves in the unit CSS variable"
+              ],
+              "notes": [
+                "The sm size is 18 pixels: below the recommended tap target, which is why the whole row stays clickable.",
+                "The three switches are independent and demonstrate the scale rather than form a settings group.",
+                "The thumb shadow does not scale with the size: on lg it is worth strengthening slightly.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Switch007\n  legend=\"Switch size\"\n  checkedSize=\"lg\"\n/>"
+            },
+            "controls": {
+              "legend": {
+                "label": "Heading",
+                "default": "Switch size"
+              },
+              "checkedSize": {
+                "label": "Enabled size",
+                "default": "md"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "switch-008",
+      "type": "registry:component",
+      "title": "Locked Switch",
+      "description": "Заблокированный переключатель, который объясняет себя: замок рядом с подписью, причина словами и живая ссылка на снятие ограничения.",
+      "categories": [
+        "switch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "switch-008/switch-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/switch-008.tsx"
+        }
+      ],
+      "docs": "Серверный компонент. Переключатель выключен через disabled, дорожка нарисована пунктиром — состояние читается и без цвета. Замок собран из прямоугольника корпуса и дужки на псевдоэлементе, без иконочного пакета. Ссылка намеренно не заблокирована и получает собственное кольцо фокуса: это единственный выход из тупика. Причина лежит в отдельном абзаце с приглушённым фоном. Палитра в --vibeui-switch-008-*.",
+      "meta": {
+        "tags": [
+          "switch",
+          "disabled",
+          "upgrade",
+          "state"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Switch008",
+          "usage": "<Switch008\n  label=\"Экспорт в облако\"\n  reason=\"Доступно на тарифе «Команда».\"\n  actionText=\"Сменить тариф\"\n  actionHref=\"/pricing\"\n/>",
+          "summary": "Выключенная настройка с объяснением причины и ссылкой на её снятие. Один файл, ноль зависимостей, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-switch-008-* — не заменять её токенами темы проекта",
+            "причину словами рядом с блокировкой: серый тумблер без текста читается как поломка",
+            "живую ссылку внутри объяснения — она единственный выход из заблокированного состояния и не должна быть выключена",
+            "disabled на самом input'е: визуальная имитация блокировки всё равно отправит значение формой",
+            "пунктирную дорожку и замок: состояние обязано читаться и без цвета",
+            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "подпись настройки через label",
+            "текст причины через reason",
+            "надпись ссылки через actionText и её адрес через actionHref",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Выключенный input не получает фокус — поэтому клавиатурный путь ведёт прямо на ссылку в объяснении.",
+            "Причина должна называть условие, а не отказ: «доступно на тарифе X» полезнее, чем «недоступно».",
+            "Курсор not-allowed стоит на строке, а не только на бегунке: наводят обычно на подпись.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "reason",
+            "label": "Причина",
+            "type": "text",
+            "default": "Доступно на тарифе «Команда»: на текущем плане выгрузка идёт только вручную.",
+            "maxLength": 90
+          },
+          {
+            "prop": "actionText",
+            "label": "Ссылка",
+            "type": "text",
+            "default": "Сменить тариф",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A locked switch that explains itself: a padlock beside the caption, the reason in words and a live link to lifting the limit.",
+            "ai": {
+              "summary": "A disabled setting with the reason spelled out and a link that lifts it. One file, zero dependencies, a server component.",
+              "preserve": [
+                "the local --vibeui-switch-008-* palette — do not swap it for your theme tokens",
+                "the reason in words next to the lock: a grey toggle with no text reads as a bug",
+                "the live link inside the explanation — it is the only way out of the locked state and must not be disabled",
+                "disabled on the input itself: a merely visual lock still submits a value with the form",
+                "the dashed track and the padlock: the state has to read without colour too",
+                "the component's own light surface — without it the dark text disappears on a dark page"
+              ],
+              "adapt": [
+                "the setting caption through label",
+                "the reason text through reason",
+                "the link caption through actionText and its address through actionHref",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "A disabled input takes no focus — so the keyboard path leads straight to the link in the explanation.",
+                "The reason should name the condition, not the refusal: \"available on plan X\" beats \"not available\".",
+                "The not-allowed cursor is on the row, not just the thumb: people hover the caption.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Switch008\n  label=\"Cloud export\"\n  reason=\"Available on the Team plan.\"\n  actionText=\"Change plan\"\n  actionHref=\"/pricing\"\n/>"
+            },
+            "controls": {
+              "reason": {
+                "label": "Reason",
+                "default": "Available on the Team plan: on the current one export is manual only."
+              },
+              "actionText": {
+                "label": "Link",
+                "default": "Change plan"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "switch-009",
+      "type": "registry:component",
+      "title": "Day Night Switch",
+      "description": "Переключатель темы день/ночь: дорожка перекрашивается из дневного неба в ночное, солнце превращается в месяц, а рядом всходят звёзды.",
+      "categories": [
+        "switch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "switch-009/switch-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/switch-009.tsx"
+        }
+      ],
+      "docs": "Серверный компонент: всё состояние держит нативный checkbox с role=\"switch\". Месяц сделан вырезом — круг цвета ночного неба на псевдоэлементе наезжает на солнце, днём он сдвинут за пределы бегунка. Звёзды нарисованы одной точкой с тремя тенями в box-shadow и проступают правилом input:checked ~ [data-part=stars]. Подпись режима переключается через :has(input:checked). Все переходы гасятся prefers-reduced-motion. Палитра в --vibeui-switch-009-*.",
+      "meta": {
+        "tags": [
+          "switch",
+          "theme",
+          "dark-mode",
+          "animation"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Switch009",
+          "usage": "<Switch009\n  dayLabel=\"Светлая тема\"\n  nightLabel=\"Тёмная тема\"\n/>",
+          "summary": "Переключатель темы с превращением солнца в месяц и восходом звёзд, целиком на CSS. Один файл, ноль зависимостей, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-switch-009-* — не заменять её токенами темы проекта",
+            "вырез месяца кругом цвета ночного неба: при смене фона дорожки этот круг нужно перекрасить вместе с ней",
+            "звёзды одной точкой с тремя тенями — три отдельных узла ради декора не нужны",
+            "подпись режима рядом с бегунком: значок солнца и месяца сам по себе не объясняет, что произойдёт по нажатию",
+            "правило prefers-reduced-motion — переезд, перекраска и восход звёзд обязаны выключаться",
+            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "подпись светлого режима через dayLabel",
+            "подпись тёмного режима через nightLabel",
+            "акцентный цвет фокуса через accent",
+            "цвета неба и светил в переменных day, night, sun и moon"
+          ],
+          "notes": [
+            "Компонент не переключает тему сайта: он только отражает выбор, применяет его владелец состояния.",
+            "Настоящему переключателю темы нужен третий режим «как в системе» — здесь их сознательно два.",
+            "Вырез месяца завязан на цвет ночного неба: при полупрозрачном фоне серп станет виден днём.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "dayLabel",
+            "label": "Светлый режим",
+            "type": "text",
+            "default": "Светлая тема",
+            "maxLength": 24
+          },
+          {
+            "prop": "nightLabel",
+            "label": "Тёмный режим",
+            "type": "text",
+            "default": "Тёмная тема",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A day/night theme switch: the track repaints from daylight sky to night, the sun turns into a crescent, and stars rise beside it.",
+            "ai": {
+              "summary": "A theme switch turning a sun into a crescent with rising stars, entirely in CSS. One file, zero dependencies, a server component.",
+              "preserve": [
+                "the local --vibeui-switch-009-* palette — do not swap it for your theme tokens",
+                "the crescent cut by a circle in the night-sky colour: change the track background and that circle must change with it",
+                "the stars as a single dot with three shadows — decoration does not need three extra nodes",
+                "the mode caption beside the thumb: a sun and moon glyph alone does not say what a tap will do",
+                "the prefers-reduced-motion rule — the travel, the repaint and the rising stars must be switchable off",
+                "the component's own light surface — without it the dark text disappears on a dark page"
+              ],
+              "adapt": [
+                "the light mode caption through dayLabel",
+                "the dark mode caption through nightLabel",
+                "the focus accent colour through accent",
+                "the sky and luminary colours in the day, night, sun and moon variables"
+              ],
+              "notes": [
+                "The component does not switch the site theme: it only reflects the choice, the state owner applies it.",
+                "A real theme switch needs a third \"follow system\" mode — here there are deliberately two.",
+                "The crescent cut depends on the night-sky colour: with a translucent background the crescent shows in daylight.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Switch009\n  dayLabel=\"Light theme\"\n  nightLabel=\"Dark theme\"\n/>"
+            },
+            "controls": {
+              "dayLabel": {
+                "label": "Light mode",
+                "default": "Light theme"
+              },
+              "nightLabel": {
+                "label": "Dark mode",
+                "default": "Dark theme"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "switch-010",
+      "type": "registry:component",
+      "title": "Icon Setting Switch",
+      "description": "Строка настройки с квадратной меткой раздела перед подписью: значок-сигнал помогает узнавать переключатель взглядом в длинном списке настроек.",
+      "categories": [
+        "switch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "switch-010/switch-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/switch-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-switch-010-*. Корень — <label>, поэтому мишень это вся строка. Метка раздела — квадрат с приглушённой заливкой и точкой-сигналом на псевдоэлементе, чисто декоративная и спрятана от скринридера через aria-hidden. Дорожка — нативный checkbox с role=\"switch\" и appearance:none, кружок сдвигается по :checked через transform.",
+      "meta": {
+        "tags": [
+          "switch",
+          "toggle",
+          "settings",
+          "icon"
+        ],
+        "ai": {
+          "export": "Switch010",
+          "usage": "<Switch010\n  label=\"Push-уведомления\"\n  description=\"Короткие сообщения о важных событиях на телефон.\"\n/>",
+          "summary": "Строка настройки с квадратной меткой раздела слева от текста: сигнал-значок, который помогает опознавать переключатель в длинном списке настроек быстрее, чем чтение подписи. Дорожка — нативный checkbox с role=\"switch\" и appearance:none. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-switch-010-* и не подменять её токенами вашей темы",
+            "квадратную метку раздела как отдельный декоративный узел с aria-hidden: она не несёт состояния, только визуальную категорию",
+            "нативный input[type=checkbox] с role=\"switch\": роль объявляет поведение, а состояние остаётся настоящим",
+            "сдвиг бегунка через transform, а не через left: transform не вызывает пересчёт раскладки",
+            "outline focus-visible у дорожки — переключатель нажимают пробелом с клавиатуры",
+            "правило :has(input:disabled), гасящее всю строку целиком"
+          ],
+          "adapt": [
+            "тексты label и description; без description строка становится однострочной",
+            "акцент через проп accent — цвет метки, включённой дорожки и кольца фокуса",
+            "любые нативные пропсы input: name, checked, defaultChecked, onChange, disabled, value",
+            "внешние отступы и ширину через className"
+          ],
+          "notes": [
+            "Метка раздела декоративна и не меняется формой — под свою иконографию перекрашивайте через accent или переопределяйте её в CSS.",
+            "Не оборачивайте компонент в свой <label>: он уже внутри.",
+            "Не подписывайте состояния словами «вкл»/«выкл» внутри дорожки: место рассчитано под кружок.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Push-уведомления",
+            "maxLength": 40
+          },
+          {
+            "prop": "description",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Короткие сообщения о важных событиях на телефон.",
+            "maxLength": 90
+          },
+          {
+            "prop": "defaultChecked",
+            "label": "Включено",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "disabled",
+            "label": "Выключено",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A setting row with a square section mark before the caption: a signal icon that helps you spot the switch at a glance in a long settings list.",
+            "ai": {
+              "summary": "A setting row with a square section mark to the left of the text: a signal icon that helps you spot the switch in a long settings list faster than reading the caption. The track is a native checkbox with role=\"switch\" and appearance:none. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-switch-010-* palette — do not swap it for your theme tokens",
+                "the square section mark as a separate decorative node with aria-hidden: it carries no state, only the visual category",
+                "the native input[type=checkbox] with role=\"switch\": the role announces the behaviour while the state stays real",
+                "moving the thumb with transform rather than left: transform does not trigger layout",
+                "the focus-visible outline on the track — the switch is toggled with the space key",
+                "the :has(input:disabled) rule that dims the entire row"
+              ],
+              "adapt": [
+                "the label and description copy; without description the row becomes single-line",
+                "the accent through the accent prop — it colours the mark, the on-state track and the focus ring",
+                "any native input props: name, checked, defaultChecked, onChange, disabled, value",
+                "outer spacing and width through className"
+              ],
+              "notes": [
+                "The section mark is decorative and is not props-driven — recolour it with accent or override it in CSS for your own iconography.",
+                "Do not wrap the component in your own <label> — there is one inside.",
+                "Do not put On/Off wording inside the track: the room in there is sized for the thumb.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Switch010\n  label=\"Push notifications\"\n  description=\"Short pings about important events on your phone.\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Push notifications"
+              },
+              "description": {
+                "label": "Description",
+                "default": "Short pings about important events on your phone."
+              },
+              "defaultChecked": {
+                "label": "On"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "disabled": {
+                "label": "Disabled"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "switch-011",
+      "type": "registry:component",
+      "title": "Confirmed Enable Switch",
+      "description": "Переключатель опасного включения: включение открывает нативный <dialog> с вопросом и двумя кнопками, а безопасное выключение срабатывает мгновенно.",
+      "categories": [
+        "switch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "switch-011/switch-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/switch-011.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: useState на состояние, useRef на ссылку <dialog>. Обработчик onChange асимметричен — выключение применяется мгновенно, включение только открывает диалог через showModal(), поэтому тумблер физически не двигается до подтверждения. Диалог даёт готовую ловушку фокуса и закрытие по Esc без ручной разметки; кнопки подтверждения и отмены равнозначны по весу. Палитра в --vibeui-switch-011-*.",
+      "meta": {
+        "tags": [
+          "switch",
+          "confirm",
+          "danger",
+          "dialog"
+        ],
+        "ai": {
+          "export": "Switch011",
+          "usage": "<Switch011\n  label=\"Публичная ссылка на проект\"\n  question=\"Открыть доступ по ссылке?\"\n  confirmText=\"Открыть доступ\"\n/>",
+          "summary": "Переключатель, который спрашивает подтверждение только в опасную сторону — включение, а не выключение. Вопрос задаётся в нативном <dialog> с готовой ловушкой фокуса и закрытием по Esc. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-switch-011-* — не заменять её токенами темы проекта",
+            "асимметрию подтверждения: вопрос задаётся только у включения, выключение безопасно и обязано быть мгновенным",
+            "тумблер, который не двигается до подтверждения — иначе состояние на экране расходится с реальным",
+            "нативный <dialog> с showModal(): фокус-ловушка и закрытие по Esc достаются даром, без ручной разметки",
+            "две отдельные кнопки вместо одной: отмена обязана быть таким же явным действием",
+            "aria-labelledby диалога, указывающий на текст вопроса"
+          ],
+          "adapt": [
+            "подпись настройки через label и пояснение через description",
+            "текст вопроса через question",
+            "надписи кнопок через confirmText и cancelText",
+            "акцентный цвет через accent"
+          ],
+          "notes": [
+            "Диалог модальный: пока он открыт, остальная страница недоступна для клавиатуры и скринридера — это штатное поведение <dialog>.",
+            "Перед повторным showModal() проверяется dialogRef.current?.open, иначе браузер бросает исключение.",
+            "Отмена и Esc возвращают исходное состояние молча, без всплывающих сообщений.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "question",
+            "label": "Вопрос",
+            "type": "text",
+            "default": "Открыть доступ по ссылке? Проект смогут увидеть все, у кого она окажется.",
+            "maxLength": 110
+          },
+          {
+            "prop": "confirmText",
+            "label": "Кнопка действия",
+            "type": "text",
+            "default": "Открыть доступ",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A switch for a dangerous enable: turning it on opens a native <dialog> with a question and two buttons, while turning it off applies instantly.",
+            "ai": {
+              "summary": "A switch that asks for confirmation only in the dangerous direction — turning on, not off. The question opens in a native <dialog> with a built-in focus trap and Escape-to-close. One file, zero dependencies, a client component.",
+              "preserve": [
+                "the local --vibeui-switch-011-* palette — do not swap it for your theme tokens",
+                "the asymmetry of confirmation: only turning on asks, turning off has to be instant",
+                "the thumb that does not move until confirmation — otherwise the screen state disagrees with the real one",
+                "the native <dialog> with showModal(): the focus trap and Escape-to-close come for free, with no manual markup",
+                "two separate buttons rather than one: cancelling must be an equally explicit action",
+                "the dialog's aria-labelledby pointing at the question text"
+              ],
+              "adapt": [
+                "the setting caption through label and the explanation through description",
+                "the question text through question",
+                "the button captions through confirmText and cancelText",
+                "the accent colour through accent"
+              ],
+              "notes": [
+                "The dialog is modal: while it is open the rest of the page is unreachable by keyboard and screen reader — that is standard <dialog> behaviour.",
+                "A repeat showModal() is guarded by checking dialogRef.current?.open first, or the browser throws.",
+                "Cancel and Escape restore the previous state silently, with no toast.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Switch011\n  label=\"Public project link\"\n  question=\"Grant link access?\"\n  confirmText=\"Grant access\"\n/>"
+            },
+            "controls": {
+              "question": {
+                "label": "Question",
+                "default": "Grant link access? Anyone who has the link will be able to open the project."
+              },
+              "confirmText": {
+                "label": "Action button",
+                "default": "Grant access"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "switch-012",
+      "type": "registry:component",
+      "title": "Master Group Switch",
+      "description": "Группа переключателей с общим тумблером «включить всё»: он встаёт в промежуточное положение, когда включена только часть строк, и текстом сообщает счёт.",
+      "categories": [
+        "switch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "switch-012/switch-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/switch-012.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: useState хранит множество включённых id, useRef и useEffect ставят DOM-свойство indeterminate на общем тумблере — React не прокидывает его через пропы. allOn и someOn пересчитываются от items на каждом рендере, поэтому общий тумблер не может разойтись со строками. Текстовый статус «Включено N из M» дублирует состояние словами, потому что tri-state у роли switch не описан ARIA. Палитра в --vibeui-switch-012-*.",
+      "meta": {
+        "tags": [
+          "switch",
+          "group",
+          "master",
+          "indeterminate"
+        ],
+        "ai": {
+          "export": "Switch012",
+          "usage": "<Switch012\n  legend=\"Каналы уведомлений\"\n  masterLabel=\"Включить всё\"\n/>",
+          "summary": "Общий тумблер над списком переключателей: индетерминированное состояние при частичном включении и текстовый счётчик «Включено N из M» вместо гадания по цвету бегунка. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-switch-012-* — не заменять её токенами темы проекта",
+            "установку input.indeterminate через ref в useEffect: React не прокидывает это свойство через пропы",
+            "текстовый статус «Включено N из M» — tri-state у роли switch формально не описан ARIA, поэтому счёт словами обязателен",
+            "fieldset с legend: список переключателей объявляется как один раздел настроек",
+            "нативные checkbox с role=\"switch\" в каждой строке: клавиатура и форма достаются даром",
+            "пересчёт allOn/someOn от общего items, а не от отдельного флага — иначе общий тумблер разойдётся со строками"
+          ],
+          "adapt": [
+            "название раздела через legend и подпись общего тумблера через masterLabel",
+            "состав строк, подписи и начальные состояния через items",
+            "акцентный цвет через accent",
+            "ширину карточки через max-width в CSS блока"
+          ],
+          "notes": [
+            "Общий тумблер не хранит своё состояние — оно каждый раз вычисляется из items, поэтому расхождений со строками не бывает.",
+            "Каждый переключатель получает свой id из items: без него метки потеряют связь с полями.",
+            "Индетерминированный бегунок останавливается по центру дорожки — это чисто визуальный сигнал, а не отдельное состояние формы.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Раздел",
+            "type": "text",
+            "default": "Каналы уведомлений",
+            "maxLength": 30
+          },
+          {
+            "prop": "masterLabel",
+            "label": "Общий тумблер",
+            "type": "text",
+            "default": "Включить всё",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A group of switches with a shared \"turn on all\" master toggle: it sits in an indeterminate position when only part of the rows are on and reports the count in words.",
+            "ai": {
+              "summary": "A master toggle above a list of switches: an indeterminate state when only part is on, plus a textual \"N of M on\" counter instead of guessing from thumb colour. One file, zero dependencies, a client component.",
+              "preserve": [
+                "the local --vibeui-switch-012-* palette — do not swap it for your theme tokens",
+                "setting input.indeterminate through a ref inside useEffect: React does not pass that property through props",
+                "the textual \"N of M on\" status — the switch role has no formal tri-state in ARIA, so a worded count is mandatory",
+                "the fieldset with a legend: the list of switches is announced as one settings section",
+                "native checkboxes with role=\"switch\" in every row: keyboard and form support come for free",
+                "computing allOn/someOn from the shared items state rather than a separate flag — otherwise the master toggle drifts from the rows"
+              ],
+              "adapt": [
+                "the section title through legend and the master caption through masterLabel",
+                "the rows, captions and initial states through items",
+                "the accent colour through accent",
+                "the card width through max-width in the block CSS"
+              ],
+              "notes": [
+                "The master toggle keeps no state of its own — it is recomputed from items every render, so it can never drift from the rows.",
+                "Every switch takes its id from items: without it the labels lose their connection to the fields.",
+                "The indeterminate thumb parks in the middle of the track — that is a purely visual cue, not a separate form state.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Switch012\n  legend=\"Notification channels\"\n  masterLabel=\"Turn on all\"\n/>"
+            },
+            "controls": {
+              "legend": {
+                "label": "Section",
+                "default": "Notification channels"
+              },
+              "masterLabel": {
+                "label": "Master switch",
+                "default": "Turn on all"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "switch-013",
+      "type": "registry:component",
+      "title": "Save Status Switch",
+      "description": "Переключатель с всплывающим бейджем сохранения: тумблер двигается сразу, а под ним на секунду встаёт капсула «Сохраняем…» со спиннером и «Сохранено» с галочкой.",
+      "categories": [
+        "switch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "switch-013/switch-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/switch-013.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: useState на состояние и на фазу записи, useRef хранит таймеры, useEffect снимает их при размонтировании. Статус вынесен во всплывающий бейдж с role=\"status\" под строкой, а не в резервированную по высоте строку — карточка временно растёт на время записи. Индикатор — кольцо с окрашенной верхней гранью, галочка — угол квадрата под 45°; обе анимации гасятся prefers-reduced-motion. Палитра в --vibeui-switch-013-*.",
+      "meta": {
+        "tags": [
+          "switch",
+          "autosave",
+          "status",
+          "badge"
+        ],
+        "ai": {
+          "export": "Switch013",
+          "usage": "<Switch013\n  label=\"Автоматический бэкап\"\n  delay={900}\n/>",
+          "summary": "Переключатель, показывающий фазы записи настройки во всплывающем бейдже под строкой, а не в резервированной строке статуса. Один файл, ноль зависимостей, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-switch-013-* — не заменять её токенами темы проекта",
+            "снятие таймеров в useEffect: без него setState зовут у уже размонтированного компонента",
+            "role=\"status\" на бейдже: смена фазы объявляется без кражи фокуса",
+            "три честные фазы вместо мгновенного «сохранено»: оптимистичный ответ без записи теряет настройку",
+            "смену цвета бейджа с акцентного на зелёный между «сохраняем» и «сохранено»: недостаточно одной обводки",
+            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "подпись настройки через label и спокойный текст через description",
+            "паузу до состояния «сохранено» через delay",
+            "акцентный цвет через accent",
+            "формулировки бейджа в тексте компонента"
+          ],
+          "notes": [
+            "Запрос компонент не делает: delay имитирует его — подключая настоящую запись, состояние переводит владелец данных.",
+            "Бейдж не резервирует место в простое: карточка временно растёт на время записи — это осознанный выбор, а не баг.",
+            "Быстрые повторные переключения сбрасывают прежние таймеры — иначе бейджи наложатся друг на друга.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Автоматический бэкап",
+            "maxLength": 40
+          },
+          {
+            "prop": "delay",
+            "label": "Пауза, мс",
+            "type": "number",
+            "default": 900,
+            "min": 200,
+            "max": 4000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A switch with a pop-up save badge: the thumb moves at once, while a capsule beneath it briefly reads \"Saving…\" with a spinner, then \"Saved\" with a checkmark.",
+            "ai": {
+              "summary": "A switch that shows the phases of writing a setting in a pop-up badge below the row rather than a reserved status line. One file, zero dependencies, a client component.",
+              "preserve": [
+                "the local --vibeui-switch-013-* palette — do not swap it for your theme tokens",
+                "clearing the timers in useEffect: without it setState is called on an unmounted component",
+                "role=\"status\" on the badge: the phase change is announced without stealing focus",
+                "three honest phases instead of an instant \"saved\": an optimistic answer without a write loses the setting",
+                "the badge colour switching from accent to green between \"saving\" and \"saved\": an outline alone is not enough",
+                "the component's own light surface — without it the dark text disappears on a dark page"
+              ],
+              "adapt": [
+                "the setting caption through label and the calm text through description",
+                "the pause before \"saved\" through delay",
+                "the accent colour through accent",
+                "the badge wording inside the component text"
+              ],
+              "notes": [
+                "The component issues no request: delay imitates it — wire a real write and let the data owner drive the state.",
+                "The badge reserves no space at rest: the card temporarily grows while saving — that is a deliberate choice, not a bug.",
+                "Rapid re-toggling clears the previous timers — otherwise the badges stack on each other.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Switch013\n  label=\"Automatic backup\"\n  delay={900}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Automatic backup"
+              },
+              "delay": {
+                "label": "Pause, ms",
+                "default": 900
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "switch-014",
+      "type": "registry:component",
+      "title": "Track Icons Switch",
+      "description": "Переключатель со значками в торцах дорожки: слева засечка выключения, справа галочка включения, обе закреплены на месте, а бегунок лишь указывает на активную сторону.",
+      "categories": [
+        "switch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "switch-014/switch-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/switch-014.tsx"
+        }
+      ],
+      "docs": "Серверный компонент. Значки закреплены в торцах input'а через absolute-позиционирование и не участвуют в сдвиге; активная сторона подсвечивается правилами input:checked ~ [data-part=\"on-mark\"] и input:not(:checked) ~ [data-part=\"off-mark\"]. Сдвиг бегунка задан цепочкой смежных селекторов input:checked + [off-mark] + [on-mark] + [thumb], поэтому порядок узлов в разметке нельзя менять. Засечка и галочка нарисованы рамками, без иконочного пакета. Палитра в --vibeui-switch-014-*.",
+      "meta": {
+        "tags": [
+          "switch",
+          "icon",
+          "track",
+          "toggle"
+        ],
+        "ai": {
+          "export": "Switch014",
+          "usage": "<Switch014\n  label=\"Автовоспроизведение\"\n  description=\"Следующее видео начинается без нажатия.\"\n/>",
+          "summary": "Переключатель со значками, закреплёнными в торцах дорожки, а не внутри бегунка: активная сторона подсвечивается цветом, бегунок только показывает, куда переключились. Один файл, ноль зависимостей, серверный компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-switch-014-* — не заменять её токенами темы проекта",
+            "неподвижные значки в торцах дорожки: сдвигается только бегунок, знаки остаются на месте",
+            "подсветку активного значка цветом через input:checked ~ и input:not(:checked) ~: состояние читается без утечки в текст",
+            "цепочку смежных селекторов input:checked + [off-mark] + [on-mark] + [thumb] для сдвига бегунка — порядок узлов в разметке менять нельзя",
+            "нативный checkbox с role=\"switch\": он даёт клавиатуру, форму и объявление состояния",
+            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+          ],
+          "adapt": [
+            "подпись переключателя через label и пояснение через description",
+            "акцентный цвет включённой дорожки через accent",
+            "изначальное состояние через defaultChecked",
+            "любые нативные пропсы input: name, checked, onChange, disabled, value"
+          ],
+          "notes": [
+            "Порядок узлов внутри дорожки жёсткий: input, off-mark, on-mark, thumb — селекторы завязаны именно на эту последовательность.",
+            "Значки декоративны и спрятаны через aria-hidden: состояние объявляет сам role=\"switch\".",
+            "Крупная дорожка здесь не украшение: знакам по краям нужно место, меньше 56 пикселей ширины они начинают наезжать на бегунок.",
+            "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Автовоспроизведение",
+            "maxLength": 30
+          },
+          {
+            "prop": "description",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Следующее видео начинается без нажатия.",
+            "maxLength": 70
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A switch with icons fixed at the ends of the track: an off tick on the left, an on check on the right, both anchored in place while the thumb simply points at the active side.",
+            "ai": {
+              "summary": "A switch with icons anchored at the ends of the track rather than inside the thumb: the active side lights up in colour, and the thumb only shows which way it switched. One file, zero dependencies, a server component.",
+              "preserve": [
+                "the local --vibeui-switch-014-* palette — do not swap it for your theme tokens",
+                "the fixed icons at the track ends: only the thumb moves, the marks stay put",
+                "colouring the active mark through input:checked ~ and input:not(:checked) ~: the state reads without leaking into text",
+                "the chained adjacent-sibling selector input:checked + [off-mark] + [on-mark] + [thumb] that moves the thumb — the node order in the markup must not change",
+                "the native checkbox with role=\"switch\": it brings keyboard, form support and state announcement",
+                "the component's own light surface — without it the dark text disappears on a dark page"
+              ],
+              "adapt": [
+                "the switch caption through label and the explanation through description",
+                "the on-state track accent colour through accent",
+                "the initial state through defaultChecked",
+                "any native input props: name, checked, onChange, disabled, value"
+              ],
+              "notes": [
+                "The node order inside the track is fixed: input, off-mark, on-mark, thumb — the selectors depend on exactly that sequence.",
+                "The marks are decorative and hidden with aria-hidden: role=\"switch\" itself announces the state.",
+                "The large track is not decoration: the marks at the edges need room and start colliding with the thumb below 56 pixels wide.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Switch014\n  label=\"Autoplay\"\n  description=\"The next video starts without a tap.\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Autoplay"
+              },
+              "description": {
+                "label": "Description",
+                "default": "The next video starts without a tap."
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,966 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "menu-006",
+      "type": "registry:component",
+      "title": "Mega Menu",
+      "description": "Широкое меню навигации на details: колонки с пояснениями к ссылкам — список из двадцати названий это карта сайта, а не навигация.",
+      "categories": [
+        "navigation-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "menu-006/menu-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/menu-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-006-*. Серверный компонент: раскрытие держит нативный details, useId нужен для имени группы. Корень объявлен контейнером, колонки живут на внутренней панели: контейнерный запрос действует только на потомков. От 26rem собственной ширины панель складывается в одну колонку.",
+      "meta": {
+        "tags": [
+          "menu",
+          "mega",
+          "navigation",
+          "no-js"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Menu006",
+          "usage": "<Menu006 label=\"Продукт\" sections={sections} />",
+          "summary": "Широкое меню навигации: раскрытие на details, две колонки с заголовками разделов и пояснением к каждой ссылке. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-menu-006-* и не подменять её токенами вашей темы",
+            "пояснения к ссылкам: без них это карта сайта, а не навигация",
+            "details вместо своего состояния — клавиатура и роль достаются даром",
+            "раскладку на внутренней панели: контейнерный запрос не применяется к самому контейнеру",
+            "складывание в одну колонку на узкой ширине",
+            "верхний слой у панели: меню обязано перекрывать содержимое"
+          ],
+          "adapt": [
+            "массив sections и их ссылки",
+            "label — подпись раздела",
+            "акцент через проп accent",
+            "число колонок"
+          ],
+          "notes": [
+            "Details не закрывается по клику вне: для этого нужен JS, и это осознанный размен.",
+            "Больше трёх колонок читаются как таблица: разбивайте меню на разделы.",
+            "Пояснение должно объяснять, а не повторять название ссылки другими словами.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись раздела",
+            "type": "text",
+            "default": "Продукт",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A wide navigation menu on details: columns with a line of explanation per link — twenty bare names are a sitemap, not navigation.",
+            "ai": {
+              "summary": "A mega menu: disclosure on details, two columns with section headings and a hint under every link. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-menu-006-* palette — do not swap it for your theme tokens",
+                "the hints under links: without them it is a sitemap, not navigation",
+                "details instead of custom state — keyboard and role come free",
+                "the layout on the inner panel: a container query does not apply to the container itself",
+                "collapsing to one column at narrow widths",
+                "the top layer on the panel: a menu must overlap content"
+              ],
+              "adapt": [
+                "the sections array and their links",
+                "label — the trigger's text",
+                "the accent through the accent prop",
+                "the number of columns"
+              ],
+              "notes": [
+                "Details does not close on an outside click: that needs JS, and skipping it is a deliberate trade.",
+                "More than three columns read as a table: split the menu into sections.",
+                "A hint must explain, not restate the link's name in other words.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Menu006 label=\"Product\" sections={sections} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Trigger text",
+                "default": "Product"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navmenu-001",
+      "type": "registry:component",
+      "title": "Column Navmenu",
+      "description": "Навигация сайта с выпадающей панелью из колонок: под каждой ссылкой строка пояснения, поэтому по разделу понятно, что внутри.",
+      "categories": [
+        "navigation-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navmenu-001/navmenu-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navmenu-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-001-*. Серверный: хуков нет, панель открывает popover=\"auto\". Якорем служит вся полоса навигации (anchor-name на [data-part=\"bar\"]), поэтому широкая панель встаёт под полосой целиком, а не под отдельной кнопкой. Колонки раскладывает grid с auto-fit и minmax, так что их число подстраивается под ширину панели. Разделы без панели — обычные ссылки.",
+      "meta": {
+        "tags": [
+          "navmenu",
+          "mega menu",
+          "popover",
+          "site nav"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navmenu001",
+          "usage": "<Navmenu001\n  entries={[\n    {\n      label: \"Продукт\",\n      columns: [\n        { title: \"Инструменты\", links: [{ label: \"Редактор\", hint: \"Блоки и сетка\" }] },\n      ],\n    },\n    { label: \"Цены\", href: \"/pricing\" },\n  ]}\n/>",
+          "summary": "Навигация сайта с широкой выпадающей панелью: колонки ссылок, у каждой ссылки строка пояснения. Панель открывает HTML popover и якорит к полосе навигации, поэтому Escape и клик мимо достаются от браузера. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navmenu-001-* и не подменять её токенами вашей темы (bg-popover, text-muted-foreground и подобными)",
+            "пояснение под каждой ссылкой: имя раздела в мега-меню почти никогда не объясняет, что там внутри",
+            "якорь на всей полосе, а не на отдельной кнопке: широкая панель, привязанная к кнопке, съезжает за край окна",
+            "popover=\"auto\": Escape, клик мимо и закрытие соседней панели достаются от браузера",
+            "auto-fit с minmax в колонках — при узкой панели они перестраиваются сами, без второго набора правил",
+            "разделы без панели обычными ссылками: кнопка, которая просто ведёт на страницу, ломает открытие в новой вкладке"
+          ],
+          "adapt": [
+            "массив entries: разделы, их колонки, ссылки и пояснения",
+            "ширину панели и минимальную ширину колонки",
+            "акцент через проп accent — цвет колец фокуса",
+            "высоту полосы навигации"
+          ],
+          "notes": [
+            "Панель не открывается по наведению — только по клику: случайное раскрытие мега-меню при проезде курсором раздражает сильнее, чем лишний клик.",
+            "Без поддержки anchor positioning панель открывается по центру экрана: проверьте целевые браузеры.",
+            "Больше трёх колонок в панели не ставьте: список перестаёт читаться и превращается в стену ссылок.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Site navigation with a drop-down panel of columns: every link carries a line of explanation, so a section says what is inside it.",
+            "ai": {
+              "summary": "Site navigation with a wide drop-down panel: columns of links, each with a line of explanation. The panel runs on the HTML popover and anchors to the nav bar, so Escape and outside clicks come from the browser. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navmenu-001-* palette — do not swap it for your theme tokens (bg-popover, text-muted-foreground and the like)",
+                "the hint under every link: a section name in a mega menu almost never explains what is inside",
+                "anchoring to the whole bar rather than one button: a wide panel tied to a button slides off the window edge",
+                "popover=\"auto\": Escape, outside clicks and closing a neighbouring panel come from the browser",
+                "auto-fit with minmax in the columns — a narrow panel rearranges itself without a second rule set",
+                "plain links for sections without a panel: a button that merely navigates breaks opening in a new tab"
+              ],
+              "adapt": [
+                "the entries array: sections, their columns, links and hints",
+                "the panel width and the minimum column width",
+                "the accent through the accent prop — it colours the focus rings",
+                "the height of the nav bar"
+              ],
+              "notes": [
+                "The panel does not open on hover, only on click: a mega menu unfolding as the cursor passes annoys more than one extra click.",
+                "Without anchor positioning support the panel opens centred: check your target browsers.",
+                "Do not go past three columns: the list stops reading and turns into a wall of links.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navmenu001\n  entries={[\n    {\n      label: \"Product\",\n      columns: [\n        { title: \"Tools\", links: [{ label: \"Editor\", hint: \"Blocks and grid\" }] },\n      ],\n    },\n    { label: \"Pricing\", href: \"/pricing\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navmenu-002",
+      "type": "registry:component",
+      "title": "Promo Navmenu",
+      "description": "Выпадающая панель с приоритетом: слева промо-карточка на всю высоту, справа обычные ссылки — вместо ровного списка одинаковых пунктов.",
+      "categories": [
+        "navigation-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navmenu-002/navmenu-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navmenu-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-002-*. Серверный: хуков нет, панель — popover=\"auto\" с якорем на полосе навигации. Панель разложена в две колонки grid: промо и список. Промо целиком является ссылкой, поэтому кликается вся карточка, а её фон собран из радиального градиента поверх плоского цвета — картинок компонент не тянет.",
+      "meta": {
+        "tags": [
+          "navmenu",
+          "promo",
+          "popover",
+          "marketing"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navmenu002",
+          "usage": "<Navmenu002\n  panelLabel=\"Возможности\"\n  promoTitle=\"Конструктор писем\"\n  links={[{ label: \"Редактор\", hint: \"Блоки и сетка\" }]}\n/>",
+          "summary": "Навигация с выпадающей панелью, где есть главный экспонат: промо-блок слева задаёт приоритет, ссылки справа перечисляют остальное. Промо — одна большая ссылка с фоном из градиента, без картинок. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navmenu-002-* и не подменять её токенами вашей темы (bg-accent, text-muted-foreground и подобными)",
+            "промо как единую ссылку, а не набор из заголовка и кнопки: две цели рядом заставляют выбирать, куда нажать",
+            "приоритет в панели: одинаково оформленные пункты не подсказывают, с чего начать",
+            "popover=\"auto\": Escape и клик мимо достаются от браузера",
+            "фон промо из градиента вместо картинки — компонент обязан оставаться одним файлом без ассетов",
+            "метку «Новое» отдельным элементом, а не припиской к заголовку: приписку не видно при беглом чтении",
+            "раскладку панели только в :popover-open — display на элементе с popover перебивает display:none из стилей браузера, и панель перестаёт закрываться"
+          ],
+          "adapt": [
+            "массив links и подписи panelLabel, promoTitle, promoText, promoAction",
+            "массив entries — остальные разделы полосы",
+            "акцент через проп accent — цвет метки и колец фокуса",
+            "пропорции колонок панели"
+          ],
+          "notes": [
+            "Промо-блок стоит первым в разметке, поэтому и в порядке табуляции он первый: это осознанный приоритет, а не ошибка.",
+            "Без поддержки anchor positioning панель открывается по центру экрана: проверьте целевые браузеры.",
+            "Двух промо в одной панели быть не должно: приоритет, поделённый надвое, перестаёт работать.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "panelLabel",
+            "label": "Раздел",
+            "type": "text",
+            "default": "Возможности",
+            "maxLength": 20
+          },
+          {
+            "prop": "promoTitle",
+            "label": "Заголовок промо",
+            "type": "text",
+            "default": "Конструктор писем",
+            "maxLength": 28
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A drop-down panel with a priority: a full-height promo card on the left, ordinary links on the right — instead of a flat list of equals.",
+            "ai": {
+              "summary": "Navigation with a drop-down panel that has a headline exhibit: the promo block on the left sets the priority, the links on the right list the rest. The promo is one large link with a gradient background and no images. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navmenu-002-* palette — do not swap it for your theme tokens (bg-accent, text-muted-foreground and the like)",
+                "the promo as a single link rather than a heading plus a button: two adjacent targets force a choice about where to click",
+                "the priority inside the panel: identically styled items never suggest where to start",
+                "popover=\"auto\": Escape and outside clicks come from the browser",
+                "the gradient promo background instead of an image — the component has to stay one file with no assets",
+                "the \"New\" badge as its own element rather than an addition to the heading: an addition goes unseen when scanning",
+                "the panel layout scoped to :popover-open — a display on a popover element overrides the browser display:none and the panel stops closing"
+              ],
+              "adapt": [
+                "the links array and the panelLabel, promoTitle, promoText and promoAction captions",
+                "the entries array — the remaining sections of the bar",
+                "the accent through the accent prop — it colours the badge and the focus rings",
+                "the column proportions of the panel"
+              ],
+              "notes": [
+                "The promo comes first in the markup and therefore first in the tab order: that is deliberate priority, not a bug.",
+                "Without anchor positioning support the panel opens centred: check your target browsers.",
+                "There must never be two promos in one panel: a priority split in half stops working.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navmenu002\n  panelLabel=\"Features\"\n  promoTitle=\"Email builder\"\n  links={[{ label: \"Editor\", hint: \"Blocks and grid\" }]}\n/>"
+            },
+            "controls": {
+              "panelLabel": {
+                "label": "Section",
+                "default": "Features"
+              },
+              "promoTitle": {
+                "label": "Promo title",
+                "default": "Email builder"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navmenu-003",
+      "type": "registry:component",
+      "title": "Simple Navmenu",
+      "description": "Самое простое выпадающее меню разделов: столбик ссылок без описаний и картинок, взаимное закрытие держит атрибут name у details.",
+      "categories": [
+        "navigation-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navmenu-003/navmenu-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navmenu-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-003-*. Серверный: хуков нет. Раздел с подпунктами — <details> с общим атрибутом name, поэтому браузер сам следит, что раскрыт только один. Меню позиционируется абсолютно от своей обёртки, anchor positioning не требуется. Галочка на кнопке переворачивается по атрибуту open, поэтому состояние видно на самой кнопке. Разделы без подпунктов — обычные ссылки.",
+      "meta": {
+        "tags": [
+          "navmenu",
+          "dropdown",
+          "details",
+          "no-js"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navmenu003",
+          "usage": "<Navmenu003\n  groups={[\n    { label: \"Продукт\", items: [\"Редактор\", \"Шаблоны\"] },\n    { label: \"Цены\", href: \"/pricing\" },\n  ]}\n/>",
+          "summary": "Обычное меню сайта: разделы с выпадающим столбиком ссылок и разделы-ссылки без списка. Открытие и взаимное закрытие держат <details> с общим name, поэтому меню работает до гидратации и при отключённых скриптах. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navmenu-003-* и не подменять её токенами вашей темы (bg-popover, border-border и подобными)",
+            "общий атрибут name у <details>: без него открываются сразу все разделы",
+            "переворот галочки по атрибуту open — состояние кнопки должно читаться на ней самой",
+            "разделы без подпунктов обычными ссылками: кнопка вместо ссылки лишает открытия в новой вкладке",
+            "разметку меню списком <ul>: набор ссылок — это список, а не стопка div'ов",
+            "видимое кольцо фокуса на кнопках и ссылках: меню обязано проходиться табуляцией"
+          ],
+          "adapt": [
+            "массив groups: разделы, их пункты и адреса",
+            "ширину выпадающего столбика",
+            "акцент через проп accent — цвет колец фокуса",
+            "высоту полосы навигации"
+          ],
+          "notes": [
+            "Escape не закрывает <details>: это поведение элемента. Нужна реакция на Escape — берите вариант на popover.",
+            "Клик мимо тоже не закрывает раздел: за это в <details> никто не отвечает.",
+            "Выпадающий столбик перекрывает содержимое под собой: полоса навигации должна лежать выше по слою.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "The plainest drop-down site menu: a column of links with no blurbs or pictures, with the name attribute on details doing the mutual closing.",
+            "ai": {
+              "summary": "An ordinary site menu: sections with a drop-down column of links, and link-only sections without a list. Opening and mutual closing come from <details> with a shared name, so the menu works before hydration and with scripts disabled. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navmenu-003-* palette — do not swap it for your theme tokens (bg-popover, border-border and the like)",
+                "the shared name attribute on <details>: without it every section opens at once",
+                "flipping the caret from the open attribute — a button's state must read on the button itself",
+                "plain links for sections without children: a button instead of a link removes opening in a new tab",
+                "the <ul> markup inside the menu: a set of links is a list, not a pile of divs",
+                "the visible focus ring on the buttons and links: the menu has to be walkable with Tab"
+              ],
+              "adapt": [
+                "the groups array: sections, their items and hrefs",
+                "the width of the drop-down column",
+                "the accent through the accent prop — it colours the focus rings",
+                "the height of the nav bar"
+              ],
+              "notes": [
+                "Escape does not close a <details>: that is the element's behaviour. If you need Escape, take the popover-based variant.",
+                "An outside click does not close it either: nothing in <details> handles that.",
+                "The drop-down covers whatever is beneath it: the nav bar has to sit higher in the stacking order.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navmenu003\n  groups={[\n    { label: \"Product\", items: [\"Editor\", \"Templates\"] },\n    { label: \"Pricing\", href: \"/pricing\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navmenu-004",
+      "type": "registry:component",
+      "title": "Catalog Navmenu",
+      "description": "Мега-меню каталога: плитки категорий со значками и счётчиками, где цвет значка выводится из названия и не хранится в данных.",
+      "categories": [
+        "navigation-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navmenu-004/navmenu-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navmenu-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-004-*. Серверный: хуков нет, панель — popover=\"auto\" с якорем на полосе навигации. Оттенок значка считает функция hue: хеш подписи даёт число от 0 до 330, оно уходит переменной --vibeui-navmenu-004-hue и подставляется в oklch. Плитки раскладывает grid с auto-fit, поэтому их число зависит от ширины панели.",
+      "meta": {
+        "tags": [
+          "navmenu",
+          "catalog",
+          "mega menu",
+          "icons"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navmenu004",
+          "usage": "<Navmenu004\n  triggerLabel=\"Каталог\"\n  tiles={[{ label: \"Ноутбуки\", hint: \"Тонкие и игровые\", count: 412 }]}\n/>",
+          "summary": "Мега-меню каталога: кнопка со значком сетки открывает панель с плитками категорий. У каждой плитки цветной значок, подпись, пояснение и число товаров. Цвет значка выводится из названия хешем, поэтому категория всегда одного цвета и палитру не нужно вести руками. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navmenu-004-* и не подменять её токенами вашей темы (bg-muted, text-foreground и подобными)",
+            "вывод оттенка из подписи: цвет категории должен быть устойчивым, иначе он меняется при каждой правке данных",
+            "плитки вместо строчек: в каталоге на десяток категорий строчки сливаются, а плитка ловит взгляд значком",
+            "popover=\"auto\": Escape и клик мимо достаются от браузера",
+            "auto-fit в сетке плиток — панель перестраивается сама, без второго набора правил",
+            "табличные цифры у счётчиков, иначе числа дёргают подписи"
+          ],
+          "adapt": [
+            "массив tiles: категории, пояснения, счётчики и адреса",
+            "подписи triggerLabel и footerLabel",
+            "акцент через проп accent — цвет ссылки в подвале панели и колец фокуса",
+            "размер плитки и число колонок"
+          ],
+          "notes": [
+            "Значок — это две первые буквы названия: для категорий, начинающихся одинаково, подставьте свои значки.",
+            "Хеш даёт двенадцать оттенков: в очень длинном каталоге цвета начнут повторяться.",
+            "Без поддержки anchor positioning панель открывается по центру экрана: проверьте целевые браузеры.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "triggerLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Каталог",
+            "maxLength": 16
+          },
+          {
+            "prop": "footerLabel",
+            "label": "Ссылка внизу",
+            "type": "text",
+            "default": "Все категории",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A catalog mega menu: category tiles with glyphs and counts, where the glyph colour is derived from the name instead of stored in data.",
+            "ai": {
+              "summary": "A catalog mega menu: a grid-glyph button opens a panel of category tiles. Every tile carries a coloured glyph, a label, a hint and an item count. The glyph colour is hashed from the name, so a category keeps one colour and the palette needs no upkeep. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navmenu-004-* palette — do not swap it for your theme tokens (bg-muted, text-foreground and the like)",
+                "deriving the hue from the label: a category colour has to be stable, otherwise it shifts with every data edit",
+                "tiles instead of rows: with a dozen categories rows blur together, while a tile catches the eye with its glyph",
+                "popover=\"auto\": Escape and outside clicks come from the browser",
+                "auto-fit in the tile grid — the panel rearranges itself without a second rule set",
+                "tabular figures on the counts, or the numbers jitter the labels"
+              ],
+              "adapt": [
+                "the tiles array: categories, hints, counts and hrefs",
+                "the triggerLabel and footerLabel captions",
+                "the accent through the accent prop — it colours the footer link and the focus rings",
+                "the tile size and the number of columns"
+              ],
+              "notes": [
+                "The glyph is the first two letters of the name: for categories that start alike, supply your own icons.",
+                "The hash yields twelve hues: in a very long catalog the colours start repeating.",
+                "Without anchor positioning support the panel opens centred: check your target browsers.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navmenu004\n  triggerLabel=\"Catalog\"\n  tiles={[{ label: \"Laptops\", hint: \"Thin and gaming\", count: 412 }]}\n/>"
+            },
+            "controls": {
+              "triggerLabel": {
+                "label": "Trigger",
+                "default": "Catalog"
+              },
+              "footerLabel": {
+                "label": "Footer link",
+                "default": "All categories"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navmenu-005",
+      "type": "registry:component",
+      "title": "Preview Navmenu",
+      "description": "Меню с превью справа: наведение или фокус на строке показывает свою картинку, и всё это на :has(), без состояния и без JS.",
+      "categories": [
+        "navigation-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navmenu-005/navmenu-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navmenu-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-005-*. Серверный: хуков нет. Превью лежат стопкой в общей области, а показывается то, чья строка под курсором или в фокусе — правилами :has() по data-index. Когда ничего не выбрано, показывается первое: за это отвечает отдельное правило с двойным :not(:has(...)). Картинки нарисованы градиентами по оттенку из подписи, поэтому меню не тянет ни одного файла изображения.",
+      "meta": {
+        "tags": [
+          "navmenu",
+          "preview",
+          "has-selector",
+          "no-js"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navmenu005",
+          "usage": "<Navmenu005\n  triggerLabel=\"Возможности\"\n  entries={[\n    { label: \"Редактор\", hint: \"Блоки и сетка\", shotTitle: \"Холст\" },\n  ]}\n/>",
+          "summary": "Меню, у которого справа живёт превью: наведение или фокус на ссылке показывает свою картинку. Переключение делает :has(), поэтому нет ни состояния, ни обработчиков. Картинки собраны из градиентов по оттенку из подписи и не требуют файлов. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navmenu-005-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            ":focus-visible рядом с :hover в правилах :has(): иначе превью недоступно тем, кто идёт по меню табуляцией",
+            "правило с двойным :not(:has(...)), показывающее первое превью: без него панель открывается пустой",
+            "область превью помеченной aria-hidden: картинка дублирует подпись ссылки и скринридеру не нужна",
+            "фиксированную высоту области превью — иначе панель прыгает при переходе между строками",
+            "правила на шесть строк: их число ограничено сверху, потому что каждая требует своей пары селекторов",
+            "раскладку панели только в :popover-open — display на элементе с popover перебивает display:none из стилей браузера, и панель перестаёт закрываться"
+          ],
+          "adapt": [
+            "массив entries: ссылки, пояснения и подписи превью",
+            "triggerLabel — подпись кнопки, открывающей панель",
+            "акцент через проп accent — цвет колец фокуса",
+            "размер области превью и оформление карточек"
+          ],
+          "notes": [
+            "Показывается не больше пяти строк: под каждую нужна своя пара правил, остальные обрезаются.",
+            "Превью — это градиент с подписью, а не скриншот: подставьте свои изображения, сохранив стопку и правила :has().",
+            "Без поддержки :has() превью останется на первом варианте — меню при этом работает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "triggerLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Возможности",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A menu with a preview on the right: hovering or focusing a row shows its own picture, all of it on :has(), with no state and no JS.",
+            "ai": {
+              "summary": "A menu with a live preview beside it: hovering or focusing a link reveals its picture. :has() does the switching, so there is no state and no handlers. The pictures are gradients tinted by a hash of the label and need no files. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navmenu-005-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                ":focus-visible alongside :hover in the :has() rules: otherwise the preview is out of reach when tabbing through the menu",
+                "the double :not(:has(...)) rule that shows the first preview: without it the panel opens empty",
+                "the preview area marked aria-hidden: the picture repeats the link label and a screen reader does not need it",
+                "the fixed preview height — otherwise the panel jumps as you move between rows",
+                "the rules written for six rows: the count is capped because each row needs its own pair of selectors",
+                "the panel layout scoped to :popover-open — a display on a popover element overrides the browser display:none and the panel stops closing"
+              ],
+              "adapt": [
+                "the entries array: links, hints and preview captions",
+                "triggerLabel — the caption of the button that opens the panel",
+                "the accent through the accent prop — it colours the focus rings",
+                "the preview size and the card styling"
+              ],
+              "notes": [
+                "No more than five rows are rendered: each needs its own pair of rules, the rest are trimmed.",
+                "A preview is a captioned gradient, not a screenshot: drop in your images, keeping the stack and the :has() rules.",
+                "Without :has() support the preview stays on the first entry — the menu itself still works.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navmenu005\n  triggerLabel=\"Features\"\n  entries={[\n    { label: \"Editor\", hint: \"Blocks and grid\", shotTitle: \"Canvas\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "triggerLabel": {
+                "label": "Trigger",
+                "default": "Features"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navmenu-006",
+      "type": "registry:component",
+      "title": "Mobile Navmenu",
+      "description": "Мобильная навигация: бургер открывает лист, а разделы внутри раскрываются списком вниз, а не летящей панелью.",
+      "categories": [
+        "navigation-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navmenu-006/navmenu-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navmenu-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-006-*. Серверный: хуков нет. Лист открывает чекбокс, состояние читается через :has(input:checked). Раскрытие сделано сменой grid-template-rows с 0fr на 1fr — так высота анимируется без магических чисел и без измерений. Разделы внутри — <details>. Полоски бургера складываются в крест по тому же состоянию чекбокса.",
+      "meta": {
+        "tags": [
+          "navmenu",
+          "mobile",
+          "burger",
+          "no-js"
+        ],
+        "ai": {
+          "export": "Navmenu006",
+          "usage": "<Navmenu006\n  brand=\"Полотно\"\n  sections={[{ label: \"Продукт\", items: [\"Редактор\", \"Шаблоны\"] }]}\n/>",
+          "summary": "Мобильная навигация: шапка с логотипом и бургером, под ней раскрывающийся лист с разделами. Разделы разворачиваются списком и толкают содержимое вниз, а не всплывают панелью — на узком экране панели некуда встать. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navmenu-006-* и не подменять её токенами вашей темы (bg-background, text-muted-foreground и подобными)",
+            "раскрытие через grid-template-rows от 0fr к 1fr: анимация высоты без заранее известного значения и без измерений в JS",
+            "чекбокс как хранилище состояния: без JS оно больше нигде не живёт",
+            "aria-label у скрытого чекбокса — иначе переключатель меню останется без имени",
+            "раскрытие списком вместо всплывающей панели: на телефоне панель либо не помещается, либо закрывает весь экран",
+            "крупные цели у строк: пункт меньше сорока пикселей по высоте пальцем не берётся"
+          ],
+          "adapt": [
+            "массив sections: разделы, их пункты и адреса",
+            "brand и actionLabel — название и подпись кнопки действия",
+            "акцент через проп accent — цвет кнопки действия и колец фокуса",
+            "высоту шапки и отступы в листе"
+          ],
+          "notes": [
+            "Идентификатор чекбокса зафиксирован в разметке: два экземпляра на странице дадут повторяющийся id, задайте свой.",
+            "Состояние листа не сохраняется между страницами: это переключатель меню, а не настройка.",
+            "Компонент рассчитан на узкую ширину: на десктопе берите вариант с выпадающими панелями.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Полотно",
+            "maxLength": 16
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Действие",
+            "type": "text",
+            "default": "Начать бесплатно",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Mobile navigation: the burger opens a sheet, and sections inside unfold as a list downwards rather than as a floating panel.",
+            "ai": {
+              "summary": "Mobile navigation: a header with a wordmark and a burger, and an expanding sheet with the sections below it. Sections unfold as a list and push the content down instead of floating over it — a panel has nowhere to sit on a narrow screen. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navmenu-006-* palette — do not swap it for your theme tokens (bg-background, text-muted-foreground and the like)",
+                "the 0fr to 1fr grid-template-rows expansion: height animates without a known value and without measuring in JS",
+                "the checkbox as the state store: without JS the state lives nowhere else",
+                "the aria-label on the hidden checkbox — otherwise the menu toggle has no name",
+                "unfolding as a list instead of a floating panel: on a phone a panel either does not fit or covers the whole screen",
+                "the large row targets: an item under forty pixels tall cannot be hit with a thumb"
+              ],
+              "adapt": [
+                "the sections array: sections, their items and hrefs",
+                "brand and actionLabel — the wordmark and the action button caption",
+                "the accent through the accent prop — it colours the action button and the focus rings",
+                "the header height and the spacing inside the sheet"
+              ],
+              "notes": [
+                "The checkbox id is fixed in the markup: two instances on one page produce a duplicate id, so give it your own.",
+                "The sheet state is not kept between pages: this is a menu toggle, not a setting.",
+                "The component is meant for narrow widths: on desktop take the drop-down panel variant.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navmenu006\n  brand=\"Canvas\"\n  sections={[{ label: \"Product\", items: [\"Editor\", \"Templates\"] }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Wordmark",
+                "default": "Canvas"
+              },
+              "actionLabel": {
+                "label": "Action",
+                "default": "Start free"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navmenu-007",
+      "type": "registry:component",
+      "title": "Brand Navmenu",
+      "description": "Шапка сайта целиком: логотип слева, разделы по центру, вход и главное действие справа, с уходом лишнего на узкой ширине.",
+      "categories": [
+        "navigation-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navmenu-007/navmenu-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navmenu-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-007-*. Серверный: хуков нет, разделы с подпунктами — <details> с общим атрибутом name. Средняя часть растягивается flex:1, поэтому правая группа остаётся у края при любой ширине. Знак логотипа нарисован градиентом, а не картинкой. На узкой ширине контейнерный запрос убирает ссылки и вторичное действие, оставляя логотип и главную кнопку.",
+      "meta": {
+        "tags": [
+          "navmenu",
+          "header",
+          "brand",
+          "cta"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navmenu007",
+          "usage": "<Navmenu007\n  brand=\"Полотно\"\n  actionLabel=\"Начать\"\n  entries={[{ label: \"Продукт\", items: [\"Редактор\", \"Шаблоны\"] }]}\n/>",
+          "summary": "Шапка сайта: логотип со знаком, разделы с выпадающими списками, вторичная ссылка и главная кнопка справа. На узкой ширине остаются логотип и кнопка, остальное уходит по контейнерному запросу. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navmenu-007-* и не подменять её токенами вашей темы (bg-primary, text-primary-foreground и подобными)",
+            "одну главную кнопку справа: два одинаково ярких действия в шапке отменяют друг друга",
+            "flex:1 у средней части вместо распорок — правая группа остаётся у края при любом числе разделов",
+            "логотип ссылкой на главную: это первое, куда возвращаются с любой страницы",
+            "контейнерный запрос, убирающий ссылки в узкой шапке: иначе кнопка выдавливается за край",
+            "общий атрибут name у <details>: им разделы закрывают друг друга"
+          ],
+          "adapt": [
+            "массив entries: разделы и их подпункты",
+            "brand и actionLabel — название и подпись главной кнопки",
+            "акцент через проп accent — цвет знака логотипа и главной кнопки",
+            "высоту шапки и радиус скругления"
+          ],
+          "notes": [
+            "В узком виде разделы просто исчезают: рядом должен стоять мобильный вариант навигации.",
+            "Знак логотипа — градиентный квадрат: подставьте свой, сохранив размер в 1.375rem.",
+            "Escape не закрывает <details>: это поведение элемента, а не ошибка.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Полотно",
+            "maxLength": 16
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Начать",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A whole site header: wordmark on the left, sections in the middle, sign-in and the primary action on the right, shedding parts when narrow.",
+            "ai": {
+              "summary": "A site header: a wordmark with a logo mark, sections with drop-down lists, a secondary link and the primary button on the right. When narrow, only the wordmark and the button remain — a container query removes the rest. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navmenu-007-* palette — do not swap it for your theme tokens (bg-primary, text-primary-foreground and the like)",
+                "the single primary button on the right: two equally loud actions in a header cancel each other out",
+                "flex:1 on the middle section instead of spacers — the right group stays at the edge whatever the section count",
+                "the wordmark as a link to the home page: it is the first place people return to from anywhere",
+                "the container query that removes the links in a narrow header: otherwise the button is pushed off the edge",
+                "the shared name attribute on <details>: it is how sections close one another"
+              ],
+              "adapt": [
+                "the entries array: sections and their children",
+                "brand and actionLabel — the wordmark and the primary button caption",
+                "the accent through the accent prop — it colours the logo mark and the primary button",
+                "the header height and the corner radius"
+              ],
+              "notes": [
+                "In the narrow view the sections simply disappear: a mobile navigation variant has to sit alongside.",
+                "The logo mark is a gradient square: swap in your own, keeping the 1.375rem size.",
+                "Escape does not close a <details>: that is the element's behaviour, not a bug.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navmenu007\n  brand=\"Canvas\"\n  actionLabel=\"Start\"\n  entries={[{ label: \"Product\", items: [\"Editor\", \"Templates\"] }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Wordmark",
+                "default": "Canvas"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Start"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "navmenu-008",
+      "type": "registry:component",
+      "title": "Search Navmenu",
+      "description": "Навигация с панелью, которая начинается со строки поиска: под полем — частые запросы и недавнее, всё обычными ссылками.",
+      "categories": [
+        "navigation-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navmenu-008/navmenu-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navmenu-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-008-*. Серверный: хуков нет. Панель — popover=\"auto\" с якорем на полосе навигации и выравниванием по правому краю. Поле лежит в настоящей <form method=\"get\"> с role=\"search\", поэтому запрос уходит на страницу результатов и без JS. Подсказки под полем — обычные ссылки, а лупа нарисована кругом с чёрточкой из бордюров.",
+      "meta": {
+        "tags": [
+          "navmenu",
+          "search",
+          "popover",
+          "form"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Navmenu008",
+          "usage": "<Navmenu008\n  placeholder=\"Что ищем в справке?\"\n  suggestions={[\"Тарифы\", \"Домены\"]}\n/>",
+          "summary": "Навигация со строкой поиска внутри выпадающей панели: поле, кнопка «Найти», частые запросы чипсами и недавние запросы списком. Форма настоящая, поэтому поиск работает и без JS. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navmenu-008-* и не подменять её токенами вашей темы (bg-input, border-input и подобными)",
+            "настоящую <form method=\"get\"> с role=\"search\": Enter отправляет её сам, и поиск работает до гидратации",
+            "aria-label у поля вместе с placeholder: подсказка исчезает при вводе и именем поля быть не может",
+            "type=\"search\" у поля — браузер даёт очистку и правильную клавиатуру на телефоне",
+            "подсказки обычными ссылками, а не кнопками: частый запрос должен открываться в новой вкладке",
+            "popover=\"auto\": Escape и клик мимо достаются от браузера"
+          ],
+          "adapt": [
+            "массивы suggestions и recent — частые и недавние запросы",
+            "подписи triggerLabel и placeholder",
+            "адрес формы: сейчас это заглушка",
+            "акцент через проп accent — цвет кнопки «Найти» и колец фокуса"
+          ],
+          "notes": [
+            "Подсказок по мере ввода нет: для живого поиска понадобится клиентский код и своя выдача.",
+            "Недавние запросы приходят пропом: компонент ничего не хранит и не читает историю.",
+            "Без поддержки anchor positioning панель открывается по центру экрана: проверьте целевые браузеры.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Что ищем в справке?",
+            "maxLength": 32
+          },
+          {
+            "prop": "triggerLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Поиск",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Navigation with a panel that opens on a search field: frequent queries and recent ones sit under it, all as ordinary links.",
+            "ai": {
+              "summary": "Navigation with a search field inside the drop-down panel: an input, a Search button, frequent queries as chips and recent ones as a list. The form is real, so search works without JS. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navmenu-008-* palette — do not swap it for your theme tokens (bg-input, border-input and the like)",
+                "the real <form method=\"get\"> with role=\"search\": Enter submits it on its own and search works before hydration",
+                "the field's aria-label alongside the placeholder: a placeholder disappears while typing and cannot be the name",
+                "type=\"search\" on the field — the browser gives a clear button and the right keyboard on a phone",
+                "the suggestions as plain links rather than buttons: a frequent query should open in a new tab",
+                "popover=\"auto\": Escape and outside clicks come from the browser"
+              ],
+              "adapt": [
+                "the suggestions and recent arrays — frequent and recent queries",
+                "the triggerLabel and placeholder captions",
+                "the form action: it is a stub right now",
+                "the accent through the accent prop — it colours the Search button and the focus rings"
+              ],
+              "notes": [
+                "There are no as-you-type suggestions: live search needs client code and your own results.",
+                "Recent queries arrive as a prop: the component stores nothing and reads no history.",
+                "Without anchor positioning support the panel opens centred: check your target browsers.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navmenu008\n  placeholder=\"Search the help centre\"\n  suggestions={[\"Pricing\", \"Domains\"]}\n/>"
+            },
+            "controls": {
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Search the help centre"
+              },
+              "triggerLabel": {
+                "label": "Trigger",
+                "default": "Search"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

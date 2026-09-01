@@ -1,0 +1,178 @@
+"use client"
+
+import { useEffect, useId, useRef, useState } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Switch013Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children" | "onChange"
+> & {
+  label?: string
+  description?: string
+  /** Сколько миллисекунд «сохраняем» — столько же ждёт настоящий запрос. */
+  delay?: number
+  accent?: string
+}
+
+// Идея компонента: тот же честный цикл записи, что и у обычного
+// переключателя с сохранением, но статус — не строка внутри карточки, а
+// всплывающий значок-бейдж под тумблером. Пока идёт запись, бейдж со
+// спиннером и словом «Сохраняем…» подрастает снизу; после ответа он на
+// секунду превращается в зелёную галочку с «Сохранено» и растворяется сам.
+const STYLES = `
+:where([data-vibeui-block="switch-013"]){
+--vibeui-switch-013-bg:oklch(1 0 0);
+--vibeui-switch-013-fg:oklch(0.22 0.014 265);
+--vibeui-switch-013-muted:oklch(0.55 0.014 265);
+--vibeui-switch-013-border:oklch(0.91 0.006 265);
+--vibeui-switch-013-track:oklch(0.88 0.008 265);
+--vibeui-switch-013-thumb:oklch(1 0 0);
+--vibeui-switch-013-accent:oklch(0.55 0.19 262);
+--vibeui-switch-013-ok:oklch(0.55 0.15 155);
+--vibeui-switch-013-ok-tint:oklch(0.55 0.15 155 / 12%);
+--vibeui-switch-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="switch-013"]{
+box-sizing:border-box;width:100%;max-width:21rem;padding:0.875rem;
+background:var(--vibeui-switch-013-bg);
+border:1px solid var(--vibeui-switch-013-border);border-radius:0.875rem;
+font-family:var(--vibeui-switch-013-font);color:var(--vibeui-switch-013-fg);
+}
+[data-vibeui-block="switch-013"] [data-part="row"]{display:flex;align-items:center;gap:1rem;cursor:pointer}
+[data-vibeui-block="switch-013"] [data-part="text"]{display:flex;flex-direction:column;gap:0.125rem;flex:1 1 auto;min-width:0}
+[data-vibeui-block="switch-013"] [data-part="label"]{font-size:0.9375rem;font-weight:600;line-height:1.3}
+[data-vibeui-block="switch-013"] [data-part="description"]{font-size:0.8125rem;line-height:1.4;color:var(--vibeui-switch-013-muted)}
+[data-vibeui-block="switch-013"] [data-part="track"]{position:relative;display:flex;flex:none}
+[data-vibeui-block="switch-013"] input{
+appearance:none;-webkit-appearance:none;margin:0;
+width:2.75rem;height:1.5rem;border-radius:9999px;
+background:var(--vibeui-switch-013-track);cursor:inherit;
+transition:background-color .18s ease;
+}
+[data-vibeui-block="switch-013"] input:checked{background:var(--vibeui-switch-013-accent)}
+[data-vibeui-block="switch-013"] input:focus-visible{outline:2px solid var(--vibeui-switch-013-accent);outline-offset:2px}
+[data-vibeui-block="switch-013"] [data-part="thumb"]{
+position:absolute;left:0.1875rem;top:0.1875rem;
+width:1.125rem;height:1.125rem;border-radius:9999px;pointer-events:none;
+background:var(--vibeui-switch-013-thumb);
+box-shadow:0 1px 2px oklch(0.2 0.02 265 / 28%);
+transition:transform .18s cubic-bezier(.32,.72,0,1);
+}
+[data-vibeui-block="switch-013"] input:checked + [data-part="thumb"]{transform:translateX(1.25rem)}
+/* Бейдж-подсказка: не резервирует место в потоке — появляется отдельной
+   строкой ниже и уезжает вместе с исчезновением, поэтому карточка временно
+   растёт на время записи, а не держит пустую полосу постоянно. */
+[data-vibeui-block="switch-013"] [data-part="badge"]{
+display:inline-flex;align-items:center;gap:0.375rem;
+margin-top:0.625rem;padding:0.3125rem 0.625rem;border-radius:9999px;
+font-size:0.75rem;font-weight:600;
+background:color-mix(in oklab,var(--vibeui-switch-013-accent) 12%,transparent);
+color:var(--vibeui-switch-013-accent);
+animation:vibeui-switch-013-pop .18s ease-out;
+}
+[data-vibeui-block="switch-013"][data-state="saved"] [data-part="badge"]{
+background:var(--vibeui-switch-013-ok-tint);color:var(--vibeui-switch-013-ok);
+}
+@keyframes vibeui-switch-013-pop{from{opacity:0;transform:translateY(-0.25rem)}to{opacity:1;transform:none}}
+[data-vibeui-block="switch-013"] [data-part="spinner"]{
+flex:none;width:0.75rem;height:0.75rem;border-radius:9999px;
+border:1.5px solid color-mix(in oklab,var(--vibeui-switch-013-accent) 30%,transparent);
+border-top-color:var(--vibeui-switch-013-accent);
+animation:vibeui-switch-013-spin .7s linear infinite;
+}
+@keyframes vibeui-switch-013-spin{to{transform:rotate(360deg)}}
+[data-vibeui-block="switch-013"] [data-part="tick"]{
+flex:none;width:0.375rem;height:0.6875rem;
+border-right:1.5px solid var(--vibeui-switch-013-ok);
+border-bottom:1.5px solid var(--vibeui-switch-013-ok);
+transform:rotate(45deg);
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="switch-013"] *{animation:none!important;transition:none!important}}
+`
+
+/**
+ * Переключатель со всплывающим бейджем сохранения: «Сохраняем…» → «Сохранено».
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Switch013({
+  label = "Автоматический бэкап",
+  description = "Копия базы каждую ночь в 03:00.",
+  delay = 900,
+  accent,
+  className,
+  style,
+  ...props
+}: Switch013Props) {
+  const id = useId()
+  const [checked, setChecked] = useState(true)
+  const [state, setState] = useState<"idle" | "saving" | "saved">("idle")
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([])
+
+  // Таймеры снимаются при размонтировании: иначе setState зовут у
+  // компонента, которого уже нет на странице.
+  useEffect(() => {
+    const pending = timers.current
+    return () => pending.forEach(clearTimeout)
+  }, [])
+
+  const palette = {
+    ...(accent ? { "--vibeui-switch-013-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-switch-013" precedence="medium">
+        {STYLES}
+      </style>
+      <div
+        {...props}
+        data-vibeui-block="switch-013"
+        data-state={state}
+        className={className}
+        style={palette}
+      >
+        <label data-part="row" htmlFor={id}>
+          <span data-part="text">
+            <span data-part="label">{label}</span>
+            <span data-part="description">{description}</span>
+          </span>
+          <span data-part="track">
+            <input
+              id={id}
+              type="checkbox"
+              role="switch"
+              checked={checked}
+              onChange={(event) => {
+                timers.current.forEach(clearTimeout)
+                timers.current = []
+                setChecked(event.target.checked)
+                setState("saving")
+                timers.current.push(
+                  setTimeout(() => setState("saved"), delay),
+                  setTimeout(() => setState("idle"), delay + 1600),
+                )
+              }}
+            />
+            <span data-part="thumb" aria-hidden="true" />
+          </span>
+        </label>
+        {state !== "idle" ? (
+          <span data-part="badge" role="status">
+            {state === "saving" ? (
+              <>
+                <span data-part="spinner" aria-hidden="true" />
+                Сохраняем…
+              </>
+            ) : (
+              <>
+                <span data-part="tick" aria-hidden="true" />
+                Сохранено
+              </>
+            )}
+          </span>
+        ) : null}
+      </div>
+    </>
+  )
+}

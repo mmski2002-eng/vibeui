@@ -1,0 +1,1361 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "field-001",
+      "type": "registry:component",
+      "title": "Field With Error",
+      "description": "Обвязка поля: пояснение и ошибка связаны через aria-describedby и читаются вслух вместе со значением, а не отдельно.",
+      "categories": ["field"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "field-001/field-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/field-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-001-*. Серверный: хуков нет. Ошибка помечает поле через aria-invalid и попадает в aria-describedby вместе с пояснением: условия остаются на экране ровно тогда, когда они нужнее всего. Ошибка снабжена знаком, а не только цветом.",
+      "meta": {
+        "tags": ["field", "error", "form", "a11y"],
+        "ai": {
+          "export": "Field001",
+          "usage": "<Field001 label=\"Рабочая почта\" hint=\"Пришлём ключ доступа.\" error=\"Адрес без «@».\" />",
+          "summary": "Поле с подписью, пояснением и ошибкой: обязательность подписана словом, ошибка со знаком и цветом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-field-001-* и не подменять её токенами вашей темы",
+            "собственную светлую подложку: поле показывают поверх любого фона",
+            "aria-describedby на пояснение и ошибку сразу: они читаются вместе со значением",
+            "aria-invalid на поле с ошибкой",
+            "сохранение пояснения рядом с ошибкой: условия нужны именно в этот момент",
+            "знак у ошибки — красный цвет виден не всем",
+            "слово «обязательно» вместо одной звёздочки"
+          ],
+          "adapt": [
+            "label, hint, error и placeholder",
+            "name и тип поля",
+            "акцент через проп accent",
+            "ширину поля"
+          ],
+          "notes": [
+            "Проверку компонент не делает: он только показывает переданную ошибку.",
+            "Ошибку показывают после попытки отправки, а не во время набора первого символа.",
+            "Текст ошибки должен говорить, что исправить, а не «поле заполнено неверно».",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Рабочая почта",
+            "maxLength": 24
+          },
+          {
+            "prop": "error",
+            "label": "Ошибка",
+            "type": "text",
+            "default": "Адрес без «@» — проверьте написание.",
+            "maxLength": 48
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A field wrapper: the note and the error are linked by aria-describedby and read out with the value, not apart from it.",
+            "ai": {
+              "summary": "A field with a label, a note and an error: the requirement is spelled out, the error carries a mark as well as colour. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-field-001-* palette — do not swap it for your theme tokens",
+                "its own light surface: the field gets shown over any background",
+                "aria-describedby pointing at both note and error: they read with the value",
+                "aria-invalid on the field in error",
+                "keeping the note beside the error: the rules are needed exactly then",
+                "the mark on the error — red is not visible to everyone",
+                "the word \"required\" instead of a lone asterisk"
+              ],
+              "adapt": [
+                "label, hint, error and placeholder",
+                "name and the input type",
+                "the accent through the accent prop",
+                "the field width"
+              ],
+              "notes": [
+                "The component does not validate: it only renders the error you pass.",
+                "Show the error after a submit attempt, not on the first typed character.",
+                "The error text must say what to fix, not \"the field is invalid\".",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Field001 label=\"Work email\" hint=\"We will send the key.\" error=\"Missing an @.\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Work email"
+              },
+              "error": {
+                "label": "Error",
+                "default": "The address has no \"@\" — check the spelling."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "field-002",
+      "type": "registry:component",
+      "title": "Field Shell",
+      "description": "Каркас поля: рамка обнимает подпись и контрол вместе, а подсказка и ошибка делят одну строку снизу — форма не прыгает при появлении ошибки.",
+      "categories": ["field"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "field-002/field-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/field-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-002-*. Серверный: состояния нет, подсветка держится на :focus-within. Внутрь рамки через children кладут любой контрол — input, textarea или select; по умолчанию рендерится input с id из пропа name. Подсказка и ошибка занимают одно и то же место, ошибка включает data-invalid на корне, aria-invalid у поля и role=\"alert\" у примечания.",
+      "meta": {
+        "tags": ["field", "form", "wrapper", "error"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Field002",
+          "usage": "<Field002\n  name=\"project\"\n  label=\"Название проекта\"\n  hint=\"Видно только вам и участникам команды.\"\n  badge=\"черновик\"\n/>",
+          "summary": "Каркас поля, а не само поле: рамка обнимает подпись и контрол, служебная строка снизу одна на подсказку и ошибку, справа помещается метка состояния. Через children внутрь кладут input, textarea или select — обвязка остаётся одинаковой во всей форме. Серверный компонент, ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-field-002-* и не подменять её токенами вашей темы (bg-background, border-input, text-muted-foreground и подобными)",
+            "рамку на каркасе, а не на контроле: у input внутри бордюра нет, иначе внутри рамки появится вторая",
+            "общее место для подсказки и ошибки: когда они меняются местами, а не добавляются друг к другу, форма не прыгает и соседние поля не уезжают вниз",
+            "подсветку :focus-within вместе с кольцом box-shadow — фокус стоит на контроле, а показать его должна вся рамка",
+            "связку ошибки: data-invalid на корне, aria-invalid у поля и role=\"alert\" у примечания — иначе сообщение увидят только зрячие",
+            "верхнюю подпись внутри рамки маленьким кеглем: она часть поля и не должна читаться как отдельный заголовок",
+            "блок <style> внутри компонента — в нём вся палитра, геометрия и поведение фокуса"
+          ],
+          "adapt": [
+            "тексты label и hint, сообщение error и метку badge",
+            "содержимое children — вместо input внутрь кладут textarea, select или собственный контрол",
+            "акцент через проп accent — цвет рамки и кольца при фокусе",
+            "проп name: из него собираются id поля и id примечания",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Свой контрол в children должен получить id вида `${name}-input`, иначе клик по подписи не наведёт на него фокус.",
+            "Ошибка вытесняет подсказку, а не дополняет её: если условия нужны и во время ошибки, впишите их в текст error.",
+            "Метка badge — украшение состояния, а не кнопка: интерактив внутрь неё не кладут.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Название проекта",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Видно только вам и участникам команды.",
+            "maxLength": 80
+          },
+          {
+            "prop": "error",
+            "label": "Ошибка",
+            "type": "text",
+            "default": "",
+            "maxLength": 80
+          },
+          {
+            "prop": "badge",
+            "label": "Метка",
+            "type": "text",
+            "default": "черновик",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A field shell: the border wraps the label and the control together, while hint and error share one line below — the form never jumps when an error appears.",
+            "ai": {
+              "summary": "A shell rather than a field: the border wraps the label and the control, one line below carries either the hint or the error, and a state badge fits on the right. Through children you drop in an input, a textarea or a select — the wrapper stays identical across the form. A server component, zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-field-002-* palette — do not swap it for your theme tokens (bg-background, border-input, text-muted-foreground and the like)",
+                "the border on the shell rather than on the control: the input inside has none, otherwise a second border appears inside the first",
+                "the shared slot for hint and error: because they swap instead of stacking, the form does not jump and the fields below stay put",
+                "the :focus-within highlight together with the box-shadow ring — focus sits on the control, but the whole frame has to show it",
+                "the error wiring: data-invalid on the root, aria-invalid on the control and role=\"alert\" on the note — otherwise only sighted users get the message",
+                "the small-caps label inside the frame: it is part of the field and must not read as a separate heading",
+                "the <style> block inside the component — it holds the palette, the geometry and the focus behaviour"
+              ],
+              "adapt": [
+                "the label and hint copy, the error message and the badge text",
+                "the children content — a textarea, a select or your own control instead of the input",
+                "the accent through the accent prop — it colours the border and ring on focus",
+                "the name prop: the field id and the note id are built from it",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "Your own control in children needs the id `${name}-input`, otherwise clicking the label will not focus it.",
+                "The error replaces the hint rather than joining it: if the rules still matter during the error, fold them into the error text.",
+                "The badge is a state marker, not a button: do not put interactive content inside it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Field002\n  name=\"project\"\n  label=\"Project name\"\n  hint=\"Only you and your teammates can see it.\"\n  badge=\"draft\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Project name"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "Only you and your teammates can see it."
+              },
+              "error": {
+                "label": "Error",
+                "default": ""
+              },
+              "badge": {
+                "label": "Badge",
+                "default": "draft"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "field-003",
+      "type": "registry:component",
+      "title": "Required Marker",
+      "description": "Обязательное поле со звёздочкой, которая объясняет себя: расшифровка в <abbr>, скрытое слово для screen reader и сноска рядом с полями.",
+      "categories": ["field"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "field-003/field-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/field-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-003-*. Серверный: состояния нет. Звёздочка обёрнута в <abbr title>, продублирована визуально скрытым текстом и объяснена сноской под парой полей. Рядом стоит необязательное поле с явной меткой — пара показывает разницу, а не намекает на неё. У обязательного поля выставлены required и aria-required.",
+      "meta": {
+        "tags": ["field", "required", "form", "a11y"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Field003",
+          "usage": "<Field003\n  name=\"company\"\n  label=\"Юридическое название\"\n  legend=\"Звёздочкой отмечены поля, без которых заявку не примут.\"\n/>",
+          "summary": "Пара полей — обязательное и необязательное — вместе со сноской, объясняющей звёздочку. Символ обёрнут в <abbr> с расшифровкой и продублирован скрытым словом, поэтому его понимают и глазами, и на слух. Серверный компонент, ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-field-003-* и не подменять её токенами вашей темы (bg-background, border-input и подобными)",
+            "расшифровку звёздочки: <abbr title> для мыши, скрытый текст для screen reader и сноска для тех, кто читает форму первый раз",
+            "aria-hidden у самого символа вместе с видимым скрытым дублем — иначе «звёздочка» прочитается вслух буквально",
+            "пару полей: обязательное рядом с необязательным — по одному полю разницу не увидеть",
+            "явную метку «необязательно» вместо пустоты: отсутствие звёздочки не считается признаком",
+            "цветную полосу слева у обязательного поля как второй, нецветовой признак — красный виден не всем",
+            "блок <style> внутри компонента — в нём вся палитра и оформление сноски"
+          ],
+          "adapt": [
+            "тексты label и optionalLabel, а также текст сноски legend",
+            "проп name: из него собираются id обоих полей",
+            "акцент через проп accent — цвет фокуса",
+            "набор полей внутри: пара показана как образец, полей может быть больше",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Если обязательны почти все поля, помечайте наоборот — необязательные: звёздочка у каждой строки перестаёт что-либо значить.",
+            "Сноска нужна рядом с полями. В конце длинной формы её не читают, а под первой ошибкой уже поздно.",
+            "Атрибут required — подсказка браузеру, а не проверка: обязательность подтверждает сервер.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Юридическое название",
+            "maxLength": 40
+          },
+          {
+            "prop": "optionalLabel",
+            "label": "Метка необязательного",
+            "type": "text",
+            "default": "необязательно",
+            "maxLength": 24
+          },
+          {
+            "prop": "legend",
+            "label": "Сноска",
+            "type": "text",
+            "default": "Звёздочкой отмечены поля, без которых заявку не примут.",
+            "maxLength": 90
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A required field whose asterisk explains itself: an <abbr> expansion, a hidden word for screen readers and a footnote sitting right beside the fields.",
+            "ai": {
+              "summary": "A pair of fields — one required, one optional — with a footnote that explains the asterisk. The symbol is wrapped in an <abbr> and doubled by hidden text, so it lands both by eye and by ear. A server component, zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-field-003-* palette — do not swap it for your theme tokens (bg-background, border-input and the like)",
+                "the three-way explanation of the asterisk: <abbr title> for the mouse, hidden text for screen readers and the footnote for first-time readers",
+                "aria-hidden on the glyph itself paired with the visually hidden duplicate — otherwise it is announced literally as \"asterisk\"",
+                "the pair of fields: required next to optional — one field alone shows no contrast",
+                "the explicit \"optional\" marker instead of nothing: the absence of an asterisk is not a signal",
+                "the coloured bar on the required field as a second, non-colour cue — red is not visible to everyone",
+                "the <style> block inside the component — it holds the palette and the footnote styling"
+              ],
+              "adapt": [
+                "the label and optionalLabel copy, and the legend footnote text",
+                "the name prop: both field ids are built from it",
+                "the accent through the accent prop — it colours focus",
+                "the set of fields inside: the pair is a sample, there can be more",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "If nearly everything is required, mark the optional fields instead: an asterisk on every row stops meaning anything.",
+                "The footnote belongs beside the fields. At the end of a long form nobody reads it, and under the first error it is too late.",
+                "The required attribute is a browser hint, not validation: the server confirms what is mandatory.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Field003\n  name=\"company\"\n  label=\"Registered name\"\n  legend=\"Fields marked with an asterisk are needed to accept the application.\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Registered name"
+              },
+              "optionalLabel": {
+                "label": "Optional marker",
+                "default": "optional"
+              },
+              "legend": {
+                "label": "Footnote",
+                "default": "Starred fields are required to submit."
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "field-004",
+      "type": "registry:component",
+      "title": "Counter Ring",
+      "description": "Поле со счётчиком остатка в виде кольца: доля заполнения видна краем глаза, точное число стоит внутри кольца, а последняя четверть краснеет.",
+      "categories": ["field"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "field-004/field-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/field-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-004-*. Клиентский: \"use client\" ради длины значения. Кольцо нарисовано conic-gradient с долей в переменной --vibeui-field-004-ratio и вырезано псевдоэлементом по центру; порог тревоги — четверть лимита, он поднимает data-low на корне. Вслух объявляется только последняя четверть: role=\"status\" на скрытой строке, иначе screen reader читает счётчик на каждую букву.",
+      "meta": {
+        "tags": ["field", "counter", "limit", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Field004",
+          "usage": "<Field004 label=\"Заголовок карточки\" limit={60} />",
+          "summary": "Однострочное поле с кольцевым счётчиком остатка в углу рамки. Доля заполнения нарисована conic-gradient, число стоит внутри кольца, а на последней четверти и кольцо, и число меняют цвет. Вслух объявляется только тревожный участок. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-field-004-* и не подменять её токенами вашей темы (bg-background, border-input и подобными)",
+            "кольцо на conic-gradient с долей в переменной --vibeui-field-004-ratio: без переменной кольцо перестанет следить за вводом",
+            "вырез в кольце псевдоэлементом ::before, покрашенным в цвет поля — иначе число ляжет на заливку и потеряет читаемость",
+            "остаток вместо набранного: «12» отвечает на вопрос «сколько ещё влезет», а «48» заставляет вычитать в уме",
+            "порог тревоги в четверть лимита и смену цвета на нём: цифра меняется постепенно, а состояние — скачком",
+            "объявление вслух только последней четверти через role=\"status\": иначе screen reader читает счётчик на каждое нажатие",
+            "блок <style> внутри компонента — в нём вся палитра, кольцо и пороги"
+          ],
+          "adapt": [
+            "тексты label и placeholder",
+            "limit — сколько символов помещается; на нём же держится нативный maxLength",
+            "акцент через проп accent — цвет кольца и кольца фокуса",
+            "обработчик onChange: он получает текущее значение строкой",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Значение хранится в состоянии компонента. Для контролируемой формы прокиньте его наружу через onChange.",
+            "Нативный maxLength не даёт превысить лимит, поэтому отрицательного остатка не бывает — красная зона предупреждает, а не сообщает об ошибке.",
+            "Для длинного многострочного текста лучше подходит счётчик строкой: кольцо рассчитано на короткие поля.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Заголовок карточки",
+            "maxLength": 40
+          },
+          {
+            "prop": "limit",
+            "label": "Лимит символов",
+            "type": "number",
+            "default": 60,
+            "min": 10,
+            "max": 200
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A field whose remaining-characters counter is a ring: the fill share reads at a glance, the exact number sits inside, and the last quarter turns red.",
+            "ai": {
+              "summary": "A single-line field with a ring counter in the corner of the frame. The share is drawn with conic-gradient, the number sits inside the ring, and on the last quarter both ring and number change colour. Only the alarming stretch is announced aloud. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-field-004-* palette — do not swap it for your theme tokens (bg-background, border-input and the like)",
+                "the conic-gradient ring driven by the --vibeui-field-004-ratio variable: without it the ring stops following the input",
+                "the ::before cut-out painted in the field colour — otherwise the number lands on the fill and becomes unreadable",
+                "the remaining count rather than the typed one: \"12\" answers \"how much more fits\", while \"48\" makes you subtract in your head",
+                "the quarter-of-the-limit threshold and the colour change on it: the digit changes gradually, the state changes at once",
+                "announcing only the last quarter through role=\"status\": otherwise a screen reader reads the counter on every keystroke",
+                "the <style> block inside the component — it holds the palette, the ring and the thresholds"
+              ],
+              "adapt": [
+                "the label and placeholder copy",
+                "limit — how many characters fit; the native maxLength rides on it too",
+                "the accent through the accent prop — it colours the ring and the focus ring",
+                "the onChange handler: it receives the current value as a string",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "The value lives in the component's state. For a controlled form lift it out through onChange.",
+                "The native maxLength prevents overshooting, so the remainder never goes negative — the red zone warns, it does not report an error.",
+                "For long multiline copy a counter on its own line works better: the ring is sized for short fields.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Field004 label=\"Card headline\" limit={60} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Card headline"
+              },
+              "limit": {
+                "label": "Character limit"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "field-005",
+      "type": "registry:component",
+      "title": "Unit Affix",
+      "description": "Поле с текстовой приставкой слева и выбором единицы справа в одной рамке: значение и единица вводятся рядом и уходят на сервер двумя полями.",
+      "categories": ["field"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "field-005/field-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/field-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-005-*. Серверный: подсветка группы держится на :focus-within. Рамка живёт на группе, у input и select её нет. Приставка — неинтерактивный span с user-select:none, окончание — нативный select с appearance:none и стрелкой из двух граней. Значение и единица уходят двумя полями формы: name и `${name}-unit`.",
+      "meta": {
+        "tags": ["field", "unit", "prefix", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Field005",
+          "usage": "<Field005\n  name=\"limit\"\n  label=\"Лимит на один файл\"\n  prefix=\"не более\"\n  units={[\"КБ\", \"МБ\", \"ГБ\"]}\n/>",
+          "summary": "Числовое поле в общей рамке с текстовой приставкой слева и нативным select единицы справа. Приставка — часть формулировки и не редактируется, единица выбирается тут же и уходит отдельным полем формы. Серверный компонент, ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-field-005-* и не подменять её токенами вашей темы (bg-muted, border-input и подобными)",
+            "рамку на группе: у input и select её нет, иначе внутри рамки появятся ещё две",
+            "нативный select для единицы — от него достаются клавиатура, поиск по букве и системное колесо на телефоне",
+            "подсветку :focus-within вместе с кольцом: фокус может стоять и на поле, и на выборе единицы, а показывать его должна вся группа",
+            "user-select:none и aria-hidden у приставки: её не выделяют и не читают вслух отдельно от подписи",
+            "overflow:hidden у группы — он обрезает подложки приставки и единицы по радиусу рамки",
+            "блок <style> внутри компонента — в нём вся палитра, геометрия и стрелка выбора"
+          ],
+          "adapt": [
+            "текст label и приставку prefix",
+            "массив units — свои единицы измерения",
+            "стартовое число defaultValue",
+            "акцент через проп accent — цвет рамки и кольца при фокусе",
+            "проп name: из него собираются имена обоих полей формы"
+          ],
+          "notes": [
+            "Единица уходит отдельным полем `${name}-unit`. Пересчитывать значение на клиенте не нужно — это работа сервера.",
+            "Не кладите в prefix кнопку: это неинтерактивная часть рамки, и мишень внутри рамки поля путает.",
+            "Список units держите коротким: длинные подписи растягивают select и съедают место у числа.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Лимит на один файл",
+            "maxLength": 40
+          },
+          {
+            "prop": "prefix",
+            "label": "Приставка",
+            "type": "text",
+            "default": "не более",
+            "maxLength": 20
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Значение",
+            "type": "number",
+            "default": 25,
+            "min": 1,
+            "max": 1000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A field with a text prefix on the left and a unit picker on the right inside one border: value and unit are entered together and submitted as two fields.",
+            "ai": {
+              "summary": "A numeric field sharing one border with a text prefix on the left and a native unit select on the right. The prefix is part of the sentence and stays uneditable; the unit is chosen in place and submitted as its own form field. A server component, zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-field-005-* palette — do not swap it for your theme tokens (bg-muted, border-input and the like)",
+                "the border on the group: neither the input nor the select has one, otherwise two more appear inside it",
+                "the native select for the unit — keyboard support, type-ahead and the system wheel on phones all come with it",
+                "the :focus-within highlight and the ring: focus can sit on the number or on the unit, and the whole group has to show it",
+                "user-select:none and aria-hidden on the prefix: it is not selected and not read apart from the label",
+                "overflow:hidden on the group — it clips the prefix and unit backgrounds to the border radius",
+                "the <style> block inside the component — it holds the palette, the geometry and the select arrow"
+              ],
+              "adapt": [
+                "the label copy and the prefix text",
+                "the units array — your own units of measurement",
+                "the starting number in defaultValue",
+                "the accent through the accent prop — it colours the border and ring on focus",
+                "the name prop: both form field names are built from it"
+              ],
+              "notes": [
+                "The unit is submitted as a separate `${name}-unit` field. Converting the value on the client is unnecessary — that is the server's job.",
+                "Do not put a button in prefix: it is a non-interactive part of the border, and a target inside a field frame confuses.",
+                "Keep the units list short: long captions stretch the select and eat the room the number needs.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Field005\n  name=\"limit\"\n  label=\"Per-file limit\"\n  prefix=\"at most\"\n  units={[\"KB\", \"MB\", \"GB\"]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Per-file limit"
+              },
+              "prefix": {
+                "label": "Prefix",
+                "default": "at most"
+              },
+              "defaultValue": {
+                "label": "Value"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "field-006",
+      "type": "registry:component",
+      "title": "Action Field",
+      "description": "Поле с кнопкой действия внутри рамки: Enter отправляет без обработчика клавиш, а пока поле пустое, кнопка выключена — нажимать нечего.",
+      "categories": ["field"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "field-006/field-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/field-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-006-*. Клиентский: \"use client\" ради значения и результата. Обёртка — настоящий <form> с onSubmit и preventDefault, поэтому Enter в поле нажимает кнопку без единого обработчика клавиш. Кнопка выключена при пустом значении, результат объявляется через role=\"status\" и поднимает data-done на корне.",
+      "meta": {
+        "tags": ["field", "action", "promo", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Field006",
+          "usage": "<Field006\n  label=\"Промокод\"\n  action=\"Применить\"\n  onSubmit={(code) => applyPromo(code)}\n/>",
+          "summary": "Поле с кнопкой действия внутри общей рамки: промокод, приглашение, короткий запрос. Обёртка — настоящая форма, поэтому Enter работает сам; на пустом значении кнопка выключена, а результат появляется строкой под полем. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-field-006-* и не подменять её токенами вашей темы (bg-primary, border-input и подобными)",
+            "обёртку <form> с preventDefault: именно она даёт Enter в поле без обработчика клавиш",
+            "кнопку внутри рамки: поле и действие — одно целое, разрыв между ними заставляет глаз прыгать",
+            "выключенную кнопку на пустом значении вместе с видимым понижением контраста — иначе нажатие просто ничего не делает",
+            "type=\"submit\" у кнопки: с type=\"button\" Enter в поле перестанет работать",
+            "строку результата с role=\"status\": ответ «код принят» обязан звучать, а не только менять цвет",
+            "блок <style> внутри компонента — в нём вся палитра, геометрия и состояние кнопки"
+          ],
+          "adapt": [
+            "тексты label и placeholder, а также подпись кнопки action",
+            "обработчик onSubmit: он получает введённое значение строкой",
+            "акцент через проп accent — цвет кнопки и кольца при фокусе",
+            "текст результата под полем",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Компонент ничего не проверяет: настоящую проверку кода делает сервер в onSubmit.",
+            "Не вкладывайте компонент внутрь другой формы: вложенные <form> запрещены в HTML и ломают отправку внешней.",
+            "Пока запрос идёт, кнопку стоит выключить снаружи — компонент не знает о сети.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Промокод",
+            "maxLength": 30
+          },
+          {
+            "prop": "action",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Применить",
+            "maxLength": 20
+          },
+          {
+            "prop": "placeholder",
+            "label": "Плейсхолдер",
+            "type": "text",
+            "default": "VIBEUI-2026",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A field with its action button inside the border: Enter submits with no key handler, and while the field is empty the button is disabled — there is nothing to press.",
+            "ai": {
+              "summary": "A field with an action button sharing its border: a promo code, an invite, a short lookup. The wrapper is a real form, so Enter works by itself; on an empty value the button is disabled, and the result appears on the line below. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-field-006-* palette — do not swap it for your theme tokens (bg-primary, border-input and the like)",
+                "the <form> wrapper with preventDefault: that is what makes Enter work without a key handler",
+                "the button inside the border: field and action are one thing, and a gap between them makes the eye jump",
+                "the disabled button on an empty value together with the visible contrast drop — otherwise pressing simply does nothing",
+                "type=\"submit\" on the button: with type=\"button\" Enter in the field stops working",
+                "the result line with role=\"status\": \"code accepted\" has to be heard, not just coloured",
+                "the <style> block inside the component — it holds the palette, the geometry and the button state"
+              ],
+              "adapt": [
+                "the label and placeholder copy, and the action button caption",
+                "the onSubmit handler: it receives the entered value as a string",
+                "the accent through the accent prop — it colours the button and the focus ring",
+                "the result wording under the field",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "The component validates nothing: the real check happens on the server inside onSubmit.",
+                "Do not nest it inside another form: nested <form> elements are invalid HTML and break the outer submit.",
+                "While a request is in flight, disable the button from outside — the component knows nothing about the network.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Field006\n  label=\"Promo code\"\n  action=\"Apply\"\n  onSubmit={(code) => applyPromo(code)}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Promo code"
+              },
+              "action": {
+                "label": "Button",
+                "default": "Apply"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "VIBEUI-2026"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "field-007",
+      "type": "registry:component",
+      "title": "Copy Field",
+      "description": "Поле только для чтения с кнопкой копирования: значение лежит в настоящем input, а при отказе буфера оно просто выделяется целиком.",
+      "categories": ["field"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "field-007/field-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/field-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-007-*. Клиентский: \"use client\" ради буфера обмена. Значение живёт в readOnly-поле, а не в <code>: его выделяют, прокручивают и отдают менеджеру паролей. Кнопка сначала выделяет текст через ref, затем пробует navigator.clipboard.writeText — выделение остаётся запасным путём при отказе. Успех поднимает data-copied и объявляется через role=\"status\".",
+      "meta": {
+        "tags": ["field", "readonly", "copy", "clipboard"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Field007",
+          "usage": "<Field007\n  label=\"Ключ доступа к registry\"\n  value=\"vibeui_live_8f3c21a7b904e6d5\"\n/>",
+          "summary": "Поле только для чтения с кнопкой копирования: ключ, ссылка приглашения, идентификатор. Значение лежит в настоящем readOnly-поле, кнопка сначала выделяет его, потом пробует буфер обмена, а результат сообщается словом. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-field-007-* и не подменять её токенами вашей темы (bg-muted, border-input и подобными)",
+            "настоящее readOnly-поле вместо <code>: значение надо выделять, прокручивать и отдавать менеджеру паролей",
+            "выделение текста перед обращением к буферу — это запасной путь, когда буфер недоступен без защищённого соединения",
+            "readOnly вместо disabled: выключенное поле нельзя ни сфокусировать, ни выделить",
+            "подтверждение словом через role=\"status\": смена цвета кнопки сама по себе не читается вслух",
+            "моноширинный шрифт для значения — в ключе важно отличать 0 от O и 1 от l",
+            "блок <style> внутри компонента — в нём вся палитра, геометрия и значок копии"
+          ],
+          "adapt": [
+            "текст label и подсказку hint",
+            "содержимое value — ключ, ссылка или идентификатор",
+            "акцент через проп accent — цвет рамки и кнопки",
+            "подписи кнопки для двух состояний",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "navigator.clipboard недоступен без HTTPS и может быть запрещён настройками: поэтому выделение делается всегда, а не только при ошибке.",
+            "Состояние «Готово» не сбрасывается само. Если нужен таймер возврата, добавьте его в вызывающем коде.",
+            "Секрет, который показывают один раз, стоит сопровождать подсказкой об этом: восстановить его после закрытия страницы нельзя.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Ключ доступа к registry",
+            "maxLength": 40
+          },
+          {
+            "prop": "value",
+            "label": "Значение",
+            "type": "text",
+            "default": "vibeui_live_8f3c21a7b904e6d5",
+            "maxLength": 60
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Ключ показывается один раз — сохраните его сейчас.",
+            "maxLength": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A read-only field with a copy button: the value lives in a real input, and if the clipboard is refused it simply gets selected in full.",
+            "ai": {
+              "summary": "A read-only field with a copy button: a key, an invite link, an identifier. The value sits in a real readOnly input, the button selects it first and then tries the clipboard, and the outcome is stated in words. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-field-007-* palette — do not swap it for your theme tokens (bg-muted, border-input and the like)",
+                "a real readOnly input instead of <code>: the value has to be selectable, scrollable and reachable by a password manager",
+                "selecting the text before reaching for the clipboard — that is the fallback when the clipboard is unavailable outside HTTPS",
+                "readOnly rather than disabled: a disabled field can be neither focused nor selected",
+                "the spoken confirmation through role=\"status\": a colour change on the button is not read aloud",
+                "the monospaced value — in a key it matters that 0 differs from O and 1 from l",
+                "the <style> block inside the component — it holds the palette, the geometry and the copy glyph"
+              ],
+              "adapt": [
+                "the label copy and the hint line",
+                "the value content — a key, a link or an identifier",
+                "the accent through the accent prop — it colours the border and the button",
+                "the button captions for both states",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "navigator.clipboard needs HTTPS and can be blocked by settings: that is why the selection always happens, not only on failure.",
+                "The \"Done\" state does not reset itself. Add a timer in the caller if you want it to.",
+                "A secret shown once deserves a line saying so: it cannot be recovered after the page closes.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Field007\n  label=\"Registry access key\"\n  value=\"vibeui_live_8f3c21a7b904e6d5\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Registry access key"
+              },
+              "value": {
+                "label": "Value",
+                "default": "vibeui_live_8f3c21a7b904e6d5"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "Shown once — save it now."
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "field-008",
+      "type": "registry:component",
+      "title": "Availability Check",
+      "description": "Поле с проверкой занятости на лету: через паузу после ввода состояние показывается и значком, и словом — «проверяем», «занято», «свободно».",
+      "categories": ["field"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "field-008/field-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/field-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-008-*. Клиентский: \"use client\" ради проверки. Проверка запускается в useEffect по таймеру и отменяется при следующем нажатии, поэтому на длинном адресе улетает один запрос, а не десяток. Состояние выносится в data-state на корне: по нему красится рамка и включается значок. Цвет состояния передаётся отдельной переменной --vibeui-field-008-state.",
+      "meta": {
+        "tags": ["field", "validation", "async", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Field008",
+          "usage": "<Field008\n  label=\"Адрес рабочего пространства\"\n  prefix=\"vibeui.ru/\"\n  taken={[\"vibeui\", \"admin\"]}\n/>",
+          "summary": "Поле с проверкой занятости прямо во время ввода: пауза после последнего нажатия, кольцо ожидания, затем «занято» или «свободно». Состояние продублировано словом под полем, поэтому значок никогда не работает один. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-field-008-* и не подменять её токенами вашей темы (bg-background, border-input и подобными)",
+            "паузу перед проверкой и отмену прошлого таймера: без неё каждая буква превращается в отдельный запрос",
+            "состояние словом рядом со значком — цвет и галочка не читаются вслух и не различаются при дальтонизме",
+            "role=\"status\" у строки состояния: ответ приходит без действия пользователя и обязан быть объявлен",
+            "aria-invalid при занятом адресе — иначе форма считается корректной",
+            "отдельный порог «слишком коротко»: проверять адрес из одной буквы бессмысленно",
+            "блок <style> внутри компонента — в нём вся палитра, значки и цвет состояния"
+          ],
+          "adapt": [
+            "текст label и приставку prefix",
+            "delay — сколько ждать после последнего нажатия перед проверкой",
+            "список taken заменяется настоящим запросом к серверу",
+            "акцент через проп accent",
+            "тексты состояний под полем"
+          ],
+          "notes": [
+            "Список taken — заглушка для демонстрации. В настоящем проекте на его месте запрос, и его нужно уметь отменять при новом вводе.",
+            "Проверка на клиенте не гарантия: между ответом «свободно» и отправкой формы адрес может занять кто-то другой, поэтому сервер проверяет ещё раз.",
+            "Не блокируйте кнопку отправки на время проверки: короткая пауза выглядит как зависание формы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Адрес рабочего пространства",
+            "maxLength": 40
+          },
+          {
+            "prop": "prefix",
+            "label": "Приставка",
+            "type": "text",
+            "default": "vibeui.ru/",
+            "maxLength": 24
+          },
+          {
+            "prop": "delay",
+            "label": "Пауза, мс",
+            "type": "number",
+            "default": 600,
+            "min": 200,
+            "max": 2000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A field that checks availability as you type: after a pause the state shows up both as a glyph and as words — checking, taken, free.",
+            "ai": {
+              "summary": "A field that checks availability while you type: a pause after the last keystroke, a waiting ring, then taken or free. The state is doubled in words under the field, so the glyph never works alone. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-field-008-* palette — do not swap it for your theme tokens (bg-background, border-input and the like)",
+                "the pause before checking and the cancellation of the previous timer: without it every letter becomes its own request",
+                "the state in words next to the glyph — colour and a tick are not read aloud and not distinguishable with colour blindness",
+                "role=\"status\" on the state line: the answer arrives without user action and has to be announced",
+                "aria-invalid on a taken address — otherwise the form counts as valid",
+                "a separate \"too short\" threshold: checking a one-letter address is pointless",
+                "the <style> block inside the component — it holds the palette, the glyphs and the state colour"
+              ],
+              "adapt": [
+                "the label copy and the prefix text",
+                "delay — how long to wait after the last keystroke before checking",
+                "the taken list, replaced by a real server request",
+                "the accent through the accent prop",
+                "the state wording under the field"
+              ],
+              "notes": [
+                "The taken list is a demo stub. In a real project a request goes there, and it must be cancellable on new input.",
+                "A client check is no guarantee: between \"free\" and submit someone else can take the name, so the server checks again.",
+                "Do not disable the submit button while checking: a short pause then reads as a frozen form.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Field008\n  label=\"Workspace address\"\n  prefix=\"vibeui.io/\"\n  taken={[\"vibeui\", \"admin\"]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Workspace address"
+              },
+              "prefix": {
+                "label": "Prefix",
+                "default": "vibeui.io/"
+              },
+              "delay": {
+                "label": "Pause, ms"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "field-009",
+      "type": "registry:component",
+      "title": "Inline Label Row",
+      "description": "Строка формы с подписью слева: на широкой ширине колонка подписей выравнивает форму по одной вертикали, на узкой строка складывается в столбец.",
+      "categories": ["field"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "field-009/field-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/field-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-009-*. Серверный: состояния нет. Раскладка считается container query по собственной ширине блока, поэтому форма в боковой панели ведёт себя как узкая даже на десктопе. Правило @container целит во внутренний [data-part=\"shell\"] и его строки, а не в сам контейнер: контейнерный запрос не действует на элемент, который его объявил. Ширина колонки подписей задаётся переменной --vibeui-field-009-label.",
+      "meta": {
+        "tags": ["field", "layout", "form", "responsive"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Field009",
+          "usage": "<Field009\n  name=\"profile\"\n  label=\"Отображаемое имя\"\n  labelWidth=\"10rem\"\n/>",
+          "summary": "Форма из строк «подпись слева — поле справа». От 30rem собственной ширины подписи выстраиваются в колонку и поля получают общую вертикаль, ниже — складываются в столбец. Ширина считается по блоку, а не по вьюпорту. Серверный компонент, ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-field-009-* и не подменять её токенами вашей темы (bg-background, border-input и подобными)",
+            "container-type:inline-size на корне и правила @container на внутреннем [data-part=\"shell\"]: контейнерный запрос не действует на сам контейнер, и правило для корня внутри него молча не сработает",
+            "переход в столбец на узкой ширине: строка «подпись слева» на телефоне оставляет полю треть экрана",
+            "фиксированную ширину колонки подписей через переменную — без неё поля перестанут стоять на одной вертикали",
+            "выравнивание подписей по правому краю на широкой раскладке: так расстояние до поля одинаковое у всех строк",
+            "связку label и контрола через htmlFor и id — по подписи кликают, чтобы попасть в поле",
+            "блок <style> внутри компонента — в нём вся палитра и обе раскладки"
+          ],
+          "adapt": [
+            "тексты label и подсказки hint",
+            "labelWidth — ширина колонки подписей на широкой раскладке",
+            "порог @container, на котором строка перестаёт складываться",
+            "акцент через проп accent",
+            "проп name: из него собираются id всех полей"
+          ],
+          "notes": [
+            "Порог указан в rem собственной ширины блока, а не окна: узкая колонка на десктопе получит мобильную раскладку, и это правильно.",
+            "Подписи в одну строку: длинный текст в колонке подписей рвётся и рушит общую вертикаль полей.",
+            "Подсказку кладите под поле, а не под подпись — иначе она уедет в колонку подписей и потеряется.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Отображаемое имя",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Так вас увидят в комментариях и в истории изменений.",
+            "maxLength": 90
+          },
+          {
+            "prop": "labelWidth",
+            "label": "Ширина подписей",
+            "type": "text",
+            "default": "9rem",
+            "maxLength": 10
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A form row with the label on the left: at wide widths the label column aligns the whole form on one vertical, and narrow it folds into a column.",
+            "ai": {
+              "summary": "A form of label-left, field-right rows. From 30rem of the block's own width the labels form a column and the fields share one vertical; below that each row folds. The width is measured on the block, not the viewport. A server component, zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-field-009-* palette — do not swap it for your theme tokens (bg-background, border-input and the like)",
+                "container-type:inline-size on the root and the @container rules on the inner [data-part=\"shell\"]: a container query does not apply to its own container, and a rule targeting the root inside it silently does nothing",
+                "the fold to a column at narrow widths: a label-left row leaves the field a third of a phone screen",
+                "the fixed label column width through the variable — without it the fields stop sharing one vertical",
+                "the right-aligned labels in the wide layout: that keeps the gap to the field equal on every row",
+                "the htmlFor/id link between label and control — people click the label to reach the field",
+                "the <style> block inside the component — it holds the palette and both layouts"
+              ],
+              "adapt": [
+                "the label and hint copy",
+                "labelWidth — the width of the label column in the wide layout",
+                "the @container threshold at which the row stops folding",
+                "the accent through the accent prop",
+                "the name prop: every field id is built from it"
+              ],
+              "notes": [
+                "The threshold is in rem of the block's own width, not the window: a narrow desktop column gets the mobile layout, and that is correct.",
+                "Keep labels to one line: long text in the label column wraps and breaks the shared vertical.",
+                "Put the hint under the field, not under the label — otherwise it slides into the label column and gets lost.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Field009\n  name=\"profile\"\n  label=\"Display name\"\n  labelWidth=\"10rem\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Display name"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "This is how you appear in comments and history."
+              },
+              "labelWidth": {
+                "label": "Label column width",
+                "default": "9rem"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "field-010",
+      "type": "registry:component",
+      "title": "Grouped Error",
+      "description": "Группа полей даты с одной общей ошибкой: «31 февраля» неверно целиком, поэтому сообщение живёт на fieldset, а не под одним из трёх полей.",
+      "categories": ["field"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "field-010/field-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/field-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-010-*. Серверный: состояния нет. Группа объявлена настоящим <fieldset> с <legend>, сообщение связано с ней через aria-describedby и role=\"alert\", поэтому его слышно при входе в любое из трёх полей. Ошибка поднимает data-invalid на корне и красит рамки всех полей группы, а не одного. У fieldset сброшен min-inline-size, иначе он не сжимается.",
+      "meta": {
+        "tags": ["field", "fieldset", "error", "date"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Field010",
+          "usage": "<Field010\n  name=\"birth\"\n  legend=\"Дата рождения\"\n  error=\"31 февраля не существует — проверьте день и месяц.\"\n/>",
+          "summary": "Дата, разбитая на три поля, с одной ошибкой на всю группу. Сообщение связано с fieldset через aria-describedby, поэтому звучит при входе в любое поле, а рамки краснеют у всех трёх — неверна дата целиком, а не одно из значений. Серверный компонент, ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-field-010-* и не подменять её токенами вашей темы (bg-background, border-input и подобными)",
+            "настоящий <fieldset> с <legend>: группа полей обязана быть группой и в разметке, иначе три поля читаются как три несвязанные строки",
+            "сообщение на группе, а не под одним полем — ошибка относится к сочетанию значений",
+            "aria-describedby у fieldset вместе с role=\"alert\" у сообщения: так его слышно при входе в любое из трёх полей",
+            "подсветку рамок всех трёх полей сразу: подсветить одно значит соврать, какое именно неверно",
+            "min-inline-size:0 у fieldset — без него он отказывается сжиматься в узкой колонке",
+            "знак «!» рядом с сообщением: красный цвет виден не всем"
+          ],
+          "adapt": [
+            "заголовок группы legend и текст ошибки error",
+            "подсказку hint, которая стоит на месте ошибки, пока её нет",
+            "состав группы: вместо дня, месяца и года — любые поля, которые проверяются вместе",
+            "акцент через проп accent",
+            "проп name: из него собираются id всех полей группы"
+          ],
+          "notes": [
+            "Проверку делает вызывающий код: компонент показывает ошибку, а не вычисляет её.",
+            "Не дублируйте общее сообщение под каждым полем — три одинаковых строки читаются вслух три раза.",
+            "Если ошибка относится к одному значению из группы, покажите её под этим полем: общая ошибка нужна только для сочетаний.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Заголовок группы",
+            "type": "text",
+            "default": "Дата рождения",
+            "maxLength": 40
+          },
+          {
+            "prop": "error",
+            "label": "Ошибка",
+            "type": "text",
+            "default": "31 февраля не существует — проверьте день и месяц.",
+            "maxLength": 90
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Нужна, чтобы подтвердить совершеннолетие. Никому не показываем.",
+            "maxLength": 90
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A date split into three fields with a single shared error: February 31st is wrong as a whole, so the message lives on the fieldset, not under one field.",
+            "ai": {
+              "summary": "A date split across three fields with one error for the whole group. The message is tied to the fieldset through aria-describedby, so it is announced on entering any of the three, and all three borders turn red — the date is wrong as a whole. A server component, zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-field-010-* palette — do not swap it for your theme tokens (bg-background, border-input and the like)",
+                "a real <fieldset> with a <legend>: a group of fields must be a group in the markup too, otherwise three fields read as three unrelated rows",
+                "the message on the group rather than under one field — the error is about the combination of values",
+                "aria-describedby on the fieldset together with role=\"alert\" on the message: that is what makes it audible from any of the three fields",
+                "highlighting all three borders at once: highlighting one would lie about which value is wrong",
+                "min-inline-size:0 on the fieldset — without it, it refuses to shrink in a narrow column",
+                "the \"!\" mark beside the message: red is not visible to everyone"
+              ],
+              "adapt": [
+                "the legend group heading and the error text",
+                "the hint that occupies the error slot while there is no error",
+                "the makeup of the group: any fields validated together instead of day, month and year",
+                "the accent through the accent prop",
+                "the name prop: every field id in the group is built from it"
+              ],
+              "notes": [
+                "Validation belongs to the caller: the component displays the error, it does not compute it.",
+                "Do not repeat the shared message under each field — three identical lines get read aloud three times.",
+                "If the error is about one value, show it under that field: a group-level error is only for combinations.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Field010\n  name=\"birth\"\n  legend=\"Date of birth\"\n  error=\"February 31st does not exist — check the day and the month.\"\n/>"
+            },
+            "controls": {
+              "legend": {
+                "label": "Group heading",
+                "default": "Date of birth"
+              },
+              "error": {
+                "label": "Error",
+                "default": "February 31st does not exist — check day and month."
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "Used to confirm you are of age. Never shown publicly."
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "field-011",
+      "type": "registry:component",
+      "title": "Draft Autosave",
+      "description": "Поле черновика с автосохранением: пауза после ввода сама запускает сохранение, а под текстом остаётся отметка времени последнего успешного сохранения.",
+      "categories": ["field"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "field-011/field-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/field-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-field-011-*. Клиентский: две последовательные паузы решают, когда сохранять. Первая — тишина после ввода на delay миллисекунд, вторая — короткая фиксированная фаза «сохраняем», которая подтверждает, что сохранение действительно случилось, а не просто истекло время. Состояние выводится из сравнения текущего текста с последним сохранённым, а не хранится отдельным флагом, поэтому не может разъехаться с реальным содержимым поля. Метка времени берётся один раз в момент сохранения и не пересчитывается на каждый рендер.",
+      "meta": {
+        "tags": ["field", "autosave", "draft", "status"],
+        "ai": {
+          "export": "Field011",
+          "usage": "<Field011\n  label=\"Заметка к сделке\"\n  delay={1200}\n/>",
+          "summary": "Черновик с автосохранением: пауза после ввода запускает сохранение, короткая фаза «сохраняем» подтверждает его, а метка времени показывает, когда это случилось в последний раз. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-field-011-* и не подменять её токенами вашей темы",
+            "паузу после последнего нажатия перед сохранением — иначе на каждую букву уходит отдельное сохранение",
+            "промежуточную фазу «сохраняем» между вводом и меткой времени — иначе сохранение неотличимо от простого молчания",
+            "состояние, выводимое из сравнения текста с последним сохранённым значением, а не хранимое отдельным флагом",
+            "точку-индикатор рядом с текстом статуса — цвет один не читается людьми с нарушением цветовосприятия",
+            "role=status на строке статуса — иначе скринридер не узнает о завершении сохранения"
+          ],
+          "adapt": [
+            "label — подпись над полем",
+            "placeholder — подсказка в пустом поле",
+            "defaultValue — исходный текст черновика",
+            "delay — пауза в миллисекундах перед сохранением",
+            "акцент через проп accent — цвет фокуса и индикатора «сохраняем»"
+          ],
+          "notes": [
+            "Реального сетевого сохранения нет: имитация нужна для демонстрации UX, подключите свой обработчик отдельно.",
+            "Метка времени берётся в момент завершения сохранения через new Date() внутри эффекта — она не выводится на сервере и не ломает гидратацию.",
+            "При delay короче 400 мс фаза «сохраняем» не успевает быть замеченной — увеличьте паузу или уберите её.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Заметка к сделке",
+            "maxLength": 40
+          },
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Опишите договорённости…",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A draft field with autosave: a pause after typing triggers the save on its own, and a last-saved timestamp stays under the text.",
+            "ai": {
+              "summary": "A draft with autosave: a pause after typing triggers the save, a brief \"saving\" phase confirms it, and a timestamp shows when it last happened. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-field-011-* palette — do not swap it for your theme tokens",
+                "the pause after the last keystroke before saving — otherwise every letter triggers its own save",
+                "the intermediate \"saving\" phase between typing and the timestamp — without it a save is indistinguishable from plain silence",
+                "the state derived from comparing the current text to the last saved value, rather than a separate stored flag",
+                "the status dot next to the status text — colour alone does not read for people with colour vision deficiency",
+                "role=status on the status line — otherwise a screen reader never learns the save finished"
+              ],
+              "adapt": [
+                "label — the caption above the field",
+                "placeholder — the hint in the empty field",
+                "defaultValue — the draft's starting text",
+                "delay — the pause in milliseconds before saving",
+                "the accent through the accent prop — the focus ring and \"saving\" indicator colour"
+              ],
+              "notes": [
+                "There is no real network save: the simulation is for demonstrating the UX — wire up your own handler separately.",
+                "The timestamp is taken when the save finishes, via new Date() inside an effect — it never renders on the server, so hydration stays safe.",
+                "Below a 400 ms delay the \"saving\" phase goes unnoticed — lengthen the pause or drop the phase.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Field011\n  label=\"Deal note\"\n  delay={1200}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Deal note"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Describe what was agreed…"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

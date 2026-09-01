@@ -1,0 +1,682 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "separator-001",
+      "type": "registry:component",
+      "title": "Labelled Separator",
+      "description": "Разделитель с подписью посередине: линия набрана сеткой из трёх колонок и работает на любой подложке.",
+      "categories": [
+        "separator"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "separator-001/separator-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/separator-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-separator-001-*. Серверный: хуков нет. Линия с подписью — грид из трёх колонок, поэтому не нужен приём с фоном под текстом и разделитель работает на любой подложке. Вертикальный вариант тянется по высоте соседей. Роль separator объявлена с aria-orientation.",
+      "meta": {
+        "tags": [
+          "separator",
+          "divider",
+          "layout",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Separator001",
+          "usage": "<Separator001 label=\"или\" />",
+          "summary": "Разделитель: горизонтальный с подписью посередине или вертикальный без неё. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-separator-001-* и не подменять её токенами вашей темы",
+            "сетку вместо фона под текстом: так подпись живёт на любой подложке",
+            "role=\"separator\" с aria-orientation",
+            "вертикальный вариант, который тянется по высоте соседей, а не задаёт её",
+            "капитель у подписи: она служебная и не должна спорить с текстом вокруг",
+            "толщину в один пиксель — разделитель отделяет, а не рисует рамку"
+          ],
+          "adapt": [
+            "label — подпись или её отсутствие",
+            "orientation — horizontal или vertical",
+            "цвет линии",
+            "величину отступов вокруг"
+          ],
+          "notes": [
+            "Разделитель без подписи не нуждается в имени: aria-label добавляется только когда текст есть.",
+            "Вертикальному варианту нужна высота от родителя: в блоке без высоты он схлопнется.",
+            "Не используйте разделитель вместо отступа: если группы и так разделены, линия лишняя.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "или",
+            "maxLength": 24
+          },
+          {
+            "prop": "orientation",
+            "label": "Направление",
+            "type": "select",
+            "default": "horizontal",
+            "options": [
+              "horizontal",
+              "vertical"
+            ]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A separator with a centred label: the line is a three-column grid, so it works on any background.",
+            "ai": {
+              "summary": "A separator: horizontal with a centred label, or vertical without one. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-separator-001-* palette — do not swap it for your theme tokens",
+                "the grid instead of a background behind the text: the label then works on any surface",
+                "role=\"separator\" with aria-orientation",
+                "the vertical variant stretching to its neighbours rather than setting their height",
+                "the small caps label: it is auxiliary and must not compete with the surrounding text",
+                "the one-pixel thickness — a separator divides, it does not draw a frame"
+              ],
+              "adapt": [
+                "label — the caption or none",
+                "orientation — horizontal or vertical",
+                "the line colour",
+                "the surrounding spacing"
+              ],
+              "notes": [
+                "An unlabelled separator needs no name: aria-label is added only when there is text.",
+                "The vertical variant needs height from its parent: in a height-less block it collapses.",
+                "Do not use a separator instead of spacing: if the groups already read apart, the line is noise.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Separator001 label=\"or\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "or"
+              },
+              "orientation": {
+                "label": "Orientation"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "separator-002",
+      "type": "registry:component",
+      "title": "Pill Label Divider",
+      "description": "Разделитель с подписью в пилюле, которая несёт собственный фон: приём с текстом цвета страницы ломается на градиенте, а пилюля работает на любой подложке.",
+      "categories": [
+        "separator"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "separator-002/separator-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/separator-002.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Положение подписи задаётся числом колонок сетки: center — 1fr auto 1fr, start — auto 1fr, end — 1fr auto, поэтому линии всегда упираются в пилюлю без ручных отступов. Пилюля несёт свою заливку и рамку — популярный приём «закрасить текст цветом страницы» рассыпается на градиенте и на картинке, где подпись оказывается в прямоугольнике чужого цвета. У корня role=separator и aria-label с текстом подписи, так что граница слышна и названа. Пилюля светлая с тёмным текстом, поэтому подложка компоненту не нужна.",
+      "meta": {
+        "tags": [
+          "separator",
+          "label",
+          "divider",
+          "pill"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Separator002",
+          "usage": "<Separator002 label=\"или\" align=\"center\" />",
+          "summary": "Разделитель с подписью в пилюле: положение задаётся колонками сетки, пилюля несёт свой фон. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-separator-002-* и не подменять её токенами вашей темы",
+            "собственную заливку пилюли: текст цвета страницы рассыпается на градиенте и картинке",
+            "колонки сетки вместо отступов — линии обязаны упираться в подпись при любом выравнивании",
+            "role=separator с aria-label: без них подпись читается как обычный текст между блоками",
+            "верхний регистр и разрядку подписи: они отличают служебную метку от заголовка",
+            "тонкую рамку пилюли — на светлом фоне заливка без рамки не отделяется от линии"
+          ],
+          "adapt": [
+            "текст подписи и её длину",
+            "положение подписи через align: start, center или end",
+            "цвет линии через переменную --vibeui-separator-002-line",
+            "ширину разделителя через max-width"
+          ],
+          "notes": [
+            "Пустой label оставит пилюлю пустой — в этом случае берите обычный разделитель.",
+            "Подпись не переносится: длинный текст лучше сократить, чем растягивать пилюлю.",
+            "role=separator без aria-orientation считается горизонтальным — так и задумано.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "или",
+            "maxLength": 16
+          },
+          {
+            "prop": "align",
+            "label": "Положение",
+            "type": "select",
+            "default": "center",
+            "options": [
+              "start",
+              "center",
+              "end"
+            ]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A divider whose caption sits in a pill carrying its own background: the page-coloured-text trick breaks on gradients, while a pill works on any surface.",
+            "ai": {
+              "summary": "A divider with a pill caption: the position comes from grid columns and the pill carries its own fill. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-separator-002-* palette — do not swap it for your theme tokens",
+                "the pill's own fill: page-coloured text falls apart over a gradient or an image",
+                "the grid columns instead of margins — the lines must meet the caption at any alignment",
+                "role=separator with aria-label: without them the caption reads as ordinary text between blocks",
+                "the uppercase and tracking of the caption: they mark it as a utility label, not a heading",
+                "the thin pill border — on a light background the fill alone does not separate from the line"
+              ],
+              "adapt": [
+                "the caption text and its length",
+                "the caption position through align: start, center or end",
+                "the line colour through the --vibeui-separator-002-line variable",
+                "the divider width through max-width"
+              ],
+              "notes": [
+                "An empty label leaves an empty pill — use a plain divider in that case.",
+                "The caption does not wrap: shorten long text rather than stretching the pill.",
+                "role=separator without aria-orientation counts as horizontal — that is intended here.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Separator002 label=\"or\" align=\"center\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "or"
+              },
+              "align": {
+                "label": "Position",
+                "default": "center"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "separator-003",
+      "type": "registry:component",
+      "title": "Vertical Stat Rules",
+      "description": "Строка показателей с вертикальными разделителями: линия берёт высоту у соседей, а не задаёт её, поэтому строка не растёт от самой линии.",
+      "categories": [
+        "separator"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "separator-003/separator-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/separator-003.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Ряд выровнен align-items:stretch, из-за чего разделитель шириной в один пиксель сам вытягивается до высоты самого высокого блока — задавать ему height вручную не нужно и вредно. Режим text ограничивает линию высотой строки значения: так делают в шапках, где полная линия выглядит как граница таблицы. Каждый разделитель помечен role=separator с aria-orientation=vertical, поэтому граница между показателями слышна. Промежуток вынесен в проп gap и подставляется переменной в пикселях. Подложка светлая: цифры и подписи тёмные.",
+      "meta": {
+        "tags": [
+          "separator",
+          "vertical",
+          "stats",
+          "row"
+        ],
+        "ai": {
+          "export": "Separator003",
+          "usage": "<Separator003\n  items={[{ value: \"128\", caption: \"компонентов\" }, { value: \"24\", caption: \"категории\" }]}\n  gap={20}\n  dividerHeight=\"full\"\n/>",
+          "summary": "Строка показателей с вертикальными разделителями: линия тянется по высоте соседей или по строке значения. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-separator-003-* и не подменять её токенами вашей темы",
+            "align-items:stretch на ряду: без него линия схлопывается в ноль высоты",
+            "отсутствие фиксированной высоты у линии — заданная вручную, она разойдётся с соседями",
+            "role=separator с вертикальной ориентацией: иначе граница между цифрами не слышна",
+            "моноширинные цифры значений: обычные дают разную ширину и колонка дёргается",
+            "собственную светлую подложку: цифры и подписи тёмные и на тёмном фоне пропадают"
+          ],
+          "adapt": [
+            "промежуток между блоками через gap в пикселях",
+            "высоту линии через dividerHeight: text или full",
+            "состав показателей через items",
+            "цвет линии через переменную --vibeui-separator-003-line"
+          ],
+          "notes": [
+            "Ряд не переносится: четыре и больше показателей на телефоне уедут за край.",
+            "Промежуток задан в пикселях, а не в rem: он не масштабируется с кеглем.",
+            "Подписи помечены nowrap — длинное слово растянет строку, а не перенесётся.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "gap",
+            "label": "Промежуток",
+            "type": "number",
+            "default": 20,
+            "min": 8,
+            "max": 48
+          },
+          {
+            "prop": "dividerHeight",
+            "label": "Высота линии",
+            "type": "select",
+            "default": "full",
+            "options": [
+              "text",
+              "full"
+            ]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A row of stats with vertical rules: the line takes its height from the neighbours instead of setting it, so the row never grows because of the rule.",
+            "ai": {
+              "summary": "A stat row with vertical rules: the line stretches to the neighbours' height or to the value line. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-separator-003-* palette — do not swap it for your theme tokens",
+                "align-items:stretch on the row: without it the rule collapses to zero height",
+                "the absence of a fixed height on the rule — set by hand it drifts away from the neighbours",
+                "role=separator with vertical orientation: otherwise the boundary between numbers is inaudible",
+                "the tabular figures in the values: proportional ones vary in width and make the column jitter",
+                "the component's own light surface: numbers and captions are dark and vanish on a dark background"
+              ],
+              "adapt": [
+                "the spacing between blocks through gap in pixels",
+                "the rule height through dividerHeight: text or full",
+                "the stat set through items",
+                "the rule colour through the --vibeui-separator-003-line variable"
+              ],
+              "notes": [
+                "The row does not wrap: four or more stats run off the edge on a phone.",
+                "The gap is in pixels, not rem: it does not scale with the type size.",
+                "Captions are nowrap — a long word stretches the row instead of wrapping.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Separator003\n  items={[{ value: \"128\", caption: \"components\" }, { value: \"24\", caption: \"categories\" }]}\n  gap={20}\n  dividerHeight=\"full\"\n/>"
+            },
+            "controls": {
+              "gap": {
+                "label": "Spacing",
+                "default": 20
+              },
+              "dividerHeight": {
+                "label": "Rule height",
+                "default": "full"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "separator-004",
+      "type": "registry:component",
+      "title": "Dashed Rule Divider",
+      "description": "Пунктирный разделитель с управляемым рисунком: длина штриха и промежуток заданы числами, поэтому пунктир повторяем в разных местах макета.",
+      "categories": [
+        "separator"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "separator-004/separator-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/separator-004.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. border-style:dashed рисует штрих, длина которого зависит от браузера и от толщины границы, — одинакового пунктира в двух местах макета так не добиться. Здесь линия набрана repeating-linear-gradient, где длина штриха и промежуток вынесены в переменные --vibeui-separator-004-dash и --vibeui-separator-004-gap и подставляются из пропов в пикселях. Разделитель набран тегом hr со снятой рамкой, поэтому граница видна и скринридеру. Компонент показан в контексте двух строк раздела и несёт свою светлую подложку: подписи тёмные.",
+      "meta": {
+        "tags": [
+          "separator",
+          "dashed",
+          "gradient",
+          "divider"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Separator004",
+          "usage": "<Separator004 above=\"Личные данные\" below=\"Оплата\" dash={6} gap={6} />",
+          "summary": "Пунктирный разделитель на repeating-linear-gradient с точной длиной штриха и промежутка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-separator-004-* и не подменять её токенами вашей темы",
+            "градиент вместо border-dashed: длина штриха у border зависит от браузера",
+            "тег hr со снятой рамкой — это семантическая граница, а не декоративный div",
+            "равные длину штриха и промежуток по умолчанию: неравные читаются как ошибка отрисовки",
+            "толщину линии в один пиксель, иначе пунктир превращается в ряд плашек",
+            "собственную светлую подложку: подписи разделов тёмные и на тёмном фоне пропадают"
+          ],
+          "adapt": [
+            "длину штриха через dash в пикселях",
+            "промежуток между штрихами через gap в пикселях",
+            "подписи разделов через above и below",
+            "цвет линии через переменную --vibeui-separator-004-line"
+          ],
+          "notes": [
+            "Пунктир не подгоняется под ширину: последний штрих может обрезаться на любой ширине.",
+            "Вертикальный пунктир требует смены угла градиента с 90deg на 180deg.",
+            "Значения в пикселях не масштабируются с кеглем: на крупном тексте пунктир будет мелким.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "dash",
+            "label": "Длина штриха",
+            "type": "number",
+            "default": 6,
+            "min": 2,
+            "max": 16
+          },
+          {
+            "prop": "gap",
+            "label": "Промежуток",
+            "type": "number",
+            "default": 6,
+            "min": 2,
+            "max": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A dashed divider with a controllable pattern: dash length and gap are set as numbers, so the same dash repeats identically across the layout.",
+            "ai": {
+              "summary": "A dashed divider built on repeating-linear-gradient with an exact dash length and gap. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-separator-004-* palette — do not swap it for your theme tokens",
+                "the gradient instead of border-dashed: a border's dash length depends on the browser",
+                "the hr tag with its border removed — this is a semantic boundary, not a decorative div",
+                "the equal default dash and gap: unequal values read as a rendering glitch",
+                "the one-pixel line thickness, otherwise the dash turns into a row of slabs",
+                "the component's own light surface: the section captions are dark and vanish on a dark background"
+              ],
+              "adapt": [
+                "the dash length through dash in pixels",
+                "the space between dashes through gap in pixels",
+                "the section captions through above and below",
+                "the line colour through the --vibeui-separator-004-line variable"
+              ],
+              "notes": [
+                "The dash pattern is not fitted to the width: the last dash may be cut at any width.",
+                "A vertical dash needs the gradient angle changed from 90deg to 180deg.",
+                "Pixel values do not scale with the type size: the dash looks tiny next to large text.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Separator004 above=\"Personal data\" below=\"Payment\" dash={6} gap={6} />"
+            },
+            "controls": {
+              "dash": {
+                "label": "Dash length",
+                "default": 6
+              },
+              "gap": {
+                "label": "Gap",
+                "default": 6
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "separator-005",
+      "type": "registry:component",
+      "title": "Icon Center Divider",
+      "description": "Разделитель со знаком в кружке посередине линии: кружок несёт свою заливку, поэтому линия не просвечивает сквозь знак ни на светлом, ни на тёмном фоне.",
+      "categories": [
+        "separator"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "separator-005/separator-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/separator-005.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Сетка из трёх колонок (1fr auto 1fr) держит кружок ровно по центру при любой ширине. Кружок несёт собственную заливку и рамку: без заливки линия проходит сквозь знак, а вырезать её маской пришлось бы под каждый фон отдельно. Знак декоративен и помечен aria-hidden — «✦» вслух ничего не сообщает; смысл границы несёт role=separator с aria-label. Тон переключается атрибутом data-tone и меняет три переменные разом. Кружок светлый с тёмным знаком, поэтому отдельная подложка компоненту не нужна.",
+      "meta": {
+        "tags": [
+          "separator",
+          "icon",
+          "divider",
+          "ornament"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Separator005",
+          "usage": "<Separator005 glyph=\"✦\" tone=\"accent\" label=\"Конец раздела\" />",
+          "summary": "Разделитель со знаком в кружке: три колонки сетки и собственная заливка кружка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-separator-005-* и не подменять её токенами вашей темы",
+            "собственную заливку кружка: без неё линия просвечивает сквозь знак",
+            "сетку 1fr auto 1fr — отступами кружок не удержать по центру при смене ширины",
+            "aria-hidden на знаке: «✦» вслух ничего не сообщает и мешает чтению",
+            "role=separator с aria-label: граница обязана быть названа, а не только нарисована",
+            "светлую заливку кружка с тёмным знаком: она читается на любом фоне каталога"
+          ],
+          "adapt": [
+            "знак в кружке через glyph",
+            "тон через tone: neutral или accent",
+            "название границы через label",
+            "ширину разделителя через max-width"
+          ],
+          "notes": [
+            "Знак — символ, а не svg: для иконочного набора подставьте свой элемент внутрь кружка.",
+            "Кружок фиксированного размера: очень крупный знак придётся уменьшать кеглем.",
+            "Тон accent меняет и цвет линий — это намеренно, иначе кружок выглядит наклейкой.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "glyph",
+            "label": "Знак",
+            "type": "text",
+            "default": "✦",
+            "maxLength": 2
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "neutral",
+            "options": [
+              "neutral",
+              "accent"
+            ]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A divider with a glyph in a disc at the centre of the line: the disc carries its own fill, so the line never shows through the glyph on light or dark backgrounds.",
+            "ai": {
+              "summary": "A divider with a glyph disc: three grid columns and a disc with its own fill. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-separator-005-* palette — do not swap it for your theme tokens",
+                "the disc's own fill: without it the line shows through the glyph",
+                "the 1fr auto 1fr grid — margins cannot keep the disc centred as the width changes",
+                "aria-hidden on the glyph: \"✦\" says nothing aloud and only clutters the reading",
+                "role=separator with aria-label: a boundary must be named, not merely drawn",
+                "the light disc fill with a dark glyph: it stays readable on any catalog background"
+              ],
+              "adapt": [
+                "the glyph in the disc through glyph",
+                "the tone through tone: neutral or accent",
+                "the boundary name through label",
+                "the divider width through max-width"
+              ],
+              "notes": [
+                "The glyph is a character, not an svg: drop your own element into the disc for an icon set.",
+                "The disc has a fixed size: a very large glyph has to be scaled down by font size.",
+                "The accent tone also changes the line colour — deliberately, otherwise the disc looks like a sticker.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Separator005 glyph=\"✦\" tone=\"accent\" label=\"End of section\" />"
+            },
+            "controls": {
+              "glyph": {
+                "label": "Glyph",
+                "default": "✦"
+              },
+              "tone": {
+                "label": "Tone",
+                "default": "neutral"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "separator-006",
+      "type": "registry:component",
+      "title": "Scaled Space Divider",
+      "description": "Разделитель с отступами по шкале: пять ступеней кратны одному шагу, поэтому две границы в разных частях страницы дышат одинаково.",
+      "categories": [
+        "separator"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "separator-006/separator-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/separator-006.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Шкала отступов объявлена как кратные переменной --vibeui-separator-006-step, а ступени xs…xl переключаются атрибутом data-space — правится шкала одним числом, а не пятью значениями. Отступ живёт на самом разделителе, а не на соседних блоках: так соседи ничего не знают друг о друге и не схлопывают margin. Втяжка включается булевым пропом inset и задаётся отдельной переменной, чтобы линия отходила от краёв списка, как в системных таблицах. Подложка светлая: строки списка набраны тёмным.",
+      "meta": {
+        "tags": [
+          "separator",
+          "spacing",
+          "scale",
+          "rhythm"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Separator006",
+          "usage": "<Separator006 space=\"lg\" inset />",
+          "summary": "Разделитель с отступами по шкале: пять ступеней от одного шага и втяжка по краям. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-separator-006-* и не подменять её токенами вашей темы",
+            "ступени как кратные общего шага: разрозненные значения рассыпают вертикальный ритм",
+            "отступ на самом разделителе — на соседних блоках он схлопывается и становится непредсказуемым",
+            "тег hr со снятой рамкой: это семантическая граница, а не декоративная линия",
+            "втяжку отдельной переменной, чтобы её можно было отключить, не трогая вертикальные отступы",
+            "собственную светлую подложку: строки списка тёмные и на тёмном фоне пропадают"
+          ],
+          "adapt": [
+            "ступень отступов через space: xs, sm, md, lg или xl",
+            "втяжку линии через inset",
+            "шаг шкалы через переменную --vibeui-separator-006-step",
+            "цвет линии через переменную --vibeui-separator-006-line"
+          ],
+          "notes": [
+            "Ступень xl рассчитана на разделы, а не на строки списка: в плотном списке она разрывает связь.",
+            "Втяжка в 1rem подобрана под паддинг карточки — при другом паддинге её надо пересчитать.",
+            "Шкала не отвечает за отступы соседних блоков: их ритм задаётся снаружи.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "space",
+            "label": "Ступень отступа",
+            "type": "select",
+            "default": "md",
+            "options": [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl"
+            ]
+          },
+          {
+            "prop": "inset",
+            "label": "Втяжка",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A divider with scale-based spacing: five steps are multiples of one unit, so two boundaries in different parts of the page breathe alike.",
+            "ai": {
+              "summary": "A divider with scaled spacing: five steps from a single unit plus an optional inset. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-separator-006-* palette — do not swap it for your theme tokens",
+                "the steps as multiples of a shared unit: loose values scatter the vertical rhythm",
+                "the spacing on the divider itself — on neighbouring blocks it collapses and turns unpredictable",
+                "the hr tag with its border removed: this is a semantic boundary, not a decorative line",
+                "the inset as its own variable so it can be turned off without touching vertical spacing",
+                "the component's own light surface: the list rows are dark and vanish on a dark background"
+              ],
+              "adapt": [
+                "the spacing step through space: xs, sm, md, lg or xl",
+                "the line inset through inset",
+                "the scale unit through the --vibeui-separator-006-step variable",
+                "the line colour through the --vibeui-separator-006-line variable"
+              ],
+              "notes": [
+                "The xl step is meant for sections, not list rows: in a dense list it severs the connection.",
+                "The 1rem inset is tuned to the card padding — recalculate it for a different padding.",
+                "The scale does not govern the spacing of neighbouring blocks: their rhythm comes from outside.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Separator006 space=\"lg\" inset />"
+            },
+            "controls": {
+              "space": {
+                "label": "Spacing step",
+                "default": "md"
+              },
+              "inset": {
+                "label": "Inset",
+                "default": false
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

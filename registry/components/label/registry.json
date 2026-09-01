@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Required Mark",
       "description": "Подпись обязательного поля: звёздочка со скрытой расшифровкой для скринридера и строка-объяснение, зачем поле нужно.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,8 +20,15 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-001-*. Серверный: из хуков только useId, состояния нет. Звёздочка помечена aria-hidden, а её смысл несёт визуально скрытый текст «, обязательное поле» — иначе скринридер произносит «звёздочка» и оставляет гадать. Строка-объяснение связана с полем через aria-describedby, поэтому читается сразу после имени поля, а не теряется. Поле получает нативный required: валидация браузера остаётся рабочей. Блок несёт собственную светлую подложку с рамкой — тёмный текст подписи обязан читаться на тёмной карточке каталога.",
       "meta": {
-        "tags": ["label", "form", "required", "a11y"],
-        "preview": { "width": "full" },
+        "tags": [
+          "label",
+          "form",
+          "required",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Label001",
           "usage": "<Label001\n  label=\"Рабочая почта\"\n  hint=\"Пришлём на неё счёт и доступ в кабинет.\"\n  placeholder=\"name@company.com\"\n/>",
@@ -89,7 +98,10 @@
               "usage": "<Label001\n  label=\"Work email\"\n  hint=\"We send the invoice and your account access there.\"\n  placeholder=\"name@company.com\"\n/>"
             },
             "controls": {
-              "label": { "label": "Label", "default": "Work email" },
+              "label": {
+                "label": "Label",
+                "default": "Work email"
+              },
               "hint": {
                 "label": "Hint",
                 "default": "We send the invoice and your account access there."
@@ -104,7 +116,9 @@
       "type": "registry:component",
       "title": "Hint Popover",
       "description": "Подпись с кнопкой-вопросом рядом: длинное объяснение прячется в нативный popover и открывается без единой строчки скрипта.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -116,8 +130,15 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-002-*. Серверный: из хуков только useId. Подсказка — нативный элемент с атрибутом popover=\"auto\", кнопка открывает его через popoverTarget: браузер сам даёт закрытие по Esc и по клику мимо, обработчиков нет. Позиция подсказки берётся из CSS anchor positioning под @supports (anchor-name: --a) с position-try-fallbacks; там, где anchor не поддержан, браузер ставит popover по центру экрана — некрасиво, но текст доступен. Кнопка — обычный <button> с aria-label, поэтому попадает в порядок обхода и открывается с клавиатуры.",
       "meta": {
-        "tags": ["label", "popover", "hint", "no-js"],
-        "preview": { "width": "full" },
+        "tags": [
+          "label",
+          "popover",
+          "hint",
+          "no-js"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Label002",
           "usage": "<Label002\n  label=\"Код подразделения\"\n  question=\"Где взять код подразделения\"\n  answer=\"Четыре цифры из шапки договора, строка «Подразделение».\"\n/>",
@@ -205,7 +226,9 @@
       "type": "registry:component",
       "title": "Optional Tag",
       "description": "Подпись с пометкой «необязательно» на правом краю строки: помечено меньшинство полей, а не большинство со звёздочками.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -217,8 +240,15 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-003-*. Серверный: из хуков только useId. Строка подписи — flex с justify-content:space-between и align-items:baseline: пометка прижата к правому краю, но сидит на одной базовой линии с подписью, хотя кегль у неё меньше. Пометка сделана обычным текстом в пилюле, а не иконкой и не цветом: признак «необязательно» обязан читаться и вслух, и в чёрно-белой печати. Поле — textarea с resize:vertical, чтобы длинный комментарий можно было раскрыть, не ломая ширину формы.",
       "meta": {
-        "tags": ["label", "optional", "form", "layout"],
-        "preview": { "width": "full" },
+        "tags": [
+          "label",
+          "optional",
+          "form",
+          "layout"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Label003",
           "usage": "<Label003\n  label=\"Комментарий к заказу\"\n  optionalText=\"необязательно\"\n  placeholder=\"Например: позвонить за час до доставки\"\n/>",
@@ -288,8 +318,14 @@
               "usage": "<Label003\n  label=\"Note for the courier\"\n  optionalText=\"optional\"\n  placeholder=\"For example: call an hour before delivery\"\n/>"
             },
             "controls": {
-              "label": { "label": "Label", "default": "Note for the courier" },
-              "optionalText": { "label": "Tag", "default": "optional" }
+              "label": {
+                "label": "Label",
+                "default": "Note for the courier"
+              },
+              "optionalText": {
+                "label": "Tag",
+                "default": "optional"
+              }
             }
           }
         }
@@ -300,7 +336,9 @@
       "type": "registry:component",
       "title": "Side Label",
       "description": "Подпись слева от поля для плотной десктопной формы: колонка подписи фиксирована, а на узкой ширине блока подпись уходит наверх.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -312,8 +350,15 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-004-*. Серверный: из хуков только useId. Корень объявлен container-type:inline-size, но сама раскладка лежит на внутренней оболочке [data-part=\"shell\"] — правило внутри @container не действует на сам контейнер, поэтому переключать grid на корне бессмысленно. Раскладка — grid-template-areas: в один столбец подпись/поле/пояснение идут стопкой, от 28rem собственной ширины подпись становится левой колонкой шириной --vibeui-label-004-label-width, а пояснение остаётся под полем во второй колонке. Подпись получает padding-top, чтобы сидеть на первой строке текста внутри поля, а не на его верхней рамке.",
       "meta": {
-        "tags": ["label", "form", "container-query", "desktop"],
-        "preview": { "width": "full" },
+        "tags": [
+          "label",
+          "form",
+          "container-query",
+          "desktop"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Label004",
           "usage": "<Label004\n  label=\"Название компании\"\n  hint=\"Так, как написано в реквизитах, без кавычек.\"\n  labelWidth={9}\n/>",
@@ -384,8 +429,14 @@
               "usage": "<Label004\n  label=\"Company name\"\n  hint=\"Exactly as written in your registration details.\"\n  labelWidth={9}\n/>"
             },
             "controls": {
-              "label": { "label": "Label", "default": "Company name" },
-              "labelWidth": { "label": "Label column, rem", "default": 9 }
+              "label": {
+                "label": "Label",
+                "default": "Company name"
+              },
+              "labelWidth": {
+                "label": "Label column, rem",
+                "default": 9
+              }
             }
           }
         }
@@ -396,7 +447,9 @@
       "type": "registry:component",
       "title": "Group Legend",
       "description": "Подпись группы полей на <legend> внутри <fieldset>: вопрос относится ко всем переключателям сразу и читается перед каждым.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -408,8 +461,15 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-005-*. Серверный: из хуков только useId, состояние держат нативные радиокнопки одного name. Заголовок группы — <legend>, а не <label>: <label> подписывает одно поле, а вопрос относится ко всем вариантам, и озвучка повторяет legend перед каждым. У legend снята его особая раскладка внутри рамки приёмом float:left;width:100%; плата за это — обтекание, поэтому пояснение и оболочка вариантов получают clear:both. Отметка варианта подсвечивает всю строку через :has(input:checked), обводка фокуса ставится на строку через :has(input:focus-visible) — цель нажатия видна целиком.",
       "meta": {
-        "tags": ["label", "fieldset", "legend", "radio"],
-        "preview": { "width": "full" },
+        "tags": [
+          "label",
+          "fieldset",
+          "legend",
+          "radio"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Label005",
           "usage": "<Label005\n  legend=\"Как доставить заказ\"\n  hint=\"Способ можно поменять до того, как курьер выехал.\"\n  options={[\"Курьером до двери\", \"В пункт выдачи\", \"Почтой России\"]}\n/>",
@@ -497,7 +557,9 @@
       "type": "registry:component",
       "title": "Counter Label",
       "description": "Подпись со счётчиком символов на правом краю строки: лимит виден до начала ввода, перебор подсвечивается и не обрезает вставленный текст.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -509,8 +571,15 @@
       ],
       "docs": "Клиентский компонент: значение поля держит useState, из него считается остаток. Один файл, без зависимостей, палитра в локальных переменных --vibeui-label-006-*. Счётчик стоит в строке подписи, а не под полем: лимит виден раньше, чем человек начал печатать. Состояние счётчика выражено атрибутом data-state (ok/near/over), цвета висят на нём — отдельных классов нет. Жёсткого maxLength у поля нет намеренно: вставленный из буфера текст не обрезается молча, вместо этого поле получает aria-invalid, а счётчик краснеет. Цифры набраны табличными (font-variant-numeric:tabular-nums), поэтому правый край не дёргается при вводе. Живое сообщение включается только у границы: озвучивать каждый символ — шум, из-за которого выключают экранного диктора.",
       "meta": {
-        "tags": ["label", "counter", "textarea", "limit"],
-        "preview": { "width": "full" },
+        "tags": [
+          "label",
+          "counter",
+          "textarea",
+          "limit"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Label006",
           "usage": "<Label006\n  label=\"Короткое описание\"\n  limit={140}\n  defaultValue=\"Мастерская керамики в центре города.\"\n/>",
@@ -581,8 +650,14 @@
               "usage": "<Label006\n  label=\"Short description\"\n  limit={140}\n  defaultValue=\"A pottery studio in the town centre.\"\n/>"
             },
             "controls": {
-              "label": { "label": "Label", "default": "Short description" },
-              "limit": { "label": "Character limit", "default": 140 }
+              "label": {
+                "label": "Label",
+                "default": "Short description"
+              },
+              "limit": {
+                "label": "Character limit",
+                "default": 140
+              }
             }
           }
         }
@@ -593,7 +668,9 @@
       "type": "registry:component",
       "title": "Error Label",
       "description": "Подпись с сообщением об ошибке между ней и полем: вся раскраска состояния висит на одном атрибуте aria-invalid.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -605,8 +682,15 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-007-*. Серверный: из хуков только useId. Единственный источник состояния — aria-invalid у поля: подпись краснеет правилом :has(input[aria-invalid=\"true\"]), рамка и обводка фокуса — селектором по тому же атрибуту. Отдельного класса «error» нет, поэтому состояния не разъезжаются. Сообщение стоит между подписью и полем: на телефоне клавиатура закрывает низ экрана, и текст под полем не виден. К цвету добавлен нарисованный рамкой значок — цвет не должен быть единственным признаком ошибки. Сообщение связано с полем через aria-describedby.",
       "meta": {
-        "tags": ["label", "error", "validation", "a11y"],
-        "preview": { "width": "full" },
+        "tags": [
+          "label",
+          "error",
+          "validation",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Label007",
           "usage": "<Label007\n  label=\"Почта для счетов\"\n  error=\"Такой почты не существует: проверьте домен после @.\"\n  defaultValue=\"buhgalter@company\"\n/>",
@@ -676,7 +760,10 @@
               "usage": "<Label007\n  label=\"Billing email\"\n  error=\"No such address: check the domain after the @.\"\n  defaultValue=\"accounting@company\"\n/>"
             },
             "controls": {
-              "label": { "label": "Label", "default": "Billing email" },
+              "label": {
+                "label": "Label",
+                "default": "Billing email"
+              },
               "error": {
                 "label": "Error text",
                 "default": "No such address: check that a domain follows the @."
@@ -691,7 +778,9 @@
       "type": "registry:component",
       "title": "Locked Reason",
       "description": "Подпись выключенного поля с причиной запрета и ссылкой-выходом: поле readonly, а не disabled, поэтому остаётся доступным с клавиатуры.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -703,8 +792,15 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-008-*. Серверный: из хуков только useId, состояния нет. Ключевое решение — readOnly плюс aria-disabled вместо настоящего disabled: disabled выбрасывает поле из порядка обхода, и человек с клавиатуры до причины не доберётся, а readonly оставляет фокус и позволяет прочитать привязанный через aria-describedby текст. Замок нарисован средствами CSS: корпус — фон элемента, дужка — рамка псевдоэлемента, иконочный пакет ради одного значка не нужен. Рядом с причиной стоит ссылка, снимающая запрет, — без неё интерфейс превращается в тупик.",
       "meta": {
-        "tags": ["label", "disabled", "readonly", "a11y"],
-        "preview": { "width": "full" },
+        "tags": [
+          "label",
+          "disabled",
+          "readonly",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Label008",
           "usage": "<Label008\n  label=\"Тариф\"\n  reason=\"Тариф меняется после оплаты текущего периода.\"\n  actionText=\"Оплатить сейчас\"\n  actionHref=\"/billing\"\n/>",
@@ -778,7 +874,532 @@
                 "label": "Reason",
                 "default": "The plan can only change after the current period is paid — it closes on 30 September."
               },
-              "actionText": { "label": "Way out", "default": "Pay now" }
+              "actionText": {
+                "label": "Way out",
+                "default": "Pay now"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "label-009",
+      "type": "registry:component",
+      "title": "Required Badge",
+      "description": "Подпись обязательного поля с читаемым текстовым бейджем «Обязательно» внутри самой подписи и пояснением под полем.",
+      "categories": [
+        "label"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "label-009/label-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/label-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-009-*. Серверный: из хуков только useId, состояния нет. Вместо звёздочки с расшифровкой для скринридера здесь читаемый бейдж «Обязательно», вложенный прямо в <label> — он звучит вместе с именем поля без отдельного skip-текста и aria-hidden. Пояснение стоит под полем и связано с ним через aria-describedby. Поле получает нативный required, валидация браузера остаётся рабочей. Блок несёт собственную светлую подложку с рамкой — тёмный текст подписи обязан читаться на тёмной карточке каталога.",
+      "meta": {
+        "tags": [
+          "label",
+          "form",
+          "required",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Label009",
+          "usage": "<Label009\n  label=\"Телефон для связи\"\n  badge=\"Обязательно\"\n  hint=\"Позвоним, если у курьера не получится дозвониться на резервный номер.\"\n/>",
+          "summary": "Подпись обязательного поля с текстовым бейджем «Обязательно» внутри <label> и пояснением под полем. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-label-009-* и не подменять её токенами вашей темы",
+            "бейдж внутри <label>, а не рядом с ним: иначе он выпадает из чтения имени поля скринридером",
+            "связь пояснения с полем через aria-describedby: иначе текст виден глазами, но не читается вслух",
+            "нативный атрибут required на поле — на нём держится проверка браузера без скрипта",
+            "собственную светлую подложку блока: без неё тёмная подпись пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "имя поля через label, текст бейджа через badge и пояснение через hint",
+            "текст-заглушку через placeholder",
+            "цвет фокуса и акцента через accent",
+            "цвет и подложку бейджа через переменные --vibeui-label-009-required и --vibeui-label-009-required-soft"
+          ],
+          "notes": [
+            "Бейдж работает, только когда обязательных полей меньшинство: если обязательны почти все, помечайте наоборот необязательные.",
+            "Тип поля здесь tel; под другой тип меняйте и autoComplete, иначе автозаполнение подставит не то.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Телефон для связи",
+            "maxLength": 40
+          },
+          {
+            "prop": "badge",
+            "label": "Текст бейджа",
+            "type": "text",
+            "default": "Обязательно",
+            "maxLength": 20
+          },
+          {
+            "prop": "hint",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Позвоним, если у курьера не получится дозвониться на резервный номер.",
+            "maxLength": 90
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A required-field label with a readable \"Required\" text badge built into the label itself and an explanation under the field.",
+            "ai": {
+              "summary": "A required-field label with a \"Required\" text badge inside the <label> and an explanation under the field. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-label-009-* palette — do not swap it for your theme tokens",
+                "the badge inside <label> rather than next to it: otherwise it falls out of the screen reader's reading of the field name",
+                "the aria-describedby link between the hint and the field: otherwise the text is visible but never spoken",
+                "the native required attribute on the input — browser validation rests on it, with no script",
+                "the block's own light surface: without it the dark label disappears on a dark background"
+              ],
+              "adapt": [
+                "the field name through label, the badge text through badge and the explanation through hint",
+                "the placeholder text through placeholder",
+                "the focus and accent color through accent",
+                "the badge color and background through the --vibeui-label-009-required and --vibeui-label-009-required-soft variables"
+              ],
+              "notes": [
+                "The badge only works while required fields are the minority: if almost everything is required, mark the optional ones instead.",
+                "The input type here is tel; for another type change autoComplete as well, or autofill will paste the wrong value.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Label009\n  label=\"Contact phone\"\n  badge=\"Required\"\n  hint=\"We'll call it if the courier can't reach the backup number.\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Contact phone"
+              },
+              "badge": {
+                "label": "Badge text",
+                "default": "Required"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "We'll call it if the courier can't reach the backup number."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "label-010",
+      "type": "registry:component",
+      "title": "Inline Disclosure",
+      "description": "Подпись с разворачивающимся прямо в потоке формы пояснением на нативных <details>/<summary>: длинный ответ раздвигает соседние поля, а не всплывает поверх них.",
+      "categories": [
+        "label"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "label-010/label-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/label-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-010-*. Серверный: из хуков только useId, состояния нет — раскрытие держит нативный <details>. Кнопка-триггер — обычный <summary> с убранным системным маркером и своим шевроном на transform:rotate; aria-expanded браузер выставляет сам. Ответ связан с полем через aria-describedby независимо от состояния open. В отличие от всплывающей подсказки, длинный ответ раздвигает форму вниз, а не перекрывает соседние поля.",
+      "meta": {
+        "tags": [
+          "label",
+          "form",
+          "disclosure",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Label010",
+          "usage": "<Label010\n  label=\"Экспортный код валюты\"\n  toggleText=\"Зачем это нужно\"\n  answer=\"Трёхбуквенный код по ISO 4217 — по нему платёжный шлюз определяет валюту счёта.\"\n/>",
+          "summary": "Подпись с раскрывающимся пояснением на нативном <details>/<summary>: ответ разворачивается в потоке формы без попапа и без клиентского JS. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-label-010-* и не подменять её токенами вашей темы",
+            "нативный <details>/<summary> вместо кастомного попапа: aria-expanded и клавиатурное управление браузер ведёт сам",
+            "aria-describedby на поле, указывающий на ответ, независимо от того, открыт он или закрыт",
+            "скрытый системный маркер списка у <summary> — его подменяет собственный шеврон",
+            "собственную светлую подложку блока: без неё тёмная подпись пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "имя поля через label, текст кнопки-триггера через toggleText и ответ через answer",
+            "текст-заглушку через placeholder",
+            "цвет фокуса и акцента через accent",
+            "фон раскрытого блока ответа через переменную --vibeui-label-010-answer-bg"
+          ],
+          "notes": [
+            "Ответ остаётся в DOM всегда: пока <details> закрыт, aria-describedby ссылается на скрытый узел — это ожидаемо для прогрессивного раскрытия.",
+            "Раскрытие не анимировано намеренно: анимация высоты требует либо JS, либо interpolate-size, а раскрытие «в потоке» и без анимации уже избавляет от наслоения попапа.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Экспортный код валюты",
+            "maxLength": 40
+          },
+          {
+            "prop": "toggleText",
+            "label": "Текст кнопки-раскрытия",
+            "type": "text",
+            "default": "Зачем это нужно",
+            "maxLength": 40
+          },
+          {
+            "prop": "answer",
+            "label": "Ответ",
+            "type": "text",
+            "default": "Трёхбуквенный код по ISO 4217 (например, RUB или USD) — по нему платёжный шлюз определяет валюту счёта и не путает суммы при конвертации.",
+            "maxLength": 220
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A label with an explanation that expands inline in the form's flow via native <details>/<summary>: a long answer pushes neighboring fields down instead of floating over them.",
+            "ai": {
+              "summary": "A label with an explanation that expands via native <details>/<summary>: the answer unfolds in the form's flow with no popover and no client JS. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-label-010-* palette — do not swap it for your theme tokens",
+                "the native <details>/<summary> instead of a custom popover: the browser drives aria-expanded and keyboard control on its own",
+                "aria-describedby on the field pointing at the answer regardless of whether it is open or closed",
+                "the hidden system list marker on <summary> — a custom chevron replaces it",
+                "the block's own light surface: without it the dark label disappears on a dark background"
+              ],
+              "adapt": [
+                "the field name through label, the toggle text through toggleText and the answer through answer",
+                "the placeholder text through placeholder",
+                "the focus and accent color through accent",
+                "the expanded answer's background through the --vibeui-label-010-answer-bg variable"
+              ],
+              "notes": [
+                "The answer stays in the DOM at all times: while <details> is closed, aria-describedby points at a hidden node — expected for progressive disclosure.",
+                "The expand is deliberately not animated: animating height needs either JS or interpolate-size, and unfolding in-flow without animation already avoids popover layering.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Label010\n  label=\"Currency export code\"\n  toggleText=\"Why we need this\"\n  answer=\"A three-letter ISO 4217 code — the payment gateway reads it to set the invoice currency.\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Currency export code"
+              },
+              "toggleText": {
+                "label": "Disclosure button text",
+                "default": "Why we need this"
+              },
+              "answer": {
+                "label": "Answer",
+                "default": "A three-letter ISO 4217 code (e.g. RUB or USD) — the payment gateway reads it to set the invoice currency and avoid conversion mistakes."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "label-011",
+      "type": "registry:component",
+      "title": "Checked Count",
+      "description": "Подпись группы чекбоксов со счётчиком выбранного в заголовке группы: «N из M выбрано» пересчитывается на каждый клик и дублируется в живом сообщении.",
+      "categories": [
+        "label"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "label-011/label-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/label-011.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: список выбранных значений держит useState, из него считается счётчик. Один файл, без зависимостей, палитра в локальных переменных --vibeui-label-011-*. У группы чекбоксов нет единственного поля, которое подписывает <label>, поэтому счётчик встроен в <legend> — общую подпись группы, а не в подпись одного из полей. <legend> получает раскладку через приём проекта (float:left;width:100%), а строка «текст + счётчик» внутри неё — обычный flex на вложенном <span>, без ограничений браузеров на flex-легенду. Отдельный визуально скрытый параграф с aria-live дублирует итог для скринридера, чтобы не пришлось переслушивать весь список чекбоксов после каждого клика.",
+      "meta": {
+        "tags": [
+          "label",
+          "form",
+          "checkbox",
+          "counter",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Label011",
+          "usage": "<Label011\n  legend=\"Каналы уведомлений\"\n  options={[\"Почта\", \"SMS\", \"Push в приложении\", \"Телеграм-бот\", \"Звонок\"]}\n  defaultValue={[\"Почта\", \"SMS\", \"Push в приложении\"]}\n/>",
+          "summary": "Подпись группы чекбоксов со счётчиком выбранного в <legend>: «N из M выбрано» пересчитывается на клик через useState и дублируется в aria-live. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-label-011-* и не подменять её токенами вашей темы",
+            "счётчик внутри <legend>, а не над или под группой: он относится ко всей группе, а не к одному чекбоксу",
+            "приём float:left;width:100% на самом <legend> и flex только на вложенном <span> — flex прямо на <legend> ведёт себя непредсказуемо в части браузеров",
+            "визуально скрытый параграф с aria-live: без него смену счётчика узнают только зрячие",
+            "собственную светлую подложку блока: без неё тёмная подпись пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "заголовок группы через legend, список вариантов через options и стартовый выбор через defaultValue",
+            "цвет фокуса и акцента через accent",
+            "ширину блока через max-width в палитре"
+          ],
+          "notes": [
+            "Компонент управляет состоянием сам: снаружи подставляйте стартовый выбор через defaultValue, а не пытайтесь передать value.",
+            "options и defaultValue сверяются по строковому значению — при повторяющихся текстах вариантов замените на массив объектов с id, если такое понадобится.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "i18n": {
+          "en": {
+            "description": "A checkbox group label with a selection counter in the group heading: \"N of M selected\" recalculates on every click and is echoed in a live announcement.",
+            "ai": {
+              "summary": "A checkbox group label with a selection counter inside <legend>: \"N of M selected\" recalculates on click via useState and is echoed through aria-live. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-label-011-* palette — do not swap it for your theme tokens",
+                "the counter inside <legend> rather than above or below the group: it describes the whole group, not one checkbox",
+                "the float:left;width:100% technique on <legend> itself with flex only on the nested <span> — flex directly on <legend> behaves inconsistently across browsers",
+                "the visually hidden aria-live paragraph: without it only sighted users notice the counter change",
+                "the block's own light surface: without it the dark label disappears on a dark background"
+              ],
+              "adapt": [
+                "the group heading through legend, the option list through options and the starting selection through defaultValue",
+                "the focus and accent color through accent",
+                "the block width through max-width in the palette"
+              ],
+              "notes": [
+                "The component owns its state: feed it a starting selection from outside through defaultValue, not by trying to pass value.",
+                "options and defaultValue are matched by string value — for repeating option text switch to an array of objects with an id if you need that.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Label011\n  legend=\"Notification channels\"\n  options={[\"Email\", \"SMS\", \"In-app push\", \"Telegram bot\", \"Phone call\"]}\n  defaultValue={[\"Email\", \"SMS\", \"In-app push\"]}\n/>"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "label-012",
+      "type": "registry:component",
+      "title": "Optional Note",
+      "description": "Подпись с пометкой «необязательно» как приглушённой частью той же фразы, без отдельного бейджа и подложки — только цвет и начертание.",
+      "categories": [
+        "label"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "label-012/label-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/label-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-012-*. Серверный: из хуков только useId, состояния нет. Пометка «необязательно» — не отдельный элемент с фоном и рамкой, а приглушённый текст внутри того же <label>, что и имя поля: подпись читается и звучит одной фразой, а не подписью плюс наклеенным ярлыком. Приглушение только цветом var(--vibeui-label-012-muted) и обычным начертанием на фоне полужирного имени поля.",
+      "meta": {
+        "tags": [
+          "label",
+          "form",
+          "optional",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Label012",
+          "usage": "<Label012\n  label=\"Название компании\"\n  optionalText=\"необязательно\"\n  placeholder=\"ООО «Ромашка»\"\n/>",
+          "summary": "Подпись с приглушённой пометкой «(необязательно)» прямо в тексте <label>, без бейджа и подложки. Один файл, ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-label-012-* и не подменять её токенами вашей темы",
+            "пометку внутри <label>, а не рядом отдельным элементом: она обязана звучать в одной фразе с именем поля",
+            "приглушение только цветом и начертанием, без фона и рамки — иначе это снова бейдж, а не тихая часть фразы",
+            "собственную светлую подложку блока: без неё тёмная подпись пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "имя поля через label и текст пометки через optionalText",
+            "текст-заглушку через placeholder",
+            "цвет фокуса и акцента через accent",
+            "ширину блока через max-width в палитре"
+          ],
+          "notes": [
+            "Пометка работает, только когда необязательных полей меньшинство: если необязательны почти все, помечайте наоборот обязательные.",
+            "Скобки вокруг optionalText — часть визуального языка компонента: убирая их, проверьте, что фраза не читается как продолжение имени поля.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Название компании",
+            "maxLength": 40
+          },
+          {
+            "prop": "optionalText",
+            "label": "Текст пометки",
+            "type": "text",
+            "default": "необязательно",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A label with an \"optional\" note as a muted part of the same phrase, with no separate badge or background — only color and weight change.",
+            "ai": {
+              "summary": "A label with a muted \"(optional)\" note built right into the <label> text, no badge, no background. One file, zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-label-012-* palette — do not swap it for your theme tokens",
+                "the note inside <label> rather than as a separate nearby element: it has to be read as one phrase with the field name",
+                "muting through color and weight only, with no background or border — otherwise it turns back into a badge instead of a quiet part of the phrase",
+                "the block's own light surface: without it the dark label disappears on a dark background"
+              ],
+              "adapt": [
+                "the field name through label and the note text through optionalText",
+                "the placeholder text through placeholder",
+                "the focus and accent color through accent",
+                "the block width through max-width in the palette"
+              ],
+              "notes": [
+                "The note only works while optional fields are the minority: if almost everything is optional, mark the required ones instead.",
+                "The parentheses around optionalText are part of the component's visual language: if you remove them, check the phrase doesn't read as a continuation of the field name.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Label012\n  label=\"Company name\"\n  optionalText=\"optional\"\n  placeholder=\"Acme LLC\"\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Company name"
+              },
+              "optionalText": {
+                "label": "Note text",
+                "default": "optional"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "label-013",
+      "type": "registry:component",
+      "title": "Group Error",
+      "description": "Подпись группы полей: заголовок группы в <legend> и одна общая ошибка под ним для обоих полей сразу, без дублирования на каждое из них.",
+      "categories": [
+        "label"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "label-013/label-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/label-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-013-*. Серверный: из хуков только useId, состояния нет. Пароль и подтверждение пароля — два поля, но ошибка «не совпадают» относится к обоим сразу, а не к одному из них: дублировать её под каждым полем — шум и повод гадать, какое поле неверно. Сообщение одно, стоит сразу под <legend> и связано через aria-describedby и с <fieldset> целиком, и с каждым полем по отдельности, поэтому звучит независимо от того, на каком из двух полей стоит фокус.",
+      "meta": {
+        "tags": [
+          "label",
+          "form",
+          "fieldset",
+          "error",
+          "a11y"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Label013",
+          "usage": "<Label013\n  legend=\"Новый пароль\"\n  error=\"Пароли не совпадают: проверьте оба поля.\"\n  firstLabel=\"Пароль\"\n  secondLabel=\"Повторите пароль\"\n/>",
+          "summary": "Подпись группы полей: заголовок в <legend> и одна общая ошибка на оба поля вместо ошибки под каждым из них. Один файл, ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-label-013-* и не подменять её токенами вашей темы",
+            "fieldset+legend вместо двух независимых <label>: ошибка относится к группе, а не к одному полю",
+            "одно сообщение об ошибке вместо копии под каждым полем — иначе непонятно, какое поле именно неверно",
+            "aria-describedby и на <fieldset>, и на каждом поле группы: ошибка звучит независимо от того, где фокус",
+            "собственную светлую подложку блока: без неё тёмная подпись пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "заголовок группы через legend, текст ошибки через error и подписи полей через firstLabel и secondLabel",
+            "цвет фокуса и акцента через accent",
+            "ширину блока через max-width в палитре"
+          ],
+          "notes": [
+            "Оба поля показаны с aria-invalid=\"true\" и подсветкой рамки постоянно: в реальной форме переключайте это состояние по факту валидации, а не всегда.",
+            "Компонент неконтролируемый: значения полей не хранятся в состоянии — читайте их через FormData при отправке формы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Заголовок группы",
+            "type": "text",
+            "default": "Новый пароль",
+            "maxLength": 40
+          },
+          {
+            "prop": "error",
+            "label": "Текст ошибки",
+            "type": "text",
+            "default": "Пароли не совпадают: проверьте оба поля.",
+            "maxLength": 90
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A field-group label: a group heading in <legend> and one shared error underneath for both fields at once, with no duplication on each of them.",
+            "ai": {
+              "summary": "A field-group label: a heading in <legend> and one shared error for both fields instead of an error under each. One file, zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-label-013-* palette — do not swap it for your theme tokens",
+                "fieldset+legend instead of two independent <label> elements: the error belongs to the group, not to one field",
+                "a single error message instead of a copy under each field — otherwise it's unclear which field is actually wrong",
+                "aria-describedby on both the <fieldset> and each field in the group: the error is announced regardless of which one has focus",
+                "the block's own light surface: without it the dark label disappears on a dark background"
+              ],
+              "adapt": [
+                "the group heading through legend, the error text through error and the field labels through firstLabel and secondLabel",
+                "the focus and accent color through accent",
+                "the block width through max-width in the palette"
+              ],
+              "notes": [
+                "Both fields show aria-invalid=\"true\" and the border highlight permanently here: in a real form, toggle that state based on actual validation, not always.",
+                "The component is uncontrolled: field values are not held in state — read them through FormData on submit.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Label013\n  legend=\"New password\"\n  error=\"Passwords don't match: check both fields.\"\n  firstLabel=\"Password\"\n  secondLabel=\"Confirm password\"\n/>"
+            },
+            "controls": {
+              "legend": {
+                "label": "Group heading",
+                "default": "New password"
+              },
+              "error": {
+                "label": "Error text",
+                "default": "Passwords don't match: check both fields."
+              }
             }
           }
         }

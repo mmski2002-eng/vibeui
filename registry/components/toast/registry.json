@@ -1,0 +1,2306 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "toast-001",
+      "type": "registry:component",
+      "title": "Timed Toast",
+      "description": "Всплывающее уведомление с полосой оставшегося времени и действием «Отменить»: видно, сколько секунд осталось, чтобы передумать.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-001/toast-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-001-*. Полоса времени — CSS-анимация scaleX, длительность приходит переменной --vibeui-toast-001-duration из пропа duration: таймер не считается в JS и не вызывает перерисовок. Сам компонент только показывает уведомление: появлением, очередью и удалением управляет вызывающий код через onClose. Роль выбирается по тону: danger — alert, остальные — status.",
+      "meta": {
+        "tags": [
+          "toast",
+          "notification",
+          "undo",
+          "timer"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast001",
+          "usage": "<Toast001\n  tone=\"success\"\n  title=\"Страница опубликована\"\n  description=\"Изменения уже видны по адресу проекта.\"\n  duration={5}\n  onUndo={handleUndo}\n  onClose={dismiss}\n/>",
+          "summary": "Тёмное всплывающее уведомление: точка тона, заголовок, описание, кнопка отмены и крестик. Внизу убывает полоса времени — она показывает, сколько осталось до исчезновения, поэтому пропажа не выглядит внезапной, а «Отменить» видно, пока действие ещё можно отменить. Три тона, длительность пропом. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-001-* и не подменять её токенами вашей темы: уведомление намеренно тёмное и не зависит от темы страницы",
+            "полосу времени как CSS-анимацию scaleX с длительностью из переменной — таймер на setInterval перерисовывал бы компонент десятки раз",
+            "совпадение duration и того, через сколько вызывающий код действительно убирает уведомление: разошлись — полоса начинает врать",
+            "действие «Отменить» рядом с текстом, а не под ним: тост живёт секунды, действие должно попадаться на глаза сразу",
+            "выбор роли по тону: danger — role=\"alert\", остальные — role=\"status\"",
+            "aria-label у крестика: иначе скринридер прочитает «×»",
+            "правило prefers-reduced-motion, которое убирает полосу вместо того, чтобы её анимировать",
+            "блок <style> внутри компонента — в нём вся палитра, тона и анимация"
+          ],
+          "adapt": [
+            "тексты title и description, подпись undoLabel",
+            "tone: success, danger или neutral",
+            "duration — сколько секунд живёт уведомление; 0 убирает полосу",
+            "обработчики onUndo и onClose — они и есть логика: компонент сам себя не удаляет",
+            "ширину и положение через className: контейнер тостов делает вызывающий код"
+          ],
+          "notes": [
+            "Компонент не показывает и не прячет себя. Очередь, стек и таймер удаления — задача вызывающего кода.",
+            "Не ставьте duration меньше четырёх секунд, если есть «Отменить»: прочитать и нажать не успевают.",
+            "Не сообщайте тостом об ошибке, требующей действия: он исчезнет вместе с ней. Для этого есть alert в потоке страницы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "success",
+            "options": [
+              "neutral",
+              "success",
+              "danger"
+            ]
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Страница опубликована",
+            "maxLength": 50
+          },
+          {
+            "prop": "description",
+            "label": "Описание",
+            "type": "text",
+            "default": "Изменения уже видны по адресу проекта.",
+            "maxLength": 90
+          },
+          {
+            "prop": "undoLabel",
+            "label": "Отмена",
+            "type": "text",
+            "default": "Отменить",
+            "maxLength": 20
+          },
+          {
+            "prop": "duration",
+            "label": "Секунд",
+            "type": "number",
+            "default": 5,
+            "min": 0,
+            "max": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A toast with a draining time bar and an Undo action: you can see how many seconds are left to change your mind.",
+            "ai": {
+              "summary": "A dark toast: a tone dot, a title, a description, an Undo button and a close cross. A bar drains along the bottom, showing how long is left before it disappears, so the toast does not vanish out of nowhere and Undo stays visible while undoing is still possible. Three tones, duration as a prop. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-toast-001-* palette — the toast is deliberately dark and independent of the page theme",
+                "the time bar as a CSS scaleX animation driven by a variable — a setInterval timer would re-render the component dozens of times",
+                "keeping duration in sync with when the caller actually removes the toast: once they diverge, the bar starts lying",
+                "the Undo action beside the text rather than below it: a toast lives for seconds and the action has to be seen at once",
+                "picking the role from the tone: danger is role=\"alert\", the rest are role=\"status\"",
+                "the aria-label on the close button: otherwise a screen reader announces \"×\"",
+                "the prefers-reduced-motion rule that removes the bar instead of animating it",
+                "the <style> block inside the component — it holds the palette, the tones and the animation"
+              ],
+              "adapt": [
+                "the title and description copy and the undoLabel",
+                "tone: success, danger or neutral",
+                "duration — how many seconds the toast lives; 0 removes the bar",
+                "the onUndo and onClose handlers — they are the logic: the component does not remove itself",
+                "width and placement through className: the toast container is the caller's job"
+              ],
+              "notes": [
+                "The component neither shows nor hides itself. The queue, the stack and the removal timer belong to the calling code.",
+                "Do not set duration below four seconds when Undo is present: nobody can read and click in time.",
+                "Do not report an error that needs action in a toast — it leaves with the toast. Use an inline alert instead.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast001\n  tone=\"success\"\n  title=\"Page published\"\n  description=\"The changes are live at your project address.\"\n  duration={5}\n  onUndo={handleUndo}\n  onClose={dismiss}\n/>"
+            },
+            "controls": {
+              "tone": {
+                "label": "Tone"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Page published"
+              },
+              "description": {
+                "label": "Description",
+                "default": "The changes are live at your project address."
+              },
+              "undoLabel": {
+                "label": "Undo",
+                "default": "Undo"
+              },
+              "duration": {
+                "label": "Seconds"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-002",
+      "type": "registry:component",
+      "title": "Undo Toast",
+      "description": "Сообщение с отменой вместо подтверждения: «точно удалить?» останавливает всех ради ошибки одного.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-002/toast-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-002-*. Клиентский: \"use client\". Оставшееся время хранится в миллисекундах и уменьшается интервалом в 100 мс; пауза живёт в ref, поэтому наведение не вызывает перерисовку. Сообщение объявлено role=\"status\" с aria-live=\"polite\".",
+      "meta": {
+        "tags": [
+          "toast",
+          "undo",
+          "feedback",
+          "timer"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast002",
+          "usage": "<Toast002 message=\"Проект в архиве\" seconds={8} onUndo={restore} />",
+          "summary": "Сообщение об уже выполненном действии с кнопкой отмены, обратным отсчётом и полосой оставшегося времени. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-002-* и не подменять её токенами вашей темы",
+            "отмену вместо подтверждения: диалог останавливает всех ради ошибки одного",
+            "полосу и число секунд — без них непонятно, сколько ещё можно передумать",
+            "паузу по наведению и фокусу: иначе отмену не успевают нажать",
+            "role=\"status\" с aria-live: сообщение должно быть услышано",
+            "отчёт после отмены вместо мгновенного исчезновения"
+          ],
+          "adapt": [
+            "message и undoLabel",
+            "seconds — сколько можно передумать",
+            "обработчик onUndo",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Отмена должна быть настоящей: если действие необратимо, нужен диалог, а не это сообщение.",
+            "Восемь секунд — компромисс: меньше не успеть прочитать и нажать, больше сообщение мешает.",
+            "Позиционирование не входит в компонент: угол экрана задаёт вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "message",
+            "label": "Сообщение",
+            "type": "text",
+            "default": "Проект перемещён в архив",
+            "maxLength": 40
+          },
+          {
+            "prop": "undoLabel",
+            "label": "Отмена",
+            "type": "text",
+            "default": "Отменить",
+            "maxLength": 20
+          },
+          {
+            "prop": "seconds",
+            "label": "Секунд",
+            "type": "number",
+            "default": 8,
+            "min": 3,
+            "max": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A toast with undo instead of a confirmation: \"are you sure?\" stops everyone for the sake of one person's mistake.",
+            "ai": {
+              "summary": "A toast about an action already taken, with an undo button, a countdown and a time bar. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-toast-002-* palette — do not swap it for your theme tokens",
+                "undo instead of confirmation: a dialog taxes everyone for one person's slip",
+                "the bar and the seconds — otherwise nothing says how long the option lasts",
+                "the pause on hover and focus: otherwise undo cannot be reached in time",
+                "role=\"status\" with aria-live: the message has to be heard",
+                "the report after undo rather than instant disappearance"
+              ],
+              "adapt": [
+                "message and undoLabel",
+                "seconds — how long the option lasts",
+                "the onUndo handler",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Undo must be real: if the action is irreversible, use a dialog instead.",
+                "Eight seconds is the compromise: less is unreadable, more gets in the way.",
+                "Positioning is not part of the component: the caller picks the corner.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast002 message=\"Project archived\" seconds={8} onUndo={restore} />"
+            },
+            "controls": {
+              "message": {
+                "label": "Message",
+                "default": "Project moved to archive"
+              },
+              "undoLabel": {
+                "label": "Undo",
+                "default": "Undo"
+              },
+              "seconds": {
+                "label": "Seconds"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-003",
+      "type": "registry:component",
+      "title": "Toast Stack",
+      "description": "Стопка сообщений с пределом: больше трёх карточек подряд никто не читает, остальные сворачиваются в строку.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-003/toast-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-003-*. Клиентский: \"use client\". Контейнер объявлен role=\"log\" с aria-live=\"polite\": так читаются потоки сообщений. Тон задаётся полоской слева через data-tone, у каждой карточки есть кнопка скрытия с именем сообщения.",
+      "meta": {
+        "tags": [
+          "toast",
+          "stack",
+          "notifications",
+          "limit"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast003",
+          "usage": "<Toast003 items={items} max={3} />",
+          "summary": "Стопка сообщений: до трёх карточек, свёрнутый хвост со счётчиком, тон полоской слева и закрытие каждой. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-003-* и не подменять её токенами вашей темы",
+            "предел в три карточки: остальное сворачивается, иначе стопка закрывает экран",
+            "role=\"log\" с aria-live: поток сообщений читается иначе, чем одно",
+            "тон полоской, а не заливкой: сообщение должно оставаться читаемым",
+            "имя сообщения в подписи кнопки закрытия",
+            "новые сообщения сверху — читают сверху вниз"
+          ],
+          "adapt": [
+            "массив items и их тон",
+            "max — сколько показывать сразу",
+            "поведение кнопки закрытия",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Автоскрытия здесь нет: для одиночного сообщения с таймером есть toast-001.",
+            "Ошибки не должны исчезать сами: их закрывает человек, и в стопке они стоят рядом с обычными.",
+            "Позиционирование стопки — задача вызывающего кода.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "max",
+            "label": "Показывать",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A capped toast stack: nobody reads more than three cards in a row, so the tail folds into one line.",
+            "ai": {
+              "summary": "A toast stack: up to three cards, a folded tail with a counter, tone as a left bar and per-card dismissal. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-toast-003-* palette — do not swap it for your theme tokens",
+                "the three-card cap: the rest folds, otherwise the stack covers the screen",
+                "role=\"log\" with aria-live: a stream of messages reads differently from one",
+                "tone as a bar rather than a fill: the message must stay readable",
+                "the message name in the dismiss button's label",
+                "new messages on top — people read downward"
+              ],
+              "adapt": [
+                "the items array and their tone",
+                "max — how many show at once",
+                "what dismissal does",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "There is no auto-dismiss here: for a single timed message use toast-001.",
+                "Errors must not vanish on their own: a person dismisses them, and here they sit among the rest.",
+                "Positioning the stack is the caller's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast003 items={items} max={3} />"
+            },
+            "controls": {
+              "max": {
+                "label": "Show at once"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-004",
+      "type": "registry:component",
+      "title": "Lifecycle Toast",
+      "description": "Одно уведомление на всю операцию: карточка не пересоздаётся, а меняет значок и строку с «собираем» на «готово» или «не вышло».",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-004/toast-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-004-*. Серверный: хуков нет, стадия приходит пропом state. Кольцо загрузки — конический градиент, вырезанный radial-маской в тонкий обод, значок результата лежит тем же слоем и переключается правилами [data-state]. Полоса-«пульс» показывает неопределённую длительность и скрывается, как только стадия перестаёт быть loading. Роль меняется вместе со стадией: ошибка объявляется как alert, остальное как status.",
+      "meta": {
+        "tags": [
+          "toast",
+          "loading",
+          "status",
+          "async"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast004",
+          "usage": "<Toast004\n  state=\"success\"\n  loadingText=\"Собираем архив проекта\"\n  successText=\"Архив готов к скачиванию\"\n  hint=\"Ссылка живёт сутки.\"\n/>",
+          "summary": "Уведомление операции с тремя стадиями в одной карточке: загрузка, успех, ошибка. Ноль зависимостей, один файл, клиентского JS нет — стадию передаёт родитель.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-004-* и не подменять её токенами вашей темы",
+            "одну карточку на всю операцию: два отдельных уведомления заставляют читать одно и то же дважды",
+            "переключение роли на alert при ошибке — успех не должен перебивать чтение экрана",
+            "маску кольца загрузки: без radial-маски конический градиент превращается в закрашенный круг",
+            "скрытие полосы-пульса вне стадии loading — иначе готовая операция выглядит незавершённой",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "стадию через state — loading, success или error",
+            "надписи стадий через loadingText, successText и errorText",
+            "вторую строку через hint или убрать её пустой строкой",
+            "цвет стадии через переменную --vibeui-toast-004-tone"
+          ],
+          "notes": [
+            "Компонент не считает время сам: стадию переключает родитель после ответа сервера.",
+            "Полоса-пульс не показывает процент — для определённого прогресса нужен другой вариант.",
+            "При reduced-motion кольцо останавливается, а полоса растягивается на всю ширину: движение убрано, смысл остался.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "state",
+            "label": "Стадия",
+            "type": "select",
+            "default": "loading",
+            "options": [
+              "loading",
+              "success",
+              "error"
+            ]
+          },
+          {
+            "prop": "successText",
+            "label": "Текст успеха",
+            "type": "text",
+            "default": "Архив готов к скачиванию",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "One toast for the whole operation: the card is not recreated, it swaps the icon and the line from «packing» to «done» or «failed».",
+            "ai": {
+              "summary": "An operation toast with three stages inside a single card: loading, success, error. Zero dependencies, one file, no client JS — the parent supplies the stage.",
+              "preserve": [
+                "the local --vibeui-toast-004-* palette — do not swap it for your theme tokens",
+                "one card for the whole operation: two separate toasts make people read the same thing twice",
+                "the role switching to alert on failure — success must not interrupt a screen reader",
+                "the mask on the spinner ring: without the radial mask the conic gradient becomes a filled disc",
+                "hiding the pulse bar outside the loading stage — otherwise a finished operation still looks busy",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the stage through state — loading, success or error",
+                "the stage captions through loadingText, successText and errorText",
+                "the second line through hint, or drop it with an empty string",
+                "the stage colour through the --vibeui-toast-004-tone variable"
+              ],
+              "notes": [
+                "The component does not time anything itself: the parent switches the stage once the server answers.",
+                "The pulse bar shows no percentage — determinate progress needs a different variant.",
+                "Under reduced motion the ring stops and the bar spans the full width: the motion is gone, the meaning stays.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast004\n  state=\"success\"\n  loadingText=\"Packing the project archive\"\n  successText=\"The archive is ready to download\"\n  hint=\"The link lives for a day.\"\n/>"
+            },
+            "controls": {
+              "state": {
+                "label": "Stage"
+              },
+              "successText": {
+                "label": "Success text",
+                "default": "The archive is ready"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-005",
+      "type": "registry:component",
+      "title": "Retry Toast",
+      "description": "Уведомление об ошибке, из которого есть выход: действие «Повторить» на первом месте, технические подробности спрятаны под раскрытием.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-005/toast-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-005-*. Серверный: состояние раскрытия держит нативный <details>, обработчик не нужен. Маркер summary снят через list-style:none и ::-webkit-details-marker, поэтому строка выглядит ссылкой, но остаётся кнопкой раскрытия. Карточка объявлена role=\"alert\": ошибка читается сразу. Левая грань окрашена тоном ошибки — цвет дублирован значком и словами, не только заливкой.",
+      "meta": {
+        "tags": [
+          "toast",
+          "error",
+          "retry",
+          "details"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast005",
+          "usage": "<Toast005\n  title=\"Не удалось сохранить черновик\"\n  message=\"Соединение оборвалось. Текст остался в браузере.\"\n  retryLabel=\"Повторить\"\n  details=\"PUT /api/drafts/8412 — 504\"\n/>",
+          "summary": "Уведомление об ошибке с повтором и техническими подробностями под нативным <details>. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-005-* и не подменять её токенами вашей темы",
+            "порядок «сначала выход, потом подробности»: кнопка повтора обязана стоять первой",
+            "role=\"alert\" на карточке — ошибка должна дойти до скринридера без действий пользователя",
+            "нативный <details> вместо своего состояния: раскрытие работает и без JS",
+            "снятый маркер summary с сохранённым фокус-стилем — иначе кнопка раскрытия теряется",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "заголовок через title и объяснение через message",
+            "подпись действия через retryLabel",
+            "содержимое раскрытия через details — код ответа, адрес, время",
+            "тон ошибки через переменную --vibeui-toast-005-tone"
+          ],
+          "notes": [
+            "Текст message адресован человеку: стек вызовов кладите в details, а не в первую строку.",
+            "Пустая строка в details убирает раскрытие целиком, кнопка повтора остаётся.",
+            "Внутри <pre> перенос включён: длинный адрес не растянет карточку по горизонтали.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Не удалось сохранить черновик",
+            "maxLength": 40
+          },
+          {
+            "prop": "retryLabel",
+            "label": "Повтор",
+            "type": "text",
+            "default": "Повторить",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An error toast with a way out: the retry action comes first and the technical detail hides behind a disclosure.",
+            "ai": {
+              "summary": "An error toast with a retry action and technical detail inside a native <details>. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-toast-005-* palette — do not swap it for your theme tokens",
+                "the order «way out first, detail second»: the retry button must come first",
+                "role=\"alert\" on the card — the failure has to reach a screen reader without any action",
+                "the native <details> instead of your own state: the disclosure works without JS",
+                "the stripped summary marker with its focus ring kept — otherwise the disclosure control disappears",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the heading through title and the explanation through message",
+                "the action caption through retryLabel",
+                "the disclosure content through details — status code, URL, timestamp",
+                "the error tone through the --vibeui-toast-005-tone variable"
+              ],
+              "notes": [
+                "The message text is written for a person: put the stack trace in details, not in the first line.",
+                "An empty details string removes the disclosure entirely and keeps the retry button.",
+                "Wrapping is on inside the <pre>: a long URL will not stretch the card sideways.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast005\n  title=\"Could not save the draft\"\n  message=\"The connection dropped. Your text is still in the browser.\"\n  retryLabel=\"Retry\"\n  details=\"PUT /api/drafts/8412 — 504\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Could not save the draft"
+              },
+              "retryLabel": {
+                "label": "Retry",
+                "default": "Retry"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-006",
+      "type": "registry:component",
+      "title": "Progress Toast",
+      "description": "Уведомление длинной операции с честным прогрессом: процент, полоса заполнения, счётчик файлов и отмена рядом.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-006/toast-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-006-*. Серверный: значение приходит пропом value и кладётся в переменную --vibeui-toast-006-value, ширину полосы считает calc — при перерисовке меняется одно число, а не разметка. Полоса размечена role=\"progressbar\" с aria-valuenow, поэтому прогресс читается вслух. Значение зажимается в диапазон 0–100 и округляется, чтобы дробь не разъезжала в табличных цифрах.",
+      "meta": {
+        "tags": [
+          "toast",
+          "progress",
+          "upload",
+          "cancel"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast006",
+          "usage": "<Toast006\n  title=\"Загружаем фотографии\"\n  value={62}\n  countLabel=\"15 из 24 файлов\"\n  cancelLabel=\"Отменить\"\n/>",
+          "summary": "Уведомление длинной операции: процент, полоса на CSS-переменной, счётчик и отмена. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-006-* и не подменять её токенами вашей темы",
+            "полосу на переменной: пересчёт ширины через calc дешевле перерисовки разметки",
+            "role=\"progressbar\" вместе с aria-valuenow — без них прогресс не читается вслух",
+            "счётчик рядом с процентом: 62% без «15 из 24» не говорят, сколько ещё ждать",
+            "кнопку отмены: длинную операцию обязательно должно быть чем остановить",
+            "табличные цифры у процента и счётчика — иначе числа прыгают при каждом обновлении"
+          ],
+          "adapt": [
+            "заголовок через title и значение прогресса через value",
+            "подпись счётчика через countLabel",
+            "подпись отмены через cancelLabel или убрать её пустой строкой",
+            "цвет заполнения через переменную --vibeui-toast-006-tone"
+          ],
+          "notes": [
+            "Значение зажимается в 0–100: передать 120 безопасно, полоса не вылезет.",
+            "Компонент ничего не загружает сам — value обновляет владелец операции.",
+            "Отмена только вызывает onCancel: остановить запрос должен вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "value",
+            "label": "Прогресс",
+            "type": "number",
+            "default": 62,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "countLabel",
+            "label": "Счётчик",
+            "type": "text",
+            "default": "15 из 24 файлов",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A long-operation toast with honest progress: a percentage, a fill bar, a file counter and cancel right beside it.",
+            "ai": {
+              "summary": "A long-operation toast: percentage, a bar driven by a CSS variable, a counter and cancel. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-toast-006-* palette — do not swap it for your theme tokens",
+                "the bar driven by a variable: recomputing width in calc is cheaper than re-rendering markup",
+                "role=\"progressbar\" together with aria-valuenow — without them progress is never announced",
+                "the counter beside the percentage: 62% without «15 of 24» never says how long is left",
+                "the cancel button: a long operation must always be stoppable",
+                "tabular figures on the percentage and counter — otherwise the numbers jump on every update"
+              ],
+              "adapt": [
+                "the heading through title and the progress through value",
+                "the counter caption through countLabel",
+                "the cancel caption through cancelLabel, or drop it with an empty string",
+                "the fill colour through the --vibeui-toast-006-tone variable"
+              ],
+              "notes": [
+                "The value is clamped to 0–100: passing 120 is safe, the bar will not overflow.",
+                "The component uploads nothing itself — the owner of the operation updates value.",
+                "Cancel only calls onCancel: aborting the request is the caller's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast006\n  title=\"Uploading photos\"\n  value={62}\n  countLabel=\"15 of 24 files\"\n  cancelLabel=\"Cancel\"\n/>"
+            },
+            "controls": {
+              "value": {
+                "label": "Progress"
+              },
+              "countLabel": {
+                "label": "Counter",
+                "default": "15 of 24 files"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-007",
+      "type": "registry:component",
+      "title": "Rich Toast",
+      "description": "Уведомление с описанием: две строки текста под заголовком и действия отдельной строкой, чтобы они не сжимали заголовок на узком экране.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-007/toast-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-007-*. Серверный: хуков нет. Раскладка — сетка из трёх колонок: значок занимает три ряда, заголовок и крестик стоят в первом, описание и действия растянуты на две колонки. Описание обрезано на двух строках через -webkit-line-clamp: третья строка превращает уведомление в письмо. Действия вынесены вниз, поэтому на узком экране заголовок не сжимается до одного слова.",
+      "meta": {
+        "tags": [
+          "toast",
+          "actions",
+          "invite",
+          "clamp"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast007",
+          "usage": "<Toast007\n  title=\"Приглашение в команду\"\n  description=\"Мария зовёт вас в проект «Каталог».\"\n  primaryLabel=\"Принять\"\n  secondaryLabel=\"Позже\"\n/>",
+          "summary": "Уведомление с двухстрочным описанием и парой действий под текстом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-007-* и не подменять её токенами вашей темы",
+            "обрезку описания на двух строках: третья превращает уведомление в письмо",
+            "действия отдельной строкой — в одну линию с заголовком они сжимают его до слова",
+            "разный вес главного и второстепенного действия: две одинаковые кнопки заставляют выбирать дважды",
+            "видимую подпись у крестика через aria-label — иконка без имени бесполезна для скринридера",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "заголовок через title и описание через description",
+            "подписи кнопок через primaryLabel и secondaryLabel",
+            "значок в левом квадрате — символ или свою иконку",
+            "акцент через переменную --vibeui-toast-007-tone"
+          ],
+          "notes": [
+            "Обрезка на двух строках зависит от -webkit-line-clamp: в очень старых движках текст просто не обрежется.",
+            "Пустой secondaryLabel убирает вторую кнопку, раскладка не ломается.",
+            "Крестик не закрывает карточку сам — обработчик вешает вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "primaryLabel",
+            "label": "Главное действие",
+            "type": "text",
+            "default": "Принять",
+            "maxLength": 20
+          },
+          {
+            "prop": "secondaryLabel",
+            "label": "Второе действие",
+            "type": "text",
+            "default": "Позже",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A toast with an explanation: two lines of text under the heading and the actions on their own row so they never squeeze the title on a narrow screen.",
+            "ai": {
+              "summary": "A toast with a two-line description and a pair of actions under the text. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-toast-007-* palette — do not swap it for your theme tokens",
+                "the two-line clamp on the description: a third line turns the toast into a letter",
+                "the actions on their own row — inline with the heading they squeeze it down to one word",
+                "the different weight of the primary and secondary action: two identical buttons make people choose twice",
+                "the aria-label on the close button — an unnamed icon is useless to a screen reader",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the heading through title and the copy through description",
+                "the button captions through primaryLabel and secondaryLabel",
+                "the glyph in the left square — a character or your own icon",
+                "the accent through the --vibeui-toast-007-tone variable"
+              ],
+              "notes": [
+                "The two-line clamp relies on -webkit-line-clamp: in very old engines the text simply will not be cut.",
+                "An empty secondaryLabel removes the second button without breaking the layout.",
+                "The close button does not dismiss the card itself — the caller attaches the handler.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast007\n  title=\"Team invitation\"\n  description=\"Maria invites you to the «Catalog» project.\"\n  primaryLabel=\"Accept\"\n  secondaryLabel=\"Later\"\n/>"
+            },
+            "controls": {
+              "primaryLabel": {
+                "label": "Primary action",
+                "default": "Accept"
+              },
+              "secondaryLabel": {
+                "label": "Secondary action",
+                "default": "Later"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-008",
+      "type": "registry:component",
+      "title": "Toast Region",
+      "description": "Не одно уведомление, а место для них: угол задаётся одним пропом, все четыре варианта собираются из переменной отступа и двух переключателей выравнивания.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-008/toast-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-008-*. Серверный: хуков нет. Угол разобран селекторами [data-corner^=\"top\"] и [data-corner$=\"right\"], поэтому четыре варианта дают четыре короткие строки CSS вместо четырёх наборов правил. Для нижних углов порядок карточек переворачивается column-reverse: свежее сообщение всегда ближе к краю. Сцена с клетчатым фоном изображает окно приложения — иначе «угол экрана» показать нечем. Стопка объявлена role=\"log\" с aria-live=\"polite\".",
+      "meta": {
+        "tags": [
+          "toast",
+          "position",
+          "region",
+          "stack"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast008",
+          "usage": "<Toast008\n  corner=\"top-right\"\n  offset=\"1.5rem\"\n  messages={[\"Черновик сохранён\", \"Файл выгружен\"]}\n/>",
+          "summary": "Область уведомлений: угол и отступ задаются пропами и раскладываются четырьмя строками CSS. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-008-* и не подменять её токенами вашей темы",
+            "разбор угла через селекторы начала и конца строки: иначе под каждый угол придётся писать свой набор правил",
+            "переворот порядка column-reverse в нижних углах — свежее сообщение обязано быть у края",
+            "role=\"log\" с aria-live=\"polite\" на стопке: поток сообщений читается именно так",
+            "ограничение ширины стопки формулой с отступом — на телефоне карточка иначе упирается в края",
+            "собственную светлую подложку сцены: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "угол через corner — top-left, top-right, bottom-left или bottom-right",
+            "расстояние до краёв через offset",
+            "содержимое стопки через messages",
+            "цвет точки через переменную --vibeui-toast-008-tone"
+          ],
+          "notes": [
+            "Сцена нужна только для показа: в приложении регион ставят на position:fixed и сцену выбрасывают.",
+            "Больше трёх карточек подряд никто не читает — ограничивайте длину messages на стороне вызова.",
+            "Задержки появления заданы через nth-child и рассчитаны на три карточки; для длинного списка их лучше убрать.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "corner",
+            "label": "Угол",
+            "type": "select",
+            "default": "bottom-right",
+            "options": [
+              "top-left",
+              "top-right",
+              "bottom-left",
+              "bottom-right"
+            ]
+          },
+          {
+            "prop": "offset",
+            "label": "Отступ",
+            "type": "text",
+            "default": "1rem",
+            "maxLength": 10
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Not a single toast but a place for them: the corner is one prop, and all four variants come from an offset variable plus two alignment switches.",
+            "ai": {
+              "summary": "A toast region: the corner and the offset are props, laid out by four lines of CSS. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-toast-008-* palette — do not swap it for your theme tokens",
+                "parsing the corner with prefix and suffix attribute selectors: otherwise every corner needs its own rule set",
+                "the column-reverse order in the bottom corners — the newest message must sit at the edge",
+                "role=\"log\" with aria-live=\"polite\" on the stack: that is how a stream of messages is read",
+                "the width formula that subtracts the offset — on a phone the card would otherwise hit both edges",
+                "the stage's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the corner through corner — top-left, top-right, bottom-left or bottom-right",
+                "the distance to the edges through offset",
+                "the stack content through messages",
+                "the dot colour through the --vibeui-toast-008-tone variable"
+              ],
+              "notes": [
+                "The stage exists only for the demo: in an app the region goes on position:fixed and the stage is dropped.",
+                "Nobody reads more than three cards in a row — cap the length of messages at the call site.",
+                "The entry delays use nth-child and assume three cards; for a long list they are better removed.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast008\n  corner=\"top-right\"\n  offset=\"1.5rem\"\n  messages={[\"Draft saved\", \"File uploaded\"]}\n/>"
+            },
+            "controls": {
+              "corner": {
+                "label": "Corner"
+              },
+              "offset": {
+                "label": "Offset",
+                "default": "1rem"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-009",
+      "type": "registry:component",
+      "title": "Message Toast",
+      "description": "Уведомление о личном сообщении, а не о системном событии: инициалы с оттенком из имени, текст в две строки и поле быстрого ответа.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-009/toast-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-009-*. Серверный: хуков нет. Оттенок кружка выводится из имени хешем FNV-1a и кладётся в --vibeui-toast-009-hue, поэтому у каждого собеседника свой цвет без словаря соответствий. Поле ответа — это кнопка, стилизованная под ввод: настоящая форма в уведомлении требует фокус-ловушки, а уведомление живёт несколько секунд. Текст обрезан на двух строках.",
+      "meta": {
+        "tags": [
+          "toast",
+          "message",
+          "avatar",
+          "reply"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast009",
+          "usage": "<Toast009\n  name=\"Артём Северов\"\n  message=\"Посмотри последний макет каталога\"\n  time=\"18:04\"\n  replyLabel=\"Ответить…\"\n/>",
+          "summary": "Уведомление о личном сообщении: инициалы с цветом из имени, текст и кнопка быстрого ответа. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-009-* и не подменять её токенами вашей темы",
+            "вывод оттенка из имени: словарь цветов придётся вести руками и он рассинхронизируется",
+            "поле ответа кнопкой, а не input: настоящая форма в короткоживущем уведомлении требует фокус-ловушки",
+            "имя собеседника в доступной подписи кнопки — «Ответить» без имени в потоке бесполезно",
+            "обрезку сообщения на двух строках: длинное письмо читают в переписке, а не в уведомлении",
+            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+          ],
+          "adapt": [
+            "имя собеседника через name и текст через message",
+            "отметку времени через time",
+            "подпись быстрого ответа через replyLabel",
+            "скругление и подложку через переменные --vibeui-toast-009-radius и --vibeui-toast-009-bg"
+          ],
+          "notes": [
+            "Инициалы берутся из первых двух слов имени: односложный ник даст одну букву.",
+            "Оттенок стабилен для одного имени, но два разных имени могут совпасть — это допустимо.",
+            "Нажатие на поле ответа только вызывает onReply: открыть переписку должен вызывающий код.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя",
+            "type": "text",
+            "default": "Артём Северов",
+            "maxLength": 30
+          },
+          {
+            "prop": "replyLabel",
+            "label": "Ответ",
+            "type": "text",
+            "default": "Ответить…",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A toast about a personal message rather than a system event: initials tinted from the name, two lines of text and a quick reply field.",
+            "ai": {
+              "summary": "A direct-message toast: initials coloured from the name, the text and a quick reply button. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-toast-009-* palette — do not swap it for your theme tokens",
+                "deriving the hue from the name: a colour dictionary has to be maintained by hand and drifts",
+                "the reply field as a button, not an input: a real form inside a short-lived toast needs a focus trap",
+                "the sender name in the button label — a bare \"Reply\" is useless in a stream",
+                "the two-line clamp on the message: a long letter is read in the thread, not in a toast",
+                "the card's own light surface: without it the dark text disappears on a dark background"
+              ],
+              "adapt": [
+                "the sender through name and the copy through message",
+                "the timestamp through time",
+                "the quick reply caption through replyLabel",
+                "the radius and surface through --vibeui-toast-009-radius and --vibeui-toast-009-bg"
+              ],
+              "notes": [
+                "Initials come from the first two words of the name: a single-word handle gives one letter.",
+                "The hue is stable for one name, but two different names may collide — that is acceptable.",
+                "Tapping the reply field only calls onReply: opening the thread is the caller's job.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast009\n  name=\"Artem Severov\"\n  message=\"Take a look at the latest catalog mockup\"\n  time=\"18:04\"\n  replyLabel=\"Reply…\"\n/>"
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Artem Severov"
+              },
+              "replyLabel": {
+                "label": "Reply",
+                "default": "Reply…"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-010",
+      "type": "registry:component",
+      "title": "Pill Toast",
+      "description": "Подтверждение размером в строку: тёмная пилюля со значком, без заголовка, кнопок и крестика — реплика, а не сообщение.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-010/toast-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-010-*. Серверный: хуков нет. Форма и вес отличают пилюлю от карточек: скругление 9999px, одна строка с многоточием, ширина по содержимому. Появление — короткий подъём с масштабом; правило prefers-reduced-motion выключает его и для самого блока, а не только для потомков. Тон меняет только цвет значка: заливка остаётся тёмной, чтобы пилюля не спорила с интерфейсом.",
+      "meta": {
+        "tags": [
+          "toast",
+          "snackbar",
+          "compact",
+          "confirmation"
+        ],
+        "ai": {
+          "export": "Toast010",
+          "usage": "<Toast010 message=\"Ссылка скопирована\" tone=\"success\" glyph=\"✓\" />",
+          "summary": "Компактная пилюля-подтверждение в одну строку: значок и текст, ничего больше. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-toast-010-* и не подменять её токенами вашей темы",
+            "одну строку с многоточием: пилюля рассчитана на реплику, а не на объяснение",
+            "отсутствие кнопок и крестика — действие в пилюле некуда поставить, она уходит сама",
+            "role=\"status\" с aria-live=\"polite\": подтверждение не должно перебивать чтение",
+            "выключение анимации у самого блока в prefers-reduced-motion, а не только у потомков",
+            "тёмную заливку независимо от тона: цветная пилюля спорит с интерфейсом под ней"
+          ],
+          "adapt": [
+            "текст через message и тон через tone",
+            "значок через glyph или убрать его пустой строкой",
+            "предельную ширину через max-width",
+            "цвет значка через переменную --vibeui-toast-010-tone"
+          ],
+          "notes": [
+            "Компонент не исчезает сам: таймер держит вызывающий код.",
+            "Текст длиннее строки обрезается многоточием — для двух строк возьмите карточку, а не пилюлю.",
+            "Значок нарисован символом: своя иконка вставляется вместо содержимого glyph.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "message",
+            "label": "Сообщение",
+            "type": "text",
+            "default": "Ссылка скопирована",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "success",
+            "options": [
+              "neutral",
+              "success",
+              "warning"
+            ]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A confirmation the size of one line: a dark pill with a glyph, no heading, no buttons, no close — a remark rather than a message.",
+            "ai": {
+              "summary": "A compact one-line confirmation pill: a glyph and text, nothing else. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-toast-010-* palette — do not swap it for your theme tokens",
+                "the single ellipsised line: the pill is built for a remark, not an explanation",
+                "the absence of buttons and a close control — there is nowhere to put an action, the pill leaves on its own",
+                "role=\"status\" with aria-live=\"polite\": a confirmation must not interrupt reading",
+                "disabling the animation on the block itself under prefers-reduced-motion, not only on its children",
+                "the dark fill regardless of tone: a coloured pill fights the interface underneath it"
+              ],
+              "adapt": [
+                "the copy through message and the tone through tone",
+                "the glyph through glyph, or drop it with an empty string",
+                "the maximum width through max-width",
+                "the glyph colour through the --vibeui-toast-010-tone variable"
+              ],
+              "notes": [
+                "The component does not disappear by itself: the caller owns the timer.",
+                "Text longer than the line is ellipsised — for two lines use a card, not a pill.",
+                "The glyph is a character: your own icon replaces the content of glyph.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Toast010 message=\"Link copied\" tone=\"success\" glyph=\"✓\" />"
+            },
+            "controls": {
+              "message": {
+                "label": "Message",
+                "default": "Link copied"
+              },
+              "tone": {
+                "label": "Tone"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-011",
+      "type": "registry:component",
+      "title": "Deck Toast",
+      "description": "Стек уведомлений колодой карт: несколько карточек сдвинуты друг под другом, верхняя читается целиком, а срез снизу показывает, что очередь не закончилась.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-011/toast-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-011-*. Каждая карточка — абсолютно спозиционированный элемент, чей сдвиг, масштаб и прозрачность считает calc() от переменной --vibeui-toast-011-index, поэтому колода из любого числа карточек не требует отдельного CSS-правила на каждый индекс. Верхняя карточка — единственная в таб-порядке и в дереве доступности: у карточек под ней aria-hidden=\"true\" и tabIndex={-1}, а указатель выключен через data-behind. Клик по крестику убирает верхнюю карточку, и колода сдвигается — состояние живёт в useState, компонент клиентский.",
+      "meta": {
+        "tags": [
+          "toast",
+          "stack",
+          "deck",
+          "notifications"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast011",
+          "usage": "<Toast011\n  items={[\n    { id: \"1\", title: \"Резервная копия проекта создана\", tone: \"success\" },\n    { id: \"2\", title: \"Новый комментарий к макету каталога\" },\n  ]}\n  onDismiss={handleDismiss}\n/>",
+          "summary": "Колода уведомлений: карточки сдвинуты друг под другом по индексу, верхняя читается целиком и закрывается кнопкой, следующие видны срезом. Ноль зависимостей, один файл, собственная палитра.",
+          "preserve": [
+            "сдвиг, масштаб и прозрачность карточки через переменную --vibeui-toast-011-index в calc(), а не отдельные CSS-классы на каждый индекс",
+            "aria-hidden и tabIndex={-1} у карточек под верхней — скринридер и Tab должны видеть только то, что видно глазом",
+            "кнопку закрытия с aria-label, включающим текст карточки",
+            "локальную палитру --vibeui-toast-011-* и не подменять её токенами вашей темы"
+          ],
+          "adapt": [
+            "список через items с полями id, title и необязательным tone",
+            "подписи через closeLabel и emptyLabel",
+            "обработчик через onDismiss"
+          ],
+          "notes": [
+            "Показывать имеет смысл 3–4 карточки: дальше срез становится незаметным.",
+            "Колода не восстанавливается сама — новые уведомления добавляет вызывающий код через items."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "closeLabel",
+            "label": "Подпись закрытия",
+            "type": "text",
+            "default": "Закрыть",
+            "maxLength": 20
+          },
+          {
+            "prop": "emptyLabel",
+            "label": "Пустое состояние",
+            "type": "text",
+            "default": "Уведомлений больше нет",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A card-deck notification stack: several cards shifted one under another, the top one reads in full, and the sliver beneath shows the queue isn't over.",
+            "ai": {
+              "summary": "A notification deck: cards are shifted one under another by index, the top one reads in full and closes with a button, the rest show as a sliver. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the card's shift, scale and opacity through the --vibeui-toast-011-index variable inside calc(), not separate CSS classes per index",
+                "aria-hidden and tabIndex={-1} on the cards behind the top one — a screen reader and Tab should only reach what the eye sees",
+                "the close button with an aria-label that includes the card's text",
+                "the local --vibeui-toast-011-* palette — do not swap it for your theme tokens"
+              ],
+              "adapt": [
+                "the list through items, with id, title and an optional tone",
+                "the captions through closeLabel and emptyLabel",
+                "the handler through onDismiss"
+              ],
+              "notes": [
+                "Showing 3–4 cards makes sense: beyond that the sliver stops being visible.",
+                "The deck does not refill itself — the caller adds new notifications through items."
+              ],
+              "usage": "<Toast011\n  items={[\n    { id: \"1\", title: \"Project backup created\", tone: \"success\" },\n    { id: \"2\", title: \"New comment on the catalog mockup\" },\n  ]}\n  onDismiss={handleDismiss}\n/>"
+            },
+            "controls": {
+              "closeLabel": {
+                "label": "Close label",
+                "default": "Close"
+              },
+              "emptyLabel": {
+                "label": "Empty state",
+                "default": "No notifications left"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-012",
+      "type": "registry:component",
+      "title": "Auto Progress Toast",
+      "description": "Уведомление длинной операции, которое само ведёт загрузку и само переключается на «готово»: процент считает внутренний таймер, а не пропс от родителя.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-012/toast-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-012-*. В отличие от карточки с внешним value, процент считает внутренний таймер: setInterval пересчитывает прошедшее время относительно duration и кладёт результат в переменную --vibeui-toast-012-value, поэтому полосу двигает calc(), а не пересборка разметки. По достижении 100% карточка не пересоздаётся, а переключается на состояние «готово» — значок и заголовок меняются на месте. Кнопка «Отменить» останавливает таймер и переводит карточку в состояние «отменено»; таймер чистится в useEffect при размонтировании и смене фазы.",
+      "meta": {
+        "tags": [
+          "toast",
+          "progress",
+          "async",
+          "completion"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast012",
+          "usage": "<Toast012\n  title=\"Экспортируем видео\"\n  doneTitle=\"Видео готово к скачиванию\"\n  duration={4000}\n  onDone={handleDone}\n/>",
+          "summary": "Уведомление операции, которое само считает прогресс и само переключается на готово: процент и полоса на CSS-переменной, отмена во время загрузки, значок успеха по завершении. Ноль зависимостей, один файл.",
+          "preserve": [
+            "полосу прогресса на переменной --vibeui-toast-012-value — calc() дешевле пересборки разметки при каждом тике",
+            "role=\"progressbar\" вместе с aria-valuenow, пока идёт загрузка — иначе прогресс не читается вслух",
+            "очистку setInterval в useEffect при размонтировании и при смене фазы",
+            "переход в состояние «готово» внутри той же карточки, а не пересоздание уведомления"
+          ],
+          "adapt": [
+            "заголовки загрузки и результата через title и doneTitle",
+            "длительность условной загрузки через duration в миллисекундах",
+            "подпись отмены через cancelLabel",
+            "обработчики через onDone и onCancel"
+          ],
+          "notes": [
+            "Таймер условный: отсчёт использует Date.now(), поэтому процент не плывёт при подвисании вкладки.",
+            "После отмены карточка не исчезает сама — скрыть её решает вызывающий код."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "duration",
+            "label": "Длительность, мс",
+            "type": "number",
+            "default": 4000,
+            "min": 1000,
+            "max": 10000
+          },
+          {
+            "prop": "cancelLabel",
+            "label": "Подпись отмены",
+            "type": "text",
+            "default": "Отменить",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A long-running-task toast that drives its own upload and switches itself to done: an internal timer computes the percentage, not a prop from the parent.",
+            "ai": {
+              "summary": "An operation toast that counts its own progress and switches itself to done: percentage and bar on a CSS variable, cancel while loading, a success mark on completion. Zero dependencies, one file.",
+              "preserve": [
+                "the progress bar on the --vibeui-toast-012-value variable — calc() is cheaper than re-rendering markup on every tick",
+                "role=\"progressbar\" together with aria-valuenow while loading — otherwise progress is never announced",
+                "clearing setInterval in useEffect on unmount and on phase change",
+                "the switch to the “done” state inside the same card, instead of recreating the toast"
+              ],
+              "adapt": [
+                "the loading and result headings through title and doneTitle",
+                "the simulated loading length through duration in milliseconds",
+                "the cancel caption through cancelLabel",
+                "the handlers through onDone and onCancel"
+              ],
+              "notes": [
+                "The timer is simulated: it uses Date.now(), so the percentage doesn't drift if the tab is throttled.",
+                "The card doesn't hide itself after cancelling — the caller decides whether to dismiss it."
+              ],
+              "usage": "<Toast012\n  title=\"Exporting video\"\n  doneTitle=\"Video ready to download\"\n  duration={4000}\n  onDone={handleDone}\n/>"
+            },
+            "controls": {
+              "duration": {
+                "label": "Duration, ms"
+              },
+              "cancelLabel": {
+                "label": "Cancel label",
+                "default": "Cancel"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-013",
+      "type": "registry:component",
+      "title": "Return Toast",
+      "description": "Пачечная отмена с кольцевым таймером вместо полосы: в центре кольца считаются секунды, а кнопка «Вернуть» возвращает сразу несколько объектов одним действием.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-013/toast-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-013-*. Таймер — conic-gradient, доля круга считается из переменной --vibeui-toast-013-percent, а число секунд в центре кольца дублирует то же значение текстом, поэтому отсчёт читается и глазами, и вслух через aria-live. Наведение и фокус ставят таймер на паузу через ref, не через ререндер. После нажатия «Вернуть» кольцо превращается в галочку, а кнопка исчезает — состояние держит useState, компонент клиентский.",
+      "meta": {
+        "tags": [
+          "toast",
+          "undo",
+          "batch",
+          "timer"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast013",
+          "usage": "<Toast013\n  message=\"5 писем перемещены в архив\"\n  seconds={6}\n  onReturn={handleReturn}\n/>",
+          "summary": "Пачечная отмена с кольцевым таймером: секунды считаются в центре кольца, а не на линии-полосе, наведение ставит отсчёт на паузу, кнопка «Вернуть» возвращает объекты одним действием. Ноль зависимостей, один файл.",
+          "preserve": [
+            "кольцо на conic-gradient с переменной --vibeui-toast-013-percent — доля круга и число в центре считаются от одного состояния",
+            "паузу по наведению и фокусу через ref, а не через ререндер на каждый тик",
+            "переход кольца в галочку после «Вернуть» вместо исчезновения карточки",
+            "локальную палитру --vibeui-toast-013-* и не подменять её токенами вашей темы"
+          ],
+          "adapt": [
+            "текст действия через message",
+            "подпись кнопки через returnLabel",
+            "время на отмену через seconds",
+            "обработчики через onReturn и onExpire"
+          ],
+          "notes": [
+            "onExpire вызывается один раз, когда время истекает без нажатия «Вернуть».",
+            "Компонент не восстанавливает данные сам — onReturn лишь сообщает о решении пользователя."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "seconds",
+            "label": "Секунд на отмену",
+            "type": "number",
+            "default": 6,
+            "min": 3,
+            "max": 20
+          },
+          {
+            "prop": "returnLabel",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Вернуть",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A batch undo with a ring timer instead of a bar: seconds count down inside the ring, and the “Restore” button brings several items back in one action.",
+            "ai": {
+              "summary": "A batch undo with a ring timer: seconds count in the center of the ring rather than on a bar, hover pauses the countdown, and a “Restore” button brings items back in one action. Zero dependencies, one file.",
+              "preserve": [
+                "the conic-gradient ring driven by the --vibeui-toast-013-percent variable — the ring's fraction and the center number come from one piece of state",
+                "pausing on hover and focus through a ref, not a re-render on every tick",
+                "the ring turning into a checkmark after “Restore” instead of the card disappearing",
+                "the local --vibeui-toast-013-* palette — do not swap it for your theme tokens"
+              ],
+              "adapt": [
+                "the action text through message",
+                "the button caption through returnLabel",
+                "the time to undo through seconds",
+                "the handlers through onReturn and onExpire"
+              ],
+              "notes": [
+                "onExpire fires once, when time runs out without pressing “Restore”.",
+                "The component doesn't restore the data itself — onReturn only reports the user's decision."
+              ],
+              "usage": "<Toast013\n  message=\"5 emails moved to archive\"\n  seconds={6}\n  onReturn={handleReturn}\n/>"
+            },
+            "controls": {
+              "seconds": {
+                "label": "Seconds to undo"
+              },
+              "returnLabel": {
+                "label": "Button label",
+                "default": "Restore"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-014",
+      "type": "registry:component",
+      "title": "Corner Picker Toast",
+      "description": "Интерактивный выбор угла появления: переключатель меняет позицию сцены, а карточка каждый раз въезжает со своей стороны — с левого края слева, с правого справа.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-014/toast-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-014.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-014-*. Угол задаёт две пары CSS-переключателей (top/bottom и left/right), но здесь угол меняет ещё и направление входа: карточка перемонтируется по key={corner}, поэтому анимация въезда переигрывается заново и всегда идёт с той стороны, где стоит карточка. Кнопки-переключатели отмечены aria-pressed, сцена — демонстрационная область с position: relative, а не position: fixed по окну.",
+      "meta": {
+        "tags": [
+          "toast",
+          "position",
+          "corner",
+          "animation"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast014",
+          "usage": "<Toast014\n  defaultCorner=\"top-right\"\n  message=\"Файл выгружен в облако\"\n/>",
+          "summary": "Интерактивный выбор угла: четыре кнопки меняют угол сцены, а карточка въезжает со своей стороны — key={corner} переигрывает анимацию входа при каждом переключении. Ноль зависимостей, один файл.",
+          "preserve": [
+            "key={corner} на карточке — без перемонтирования анимация въезда не переиграется при смене угла",
+            "направленные keyframes: from-left для левых углов, from-right для правых, а не одна общая анимация",
+            "aria-pressed на кнопках переключателя угла",
+            "локальную палитру --vibeui-toast-014-* и не подменять её токенами вашей темы"
+          ],
+          "adapt": [
+            "начальный угол через defaultCorner",
+            "текст карточки через message",
+            "подпись закрытия через closeLabel"
+          ],
+          "notes": [
+            "Угол меняется через переключатель в демо-области; для управления углом снаружи добавьте проп corner и синхронизируйте его с useState.",
+            "Сцена — демонстрационная область с position: relative, а не окно целиком: раскладка не завязана на viewport."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultCorner",
+            "label": "Угол по умолчанию",
+            "type": "select",
+            "default": "bottom-right",
+            "options": [
+              "top-left",
+              "top-right",
+              "bottom-left",
+              "bottom-right"
+            ]
+          },
+          {
+            "prop": "message",
+            "label": "Текст уведомления",
+            "type": "text",
+            "default": "Файл выгружен в облако",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Interactive corner picker: a switcher changes the stage's position, and the card slides in from its own side each time — from the left edge on the left, from the right on the right.",
+            "ai": {
+              "summary": "An interactive corner picker: four buttons change the stage's corner, and the card slides in from its own side — key={corner} replays the entrance animation on every switch. Zero dependencies, one file.",
+              "preserve": [
+                "key={corner} on the card — without remounting, the entrance animation won't replay when the corner changes",
+                "directional keyframes: from-left for the left corners, from-right for the right ones, not one shared animation",
+                "aria-pressed on the corner switch buttons",
+                "the local --vibeui-toast-014-* palette — do not swap it for your theme tokens"
+              ],
+              "adapt": [
+                "the initial corner through defaultCorner",
+                "the card text through message",
+                "the close label through closeLabel"
+              ],
+              "notes": [
+                "The corner changes through the switcher inside the demo area; for an externally controlled corner, add a corner prop and sync it with useState.",
+                "The stage is a demo area with position: relative, not the whole window — the layout isn't tied to the viewport."
+              ],
+              "usage": "<Toast014\n  defaultCorner=\"top-right\"\n  message=\"File uploaded to the cloud\"\n/>"
+            },
+            "controls": {
+              "defaultCorner": {
+                "label": "Default corner"
+              },
+              "message": {
+                "label": "Notification text",
+                "default": "File uploaded to the cloud"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-015",
+      "type": "registry:component",
+      "title": "Reply Toast",
+      "description": "Уведомление о новом личном сообщении: аватар собеседника с провалом на инициалы, имя, текст в одну строку и настоящая кнопка «Ответить» рядом с закрытием.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-015/toast-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-015-*. Клиентский: \"use client\". Аватар — картинка из avatarSrc; если проп пуст или <img> кинул onError, кружок молча переключается на инициалы из первых двух слов name, поэтому вести отдельный словарь заглушек не нужно. Текст сообщения обрезан в одну строку через text-overflow: ellipsis — длинное письмо читают в переписке, а не в уведомлении. Кнопка «Ответить» — обычная кнопка со своим обработчиком, а не поле, стилизованное под ввод.",
+      "meta": {
+        "tags": [
+          "toast",
+          "message",
+          "avatar",
+          "reply"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast015",
+          "usage": "<Toast015\n  name=\"Марина Ковалёва\"\n  message=\"Отправила обновлённый макет каталога\"\n  avatarSrc=\"/avatars/marina.jpg\"\n  onReply={openThread}\n  onClose={dismiss}\n/>",
+          "summary": "Уведомление о новом сообщении: аватар с провалом на инициалы, имя, текст в одну строку и настоящая кнопка «Ответить» рядом с крестиком. Ноль зависимостей, один файл, собственная палитра.",
+          "preserve": [
+            "настоящую кнопку «Ответить», а не поле, стилизованное под ввод: короткоживущему уведомлению не нужна фокус-ловушка формы",
+            "провал аватара на инициалы через onError у <img>, а не проверку URL заранее",
+            "обрезку текста сообщения в одну строку через text-overflow: ellipsis",
+            "aria-label крестика с именем собеседника — «Закрыть» без контекста бесполезно в потоке уведомлений",
+            "локальную палитру --vibeui-toast-015-* и не подменять её токенами вашей темы"
+          ],
+          "adapt": [
+            "имя собеседника через name и текст через message",
+            "аватар через avatarSrc — при пустом или неудачном URL показываются инициалы",
+            "подпись кнопки ответа через replyLabel",
+            "обработчики через onReply и onClose"
+          ],
+          "notes": [
+            "Компонент не открывает переписку сам — onReply лишь сообщает о намерении, экран чата открывает вызывающий код.",
+            "Инициалы берутся из первых двух слов name: односложный ник даст одну букву."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя",
+            "type": "text",
+            "default": "Марина Ковалёва",
+            "maxLength": 30
+          },
+          {
+            "prop": "message",
+            "label": "Сообщение",
+            "type": "text",
+            "default": "Отправила обновлённый макет каталога, посмотри при случае",
+            "maxLength": 90
+          },
+          {
+            "prop": "replyLabel",
+            "label": "Подпись ответа",
+            "type": "text",
+            "default": "Ответить",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A new direct-message toast: the sender's avatar falls back to initials, a name, a single-line message and a real Reply button next to the close control.",
+            "ai": {
+              "summary": "A new-message toast: an avatar that falls back to initials, a name, a single-line message and a real Reply button beside the close cross. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the real Reply button rather than a field styled to look like an input — a short-lived toast doesn't need a form's focus trap",
+                "the avatar falling back to initials through the <img> onError handler, not a URL check ahead of time",
+                "the single-line message clamp through text-overflow: ellipsis",
+                "the aria-label on the close button carrying the sender's name — a bare \"Close\" is useless in a stream of toasts",
+                "the local --vibeui-toast-015-* palette — do not swap it for your theme tokens"
+              ],
+              "adapt": [
+                "the sender through name and the copy through message",
+                "the avatar through avatarSrc — an empty or failing URL falls back to initials",
+                "the reply button caption through replyLabel",
+                "the handlers through onReply and onClose"
+              ],
+              "notes": [
+                "The component doesn't open the thread itself — onReply only reports intent, the caller opens the chat screen.",
+                "Initials come from the first two words of name: a single-word handle gives one letter."
+              ],
+              "usage": "<Toast015\n  name=\"Marina Kovaleva\"\n  message=\"Sent the updated catalog mockup\"\n  avatarSrc=\"/avatars/marina.jpg\"\n  onReply={openThread}\n  onClose={dismiss}\n/>"
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Marina Kovaleva"
+              },
+              "message": {
+                "label": "Message",
+                "default": "Sent the updated catalog mockup, take a look"
+              },
+              "replyLabel": {
+                "label": "Reply caption",
+                "default": "Reply"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-016",
+      "type": "registry:component",
+      "title": "Connection Status Toast",
+      "description": "Сетевой статус в реальном времени: пропажа соединения переходит в попытку переподключения и заканчивается подтверждением, что связь восстановлена.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-016/toast-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-016.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-016-*. Клиентский: \"use client\". Три стадии — offline, reconnecting, online — держатся в useState и переключаются таймерами в useEffect (в реальном проекте их заменяют слушатели online/offline или статус сокета через onStatusChange). Индикатор — три столбика, окрашенные по data-status и мигающие в reconnecting; роль и aria-live тоже переключаются по стадии: offline — role=\"alert\" с aria-live=\"assertive\", остальное — role=\"status\" с aria-live=\"polite\".",
+      "meta": {
+        "tags": [
+          "toast",
+          "network",
+          "offline",
+          "status"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast016",
+          "usage": "<Toast016\n  offlineText=\"Соединение потеряно\"\n  reconnectAfter={1800}\n  onStatusChange={syncBanner}\n/>",
+          "summary": "Сетевой статус из трёх кадров: пропало соединение, идёт попытка восстановить, соединение вернулось. Индикатор из трёх столбиков вместо иконки wifi, роль меняется вместе со стадией. Ноль зависимостей, один файл.",
+          "preserve": [
+            "три кадра одной истории — offline → reconnecting → online, а не одно статичное сообщение об ошибке",
+            "смену role и aria-live по статусу: offline — role=\"alert\" со срочным aria-live=\"assertive\", остальное — role=\"status\"",
+            "индикатор из трёх столбиков вместо иконки wifi: на маленьком размере столбики читаются увереннее значка",
+            "правило prefers-reduced-motion, отключающее мигание столбиков в reconnecting",
+            "локальную палитру --vibeui-toast-016-* и не подменять её токенами вашей темы"
+          ],
+          "adapt": [
+            "тексты через offlineText, reconnectingText и onlineText",
+            "тайминги через reconnectAfter и hideAfter",
+            "обработчик onStatusChange — им синхронизируют компонент с реальным navigator.onLine или статусом сокета"
+          ],
+          "notes": [
+            "Смена стадий в этом файле — демонстрационные таймеры; в проде стадию должен переключать реальный источник сети.",
+            "Компонент не переподключается сам — он только показывает стадию, которую ему передают."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "offlineText",
+            "label": "Текст обрыва",
+            "type": "text",
+            "default": "Соединение потеряно",
+            "maxLength": 40
+          },
+          {
+            "prop": "reconnectAfter",
+            "label": "Задержка стадии, мс",
+            "type": "number",
+            "default": 1800,
+            "min": 500,
+            "max": 5000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A live network status toast: a dropped connection moves into a reconnect attempt and ends with confirmation that the link is back.",
+            "ai": {
+              "summary": "A three-frame network status: connection lost, attempting to reconnect, connection restored. A three-bar indicator instead of a wifi icon, the role switches with the stage. Zero dependencies, one file.",
+              "preserve": [
+                "the three frames of one story — offline → reconnecting → online, not a single static error message",
+                "the role and aria-live switching with the status: offline is role=\"alert\" with urgent aria-live=\"assertive\", the rest is role=\"status\"",
+                "the three-bar indicator instead of a wifi icon: bars read more reliably than a glyph at small sizes",
+                "the prefers-reduced-motion rule that stops the bars pulsing while reconnecting",
+                "the local --vibeui-toast-016-* palette — do not swap it for your theme tokens"
+              ],
+              "adapt": [
+                "the copy through offlineText, reconnectingText and onlineText",
+                "the timings through reconnectAfter and hideAfter",
+                "the onStatusChange handler — use it to sync the component with real navigator.onLine or a socket status"
+              ],
+              "notes": [
+                "The stage changes in this file are demo timers; in production a real network source should drive the stage.",
+                "The component never reconnects on its own — it only displays the stage it's given."
+              ],
+              "usage": "<Toast016\n  offlineText=\"Connection lost\"\n  reconnectAfter={1800}\n  onStatusChange={syncBanner}\n/>"
+            },
+            "controls": {
+              "offlineText": {
+                "label": "Offline text",
+                "default": "Connection lost"
+              },
+              "reconnectAfter": {
+                "label": "Stage delay, ms"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-017",
+      "type": "registry:component",
+      "title": "Destructive Choice Toast",
+      "description": "Подтверждение опасного действия прямо в уведомлении: пара кнопок «Оставить» и «Удалить» разного веса, а после выбора видно, каким он был.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-017/toast-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-017.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-017-*. Клиентский: \"use client\". Решение хранится в useState с тремя значениями — pending, kept, deleted — и при выборе карточка не закрывается сама, а переключает содержимое на строку итога: кнопки заменяются текстом решения. Карточка объявлена role=\"alert\" с aria-live=\"assertive\" на всём протяжении, потому что вопрос об удалении обязан быть услышан сразу.",
+      "meta": {
+        "tags": [
+          "toast",
+          "confirmation",
+          "destructive",
+          "actions"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast017",
+          "usage": "<Toast017\n  title=\"Удалить черновик статьи?\"\n  message=\"Черновик «Осенняя коллекция» будет удалён без возможности восстановления.\"\n  onKeep={handleKeep}\n  onDelete={handleDelete}\n/>",
+          "summary": "Подтверждение с двумя действиями прямо в уведомлении: «Оставить» — нейтральная кнопка, «Удалить» — окрашена тоном опасности. После выбора карточка показывает итог вместо кнопок. Ноль зависимостей, один файл.",
+          "preserve": [
+            "визуальный вес «Удалить» — заливка тона danger, а не такая же нейтральная кнопка, как «Оставить»",
+            "role=\"alert\" с aria-live=\"assertive\": разрушительный вопрос обязан дойти до скринридера без действий пользователя",
+            "показ итога решения после выбора вместо мгновенного исчезновения карточки",
+            "равную ширину обеих кнопок — разный вес даёт цвет, а не размер, иначе кнопки давят на решение геометрией",
+            "локальную палитру --vibeui-toast-017-* и не подменять её токенами вашей темы"
+          ],
+          "adapt": [
+            "заголовок через title и объяснение через message",
+            "подписи кнопок через keepLabel и deleteLabel",
+            "текст итога через keptResult и deletedResult",
+            "обработчики через onKeep и onDelete"
+          ],
+          "notes": [
+            "Компонент не удаляет данные сам — onDelete лишь сообщает о решении, запрос отправляет вызывающий код.",
+            "Для действий, которые можно отменить, больше подходит уведомление с таймером и «Отменить» (toast-002), а не этот выбор."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Удалить черновик статьи?",
+            "maxLength": 50
+          },
+          {
+            "prop": "deleteLabel",
+            "label": "Подпись удаления",
+            "type": "text",
+            "default": "Удалить",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A destructive confirmation right inside the toast: a “Keep” and a “Delete” button of different visual weight, with the outcome shown after the choice.",
+            "ai": {
+              "summary": "A two-action confirmation inside the toast: “Keep” is a neutral button, “Delete” carries the danger tone. After the choice the card shows the outcome instead of the buttons. Zero dependencies, one file.",
+              "preserve": [
+                "the visual weight of Delete — a danger-tone fill, not the same neutral button as Keep",
+                "role=\"alert\" with aria-live=\"assertive\": a destructive question must reach a screen reader without any action",
+                "showing the outcome after the choice instead of the card vanishing instantly",
+                "the equal width of both buttons — the weight comes from colour, not size, otherwise geometry pressures the decision",
+                "the local --vibeui-toast-017-* palette — do not swap it for your theme tokens"
+              ],
+              "adapt": [
+                "the heading through title and the explanation through message",
+                "the button captions through keepLabel and deleteLabel",
+                "the outcome text through keptResult and deletedResult",
+                "the handlers through onKeep and onDelete"
+              ],
+              "notes": [
+                "The component never deletes data itself — onDelete only reports the decision, the caller sends the request.",
+                "For a reversible action, a timed toast with Undo (toast-002) fits better than this choice."
+              ],
+              "usage": "<Toast017\n  title=\"Delete the article draft?\"\n  message=\"The «Autumn collection» draft will be deleted without recovery.\"\n  onKeep={handleKeep}\n  onDelete={handleDelete}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Delete the article draft?"
+              },
+              "deleteLabel": {
+                "label": "Delete caption",
+                "default": "Delete"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-018",
+      "type": "registry:component",
+      "title": "Grouped Toast",
+      "description": "Сгруппированные уведомления одной карточкой: заголовок со счётчиком, свёрнутый список с «ещё N» и раскрытие по клику вместо потока отдельных тостов.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-018/toast-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-018.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-018-*. Клиентский: \"use client\". Список ограничен visibleCount, остаток считается вычитанием и выводится строкой «Показать все · ещё N»; клик переключает useState и атрибут data-expanded, который переключает max-height у <ul> — раскрытие анимируется чистым CSS без измерения высоты в JS. Кнопка раскрытия несёт aria-expanded, каждый пункт закрывается своей кнопкой с именем события в aria-label.",
+      "meta": {
+        "tags": [
+          "toast",
+          "group",
+          "counter",
+          "expand"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast018",
+          "usage": "<Toast018\n  groupTitle=\"Новые события магазина\"\n  items={[\n    { id: \"1\", title: \"Новый заказ №4821 на 3 позиции\" },\n    { id: \"2\", title: \"Отзыв 5★ на товар «Керамическая ваза»\" },\n  ]}\n  visibleCount={2}\n  onDismiss={handleDismiss}\n/>",
+          "summary": "Сгруппированные уведомления одной карточкой: заголовок со счётчиком, свёрнутый список с «ещё N» и раскрытие по клику на max-height. Ноль зависимостей, один файл, собственная палитра.",
+          "preserve": [
+            "счётчик «ещё N» вместо бесконечного списка — сворачивание считается от visibleCount, а не от жёсткого числа строк в разметке",
+            "max-height вместо измерения высоты в JS: раскрытие анимируется чистым CSS",
+            "aria-expanded на кнопке раскрытия и отдельную кнопку закрытия с именем события в aria-label у каждого пункта",
+            "счётчик в заголовке, а не в тексте — badge меняется вместе со списком при закрытии пунктов",
+            "локальную палитру --vibeui-toast-018-* и не подменять её токенами вашей темы"
+          ],
+          "adapt": [
+            "заголовок группы через groupTitle и список через items",
+            "число видимых пунктов до сворачивания через visibleCount",
+            "подписи через expandLabel, collapseLabel и closeLabel",
+            "обработчик через onDismiss"
+          ],
+          "notes": [
+            "Компонент не запрашивает события сам — items и их обновление держит вызывающий код.",
+            "max-height раскрытого списка — 24rem с запасом; для очень длинных списков добавьте собственную прокрутку."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "groupTitle",
+            "label": "Заголовок группы",
+            "type": "text",
+            "default": "Новые события магазина",
+            "maxLength": 40
+          },
+          {
+            "prop": "visibleCount",
+            "label": "Видимых пунктов",
+            "type": "number",
+            "default": 2,
+            "min": 1,
+            "max": 5
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Grouped notifications in one card: a heading with a counter, a folded list with an “+N more” line and expand-on-click instead of a stream of separate toasts.",
+            "ai": {
+              "summary": "Grouped notifications in one card: a heading with a counter, a folded list with a “+N more” line and a click-to-expand driven by max-height. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the “+N more” counter instead of an endless list — the fold is computed from visibleCount, not a hardcoded row count",
+                "max-height instead of measuring height in JS: the expand animates with plain CSS",
+                "aria-expanded on the toggle button and a separate dismiss button per item with the event name in its aria-label",
+                "the counter in the heading, not in the copy — the badge updates with the list as items are dismissed",
+                "the local --vibeui-toast-018-* palette — do not swap it for your theme tokens"
+              ],
+              "adapt": [
+                "the group heading through groupTitle and the list through items",
+                "the number of items shown before folding through visibleCount",
+                "the captions through expandLabel, collapseLabel and closeLabel",
+                "the handler through onDismiss"
+              ],
+              "notes": [
+                "The component never fetches events itself — items and its updates are the caller's job.",
+                "The expanded list's max-height is 24rem with headroom; for very long lists add your own scroll."
+              ],
+              "usage": "<Toast018\n  groupTitle=\"New shop events\"\n  items={[\n    { id: \"1\", title: \"New order #4821 with 3 items\" },\n    { id: \"2\", title: \"5★ review on «Ceramic vase»\" },\n  ]}\n  visibleCount={2}\n  onDismiss={handleDismiss}\n/>"
+            },
+            "controls": {
+              "groupTitle": {
+                "label": "Group heading",
+                "default": "New shop events"
+              },
+              "visibleCount": {
+                "label": "Visible items"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-019",
+      "type": "registry:component",
+      "title": "Download Ready Toast",
+      "description": "Фоновая выгрузка файла: полоса прогресса на время подготовки сменяется ссылкой «Скачать», когда результат готов.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-019/toast-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-019.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-019-*. Клиентский: \"use client\". Статус держится в useState: exporting считает процент самодостаточным таймером в useEffect (в реальном проекте его заменяет прогресс реального fetch/XHR или сокета), при достижении 100% переключается на ready и вызывает onReady. Кнопка «Отмена» видна только во время подготовки, ссылка «Скачать» — обычный <a href download>, который появляется только в состоянии ready. Крестик закрытия работает в любом статусе.",
+      "meta": {
+        "tags": [
+          "toast",
+          "download",
+          "export",
+          "progress"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast019",
+          "usage": "<Toast019\n  fileName=\"Отчёт-продажи.xlsx\"\n  downloadHref=\"/exports/report.xlsx\"\n  durationMs={2400}\n  onReady={handleReady}\n/>",
+          "summary": "Фоновая выгрузка файла: полоса прогресса сама доходит до 100% и превращается в ссылку «Скачать» с именем и размером файла. Ноль зависимостей, один файл, собственная палитра.",
+          "preserve": [
+            "полосу прогресса, которая сама доходит до 100% и переключает статус на «готово» — процент не пробрасывается пропом снаружи",
+            "ссылку «Скачать» как <a href download>, а не кнопку — это обещание реального файла, а не действие интерфейса",
+            "кнопку «Отмена» только на время подготовки — после готовности отменять уже нечего",
+            "локальную палитру --vibeui-toast-019-* и не подменять её токенами вашей темы"
+          ],
+          "adapt": [
+            "имя и размер файла через fileName и fileSize",
+            "ссылку скачивания через downloadHref — по умолчанию это пустая заглушка",
+            "длительность демонстрационной подготовки через durationMs",
+            "обработчики onReady и onCancel"
+          ],
+          "notes": [
+            "Прогресс в этом файле — демонстрационный таймер; в проде процент должен приходить от реальной выгрузки (progress-событие fetch/XHR или сокета).",
+            "Компонент не отменяет операцию сам — onCancel только сообщает о намерении, саму отмену выполняет вызывающий код."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "fileName",
+            "label": "Имя файла",
+            "type": "text",
+            "default": "Отчёт-продажи.xlsx",
+            "maxLength": 40
+          },
+          {
+            "prop": "durationMs",
+            "label": "Длительность подготовки, мс",
+            "type": "number",
+            "default": 2400,
+            "min": 800,
+            "max": 6000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A background file export: the progress bar during preparation turns into a “Download” link once the result is ready.",
+            "ai": {
+              "summary": "A background file export toast: the progress bar reaches 100% on its own and turns into a “Download” link with the file's name and size. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the progress bar reaching 100% on its own and switching the status to ready — the percent is not passed in as a prop from outside",
+                "the “Download” link as an <a href download>, not a button — it's a promise of a real file, not an interface action",
+                "the “Cancel” button shown only while preparing — there is nothing left to cancel once it's ready",
+                "the local --vibeui-toast-019-* palette — do not swap it for your theme tokens"
+              ],
+              "adapt": [
+                "the file name and size through fileName and fileSize",
+                "the download link through downloadHref — it defaults to an empty placeholder",
+                "the demo preparation length through durationMs",
+                "the onReady and onCancel handlers"
+              ],
+              "notes": [
+                "The progress in this file is a demo timer; in production the percent should come from a real upload's progress event (fetch/XHR or a socket).",
+                "The component never cancels the operation itself — onCancel only reports intent, the caller performs the actual cancellation."
+              ],
+              "usage": "<Toast019\n  fileName=\"sales-report.xlsx\"\n  downloadHref=\"/exports/report.xlsx\"\n  durationMs={2400}\n  onReady={handleReady}\n/>"
+            },
+            "controls": {
+              "fileName": {
+                "label": "File name",
+                "default": "sales-report.xlsx"
+              },
+              "durationMs": {
+                "label": "Preparation length, ms"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-020",
+      "type": "registry:component",
+      "title": "Countdown Toast",
+      "description": "Обратный отсчёт до автодействия: полоса и цифры тают вместе, наведение и фокус ставят отсчёт на паузу, а кнопка возвращает полный срок.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-020/toast-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-020.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-020-*. Клиентский: \"use client\". Остаток мс держится в useState и убывает в useEffect через setInterval, флаг паузы лежит в useRef и синхронизируется с состоянием, чтобы не пересоздавать интервал на каждый ререндер; наведение и фокус клавиатурой (onMouseEnter/Leave, onFocus/onBlur) ставят паузу одинаково. При достижении нуля вызывается onExpire один раз (флаг в useRef защищает от повтора), кнопка «Остаться в системе» возвращает left к исходному total и вызывает onExtend.",
+      "meta": {
+        "tags": [
+          "toast",
+          "countdown",
+          "session",
+          "timer"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast020",
+          "usage": "<Toast020\n  message=\"Сессия завершится из-за бездействия\"\n  seconds={30}\n  onExpire={handleExpire}\n  onExtend={handleExtend}\n/>",
+          "summary": "Обратный отсчёт до автодействия с линейной полосой и цифровым таймером mm:ss. Наведение и фокус клавиатурой ставят отсчёт на паузу, кнопка перезапускает полный срок. Ноль зависимостей, один файл.",
+          "preserve": [
+            "паузу по наведению и по фокусу клавиатурой одновременно — это не только курсор мыши, иначе клавиатурный пользователь не успеет прочитать",
+            "полосу и цифровой таймер mm:ss вместе — полоса даёт общее ощущение срока, цифры дают точное значение",
+            "разовый вызов onExpire по достижении нуля вместо повторных вызовов на каждый тик",
+            "кнопку «Остаться в системе», которая перезапускает полный отсчёт, а не просто закрывает уведомление",
+            "локальную палитру --vibeui-toast-020-* и не подменять её токенами вашей темы"
+          ],
+          "adapt": [
+            "текст предупреждения через message и текст после истечения через expiredMessage",
+            "продолжительность отсчёта через seconds",
+            "подписи кнопок через extendLabel и closeLabel",
+            "обработчики onExpire и onExtend"
+          ],
+          "notes": [
+            "Автодействие в этом файле не выполняется само — onExpire только сообщает о наступлении срока, реальный выход из системы делает вызывающий код.",
+            "Пауза сбрасывается при потере наведения и фокуса одновременно — если элемент внутри уведомления удерживает фокус дольше, учитывайте это в интеграции."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "message",
+            "label": "Текст предупреждения",
+            "type": "text",
+            "default": "Сессия завершится из-за бездействия",
+            "maxLength": 60
+          },
+          {
+            "prop": "seconds",
+            "label": "Секунд до автодействия",
+            "type": "number",
+            "default": 30,
+            "min": 5,
+            "max": 120
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A countdown to an automatic action: the bar and the digits run down together, hover and focus pause the countdown, and a button resets the full duration.",
+            "ai": {
+              "summary": "A countdown to an automatic action with a linear bar and an mm:ss digital timer. Hover and keyboard focus pause the countdown, a button restarts the full duration. Zero dependencies, one file.",
+              "preserve": [
+                "pausing on both hover and keyboard focus — not just the mouse cursor, or a keyboard user won't have time to read it",
+                "the bar and the mm:ss digital timer together — the bar gives an overall sense of time left, the digits give an exact value",
+                "calling onExpire exactly once when it hits zero instead of on every tick",
+                "the “Stay signed in” button, which restarts the full countdown rather than just closing the toast",
+                "the local --vibeui-toast-020-* palette — do not swap it for your theme tokens"
+              ],
+              "adapt": [
+                "the warning text through message and the post-expiry text through expiredMessage",
+                "the countdown length through seconds",
+                "the button captions through extendLabel and closeLabel",
+                "the onExpire and onExtend handlers"
+              ],
+              "notes": [
+                "The automatic action in this file never runs on its own — onExpire only reports that the deadline hit, the caller performs the actual sign-out.",
+                "The pause clears when both hover and focus are gone — if something inside the toast keeps focus longer, account for that in your integration."
+              ],
+              "usage": "<Toast020\n  message=\"Your session will end due to inactivity\"\n  seconds={30}\n  onExpire={handleExpire}\n  onExtend={handleExtend}\n/>"
+            },
+            "controls": {
+              "message": {
+                "label": "Warning text",
+                "default": "Your session will end due to inactivity"
+              },
+              "seconds": {
+                "label": "Seconds until action"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "toast-021",
+      "type": "registry:component",
+      "title": "Center Pill Toast",
+      "description": "Компактная пилюля по центру сверху сцены: заезжает сверху, держится над контентом и прячется сама или по крестику.",
+      "categories": [
+        "toast"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "toast-021/toast-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/toast-021.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-021-*. Клиентский: \"use client\". Сцена с сеткой в position:relative изображает окно приложения — без неё «сверху по центру» показать нечем; пилюля лежит внутри неё в position:absolute с translateX(-50%) и заезжает сверху через keyframes. Автоскрытие — таймер в useEffect по autoHideMs (0 отключает его), крестик прячет пилюлю вручную в любой момент, кнопка «Показать снова» переключает key, чтобы анимация въезда проигралась заново.",
+      "meta": {
+        "tags": [
+          "toast",
+          "pill",
+          "compact",
+          "hud"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Toast021",
+          "usage": "<Toast021\n  message=\"Обновление установлено\"\n  tone=\"success\"\n  autoHideMs={3200}\n/>",
+          "summary": "Компактная системная пилюля по центру сверху сцены: заезжает сверху, живёт своё время и прячется сама или по крестику. Ноль зависимостей, один файл, собственная палитра.",
+          "preserve": [
+            "сцену в position:relative вокруг пилюли — без неё «сверху по центру» превращается в position:fixed по окну, а компонент обязан оставаться внутри своей области",
+            "положение пилюли через position:absolute с translateX(-50%), а не через margin:auto — так она не зависит от ширины родителя",
+            "автоскрытие через таймер по autoHideMs с явным отключением при 0, а не жёстко зашитый интервал",
+            "форму пилюли и однострочный текст без переноса — это системное уведомление, а не карточка сообщения",
+            "локальную палитру --vibeui-toast-021-* и не подменять её токенами вашей темы"
+          ],
+          "adapt": [
+            "текст через message, значок через glyph и тон через tone",
+            "время автоскрытия через autoHideMs",
+            "подписи через closeLabel и replayLabel",
+            "обработчик onDismiss"
+          ],
+          "notes": [
+            "position:absolute в этом файле привязан к сцене-обёртке компонента, а не к окну браузера — в реальном layout эту роль берёт на себя контейнер тостов приложения.",
+            "Кнопка «Показать снова» — часть демонстрации; в проде повторный показ определяет источник события, а не сам компонент."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "message",
+            "label": "Текст",
+            "type": "text",
+            "default": "Обновление установлено",
+            "maxLength": 40
+          },
+          {
+            "prop": "autoHideMs",
+            "label": "Автоскрытие, мс",
+            "type": "number",
+            "default": 3200,
+            "min": 0,
+            "max": 8000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A compact top-center pill toast: it drops in from the top, sits above the content, and hides on its own or via the close button.",
+            "ai": {
+              "summary": "A compact system pill centered at the top of the scene: it drops in from the top, lives out its time and hides on its own or via the close button. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the position:relative stage around the pill — without it “top-center” turns into position:fixed against the window, and the component must stay inside its own area",
+                "the pill's placement via position:absolute with translateX(-50%), not margin:auto — so it doesn't depend on the parent's width",
+                "auto-hide through an autoHideMs timer with an explicit off switch at 0, not a hardcoded interval",
+                "the pill shape and single-line, non-wrapping text — this is a system notification, not a message card",
+                "the local --vibeui-toast-021-* palette — do not swap it for your theme tokens"
+              ],
+              "adapt": [
+                "the text through message, the icon through glyph and the tone through tone",
+                "the auto-hide length through autoHideMs",
+                "the captions through closeLabel and replayLabel",
+                "the onDismiss handler"
+              ],
+              "notes": [
+                "The position:absolute in this file is anchored to the component's own stage wrapper, not the browser window — in a real layout the app's toast container takes on that role.",
+                "The “Show again” button is part of the demo; in production, a real event source decides when to show it again, not the component itself."
+              ],
+              "usage": "<Toast021\n  message=\"Update installed\"\n  tone=\"success\"\n  autoHideMs={3200}\n/>"
+            },
+            "controls": {
+              "message": {
+                "label": "Text",
+                "default": "Update installed"
+              },
+              "autoHideMs": {
+                "label": "Auto-hide, ms"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

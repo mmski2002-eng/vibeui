@@ -1,0 +1,2002 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "frame-001",
+      "type": "registry:component",
+      "title": "Demo Frame",
+      "description": "Обрамление демо: условная рамка браузера или телефона вокруг слота, без подделки интерфейса до кнопок и вкладок.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-001/frame-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-frame-001-*. Серверный: хуков нет. Содержимое приходит через children, поэтому внутрь встаёт картинка, iframe или другой блок. Вариант phone ограничивает ширину и увеличивает скругление, вариант plain оставляет чистую рамку.",
+      "meta": {
+        "tags": [
+          "frame",
+          "mockup",
+          "browser",
+          "demo"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame001",
+          "usage": "<Frame001 variant=\"browser\" url=\"vibeui.ru\" caption=\"Каталог\"><img src=\"/shot.png\" alt=\"\" /></Frame001>",
+          "summary": "Рамка вокруг демо: браузер с полосой адреса, телефон со скруглением или чистая рамка. Подпись под кадром. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-001-* и не подменять её токенами вашей темы",
+            "условность рамки: подделка браузера до вкладок и кнопок спорит с интерфейсом вокруг",
+            "слот для содержимого — внутрь встаёт картинка, iframe или другой блок",
+            "подпись под кадром, а не поверх него",
+            "ограничение ширины у варианта phone: без него это не телефон",
+            "figure и figcaption вместо пары div: подпись должна быть связана с кадром"
+          ],
+          "adapt": [
+            "variant — browser, phone или plain",
+            "url, title и caption",
+            "скругление и толщину рамки",
+            "содержимое слота"
+          ],
+          "notes": [
+            "Рамка декоративна: alt и подписи должны нести смысл сами, без опоры на неё.",
+            "Скриншот внутри не масштабируется по высоте: задайте пропорцию картинке или возьмите aspect-001.",
+            "Не рисуйте кнопки «назад» и «обновить»: они выглядят рабочими и вводят в заблуждение.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "variant",
+            "label": "Вид",
+            "type": "select",
+            "default": "browser",
+            "options": [
+              "browser",
+              "phone",
+              "plain"
+            ]
+          },
+          {
+            "prop": "url",
+            "label": "Адрес",
+            "type": "text",
+            "default": "vibeui.ru/components",
+            "maxLength": 32
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Каталог компонентов в браузере",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A demo frame: a suggested browser or phone shell around a slot, without faking the interface down to tabs and buttons.",
+            "ai": {
+              "summary": "A frame around a demo: a browser with an address strip, a phone with heavy rounding, or a plain border. Caption below. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-001-* palette — do not swap it for your theme tokens",
+                "the suggestion, not the imitation: a full browser fake fights the surrounding UI",
+                "the content slot — an image, an iframe or another block goes inside",
+                "the caption below the frame rather than over it",
+                "the width cap on the phone variant: without it it is not a phone",
+                "figure and figcaption instead of two divs: the caption must belong to the frame"
+              ],
+              "adapt": [
+                "variant — browser, phone or plain",
+                "url, title and caption",
+                "the corner radius and border weight",
+                "the slot content"
+              ],
+              "notes": [
+                "The frame is decorative: alt text and captions must carry the meaning alone.",
+                "A screenshot inside does not scale by height: set a ratio or use aspect-001.",
+                "Do not draw back and reload buttons: they look functional and mislead.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame001 variant=\"browser\" url=\"vibeui.ru\" caption=\"Catalog\"><img src=\"/shot.png\" alt=\"\" /></Frame001>"
+            },
+            "controls": {
+              "variant": {
+                "label": "Variant"
+              },
+              "url": {
+                "label": "Address",
+                "default": "vibeui.ru/components"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "The catalog in a browser"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-002",
+      "type": "registry:component",
+      "title": "Aspect Video Frame",
+      "description": "Рамка встраивания с фиксированным соотношением сторон: место под ролик занято до того, как iframe успел загрузиться, поэтому страница не прыгает.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-002/frame-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-002.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Соотношение сторон объявлено переменной --vibeui-frame-002-ratio на самой рамке, а варианты 4:3, 1:1 и 21:9 переопределяют её через атрибут data-ratio — так пропорция задаётся одной строкой, а не набором классов. Вложенный iframe, img или video растягиваются правилом для :where(iframe,img,video) на inset:0: без него iframe держит собственные 150px высоты и пропорция рамки перестаёт что-либо значить. Заглушка с треугольником нарисована рамками через ::before, чтобы не тащить svg. Компонент несёт свою белую подложку — тёмный экран внутри белой карточки читается на любом фоне каталога.",
+      "meta": {
+        "tags": [
+          "frame",
+          "video",
+          "embed",
+          "aspect-ratio"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame002",
+          "usage": "<Frame002 ratio=\"16:9\" title=\"Обзор каталога VibeUI\">\n  <iframe src=\"https://example.com/embed/abc\" title=\"Обзор\" />\n</Frame002>",
+          "summary": "Рамка встраивания видео: соотношение сторон резервирует место до загрузки, вложенный iframe растягивается на всю рамку. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-002-* и не подменять её токенами вашей темы",
+            "соотношение сторон на самой рамке: без него страница прыгает в момент загрузки ролика",
+            "растягивание вложенного iframe на inset:0 — иначе он остаётся высотой 150px и ломает пропорцию",
+            "overflow:hidden на рамке: у видеоплееров свои скруглённые углы, которые вылезают за границу",
+            "заглушку с треугольником: пустой тёмный прямоугольник читается как ошибка загрузки",
+            "собственную светлую подложку: тёмный экран без неё сливается с тёмным фоном каталога"
+          ],
+          "adapt": [
+            "пропорцию через ratio: 16:9 для роликов, 1:1 для сторис, 21:9 для трейлеров",
+            "подпись заглушки через title",
+            "текст под рамкой через caption",
+            "ширину рамки через max-width"
+          ],
+          "notes": [
+            "Соотношение сторон поддерживается всеми актуальными браузерами, но в очень старых движках рамка схлопнется в ноль высоты.",
+            "object-fit:cover обрезает картинку по краям: если кадр важен целиком, поменяйте на contain.",
+            "Внутрь допустим ровно один медиа-узел — двум абсолютным детям рамка не поможет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "ratio",
+            "label": "Пропорция",
+            "type": "select",
+            "default": "16:9",
+            "options": [
+              "16:9",
+              "4:3",
+              "1:1",
+              "21:9"
+            ]
+          },
+          {
+            "prop": "title",
+            "label": "Подпись заглушки",
+            "type": "text",
+            "default": "Обзор каталога VibeUI",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An embed frame with a fixed aspect ratio: the space for the video is reserved before the iframe loads, so the page never jumps.",
+            "ai": {
+              "summary": "A video embed frame: the aspect ratio reserves space before loading and the nested iframe stretches to fill the frame. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-002-* palette — do not swap it for your theme tokens",
+                "the aspect ratio on the frame itself: without it the page jumps the moment the video loads",
+                "stretching the nested iframe to inset:0 — otherwise it stays 150px tall and breaks the ratio",
+                "overflow:hidden on the frame: video players carry their own rounded corners that spill outside",
+                "the stub with the play triangle: an empty dark rectangle reads as a loading error",
+                "the component's own light surface: without it the dark screen merges into a dark catalog background"
+              ],
+              "adapt": [
+                "the proportion through ratio: 16:9 for clips, 1:1 for stories, 21:9 for trailers",
+                "the stub caption through title",
+                "the text under the frame through caption",
+                "the frame width through max-width"
+              ],
+              "notes": [
+                "aspect-ratio is supported by every current browser, but in very old engines the frame collapses to zero height.",
+                "object-fit:cover crops the edges: switch it to contain when the whole frame matters.",
+                "Exactly one media node belongs inside — the frame cannot help two absolutely positioned children.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame002 ratio=\"16:9\" title=\"VibeUI catalog tour\">\n  <iframe src=\"https://example.com/embed/abc\" title=\"Tour\" />\n</Frame002>"
+            },
+            "controls": {
+              "ratio": {
+                "label": "Aspect ratio",
+                "default": "16:9"
+              },
+              "title": {
+                "label": "Stub caption",
+                "default": "VibeUI catalog tour"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-003",
+      "type": "registry:component",
+      "title": "Browser Window Frame",
+      "description": "Окно браузера с вкладкой и адресной строкой вокруг слота: читатель сразу понимает, что внутри страница, а не иллюстрация на сайте.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-003/frame-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-003.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Хром окна собран из трёх полос: вкладка со скруглением только сверху, строка адреса и тело со слотом. Замок в адресной строке нарисован блоком и ::before, а не эмодзи: эмодзи меняет начертание от системы и сбивает вертикальный ритм строки. Адрес обрезается многоточием (overflow + text-overflow), иначе длинный URL растягивает окно и ломает раскладку на телефоне. Хром помечен aria-hidden: для скринридера это декорация, а не навигация. Собственная белая подложка обязательна — вся типографика окна тёмная.",
+      "meta": {
+        "tags": [
+          "frame",
+          "browser",
+          "mockup",
+          "screenshot"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame003",
+          "usage": "<Frame003 url=\"vibeui.ru/components\" tab=\"VibeUI — каталог\">\n  <img src=\"/shots/catalog.png\" alt=\"Каталог компонентов\" />\n</Frame003>",
+          "summary": "Рамка окна браузера: вкладка, адресная строка с замком и слот под скриншот. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-003-* и не подменять её токенами вашей темы",
+            "aria-hidden на хроме окна: вкладка и стрелки — декорация, а не навигация по сайту",
+            "обрезку адреса многоточием — длинный URL иначе растягивает окно и ломает телефон",
+            "замок, нарисованный CSS: эмодзи меняет начертание от системы и сбивает строку",
+            "условность хрома: подробная подделка браузера начинает спорить с интерфейсом вокруг",
+            "собственную светлую подложку: вся типографика окна тёмная и на тёмном фоне пропадает"
+          ],
+          "adapt": [
+            "адрес в строке через url",
+            "заголовок вкладки через tab",
+            "содержимое окна — картинкой, iframe или любым блоком в слоте",
+            "ширину окна через max-width"
+          ],
+          "notes": [
+            "Вкладка одна: ряд из трёх вкладок требует своей раскладки и проверки на узкой ширине.",
+            "Картинку внутри отдавайте в пропорции окна — рамка её не обрезает и не масштабирует.",
+            "Стрелки навигации не кнопки: если нужен рабочий переход, ставьте настоящие button.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "url",
+            "label": "Адрес",
+            "type": "text",
+            "default": "vibeui.ru/components/frame-003",
+            "maxLength": 48
+          },
+          {
+            "prop": "tab",
+            "label": "Вкладка",
+            "type": "text",
+            "default": "VibeUI — каталог компонентов",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A browser window with a tab and an address bar around the slot, so the reader instantly reads the content as a page rather than a picture.",
+            "ai": {
+              "summary": "A browser window frame: a tab, an address bar with a lock and a slot for the screenshot. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-003-* palette — do not swap it for your theme tokens",
+                "aria-hidden on the window chrome: the tab and arrows are decoration, not site navigation",
+                "the ellipsis truncation of the address — a long URL otherwise stretches the window and breaks phones",
+                "the lock drawn in CSS: an emoji changes shape per system and knocks the line out of rhythm",
+                "the deliberately loose chrome: a detailed browser fake starts arguing with the surrounding UI",
+                "the component's own light surface: all of the window typography is dark and vanishes on a dark background"
+              ],
+              "adapt": [
+                "the address in the bar through url",
+                "the tab caption through tab",
+                "the window content — an image, an iframe or any block in the slot",
+                "the window width through max-width"
+              ],
+              "notes": [
+                "There is a single tab: a row of three needs its own layout and a check on narrow widths.",
+                "Supply the inner image in the window's proportion — the frame neither crops nor scales it.",
+                "The navigation arrows are not buttons: use real buttons if a working action is required.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame003 url=\"vibeui.ru/components\" tab=\"VibeUI — catalog\">\n  <img src=\"/shots/catalog.png\" alt=\"Component catalog\" />\n</Frame003>"
+            },
+            "controls": {
+              "url": {
+                "label": "Address",
+                "default": "vibeui.ru/components/frame-003"
+              },
+              "tab": {
+                "label": "Tab",
+                "default": "VibeUI — component catalog"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-004",
+      "type": "registry:component",
+      "title": "Phone Screenshot Frame",
+      "description": "Рамка телефона под скриншот: экран задан пропорцией 9 / 19.5, поэтому картинка любого размера ложится в него без обрезки и чёрных полей.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-004/frame-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-004.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Экран держит aspect-ratio 9 / 19.5 вместо фиксированной высоты, а корпус ограничен width:min(100%, 15rem) — рамка ужимается на телефоне, но не растекается на десктопе. Островок вынесен из потока в absolute: в потоке он сдвигал бы статус-строку вниз и съедал верх скриншота. Сигнал и батарея нарисованы блоками и градиентом, без иконочного шрифта. Корпус светлый с тонкой обводкой сознательно: тёмный корпус на тёмной подложке каталога сливается, и от телефона остаётся плавающий белый прямоугольник. Статус-строка помечена aria-hidden — это декорация макета.",
+      "meta": {
+        "tags": [
+          "frame",
+          "phone",
+          "mockup",
+          "screenshot"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame004",
+          "usage": "<Frame004 time=\"9:41\" carrier=\"VibeUI\">\n  <img src=\"/shots/app.png\" alt=\"Экран приложения\" />\n</Frame004>",
+          "summary": "Рамка телефона: пропорция экрана 9 / 19.5, статус-строка и островок, слот под скриншот. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-004-* и не подменять её токенами вашей темы",
+            "пропорцию экрана вместо фиксированной высоты: иначе скриншот обрезается или получает поля",
+            "островок в absolute — в потоке он сдвигает статус-строку и съедает верх скриншота",
+            "ограничение ширины корпуса: телефон шириной с экран перестаёт читаться как телефон",
+            "светлый корпус с тонкой обводкой: тёмный сливается с тёмным фоном каталога",
+            "aria-hidden на статус-строке: время и батарея — декорация макета, а не данные"
+          ],
+          "adapt": [
+            "время в статус-строке через time",
+            "надпись оператора через carrier",
+            "содержимое экрана — картинкой или блоком в слоте",
+            "ширину корпуса через переменную --vibeui-frame-004-width"
+          ],
+          "notes": [
+            "Скриншот масштабируется по object-fit:cover: узкая картинка потеряет края.",
+            "Пропорция 9 / 19.5 соответствует современным телефонам; для старых моделей поменяйте её на 9 / 16.",
+            "Островок и полоса домой — детали конкретной платформы, на Android-макете их убирают.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "time",
+            "label": "Время",
+            "type": "text",
+            "default": "9:41",
+            "maxLength": 8
+          },
+          {
+            "prop": "carrier",
+            "label": "Оператор",
+            "type": "text",
+            "default": "VibeUI",
+            "maxLength": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A phone frame for a screenshot: the screen is set by a 9 / 19.5 ratio, so an image of any size fits without cropping or black bars.",
+            "ai": {
+              "summary": "A phone frame: a 9 / 19.5 screen ratio, a status bar with an island and a slot for the screenshot. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-004-* palette — do not swap it for your theme tokens",
+                "the screen ratio instead of a fixed height: otherwise the screenshot is cropped or gets bars",
+                "the island in absolute position — in flow it pushes the status bar down and eats the screenshot",
+                "the body width cap: a phone as wide as the viewport stops reading as a phone",
+                "the light body with a thin outline: a dark one merges into the dark catalog background",
+                "aria-hidden on the status bar: the clock and battery are mockup decoration, not data"
+              ],
+              "adapt": [
+                "the clock in the status bar through time",
+                "the carrier caption through carrier",
+                "the screen content — an image or a block in the slot",
+                "the body width through the --vibeui-frame-004-width variable"
+              ],
+              "notes": [
+                "The screenshot is scaled with object-fit:cover: a narrow image loses its edges.",
+                "The 9 / 19.5 ratio matches modern phones; switch it to 9 / 16 for older models.",
+                "The island and the home bar are platform details — drop them in an Android mockup.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame004 time=\"9:41\" carrier=\"VibeUI\">\n  <img src=\"/shots/app.png\" alt=\"App screen\" />\n</Frame004>"
+            },
+            "controls": {
+              "time": {
+                "label": "Clock",
+                "default": "9:41"
+              },
+              "carrier": {
+                "label": "Carrier",
+                "default": "VibeUI"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-005",
+      "type": "registry:component",
+      "title": "Laptop Device Frame",
+      "description": "Рамка ноутбука с экраном 16 / 10 и трапецией основания на clip-path: корпус сужается книзу без единой картинки и масштабируется вместе с экраном.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-005/frame-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-005.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Крышка — обычный блок со скруглением сверху, экран держит aspect-ratio 16 / 10 (стандарт ноутбучной матрицы; 16 / 9 читается как телевизор). Основание нарисовано clip-path:polygon и потому сужается книзу без второго прямоугольника и без изображений; оно чуть шире крышки, что и даёт силуэт устройства. Оттенок корпуса переключается атрибутом data-tone: silver и graphite меняют три переменные палитры разом. Экран белый, поэтому конструкция читается и на тёмной подложке каталога; вся типографика демо-содержимого лежит внутри белого экрана.",
+      "meta": {
+        "tags": [
+          "frame",
+          "laptop",
+          "device",
+          "mockup"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame005",
+          "usage": "<Frame005 title=\"Панель проекта\" tone=\"silver\">\n  <img src=\"/shots/dashboard.png\" alt=\"Панель проекта\" />\n</Frame005>",
+          "summary": "Рамка ноутбука: крышка с экраном 16 / 10 и основание-трапеция на clip-path. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-005-* и не подменять её токенами вашей темы",
+            "пропорцию экрана 16 / 10: на 16 / 9 силуэт перестаёт читаться как ноутбук",
+            "трапецию на clip-path — прямоугольное основание превращает устройство в две плашки",
+            "основание чуть шире крышки: ровно по ширине оно теряет перспективу",
+            "белый экран внутри корпуса: он держит контраст на любой подложке каталога",
+            "overflow:hidden на экране — скриншот со своими углами иначе вылезает за скругление"
+          ],
+          "adapt": [
+            "заголовок демо-экрана через title",
+            "оттенок корпуса через tone: silver или graphite",
+            "содержимое экрана — картинкой или блоком в слоте",
+            "ширину устройства через max-width"
+          ],
+          "notes": [
+            "Основание шире крышки на 8%: при вложении в узкий контейнер с overflow:hidden его срежет.",
+            "Скриншот отдавайте в пропорции 16 / 10, иначе object-fit обрежет края.",
+            "Клавиатуры и тачпада нет намеренно: детали корпуса спорят с содержимым экрана.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок экрана",
+            "type": "text",
+            "default": "Панель проекта",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Корпус",
+            "type": "select",
+            "default": "silver",
+            "options": [
+              "silver",
+              "graphite"
+            ]
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A laptop frame with a 16 / 10 screen and a clip-path trapezoid base: the body tapers downwards without a single image and scales with the screen.",
+            "ai": {
+              "summary": "A laptop frame: a lid with a 16 / 10 screen and a clip-path trapezoid base. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-005-* palette — do not swap it for your theme tokens",
+                "the 16 / 10 screen ratio: at 16 / 9 the silhouette stops reading as a laptop",
+                "the clip-path trapezoid — a rectangular base turns the device into two slabs",
+                "the base being slightly wider than the lid: flush widths lose the perspective",
+                "the white screen inside the body: it keeps contrast on any catalog background",
+                "overflow:hidden on the screen — a screenshot with its own corners otherwise spills past the radius"
+              ],
+              "adapt": [
+                "the demo screen heading through title",
+                "the body finish through tone: silver or graphite",
+                "the screen content — an image or a block in the slot",
+                "the device width through max-width"
+              ],
+              "notes": [
+                "The base is 8% wider than the lid: a narrow parent with overflow:hidden will clip it.",
+                "Supply the screenshot in a 16 / 10 ratio, otherwise object-fit crops the edges.",
+                "There is deliberately no keyboard or trackpad: body details argue with the screen content.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame005 title=\"Project dashboard\" tone=\"silver\">\n  <img src=\"/shots/dashboard.png\" alt=\"Project dashboard\" />\n</Frame005>"
+            },
+            "controls": {
+              "title": {
+                "label": "Screen heading",
+                "default": "Project dashboard"
+              },
+              "tone": {
+                "label": "Body",
+                "default": "silver"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-006",
+      "type": "registry:component",
+      "title": "Captioned Figure Frame",
+      "description": "Рамка с нумерованной подписью под содержимым: номер рисунка, текст и строка источника разведены по трём уровням, поэтому подпись читается, а не сливается.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-006/frame-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-006.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Разметка — figure с figcaption внутри, а не картинка и абзац рядом: только так связь изображения и подписи видна скринридеру. Номер рисунка вынесен в отдельный элемент с white-space:nowrap, поэтому «Рис. 12» не разрывается переносом; текст подписи и строка источника отличаются кеглем и цветом, иначе всё склеивается в одно предложение. Медиа-слот держит пропорцию 16 / 10, чтобы подпись не уезжала при разной высоте картинок. Выравнивание переключается атрибутом data-align. Подложка светлая: вся типографика подписи тёмная.",
+      "meta": {
+        "tags": [
+          "frame",
+          "caption",
+          "figure",
+          "gallery"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame006",
+          "usage": "<Frame006\n  index={2}\n  caption=\"Каталог компонентов: карточка раскрывает превью\"\n  source=\"Источник: скриншот VibeUI\"\n  align=\"start\"\n>\n  <img src=\"/shots/catalog.png\" alt=\"Каталог\" />\n</Frame006>",
+          "summary": "Рамка с подписью под содержимым: номер рисунка, текст и источник тремя строками внутри figcaption. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-006-* и не подменять её токенами вашей темы",
+            "связку figure + figcaption: картинка с абзацем рядом теряет связь для скринридера",
+            "номер рисунка отдельным элементом с nowrap — иначе «Рис. 12» рвётся переносом",
+            "разный кегль подписи и источника: слитые строки читаются как одно предложение",
+            "пропорцию медиа-слота: без неё подпись прыгает от высоты каждой картинки",
+            "собственную светлую подложку: подпись тёмная и на тёмном фоне каталога исчезает"
+          ],
+          "adapt": [
+            "текст подписи через caption",
+            "номер рисунка через index",
+            "строку происхождения через source",
+            "выравнивание подписи через align"
+          ],
+          "notes": [
+            "Нумерация ручная: сквозной счётчик по странице делается CSS-счётчиком на родителе.",
+            "Пустой source убирает третью строку — проверьте, что подпись без неё не выглядит обрезанной.",
+            "Подпись не альтернативный текст: alt у картинки всё равно обязателен.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Каталог компонентов: карточка раскрывает превью по наведению",
+            "maxLength": 80
+          },
+          {
+            "prop": "index",
+            "label": "Номер рисунка",
+            "type": "number",
+            "default": 2,
+            "min": 1,
+            "max": 99
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A frame with a numbered caption below the content: the figure number, the text and the source line sit on three levels, so the caption reads instead of blurring together.",
+            "ai": {
+              "summary": "A captioned frame: figure number, caption text and source line as three rows inside figcaption. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-006-* palette — do not swap it for your theme tokens",
+                "the figure + figcaption pairing: an image with a neighbouring paragraph loses the link for screen readers",
+                "the figure number as a separate nowrap element — otherwise \"Fig. 12\" breaks across lines",
+                "the different sizes of caption and source: merged rows read as one sentence",
+                "the media slot ratio: without it the caption jumps with every image height",
+                "the component's own light surface: the caption is dark and disappears on a dark catalog background"
+              ],
+              "adapt": [
+                "the caption text through caption",
+                "the figure number through index",
+                "the provenance line through source",
+                "the caption alignment through align"
+              ],
+              "notes": [
+                "Numbering is manual: a page-wide sequence is done with a CSS counter on the parent.",
+                "An empty source removes the third row — check the caption still looks finished without it.",
+                "A caption is not alternative text: the image still needs its alt.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame006\n  index={2}\n  caption=\"The catalog card expands the preview on hover\"\n  source=\"Source: VibeUI screenshot\"\n  align=\"start\"\n>\n  <img src=\"/shots/catalog.png\" alt=\"Catalog\" />\n</Frame006>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "The catalog card expands the preview on hover"
+              },
+              "index": {
+                "label": "Figure number",
+                "default": 2
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-007",
+      "type": "registry:component",
+      "title": "Terminal Frame",
+      "description": "Кадр терминала со строкой заголовка, точками и моноширинным выводом команд: демонстрация CLI-сценария без скриншота настоящей консоли.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-007/frame-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-007.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Хром окна — точки и заголовок — заголовок несёт содержательный текст и не скрыт от скринридера, а точки помечены aria-hidden. lines принимает массив { text, type }: тип command добавляет приглашение prompt, output выводит текст без него. Курсор — блок с CSS-анимацией моргания vibeui-frame-007-blink, которая отключается через prefers-reduced-motion. Слот children подменяет весь блок вывода целиком, включая курсор.",
+      "meta": {
+        "tags": [
+          "frame",
+          "terminal",
+          "cli",
+          "mockup"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame007",
+          "usage": "<Frame007 title=\"zsh — vibeui\" prompt=\"❯\" lines={[{ text: \"npm run build\", type: \"command\" }, { text: \"Готово\", type: \"output\" }]} />",
+          "summary": "Кадр терминала: строка заголовка с точками, моноширинный вывод команд и мигающий курсор. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-007-* и не подменять её токенами вашей темы",
+            "моноширинный шрифт и pre для вывода — иначе строки теряют выравнивание команды и результата",
+            "приглашение только у строк типа command — вывод без него, иначе журнал превращается в стену значков",
+            "анимацию курсора через CSS, а не текст: так её гасит prefers-reduced-motion, не трогая разметку",
+            "aria-label на выводе терминала — скринридер должен понимать, что это лог, а не случайный текст"
+          ],
+          "adapt": [
+            "заголовок окна через title",
+            "символ приглашения через prompt",
+            "список команд и вывода через lines",
+            "содержимое целиком через children вместо lines"
+          ],
+          "notes": [
+            "Курсор один и в конце вывода: курсор после каждой строки не имитируется намеренно.",
+            "Три цветные точки декоративны и не работают как кнопки закрытия или сворачивания.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок окна",
+            "type": "text",
+            "default": "zsh — vibeui",
+            "maxLength": 40
+          },
+          {
+            "prop": "prompt",
+            "label": "Приглашение",
+            "type": "text",
+            "default": "❯",
+            "maxLength": 4
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A terminal frame with a title bar, dots and monospaced command output: a CLI scenario shown without a real console screenshot.",
+            "ai": {
+              "summary": "A terminal frame: a title bar with dots, monospaced command output and a blinking cursor. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-007-* palette — do not swap it for your theme tokens",
+                "the monospace font and pre for the output — otherwise command and result lines lose alignment",
+                "the prompt only on command-type lines — output without it, otherwise the log turns into a wall of glyphs",
+                "the cursor animation in CSS, not text: prefers-reduced-motion can then mute it without touching markup",
+                "the aria-label on the terminal output — a screen reader needs to know it is a log, not random text"
+              ],
+              "adapt": [
+                "the window title through title",
+                "the prompt symbol through prompt",
+                "the list of commands and output through lines",
+                "the whole content through children instead of lines"
+              ],
+              "notes": [
+                "There is a single cursor at the end of the output: a cursor after every line is deliberately not simulated.",
+                "The three colored dots are decorative and do not work as close or minimize buttons.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame007 title=\"zsh — vibeui\" prompt=\"❯\" lines={[{ text: \"npm run build\", type: \"command\" }, { text: \"Done\", type: \"output\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Window title",
+                "default": "zsh — vibeui"
+              },
+              "prompt": {
+                "label": "Prompt",
+                "default": "❯"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-008",
+      "type": "registry:component",
+      "title": "Tablet Landscape Frame",
+      "description": "Планшет в альбомной ориентации под скриншот интерфейса: экран держит пропорцию 4 / 3, поэтому картинка любой ширины ложится без обрезки.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-008/frame-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-008.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Корпус — блок с обводкой и внутренним отступом, экран держит aspect-ratio 4 / 3 и overflow:hidden, чтобы скриншот со своими углами не вылезал за скругление. Камера — точка в absolute на боковой грани корпуса: в альбомной ориентации она уходит с верхнего края, как у настоящего планшета. Домашняя полоса — тонкая линия внизу экрана, деталь макета без физической кнопки. Подпись — обычный figcaption под фигурой.",
+      "meta": {
+        "tags": [
+          "frame",
+          "tablet",
+          "landscape",
+          "mockup"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame008",
+          "usage": "<Frame008 caption=\"Дашборд на планшете\">\n  <img src=\"/shots/dashboard.png\" alt=\"Дашборд\" />\n</Frame008>",
+          "summary": "Рамка планшета в альбомной ориентации: экран 4 / 3, камера на боковой грани, слот под скриншот. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-008-* и не подменять её токенами вашей темы",
+            "пропорцию экрана 4 / 3 вместо фиксированной высоты: иначе скриншот обрезается или получает поля",
+            "альбомную ориентацию: портретный планшет с тем же макетом читается как другое устройство",
+            "камеру на боковой, а не верхней грани — в альбомной ориентации она физически там",
+            "светлый корпус с тонкой обводкой: тёмный сливается с тёмным фоном каталога"
+          ],
+          "adapt": [
+            "подпись под кадром через caption",
+            "содержимое экрана — картинкой или блоком в слоте",
+            "ширину корпуса через max-width на самом кадре",
+            "оттенок корпуса через переменную --vibeui-frame-008-bezel"
+          ],
+          "notes": [
+            "Скриншот масштабируется object-fit:cover: узкая картинка потеряет края.",
+            "Домашняя полоса — деталь макета без физической кнопки, актуальная для современных планшетов.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Интерфейс на планшете в альбомной ориентации",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tablet in landscape orientation for a UI screenshot: the screen holds a 4 / 3 ratio, so an image of any width fits without cropping.",
+            "ai": {
+              "summary": "A landscape tablet frame: a 4 / 3 screen, a camera on the side edge, a slot for the screenshot. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-008-* palette — do not swap it for your theme tokens",
+                "the 4 / 3 screen ratio instead of a fixed height: otherwise the screenshot is cropped or gets bars",
+                "the landscape orientation: a portrait tablet with the same layout reads as a different device",
+                "the camera on the side edge rather than the top — in landscape it physically sits there",
+                "the light body with a thin outline: a dark one merges into the dark catalog background"
+              ],
+              "adapt": [
+                "the caption below the frame through caption",
+                "the screen content — an image or a block in the slot",
+                "the body width through max-width on the frame itself",
+                "the body finish through the --vibeui-frame-008-bezel variable"
+              ],
+              "notes": [
+                "The screenshot is scaled with object-fit:cover: a narrow image loses its edges.",
+                "The home bar is a layout detail with no physical button, matching modern tablets.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame008 caption=\"Dashboard on a tablet\">\n  <img src=\"/shots/dashboard.png\" alt=\"Dashboard\" />\n</Frame008>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "UI on a tablet in landscape orientation"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-009",
+      "type": "registry:component",
+      "title": "Map Pin Frame",
+      "description": "Кадр карты с меткой и масштабной линейкой поверх условной сетки улиц: готовый шаблон для превью адреса или геолокации.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-009/frame-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-009.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Карта — условная сетка из двух repeating-linear-gradient на фоне земли, полностью декоративна и заменяется содержимым слота children. Метка нарисована каплей: круг со срезанным углом (border-radius) развёрнут через transform:rotate(-45deg), внутри — маленький кружок фона поверх исходного поворота. Масштабная линейка — три чередующихся сегмента и подпись в углу карты. И метка, и линейка обёрнуты в контейнер с aria-label, а визуальные детали внутри скрыты aria-hidden, чтобы текст не звучал дважды.",
+      "meta": {
+        "tags": [
+          "frame",
+          "map",
+          "location",
+          "pin"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame009",
+          "usage": "<Frame009 label=\"Офис VibeUI\" scale=\"1 км\" />",
+          "summary": "Кадр карты: метка с подписью, масштабная линейка и условная сетка улиц вместо реальной карты. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-009-* и не подменять её токенами вашей темы",
+            "условную сетку улиц вместо попытки нарисовать настоящую карту — сетка честно читается как заглушка",
+            "форму метки каплей через border-radius и transform, а не иконочный шрифт",
+            "aria-label на метке и линейке — визуальные детали декоративны, а текст должен звучать один раз",
+            "масштабную линейку в углу, а не поверх метки: иначе они перекрывают друг друга"
+          ],
+          "adapt": [
+            "подпись метки через label",
+            "значение масштаба через scale",
+            "подпись под кадром через caption",
+            "саму карту — картинкой, iframe или другим блоком в слоте children"
+          ],
+          "notes": [
+            "Позиция метки зафиксирована в процентах shell: для другой точки поменяйте top и left у [data-part=\"pin\"].",
+            "Масштаб не пересчитывается автоматически от карты — это статичная подпись, а не логика линейки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись метки",
+            "type": "text",
+            "default": "ул. Пушкина, 12",
+            "maxLength": 40
+          },
+          {
+            "prop": "scale",
+            "label": "Масштаб",
+            "type": "text",
+            "default": "500 м",
+            "maxLength": 12
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A map frame with a pin and a scale bar over a placeholder street grid: a ready template for an address or geolocation preview.",
+            "ai": {
+              "summary": "A map frame: a labeled pin, a scale bar and a placeholder street grid instead of a real map. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-009-* palette — do not swap it for your theme tokens",
+                "the placeholder street grid instead of faking a real map — the grid honestly reads as a stand-in",
+                "the teardrop pin shape via border-radius and transform, not an icon font",
+                "the aria-label on the pin and the scale bar — the visual details are decorative and the text must announce once",
+                "the scale bar in the corner rather than over the pin — otherwise they overlap"
+              ],
+              "adapt": [
+                "the pin caption through label",
+                "the scale value through scale",
+                "the caption below the frame through caption",
+                "the map itself — an image, an iframe or another block through the children slot"
+              ],
+              "notes": [
+                "The pin position is fixed in percent on the shell: change top and left on [data-part=\"pin\"] for a different point.",
+                "The scale is not recalculated from the map — it is a static caption, not ruler logic.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame009 label=\"VibeUI office\" scale=\"1 km\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Pin caption",
+                "default": "12 Pushkin St."
+              },
+              "scale": {
+                "label": "Scale",
+                "default": "500 m"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-010",
+      "type": "registry:component",
+      "title": "Overlapping Frame Collage",
+      "description": "Коллаж из трёх кадров внахлёст со смещением и поворотом в процентах: приём для обложек и hero-секций, когда одной картинки мало.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-010/frame-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-010.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Три карточки — data-part=\"card\" с data-role back, middle и front — расположены absolute внутри stage с aspect-ratio 6 / 5. Смещения (top, left), ширина и поворот заданы в процентах и градусах на каждой карточке отдельно, z-index растёт от заднего кадра к переднему. На узкой ширине контейнера @container уменьшает смещения и повороты, чтобы коллаж не вылезал за stage. Пустой слот показывает подпись-заглушку «Кадр N».",
+      "meta": {
+        "tags": [
+          "frame",
+          "collage",
+          "hero",
+          "gallery"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame010",
+          "usage": "<Frame010\n  back={<img src=\"/shots/one.png\" alt=\"\" />}\n  middle={<img src=\"/shots/two.png\" alt=\"\" />}\n  front={<img src=\"/shots/three.png\" alt=\"\" />}\n/>",
+          "summary": "Коллаж из трёх кадров внахлёст: смещения, повороты и порядок наложения заданы в процентах и z-index. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-010-* и не подменять её токенами вашей темы",
+            "проценты в смещениях и ширине карточек — пиксели привязали бы коллаж к конкретному контейнеру",
+            "разный z-index у трёх карточек — без него порядок наложения зависит от порядка в разметке",
+            "разные пропорции карточек: три одинаковых прямоугольника читаются как сетка, а не коллаж",
+            "тень у переднего кадра сильнее, чем у заднего — это и создаёт ощущение стопки"
+          ],
+          "adapt": [
+            "содержимое заднего кадра через back",
+            "содержимое среднего кадра через middle",
+            "содержимое переднего кадра через front",
+            "подпись под коллажем через caption"
+          ],
+          "notes": [
+            "Пустой слот показывает подпись-заглушку «Кадр N» — замените все три перед публикацией.",
+            "На узкой ширине сжатие срабатывает через @container: коллаж не завязан на ширину окна.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Три кадра внахлёст: коллаж для обложки",
+            "maxLength": 60
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A collage of three overlapping frames with percentage-based offset and rotation: a technique for covers and hero sections when one image is not enough.",
+            "ai": {
+              "summary": "A collage of three overlapping frames: offsets, rotation and stacking order are set in percent and z-index. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-010-* palette — do not swap it for your theme tokens",
+                "percentage offsets and card widths — pixels would tie the collage to one specific container",
+                "the different z-index per card — without it the stacking order depends on markup order",
+                "the different card proportions — three identical rectangles read as a grid, not a collage",
+                "the stronger shadow on the front card than the back one — that is what reads as a stack"
+              ],
+              "adapt": [
+                "the back card content through back",
+                "the middle card content through middle",
+                "the front card content through front",
+                "the caption below the collage through caption"
+              ],
+              "notes": [
+                "An empty slot shows a placeholder caption \"Frame N\" — replace all three before shipping.",
+                "The narrow-width squeeze runs through @container: the collage is not tied to the viewport width.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame010\n  back={<img src=\"/shots/one.png\" alt=\"\" />}\n  middle={<img src=\"/shots/two.png\" alt=\"\" />}\n  front={<img src=\"/shots/three.png\" alt=\"\" />}\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Three overlapping frames: a cover collage"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-011",
+      "type": "registry:component",
+      "title": "3D Tilt Frame",
+      "description": "Кадр с 3D-разворотом скриншота: perspective и rotateX/rotateY имитируют вид на экран сбоку — приём для hero-секций продукта.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-011/frame-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-011.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Карточка внутри stage с perspective развёрнута через rotateX/rotateY; направление разворота задаёт data-tilt со значениями left или right. При наведении на stage разворот выравнивается CSS-псевдоклассом :hover — эффект достигается без JS. На узкой ширине через @container угол разворота уменьшается, чтобы карточка не вылезала за stage.",
+      "meta": {
+        "tags": [
+          "frame",
+          "3d",
+          "perspective",
+          "mockup"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame011",
+          "usage": "<Frame011 tilt=\"left\" caption=\"Разворот экрана в перспективе\"><img src=\"/shots/app.png\" alt=\"\" /></Frame011>",
+          "summary": "Кадр с 3D-разворотом скриншота: perspective и rotateX/rotateY имитируют вид сбоку, разворот слегка выравнивается при наведении. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-011-* и не подменять её токенами вашей темы",
+            "perspective на stage, а не на самой карточке — иначе 3D-эффект не срабатывает",
+            "переход разворота при наведении через CSS-transition, а не JS-обработчик",
+            "тень под карточкой сильнее, чем у плоских кадров — без неё разворот не читается как объём",
+            "уменьшение угла разворота на узкой ширине через @container — иначе карточка вылезает за контейнер"
+          ],
+          "adapt": [
+            "направление разворота через tilt",
+            "подпись под кадром через caption",
+            "содержимое экрана через children"
+          ],
+          "notes": [
+            "Три точки в верхней панели декоративны и не работают как кнопки окна.",
+            "На наведение реагирует только stage целиком — не отдельные части карточки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tilt",
+            "label": "Направление разворота",
+            "type": "select",
+            "options": [
+              "left",
+              "right"
+            ],
+            "default": "left"
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A frame with a 3D screenshot tilt: perspective and rotateX/rotateY simulate a side view of the screen — a technique for product hero sections.",
+            "ai": {
+              "summary": "A frame with a 3D screenshot tilt: perspective and rotateX/rotateY simulate a side view, the tilt eases on hover. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-011-* palette — do not swap it for your theme tokens",
+                "perspective on the stage, not on the card itself — otherwise the 3D effect does not work",
+                "the hover tilt transition through CSS, not a JS handler",
+                "the stronger shadow under the card than on flat frames — without it the tilt does not read as depth",
+                "the reduced tilt angle at narrow widths through @container — otherwise the card overflows the container"
+              ],
+              "adapt": [
+                "the tilt direction through tilt",
+                "the caption below the frame through caption",
+                "the screen content through children"
+              ],
+              "notes": [
+                "The three dots in the top bar are decorative and do not act as window buttons.",
+                "Only the whole stage reacts to hover — not individual parts of the card.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame011 tilt=\"left\" caption=\"Screen tilted in perspective\"><img src=\"/shots/app.png\" alt=\"\" /></Frame011>"
+            },
+            "controls": {
+              "tilt": {
+                "label": "Tilt direction"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-012",
+      "type": "registry:component",
+      "title": "Before After Comparison Frame",
+      "description": "Сравнение «до» и «после» двумя кадрами с вертикальным разделителем и подписями — приём для демонстрации результата изменений.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-012/frame-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-012.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Два слота before и after занимают по 50% ширины stage во flex-раскладке, разделены линией и декоративной ручкой по центру. Подписи beforeLabel и afterLabel — настоящий текст в углах, а не оверлей на картинке. На узкой ширине через @container панели переключаются в колонку, разделитель становится горизонтальным.",
+      "meta": {
+        "tags": [
+          "frame",
+          "comparison",
+          "before-after",
+          "mockup"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame012",
+          "usage": "<Frame012 before={<img src=\"/shots/before.png\" alt=\"\" />} after={<img src=\"/shots/after.png\" alt=\"\" />} beforeLabel=\"До\" afterLabel=\"После\" />",
+          "summary": "Сравнение «до» и «после» двумя кадрами с разделителем и подписями по центру. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-012-* и не подменять её токенами вашей темы",
+            "равное деление 50/50 между панелями — асимметрия читается как ошибка вёрстки, а не приём",
+            "подписи beforeLabel и afterLabel настоящим текстом, а не картинкой поверх снимка",
+            "разделительную линию и ручку по центру — без них два кадра выглядят как случайная пара",
+            "переключение панелей в колонку на узкой ширине через @container"
+          ],
+          "adapt": [
+            "содержимое левой панели через before",
+            "содержимое правой панели через after",
+            "подпись левой панели через beforeLabel",
+            "подпись правой панели через afterLabel",
+            "подпись под кадром через caption"
+          ],
+          "notes": [
+            "Ручка по центру декоративна: разделитель не перетаскивается, деление всегда 50/50.",
+            "Пустые слоты показывают подписи-заглушки «Кадр «до»» и «Кадр «после»».",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "beforeLabel",
+            "label": "Подпись «до»",
+            "type": "text",
+            "default": "До",
+            "maxLength": 20
+          },
+          {
+            "prop": "afterLabel",
+            "label": "Подпись «после»",
+            "type": "text",
+            "default": "После",
+            "maxLength": 20
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A before/after comparison as two frames with a vertical divider and labels — a technique for showing the result of a change.",
+            "ai": {
+              "summary": "A before/after comparison as two frames with a divider and labels at the center. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-012-* palette — do not swap it for your theme tokens",
+                "the equal 50/50 split between panes — asymmetry reads as a layout bug, not a choice",
+                "the beforeLabel and afterLabel as real text, not an image overlay on the shot",
+                "the divider line and handle at the center — without them the two frames look like a random pair",
+                "the panel-to-column switch at narrow widths through @container"
+              ],
+              "adapt": [
+                "the left pane content through before",
+                "the right pane content through after",
+                "the left pane label through beforeLabel",
+                "the right pane label through afterLabel",
+                "the caption below the frame through caption"
+              ],
+              "notes": [
+                "The center handle is decorative: the divider is not draggable, the split is always 50/50.",
+                "Empty slots show the placeholder captions \"Frame «before»\" and \"Frame «after»\".",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame012 before={<img src=\"/shots/before.png\" alt=\"\" />} after={<img src=\"/shots/after.png\" alt=\"\" />} beforeLabel=\"Before\" afterLabel=\"After\" />"
+            },
+            "controls": {
+              "beforeLabel": {
+                "label": "Before label",
+                "default": "Before"
+              },
+              "afterLabel": {
+                "label": "After label",
+                "default": "After"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-013",
+      "type": "registry:component",
+      "title": "App Shell Frame",
+      "description": "Кадр приложения с боковой панелью навигации и шапкой над рабочей областью — макет для скриншотов дашбордов и SaaS-интерфейсов.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-013/frame-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-013.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Каркас — flex из aside-панели с nav/ul-списком пунктов и основной области с header и рабочим телом. Активный пункт меню помечен aria-current=\"page\" и подсвечен фоном. Слот children подменяет только рабочее тело под шапкой; панель и шапка остаются неизменной частью каркаса. На узкой ширине через @container панель сужается и сетка заглушек становится одноколоночной.",
+      "meta": {
+        "tags": [
+          "frame",
+          "app",
+          "dashboard",
+          "mockup"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame013",
+          "usage": "<Frame013 appName=\"Vibe\" pageTitle=\"Обзор\" navItems={[\"Обзор\", \"Проекты\", \"Команда\"]} activeIndex={0} />",
+          "summary": "Кадр приложения: боковая панель навигации с активным пунктом и шапка над рабочей областью. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-013-* и не подменять её токенами вашей темы",
+            "aria-current=\"page\" на активном пункте меню — иначе состояние теряется для вспомогательных технологий",
+            "nav с aria-label вокруг списка пунктов — список без него не опознаётся как навигация",
+            "усечение названия приложения и заголовка страницы многоточием, а не их скрытие на узкой ширине",
+            "сужение панели, а не её исчезновение, на узкой ширине через @container"
+          ],
+          "adapt": [
+            "название приложения через appName",
+            "заголовок рабочей области через pageTitle",
+            "список пунктов меню через navItems",
+            "индекс активного пункта через activeIndex",
+            "содержимое рабочей области через children"
+          ],
+          "notes": [
+            "Два кружка в шапке декоративны и не работают как кнопки действий.",
+            "Пустая рабочая область показывает сетку карточек-заглушек из четырёх блоков.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "appName",
+            "label": "Название приложения",
+            "type": "text",
+            "default": "Vibe",
+            "maxLength": 24
+          },
+          {
+            "prop": "pageTitle",
+            "label": "Заголовок страницы",
+            "type": "text",
+            "default": "Обзор",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An app frame with a sidebar navigation panel and a header above the work area — a layout for dashboard and SaaS interface screenshots.",
+            "ai": {
+              "summary": "An app frame: a sidebar navigation panel with an active item and a header above the work area. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-013-* palette — do not swap it for your theme tokens",
+                "aria-current=\"page\" on the active menu item — otherwise the state is lost for assistive technology",
+                "the nav with aria-label around the item list — without it the list is not recognized as navigation",
+                "truncating the app name and page title with an ellipsis, not hiding them, at narrow widths",
+                "narrowing the sidebar, not removing it, at narrow widths through @container"
+              ],
+              "adapt": [
+                "the app name through appName",
+                "the work area title through pageTitle",
+                "the menu item list through navItems",
+                "the active item index through activeIndex",
+                "the work area content through children"
+              ],
+              "notes": [
+                "The two circles in the header are decorative and do not act as action buttons.",
+                "An empty work area shows a placeholder grid of four cards.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame013 appName=\"Vibe\" pageTitle=\"Overview\" navItems={[\"Overview\", \"Projects\", \"Team\"]} activeIndex={0} />"
+            },
+            "controls": {
+              "appName": {
+                "label": "App name",
+                "default": "Vibe"
+              },
+              "pageTitle": {
+                "label": "Page title",
+                "default": "Overview"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-014",
+      "type": "registry:component",
+      "title": "Email Message Frame",
+      "description": "Кадр письма: строка отправителя с аватаром-инициалом, тема и тело сообщения — макет для превью email-рассылок.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-014/frame-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-014.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Строка meta несёт аватар-инициал (первая буква sender, вычисляется на сервере), имя и адрес отправителя и дату. Тема — отдельный h2 крупнее тела письма. Слот children подменяет тело письма целиком вместо строк по умолчанию. На узкой ширине через @container строка meta переносится, а тема немного уменьшается.",
+      "meta": {
+        "tags": [
+          "frame",
+          "email",
+          "message",
+          "mockup"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame014",
+          "usage": "<Frame014 sender=\"Команда VibeUI\" senderEmail=\"hello@vibeui.ru\" subject=\"Новый макет письма\"><p>Текст письма.</p></Frame014>",
+          "summary": "Кадр письма: строка отправителя с аватаром-инициалом, тема отдельной строкой и тело сообщения. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-014-* и не подменять её токенами вашей темы",
+            "аватар-инициал, вычисленный из sender, а не внешнюю картинку — письмо остаётся читаемым без загрузки изображений",
+            "тему как отдельный крупный элемент над телом — если её слить с телом, письмо теряет иерархию",
+            "перенос строки meta на узкой ширине через @container вместо обрезки имени или адреса",
+            "адрес отправителя рядом с именем — без него в письме не видно, кому доверять"
+          ],
+          "adapt": [
+            "имя отправителя через sender",
+            "адрес отправителя через senderEmail",
+            "дату или время через date",
+            "тему письма через subject",
+            "тело письма через children"
+          ],
+          "notes": [
+            "Аватар — первая буква sender в кружке, не настоящее изображение.",
+            "Пустое тело письма показывает три строки текста по умолчанию.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "subject",
+            "label": "Тема письма",
+            "type": "text",
+            "default": "Новый макет письма готов к проверке",
+            "maxLength": 80
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An email message frame: a sender line with an initial avatar, subject and message body — a layout for email newsletter previews.",
+            "ai": {
+              "summary": "An email frame: a sender line with an initial avatar, the subject as a separate line and the message body. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-014-* palette — do not swap it for your theme tokens",
+                "the initial avatar computed from sender, not an external image — the message stays readable without loading images",
+                "the subject as a separate, larger element above the body — merging it with the body loses the hierarchy",
+                "the meta line wrapping at narrow widths through @container instead of truncating the name or address",
+                "the sender address next to the name — without it the message gives no way to judge trust"
+              ],
+              "adapt": [
+                "the sender name through sender",
+                "the sender address through senderEmail",
+                "the date or time through date",
+                "the subject line through subject",
+                "the message body through children"
+              ],
+              "notes": [
+                "The avatar is the first letter of sender in a circle, not a real image.",
+                "An empty body shows three default lines of placeholder text.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame014 sender=\"VibeUI Team\" senderEmail=\"hello@vibeui.dev\" subject=\"New email layout\"><p>Message text.</p></Frame014>"
+            },
+            "controls": {
+              "subject": {
+                "label": "Subject",
+                "default": "New email layout is ready for review"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-015",
+      "type": "registry:component",
+      "title": "Video Player Frame",
+      "description": "Кадр видеоплеера: тёмная обложка, кнопка воспроизведения в центре и дорожка времени с пройденной долей внизу кадра.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-015/frame-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-015.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Обложка ролика лежит в aspect-ratio 16 / 9 и держит своё пространство до того, как медиа подгрузится. Кнопка воспроизведения и заголовок — поверх затемнения снизу (scrim), которое гарантирует контраст текста на любой обложке. Дорожка времени — трек с заполненной долей: процент передаётся пропом progress и выражается единственным инлайн-стилем в файле, остальная разметка держится на CSS-переменных.",
+      "meta": {
+        "tags": [
+          "frame",
+          "video",
+          "player",
+          "mockup"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame015",
+          "usage": "<Frame015 title=\"Обзор каталога VibeUI\" currentTime=\"1:24\" duration=\"4:12\" progress={32}><img src=\"/shots/cover.jpg\" alt=\"\" /></Frame015>",
+          "summary": "Кадр видеоплеера: обложка, кнопка воспроизведения по центру и дорожка времени с заполненной долей. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-015-* и не подменять её токенами вашей темы",
+            "затемнение (scrim) снизу обложки — без него заголовок и время не читаются на светлом кадре",
+            "единственный инлайн-стиль у заполнения дорожки — это единственный способ передать процент без класса",
+            "aspect-ratio 16 / 9 на сцене плеера — иначе кадр прыгает при загрузке обложки",
+            "aria-hidden на декоративной кнопке воспроизведения и дорожке — они не работают как реальные контролы"
+          ],
+          "adapt": [
+            "заголовок ролика через title",
+            "текущее время и длительность через currentTime и duration",
+            "заполнение дорожки через progress",
+            "обложку — картинкой или блоком в слоте children"
+          ],
+          "notes": [
+            "Кнопка воспроизведения декоративна и не реагирует на клик: компонент серверный и без JS.",
+            "Дорожка не перетаскивается: это статичная визуализация прогресса, а не полноценный сикер.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Обзор каталога VibeUI",
+            "maxLength": 60
+          },
+          {
+            "prop": "progress",
+            "label": "Прогресс просмотра",
+            "type": "number",
+            "default": 32,
+            "min": 0,
+            "max": 100
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A video player frame: a dark poster, a centered play button and a timeline track with the watched portion filled in.",
+            "ai": {
+              "summary": "A video player frame: a poster, a centered play button and a timeline track with the watched share filled in. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-015-* palette — do not swap it for your theme tokens",
+                "the scrim under the poster — without it the title and time are unreadable on a light frame",
+                "the single inline style on the track fill — it is the only way to pass a percentage without a class",
+                "the 16 / 9 aspect ratio on the player stage — otherwise the frame jumps as the poster loads",
+                "aria-hidden on the decorative play button and track — they do not act as real controls"
+              ],
+              "adapt": [
+                "the video title through title",
+                "the current time and duration through currentTime and duration",
+                "the track fill through progress",
+                "the poster — an image or a block through the children slot"
+              ],
+              "notes": [
+                "The play button is decorative and does not respond to clicks: the component is server-rendered with no JS.",
+                "The track is not draggable: it is a static progress visualization, not a real seeker.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame015 title=\"VibeUI catalog tour\" currentTime=\"1:24\" duration=\"4:12\" progress={32}><img src=\"/shots/cover.jpg\" alt=\"\" /></Frame015>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "VibeUI catalog tour"
+              },
+              "progress": {
+                "label": "Watch progress"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-016",
+      "type": "registry:component",
+      "title": "Smart Watch Frame",
+      "description": "Кадр умных часов с круглым экраном: ремешок и коронка нарисованы на CSS clip-path, а не картинкой, циферблат передаётся через children.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-016/frame-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-016.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Корпус — окружность с внутренним отступом и слотом-экраном, тоже кругом, чтобы содержимое циферблата не вылезало за скругление. Ремешок над и под корпусом нарисован clip-path:polygon — тем же приёмом, что и основание ноутбука в frame-005, без второй картинки. Коронка сбоку — маленький прямоугольник в absolute за пределами круга. Корпус светлый металлик: тёмный силуэт растворился бы в тёмной подложке каталога, а тёмный экран держит контраст текста на себе.",
+      "meta": {
+        "tags": [
+          "frame",
+          "watch",
+          "wearable",
+          "mockup"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame016",
+          "usage": "<Frame016 time=\"9:41\" subtitle=\"6 482 шага\" caption=\"Циферблат с активностью за день\" />",
+          "summary": "Кадр умных часов: круглый экран в металлическом корпусе, ремешок на clip-path и коронка сбоку. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-016-* и не подменять её токенами вашей темы",
+            "круглую форму экрана и корпуса — квадратный экран здесь читается как другое устройство",
+            "ремешок на clip-path сверху и снизу корпуса — прямоугольная лента превращает часы в две плашки",
+            "светлый металлический корпус: тёмный сливается с тёмной подложкой каталога",
+            "overflow:hidden на экране — содержимое со своими углами иначе вылезает за окружность"
+          ],
+          "adapt": [
+            "время на циферблате через time",
+            "подпись под временем через subtitle",
+            "содержимое экрана целиком через children вместо time и subtitle",
+            "ширину корпуса через переменную --vibeui-frame-016-size"
+          ],
+          "notes": [
+            "Коронка декоративна и не работает как кнопка или колёсико прокрутки.",
+            "На очень узкой ширине корпус уменьшается через @container, а не переполняет контейнер.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "time",
+            "label": "Время",
+            "type": "text",
+            "default": "9:41",
+            "maxLength": 8
+          },
+          {
+            "prop": "subtitle",
+            "label": "Подпись",
+            "type": "text",
+            "default": "6 482 шага",
+            "maxLength": 24
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A smart watch frame with a round screen: the strap and crown are drawn with CSS clip-path rather than an image, the dial content passes through children.",
+            "ai": {
+              "summary": "A smart watch frame: a round screen in a metal case, a clip-path strap and a side crown. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-016-* palette — do not swap it for your theme tokens",
+                "the round shape of the screen and case — a square screen here reads as a different device",
+                "the clip-path strap above and below the case — a rectangular band turns the watch into two slabs",
+                "the light metal case — a dark one merges into the dark catalog background",
+                "overflow:hidden on the screen — content with its own corners otherwise spills past the circle"
+              ],
+              "adapt": [
+                "the dial time through time",
+                "the caption under the time through subtitle",
+                "the whole screen content through children instead of time and subtitle",
+                "the case width through the --vibeui-frame-016-size variable"
+              ],
+              "notes": [
+                "The crown is decorative and does not act as a button or scroll wheel.",
+                "At very narrow widths the case shrinks through @container instead of overflowing the container.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame016 time=\"9:41\" subtitle=\"6,482 steps\" caption=\"A watch face with daily activity\" />"
+            },
+            "controls": {
+              "time": {
+                "label": "Time",
+                "default": "9:41"
+              },
+              "subtitle": {
+                "label": "Caption",
+                "default": "6,482 steps"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-017",
+      "type": "registry:component",
+      "title": "Presentation Slide Frame",
+      "description": "Кадр слайда презентации с полем 16 / 9 и подписью: строка снизу считает номер слайда и рисует точки положения в колоде.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-017/frame-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-017.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Поле держит aspect-ratio 16 / 9 независимо от содержимого слота, поэтому кадр не меняет пропорцию при разных слайдах. Строка под полем показывает текстовый счётчик «index / total» — обычный текст для скринридера — и ряд точек-индикаторов, помеченных aria-hidden как декоративное дублирование того же счётчика. Число точек ограничено восемью: большая колода рисуется тем же счётчиком без ленты из полусотни точек.",
+      "meta": {
+        "tags": [
+          "frame",
+          "slide",
+          "presentation",
+          "mockup"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame017",
+          "usage": "<Frame017 index={3} total={12} caption=\"Слайд «Дорожная карта Q3»\"><img src=\"/shots/slide.png\" alt=\"Дорожная карта Q3\" /></Frame017>",
+          "summary": "Кадр слайда презентации: поле 16 / 9, строка с номером слайда и точками положения в колоде. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-017-* и не подменять её токенами вашей темы",
+            "aspect-ratio 16 / 9 на поле слайда — без него кадр меняет пропорцию от слайда к слайду",
+            "текстовый счётчик «index / total» как обычный текст — точки под ним декоративны и aria-hidden",
+            "ограничение точек-индикаторов восемью — лента из полусотни точек нечитаема и бесполезна",
+            "подпись фигуры под кадром, а не поверх слайда"
+          ],
+          "adapt": [
+            "номер слайда через index",
+            "общее число слайдов через total",
+            "содержимое поля через children",
+            "подпись под кадром через caption"
+          ],
+          "notes": [
+            "Точки не интерактивны и не переключают слайд: это статичный индикатор позиции.",
+            "При total больше восьми в ряду остаётся восемь точек, а счётчик продолжает показывать реальные числа.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "index",
+            "label": "Номер слайда",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 99
+          },
+          {
+            "prop": "total",
+            "label": "Всего слайдов",
+            "type": "number",
+            "default": 12,
+            "min": 1,
+            "max": 99
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A presentation slide frame with a 16 / 9 field and a caption: the row below counts the slide number and draws dots for the position in the deck.",
+            "ai": {
+              "summary": "A presentation slide frame: a 16 / 9 field, a slide counter row and dots for the position in the deck. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-017-* palette — do not swap it for your theme tokens",
+                "the 16 / 9 aspect ratio on the slide field — without it the frame changes proportion from slide to slide",
+                "the \"index / total\" text counter as real text — the dots below it are decorative and aria-hidden",
+                "the eight-dot cap on the indicators — a ribbon of fifty dots is unreadable and useless",
+                "the figure caption below the frame rather than over the slide"
+              ],
+              "adapt": [
+                "the slide number through index",
+                "the total slide count through total",
+                "the field content through children",
+                "the caption below the frame through caption"
+              ],
+              "notes": [
+                "The dots are not interactive and do not switch slides: it is a static position indicator.",
+                "When total exceeds eight, the row keeps eight dots while the counter still shows the real numbers.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame017 index={3} total={12} caption=\"Slide: Q3 roadmap\"><img src=\"/shots/slide.png\" alt=\"Q3 roadmap\" /></Frame017>"
+            },
+            "controls": {
+              "index": {
+                "label": "Slide number"
+              },
+              "total": {
+                "label": "Total slides"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-018",
+      "type": "registry:component",
+      "title": "Chat Message Frame",
+      "description": "Кадр чата: заголовок с собеседником, лента пузырей сообщений и поле ввода снизу — макет для превью переписки в мессенджере.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-018/frame-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-018.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Своё сообщение выравнивается вправо и красится акцентным цветом, чужое — влево на нейтральном фоне; хвостик пузыря срезан скруглением с той стороны, что и выравнивание, поэтому направление читается без подписи отправителя у каждой реплики. Лента обёрнута в role=\"log\" с aria-label на имя собеседника. Поле ввода и кнопка отправки — настоящие disabled input и button: честно сообщают вспомогательным технологиям, что это макет, а не рабочая форма, и не требуют клиентского JS.",
+      "meta": {
+        "tags": [
+          "frame",
+          "chat",
+          "messenger",
+          "mockup"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame018",
+          "usage": "<Frame018 contact=\"Ева\" messages={[{ from: \"them\", text: \"Привет!\" }, { from: \"me\", text: \"Привет, как дела?\" }]} />",
+          "summary": "Кадр чата: заголовок с собеседником, пузыри сообщений слева и справа и поле ввода снизу. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-018-* и не подменять её токенами вашей темы",
+            "выравнивание и форму хвостика пузыря как признак отправителя — смысл должен читаться и без цвета",
+            "role=\"log\" с aria-label на ленте сообщений — иначе переписка не опознаётся как связный поток",
+            "disabled на поле ввода и кнопке отправки — это честно сообщает, что перед пользователем макет, а не форма",
+            "сжатие ширины пузырей на узкой ширине через @container, а не фиксированный процент"
+          ],
+          "adapt": [
+            "имя собеседника через contact",
+            "список сообщений через messages с полями text и from",
+            "плейсхолдер поля ввода через placeholder",
+            "ленту сообщений целиком через children вместо messages",
+            "подпись под кадром через caption"
+          ],
+          "notes": [
+            "Поле ввода и кнопка отправки задизейблены намеренно: клиентского JS в компоненте нет.",
+            "from принимает только «me» или «them» — сторонние значения ломают выравнивание пузыря.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "contact",
+            "label": "Имя собеседника",
+            "type": "text",
+            "default": "Ева",
+            "maxLength": 24
+          },
+          {
+            "prop": "placeholder",
+            "label": "Плейсхолдер поля ввода",
+            "type": "text",
+            "default": "Сообщение…",
+            "maxLength": 30
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A chat frame: a header with the contact, a feed of message bubbles and an input field at the bottom — a layout for messenger conversation previews.",
+            "ai": {
+              "summary": "A chat frame: a contact header, message bubbles aligned left and right and an input field at the bottom. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-018-* palette — do not swap it for your theme tokens",
+                "the alignment and bubble tail shape as the sender cue — the meaning must read even without color",
+                "the role=\"log\" with aria-label on the message feed — otherwise the conversation is not recognized as a coherent stream",
+                "disabled on the input and send button — it honestly tells assistive tech this is a mockup, not a working form",
+                "the bubble width shrinking at narrow widths through @container rather than a fixed percentage"
+              ],
+              "adapt": [
+                "the contact name through contact",
+                "the message list through messages with text and from fields",
+                "the input placeholder through placeholder",
+                "the whole message feed through children instead of messages",
+                "the caption below the frame through caption"
+              ],
+              "notes": [
+                "The input and send button are deliberately disabled: the component ships with no client JS.",
+                "from only accepts \"me\" or \"them\" — other values break the bubble alignment.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame018 contact=\"Eve\" messages={[{ from: \"them\", text: \"Hi!\" }, { from: \"me\", text: \"Hey, how are you?\" }]} />"
+            },
+            "controls": {
+              "contact": {
+                "label": "Contact name",
+                "default": "Eve"
+              },
+              "placeholder": {
+                "label": "Input placeholder",
+                "default": "Message…"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "frame-019",
+      "type": "registry:component",
+      "title": "Gradient Glow Frame",
+      "description": "Кадр с рамкой-градиентом и мягким свечением под ним: сплошная заливка держит середину рамки, размытый слой позади создаёт подсветку.",
+      "categories": [
+        "frame"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "frame-019/frame-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/frame-019.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, хуков нет. Градиентная рамка нарисована без border: внешний блок залит линейным градиентом и держит паддинг 2px, внутренний блок сплошным фоном перекрывает середину, оставляя градиент только по кромке. Свечение — отдельный слой позади кадра с двумя радиальными градиентами и большим blur, сдвинутый вниз и увеличенный за границы рамки, поэтому читается как подсветка из-под кадра. Едва заметная пульсация свечения — CSS keyframes, отключаемая через prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "frame",
+          "gradient",
+          "glow",
+          "mockup"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Frame019",
+          "usage": "<Frame019 caption=\"Обложка продукта в градиентной рамке\"><img src=\"/shots/product.jpg\" alt=\"\" /></Frame019>",
+          "summary": "Кадр с рамкой-градиентом и мягким свечением под ним: заливка держит середину рамки, размытый слой позади — эффект подсветки. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-frame-019-* и не подменять её токенами вашей темы",
+            "паддинг 2px на градиентном слое вместо border — border-image даёт куда меньше контроля над углами",
+            "свечение отдельным слоем позади кадра, а не тенью на самой рамке — иначе подсветка обрезается overflow:hidden кадра",
+            "пульсацию свечения через CSS keyframes с prefers-reduced-motion — а не постоянную статичную заливку",
+            "z-index свечения ниже рамки — иначе оно перекрывает содержимое, а не подсвечивает его снизу"
+          ],
+          "adapt": [
+            "содержимое кадра через children",
+            "подпись под кадром через caption",
+            "цвета рамки и свечения через --vibeui-frame-019-border-a/-b и --vibeui-frame-019-glow-a/-b"
+          ],
+          "notes": [
+            "Свечение декоративно и помечено aria-hidden — смысл несёт содержимое кадра, а не подсветка.",
+            "На очень узкой ширине паддинг сцены уменьшается через @container, чтобы свечение не обрезалось.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "i18n": {
+          "en": {
+            "description": "A frame with a gradient border and a soft glow beneath it: a solid fill holds the middle of the border, a blurred layer behind creates the backlight.",
+            "ai": {
+              "summary": "A frame with a gradient border and a soft glow underneath: a fill holds the border's middle, a blurred layer behind reads as a backlight. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-frame-019-* palette — do not swap it for your theme tokens",
+                "the 2px padding on the gradient layer instead of border — border-image gives far less control over the corners",
+                "the glow as a separate layer behind the frame, not a shadow on the frame itself — otherwise the frame's overflow:hidden clips it",
+                "the glow pulse through CSS keyframes with prefers-reduced-motion — not a constant static fill",
+                "the glow's lower z-index than the frame — otherwise it covers the content instead of lighting it from below"
+              ],
+              "adapt": [
+                "the frame content through children",
+                "the caption below the frame through caption",
+                "the border and glow colors through --vibeui-frame-019-border-a/-b and --vibeui-frame-019-glow-a/-b"
+              ],
+              "notes": [
+                "The glow is decorative and marked aria-hidden — the frame's content carries the meaning, not the backlight.",
+                "At very narrow widths the stage padding shrinks through @container so the glow does not get clipped.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Frame019 caption=\"A product cover in a gradient frame\"><img src=\"/shots/product.jpg\" alt=\"\" /></Frame019>"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

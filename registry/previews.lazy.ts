@@ -1858,456 +1858,6 @@ export const LAZY_PREVIEWS = {
       (module) => module.Contact006,
     ),
   ),
-  "datagrid-001": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-001/datagrid-001").then(
-      (module) => module.Datagrid001,
-    ),
-  ),
-  "datagrid-002": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-002/datagrid-002").then(
-      (module) => module.Datagrid002,
-    ),
-  ),
-  "datagrid-003": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-003/datagrid-003").then(
-      (module) => module.Datagrid003,
-    ),
-  ),
-  "datagrid-004": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-004/datagrid-004").then(
-      (module) => module.Datagrid004,
-    ),
-  ),
-  "datagrid-005": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-005/datagrid-005").then(
-      (module) => module.Datagrid005,
-    ),
-  ),
-  "datagrid-006": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-006/datagrid-006").then(
-      (module) => module.Datagrid006,
-    ),
-  ),
-  "datagrid-007": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-007/datagrid-007").then(
-      (module) => module.Datagrid007,
-    ),
-  ),
-  "datagrid-008": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-008/datagrid-008").then(
-      (module) => module.Datagrid008,
-    ),
-  ),
-  "datagrid-009": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-009/datagrid-009").then(
-      (module) => module.Datagrid009,
-    ),
-  ),
-  "datagrid-010": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-010/datagrid-010").then(
-      (module) => module.Datagrid010,
-    ),
-  ),
-  "datagrid-011": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-011/datagrid-011").then(
-      (module) => module.Datagrid011,
-    ),
-  ),
-  "datagrid-012": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-012/datagrid-012").then(
-      (module) => module.Datagrid012,
-    ),
-  ),
-  "datagrid-013": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-013/datagrid-013").then(
-      (module) => module.Datagrid013,
-    ),
-  ),
-  "datagrid-014": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-014/datagrid-014").then(
-      (module) => module.Datagrid014,
-    ),
-  ),
-  "datagrid-015": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-015/datagrid-015").then(
-      (module) => module.Datagrid015,
-    ),
-  ),
-  "datagrid-016": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-016/datagrid-016").then(
-      (module) => module.Datagrid016,
-    ),
-  ),
-  "datagrid-017": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-017/datagrid-017").then(
-      (module) => module.Datagrid017,
-    ),
-  ),
-  "datagrid-018": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-018/datagrid-018").then(
-      (module) => module.Datagrid018,
-    ),
-  ),
-  "datagrid-019": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-019/datagrid-019").then(
-      (module) => module.Datagrid019,
-    ),
-  ),
-  "datagrid-020": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-020/datagrid-020").then(
-      (module) => module.Datagrid020,
-    ),
-  ),
-  "datagrid-021": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-021/datagrid-021").then(
-      (module) => module.Datagrid021,
-    ),
-  ),
-  "datagrid-022": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-022/datagrid-022").then(
-      (module) => module.Datagrid022,
-    ),
-  ),
-  "datagrid-023": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-023/datagrid-023").then(
-      (module) => module.Datagrid023,
-    ),
-  ),
-  "datagrid-024": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-024/datagrid-024").then(
-      (module) => module.Datagrid024,
-    ),
-  ),
-  "datagrid-025": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-025/datagrid-025").then(
-      (module) => module.Datagrid025,
-    ),
-  ),
-  "datagrid-026": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-026/datagrid-026").then(
-      (module) => module.Datagrid026,
-    ),
-  ),
-  "datagrid-027": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-027/datagrid-027").then(
-      (module) => module.Datagrid027,
-    ),
-  ),
-  "datagrid-028": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-028/datagrid-028").then(
-      (module) => module.Datagrid028,
-    ),
-  ),
-  "datagrid-029": dynamic(() =>
-    import("@/registry/components/datagrid/datagrid-029/datagrid-029").then(
-      (module) => module.Datagrid029,
-    ),
-  ),
-  "button-001": dynamic(() =>
-    import("@/registry/components/buttons/button-001/button-001").then(
-      (module) => module.Button001,
-    ),
-  ),
-  "button-002": dynamic(() =>
-    import("@/registry/components/buttons/button-002/button-002").then(
-      (module) => module.Button002,
-    ),
-  ),
-  "button-003": dynamic(() =>
-    import("@/registry/components/buttons/button-003/button-003").then(
-      (module) => module.Button003,
-    ),
-  ),
-  "button-004": dynamic(() =>
-    import("@/registry/components/buttons/button-004/button-004").then(
-      (module) => module.Button004,
-    ),
-  ),
-  "button-005": dynamic(() =>
-    import("@/registry/components/buttons/button-005/button-005").then(
-      (module) => module.Button005,
-    ),
-  ),
-  "button-006": dynamic(() =>
-    import("@/registry/components/buttons/button-006/button-006").then(
-      (module) => module.Button006,
-    ),
-  ),
-  "button-007": dynamic(() =>
-    import("@/registry/components/buttons/button-007/button-007").then(
-      (module) => module.Button007,
-    ),
-  ),
-  "button-008": dynamic(() =>
-    import("@/registry/components/buttons/button-008/button-008").then(
-      (module) => module.Button008,
-    ),
-  ),
-  "button-009": dynamic(() =>
-    import("@/registry/components/buttons/button-009/button-009").then(
-      (module) => module.Button009,
-    ),
-  ),
-  "button-010": dynamic(() =>
-    import("@/registry/components/buttons/button-010/button-010").then(
-      (module) => module.Button010,
-    ),
-  ),
-  "button-011": dynamic(() =>
-    import("@/registry/components/buttons/button-011/button-011").then(
-      (module) => module.Button011,
-    ),
-  ),
-  "button-012": dynamic(() =>
-    import("@/registry/components/buttons/button-012/button-012").then(
-      (module) => module.Button012,
-    ),
-  ),
-  "button-013": dynamic(() =>
-    import("@/registry/components/buttons/button-013/button-013").then(
-      (module) => module.Button013,
-    ),
-  ),
-  "button-014": dynamic(() =>
-    import("@/registry/components/buttons/button-014/button-014").then(
-      (module) => module.Button014,
-    ),
-  ),
-  "button-015": dynamic(() =>
-    import("@/registry/components/buttons/button-015/button-015").then(
-      (module) => module.Button015,
-    ),
-  ),
-  "button-016": dynamic(() =>
-    import("@/registry/components/buttons/button-016/button-016").then(
-      (module) => module.Button016,
-    ),
-  ),
-  "button-017": dynamic(() =>
-    import("@/registry/components/buttons/button-017/button-017").then(
-      (module) => module.Button017,
-    ),
-  ),
-  "button-018": dynamic(() =>
-    import("@/registry/components/buttons/button-018/button-018").then(
-      (module) => module.Button018,
-    ),
-  ),
-  "button-019": dynamic(() =>
-    import("@/registry/components/buttons/button-019/button-019").then(
-      (module) => module.Button019,
-    ),
-  ),
-  "button-020": dynamic(() =>
-    import("@/registry/components/buttons/button-020/button-020").then(
-      (module) => module.Button020,
-    ),
-  ),
-  "button-021": dynamic(() =>
-    import("@/registry/components/buttons/button-021/button-021").then(
-      (module) => module.Button021,
-    ),
-  ),
-  "button-022": dynamic(() =>
-    import("@/registry/components/buttons/button-022/button-022").then(
-      (module) => module.Button022,
-    ),
-  ),
-  "button-023": dynamic(() =>
-    import("@/registry/components/buttons/button-023/button-023").then(
-      (module) => module.Button023,
-    ),
-  ),
-  "button-024": dynamic(() =>
-    import("@/registry/components/buttons/button-024/button-024").then(
-      (module) => module.Button024,
-    ),
-  ),
-  "button-025": dynamic(() =>
-    import("@/registry/components/buttons/button-025/button-025").then(
-      (module) => module.Button025,
-    ),
-  ),
-  "button-026": dynamic(() =>
-    import("@/registry/components/buttons/button-026/button-026").then(
-      (module) => module.Button026,
-    ),
-  ),
-  "button-027": dynamic(() =>
-    import("@/registry/components/buttons/button-027/button-027").then(
-      (module) => module.Button027,
-    ),
-  ),
-  "button-028": dynamic(() =>
-    import("@/registry/components/buttons/button-028/button-028").then(
-      (module) => module.Button028,
-    ),
-  ),
-  "button-029": dynamic(() =>
-    import("@/registry/components/buttons/button-029/button-029").then(
-      (module) => module.Button029,
-    ),
-  ),
-  "button-030": dynamic(() =>
-    import("@/registry/components/buttons/button-030/button-030").then(
-      (module) => module.Button030,
-    ),
-  ),
-  "button-031": dynamic(() =>
-    import("@/registry/components/buttons/button-031/button-031").then(
-      (module) => module.Button031,
-    ),
-  ),
-  "button-032": dynamic(() =>
-    import("@/registry/components/buttons/button-032/button-032").then(
-      (module) => module.Button032,
-    ),
-  ),
-  "button-033": dynamic(() =>
-    import("@/registry/components/buttons/button-033/button-033").then(
-      (module) => module.Button033,
-    ),
-  ),
-  "button-034": dynamic(() =>
-    import("@/registry/components/buttons/button-034/button-034").then(
-      (module) => module.Button034,
-    ),
-  ),
-  "button-035": dynamic(() =>
-    import("@/registry/components/buttons/button-035/button-035").then(
-      (module) => module.Button035,
-    ),
-  ),
-  "button-036": dynamic(() =>
-    import("@/registry/components/buttons/button-036/button-036").then(
-      (module) => module.Button036,
-    ),
-  ),
-  "button-037": dynamic(() =>
-    import("@/registry/components/buttons/button-037/button-037").then(
-      (module) => module.Button037,
-    ),
-  ),
-  "button-038": dynamic(() =>
-    import("@/registry/components/buttons/button-038/button-038").then(
-      (module) => module.Button038,
-    ),
-  ),
-  "button-039": dynamic(() =>
-    import("@/registry/components/buttons/button-039/button-039").then(
-      (module) => module.Button039,
-    ),
-  ),
-  "button-040": dynamic(() =>
-    import("@/registry/components/buttons/button-040/button-040").then(
-      (module) => module.Button040,
-    ),
-  ),
-  "button-041": dynamic(() =>
-    import("@/registry/components/buttons/button-041/button-041").then(
-      (module) => module.Button041,
-    ),
-  ),
-  "button-042": dynamic(() =>
-    import("@/registry/components/buttons/button-042/button-042").then(
-      (module) => module.Button042,
-    ),
-  ),
-  "button-043": dynamic(() =>
-    import("@/registry/components/buttons/button-043/button-043").then(
-      (module) => module.Button043,
-    ),
-  ),
-  "button-044": dynamic(() =>
-    import("@/registry/components/buttons/button-044/button-044").then(
-      (module) => module.Button044,
-    ),
-  ),
-  "button-045": dynamic(() =>
-    import("@/registry/components/buttons/button-045/button-045").then(
-      (module) => module.Button045,
-    ),
-  ),
-  "button-046": dynamic(() =>
-    import("@/registry/components/buttons/button-046/button-046").then(
-      (module) => module.Button046,
-    ),
-  ),
-  "button-047": dynamic(() =>
-    import("@/registry/components/buttons/button-047/button-047").then(
-      (module) => module.Button047,
-    ),
-  ),
-  "button-048": dynamic(() =>
-    import("@/registry/components/buttons/button-048/button-048").then(
-      (module) => module.Button048,
-    ),
-  ),
-  "button-049": dynamic(() =>
-    import("@/registry/components/buttons/button-049/button-049").then(
-      (module) => module.Button049,
-    ),
-  ),
-  "button-050": dynamic(() =>
-    import("@/registry/components/buttons/button-050/button-050").then(
-      (module) => module.Button050,
-    ),
-  ),
-  "button-051": dynamic(() =>
-    import("@/registry/components/buttons/button-051/button-051").then(
-      (module) => module.Button051,
-    ),
-  ),
-  "button-052": dynamic(() =>
-    import("@/registry/components/buttons/button-052/button-052").then(
-      (module) => module.Button052,
-    ),
-  ),
-  "button-053": dynamic(() =>
-    import("@/registry/components/buttons/button-053/button-053").then(
-      (module) => module.Button053,
-    ),
-  ),
-  "button-054": dynamic(() =>
-    import("@/registry/components/buttons/button-054/button-054").then(
-      (module) => module.Button054,
-    ),
-  ),
-  "button-055": dynamic(() =>
-    import("@/registry/components/buttons/button-055/button-055").then(
-      (module) => module.Button055,
-    ),
-  ),
-  "button-056": dynamic(() =>
-    import("@/registry/components/buttons/button-056/button-056").then(
-      (module) => module.Button056,
-    ),
-  ),
-  "button-057": dynamic(() =>
-    import("@/registry/components/buttons/button-057/button-057").then(
-      (module) => module.Button057,
-    ),
-  ),
-  "button-058": dynamic(() =>
-    import("@/registry/components/buttons/button-058/button-058").then(
-      (module) => module.Button058,
-    ),
-  ),
-  "button-059": dynamic(() =>
-    import("@/registry/components/buttons/button-059/button-059").then(
-      (module) => module.Button059,
-    ),
-  ),
-  "button-060": dynamic(() =>
-    import("@/registry/components/buttons/button-060/button-060").then(
-      (module) => module.Button060,
-    ),
-  ),
-  "button-061": dynamic(() =>
-    import("@/registry/components/buttons/button-061/button-061").then(
-      (module) => module.Button061,
-    ),
-  ),
   "accordion-001": dynamic(() =>
     import("@/registry/components/accordion/accordion-001/accordion-001").then(
       (module) => module.Accordion001,
@@ -2463,183 +2013,113 @@ export const LAZY_PREVIEWS = {
       (module) => module.Alert020,
     ),
   ),
-  "dialog-001": dynamic(() =>
-    import("@/registry/components/dialog/dialog-001/dialog-001").then(
-      (module) => module.Dialog001,
-    ),
-  ),
-  "dialog-002": dynamic(() =>
-    import("@/registry/components/dialog/dialog-002/dialog-002").then(
-      (module) => module.Dialog002,
-    ),
-  ),
-  "dialog-003": dynamic(() =>
-    import("@/registry/components/dialog/dialog-003/dialog-003").then(
-      (module) => module.Dialog003,
-    ),
-  ),
-  "dialog-004": dynamic(() =>
-    import("@/registry/components/dialog/dialog-004/dialog-004").then(
-      (module) => module.Dialog004,
-    ),
-  ),
-  "dialog-005": dynamic(() =>
-    import("@/registry/components/dialog/dialog-005/dialog-005").then(
-      (module) => module.Dialog005,
-    ),
-  ),
-  "dialog-006": dynamic(() =>
-    import("@/registry/components/dialog/dialog-006/dialog-006").then(
-      (module) => module.Dialog006,
-    ),
-  ),
-  "dialog-007": dynamic(() =>
-    import("@/registry/components/dialog/dialog-007/dialog-007").then(
-      (module) => module.Dialog007,
-    ),
-  ),
-  "dialog-008": dynamic(() =>
-    import("@/registry/components/dialog/dialog-008/dialog-008").then(
-      (module) => module.Dialog008,
-    ),
-  ),
-  "dialog-009": dynamic(() =>
-    import("@/registry/components/dialog/dialog-009/dialog-009").then(
-      (module) => module.Dialog009,
-    ),
-  ),
-  "dialog-010": dynamic(() =>
-    import("@/registry/components/dialog/dialog-010/dialog-010").then(
-      (module) => module.Dialog010,
-    ),
-  ),
-  "dialog-011": dynamic(() =>
-    import("@/registry/components/dialog/dialog-011/dialog-011").then(
-      (module) => module.Dialog011,
-    ),
-  ),
-  "dialog-012": dynamic(() =>
-    import("@/registry/components/dialog/dialog-012/dialog-012").then(
-      (module) => module.Dialog012,
-    ),
-  ),
-  "dialog-013": dynamic(() =>
-    import("@/registry/components/dialog/dialog-013/dialog-013").then(
-      (module) => module.Dialog013,
-    ),
-  ),
-  "dialog-014": dynamic(() =>
-    import("@/registry/components/dialog/dialog-014/dialog-014").then(
-      (module) => module.Dialog014,
-    ),
-  ),
   "alertdialog-001": dynamic(() =>
-    import("@/registry/components/alertdialog/alertdialog-001/alertdialog-001").then(
+    import("@/registry/components/alert-dialog/alertdialog-001/alertdialog-001").then(
       (module) => module.Alertdialog001,
     ),
   ),
   "alertdialog-002": dynamic(() =>
-    import("@/registry/components/alertdialog/alertdialog-002/alertdialog-002").then(
+    import("@/registry/components/alert-dialog/alertdialog-002/alertdialog-002").then(
       (module) => module.Alertdialog002,
     ),
   ),
   "alertdialog-003": dynamic(() =>
-    import("@/registry/components/alertdialog/alertdialog-003/alertdialog-003").then(
+    import("@/registry/components/alert-dialog/alertdialog-003/alertdialog-003").then(
       (module) => module.Alertdialog003,
     ),
   ),
   "alertdialog-004": dynamic(() =>
-    import("@/registry/components/alertdialog/alertdialog-004/alertdialog-004").then(
+    import("@/registry/components/alert-dialog/alertdialog-004/alertdialog-004").then(
       (module) => module.Alertdialog004,
     ),
   ),
   "alertdialog-005": dynamic(() =>
-    import("@/registry/components/alertdialog/alertdialog-005/alertdialog-005").then(
+    import("@/registry/components/alert-dialog/alertdialog-005/alertdialog-005").then(
       (module) => module.Alertdialog005,
     ),
   ),
   "alertdialog-006": dynamic(() =>
-    import("@/registry/components/alertdialog/alertdialog-006/alertdialog-006").then(
+    import("@/registry/components/alert-dialog/alertdialog-006/alertdialog-006").then(
       (module) => module.Alertdialog006,
     ),
   ),
   "alertdialog-007": dynamic(() =>
-    import("@/registry/components/alertdialog/alertdialog-007/alertdialog-007").then(
+    import("@/registry/components/alert-dialog/alertdialog-007/alertdialog-007").then(
       (module) => module.Alertdialog007,
     ),
   ),
   "alertdialog-008": dynamic(() =>
-    import("@/registry/components/alertdialog/alertdialog-008/alertdialog-008").then(
+    import("@/registry/components/alert-dialog/alertdialog-008/alertdialog-008").then(
       (module) => module.Alertdialog008,
     ),
   ),
   "alertdialog-009": dynamic(() =>
-    import("@/registry/components/alertdialog/alertdialog-009/alertdialog-009").then(
+    import("@/registry/components/alert-dialog/alertdialog-009/alertdialog-009").then(
       (module) => module.Alertdialog009,
     ),
   ),
   "alertdialog-010": dynamic(() =>
-    import("@/registry/components/alertdialog/alertdialog-010/alertdialog-010").then(
+    import("@/registry/components/alert-dialog/alertdialog-010/alertdialog-010").then(
       (module) => module.Alertdialog010,
     ),
   ),
   "alertdialog-011": dynamic(() =>
-    import("@/registry/components/alertdialog/alertdialog-011/alertdialog-011").then(
+    import("@/registry/components/alert-dialog/alertdialog-011/alertdialog-011").then(
       (module) => module.Alertdialog011,
     ),
   ),
   "alertdialog-012": dynamic(() =>
-    import("@/registry/components/alertdialog/alertdialog-012/alertdialog-012").then(
+    import("@/registry/components/alert-dialog/alertdialog-012/alertdialog-012").then(
       (module) => module.Alertdialog012,
     ),
   ),
   "alertdialog-013": dynamic(() =>
-    import("@/registry/components/alertdialog/alertdialog-013/alertdialog-013").then(
+    import("@/registry/components/alert-dialog/alertdialog-013/alertdialog-013").then(
       (module) => module.Alertdialog013,
     ),
   ),
   "alertdialog-014": dynamic(() =>
-    import("@/registry/components/alertdialog/alertdialog-014/alertdialog-014").then(
+    import("@/registry/components/alert-dialog/alertdialog-014/alertdialog-014").then(
       (module) => module.Alertdialog014,
     ),
   ),
   "aspect-001": dynamic(() =>
-    import("@/registry/components/aspect/aspect-001/aspect-001").then(
+    import("@/registry/components/aspect-ratio/aspect-001/aspect-001").then(
       (module) => module.Aspect001,
     ),
   ),
   "aspect-002": dynamic(() =>
-    import("@/registry/components/aspect/aspect-002/aspect-002").then(
+    import("@/registry/components/aspect-ratio/aspect-002/aspect-002").then(
       (module) => module.Aspect002,
     ),
   ),
   "aspect-003": dynamic(() =>
-    import("@/registry/components/aspect/aspect-003/aspect-003").then(
+    import("@/registry/components/aspect-ratio/aspect-003/aspect-003").then(
       (module) => module.Aspect003,
     ),
   ),
   "aspect-004": dynamic(() =>
-    import("@/registry/components/aspect/aspect-004/aspect-004").then(
+    import("@/registry/components/aspect-ratio/aspect-004/aspect-004").then(
       (module) => module.Aspect004,
     ),
   ),
   "aspect-005": dynamic(() =>
-    import("@/registry/components/aspect/aspect-005/aspect-005").then(
+    import("@/registry/components/aspect-ratio/aspect-005/aspect-005").then(
       (module) => module.Aspect005,
     ),
   ),
   "aspect-006": dynamic(() =>
-    import("@/registry/components/aspect/aspect-006/aspect-006").then(
+    import("@/registry/components/aspect-ratio/aspect-006/aspect-006").then(
       (module) => module.Aspect006,
     ),
   ),
   "aspect-007": dynamic(() =>
-    import("@/registry/components/aspect/aspect-007/aspect-007").then(
+    import("@/registry/components/aspect-ratio/aspect-007/aspect-007").then(
       (module) => module.Aspect007,
     ),
   ),
   "aspect-008": dynamic(() =>
-    import("@/registry/components/aspect/aspect-008/aspect-008").then(
+    import("@/registry/components/aspect-ratio/aspect-008/aspect-008").then(
       (module) => module.Aspect008,
     ),
   ),
@@ -3003,289 +2483,44 @@ export const LAZY_PREVIEWS = {
       (module) => module.Badge025,
     ),
   ),
-  "buttongroup-001": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-001/buttongroup-001").then(
-      (module) => module.Buttongroup001,
+  "banner-001": dynamic(() =>
+    import("@/registry/components/banner/banner-001/banner-001").then(
+      (module) => module.Banner001,
     ),
   ),
-  "buttongroup-002": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-002/buttongroup-002").then(
-      (module) => module.Buttongroup002,
+  "banner-002": dynamic(() =>
+    import("@/registry/components/banner/banner-002/banner-002").then(
+      (module) => module.Banner002,
     ),
   ),
-  "buttongroup-003": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-003/buttongroup-003").then(
-      (module) => module.Buttongroup003,
+  "banner-003": dynamic(() =>
+    import("@/registry/components/banner/banner-003/banner-003").then(
+      (module) => module.Banner003,
     ),
   ),
-  "buttongroup-004": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-004/buttongroup-004").then(
-      (module) => module.Buttongroup004,
+  "banner-004": dynamic(() =>
+    import("@/registry/components/banner/banner-004/banner-004").then(
+      (module) => module.Banner004,
     ),
   ),
-  "buttongroup-005": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-005/buttongroup-005").then(
-      (module) => module.Buttongroup005,
+  "banner-005": dynamic(() =>
+    import("@/registry/components/banner/banner-005/banner-005").then(
+      (module) => module.Banner005,
     ),
   ),
-  "buttongroup-006": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-006/buttongroup-006").then(
-      (module) => module.Buttongroup006,
+  "banner-006": dynamic(() =>
+    import("@/registry/components/banner/banner-006/banner-006").then(
+      (module) => module.Banner006,
     ),
   ),
-  "buttongroup-007": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-007/buttongroup-007").then(
-      (module) => module.Buttongroup007,
+  "banner-007": dynamic(() =>
+    import("@/registry/components/banner/banner-007/banner-007").then(
+      (module) => module.Banner007,
     ),
   ),
-  "buttongroup-008": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-008/buttongroup-008").then(
-      (module) => module.Buttongroup008,
-    ),
-  ),
-  "buttongroup-009": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-009/buttongroup-009").then(
-      (module) => module.Buttongroup009,
-    ),
-  ),
-  "buttongroup-010": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-010/buttongroup-010").then(
-      (module) => module.Buttongroup010,
-    ),
-  ),
-  "buttongroup-011": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-011/buttongroup-011").then(
-      (module) => module.Buttongroup011,
-    ),
-  ),
-  "buttongroup-012": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-012/buttongroup-012").then(
-      (module) => module.Buttongroup012,
-    ),
-  ),
-  "buttongroup-013": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-013/buttongroup-013").then(
-      (module) => module.Buttongroup013,
-    ),
-  ),
-  "buttongroup-014": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-014/buttongroup-014").then(
-      (module) => module.Buttongroup014,
-    ),
-  ),
-  "buttongroup-015": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-015/buttongroup-015").then(
-      (module) => module.Buttongroup015,
-    ),
-  ),
-  "buttongroup-016": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-016/buttongroup-016").then(
-      (module) => module.Buttongroup016,
-    ),
-  ),
-  "buttongroup-017": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-017/buttongroup-017").then(
-      (module) => module.Buttongroup017,
-    ),
-  ),
-  "buttongroup-018": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-018/buttongroup-018").then(
-      (module) => module.Buttongroup018,
-    ),
-  ),
-  "buttongroup-019": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-019/buttongroup-019").then(
-      (module) => module.Buttongroup019,
-    ),
-  ),
-  "buttongroup-020": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-020/buttongroup-020").then(
-      (module) => module.Buttongroup020,
-    ),
-  ),
-  "buttongroup-021": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-021/buttongroup-021").then(
-      (module) => module.Buttongroup021,
-    ),
-  ),
-  "buttongroup-022": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-022/buttongroup-022").then(
-      (module) => module.Buttongroup022,
-    ),
-  ),
-  "buttongroup-023": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-023/buttongroup-023").then(
-      (module) => module.Buttongroup023,
-    ),
-  ),
-  "buttongroup-024": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-024/buttongroup-024").then(
-      (module) => module.Buttongroup024,
-    ),
-  ),
-  "buttongroup-025": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-025/buttongroup-025").then(
-      (module) => module.Buttongroup025,
-    ),
-  ),
-  "buttongroup-026": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-026/buttongroup-026").then(
-      (module) => module.Buttongroup026,
-    ),
-  ),
-  "buttongroup-027": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-027/buttongroup-027").then(
-      (module) => module.Buttongroup027,
-    ),
-  ),
-  "buttongroup-028": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-028/buttongroup-028").then(
-      (module) => module.Buttongroup028,
-    ),
-  ),
-  "buttongroup-029": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-029/buttongroup-029").then(
-      (module) => module.Buttongroup029,
-    ),
-  ),
-  "buttongroup-030": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-030/buttongroup-030").then(
-      (module) => module.Buttongroup030,
-    ),
-  ),
-  "buttongroup-031": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-031/buttongroup-031").then(
-      (module) => module.Buttongroup031,
-    ),
-  ),
-  "buttongroup-032": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-032/buttongroup-032").then(
-      (module) => module.Buttongroup032,
-    ),
-  ),
-  "buttongroup-033": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-033/buttongroup-033").then(
-      (module) => module.Buttongroup033,
-    ),
-  ),
-  "buttongroup-034": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-034/buttongroup-034").then(
-      (module) => module.Buttongroup034,
-    ),
-  ),
-  "buttongroup-035": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-035/buttongroup-035").then(
-      (module) => module.Buttongroup035,
-    ),
-  ),
-  "buttongroup-036": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-036/buttongroup-036").then(
-      (module) => module.Buttongroup036,
-    ),
-  ),
-  "buttongroup-037": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-037/buttongroup-037").then(
-      (module) => module.Buttongroup037,
-    ),
-  ),
-  "buttongroup-038": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-038/buttongroup-038").then(
-      (module) => module.Buttongroup038,
-    ),
-  ),
-  "buttongroup-039": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-039/buttongroup-039").then(
-      (module) => module.Buttongroup039,
-    ),
-  ),
-  "buttongroup-040": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-040/buttongroup-040").then(
-      (module) => module.Buttongroup040,
-    ),
-  ),
-  "buttongroup-041": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-041/buttongroup-041").then(
-      (module) => module.Buttongroup041,
-    ),
-  ),
-  "buttongroup-042": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-042/buttongroup-042").then(
-      (module) => module.Buttongroup042,
-    ),
-  ),
-  "buttongroup-043": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-043/buttongroup-043").then(
-      (module) => module.Buttongroup043,
-    ),
-  ),
-  "buttongroup-044": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-044/buttongroup-044").then(
-      (module) => module.Buttongroup044,
-    ),
-  ),
-  "buttongroup-045": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-045/buttongroup-045").then(
-      (module) => module.Buttongroup045,
-    ),
-  ),
-  "buttongroup-046": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-046/buttongroup-046").then(
-      (module) => module.Buttongroup046,
-    ),
-  ),
-  "buttongroup-047": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-047/buttongroup-047").then(
-      (module) => module.Buttongroup047,
-    ),
-  ),
-  "buttongroup-048": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-048/buttongroup-048").then(
-      (module) => module.Buttongroup048,
-    ),
-  ),
-  "buttongroup-049": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-049/buttongroup-049").then(
-      (module) => module.Buttongroup049,
-    ),
-  ),
-  "buttongroup-050": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-050/buttongroup-050").then(
-      (module) => module.Buttongroup050,
-    ),
-  ),
-  "buttongroup-051": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-051/buttongroup-051").then(
-      (module) => module.Buttongroup051,
-    ),
-  ),
-  "buttongroup-052": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-052/buttongroup-052").then(
-      (module) => module.Buttongroup052,
-    ),
-  ),
-  "buttongroup-053": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-053/buttongroup-053").then(
-      (module) => module.Buttongroup053,
-    ),
-  ),
-  "buttongroup-054": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-054/buttongroup-054").then(
-      (module) => module.Buttongroup054,
-    ),
-  ),
-  "buttongroup-055": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-055/buttongroup-055").then(
-      (module) => module.Buttongroup055,
-    ),
-  ),
-  "buttongroup-056": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-056/buttongroup-056").then(
-      (module) => module.Buttongroup056,
-    ),
-  ),
-  "buttongroup-057": dynamic(() =>
-    import("@/registry/components/buttongroup/buttongroup-057/buttongroup-057").then(
-      (module) => module.Buttongroup057,
+  "banner-008": dynamic(() =>
+    import("@/registry/components/banner/banner-008/banner-008").then(
+      (module) => module.Banner008,
     ),
   ),
   "breadcrumb-001": dynamic(() =>
@@ -3361,6 +2596,596 @@ export const LAZY_PREVIEWS = {
   "breadcrumb-015": dynamic(() =>
     import("@/registry/components/breadcrumb/breadcrumb-015/breadcrumb-015").then(
       (module) => module.Breadcrumb015,
+    ),
+  ),
+  "button-001": dynamic(() =>
+    import("@/registry/components/button/button-001/button-001").then(
+      (module) => module.Button001,
+    ),
+  ),
+  "button-002": dynamic(() =>
+    import("@/registry/components/button/button-002/button-002").then(
+      (module) => module.Button002,
+    ),
+  ),
+  "button-003": dynamic(() =>
+    import("@/registry/components/button/button-003/button-003").then(
+      (module) => module.Button003,
+    ),
+  ),
+  "button-004": dynamic(() =>
+    import("@/registry/components/button/button-004/button-004").then(
+      (module) => module.Button004,
+    ),
+  ),
+  "button-005": dynamic(() =>
+    import("@/registry/components/button/button-005/button-005").then(
+      (module) => module.Button005,
+    ),
+  ),
+  "button-006": dynamic(() =>
+    import("@/registry/components/button/button-006/button-006").then(
+      (module) => module.Button006,
+    ),
+  ),
+  "button-007": dynamic(() =>
+    import("@/registry/components/button/button-007/button-007").then(
+      (module) => module.Button007,
+    ),
+  ),
+  "button-008": dynamic(() =>
+    import("@/registry/components/button/button-008/button-008").then(
+      (module) => module.Button008,
+    ),
+  ),
+  "button-009": dynamic(() =>
+    import("@/registry/components/button/button-009/button-009").then(
+      (module) => module.Button009,
+    ),
+  ),
+  "button-010": dynamic(() =>
+    import("@/registry/components/button/button-010/button-010").then(
+      (module) => module.Button010,
+    ),
+  ),
+  "button-011": dynamic(() =>
+    import("@/registry/components/button/button-011/button-011").then(
+      (module) => module.Button011,
+    ),
+  ),
+  "button-012": dynamic(() =>
+    import("@/registry/components/button/button-012/button-012").then(
+      (module) => module.Button012,
+    ),
+  ),
+  "button-013": dynamic(() =>
+    import("@/registry/components/button/button-013/button-013").then(
+      (module) => module.Button013,
+    ),
+  ),
+  "button-014": dynamic(() =>
+    import("@/registry/components/button/button-014/button-014").then(
+      (module) => module.Button014,
+    ),
+  ),
+  "button-015": dynamic(() =>
+    import("@/registry/components/button/button-015/button-015").then(
+      (module) => module.Button015,
+    ),
+  ),
+  "button-016": dynamic(() =>
+    import("@/registry/components/button/button-016/button-016").then(
+      (module) => module.Button016,
+    ),
+  ),
+  "button-017": dynamic(() =>
+    import("@/registry/components/button/button-017/button-017").then(
+      (module) => module.Button017,
+    ),
+  ),
+  "button-018": dynamic(() =>
+    import("@/registry/components/button/button-018/button-018").then(
+      (module) => module.Button018,
+    ),
+  ),
+  "button-019": dynamic(() =>
+    import("@/registry/components/button/button-019/button-019").then(
+      (module) => module.Button019,
+    ),
+  ),
+  "button-020": dynamic(() =>
+    import("@/registry/components/button/button-020/button-020").then(
+      (module) => module.Button020,
+    ),
+  ),
+  "button-021": dynamic(() =>
+    import("@/registry/components/button/button-021/button-021").then(
+      (module) => module.Button021,
+    ),
+  ),
+  "button-022": dynamic(() =>
+    import("@/registry/components/button/button-022/button-022").then(
+      (module) => module.Button022,
+    ),
+  ),
+  "button-023": dynamic(() =>
+    import("@/registry/components/button/button-023/button-023").then(
+      (module) => module.Button023,
+    ),
+  ),
+  "button-024": dynamic(() =>
+    import("@/registry/components/button/button-024/button-024").then(
+      (module) => module.Button024,
+    ),
+  ),
+  "button-025": dynamic(() =>
+    import("@/registry/components/button/button-025/button-025").then(
+      (module) => module.Button025,
+    ),
+  ),
+  "button-026": dynamic(() =>
+    import("@/registry/components/button/button-026/button-026").then(
+      (module) => module.Button026,
+    ),
+  ),
+  "button-027": dynamic(() =>
+    import("@/registry/components/button/button-027/button-027").then(
+      (module) => module.Button027,
+    ),
+  ),
+  "button-028": dynamic(() =>
+    import("@/registry/components/button/button-028/button-028").then(
+      (module) => module.Button028,
+    ),
+  ),
+  "button-029": dynamic(() =>
+    import("@/registry/components/button/button-029/button-029").then(
+      (module) => module.Button029,
+    ),
+  ),
+  "button-030": dynamic(() =>
+    import("@/registry/components/button/button-030/button-030").then(
+      (module) => module.Button030,
+    ),
+  ),
+  "button-031": dynamic(() =>
+    import("@/registry/components/button/button-031/button-031").then(
+      (module) => module.Button031,
+    ),
+  ),
+  "button-032": dynamic(() =>
+    import("@/registry/components/button/button-032/button-032").then(
+      (module) => module.Button032,
+    ),
+  ),
+  "button-033": dynamic(() =>
+    import("@/registry/components/button/button-033/button-033").then(
+      (module) => module.Button033,
+    ),
+  ),
+  "button-034": dynamic(() =>
+    import("@/registry/components/button/button-034/button-034").then(
+      (module) => module.Button034,
+    ),
+  ),
+  "button-035": dynamic(() =>
+    import("@/registry/components/button/button-035/button-035").then(
+      (module) => module.Button035,
+    ),
+  ),
+  "button-036": dynamic(() =>
+    import("@/registry/components/button/button-036/button-036").then(
+      (module) => module.Button036,
+    ),
+  ),
+  "button-037": dynamic(() =>
+    import("@/registry/components/button/button-037/button-037").then(
+      (module) => module.Button037,
+    ),
+  ),
+  "button-038": dynamic(() =>
+    import("@/registry/components/button/button-038/button-038").then(
+      (module) => module.Button038,
+    ),
+  ),
+  "button-039": dynamic(() =>
+    import("@/registry/components/button/button-039/button-039").then(
+      (module) => module.Button039,
+    ),
+  ),
+  "button-040": dynamic(() =>
+    import("@/registry/components/button/button-040/button-040").then(
+      (module) => module.Button040,
+    ),
+  ),
+  "button-041": dynamic(() =>
+    import("@/registry/components/button/button-041/button-041").then(
+      (module) => module.Button041,
+    ),
+  ),
+  "button-042": dynamic(() =>
+    import("@/registry/components/button/button-042/button-042").then(
+      (module) => module.Button042,
+    ),
+  ),
+  "button-043": dynamic(() =>
+    import("@/registry/components/button/button-043/button-043").then(
+      (module) => module.Button043,
+    ),
+  ),
+  "button-044": dynamic(() =>
+    import("@/registry/components/button/button-044/button-044").then(
+      (module) => module.Button044,
+    ),
+  ),
+  "button-045": dynamic(() =>
+    import("@/registry/components/button/button-045/button-045").then(
+      (module) => module.Button045,
+    ),
+  ),
+  "button-046": dynamic(() =>
+    import("@/registry/components/button/button-046/button-046").then(
+      (module) => module.Button046,
+    ),
+  ),
+  "button-047": dynamic(() =>
+    import("@/registry/components/button/button-047/button-047").then(
+      (module) => module.Button047,
+    ),
+  ),
+  "button-048": dynamic(() =>
+    import("@/registry/components/button/button-048/button-048").then(
+      (module) => module.Button048,
+    ),
+  ),
+  "button-049": dynamic(() =>
+    import("@/registry/components/button/button-049/button-049").then(
+      (module) => module.Button049,
+    ),
+  ),
+  "button-050": dynamic(() =>
+    import("@/registry/components/button/button-050/button-050").then(
+      (module) => module.Button050,
+    ),
+  ),
+  "button-051": dynamic(() =>
+    import("@/registry/components/button/button-051/button-051").then(
+      (module) => module.Button051,
+    ),
+  ),
+  "button-052": dynamic(() =>
+    import("@/registry/components/button/button-052/button-052").then(
+      (module) => module.Button052,
+    ),
+  ),
+  "button-053": dynamic(() =>
+    import("@/registry/components/button/button-053/button-053").then(
+      (module) => module.Button053,
+    ),
+  ),
+  "button-054": dynamic(() =>
+    import("@/registry/components/button/button-054/button-054").then(
+      (module) => module.Button054,
+    ),
+  ),
+  "button-055": dynamic(() =>
+    import("@/registry/components/button/button-055/button-055").then(
+      (module) => module.Button055,
+    ),
+  ),
+  "button-056": dynamic(() =>
+    import("@/registry/components/button/button-056/button-056").then(
+      (module) => module.Button056,
+    ),
+  ),
+  "button-057": dynamic(() =>
+    import("@/registry/components/button/button-057/button-057").then(
+      (module) => module.Button057,
+    ),
+  ),
+  "button-058": dynamic(() =>
+    import("@/registry/components/button/button-058/button-058").then(
+      (module) => module.Button058,
+    ),
+  ),
+  "button-059": dynamic(() =>
+    import("@/registry/components/button/button-059/button-059").then(
+      (module) => module.Button059,
+    ),
+  ),
+  "button-060": dynamic(() =>
+    import("@/registry/components/button/button-060/button-060").then(
+      (module) => module.Button060,
+    ),
+  ),
+  "button-061": dynamic(() =>
+    import("@/registry/components/button/button-061/button-061").then(
+      (module) => module.Button061,
+    ),
+  ),
+  "buttongroup-001": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-001/buttongroup-001").then(
+      (module) => module.Buttongroup001,
+    ),
+  ),
+  "buttongroup-002": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-002/buttongroup-002").then(
+      (module) => module.Buttongroup002,
+    ),
+  ),
+  "buttongroup-003": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-003/buttongroup-003").then(
+      (module) => module.Buttongroup003,
+    ),
+  ),
+  "buttongroup-004": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-004/buttongroup-004").then(
+      (module) => module.Buttongroup004,
+    ),
+  ),
+  "buttongroup-005": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-005/buttongroup-005").then(
+      (module) => module.Buttongroup005,
+    ),
+  ),
+  "buttongroup-006": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-006/buttongroup-006").then(
+      (module) => module.Buttongroup006,
+    ),
+  ),
+  "buttongroup-007": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-007/buttongroup-007").then(
+      (module) => module.Buttongroup007,
+    ),
+  ),
+  "buttongroup-008": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-008/buttongroup-008").then(
+      (module) => module.Buttongroup008,
+    ),
+  ),
+  "buttongroup-009": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-009/buttongroup-009").then(
+      (module) => module.Buttongroup009,
+    ),
+  ),
+  "buttongroup-010": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-010/buttongroup-010").then(
+      (module) => module.Buttongroup010,
+    ),
+  ),
+  "buttongroup-011": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-011/buttongroup-011").then(
+      (module) => module.Buttongroup011,
+    ),
+  ),
+  "buttongroup-012": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-012/buttongroup-012").then(
+      (module) => module.Buttongroup012,
+    ),
+  ),
+  "buttongroup-013": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-013/buttongroup-013").then(
+      (module) => module.Buttongroup013,
+    ),
+  ),
+  "buttongroup-014": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-014/buttongroup-014").then(
+      (module) => module.Buttongroup014,
+    ),
+  ),
+  "buttongroup-015": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-015/buttongroup-015").then(
+      (module) => module.Buttongroup015,
+    ),
+  ),
+  "buttongroup-016": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-016/buttongroup-016").then(
+      (module) => module.Buttongroup016,
+    ),
+  ),
+  "buttongroup-017": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-017/buttongroup-017").then(
+      (module) => module.Buttongroup017,
+    ),
+  ),
+  "buttongroup-018": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-018/buttongroup-018").then(
+      (module) => module.Buttongroup018,
+    ),
+  ),
+  "buttongroup-019": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-019/buttongroup-019").then(
+      (module) => module.Buttongroup019,
+    ),
+  ),
+  "buttongroup-020": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-020/buttongroup-020").then(
+      (module) => module.Buttongroup020,
+    ),
+  ),
+  "buttongroup-021": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-021/buttongroup-021").then(
+      (module) => module.Buttongroup021,
+    ),
+  ),
+  "buttongroup-022": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-022/buttongroup-022").then(
+      (module) => module.Buttongroup022,
+    ),
+  ),
+  "buttongroup-023": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-023/buttongroup-023").then(
+      (module) => module.Buttongroup023,
+    ),
+  ),
+  "buttongroup-024": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-024/buttongroup-024").then(
+      (module) => module.Buttongroup024,
+    ),
+  ),
+  "buttongroup-025": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-025/buttongroup-025").then(
+      (module) => module.Buttongroup025,
+    ),
+  ),
+  "buttongroup-026": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-026/buttongroup-026").then(
+      (module) => module.Buttongroup026,
+    ),
+  ),
+  "buttongroup-027": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-027/buttongroup-027").then(
+      (module) => module.Buttongroup027,
+    ),
+  ),
+  "buttongroup-028": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-028/buttongroup-028").then(
+      (module) => module.Buttongroup028,
+    ),
+  ),
+  "buttongroup-029": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-029/buttongroup-029").then(
+      (module) => module.Buttongroup029,
+    ),
+  ),
+  "buttongroup-030": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-030/buttongroup-030").then(
+      (module) => module.Buttongroup030,
+    ),
+  ),
+  "buttongroup-031": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-031/buttongroup-031").then(
+      (module) => module.Buttongroup031,
+    ),
+  ),
+  "buttongroup-032": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-032/buttongroup-032").then(
+      (module) => module.Buttongroup032,
+    ),
+  ),
+  "buttongroup-033": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-033/buttongroup-033").then(
+      (module) => module.Buttongroup033,
+    ),
+  ),
+  "buttongroup-034": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-034/buttongroup-034").then(
+      (module) => module.Buttongroup034,
+    ),
+  ),
+  "buttongroup-035": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-035/buttongroup-035").then(
+      (module) => module.Buttongroup035,
+    ),
+  ),
+  "buttongroup-036": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-036/buttongroup-036").then(
+      (module) => module.Buttongroup036,
+    ),
+  ),
+  "buttongroup-037": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-037/buttongroup-037").then(
+      (module) => module.Buttongroup037,
+    ),
+  ),
+  "buttongroup-038": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-038/buttongroup-038").then(
+      (module) => module.Buttongroup038,
+    ),
+  ),
+  "buttongroup-039": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-039/buttongroup-039").then(
+      (module) => module.Buttongroup039,
+    ),
+  ),
+  "buttongroup-040": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-040/buttongroup-040").then(
+      (module) => module.Buttongroup040,
+    ),
+  ),
+  "buttongroup-041": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-041/buttongroup-041").then(
+      (module) => module.Buttongroup041,
+    ),
+  ),
+  "buttongroup-042": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-042/buttongroup-042").then(
+      (module) => module.Buttongroup042,
+    ),
+  ),
+  "buttongroup-043": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-043/buttongroup-043").then(
+      (module) => module.Buttongroup043,
+    ),
+  ),
+  "buttongroup-044": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-044/buttongroup-044").then(
+      (module) => module.Buttongroup044,
+    ),
+  ),
+  "buttongroup-045": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-045/buttongroup-045").then(
+      (module) => module.Buttongroup045,
+    ),
+  ),
+  "buttongroup-046": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-046/buttongroup-046").then(
+      (module) => module.Buttongroup046,
+    ),
+  ),
+  "buttongroup-047": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-047/buttongroup-047").then(
+      (module) => module.Buttongroup047,
+    ),
+  ),
+  "buttongroup-048": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-048/buttongroup-048").then(
+      (module) => module.Buttongroup048,
+    ),
+  ),
+  "buttongroup-049": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-049/buttongroup-049").then(
+      (module) => module.Buttongroup049,
+    ),
+  ),
+  "buttongroup-050": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-050/buttongroup-050").then(
+      (module) => module.Buttongroup050,
+    ),
+  ),
+  "buttongroup-051": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-051/buttongroup-051").then(
+      (module) => module.Buttongroup051,
+    ),
+  ),
+  "buttongroup-052": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-052/buttongroup-052").then(
+      (module) => module.Buttongroup052,
+    ),
+  ),
+  "buttongroup-053": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-053/buttongroup-053").then(
+      (module) => module.Buttongroup053,
+    ),
+  ),
+  "buttongroup-054": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-054/buttongroup-054").then(
+      (module) => module.Buttongroup054,
+    ),
+  ),
+  "buttongroup-055": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-055/buttongroup-055").then(
+      (module) => module.Buttongroup055,
+    ),
+  ),
+  "buttongroup-056": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-056/buttongroup-056").then(
+      (module) => module.Buttongroup056,
+    ),
+  ),
+  "buttongroup-057": dynamic(() =>
+    import("@/registry/components/button-group/buttongroup-057/buttongroup-057").then(
+      (module) => module.Buttongroup057,
     ),
   ),
   "calendar-001": dynamic(() =>
@@ -3698,6 +3523,231 @@ export const LAZY_PREVIEWS = {
       (module) => module.Carousel016,
     ),
   ),
+  "cascader-001": dynamic(() =>
+    import("@/registry/components/cascader/cascader-001/cascader-001").then(
+      (module) => module.Cascader001,
+    ),
+  ),
+  "cascader-002": dynamic(() =>
+    import("@/registry/components/cascader/cascader-002/cascader-002").then(
+      (module) => module.Cascader002,
+    ),
+  ),
+  "cascader-003": dynamic(() =>
+    import("@/registry/components/cascader/cascader-003/cascader-003").then(
+      (module) => module.Cascader003,
+    ),
+  ),
+  "cascader-004": dynamic(() =>
+    import("@/registry/components/cascader/cascader-004/cascader-004").then(
+      (module) => module.Cascader004,
+    ),
+  ),
+  "cascader-005": dynamic(() =>
+    import("@/registry/components/cascader/cascader-005/cascader-005").then(
+      (module) => module.Cascader005,
+    ),
+  ),
+  "cascader-006": dynamic(() =>
+    import("@/registry/components/cascader/cascader-006/cascader-006").then(
+      (module) => module.Cascader006,
+    ),
+  ),
+  "cascader-007": dynamic(() =>
+    import("@/registry/components/cascader/cascader-007/cascader-007").then(
+      (module) => module.Cascader007,
+    ),
+  ),
+  "cascader-008": dynamic(() =>
+    import("@/registry/components/cascader/cascader-008/cascader-008").then(
+      (module) => module.Cascader008,
+    ),
+  ),
+  "cascader-009": dynamic(() =>
+    import("@/registry/components/cascader/cascader-009/cascader-009").then(
+      (module) => module.Cascader009,
+    ),
+  ),
+  "cascader-010": dynamic(() =>
+    import("@/registry/components/cascader/cascader-010/cascader-010").then(
+      (module) => module.Cascader010,
+    ),
+  ),
+  "cascader-011": dynamic(() =>
+    import("@/registry/components/cascader/cascader-011/cascader-011").then(
+      (module) => module.Cascader011,
+    ),
+  ),
+  "cascader-012": dynamic(() =>
+    import("@/registry/components/cascader/cascader-012/cascader-012").then(
+      (module) => module.Cascader012,
+    ),
+  ),
+  "cascader-013": dynamic(() =>
+    import("@/registry/components/cascader/cascader-013/cascader-013").then(
+      (module) => module.Cascader013,
+    ),
+  ),
+  "cascader-014": dynamic(() =>
+    import("@/registry/components/cascader/cascader-014/cascader-014").then(
+      (module) => module.Cascader014,
+    ),
+  ),
+  "cascader-015": dynamic(() =>
+    import("@/registry/components/cascader/cascader-015/cascader-015").then(
+      (module) => module.Cascader015,
+    ),
+  ),
+  "cascader-016": dynamic(() =>
+    import("@/registry/components/cascader/cascader-016/cascader-016").then(
+      (module) => module.Cascader016,
+    ),
+  ),
+  "cascader-017": dynamic(() =>
+    import("@/registry/components/cascader/cascader-017/cascader-017").then(
+      (module) => module.Cascader017,
+    ),
+  ),
+  "cascader-018": dynamic(() =>
+    import("@/registry/components/cascader/cascader-018/cascader-018").then(
+      (module) => module.Cascader018,
+    ),
+  ),
+  "cascader-019": dynamic(() =>
+    import("@/registry/components/cascader/cascader-019/cascader-019").then(
+      (module) => module.Cascader019,
+    ),
+  ),
+  "cascader-020": dynamic(() =>
+    import("@/registry/components/cascader/cascader-020/cascader-020").then(
+      (module) => module.Cascader020,
+    ),
+  ),
+  "chart-001": dynamic(() =>
+    import("@/registry/components/chart/chart-001/chart-001").then(
+      (module) => module.Chart001,
+    ),
+  ),
+  "chart-002": dynamic(() =>
+    import("@/registry/components/chart/chart-002/chart-002").then(
+      (module) => module.Chart002,
+    ),
+  ),
+  "chart-003": dynamic(() =>
+    import("@/registry/components/chart/chart-003/chart-003").then(
+      (module) => module.Chart003,
+    ),
+  ),
+  "chart-004": dynamic(() =>
+    import("@/registry/components/chart/chart-004/chart-004").then(
+      (module) => module.Chart004,
+    ),
+  ),
+  "chart-005": dynamic(() =>
+    import("@/registry/components/chart/chart-005/chart-005").then(
+      (module) => module.Chart005,
+    ),
+  ),
+  "chart-006": dynamic(() =>
+    import("@/registry/components/chart/chart-006/chart-006").then(
+      (module) => module.Chart006,
+    ),
+  ),
+  "chart-007": dynamic(() =>
+    import("@/registry/components/chart/chart-007/chart-007").then(
+      (module) => module.Chart007,
+    ),
+  ),
+  "chart-008": dynamic(() =>
+    import("@/registry/components/chart/chart-008/chart-008").then(
+      (module) => module.Chart008,
+    ),
+  ),
+  "chart-009": dynamic(() =>
+    import("@/registry/components/chart/chart-009/chart-009").then(
+      (module) => module.Chart009,
+    ),
+  ),
+  "chart-010": dynamic(() =>
+    import("@/registry/components/chart/chart-010/chart-010").then(
+      (module) => module.Chart010,
+    ),
+  ),
+  "chart-011": dynamic(() =>
+    import("@/registry/components/chart/chart-011/chart-011").then(
+      (module) => module.Chart011,
+    ),
+  ),
+  "chart-012": dynamic(() =>
+    import("@/registry/components/chart/chart-012/chart-012").then(
+      (module) => module.Chart012,
+    ),
+  ),
+  "chart-013": dynamic(() =>
+    import("@/registry/components/chart/chart-013/chart-013").then(
+      (module) => module.Chart013,
+    ),
+  ),
+  "chart-014": dynamic(() =>
+    import("@/registry/components/chart/chart-014/chart-014").then(
+      (module) => module.Chart014,
+    ),
+  ),
+  "chart-015": dynamic(() =>
+    import("@/registry/components/chart/chart-015/chart-015").then(
+      (module) => module.Chart015,
+    ),
+  ),
+  "chart-016": dynamic(() =>
+    import("@/registry/components/chart/chart-016/chart-016").then(
+      (module) => module.Chart016,
+    ),
+  ),
+  "chart-017": dynamic(() =>
+    import("@/registry/components/chart/chart-017/chart-017").then(
+      (module) => module.Chart017,
+    ),
+  ),
+  "chart-018": dynamic(() =>
+    import("@/registry/components/chart/chart-018/chart-018").then(
+      (module) => module.Chart018,
+    ),
+  ),
+  "chart-019": dynamic(() =>
+    import("@/registry/components/chart/chart-019/chart-019").then(
+      (module) => module.Chart019,
+    ),
+  ),
+  "chart-020": dynamic(() =>
+    import("@/registry/components/chart/chart-020/chart-020").then(
+      (module) => module.Chart020,
+    ),
+  ),
+  "chart-021": dynamic(() =>
+    import("@/registry/components/chart/chart-021/chart-021").then(
+      (module) => module.Chart021,
+    ),
+  ),
+  "chart-022": dynamic(() =>
+    import("@/registry/components/chart/chart-022/chart-022").then(
+      (module) => module.Chart022,
+    ),
+  ),
+  "chart-023": dynamic(() =>
+    import("@/registry/components/chart/chart-023/chart-023").then(
+      (module) => module.Chart023,
+    ),
+  ),
+  "chart-024": dynamic(() =>
+    import("@/registry/components/chart/chart-024/chart-024").then(
+      (module) => module.Chart024,
+    ),
+  ),
+  "chart-025": dynamic(() =>
+    import("@/registry/components/chart/chart-025/chart-025").then(
+      (module) => module.Chart025,
+    ),
+  ),
   "checkbox-001": dynamic(() =>
     import("@/registry/components/checkbox/checkbox-001/checkbox-001").then(
       (module) => module.Checkbox001,
@@ -3809,138 +3859,193 @@ export const LAZY_PREVIEWS = {
     ),
   ),
   "codeblock-001": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-001/codeblock-001").then(
+    import("@/registry/components/code-block/codeblock-001/codeblock-001").then(
       (module) => module.Codeblock001,
     ),
   ),
   "codeblock-002": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-002/codeblock-002").then(
+    import("@/registry/components/code-block/codeblock-002/codeblock-002").then(
       (module) => module.Codeblock002,
     ),
   ),
   "codeblock-003": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-003/codeblock-003").then(
+    import("@/registry/components/code-block/codeblock-003/codeblock-003").then(
       (module) => module.Codeblock003,
     ),
   ),
   "codeblock-004": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-004/codeblock-004").then(
+    import("@/registry/components/code-block/codeblock-004/codeblock-004").then(
       (module) => module.Codeblock004,
     ),
   ),
   "codeblock-005": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-005/codeblock-005").then(
+    import("@/registry/components/code-block/codeblock-005/codeblock-005").then(
       (module) => module.Codeblock005,
     ),
   ),
   "codeblock-006": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-006/codeblock-006").then(
+    import("@/registry/components/code-block/codeblock-006/codeblock-006").then(
       (module) => module.Codeblock006,
     ),
   ),
   "codeblock-007": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-007/codeblock-007").then(
+    import("@/registry/components/code-block/codeblock-007/codeblock-007").then(
       (module) => module.Codeblock007,
     ),
   ),
   "codeblock-008": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-008/codeblock-008").then(
+    import("@/registry/components/code-block/codeblock-008/codeblock-008").then(
       (module) => module.Codeblock008,
     ),
   ),
   "codeblock-009": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-009/codeblock-009").then(
+    import("@/registry/components/code-block/codeblock-009/codeblock-009").then(
       (module) => module.Codeblock009,
     ),
   ),
   "codeblock-010": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-010/codeblock-010").then(
+    import("@/registry/components/code-block/codeblock-010/codeblock-010").then(
       (module) => module.Codeblock010,
     ),
   ),
   "codeblock-011": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-011/codeblock-011").then(
+    import("@/registry/components/code-block/codeblock-011/codeblock-011").then(
       (module) => module.Codeblock011,
     ),
   ),
   "codeblock-012": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-012/codeblock-012").then(
+    import("@/registry/components/code-block/codeblock-012/codeblock-012").then(
       (module) => module.Codeblock012,
     ),
   ),
   "codeblock-013": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-013/codeblock-013").then(
+    import("@/registry/components/code-block/codeblock-013/codeblock-013").then(
       (module) => module.Codeblock013,
     ),
   ),
   "codeblock-014": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-014/codeblock-014").then(
+    import("@/registry/components/code-block/codeblock-014/codeblock-014").then(
       (module) => module.Codeblock014,
     ),
   ),
   "codeblock-015": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-015/codeblock-015").then(
+    import("@/registry/components/code-block/codeblock-015/codeblock-015").then(
       (module) => module.Codeblock015,
     ),
   ),
   "codeblock-016": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-016/codeblock-016").then(
+    import("@/registry/components/code-block/codeblock-016/codeblock-016").then(
       (module) => module.Codeblock016,
     ),
   ),
   "codeblock-017": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-017/codeblock-017").then(
+    import("@/registry/components/code-block/codeblock-017/codeblock-017").then(
       (module) => module.Codeblock017,
     ),
   ),
   "codeblock-018": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-018/codeblock-018").then(
+    import("@/registry/components/code-block/codeblock-018/codeblock-018").then(
       (module) => module.Codeblock018,
     ),
   ),
   "codeblock-019": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-019/codeblock-019").then(
+    import("@/registry/components/code-block/codeblock-019/codeblock-019").then(
       (module) => module.Codeblock019,
     ),
   ),
   "codeblock-020": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-020/codeblock-020").then(
+    import("@/registry/components/code-block/codeblock-020/codeblock-020").then(
       (module) => module.Codeblock020,
     ),
   ),
   "codeblock-021": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-021/codeblock-021").then(
+    import("@/registry/components/code-block/codeblock-021/codeblock-021").then(
       (module) => module.Codeblock021,
     ),
   ),
   "codeblock-022": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-022/codeblock-022").then(
+    import("@/registry/components/code-block/codeblock-022/codeblock-022").then(
       (module) => module.Codeblock022,
     ),
   ),
   "codeblock-023": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-023/codeblock-023").then(
+    import("@/registry/components/code-block/codeblock-023/codeblock-023").then(
       (module) => module.Codeblock023,
     ),
   ),
   "codeblock-024": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-024/codeblock-024").then(
+    import("@/registry/components/code-block/codeblock-024/codeblock-024").then(
       (module) => module.Codeblock024,
     ),
   ),
   "codeblock-025": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-025/codeblock-025").then(
+    import("@/registry/components/code-block/codeblock-025/codeblock-025").then(
       (module) => module.Codeblock025,
     ),
   ),
   "codeblock-026": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-026/codeblock-026").then(
+    import("@/registry/components/code-block/codeblock-026/codeblock-026").then(
       (module) => module.Codeblock026,
     ),
   ),
   "codeblock-027": dynamic(() =>
-    import("@/registry/components/codeblock/codeblock-027/codeblock-027").then(
+    import("@/registry/components/code-block/codeblock-027/codeblock-027").then(
       (module) => module.Codeblock027,
+    ),
+  ),
+  "code-001": dynamic(() =>
+    import("@/registry/components/code-block/code-001/code-001").then(
+      (module) => module.Code001,
+    ),
+  ),
+  "collapsible-001": dynamic(() =>
+    import("@/registry/components/collapsible/collapsible-001/collapsible-001").then(
+      (module) => module.Collapsible001,
+    ),
+  ),
+  "collapsible-002": dynamic(() =>
+    import("@/registry/components/collapsible/collapsible-002/collapsible-002").then(
+      (module) => module.Collapsible002,
+    ),
+  ),
+  "collapsible-003": dynamic(() =>
+    import("@/registry/components/collapsible/collapsible-003/collapsible-003").then(
+      (module) => module.Collapsible003,
+    ),
+  ),
+  "collapsible-004": dynamic(() =>
+    import("@/registry/components/collapsible/collapsible-004/collapsible-004").then(
+      (module) => module.Collapsible004,
+    ),
+  ),
+  "collapsible-005": dynamic(() =>
+    import("@/registry/components/collapsible/collapsible-005/collapsible-005").then(
+      (module) => module.Collapsible005,
+    ),
+  ),
+  "collapsible-006": dynamic(() =>
+    import("@/registry/components/collapsible/collapsible-006/collapsible-006").then(
+      (module) => module.Collapsible006,
+    ),
+  ),
+  "collapsible-007": dynamic(() =>
+    import("@/registry/components/collapsible/collapsible-007/collapsible-007").then(
+      (module) => module.Collapsible007,
+    ),
+  ),
+  "collapsible-008": dynamic(() =>
+    import("@/registry/components/collapsible/collapsible-008/collapsible-008").then(
+      (module) => module.Collapsible008,
+    ),
+  ),
+  "collapsible-009": dynamic(() =>
+    import("@/registry/components/collapsible/collapsible-009/collapsible-009").then(
+      (module) => module.Collapsible009,
+    ),
+  ),
+  "collapsible-010": dynamic(() =>
+    import("@/registry/components/collapsible/collapsible-010/collapsible-010").then(
+      (module) => module.Collapsible010,
     ),
   ),
   "combobox-001": dynamic(() =>
@@ -4043,6 +4148,1681 @@ export const LAZY_PREVIEWS = {
       (module) => module.Combobox020,
     ),
   ),
+  "combobox-021": dynamic(() =>
+    import("@/registry/components/combobox/combobox-021/combobox-021").then(
+      (module) => module.Combobox021,
+    ),
+  ),
+  "combobox-022": dynamic(() =>
+    import("@/registry/components/combobox/combobox-022/combobox-022").then(
+      (module) => module.Combobox022,
+    ),
+  ),
+  "combobox-023": dynamic(() =>
+    import("@/registry/components/combobox/combobox-023/combobox-023").then(
+      (module) => module.Combobox023,
+    ),
+  ),
+  "combobox-024": dynamic(() =>
+    import("@/registry/components/combobox/combobox-024/combobox-024").then(
+      (module) => module.Combobox024,
+    ),
+  ),
+  "combobox-025": dynamic(() =>
+    import("@/registry/components/combobox/combobox-025/combobox-025").then(
+      (module) => module.Combobox025,
+    ),
+  ),
+  "combobox-026": dynamic(() =>
+    import("@/registry/components/combobox/combobox-026/combobox-026").then(
+      (module) => module.Combobox026,
+    ),
+  ),
+  "combobox-027": dynamic(() =>
+    import("@/registry/components/combobox/combobox-027/combobox-027").then(
+      (module) => module.Combobox027,
+    ),
+  ),
+  "combobox-028": dynamic(() =>
+    import("@/registry/components/combobox/combobox-028/combobox-028").then(
+      (module) => module.Combobox028,
+    ),
+  ),
+  "command-001": dynamic(() =>
+    import("@/registry/components/command/command-001/command-001").then(
+      (module) => module.Command001,
+    ),
+  ),
+  "command-002": dynamic(() =>
+    import("@/registry/components/command/command-002/command-002").then(
+      (module) => module.Command002,
+    ),
+  ),
+  "command-003": dynamic(() =>
+    import("@/registry/components/command/command-003/command-003").then(
+      (module) => module.Command003,
+    ),
+  ),
+  "command-004": dynamic(() =>
+    import("@/registry/components/command/command-004/command-004").then(
+      (module) => module.Command004,
+    ),
+  ),
+  "command-005": dynamic(() =>
+    import("@/registry/components/command/command-005/command-005").then(
+      (module) => module.Command005,
+    ),
+  ),
+  "command-006": dynamic(() =>
+    import("@/registry/components/command/command-006/command-006").then(
+      (module) => module.Command006,
+    ),
+  ),
+  "command-007": dynamic(() =>
+    import("@/registry/components/command/command-007/command-007").then(
+      (module) => module.Command007,
+    ),
+  ),
+  "command-008": dynamic(() =>
+    import("@/registry/components/command/command-008/command-008").then(
+      (module) => module.Command008,
+    ),
+  ),
+  "command-009": dynamic(() =>
+    import("@/registry/components/command/command-009/command-009").then(
+      (module) => module.Command009,
+    ),
+  ),
+  "command-010": dynamic(() =>
+    import("@/registry/components/command/command-010/command-010").then(
+      (module) => module.Command010,
+    ),
+  ),
+  "menu-002": dynamic(() =>
+    import("@/registry/components/context-menu/menu-002/menu-002").then(
+      (module) => module.Menu002,
+    ),
+  ),
+  "contextmenu-001": dynamic(() =>
+    import("@/registry/components/context-menu/contextmenu-001/contextmenu-001").then(
+      (module) => module.Contextmenu001,
+    ),
+  ),
+  "contextmenu-002": dynamic(() =>
+    import("@/registry/components/context-menu/contextmenu-002/contextmenu-002").then(
+      (module) => module.Contextmenu002,
+    ),
+  ),
+  "contextmenu-003": dynamic(() =>
+    import("@/registry/components/context-menu/contextmenu-003/contextmenu-003").then(
+      (module) => module.Contextmenu003,
+    ),
+  ),
+  "contextmenu-004": dynamic(() =>
+    import("@/registry/components/context-menu/contextmenu-004/contextmenu-004").then(
+      (module) => module.Contextmenu004,
+    ),
+  ),
+  "contextmenu-005": dynamic(() =>
+    import("@/registry/components/context-menu/contextmenu-005/contextmenu-005").then(
+      (module) => module.Contextmenu005,
+    ),
+  ),
+  "contextmenu-006": dynamic(() =>
+    import("@/registry/components/context-menu/contextmenu-006/contextmenu-006").then(
+      (module) => module.Contextmenu006,
+    ),
+  ),
+  "contextmenu-007": dynamic(() =>
+    import("@/registry/components/context-menu/contextmenu-007/contextmenu-007").then(
+      (module) => module.Contextmenu007,
+    ),
+  ),
+  "contextmenu-008": dynamic(() =>
+    import("@/registry/components/context-menu/contextmenu-008/contextmenu-008").then(
+      (module) => module.Contextmenu008,
+    ),
+  ),
+  "contextmenu-009": dynamic(() =>
+    import("@/registry/components/context-menu/contextmenu-009/contextmenu-009").then(
+      (module) => module.Contextmenu009,
+    ),
+  ),
+  "contextmenu-010": dynamic(() =>
+    import("@/registry/components/context-menu/contextmenu-010/contextmenu-010").then(
+      (module) => module.Contextmenu010,
+    ),
+  ),
+  "currency-001": dynamic(() =>
+    import("@/registry/components/currency-input/currency-001/currency-001").then(
+      (module) => module.Currency001,
+    ),
+  ),
+  "currency-002": dynamic(() =>
+    import("@/registry/components/currency-input/currency-002/currency-002").then(
+      (module) => module.Currency002,
+    ),
+  ),
+  "currency-003": dynamic(() =>
+    import("@/registry/components/currency-input/currency-003/currency-003").then(
+      (module) => module.Currency003,
+    ),
+  ),
+  "currency-004": dynamic(() =>
+    import("@/registry/components/currency-input/currency-004/currency-004").then(
+      (module) => module.Currency004,
+    ),
+  ),
+  "currency-005": dynamic(() =>
+    import("@/registry/components/currency-input/currency-005/currency-005").then(
+      (module) => module.Currency005,
+    ),
+  ),
+  "currency-006": dynamic(() =>
+    import("@/registry/components/currency-input/currency-006/currency-006").then(
+      (module) => module.Currency006,
+    ),
+  ),
+  "currency-007": dynamic(() =>
+    import("@/registry/components/currency-input/currency-007/currency-007").then(
+      (module) => module.Currency007,
+    ),
+  ),
+  "datagrid-001": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-001/datagrid-001").then(
+      (module) => module.Datagrid001,
+    ),
+  ),
+  "datagrid-002": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-002/datagrid-002").then(
+      (module) => module.Datagrid002,
+    ),
+  ),
+  "datagrid-003": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-003/datagrid-003").then(
+      (module) => module.Datagrid003,
+    ),
+  ),
+  "datagrid-004": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-004/datagrid-004").then(
+      (module) => module.Datagrid004,
+    ),
+  ),
+  "datagrid-005": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-005/datagrid-005").then(
+      (module) => module.Datagrid005,
+    ),
+  ),
+  "datagrid-006": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-006/datagrid-006").then(
+      (module) => module.Datagrid006,
+    ),
+  ),
+  "datagrid-007": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-007/datagrid-007").then(
+      (module) => module.Datagrid007,
+    ),
+  ),
+  "datagrid-008": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-008/datagrid-008").then(
+      (module) => module.Datagrid008,
+    ),
+  ),
+  "datagrid-009": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-009/datagrid-009").then(
+      (module) => module.Datagrid009,
+    ),
+  ),
+  "datagrid-010": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-010/datagrid-010").then(
+      (module) => module.Datagrid010,
+    ),
+  ),
+  "datagrid-011": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-011/datagrid-011").then(
+      (module) => module.Datagrid011,
+    ),
+  ),
+  "datagrid-012": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-012/datagrid-012").then(
+      (module) => module.Datagrid012,
+    ),
+  ),
+  "datagrid-013": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-013/datagrid-013").then(
+      (module) => module.Datagrid013,
+    ),
+  ),
+  "datagrid-014": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-014/datagrid-014").then(
+      (module) => module.Datagrid014,
+    ),
+  ),
+  "datagrid-015": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-015/datagrid-015").then(
+      (module) => module.Datagrid015,
+    ),
+  ),
+  "datagrid-016": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-016/datagrid-016").then(
+      (module) => module.Datagrid016,
+    ),
+  ),
+  "datagrid-017": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-017/datagrid-017").then(
+      (module) => module.Datagrid017,
+    ),
+  ),
+  "datagrid-018": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-018/datagrid-018").then(
+      (module) => module.Datagrid018,
+    ),
+  ),
+  "datagrid-019": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-019/datagrid-019").then(
+      (module) => module.Datagrid019,
+    ),
+  ),
+  "datagrid-020": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-020/datagrid-020").then(
+      (module) => module.Datagrid020,
+    ),
+  ),
+  "datagrid-021": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-021/datagrid-021").then(
+      (module) => module.Datagrid021,
+    ),
+  ),
+  "datagrid-022": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-022/datagrid-022").then(
+      (module) => module.Datagrid022,
+    ),
+  ),
+  "datagrid-023": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-023/datagrid-023").then(
+      (module) => module.Datagrid023,
+    ),
+  ),
+  "datagrid-024": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-024/datagrid-024").then(
+      (module) => module.Datagrid024,
+    ),
+  ),
+  "datagrid-025": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-025/datagrid-025").then(
+      (module) => module.Datagrid025,
+    ),
+  ),
+  "datagrid-026": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-026/datagrid-026").then(
+      (module) => module.Datagrid026,
+    ),
+  ),
+  "datagrid-027": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-027/datagrid-027").then(
+      (module) => module.Datagrid027,
+    ),
+  ),
+  "datagrid-028": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-028/datagrid-028").then(
+      (module) => module.Datagrid028,
+    ),
+  ),
+  "datagrid-030": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-030/datagrid-030").then(
+      (module) => module.Datagrid030,
+    ),
+  ),
+  "datagrid-029": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-029/datagrid-029").then(
+      (module) => module.Datagrid029,
+    ),
+  ),
+  "date-001": dynamic(() =>
+    import("@/registry/components/date-selector/date-001/date-001").then(
+      (module) => module.Date001,
+    ),
+  ),
+  "date-002": dynamic(() =>
+    import("@/registry/components/date-selector/date-002/date-002").then(
+      (module) => module.Date002,
+    ),
+  ),
+  "date-003": dynamic(() =>
+    import("@/registry/components/date-selector/date-003/date-003").then(
+      (module) => module.Date003,
+    ),
+  ),
+  "date-004": dynamic(() =>
+    import("@/registry/components/date-selector/date-004/date-004").then(
+      (module) => module.Date004,
+    ),
+  ),
+  "date-005": dynamic(() =>
+    import("@/registry/components/date-selector/date-005/date-005").then(
+      (module) => module.Date005,
+    ),
+  ),
+  "date-006": dynamic(() =>
+    import("@/registry/components/date-selector/date-006/date-006").then(
+      (module) => module.Date006,
+    ),
+  ),
+  "date-007": dynamic(() =>
+    import("@/registry/components/date-selector/date-007/date-007").then(
+      (module) => module.Date007,
+    ),
+  ),
+  "date-008": dynamic(() =>
+    import("@/registry/components/date-selector/date-008/date-008").then(
+      (module) => module.Date008,
+    ),
+  ),
+  "dialog-001": dynamic(() =>
+    import("@/registry/components/dialog/dialog-001/dialog-001").then(
+      (module) => module.Dialog001,
+    ),
+  ),
+  "dialog-002": dynamic(() =>
+    import("@/registry/components/dialog/dialog-002/dialog-002").then(
+      (module) => module.Dialog002,
+    ),
+  ),
+  "dialog-003": dynamic(() =>
+    import("@/registry/components/dialog/dialog-003/dialog-003").then(
+      (module) => module.Dialog003,
+    ),
+  ),
+  "dialog-004": dynamic(() =>
+    import("@/registry/components/dialog/dialog-004/dialog-004").then(
+      (module) => module.Dialog004,
+    ),
+  ),
+  "dialog-005": dynamic(() =>
+    import("@/registry/components/dialog/dialog-005/dialog-005").then(
+      (module) => module.Dialog005,
+    ),
+  ),
+  "dialog-006": dynamic(() =>
+    import("@/registry/components/dialog/dialog-006/dialog-006").then(
+      (module) => module.Dialog006,
+    ),
+  ),
+  "dialog-007": dynamic(() =>
+    import("@/registry/components/dialog/dialog-007/dialog-007").then(
+      (module) => module.Dialog007,
+    ),
+  ),
+  "dialog-008": dynamic(() =>
+    import("@/registry/components/dialog/dialog-008/dialog-008").then(
+      (module) => module.Dialog008,
+    ),
+  ),
+  "dialog-009": dynamic(() =>
+    import("@/registry/components/dialog/dialog-009/dialog-009").then(
+      (module) => module.Dialog009,
+    ),
+  ),
+  "dialog-010": dynamic(() =>
+    import("@/registry/components/dialog/dialog-010/dialog-010").then(
+      (module) => module.Dialog010,
+    ),
+  ),
+  "dialog-011": dynamic(() =>
+    import("@/registry/components/dialog/dialog-011/dialog-011").then(
+      (module) => module.Dialog011,
+    ),
+  ),
+  "dialog-012": dynamic(() =>
+    import("@/registry/components/dialog/dialog-012/dialog-012").then(
+      (module) => module.Dialog012,
+    ),
+  ),
+  "dialog-013": dynamic(() =>
+    import("@/registry/components/dialog/dialog-013/dialog-013").then(
+      (module) => module.Dialog013,
+    ),
+  ),
+  "dialog-014": dynamic(() =>
+    import("@/registry/components/dialog/dialog-014/dialog-014").then(
+      (module) => module.Dialog014,
+    ),
+  ),
+  "drawer-001": dynamic(() =>
+    import("@/registry/components/drawer/drawer-001/drawer-001").then(
+      (module) => module.Drawer001,
+    ),
+  ),
+  "drawer-002": dynamic(() =>
+    import("@/registry/components/drawer/drawer-002/drawer-002").then(
+      (module) => module.Drawer002,
+    ),
+  ),
+  "drawer-003": dynamic(() =>
+    import("@/registry/components/drawer/drawer-003/drawer-003").then(
+      (module) => module.Drawer003,
+    ),
+  ),
+  "drawer-004": dynamic(() =>
+    import("@/registry/components/drawer/drawer-004/drawer-004").then(
+      (module) => module.Drawer004,
+    ),
+  ),
+  "drawer-005": dynamic(() =>
+    import("@/registry/components/drawer/drawer-005/drawer-005").then(
+      (module) => module.Drawer005,
+    ),
+  ),
+  "drawer-006": dynamic(() =>
+    import("@/registry/components/drawer/drawer-006/drawer-006").then(
+      (module) => module.Drawer006,
+    ),
+  ),
+  "drawer-007": dynamic(() =>
+    import("@/registry/components/drawer/drawer-007/drawer-007").then(
+      (module) => module.Drawer007,
+    ),
+  ),
+  "drawer-008": dynamic(() =>
+    import("@/registry/components/drawer/drawer-008/drawer-008").then(
+      (module) => module.Drawer008,
+    ),
+  ),
+  "dropdown-001": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-001/dropdown-001").then(
+      (module) => module.Dropdown001,
+    ),
+  ),
+  "menu-001": dynamic(() =>
+    import("@/registry/components/dropdown-menu/menu-001/menu-001").then(
+      (module) => module.Menu001,
+    ),
+  ),
+  "menu-004": dynamic(() =>
+    import("@/registry/components/dropdown-menu/menu-004/menu-004").then(
+      (module) => module.Menu004,
+    ),
+  ),
+  "menu-005": dynamic(() =>
+    import("@/registry/components/dropdown-menu/menu-005/menu-005").then(
+      (module) => module.Menu005,
+    ),
+  ),
+  "dropdown-002": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-002/dropdown-002").then(
+      (module) => module.Dropdown002,
+    ),
+  ),
+  "dropdown-003": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-003/dropdown-003").then(
+      (module) => module.Dropdown003,
+    ),
+  ),
+  "dropdown-004": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-004/dropdown-004").then(
+      (module) => module.Dropdown004,
+    ),
+  ),
+  "dropdown-005": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-005/dropdown-005").then(
+      (module) => module.Dropdown005,
+    ),
+  ),
+  "dropdown-006": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-006/dropdown-006").then(
+      (module) => module.Dropdown006,
+    ),
+  ),
+  "dropdown-007": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-007/dropdown-007").then(
+      (module) => module.Dropdown007,
+    ),
+  ),
+  "dropdown-008": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-008/dropdown-008").then(
+      (module) => module.Dropdown008,
+    ),
+  ),
+  "dropdown-009": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-009/dropdown-009").then(
+      (module) => module.Dropdown009,
+    ),
+  ),
+  "dropdown-010": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-010/dropdown-010").then(
+      (module) => module.Dropdown010,
+    ),
+  ),
+  "dropdown-011": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-011/dropdown-011").then(
+      (module) => module.Dropdown011,
+    ),
+  ),
+  "dropdown-012": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-012/dropdown-012").then(
+      (module) => module.Dropdown012,
+    ),
+  ),
+  "dropdown-013": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-013/dropdown-013").then(
+      (module) => module.Dropdown013,
+    ),
+  ),
+  "dropdown-014": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-014/dropdown-014").then(
+      (module) => module.Dropdown014,
+    ),
+  ),
+  "dropdown-015": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-015/dropdown-015").then(
+      (module) => module.Dropdown015,
+    ),
+  ),
+  "dropdown-016": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-016/dropdown-016").then(
+      (module) => module.Dropdown016,
+    ),
+  ),
+  "dropdown-017": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-017/dropdown-017").then(
+      (module) => module.Dropdown017,
+    ),
+  ),
+  "dropdown-018": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-018/dropdown-018").then(
+      (module) => module.Dropdown018,
+    ),
+  ),
+  "empty-001": dynamic(() =>
+    import("@/registry/components/empty/empty-001/empty-001").then(
+      (module) => module.Empty001,
+    ),
+  ),
+  "empty-002": dynamic(() =>
+    import("@/registry/components/empty/empty-002/empty-002").then(
+      (module) => module.Empty002,
+    ),
+  ),
+  "empty-003": dynamic(() =>
+    import("@/registry/components/empty/empty-003/empty-003").then(
+      (module) => module.Empty003,
+    ),
+  ),
+  "empty-004": dynamic(() =>
+    import("@/registry/components/empty/empty-004/empty-004").then(
+      (module) => module.Empty004,
+    ),
+  ),
+  "empty-005": dynamic(() =>
+    import("@/registry/components/empty/empty-005/empty-005").then(
+      (module) => module.Empty005,
+    ),
+  ),
+  "empty-006": dynamic(() =>
+    import("@/registry/components/empty/empty-006/empty-006").then(
+      (module) => module.Empty006,
+    ),
+  ),
+  "empty-007": dynamic(() =>
+    import("@/registry/components/empty/empty-007/empty-007").then(
+      (module) => module.Empty007,
+    ),
+  ),
+  "empty-008": dynamic(() =>
+    import("@/registry/components/empty/empty-008/empty-008").then(
+      (module) => module.Empty008,
+    ),
+  ),
+  "empty-009": dynamic(() =>
+    import("@/registry/components/empty/empty-009/empty-009").then(
+      (module) => module.Empty009,
+    ),
+  ),
+  "empty-010": dynamic(() =>
+    import("@/registry/components/empty/empty-010/empty-010").then(
+      (module) => module.Empty010,
+    ),
+  ),
+  "empty-011": dynamic(() =>
+    import("@/registry/components/empty/empty-011/empty-011").then(
+      (module) => module.Empty011,
+    ),
+  ),
+  "empty-012": dynamic(() =>
+    import("@/registry/components/empty/empty-012/empty-012").then(
+      (module) => module.Empty012,
+    ),
+  ),
+  "empty-013": dynamic(() =>
+    import("@/registry/components/empty/empty-013/empty-013").then(
+      (module) => module.Empty013,
+    ),
+  ),
+  "empty-014": dynamic(() =>
+    import("@/registry/components/empty/empty-014/empty-014").then(
+      (module) => module.Empty014,
+    ),
+  ),
+  "empty-015": dynamic(() =>
+    import("@/registry/components/empty/empty-015/empty-015").then(
+      (module) => module.Empty015,
+    ),
+  ),
+  "empty-016": dynamic(() =>
+    import("@/registry/components/empty/empty-016/empty-016").then(
+      (module) => module.Empty016,
+    ),
+  ),
+  "empty-017": dynamic(() =>
+    import("@/registry/components/empty/empty-017/empty-017").then(
+      (module) => module.Empty017,
+    ),
+  ),
+  "empty-018": dynamic(() =>
+    import("@/registry/components/empty/empty-018/empty-018").then(
+      (module) => module.Empty018,
+    ),
+  ),
+  "empty-019": dynamic(() =>
+    import("@/registry/components/empty/empty-019/empty-019").then(
+      (module) => module.Empty019,
+    ),
+  ),
+  "empty-020": dynamic(() =>
+    import("@/registry/components/empty/empty-020/empty-020").then(
+      (module) => module.Empty020,
+    ),
+  ),
+  "eventcalendar-001": dynamic(() =>
+    import("@/registry/components/event-calendar/eventcalendar-001/eventcalendar-001").then(
+      (module) => module.Eventcalendar001,
+    ),
+  ),
+  "eventcalendar-002": dynamic(() =>
+    import("@/registry/components/event-calendar/eventcalendar-002/eventcalendar-002").then(
+      (module) => module.Eventcalendar002,
+    ),
+  ),
+  "eventcalendar-003": dynamic(() =>
+    import("@/registry/components/event-calendar/eventcalendar-003/eventcalendar-003").then(
+      (module) => module.Eventcalendar003,
+    ),
+  ),
+  "eventcalendar-004": dynamic(() =>
+    import("@/registry/components/event-calendar/eventcalendar-004/eventcalendar-004").then(
+      (module) => module.Eventcalendar004,
+    ),
+  ),
+  "eventcalendar-005": dynamic(() =>
+    import("@/registry/components/event-calendar/eventcalendar-005/eventcalendar-005").then(
+      (module) => module.Eventcalendar005,
+    ),
+  ),
+  "field-001": dynamic(() =>
+    import("@/registry/components/field/field-001/field-001").then(
+      (module) => module.Field001,
+    ),
+  ),
+  "field-002": dynamic(() =>
+    import("@/registry/components/field/field-002/field-002").then(
+      (module) => module.Field002,
+    ),
+  ),
+  "field-003": dynamic(() =>
+    import("@/registry/components/field/field-003/field-003").then(
+      (module) => module.Field003,
+    ),
+  ),
+  "field-004": dynamic(() =>
+    import("@/registry/components/field/field-004/field-004").then(
+      (module) => module.Field004,
+    ),
+  ),
+  "field-005": dynamic(() =>
+    import("@/registry/components/field/field-005/field-005").then(
+      (module) => module.Field005,
+    ),
+  ),
+  "field-006": dynamic(() =>
+    import("@/registry/components/field/field-006/field-006").then(
+      (module) => module.Field006,
+    ),
+  ),
+  "field-007": dynamic(() =>
+    import("@/registry/components/field/field-007/field-007").then(
+      (module) => module.Field007,
+    ),
+  ),
+  "field-008": dynamic(() =>
+    import("@/registry/components/field/field-008/field-008").then(
+      (module) => module.Field008,
+    ),
+  ),
+  "field-009": dynamic(() =>
+    import("@/registry/components/field/field-009/field-009").then(
+      (module) => module.Field009,
+    ),
+  ),
+  "field-010": dynamic(() =>
+    import("@/registry/components/field/field-010/field-010").then(
+      (module) => module.Field010,
+    ),
+  ),
+  "field-011": dynamic(() =>
+    import("@/registry/components/field/field-011/field-011").then(
+      (module) => module.Field011,
+    ),
+  ),
+  "file-001": dynamic(() =>
+    import("@/registry/components/file-upload/file-001/file-001").then(
+      (module) => module.File001,
+    ),
+  ),
+  "file-002": dynamic(() =>
+    import("@/registry/components/file-upload/file-002/file-002").then(
+      (module) => module.File002,
+    ),
+  ),
+  "file-003": dynamic(() =>
+    import("@/registry/components/file-upload/file-003/file-003").then(
+      (module) => module.File003,
+    ),
+  ),
+  "file-004": dynamic(() =>
+    import("@/registry/components/file-upload/file-004/file-004").then(
+      (module) => module.File004,
+    ),
+  ),
+  "file-005": dynamic(() =>
+    import("@/registry/components/file-upload/file-005/file-005").then(
+      (module) => module.File005,
+    ),
+  ),
+  "file-006": dynamic(() =>
+    import("@/registry/components/file-upload/file-006/file-006").then(
+      (module) => module.File006,
+    ),
+  ),
+  "file-007": dynamic(() =>
+    import("@/registry/components/file-upload/file-007/file-007").then(
+      (module) => module.File007,
+    ),
+  ),
+  "file-008": dynamic(() =>
+    import("@/registry/components/file-upload/file-008/file-008").then(
+      (module) => module.File008,
+    ),
+  ),
+  "file-009": dynamic(() =>
+    import("@/registry/components/file-upload/file-009/file-009").then(
+      (module) => module.File009,
+    ),
+  ),
+  "file-010": dynamic(() =>
+    import("@/registry/components/file-upload/file-010/file-010").then(
+      (module) => module.File010,
+    ),
+  ),
+  "filters-001": dynamic(() =>
+    import("@/registry/components/filters/filters-001/filters-001").then(
+      (module) => module.Filters001,
+    ),
+  ),
+  "filters-002": dynamic(() =>
+    import("@/registry/components/filters/filters-002/filters-002").then(
+      (module) => module.Filters002,
+    ),
+  ),
+  "filters-003": dynamic(() =>
+    import("@/registry/components/filters/filters-003/filters-003").then(
+      (module) => module.Filters003,
+    ),
+  ),
+  "filters-004": dynamic(() =>
+    import("@/registry/components/filters/filters-004/filters-004").then(
+      (module) => module.Filters004,
+    ),
+  ),
+  "filters-005": dynamic(() =>
+    import("@/registry/components/filters/filters-005/filters-005").then(
+      (module) => module.Filters005,
+    ),
+  ),
+  "filters-006": dynamic(() =>
+    import("@/registry/components/filters/filters-006/filters-006").then(
+      (module) => module.Filters006,
+    ),
+  ),
+  "filters-007": dynamic(() =>
+    import("@/registry/components/filters/filters-007/filters-007").then(
+      (module) => module.Filters007,
+    ),
+  ),
+  "filters-008": dynamic(() =>
+    import("@/registry/components/filters/filters-008/filters-008").then(
+      (module) => module.Filters008,
+    ),
+  ),
+  "filters-009": dynamic(() =>
+    import("@/registry/components/filters/filters-009/filters-009").then(
+      (module) => module.Filters009,
+    ),
+  ),
+  "filters-010": dynamic(() =>
+    import("@/registry/components/filters/filters-010/filters-010").then(
+      (module) => module.Filters010,
+    ),
+  ),
+  "filters-011": dynamic(() =>
+    import("@/registry/components/filters/filters-011/filters-011").then(
+      (module) => module.Filters011,
+    ),
+  ),
+  "filters-012": dynamic(() =>
+    import("@/registry/components/filters/filters-012/filters-012").then(
+      (module) => module.Filters012,
+    ),
+  ),
+  "frame-001": dynamic(() =>
+    import("@/registry/components/frame/frame-001/frame-001").then(
+      (module) => module.Frame001,
+    ),
+  ),
+  "frame-002": dynamic(() =>
+    import("@/registry/components/frame/frame-002/frame-002").then(
+      (module) => module.Frame002,
+    ),
+  ),
+  "frame-003": dynamic(() =>
+    import("@/registry/components/frame/frame-003/frame-003").then(
+      (module) => module.Frame003,
+    ),
+  ),
+  "frame-004": dynamic(() =>
+    import("@/registry/components/frame/frame-004/frame-004").then(
+      (module) => module.Frame004,
+    ),
+  ),
+  "frame-005": dynamic(() =>
+    import("@/registry/components/frame/frame-005/frame-005").then(
+      (module) => module.Frame005,
+    ),
+  ),
+  "frame-006": dynamic(() =>
+    import("@/registry/components/frame/frame-006/frame-006").then(
+      (module) => module.Frame006,
+    ),
+  ),
+  "frame-007": dynamic(() =>
+    import("@/registry/components/frame/frame-007/frame-007").then(
+      (module) => module.Frame007,
+    ),
+  ),
+  "frame-008": dynamic(() =>
+    import("@/registry/components/frame/frame-008/frame-008").then(
+      (module) => module.Frame008,
+    ),
+  ),
+  "frame-009": dynamic(() =>
+    import("@/registry/components/frame/frame-009/frame-009").then(
+      (module) => module.Frame009,
+    ),
+  ),
+  "frame-010": dynamic(() =>
+    import("@/registry/components/frame/frame-010/frame-010").then(
+      (module) => module.Frame010,
+    ),
+  ),
+  "frame-011": dynamic(() =>
+    import("@/registry/components/frame/frame-011/frame-011").then(
+      (module) => module.Frame011,
+    ),
+  ),
+  "frame-012": dynamic(() =>
+    import("@/registry/components/frame/frame-012/frame-012").then(
+      (module) => module.Frame012,
+    ),
+  ),
+  "frame-013": dynamic(() =>
+    import("@/registry/components/frame/frame-013/frame-013").then(
+      (module) => module.Frame013,
+    ),
+  ),
+  "frame-014": dynamic(() =>
+    import("@/registry/components/frame/frame-014/frame-014").then(
+      (module) => module.Frame014,
+    ),
+  ),
+  "frame-015": dynamic(() =>
+    import("@/registry/components/frame/frame-015/frame-015").then(
+      (module) => module.Frame015,
+    ),
+  ),
+  "frame-016": dynamic(() =>
+    import("@/registry/components/frame/frame-016/frame-016").then(
+      (module) => module.Frame016,
+    ),
+  ),
+  "frame-017": dynamic(() =>
+    import("@/registry/components/frame/frame-017/frame-017").then(
+      (module) => module.Frame017,
+    ),
+  ),
+  "frame-018": dynamic(() =>
+    import("@/registry/components/frame/frame-018/frame-018").then(
+      (module) => module.Frame018,
+    ),
+  ),
+  "frame-019": dynamic(() =>
+    import("@/registry/components/frame/frame-019/frame-019").then(
+      (module) => module.Frame019,
+    ),
+  ),
+  "gantt-001": dynamic(() =>
+    import("@/registry/components/gantt/gantt-001/gantt-001").then(
+      (module) => module.Gantt001,
+    ),
+  ),
+  "gantt-002": dynamic(() =>
+    import("@/registry/components/gantt/gantt-002/gantt-002").then(
+      (module) => module.Gantt002,
+    ),
+  ),
+  "gantt-003": dynamic(() =>
+    import("@/registry/components/gantt/gantt-003/gantt-003").then(
+      (module) => module.Gantt003,
+    ),
+  ),
+  "gantt-004": dynamic(() =>
+    import("@/registry/components/gantt/gantt-004/gantt-004").then(
+      (module) => module.Gantt004,
+    ),
+  ),
+  "gantt-005": dynamic(() =>
+    import("@/registry/components/gantt/gantt-005/gantt-005").then(
+      (module) => module.Gantt005,
+    ),
+  ),
+  "gantt-006": dynamic(() =>
+    import("@/registry/components/gantt/gantt-006/gantt-006").then(
+      (module) => module.Gantt006,
+    ),
+  ),
+  "gantt-007": dynamic(() =>
+    import("@/registry/components/gantt/gantt-007/gantt-007").then(
+      (module) => module.Gantt007,
+    ),
+  ),
+  "hovercard-001": dynamic(() =>
+    import("@/registry/components/hover-card/hovercard-001/hovercard-001").then(
+      (module) => module.Hovercard001,
+    ),
+  ),
+  "hovercard-002": dynamic(() =>
+    import("@/registry/components/hover-card/hovercard-002/hovercard-002").then(
+      (module) => module.Hovercard002,
+    ),
+  ),
+  "hovercard-003": dynamic(() =>
+    import("@/registry/components/hover-card/hovercard-003/hovercard-003").then(
+      (module) => module.Hovercard003,
+    ),
+  ),
+  "hovercard-004": dynamic(() =>
+    import("@/registry/components/hover-card/hovercard-004/hovercard-004").then(
+      (module) => module.Hovercard004,
+    ),
+  ),
+  "hovercard-005": dynamic(() =>
+    import("@/registry/components/hover-card/hovercard-005/hovercard-005").then(
+      (module) => module.Hovercard005,
+    ),
+  ),
+  "hovercard-006": dynamic(() =>
+    import("@/registry/components/hover-card/hovercard-006/hovercard-006").then(
+      (module) => module.Hovercard006,
+    ),
+  ),
+  "hovercard-007": dynamic(() =>
+    import("@/registry/components/hover-card/hovercard-007/hovercard-007").then(
+      (module) => module.Hovercard007,
+    ),
+  ),
+  "hovercard-008": dynamic(() =>
+    import("@/registry/components/hover-card/hovercard-008/hovercard-008").then(
+      (module) => module.Hovercard008,
+    ),
+  ),
+  "iconstack-001": dynamic(() =>
+    import("@/registry/components/icon-stack/iconstack-001/iconstack-001").then(
+      (module) => module.Iconstack001,
+    ),
+  ),
+  "iconstack-002": dynamic(() =>
+    import("@/registry/components/icon-stack/iconstack-002/iconstack-002").then(
+      (module) => module.Iconstack002,
+    ),
+  ),
+  "iconstack-003": dynamic(() =>
+    import("@/registry/components/icon-stack/iconstack-003/iconstack-003").then(
+      (module) => module.Iconstack003,
+    ),
+  ),
+  "iconstack-004": dynamic(() =>
+    import("@/registry/components/icon-stack/iconstack-004/iconstack-004").then(
+      (module) => module.Iconstack004,
+    ),
+  ),
+  "iconstack-005": dynamic(() =>
+    import("@/registry/components/icon-stack/iconstack-005/iconstack-005").then(
+      (module) => module.Iconstack005,
+    ),
+  ),
+  "iconstack-006": dynamic(() =>
+    import("@/registry/components/icon-stack/iconstack-006/iconstack-006").then(
+      (module) => module.Iconstack006,
+    ),
+  ),
+  "icontile-001": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-001/icontile-001").then(
+      (module) => module.Icontile001,
+    ),
+  ),
+  "icontile-002": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-002/icontile-002").then(
+      (module) => module.Icontile002,
+    ),
+  ),
+  "icontile-003": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-003/icontile-003").then(
+      (module) => module.Icontile003,
+    ),
+  ),
+  "icontile-004": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-004/icontile-004").then(
+      (module) => module.Icontile004,
+    ),
+  ),
+  "icontile-005": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-005/icontile-005").then(
+      (module) => module.Icontile005,
+    ),
+  ),
+  "icontile-006": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-006/icontile-006").then(
+      (module) => module.Icontile006,
+    ),
+  ),
+  "icontile-007": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-007/icontile-007").then(
+      (module) => module.Icontile007,
+    ),
+  ),
+  "icontile-008": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-008/icontile-008").then(
+      (module) => module.Icontile008,
+    ),
+  ),
+  "icontile-009": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-009/icontile-009").then(
+      (module) => module.Icontile009,
+    ),
+  ),
+  "icontile-010": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-010/icontile-010").then(
+      (module) => module.Icontile010,
+    ),
+  ),
+  "icontile-011": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-011/icontile-011").then(
+      (module) => module.Icontile011,
+    ),
+  ),
+  "icontile-012": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-012/icontile-012").then(
+      (module) => module.Icontile012,
+    ),
+  ),
+  "icontile-013": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-013/icontile-013").then(
+      (module) => module.Icontile013,
+    ),
+  ),
+  "icontile-014": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-014/icontile-014").then(
+      (module) => module.Icontile014,
+    ),
+  ),
+  "icontile-015": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-015/icontile-015").then(
+      (module) => module.Icontile015,
+    ),
+  ),
+  "icontile-016": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-016/icontile-016").then(
+      (module) => module.Icontile016,
+    ),
+  ),
+  "icontile-017": dynamic(() =>
+    import("@/registry/components/icon-tile/icontile-017/icontile-017").then(
+      (module) => module.Icontile017,
+    ),
+  ),
+  "input-001": dynamic(() =>
+    import("@/registry/components/input/input-001/input-001").then(
+      (module) => module.Input001,
+    ),
+  ),
+  "input-002": dynamic(() =>
+    import("@/registry/components/input/input-002/input-002").then(
+      (module) => module.Input002,
+    ),
+  ),
+  "input-003": dynamic(() =>
+    import("@/registry/components/input/input-003/input-003").then(
+      (module) => module.Input003,
+    ),
+  ),
+  "input-004": dynamic(() =>
+    import("@/registry/components/input/input-004/input-004").then(
+      (module) => module.Input004,
+    ),
+  ),
+  "input-005": dynamic(() =>
+    import("@/registry/components/input/input-005/input-005").then(
+      (module) => module.Input005,
+    ),
+  ),
+  "input-006": dynamic(() =>
+    import("@/registry/components/input/input-006/input-006").then(
+      (module) => module.Input006,
+    ),
+  ),
+  "input-007": dynamic(() =>
+    import("@/registry/components/input/input-007/input-007").then(
+      (module) => module.Input007,
+    ),
+  ),
+  "input-008": dynamic(() =>
+    import("@/registry/components/input/input-008/input-008").then(
+      (module) => module.Input008,
+    ),
+  ),
+  "input-009": dynamic(() =>
+    import("@/registry/components/input/input-009/input-009").then(
+      (module) => module.Input009,
+    ),
+  ),
+  "input-010": dynamic(() =>
+    import("@/registry/components/input/input-010/input-010").then(
+      (module) => module.Input010,
+    ),
+  ),
+  "input-011": dynamic(() =>
+    import("@/registry/components/input/input-011/input-011").then(
+      (module) => module.Input011,
+    ),
+  ),
+  "input-012": dynamic(() =>
+    import("@/registry/components/input/input-012/input-012").then(
+      (module) => module.Input012,
+    ),
+  ),
+  "input-013": dynamic(() =>
+    import("@/registry/components/input/input-013/input-013").then(
+      (module) => module.Input013,
+    ),
+  ),
+  "input-014": dynamic(() =>
+    import("@/registry/components/input/input-014/input-014").then(
+      (module) => module.Input014,
+    ),
+  ),
+  "input-015": dynamic(() =>
+    import("@/registry/components/input/input-015/input-015").then(
+      (module) => module.Input015,
+    ),
+  ),
+  "input-016": dynamic(() =>
+    import("@/registry/components/input/input-016/input-016").then(
+      (module) => module.Input016,
+    ),
+  ),
+  "input-017": dynamic(() =>
+    import("@/registry/components/input/input-017/input-017").then(
+      (module) => module.Input017,
+    ),
+  ),
+  "input-018": dynamic(() =>
+    import("@/registry/components/input/input-018/input-018").then(
+      (module) => module.Input018,
+    ),
+  ),
+  "input-019": dynamic(() =>
+    import("@/registry/components/input/input-019/input-019").then(
+      (module) => module.Input019,
+    ),
+  ),
+  "input-020": dynamic(() =>
+    import("@/registry/components/input/input-020/input-020").then(
+      (module) => module.Input020,
+    ),
+  ),
+  "input-021": dynamic(() =>
+    import("@/registry/components/input/input-021/input-021").then(
+      (module) => module.Input021,
+    ),
+  ),
+  "input-022": dynamic(() =>
+    import("@/registry/components/input/input-022/input-022").then(
+      (module) => module.Input022,
+    ),
+  ),
+  "input-023": dynamic(() =>
+    import("@/registry/components/input/input-023/input-023").then(
+      (module) => module.Input023,
+    ),
+  ),
+  "input-024": dynamic(() =>
+    import("@/registry/components/input/input-024/input-024").then(
+      (module) => module.Input024,
+    ),
+  ),
+  "input-025": dynamic(() =>
+    import("@/registry/components/input/input-025/input-025").then(
+      (module) => module.Input025,
+    ),
+  ),
+  "input-026": dynamic(() =>
+    import("@/registry/components/input/input-026/input-026").then(
+      (module) => module.Input026,
+    ),
+  ),
+  "input-027": dynamic(() =>
+    import("@/registry/components/input/input-027/input-027").then(
+      (module) => module.Input027,
+    ),
+  ),
+  "input-028": dynamic(() =>
+    import("@/registry/components/input/input-028/input-028").then(
+      (module) => module.Input028,
+    ),
+  ),
+  "input-029": dynamic(() =>
+    import("@/registry/components/input/input-029/input-029").then(
+      (module) => module.Input029,
+    ),
+  ),
+  "input-030": dynamic(() =>
+    import("@/registry/components/input/input-030/input-030").then(
+      (module) => module.Input030,
+    ),
+  ),
+  "input-031": dynamic(() =>
+    import("@/registry/components/input/input-031/input-031").then(
+      (module) => module.Input031,
+    ),
+  ),
+  "inputgroup-001": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-001/inputgroup-001").then(
+      (module) => module.Inputgroup001,
+    ),
+  ),
+  "inputgroup-002": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-002/inputgroup-002").then(
+      (module) => module.Inputgroup002,
+    ),
+  ),
+  "inputgroup-003": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-003/inputgroup-003").then(
+      (module) => module.Inputgroup003,
+    ),
+  ),
+  "inputgroup-004": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-004/inputgroup-004").then(
+      (module) => module.Inputgroup004,
+    ),
+  ),
+  "inputgroup-005": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-005/inputgroup-005").then(
+      (module) => module.Inputgroup005,
+    ),
+  ),
+  "inputgroup-006": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-006/inputgroup-006").then(
+      (module) => module.Inputgroup006,
+    ),
+  ),
+  "inputgroup-007": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-007/inputgroup-007").then(
+      (module) => module.Inputgroup007,
+    ),
+  ),
+  "inputgroup-008": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-008/inputgroup-008").then(
+      (module) => module.Inputgroup008,
+    ),
+  ),
+  "inputgroup-009": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-009/inputgroup-009").then(
+      (module) => module.Inputgroup009,
+    ),
+  ),
+  "inputgroup-010": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-010/inputgroup-010").then(
+      (module) => module.Inputgroup010,
+    ),
+  ),
+  "inputgroup-011": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-011/inputgroup-011").then(
+      (module) => module.Inputgroup011,
+    ),
+  ),
+  "inputgroup-012": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-012/inputgroup-012").then(
+      (module) => module.Inputgroup012,
+    ),
+  ),
+  "inputgroup-013": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-013/inputgroup-013").then(
+      (module) => module.Inputgroup013,
+    ),
+  ),
+  "inputgroup-014": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-014/inputgroup-014").then(
+      (module) => module.Inputgroup014,
+    ),
+  ),
+  "inputgroup-015": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-015/inputgroup-015").then(
+      (module) => module.Inputgroup015,
+    ),
+  ),
+  "inputgroup-016": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-016/inputgroup-016").then(
+      (module) => module.Inputgroup016,
+    ),
+  ),
+  "inputgroup-017": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-017/inputgroup-017").then(
+      (module) => module.Inputgroup017,
+    ),
+  ),
+  "inputgroup-018": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-018/inputgroup-018").then(
+      (module) => module.Inputgroup018,
+    ),
+  ),
+  "inputgroup-019": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-019/inputgroup-019").then(
+      (module) => module.Inputgroup019,
+    ),
+  ),
+  "inputgroup-020": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-020/inputgroup-020").then(
+      (module) => module.Inputgroup020,
+    ),
+  ),
+  "inputgroup-021": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-021/inputgroup-021").then(
+      (module) => module.Inputgroup021,
+    ),
+  ),
+  "inputgroup-022": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-022/inputgroup-022").then(
+      (module) => module.Inputgroup022,
+    ),
+  ),
+  "inputgroup-023": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-023/inputgroup-023").then(
+      (module) => module.Inputgroup023,
+    ),
+  ),
+  "inputgroup-024": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-024/inputgroup-024").then(
+      (module) => module.Inputgroup024,
+    ),
+  ),
+  "inputgroup-025": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-025/inputgroup-025").then(
+      (module) => module.Inputgroup025,
+    ),
+  ),
+  "inputgroup-026": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-026/inputgroup-026").then(
+      (module) => module.Inputgroup026,
+    ),
+  ),
+  "inputgroup-027": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-027/inputgroup-027").then(
+      (module) => module.Inputgroup027,
+    ),
+  ),
+  "inputgroup-028": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-028/inputgroup-028").then(
+      (module) => module.Inputgroup028,
+    ),
+  ),
+  "inputgroup-029": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-029/inputgroup-029").then(
+      (module) => module.Inputgroup029,
+    ),
+  ),
+  "inputgroup-030": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-030/inputgroup-030").then(
+      (module) => module.Inputgroup030,
+    ),
+  ),
+  "inputgroup-031": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-031/inputgroup-031").then(
+      (module) => module.Inputgroup031,
+    ),
+  ),
+  "inputgroup-032": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-032/inputgroup-032").then(
+      (module) => module.Inputgroup032,
+    ),
+  ),
+  "inputgroup-033": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-033/inputgroup-033").then(
+      (module) => module.Inputgroup033,
+    ),
+  ),
+  "inputgroup-034": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-034/inputgroup-034").then(
+      (module) => module.Inputgroup034,
+    ),
+  ),
+  "inputgroup-035": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-035/inputgroup-035").then(
+      (module) => module.Inputgroup035,
+    ),
+  ),
+  "inputgroup-036": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-036/inputgroup-036").then(
+      (module) => module.Inputgroup036,
+    ),
+  ),
+  "inputgroup-037": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-037/inputgroup-037").then(
+      (module) => module.Inputgroup037,
+    ),
+  ),
+  "inputgroup-038": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-038/inputgroup-038").then(
+      (module) => module.Inputgroup038,
+    ),
+  ),
+  "inputgroup-039": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-039/inputgroup-039").then(
+      (module) => module.Inputgroup039,
+    ),
+  ),
+  "inputgroup-040": dynamic(() =>
+    import("@/registry/components/input-group/inputgroup-040/inputgroup-040").then(
+      (module) => module.Inputgroup040,
+    ),
+  ),
+  "otp-001": dynamic(() =>
+    import("@/registry/components/input-otp/otp-001/otp-001").then(
+      (module) => module.Otp001,
+    ),
+  ),
+  "otp-002": dynamic(() =>
+    import("@/registry/components/input-otp/otp-002/otp-002").then(
+      (module) => module.Otp002,
+    ),
+  ),
+  "otp-003": dynamic(() =>
+    import("@/registry/components/input-otp/otp-003/otp-003").then(
+      (module) => module.Otp003,
+    ),
+  ),
+  "otp-004": dynamic(() =>
+    import("@/registry/components/input-otp/otp-004/otp-004").then(
+      (module) => module.Otp004,
+    ),
+  ),
+  "otp-005": dynamic(() =>
+    import("@/registry/components/input-otp/otp-005/otp-005").then(
+      (module) => module.Otp005,
+    ),
+  ),
+  "otp-006": dynamic(() =>
+    import("@/registry/components/input-otp/otp-006/otp-006").then(
+      (module) => module.Otp006,
+    ),
+  ),
+  "otp-007": dynamic(() =>
+    import("@/registry/components/input-otp/otp-007/otp-007").then(
+      (module) => module.Otp007,
+    ),
+  ),
+  "item-001": dynamic(() =>
+    import("@/registry/components/item/item-001/item-001").then(
+      (module) => module.Item001,
+    ),
+  ),
+  "item-002": dynamic(() =>
+    import("@/registry/components/item/item-002/item-002").then(
+      (module) => module.Item002,
+    ),
+  ),
+  "item-003": dynamic(() =>
+    import("@/registry/components/item/item-003/item-003").then(
+      (module) => module.Item003,
+    ),
+  ),
+  "item-004": dynamic(() =>
+    import("@/registry/components/item/item-004/item-004").then(
+      (module) => module.Item004,
+    ),
+  ),
+  "item-005": dynamic(() =>
+    import("@/registry/components/item/item-005/item-005").then(
+      (module) => module.Item005,
+    ),
+  ),
+  "item-006": dynamic(() =>
+    import("@/registry/components/item/item-006/item-006").then(
+      (module) => module.Item006,
+    ),
+  ),
+  "item-007": dynamic(() =>
+    import("@/registry/components/item/item-007/item-007").then(
+      (module) => module.Item007,
+    ),
+  ),
+  "item-008": dynamic(() =>
+    import("@/registry/components/item/item-008/item-008").then(
+      (module) => module.Item008,
+    ),
+  ),
+  "item-009": dynamic(() =>
+    import("@/registry/components/item/item-009/item-009").then(
+      (module) => module.Item009,
+    ),
+  ),
+  "item-010": dynamic(() =>
+    import("@/registry/components/item/item-010/item-010").then(
+      (module) => module.Item010,
+    ),
+  ),
+  "item-011": dynamic(() =>
+    import("@/registry/components/item/item-011/item-011").then(
+      (module) => module.Item011,
+    ),
+  ),
+  "item-012": dynamic(() =>
+    import("@/registry/components/item/item-012/item-012").then(
+      (module) => module.Item012,
+    ),
+  ),
+  "kanban-001": dynamic(() =>
+    import("@/registry/components/kanban/kanban-001/kanban-001").then(
+      (module) => module.Kanban001,
+    ),
+  ),
+  "kanban-002": dynamic(() =>
+    import("@/registry/components/kanban/kanban-002/kanban-002").then(
+      (module) => module.Kanban002,
+    ),
+  ),
+  "kanban-003": dynamic(() =>
+    import("@/registry/components/kanban/kanban-003/kanban-003").then(
+      (module) => module.Kanban003,
+    ),
+  ),
+  "kanban-004": dynamic(() =>
+    import("@/registry/components/kanban/kanban-004/kanban-004").then(
+      (module) => module.Kanban004,
+    ),
+  ),
+  "kanban-005": dynamic(() =>
+    import("@/registry/components/kanban/kanban-005/kanban-005").then(
+      (module) => module.Kanban005,
+    ),
+  ),
+  "kanban-006": dynamic(() =>
+    import("@/registry/components/kanban/kanban-006/kanban-006").then(
+      (module) => module.Kanban006,
+    ),
+  ),
+  "kanban-007": dynamic(() =>
+    import("@/registry/components/kanban/kanban-007/kanban-007").then(
+      (module) => module.Kanban007,
+    ),
+  ),
+  "kbd-001": dynamic(() =>
+    import("@/registry/components/kbd/kbd-001/kbd-001").then(
+      (module) => module.Kbd001,
+    ),
+  ),
+  "kbd-002": dynamic(() =>
+    import("@/registry/components/kbd/kbd-002/kbd-002").then(
+      (module) => module.Kbd002,
+    ),
+  ),
+  "kbd-003": dynamic(() =>
+    import("@/registry/components/kbd/kbd-003/kbd-003").then(
+      (module) => module.Kbd003,
+    ),
+  ),
+  "kbd-004": dynamic(() =>
+    import("@/registry/components/kbd/kbd-004/kbd-004").then(
+      (module) => module.Kbd004,
+    ),
+  ),
+  "kbd-005": dynamic(() =>
+    import("@/registry/components/kbd/kbd-005/kbd-005").then(
+      (module) => module.Kbd005,
+    ),
+  ),
+  "kbd-006": dynamic(() =>
+    import("@/registry/components/kbd/kbd-006/kbd-006").then(
+      (module) => module.Kbd006,
+    ),
+  ),
   "label-001": dynamic(() =>
     import("@/registry/components/label/label-001/label-001").then(
       (module) => module.Label001,
@@ -4083,74 +5863,574 @@ export const LAZY_PREVIEWS = {
       (module) => module.Label008,
     ),
   ),
+  "label-009": dynamic(() =>
+    import("@/registry/components/label/label-009/label-009").then(
+      (module) => module.Label009,
+    ),
+  ),
+  "label-010": dynamic(() =>
+    import("@/registry/components/label/label-010/label-010").then(
+      (module) => module.Label010,
+    ),
+  ),
+  "label-011": dynamic(() =>
+    import("@/registry/components/label/label-011/label-011").then(
+      (module) => module.Label011,
+    ),
+  ),
+  "label-012": dynamic(() =>
+    import("@/registry/components/label/label-012/label-012").then(
+      (module) => module.Label012,
+    ),
+  ),
+  "label-013": dynamic(() =>
+    import("@/registry/components/label/label-013/label-013").then(
+      (module) => module.Label013,
+    ),
+  ),
+  "menu-003": dynamic(() =>
+    import("@/registry/components/menubar/menu-003/menu-003").then(
+      (module) => module.Menu003,
+    ),
+  ),
+  "menubar-001": dynamic(() =>
+    import("@/registry/components/menubar/menubar-001/menubar-001").then(
+      (module) => module.Menubar001,
+    ),
+  ),
+  "menubar-002": dynamic(() =>
+    import("@/registry/components/menubar/menubar-002/menubar-002").then(
+      (module) => module.Menubar002,
+    ),
+  ),
+  "menubar-003": dynamic(() =>
+    import("@/registry/components/menubar/menubar-003/menubar-003").then(
+      (module) => module.Menubar003,
+    ),
+  ),
+  "menubar-004": dynamic(() =>
+    import("@/registry/components/menubar/menubar-004/menubar-004").then(
+      (module) => module.Menubar004,
+    ),
+  ),
+  "menubar-005": dynamic(() =>
+    import("@/registry/components/menubar/menubar-005/menubar-005").then(
+      (module) => module.Menubar005,
+    ),
+  ),
+  "menubar-006": dynamic(() =>
+    import("@/registry/components/menubar/menubar-006/menubar-006").then(
+      (module) => module.Menubar006,
+    ),
+  ),
+  "menubar-007": dynamic(() =>
+    import("@/registry/components/menubar/menubar-007/menubar-007").then(
+      (module) => module.Menubar007,
+    ),
+  ),
+  "menubar-008": dynamic(() =>
+    import("@/registry/components/menubar/menubar-008/menubar-008").then(
+      (module) => module.Menubar008,
+    ),
+  ),
   "nativeselect-001": dynamic(() =>
-    import("@/registry/components/nativeselect/nativeselect-001/nativeselect-001").then(
+    import("@/registry/components/native-select/nativeselect-001/nativeselect-001").then(
       (module) => module.Nativeselect001,
     ),
   ),
   "nativeselect-002": dynamic(() =>
-    import("@/registry/components/nativeselect/nativeselect-002/nativeselect-002").then(
+    import("@/registry/components/native-select/nativeselect-002/nativeselect-002").then(
       (module) => module.Nativeselect002,
     ),
   ),
   "nativeselect-003": dynamic(() =>
-    import("@/registry/components/nativeselect/nativeselect-003/nativeselect-003").then(
+    import("@/registry/components/native-select/nativeselect-003/nativeselect-003").then(
       (module) => module.Nativeselect003,
     ),
   ),
   "nativeselect-004": dynamic(() =>
-    import("@/registry/components/nativeselect/nativeselect-004/nativeselect-004").then(
+    import("@/registry/components/native-select/nativeselect-004/nativeselect-004").then(
       (module) => module.Nativeselect004,
     ),
   ),
   "nativeselect-005": dynamic(() =>
-    import("@/registry/components/nativeselect/nativeselect-005/nativeselect-005").then(
+    import("@/registry/components/native-select/nativeselect-005/nativeselect-005").then(
       (module) => module.Nativeselect005,
     ),
   ),
   "nativeselect-006": dynamic(() =>
-    import("@/registry/components/nativeselect/nativeselect-006/nativeselect-006").then(
+    import("@/registry/components/native-select/nativeselect-006/nativeselect-006").then(
       (module) => module.Nativeselect006,
     ),
   ),
   "nativeselect-007": dynamic(() =>
-    import("@/registry/components/nativeselect/nativeselect-007/nativeselect-007").then(
+    import("@/registry/components/native-select/nativeselect-007/nativeselect-007").then(
       (module) => module.Nativeselect007,
     ),
   ),
+  "menu-006": dynamic(() =>
+    import("@/registry/components/navigation-menu/menu-006/menu-006").then(
+      (module) => module.Menu006,
+    ),
+  ),
+  "navmenu-001": dynamic(() =>
+    import("@/registry/components/navigation-menu/navmenu-001/navmenu-001").then(
+      (module) => module.Navmenu001,
+    ),
+  ),
+  "navmenu-002": dynamic(() =>
+    import("@/registry/components/navigation-menu/navmenu-002/navmenu-002").then(
+      (module) => module.Navmenu002,
+    ),
+  ),
+  "navmenu-003": dynamic(() =>
+    import("@/registry/components/navigation-menu/navmenu-003/navmenu-003").then(
+      (module) => module.Navmenu003,
+    ),
+  ),
+  "navmenu-004": dynamic(() =>
+    import("@/registry/components/navigation-menu/navmenu-004/navmenu-004").then(
+      (module) => module.Navmenu004,
+    ),
+  ),
+  "navmenu-005": dynamic(() =>
+    import("@/registry/components/navigation-menu/navmenu-005/navmenu-005").then(
+      (module) => module.Navmenu005,
+    ),
+  ),
+  "navmenu-006": dynamic(() =>
+    import("@/registry/components/navigation-menu/navmenu-006/navmenu-006").then(
+      (module) => module.Navmenu006,
+    ),
+  ),
+  "navmenu-007": dynamic(() =>
+    import("@/registry/components/navigation-menu/navmenu-007/navmenu-007").then(
+      (module) => module.Navmenu007,
+    ),
+  ),
+  "navmenu-008": dynamic(() =>
+    import("@/registry/components/navigation-menu/navmenu-008/navmenu-008").then(
+      (module) => module.Navmenu008,
+    ),
+  ),
+  "number-001": dynamic(() =>
+    import("@/registry/components/number-field/number-001/number-001").then(
+      (module) => module.Number001,
+    ),
+  ),
+  "number-002": dynamic(() =>
+    import("@/registry/components/number-field/number-002/number-002").then(
+      (module) => module.Number002,
+    ),
+  ),
+  "number-003": dynamic(() =>
+    import("@/registry/components/number-field/number-003/number-003").then(
+      (module) => module.Number003,
+    ),
+  ),
+  "number-004": dynamic(() =>
+    import("@/registry/components/number-field/number-004/number-004").then(
+      (module) => module.Number004,
+    ),
+  ),
+  "number-005": dynamic(() =>
+    import("@/registry/components/number-field/number-005/number-005").then(
+      (module) => module.Number005,
+    ),
+  ),
+  "number-006": dynamic(() =>
+    import("@/registry/components/number-field/number-006/number-006").then(
+      (module) => module.Number006,
+    ),
+  ),
+  "number-007": dynamic(() =>
+    import("@/registry/components/number-field/number-007/number-007").then(
+      (module) => module.Number007,
+    ),
+  ),
+  "number-008": dynamic(() =>
+    import("@/registry/components/number-field/number-008/number-008").then(
+      (module) => module.Number008,
+    ),
+  ),
+  "pagination-001": dynamic(() =>
+    import("@/registry/components/pagination/pagination-001/pagination-001").then(
+      (module) => module.Pagination001,
+    ),
+  ),
+  "pagination-002": dynamic(() =>
+    import("@/registry/components/pagination/pagination-002/pagination-002").then(
+      (module) => module.Pagination002,
+    ),
+  ),
+  "pagination-003": dynamic(() =>
+    import("@/registry/components/pagination/pagination-003/pagination-003").then(
+      (module) => module.Pagination003,
+    ),
+  ),
+  "pagination-004": dynamic(() =>
+    import("@/registry/components/pagination/pagination-004/pagination-004").then(
+      (module) => module.Pagination004,
+    ),
+  ),
+  "pagination-005": dynamic(() =>
+    import("@/registry/components/pagination/pagination-005/pagination-005").then(
+      (module) => module.Pagination005,
+    ),
+  ),
+  "pagination-006": dynamic(() =>
+    import("@/registry/components/pagination/pagination-006/pagination-006").then(
+      (module) => module.Pagination006,
+    ),
+  ),
+  "pagination-007": dynamic(() =>
+    import("@/registry/components/pagination/pagination-007/pagination-007").then(
+      (module) => module.Pagination007,
+    ),
+  ),
+  "pagination-008": dynamic(() =>
+    import("@/registry/components/pagination/pagination-008/pagination-008").then(
+      (module) => module.Pagination008,
+    ),
+  ),
+  "pagination-009": dynamic(() =>
+    import("@/registry/components/pagination/pagination-009/pagination-009").then(
+      (module) => module.Pagination009,
+    ),
+  ),
+  "pagination-010": dynamic(() =>
+    import("@/registry/components/pagination/pagination-010/pagination-010").then(
+      (module) => module.Pagination010,
+    ),
+  ),
+  "pagination-011": dynamic(() =>
+    import("@/registry/components/pagination/pagination-011/pagination-011").then(
+      (module) => module.Pagination011,
+    ),
+  ),
+  "pagination-012": dynamic(() =>
+    import("@/registry/components/pagination/pagination-012/pagination-012").then(
+      (module) => module.Pagination012,
+    ),
+  ),
+  "pagination-013": dynamic(() =>
+    import("@/registry/components/pagination/pagination-013/pagination-013").then(
+      (module) => module.Pagination013,
+    ),
+  ),
+  "pagination-014": dynamic(() =>
+    import("@/registry/components/pagination/pagination-014/pagination-014").then(
+      (module) => module.Pagination014,
+    ),
+  ),
+  "pagination-015": dynamic(() =>
+    import("@/registry/components/pagination/pagination-015/pagination-015").then(
+      (module) => module.Pagination015,
+    ),
+  ),
   "phoneinput-001": dynamic(() =>
-    import("@/registry/components/phoneinput/phoneinput-001/phoneinput-001").then(
+    import("@/registry/components/phone-input/phoneinput-001/phoneinput-001").then(
       (module) => module.Phoneinput001,
     ),
   ),
   "phoneinput-002": dynamic(() =>
-    import("@/registry/components/phoneinput/phoneinput-002/phoneinput-002").then(
+    import("@/registry/components/phone-input/phoneinput-002/phoneinput-002").then(
       (module) => module.Phoneinput002,
     ),
   ),
   "phoneinput-003": dynamic(() =>
-    import("@/registry/components/phoneinput/phoneinput-003/phoneinput-003").then(
+    import("@/registry/components/phone-input/phoneinput-003/phoneinput-003").then(
       (module) => module.Phoneinput003,
     ),
   ),
   "phoneinput-004": dynamic(() =>
-    import("@/registry/components/phoneinput/phoneinput-004/phoneinput-004").then(
+    import("@/registry/components/phone-input/phoneinput-004/phoneinput-004").then(
       (module) => module.Phoneinput004,
     ),
   ),
   "phoneinput-005": dynamic(() =>
-    import("@/registry/components/phoneinput/phoneinput-005/phoneinput-005").then(
+    import("@/registry/components/phone-input/phoneinput-005/phoneinput-005").then(
       (module) => module.Phoneinput005,
     ),
   ),
   "phoneinput-006": dynamic(() =>
-    import("@/registry/components/phoneinput/phoneinput-006/phoneinput-006").then(
+    import("@/registry/components/phone-input/phoneinput-006/phoneinput-006").then(
       (module) => module.Phoneinput006,
     ),
   ),
   "phoneinput-007": dynamic(() =>
-    import("@/registry/components/phoneinput/phoneinput-007/phoneinput-007").then(
+    import("@/registry/components/phone-input/phoneinput-007/phoneinput-007").then(
       (module) => module.Phoneinput007,
+    ),
+  ),
+  "phoneinput-008": dynamic(() =>
+    import("@/registry/components/phone-input/phoneinput-008/phoneinput-008").then(
+      (module) => module.Phoneinput008,
+    ),
+  ),
+  "popover-001": dynamic(() =>
+    import("@/registry/components/popover/popover-001/popover-001").then(
+      (module) => module.Popover001,
+    ),
+  ),
+  "popover-002": dynamic(() =>
+    import("@/registry/components/popover/popover-002/popover-002").then(
+      (module) => module.Popover002,
+    ),
+  ),
+  "popover-003": dynamic(() =>
+    import("@/registry/components/popover/popover-003/popover-003").then(
+      (module) => module.Popover003,
+    ),
+  ),
+  "popover-004": dynamic(() =>
+    import("@/registry/components/popover/popover-004/popover-004").then(
+      (module) => module.Popover004,
+    ),
+  ),
+  "popover-005": dynamic(() =>
+    import("@/registry/components/popover/popover-005/popover-005").then(
+      (module) => module.Popover005,
+    ),
+  ),
+  "popover-006": dynamic(() =>
+    import("@/registry/components/popover/popover-006/popover-006").then(
+      (module) => module.Popover006,
+    ),
+  ),
+  "popover-007": dynamic(() =>
+    import("@/registry/components/popover/popover-007/popover-007").then(
+      (module) => module.Popover007,
+    ),
+  ),
+  "popover-008": dynamic(() =>
+    import("@/registry/components/popover/popover-008/popover-008").then(
+      (module) => module.Popover008,
+    ),
+  ),
+  "popover-009": dynamic(() =>
+    import("@/registry/components/popover/popover-009/popover-009").then(
+      (module) => module.Popover009,
+    ),
+  ),
+  "popover-010": dynamic(() =>
+    import("@/registry/components/popover/popover-010/popover-010").then(
+      (module) => module.Popover010,
+    ),
+  ),
+  "popover-011": dynamic(() =>
+    import("@/registry/components/popover/popover-011/popover-011").then(
+      (module) => module.Popover011,
+    ),
+  ),
+  "progress-001": dynamic(() =>
+    import("@/registry/components/progress/progress-001/progress-001").then(
+      (module) => module.Progress001,
+    ),
+  ),
+  "progress-002": dynamic(() =>
+    import("@/registry/components/progress/progress-002/progress-002").then(
+      (module) => module.Progress002,
+    ),
+  ),
+  "progress-003": dynamic(() =>
+    import("@/registry/components/progress/progress-003/progress-003").then(
+      (module) => module.Progress003,
+    ),
+  ),
+  "progress-004": dynamic(() =>
+    import("@/registry/components/progress/progress-004/progress-004").then(
+      (module) => module.Progress004,
+    ),
+  ),
+  "progress-005": dynamic(() =>
+    import("@/registry/components/progress/progress-005/progress-005").then(
+      (module) => module.Progress005,
+    ),
+  ),
+  "progress-006": dynamic(() =>
+    import("@/registry/components/progress/progress-006/progress-006").then(
+      (module) => module.Progress006,
+    ),
+  ),
+  "progress-007": dynamic(() =>
+    import("@/registry/components/progress/progress-007/progress-007").then(
+      (module) => module.Progress007,
+    ),
+  ),
+  "progress-008": dynamic(() =>
+    import("@/registry/components/progress/progress-008/progress-008").then(
+      (module) => module.Progress008,
+    ),
+  ),
+  "progress-009": dynamic(() =>
+    import("@/registry/components/progress/progress-009/progress-009").then(
+      (module) => module.Progress009,
+    ),
+  ),
+  "radio-001": dynamic(() =>
+    import("@/registry/components/radio-group/radio-001/radio-001").then(
+      (module) => module.Radio001,
+    ),
+  ),
+  "radio-002": dynamic(() =>
+    import("@/registry/components/radio-group/radio-002/radio-002").then(
+      (module) => module.Radio002,
+    ),
+  ),
+  "radio-003": dynamic(() =>
+    import("@/registry/components/radio-group/radio-003/radio-003").then(
+      (module) => module.Radio003,
+    ),
+  ),
+  "radio-004": dynamic(() =>
+    import("@/registry/components/radio-group/radio-004/radio-004").then(
+      (module) => module.Radio004,
+    ),
+  ),
+  "radio-005": dynamic(() =>
+    import("@/registry/components/radio-group/radio-005/radio-005").then(
+      (module) => module.Radio005,
+    ),
+  ),
+  "radio-006": dynamic(() =>
+    import("@/registry/components/radio-group/radio-006/radio-006").then(
+      (module) => module.Radio006,
+    ),
+  ),
+  "radio-007": dynamic(() =>
+    import("@/registry/components/radio-group/radio-007/radio-007").then(
+      (module) => module.Radio007,
+    ),
+  ),
+  "radio-008": dynamic(() =>
+    import("@/registry/components/radio-group/radio-008/radio-008").then(
+      (module) => module.Radio008,
+    ),
+  ),
+  "radio-009": dynamic(() =>
+    import("@/registry/components/radio-group/radio-009/radio-009").then(
+      (module) => module.Radio009,
+    ),
+  ),
+  "radio-010": dynamic(() =>
+    import("@/registry/components/radio-group/radio-010/radio-010").then(
+      (module) => module.Radio010,
+    ),
+  ),
+  "radio-011": dynamic(() =>
+    import("@/registry/components/radio-group/radio-011/radio-011").then(
+      (module) => module.Radio011,
+    ),
+  ),
+  "radio-012": dynamic(() =>
+    import("@/registry/components/radio-group/radio-012/radio-012").then(
+      (module) => module.Radio012,
+    ),
+  ),
+  "radio-013": dynamic(() =>
+    import("@/registry/components/radio-group/radio-013/radio-013").then(
+      (module) => module.Radio013,
+    ),
+  ),
+  "radio-014": dynamic(() =>
+    import("@/registry/components/radio-group/radio-014/radio-014").then(
+      (module) => module.Radio014,
+    ),
+  ),
+  "radio-015": dynamic(() =>
+    import("@/registry/components/radio-group/radio-015/radio-015").then(
+      (module) => module.Radio015,
+    ),
+  ),
+  "radio-016": dynamic(() =>
+    import("@/registry/components/radio-group/radio-016/radio-016").then(
+      (module) => module.Radio016,
+    ),
+  ),
+  "radio-017": dynamic(() =>
+    import("@/registry/components/radio-group/radio-017/radio-017").then(
+      (module) => module.Radio017,
+    ),
+  ),
+  "range-001": dynamic(() =>
+    import("@/registry/components/range/range-001/range-001").then(
+      (module) => module.Range001,
+    ),
+  ),
+  "range-002": dynamic(() =>
+    import("@/registry/components/range/range-002/range-002").then(
+      (module) => module.Range002,
+    ),
+  ),
+  "range-003": dynamic(() =>
+    import("@/registry/components/range/range-003/range-003").then(
+      (module) => module.Range003,
+    ),
+  ),
+  "range-004": dynamic(() =>
+    import("@/registry/components/range/range-004/range-004").then(
+      (module) => module.Range004,
+    ),
+  ),
+  "range-005": dynamic(() =>
+    import("@/registry/components/range/range-005/range-005").then(
+      (module) => module.Range005,
+    ),
+  ),
+  "range-006": dynamic(() =>
+    import("@/registry/components/range/range-006/range-006").then(
+      (module) => module.Range006,
+    ),
+  ),
+  "range-007": dynamic(() =>
+    import("@/registry/components/range/range-007/range-007").then(
+      (module) => module.Range007,
+    ),
+  ),
+  "rating-001": dynamic(() =>
+    import("@/registry/components/rating/rating-001/rating-001").then(
+      (module) => module.Rating001,
+    ),
+  ),
+  "rating-002": dynamic(() =>
+    import("@/registry/components/rating/rating-002/rating-002").then(
+      (module) => module.Rating002,
+    ),
+  ),
+  "rating-003": dynamic(() =>
+    import("@/registry/components/rating/rating-003/rating-003").then(
+      (module) => module.Rating003,
+    ),
+  ),
+  "rating-004": dynamic(() =>
+    import("@/registry/components/rating/rating-004/rating-004").then(
+      (module) => module.Rating004,
+    ),
+  ),
+  "rating-005": dynamic(() =>
+    import("@/registry/components/rating/rating-005/rating-005").then(
+      (module) => module.Rating005,
+    ),
+  ),
+  "rating-006": dynamic(() =>
+    import("@/registry/components/rating/rating-006/rating-006").then(
+      (module) => module.Rating006,
+    ),
+  ),
+  "rating-007": dynamic(() =>
+    import("@/registry/components/rating/rating-007/rating-007").then(
+      (module) => module.Rating007,
+    ),
+  ),
+  "rating-008": dynamic(() =>
+    import("@/registry/components/rating/rating-008/rating-008").then(
+      (module) => module.Rating008,
+    ),
+  ),
+  "rating-009": dynamic(() =>
+    import("@/registry/components/rating/rating-009/rating-009").then(
+      (module) => module.Rating009,
     ),
   ),
   "resizable-001": dynamic(() =>
@@ -4186,6 +6466,1131 @@ export const LAZY_PREVIEWS = {
   "resizable-007": dynamic(() =>
     import("@/registry/components/resizable/resizable-007/resizable-007").then(
       (module) => module.Resizable007,
+    ),
+  ),
+  "resizable-008": dynamic(() =>
+    import("@/registry/components/resizable/resizable-008/resizable-008").then(
+      (module) => module.Resizable008,
+    ),
+  ),
+  "resizable-009": dynamic(() =>
+    import("@/registry/components/resizable/resizable-009/resizable-009").then(
+      (module) => module.Resizable009,
+    ),
+  ),
+  "resizable-010": dynamic(() =>
+    import("@/registry/components/resizable/resizable-010/resizable-010").then(
+      (module) => module.Resizable010,
+    ),
+  ),
+  "scrollarea-001": dynamic(() =>
+    import("@/registry/components/scroll-area/scrollarea-001/scrollarea-001").then(
+      (module) => module.Scrollarea001,
+    ),
+  ),
+  "scrollarea-002": dynamic(() =>
+    import("@/registry/components/scroll-area/scrollarea-002/scrollarea-002").then(
+      (module) => module.Scrollarea002,
+    ),
+  ),
+  "scrollarea-003": dynamic(() =>
+    import("@/registry/components/scroll-area/scrollarea-003/scrollarea-003").then(
+      (module) => module.Scrollarea003,
+    ),
+  ),
+  "scrollarea-004": dynamic(() =>
+    import("@/registry/components/scroll-area/scrollarea-004/scrollarea-004").then(
+      (module) => module.Scrollarea004,
+    ),
+  ),
+  "scrollarea-005": dynamic(() =>
+    import("@/registry/components/scroll-area/scrollarea-005/scrollarea-005").then(
+      (module) => module.Scrollarea005,
+    ),
+  ),
+  "scrollarea-006": dynamic(() =>
+    import("@/registry/components/scroll-area/scrollarea-006/scrollarea-006").then(
+      (module) => module.Scrollarea006,
+    ),
+  ),
+  "scrollarea-007": dynamic(() =>
+    import("@/registry/components/scroll-area/scrollarea-007/scrollarea-007").then(
+      (module) => module.Scrollarea007,
+    ),
+  ),
+  "scrollspy-001": dynamic(() =>
+    import("@/registry/components/scrollspy/scrollspy-001/scrollspy-001").then(
+      (module) => module.Scrollspy001,
+    ),
+  ),
+  "scrollspy-002": dynamic(() =>
+    import("@/registry/components/scrollspy/scrollspy-002/scrollspy-002").then(
+      (module) => module.Scrollspy002,
+    ),
+  ),
+  "scrollspy-003": dynamic(() =>
+    import("@/registry/components/scrollspy/scrollspy-003/scrollspy-003").then(
+      (module) => module.Scrollspy003,
+    ),
+  ),
+  "scrollspy-004": dynamic(() =>
+    import("@/registry/components/scrollspy/scrollspy-004/scrollspy-004").then(
+      (module) => module.Scrollspy004,
+    ),
+  ),
+  "scrollspy-005": dynamic(() =>
+    import("@/registry/components/scrollspy/scrollspy-005/scrollspy-005").then(
+      (module) => module.Scrollspy005,
+    ),
+  ),
+  "scrollspy-006": dynamic(() =>
+    import("@/registry/components/scrollspy/scrollspy-006/scrollspy-006").then(
+      (module) => module.Scrollspy006,
+    ),
+  ),
+  "scrollspy-007": dynamic(() =>
+    import("@/registry/components/scrollspy/scrollspy-007/scrollspy-007").then(
+      (module) => module.Scrollspy007,
+    ),
+  ),
+  "select-001": dynamic(() =>
+    import("@/registry/components/select/select-001/select-001").then(
+      (module) => module.Select001,
+    ),
+  ),
+  "select-002": dynamic(() =>
+    import("@/registry/components/select/select-002/select-002").then(
+      (module) => module.Select002,
+    ),
+  ),
+  "select-003": dynamic(() =>
+    import("@/registry/components/select/select-003/select-003").then(
+      (module) => module.Select003,
+    ),
+  ),
+  "select-004": dynamic(() =>
+    import("@/registry/components/select/select-004/select-004").then(
+      (module) => module.Select004,
+    ),
+  ),
+  "select-005": dynamic(() =>
+    import("@/registry/components/select/select-005/select-005").then(
+      (module) => module.Select005,
+    ),
+  ),
+  "select-006": dynamic(() =>
+    import("@/registry/components/select/select-006/select-006").then(
+      (module) => module.Select006,
+    ),
+  ),
+  "select-007": dynamic(() =>
+    import("@/registry/components/select/select-007/select-007").then(
+      (module) => module.Select007,
+    ),
+  ),
+  "select-008": dynamic(() =>
+    import("@/registry/components/select/select-008/select-008").then(
+      (module) => module.Select008,
+    ),
+  ),
+  "select-009": dynamic(() =>
+    import("@/registry/components/select/select-009/select-009").then(
+      (module) => module.Select009,
+    ),
+  ),
+  "select-010": dynamic(() =>
+    import("@/registry/components/select/select-010/select-010").then(
+      (module) => module.Select010,
+    ),
+  ),
+  "select-011": dynamic(() =>
+    import("@/registry/components/select/select-011/select-011").then(
+      (module) => module.Select011,
+    ),
+  ),
+  "select-012": dynamic(() =>
+    import("@/registry/components/select/select-012/select-012").then(
+      (module) => module.Select012,
+    ),
+  ),
+  "select-013": dynamic(() =>
+    import("@/registry/components/select/select-013/select-013").then(
+      (module) => module.Select013,
+    ),
+  ),
+  "select-014": dynamic(() =>
+    import("@/registry/components/select/select-014/select-014").then(
+      (module) => module.Select014,
+    ),
+  ),
+  "select-015": dynamic(() =>
+    import("@/registry/components/select/select-015/select-015").then(
+      (module) => module.Select015,
+    ),
+  ),
+  "select-016": dynamic(() =>
+    import("@/registry/components/select/select-016/select-016").then(
+      (module) => module.Select016,
+    ),
+  ),
+  "select-017": dynamic(() =>
+    import("@/registry/components/select/select-017/select-017").then(
+      (module) => module.Select017,
+    ),
+  ),
+  "select-018": dynamic(() =>
+    import("@/registry/components/select/select-018/select-018").then(
+      (module) => module.Select018,
+    ),
+  ),
+  "select-019": dynamic(() =>
+    import("@/registry/components/select/select-019/select-019").then(
+      (module) => module.Select019,
+    ),
+  ),
+  "select-020": dynamic(() =>
+    import("@/registry/components/select/select-020/select-020").then(
+      (module) => module.Select020,
+    ),
+  ),
+  "select-021": dynamic(() =>
+    import("@/registry/components/select/select-021/select-021").then(
+      (module) => module.Select021,
+    ),
+  ),
+  "select-022": dynamic(() =>
+    import("@/registry/components/select/select-022/select-022").then(
+      (module) => module.Select022,
+    ),
+  ),
+  "select-023": dynamic(() =>
+    import("@/registry/components/select/select-023/select-023").then(
+      (module) => module.Select023,
+    ),
+  ),
+  "select-024": dynamic(() =>
+    import("@/registry/components/select/select-024/select-024").then(
+      (module) => module.Select024,
+    ),
+  ),
+  "select-025": dynamic(() =>
+    import("@/registry/components/select/select-025/select-025").then(
+      (module) => module.Select025,
+    ),
+  ),
+  "select-026": dynamic(() =>
+    import("@/registry/components/select/select-026/select-026").then(
+      (module) => module.Select026,
+    ),
+  ),
+  "select-027": dynamic(() =>
+    import("@/registry/components/select/select-027/select-027").then(
+      (module) => module.Select027,
+    ),
+  ),
+  "select-028": dynamic(() =>
+    import("@/registry/components/select/select-028/select-028").then(
+      (module) => module.Select028,
+    ),
+  ),
+  "select-029": dynamic(() =>
+    import("@/registry/components/select/select-029/select-029").then(
+      (module) => module.Select029,
+    ),
+  ),
+  "select-030": dynamic(() =>
+    import("@/registry/components/select/select-030/select-030").then(
+      (module) => module.Select030,
+    ),
+  ),
+  "select-031": dynamic(() =>
+    import("@/registry/components/select/select-031/select-031").then(
+      (module) => module.Select031,
+    ),
+  ),
+  "select-032": dynamic(() =>
+    import("@/registry/components/select/select-032/select-032").then(
+      (module) => module.Select032,
+    ),
+  ),
+  "select-033": dynamic(() =>
+    import("@/registry/components/select/select-033/select-033").then(
+      (module) => module.Select033,
+    ),
+  ),
+  "separator-001": dynamic(() =>
+    import("@/registry/components/separator/separator-001/separator-001").then(
+      (module) => module.Separator001,
+    ),
+  ),
+  "separator-002": dynamic(() =>
+    import("@/registry/components/separator/separator-002/separator-002").then(
+      (module) => module.Separator002,
+    ),
+  ),
+  "separator-003": dynamic(() =>
+    import("@/registry/components/separator/separator-003/separator-003").then(
+      (module) => module.Separator003,
+    ),
+  ),
+  "separator-004": dynamic(() =>
+    import("@/registry/components/separator/separator-004/separator-004").then(
+      (module) => module.Separator004,
+    ),
+  ),
+  "separator-005": dynamic(() =>
+    import("@/registry/components/separator/separator-005/separator-005").then(
+      (module) => module.Separator005,
+    ),
+  ),
+  "separator-006": dynamic(() =>
+    import("@/registry/components/separator/separator-006/separator-006").then(
+      (module) => module.Separator006,
+    ),
+  ),
+  "sheet-001": dynamic(() =>
+    import("@/registry/components/sheet/sheet-001/sheet-001").then(
+      (module) => module.Sheet001,
+    ),
+  ),
+  "sheet-002": dynamic(() =>
+    import("@/registry/components/sheet/sheet-002/sheet-002").then(
+      (module) => module.Sheet002,
+    ),
+  ),
+  "sheet-003": dynamic(() =>
+    import("@/registry/components/sheet/sheet-003/sheet-003").then(
+      (module) => module.Sheet003,
+    ),
+  ),
+  "sheet-004": dynamic(() =>
+    import("@/registry/components/sheet/sheet-004/sheet-004").then(
+      (module) => module.Sheet004,
+    ),
+  ),
+  "sheet-005": dynamic(() =>
+    import("@/registry/components/sheet/sheet-005/sheet-005").then(
+      (module) => module.Sheet005,
+    ),
+  ),
+  "sheet-006": dynamic(() =>
+    import("@/registry/components/sheet/sheet-006/sheet-006").then(
+      (module) => module.Sheet006,
+    ),
+  ),
+  "sheet-007": dynamic(() =>
+    import("@/registry/components/sheet/sheet-007/sheet-007").then(
+      (module) => module.Sheet007,
+    ),
+  ),
+  "menu-007": dynamic(() =>
+    import("@/registry/components/sheet/menu-007/menu-007").then(
+      (module) => module.Menu007,
+    ),
+  ),
+  "sidebar-001": dynamic(() =>
+    import("@/registry/components/sidebar/sidebar-001/sidebar-001").then(
+      (module) => module.Sidebar001,
+    ),
+  ),
+  "sidebar-002": dynamic(() =>
+    import("@/registry/components/sidebar/sidebar-002/sidebar-002").then(
+      (module) => module.Sidebar002,
+    ),
+  ),
+  "sidebar-003": dynamic(() =>
+    import("@/registry/components/sidebar/sidebar-003/sidebar-003").then(
+      (module) => module.Sidebar003,
+    ),
+  ),
+  "sidebar-004": dynamic(() =>
+    import("@/registry/components/sidebar/sidebar-004/sidebar-004").then(
+      (module) => module.Sidebar004,
+    ),
+  ),
+  "sidebar-005": dynamic(() =>
+    import("@/registry/components/sidebar/sidebar-005/sidebar-005").then(
+      (module) => module.Sidebar005,
+    ),
+  ),
+  "sidebar-006": dynamic(() =>
+    import("@/registry/components/sidebar/sidebar-006/sidebar-006").then(
+      (module) => module.Sidebar006,
+    ),
+  ),
+  "sidebar-007": dynamic(() =>
+    import("@/registry/components/sidebar/sidebar-007/sidebar-007").then(
+      (module) => module.Sidebar007,
+    ),
+  ),
+  "sidebar-008": dynamic(() =>
+    import("@/registry/components/sidebar/sidebar-008/sidebar-008").then(
+      (module) => module.Sidebar008,
+    ),
+  ),
+  "sidebar-009": dynamic(() =>
+    import("@/registry/components/sidebar/sidebar-009/sidebar-009").then(
+      (module) => module.Sidebar009,
+    ),
+  ),
+  "skeleton-001": dynamic(() =>
+    import("@/registry/components/skeleton/skeleton-001/skeleton-001").then(
+      (module) => module.Skeleton001,
+    ),
+  ),
+  "skeleton-002": dynamic(() =>
+    import("@/registry/components/skeleton/skeleton-002/skeleton-002").then(
+      (module) => module.Skeleton002,
+    ),
+  ),
+  "skeleton-003": dynamic(() =>
+    import("@/registry/components/skeleton/skeleton-003/skeleton-003").then(
+      (module) => module.Skeleton003,
+    ),
+  ),
+  "skeleton-004": dynamic(() =>
+    import("@/registry/components/skeleton/skeleton-004/skeleton-004").then(
+      (module) => module.Skeleton004,
+    ),
+  ),
+  "skeleton-005": dynamic(() =>
+    import("@/registry/components/skeleton/skeleton-005/skeleton-005").then(
+      (module) => module.Skeleton005,
+    ),
+  ),
+  "skeleton-006": dynamic(() =>
+    import("@/registry/components/skeleton/skeleton-006/skeleton-006").then(
+      (module) => module.Skeleton006,
+    ),
+  ),
+  "skeleton-007": dynamic(() =>
+    import("@/registry/components/skeleton/skeleton-007/skeleton-007").then(
+      (module) => module.Skeleton007,
+    ),
+  ),
+  "skeleton-008": dynamic(() =>
+    import("@/registry/components/skeleton/skeleton-008/skeleton-008").then(
+      (module) => module.Skeleton008,
+    ),
+  ),
+  "skeleton-009": dynamic(() =>
+    import("@/registry/components/skeleton/skeleton-009/skeleton-009").then(
+      (module) => module.Skeleton009,
+    ),
+  ),
+  "skeleton-010": dynamic(() =>
+    import("@/registry/components/skeleton/skeleton-010/skeleton-010").then(
+      (module) => module.Skeleton010,
+    ),
+  ),
+  "slider-001": dynamic(() =>
+    import("@/registry/components/slider/slider-001/slider-001").then(
+      (module) => module.Slider001,
+    ),
+  ),
+  "slider-002": dynamic(() =>
+    import("@/registry/components/slider/slider-002/slider-002").then(
+      (module) => module.Slider002,
+    ),
+  ),
+  "slider-003": dynamic(() =>
+    import("@/registry/components/slider/slider-003/slider-003").then(
+      (module) => module.Slider003,
+    ),
+  ),
+  "slider-004": dynamic(() =>
+    import("@/registry/components/slider/slider-004/slider-004").then(
+      (module) => module.Slider004,
+    ),
+  ),
+  "slider-005": dynamic(() =>
+    import("@/registry/components/slider/slider-005/slider-005").then(
+      (module) => module.Slider005,
+    ),
+  ),
+  "slider-006": dynamic(() =>
+    import("@/registry/components/slider/slider-006/slider-006").then(
+      (module) => module.Slider006,
+    ),
+  ),
+  "slider-007": dynamic(() =>
+    import("@/registry/components/slider/slider-007/slider-007").then(
+      (module) => module.Slider007,
+    ),
+  ),
+  "slider-008": dynamic(() =>
+    import("@/registry/components/slider/slider-008/slider-008").then(
+      (module) => module.Slider008,
+    ),
+  ),
+  "slider-009": dynamic(() =>
+    import("@/registry/components/slider/slider-009/slider-009").then(
+      (module) => module.Slider009,
+    ),
+  ),
+  "slider-010": dynamic(() =>
+    import("@/registry/components/slider/slider-010/slider-010").then(
+      (module) => module.Slider010,
+    ),
+  ),
+  "slider-011": dynamic(() =>
+    import("@/registry/components/slider/slider-011/slider-011").then(
+      (module) => module.Slider011,
+    ),
+  ),
+  "slider-012": dynamic(() =>
+    import("@/registry/components/slider/slider-012/slider-012").then(
+      (module) => module.Slider012,
+    ),
+  ),
+  "sortable-001": dynamic(() =>
+    import("@/registry/components/sortable/sortable-001/sortable-001").then(
+      (module) => module.Sortable001,
+    ),
+  ),
+  "sortable-002": dynamic(() =>
+    import("@/registry/components/sortable/sortable-002/sortable-002").then(
+      (module) => module.Sortable002,
+    ),
+  ),
+  "sortable-003": dynamic(() =>
+    import("@/registry/components/sortable/sortable-003/sortable-003").then(
+      (module) => module.Sortable003,
+    ),
+  ),
+  "sortable-004": dynamic(() =>
+    import("@/registry/components/sortable/sortable-004/sortable-004").then(
+      (module) => module.Sortable004,
+    ),
+  ),
+  "sortable-005": dynamic(() =>
+    import("@/registry/components/sortable/sortable-005/sortable-005").then(
+      (module) => module.Sortable005,
+    ),
+  ),
+  "sortable-006": dynamic(() =>
+    import("@/registry/components/sortable/sortable-006/sortable-006").then(
+      (module) => module.Sortable006,
+    ),
+  ),
+  "sortable-007": dynamic(() =>
+    import("@/registry/components/sortable/sortable-007/sortable-007").then(
+      (module) => module.Sortable007,
+    ),
+  ),
+  "sortable-008": dynamic(() =>
+    import("@/registry/components/sortable/sortable-008/sortable-008").then(
+      (module) => module.Sortable008,
+    ),
+  ),
+  "sparkline-001": dynamic(() =>
+    import("@/registry/components/sparkline/sparkline-001/sparkline-001").then(
+      (module) => module.Sparkline001,
+    ),
+  ),
+  "sparkline-002": dynamic(() =>
+    import("@/registry/components/sparkline/sparkline-002/sparkline-002").then(
+      (module) => module.Sparkline002,
+    ),
+  ),
+  "spinner-001": dynamic(() =>
+    import("@/registry/components/spinner/spinner-001/spinner-001").then(
+      (module) => module.Spinner001,
+    ),
+  ),
+  "spinner-002": dynamic(() =>
+    import("@/registry/components/spinner/spinner-002/spinner-002").then(
+      (module) => module.Spinner002,
+    ),
+  ),
+  "spinner-003": dynamic(() =>
+    import("@/registry/components/spinner/spinner-003/spinner-003").then(
+      (module) => module.Spinner003,
+    ),
+  ),
+  "spinner-004": dynamic(() =>
+    import("@/registry/components/spinner/spinner-004/spinner-004").then(
+      (module) => module.Spinner004,
+    ),
+  ),
+  "spinner-005": dynamic(() =>
+    import("@/registry/components/spinner/spinner-005/spinner-005").then(
+      (module) => module.Spinner005,
+    ),
+  ),
+  "spinner-006": dynamic(() =>
+    import("@/registry/components/spinner/spinner-006/spinner-006").then(
+      (module) => module.Spinner006,
+    ),
+  ),
+  "spinner-007": dynamic(() =>
+    import("@/registry/components/spinner/spinner-007/spinner-007").then(
+      (module) => module.Spinner007,
+    ),
+  ),
+  "spinner-008": dynamic(() =>
+    import("@/registry/components/spinner/spinner-008/spinner-008").then(
+      (module) => module.Spinner008,
+    ),
+  ),
+  "spinner-009": dynamic(() =>
+    import("@/registry/components/spinner/spinner-009/spinner-009").then(
+      (module) => module.Spinner009,
+    ),
+  ),
+  "spinner-010": dynamic(() =>
+    import("@/registry/components/spinner/spinner-010/spinner-010").then(
+      (module) => module.Spinner010,
+    ),
+  ),
+  "spinner-011": dynamic(() =>
+    import("@/registry/components/spinner/spinner-011/spinner-011").then(
+      (module) => module.Spinner011,
+    ),
+  ),
+  "spinner-012": dynamic(() =>
+    import("@/registry/components/spinner/spinner-012/spinner-012").then(
+      (module) => module.Spinner012,
+    ),
+  ),
+  "stepper-001": dynamic(() =>
+    import("@/registry/components/stepper/stepper-001/stepper-001").then(
+      (module) => module.Stepper001,
+    ),
+  ),
+  "stepper-002": dynamic(() =>
+    import("@/registry/components/stepper/stepper-002/stepper-002").then(
+      (module) => module.Stepper002,
+    ),
+  ),
+  "stepper-003": dynamic(() =>
+    import("@/registry/components/stepper/stepper-003/stepper-003").then(
+      (module) => module.Stepper003,
+    ),
+  ),
+  "stepper-004": dynamic(() =>
+    import("@/registry/components/stepper/stepper-004/stepper-004").then(
+      (module) => module.Stepper004,
+    ),
+  ),
+  "stepper-005": dynamic(() =>
+    import("@/registry/components/stepper/stepper-005/stepper-005").then(
+      (module) => module.Stepper005,
+    ),
+  ),
+  "stepper-006": dynamic(() =>
+    import("@/registry/components/stepper/stepper-006/stepper-006").then(
+      (module) => module.Stepper006,
+    ),
+  ),
+  "stepper-007": dynamic(() =>
+    import("@/registry/components/stepper/stepper-007/stepper-007").then(
+      (module) => module.Stepper007,
+    ),
+  ),
+  "stepper-008": dynamic(() =>
+    import("@/registry/components/stepper/stepper-008/stepper-008").then(
+      (module) => module.Stepper008,
+    ),
+  ),
+  "stepper-009": dynamic(() =>
+    import("@/registry/components/stepper/stepper-009/stepper-009").then(
+      (module) => module.Stepper009,
+    ),
+  ),
+  "stepper-010": dynamic(() =>
+    import("@/registry/components/stepper/stepper-010/stepper-010").then(
+      (module) => module.Stepper010,
+    ),
+  ),
+  "stepper-011": dynamic(() =>
+    import("@/registry/components/stepper/stepper-011/stepper-011").then(
+      (module) => module.Stepper011,
+    ),
+  ),
+  "stepper-012": dynamic(() =>
+    import("@/registry/components/stepper/stepper-012/stepper-012").then(
+      (module) => module.Stepper012,
+    ),
+  ),
+  "stepper-013": dynamic(() =>
+    import("@/registry/components/stepper/stepper-013/stepper-013").then(
+      (module) => module.Stepper013,
+    ),
+  ),
+  "stepper-014": dynamic(() =>
+    import("@/registry/components/stepper/stepper-014/stepper-014").then(
+      (module) => module.Stepper014,
+    ),
+  ),
+  "stepper-015": dynamic(() =>
+    import("@/registry/components/stepper/stepper-015/stepper-015").then(
+      (module) => module.Stepper015,
+    ),
+  ),
+  "switch-001": dynamic(() =>
+    import("@/registry/components/switch/switch-001/switch-001").then(
+      (module) => module.Switch001,
+    ),
+  ),
+  "switch-002": dynamic(() =>
+    import("@/registry/components/switch/switch-002/switch-002").then(
+      (module) => module.Switch002,
+    ),
+  ),
+  "switch-003": dynamic(() =>
+    import("@/registry/components/switch/switch-003/switch-003").then(
+      (module) => module.Switch003,
+    ),
+  ),
+  "switch-004": dynamic(() =>
+    import("@/registry/components/switch/switch-004/switch-004").then(
+      (module) => module.Switch004,
+    ),
+  ),
+  "switch-005": dynamic(() =>
+    import("@/registry/components/switch/switch-005/switch-005").then(
+      (module) => module.Switch005,
+    ),
+  ),
+  "switch-006": dynamic(() =>
+    import("@/registry/components/switch/switch-006/switch-006").then(
+      (module) => module.Switch006,
+    ),
+  ),
+  "switch-007": dynamic(() =>
+    import("@/registry/components/switch/switch-007/switch-007").then(
+      (module) => module.Switch007,
+    ),
+  ),
+  "switch-008": dynamic(() =>
+    import("@/registry/components/switch/switch-008/switch-008").then(
+      (module) => module.Switch008,
+    ),
+  ),
+  "switch-009": dynamic(() =>
+    import("@/registry/components/switch/switch-009/switch-009").then(
+      (module) => module.Switch009,
+    ),
+  ),
+  "switch-010": dynamic(() =>
+    import("@/registry/components/switch/switch-010/switch-010").then(
+      (module) => module.Switch010,
+    ),
+  ),
+  "switch-011": dynamic(() =>
+    import("@/registry/components/switch/switch-011/switch-011").then(
+      (module) => module.Switch011,
+    ),
+  ),
+  "switch-012": dynamic(() =>
+    import("@/registry/components/switch/switch-012/switch-012").then(
+      (module) => module.Switch012,
+    ),
+  ),
+  "switch-013": dynamic(() =>
+    import("@/registry/components/switch/switch-013/switch-013").then(
+      (module) => module.Switch013,
+    ),
+  ),
+  "switch-014": dynamic(() =>
+    import("@/registry/components/switch/switch-014/switch-014").then(
+      (module) => module.Switch014,
+    ),
+  ),
+  "table-001": dynamic(() =>
+    import("@/registry/components/table/table-001/table-001").then(
+      (module) => module.Table001,
+    ),
+  ),
+  "table-002": dynamic(() =>
+    import("@/registry/components/table/table-002/table-002").then(
+      (module) => module.Table002,
+    ),
+  ),
+  "table-003": dynamic(() =>
+    import("@/registry/components/table/table-003/table-003").then(
+      (module) => module.Table003,
+    ),
+  ),
+  "table-004": dynamic(() =>
+    import("@/registry/components/table/table-004/table-004").then(
+      (module) => module.Table004,
+    ),
+  ),
+  "table-005": dynamic(() =>
+    import("@/registry/components/table/table-005/table-005").then(
+      (module) => module.Table005,
+    ),
+  ),
+  "table-006": dynamic(() =>
+    import("@/registry/components/table/table-006/table-006").then(
+      (module) => module.Table006,
+    ),
+  ),
+  "table-007": dynamic(() =>
+    import("@/registry/components/table/table-007/table-007").then(
+      (module) => module.Table007,
+    ),
+  ),
+  "table-008": dynamic(() =>
+    import("@/registry/components/table/table-008/table-008").then(
+      (module) => module.Table008,
+    ),
+  ),
+  "table-009": dynamic(() =>
+    import("@/registry/components/table/table-009/table-009").then(
+      (module) => module.Table009,
+    ),
+  ),
+  "table-010": dynamic(() =>
+    import("@/registry/components/table/table-010/table-010").then(
+      (module) => module.Table010,
+    ),
+  ),
+  "table-011": dynamic(() =>
+    import("@/registry/components/table/table-011/table-011").then(
+      (module) => module.Table011,
+    ),
+  ),
+  "table-012": dynamic(() =>
+    import("@/registry/components/table/table-012/table-012").then(
+      (module) => module.Table012,
+    ),
+  ),
+  "table-013": dynamic(() =>
+    import("@/registry/components/table/table-013/table-013").then(
+      (module) => module.Table013,
+    ),
+  ),
+  "table-014": dynamic(() =>
+    import("@/registry/components/table/table-014/table-014").then(
+      (module) => module.Table014,
+    ),
+  ),
+  "table-015": dynamic(() =>
+    import("@/registry/components/table/table-015/table-015").then(
+      (module) => module.Table015,
+    ),
+  ),
+  "table-016": dynamic(() =>
+    import("@/registry/components/table/table-016/table-016").then(
+      (module) => module.Table016,
+    ),
+  ),
+  "table-017": dynamic(() =>
+    import("@/registry/components/table/table-017/table-017").then(
+      (module) => module.Table017,
+    ),
+  ),
+  "table-018": dynamic(() =>
+    import("@/registry/components/table/table-018/table-018").then(
+      (module) => module.Table018,
+    ),
+  ),
+  "table-019": dynamic(() =>
+    import("@/registry/components/table/table-019/table-019").then(
+      (module) => module.Table019,
+    ),
+  ),
+  "table-020": dynamic(() =>
+    import("@/registry/components/table/table-020/table-020").then(
+      (module) => module.Table020,
+    ),
+  ),
+  "tabs-001": dynamic(() =>
+    import("@/registry/components/tabs/tabs-001/tabs-001").then(
+      (module) => module.Tabs001,
+    ),
+  ),
+  "tabbar-001": dynamic(() =>
+    import("@/registry/components/tabs/tabbar-001/tabbar-001").then(
+      (module) => module.Tabbar001,
+    ),
+  ),
+  "tabs-002": dynamic(() =>
+    import("@/registry/components/tabs/tabs-002/tabs-002").then(
+      (module) => module.Tabs002,
+    ),
+  ),
+  "tabs-003": dynamic(() =>
+    import("@/registry/components/tabs/tabs-003/tabs-003").then(
+      (module) => module.Tabs003,
+    ),
+  ),
+  "tabs-004": dynamic(() =>
+    import("@/registry/components/tabs/tabs-004/tabs-004").then(
+      (module) => module.Tabs004,
+    ),
+  ),
+  "tabs-005": dynamic(() =>
+    import("@/registry/components/tabs/tabs-005/tabs-005").then(
+      (module) => module.Tabs005,
+    ),
+  ),
+  "tabs-006": dynamic(() =>
+    import("@/registry/components/tabs/tabs-006/tabs-006").then(
+      (module) => module.Tabs006,
+    ),
+  ),
+  "tabs-007": dynamic(() =>
+    import("@/registry/components/tabs/tabs-007/tabs-007").then(
+      (module) => module.Tabs007,
+    ),
+  ),
+  "tabs-008": dynamic(() =>
+    import("@/registry/components/tabs/tabs-008/tabs-008").then(
+      (module) => module.Tabs008,
+    ),
+  ),
+  "tabs-009": dynamic(() =>
+    import("@/registry/components/tabs/tabs-009/tabs-009").then(
+      (module) => module.Tabs009,
+    ),
+  ),
+  "tabs-010": dynamic(() =>
+    import("@/registry/components/tabs/tabs-010/tabs-010").then(
+      (module) => module.Tabs010,
+    ),
+  ),
+  "tags-001": dynamic(() =>
+    import("@/registry/components/tags-input/tags-001/tags-001").then(
+      (module) => module.Tags001,
+    ),
+  ),
+  "tags-002": dynamic(() =>
+    import("@/registry/components/tags-input/tags-002/tags-002").then(
+      (module) => module.Tags002,
+    ),
+  ),
+  "tags-003": dynamic(() =>
+    import("@/registry/components/tags-input/tags-003/tags-003").then(
+      (module) => module.Tags003,
+    ),
+  ),
+  "tags-004": dynamic(() =>
+    import("@/registry/components/tags-input/tags-004/tags-004").then(
+      (module) => module.Tags004,
+    ),
+  ),
+  "tags-005": dynamic(() =>
+    import("@/registry/components/tags-input/tags-005/tags-005").then(
+      (module) => module.Tags005,
+    ),
+  ),
+  "tags-006": dynamic(() =>
+    import("@/registry/components/tags-input/tags-006/tags-006").then(
+      (module) => module.Tags006,
+    ),
+  ),
+  "tags-007": dynamic(() =>
+    import("@/registry/components/tags-input/tags-007/tags-007").then(
+      (module) => module.Tags007,
+    ),
+  ),
+  "textarea-001": dynamic(() =>
+    import("@/registry/components/textarea/textarea-001/textarea-001").then(
+      (module) => module.Textarea001,
+    ),
+  ),
+  "textarea-002": dynamic(() =>
+    import("@/registry/components/textarea/textarea-002/textarea-002").then(
+      (module) => module.Textarea002,
+    ),
+  ),
+  "textarea-003": dynamic(() =>
+    import("@/registry/components/textarea/textarea-003/textarea-003").then(
+      (module) => module.Textarea003,
+    ),
+  ),
+  "textarea-004": dynamic(() =>
+    import("@/registry/components/textarea/textarea-004/textarea-004").then(
+      (module) => module.Textarea004,
+    ),
+  ),
+  "textarea-005": dynamic(() =>
+    import("@/registry/components/textarea/textarea-005/textarea-005").then(
+      (module) => module.Textarea005,
+    ),
+  ),
+  "textarea-006": dynamic(() =>
+    import("@/registry/components/textarea/textarea-006/textarea-006").then(
+      (module) => module.Textarea006,
+    ),
+  ),
+  "textarea-007": dynamic(() =>
+    import("@/registry/components/textarea/textarea-007/textarea-007").then(
+      (module) => module.Textarea007,
+    ),
+  ),
+  "textarea-008": dynamic(() =>
+    import("@/registry/components/textarea/textarea-008/textarea-008").then(
+      (module) => module.Textarea008,
+    ),
+  ),
+  "timeline-001": dynamic(() =>
+    import("@/registry/components/timeline/timeline-001/timeline-001").then(
+      (module) => module.Timeline001,
+    ),
+  ),
+  "timeline-002": dynamic(() =>
+    import("@/registry/components/timeline/timeline-002/timeline-002").then(
+      (module) => module.Timeline002,
+    ),
+  ),
+  "timeline-003": dynamic(() =>
+    import("@/registry/components/timeline/timeline-003/timeline-003").then(
+      (module) => module.Timeline003,
+    ),
+  ),
+  "timeline-004": dynamic(() =>
+    import("@/registry/components/timeline/timeline-004/timeline-004").then(
+      (module) => module.Timeline004,
+    ),
+  ),
+  "timeline-005": dynamic(() =>
+    import("@/registry/components/timeline/timeline-005/timeline-005").then(
+      (module) => module.Timeline005,
+    ),
+  ),
+  "timeline-006": dynamic(() =>
+    import("@/registry/components/timeline/timeline-006/timeline-006").then(
+      (module) => module.Timeline006,
+    ),
+  ),
+  "timeline-007": dynamic(() =>
+    import("@/registry/components/timeline/timeline-007/timeline-007").then(
+      (module) => module.Timeline007,
+    ),
+  ),
+  "timeline-008": dynamic(() =>
+    import("@/registry/components/timeline/timeline-008/timeline-008").then(
+      (module) => module.Timeline008,
+    ),
+  ),
+  "timeline-009": dynamic(() =>
+    import("@/registry/components/timeline/timeline-009/timeline-009").then(
+      (module) => module.Timeline009,
+    ),
+  ),
+  "timeline-010": dynamic(() =>
+    import("@/registry/components/timeline/timeline-010/timeline-010").then(
+      (module) => module.Timeline010,
+    ),
+  ),
+  "timeline-011": dynamic(() =>
+    import("@/registry/components/timeline/timeline-011/timeline-011").then(
+      (module) => module.Timeline011,
+    ),
+  ),
+  "timeline-012": dynamic(() =>
+    import("@/registry/components/timeline/timeline-012/timeline-012").then(
+      (module) => module.Timeline012,
+    ),
+  ),
+  "toast-001": dynamic(() =>
+    import("@/registry/components/toast/toast-001/toast-001").then(
+      (module) => module.Toast001,
+    ),
+  ),
+  "toast-002": dynamic(() =>
+    import("@/registry/components/toast/toast-002/toast-002").then(
+      (module) => module.Toast002,
+    ),
+  ),
+  "toast-003": dynamic(() =>
+    import("@/registry/components/toast/toast-003/toast-003").then(
+      (module) => module.Toast003,
+    ),
+  ),
+  "toast-004": dynamic(() =>
+    import("@/registry/components/toast/toast-004/toast-004").then(
+      (module) => module.Toast004,
+    ),
+  ),
+  "toast-005": dynamic(() =>
+    import("@/registry/components/toast/toast-005/toast-005").then(
+      (module) => module.Toast005,
+    ),
+  ),
+  "toast-006": dynamic(() =>
+    import("@/registry/components/toast/toast-006/toast-006").then(
+      (module) => module.Toast006,
+    ),
+  ),
+  "toast-007": dynamic(() =>
+    import("@/registry/components/toast/toast-007/toast-007").then(
+      (module) => module.Toast007,
+    ),
+  ),
+  "toast-008": dynamic(() =>
+    import("@/registry/components/toast/toast-008/toast-008").then(
+      (module) => module.Toast008,
+    ),
+  ),
+  "toast-009": dynamic(() =>
+    import("@/registry/components/toast/toast-009/toast-009").then(
+      (module) => module.Toast009,
+    ),
+  ),
+  "toast-010": dynamic(() =>
+    import("@/registry/components/toast/toast-010/toast-010").then(
+      (module) => module.Toast010,
+    ),
+  ),
+  "toast-011": dynamic(() =>
+    import("@/registry/components/toast/toast-011/toast-011").then(
+      (module) => module.Toast011,
+    ),
+  ),
+  "toast-012": dynamic(() =>
+    import("@/registry/components/toast/toast-012/toast-012").then(
+      (module) => module.Toast012,
+    ),
+  ),
+  "toast-013": dynamic(() =>
+    import("@/registry/components/toast/toast-013/toast-013").then(
+      (module) => module.Toast013,
+    ),
+  ),
+  "toast-014": dynamic(() =>
+    import("@/registry/components/toast/toast-014/toast-014").then(
+      (module) => module.Toast014,
+    ),
+  ),
+  "toast-015": dynamic(() =>
+    import("@/registry/components/toast/toast-015/toast-015").then(
+      (module) => module.Toast015,
+    ),
+  ),
+  "toast-016": dynamic(() =>
+    import("@/registry/components/toast/toast-016/toast-016").then(
+      (module) => module.Toast016,
+    ),
+  ),
+  "toast-017": dynamic(() =>
+    import("@/registry/components/toast/toast-017/toast-017").then(
+      (module) => module.Toast017,
+    ),
+  ),
+  "toast-018": dynamic(() =>
+    import("@/registry/components/toast/toast-018/toast-018").then(
+      (module) => module.Toast018,
+    ),
+  ),
+  "toast-019": dynamic(() =>
+    import("@/registry/components/toast/toast-019/toast-019").then(
+      (module) => module.Toast019,
+    ),
+  ),
+  "toast-020": dynamic(() =>
+    import("@/registry/components/toast/toast-020/toast-020").then(
+      (module) => module.Toast020,
+    ),
+  ),
+  "toast-021": dynamic(() =>
+    import("@/registry/components/toast/toast-021/toast-021").then(
+      (module) => module.Toast021,
     ),
   ),
   "toggle-001": dynamic(() =>
@@ -4228,2534 +7633,234 @@ export const LAZY_PREVIEWS = {
       (module) => module.Toggle008,
     ),
   ),
+  "toggle-009": dynamic(() =>
+    import("@/registry/components/toggle/toggle-009/toggle-009").then(
+      (module) => module.Toggle009,
+    ),
+  ),
+  "toggle-010": dynamic(() =>
+    import("@/registry/components/toggle/toggle-010/toggle-010").then(
+      (module) => module.Toggle010,
+    ),
+  ),
+  "toggle-011": dynamic(() =>
+    import("@/registry/components/toggle/toggle-011/toggle-011").then(
+      (module) => module.Toggle011,
+    ),
+  ),
+  "toggle-012": dynamic(() =>
+    import("@/registry/components/toggle/toggle-012/toggle-012").then(
+      (module) => module.Toggle012,
+    ),
+  ),
+  "toggle-013": dynamic(() =>
+    import("@/registry/components/toggle/toggle-013/toggle-013").then(
+      (module) => module.Toggle013,
+    ),
+  ),
+  "toggle-014": dynamic(() =>
+    import("@/registry/components/toggle/toggle-014/toggle-014").then(
+      (module) => module.Toggle014,
+    ),
+  ),
   "togglegroup-001": dynamic(() =>
-    import("@/registry/components/togglegroup/togglegroup-001/togglegroup-001").then(
+    import("@/registry/components/toggle-group/togglegroup-001/togglegroup-001").then(
       (module) => module.Togglegroup001,
     ),
   ),
   "togglegroup-002": dynamic(() =>
-    import("@/registry/components/togglegroup/togglegroup-002/togglegroup-002").then(
+    import("@/registry/components/toggle-group/togglegroup-002/togglegroup-002").then(
       (module) => module.Togglegroup002,
     ),
   ),
   "togglegroup-003": dynamic(() =>
-    import("@/registry/components/togglegroup/togglegroup-003/togglegroup-003").then(
+    import("@/registry/components/toggle-group/togglegroup-003/togglegroup-003").then(
       (module) => module.Togglegroup003,
     ),
   ),
   "togglegroup-004": dynamic(() =>
-    import("@/registry/components/togglegroup/togglegroup-004/togglegroup-004").then(
+    import("@/registry/components/toggle-group/togglegroup-004/togglegroup-004").then(
       (module) => module.Togglegroup004,
     ),
   ),
   "togglegroup-005": dynamic(() =>
-    import("@/registry/components/togglegroup/togglegroup-005/togglegroup-005").then(
+    import("@/registry/components/toggle-group/togglegroup-005/togglegroup-005").then(
       (module) => module.Togglegroup005,
     ),
   ),
   "togglegroup-006": dynamic(() =>
-    import("@/registry/components/togglegroup/togglegroup-006/togglegroup-006").then(
+    import("@/registry/components/toggle-group/togglegroup-006/togglegroup-006").then(
       (module) => module.Togglegroup006,
     ),
   ),
   "togglegroup-007": dynamic(() =>
-    import("@/registry/components/togglegroup/togglegroup-007/togglegroup-007").then(
+    import("@/registry/components/toggle-group/togglegroup-007/togglegroup-007").then(
       (module) => module.Togglegroup007,
     ),
   ),
   "togglegroup-008": dynamic(() =>
-    import("@/registry/components/togglegroup/togglegroup-008/togglegroup-008").then(
+    import("@/registry/components/toggle-group/togglegroup-008/togglegroup-008").then(
       (module) => module.Togglegroup008,
     ),
   ),
-  "eventcalendar-001": dynamic(() =>
-    import("@/registry/components/eventcalendar/eventcalendar-001/eventcalendar-001").then(
-      (module) => module.Eventcalendar001,
+  "togglegroup-009": dynamic(() =>
+    import("@/registry/components/toggle-group/togglegroup-009/togglegroup-009").then(
+      (module) => module.Togglegroup009,
     ),
   ),
-  "eventcalendar-002": dynamic(() =>
-    import("@/registry/components/eventcalendar/eventcalendar-002/eventcalendar-002").then(
-      (module) => module.Eventcalendar002,
+  "togglegroup-010": dynamic(() =>
+    import("@/registry/components/toggle-group/togglegroup-010/togglegroup-010").then(
+      (module) => module.Togglegroup010,
     ),
   ),
-  "eventcalendar-003": dynamic(() =>
-    import("@/registry/components/eventcalendar/eventcalendar-003/eventcalendar-003").then(
-      (module) => module.Eventcalendar003,
+  "togglegroup-011": dynamic(() =>
+    import("@/registry/components/toggle-group/togglegroup-011/togglegroup-011").then(
+      (module) => module.Togglegroup011,
     ),
   ),
-  "eventcalendar-004": dynamic(() =>
-    import("@/registry/components/eventcalendar/eventcalendar-004/eventcalendar-004").then(
-      (module) => module.Eventcalendar004,
+  "togglegroup-012": dynamic(() =>
+    import("@/registry/components/toggle-group/togglegroup-012/togglegroup-012").then(
+      (module) => module.Togglegroup012,
     ),
   ),
-  "eventcalendar-005": dynamic(() =>
-    import("@/registry/components/eventcalendar/eventcalendar-005/eventcalendar-005").then(
-      (module) => module.Eventcalendar005,
+  "togglegroup-013": dynamic(() =>
+    import("@/registry/components/toggle-group/togglegroup-013/togglegroup-013").then(
+      (module) => module.Togglegroup013,
     ),
   ),
-  "dropdown-001": dynamic(() =>
-    import("@/registry/components/menu/dropdown-001/dropdown-001").then(
-      (module) => module.Dropdown001,
+  "togglegroup-014": dynamic(() =>
+    import("@/registry/components/toggle-group/togglegroup-014/togglegroup-014").then(
+      (module) => module.Togglegroup014,
     ),
   ),
-  "menu-001": dynamic(() =>
-    import("@/registry/components/menu/menu-001/menu-001").then(
-      (module) => module.Menu001,
+  "togglegroup-015": dynamic(() =>
+    import("@/registry/components/toggle-group/togglegroup-015/togglegroup-015").then(
+      (module) => module.Togglegroup015,
     ),
   ),
-  "menu-002": dynamic(() =>
-    import("@/registry/components/menu/menu-002/menu-002").then(
-      (module) => module.Menu002,
-    ),
-  ),
-  "menu-003": dynamic(() =>
-    import("@/registry/components/menu/menu-003/menu-003").then(
-      (module) => module.Menu003,
-    ),
-  ),
-  "menu-004": dynamic(() =>
-    import("@/registry/components/menu/menu-004/menu-004").then(
-      (module) => module.Menu004,
-    ),
-  ),
-  "menu-005": dynamic(() =>
-    import("@/registry/components/menu/menu-005/menu-005").then(
-      (module) => module.Menu005,
-    ),
-  ),
-  "menu-006": dynamic(() =>
-    import("@/registry/components/menu/menu-006/menu-006").then(
-      (module) => module.Menu006,
-    ),
-  ),
-  "menu-007": dynamic(() =>
-    import("@/registry/components/menu/menu-007/menu-007").then(
-      (module) => module.Menu007,
-    ),
-  ),
-  "dropdown-002": dynamic(() =>
-    import("@/registry/components/menu/dropdown-002/dropdown-002").then(
-      (module) => module.Dropdown002,
-    ),
-  ),
-  "dropdown-003": dynamic(() =>
-    import("@/registry/components/menu/dropdown-003/dropdown-003").then(
-      (module) => module.Dropdown003,
-    ),
-  ),
-  "dropdown-004": dynamic(() =>
-    import("@/registry/components/menu/dropdown-004/dropdown-004").then(
-      (module) => module.Dropdown004,
-    ),
-  ),
-  "dropdown-005": dynamic(() =>
-    import("@/registry/components/menu/dropdown-005/dropdown-005").then(
-      (module) => module.Dropdown005,
-    ),
-  ),
-  "dropdown-006": dynamic(() =>
-    import("@/registry/components/menu/dropdown-006/dropdown-006").then(
-      (module) => module.Dropdown006,
-    ),
-  ),
-  "dropdown-007": dynamic(() =>
-    import("@/registry/components/menu/dropdown-007/dropdown-007").then(
-      (module) => module.Dropdown007,
-    ),
-  ),
-  "dropdown-008": dynamic(() =>
-    import("@/registry/components/menu/dropdown-008/dropdown-008").then(
-      (module) => module.Dropdown008,
-    ),
-  ),
-  "dropdown-009": dynamic(() =>
-    import("@/registry/components/menu/dropdown-009/dropdown-009").then(
-      (module) => module.Dropdown009,
-    ),
-  ),
-  "dropdown-010": dynamic(() =>
-    import("@/registry/components/menu/dropdown-010/dropdown-010").then(
-      (module) => module.Dropdown010,
-    ),
-  ),
-  "dropdown-011": dynamic(() =>
-    import("@/registry/components/menu/dropdown-011/dropdown-011").then(
-      (module) => module.Dropdown011,
-    ),
-  ),
-  "dropdown-012": dynamic(() =>
-    import("@/registry/components/menu/dropdown-012/dropdown-012").then(
-      (module) => module.Dropdown012,
-    ),
-  ),
-  "input-001": dynamic(() =>
-    import("@/registry/components/inputs/input-001/input-001").then(
-      (module) => module.Input001,
-    ),
-  ),
-  "input-002": dynamic(() =>
-    import("@/registry/components/inputs/input-002/input-002").then(
-      (module) => module.Input002,
-    ),
-  ),
-  "textarea-001": dynamic(() =>
-    import("@/registry/components/inputs/textarea-001/textarea-001").then(
-      (module) => module.Textarea001,
-    ),
-  ),
-  "select-001": dynamic(() =>
-    import("@/registry/components/inputs/select-001/select-001").then(
-      (module) => module.Select001,
-    ),
-  ),
-  "switch-001": dynamic(() =>
-    import("@/registry/components/inputs/switch-001/switch-001").then(
-      (module) => module.Switch001,
-    ),
-  ),
-  "input-003": dynamic(() =>
-    import("@/registry/components/inputs/input-003/input-003").then(
-      (module) => module.Input003,
-    ),
-  ),
-  "input-004": dynamic(() =>
-    import("@/registry/components/inputs/input-004/input-004").then(
-      (module) => module.Input004,
-    ),
-  ),
-  "input-005": dynamic(() =>
-    import("@/registry/components/inputs/input-005/input-005").then(
-      (module) => module.Input005,
-    ),
-  ),
-  "otp-001": dynamic(() =>
-    import("@/registry/components/inputs/otp-001/otp-001").then(
-      (module) => module.Otp001,
-    ),
-  ),
-  "file-001": dynamic(() =>
-    import("@/registry/components/inputs/file-001/file-001").then(
-      (module) => module.File001,
-    ),
-  ),
-  "currency-001": dynamic(() =>
-    import("@/registry/components/inputs/currency-001/currency-001").then(
-      (module) => module.Currency001,
-    ),
-  ),
-  "textarea-002": dynamic(() =>
-    import("@/registry/components/inputs/textarea-002/textarea-002").then(
-      (module) => module.Textarea002,
-    ),
-  ),
-  "radio-001": dynamic(() =>
-    import("@/registry/components/inputs/radio-001/radio-001").then(
-      (module) => module.Radio001,
-    ),
-  ),
-  "slider-001": dynamic(() =>
-    import("@/registry/components/inputs/slider-001/slider-001").then(
-      (module) => module.Slider001,
-    ),
-  ),
-  "rating-001": dynamic(() =>
-    import("@/registry/components/inputs/rating-001/rating-001").then(
-      (module) => module.Rating001,
-    ),
-  ),
-  "date-001": dynamic(() =>
-    import("@/registry/components/inputs/date-001/date-001").then(
-      (module) => module.Date001,
-    ),
-  ),
-  "number-001": dynamic(() =>
-    import("@/registry/components/inputs/number-001/number-001").then(
-      (module) => module.Number001,
-    ),
-  ),
-  "tags-001": dynamic(() =>
-    import("@/registry/components/inputs/tags-001/tags-001").then(
-      (module) => module.Tags001,
-    ),
-  ),
-  "field-001": dynamic(() =>
-    import("@/registry/components/inputs/field-001/field-001").then(
-      (module) => module.Field001,
-    ),
-  ),
-  "range-001": dynamic(() =>
-    import("@/registry/components/inputs/range-001/range-001").then(
-      (module) => module.Range001,
-    ),
-  ),
-  "cascader-001": dynamic(() =>
-    import("@/registry/components/inputs/cascader-001/cascader-001").then(
-      (module) => module.Cascader001,
-    ),
-  ),
-  "filters-001": dynamic(() =>
-    import("@/registry/components/inputs/filters-001/filters-001").then(
-      (module) => module.Filters001,
-    ),
-  ),
-  "cascader-002": dynamic(() =>
-    import("@/registry/components/inputs/cascader-002/cascader-002").then(
-      (module) => module.Cascader002,
-    ),
-  ),
-  "cascader-003": dynamic(() =>
-    import("@/registry/components/inputs/cascader-003/cascader-003").then(
-      (module) => module.Cascader003,
-    ),
-  ),
-  "cascader-004": dynamic(() =>
-    import("@/registry/components/inputs/cascader-004/cascader-004").then(
-      (module) => module.Cascader004,
-    ),
-  ),
-  "cascader-005": dynamic(() =>
-    import("@/registry/components/inputs/cascader-005/cascader-005").then(
-      (module) => module.Cascader005,
-    ),
-  ),
-  "cascader-006": dynamic(() =>
-    import("@/registry/components/inputs/cascader-006/cascader-006").then(
-      (module) => module.Cascader006,
-    ),
-  ),
-  "cascader-007": dynamic(() =>
-    import("@/registry/components/inputs/cascader-007/cascader-007").then(
-      (module) => module.Cascader007,
-    ),
-  ),
-  "cascader-008": dynamic(() =>
-    import("@/registry/components/inputs/cascader-008/cascader-008").then(
-      (module) => module.Cascader008,
-    ),
-  ),
-  "cascader-009": dynamic(() =>
-    import("@/registry/components/inputs/cascader-009/cascader-009").then(
-      (module) => module.Cascader009,
-    ),
-  ),
-  "cascader-010": dynamic(() =>
-    import("@/registry/components/inputs/cascader-010/cascader-010").then(
-      (module) => module.Cascader010,
-    ),
-  ),
-  "cascader-011": dynamic(() =>
-    import("@/registry/components/inputs/cascader-011/cascader-011").then(
-      (module) => module.Cascader011,
-    ),
-  ),
-  "cascader-012": dynamic(() =>
-    import("@/registry/components/inputs/cascader-012/cascader-012").then(
-      (module) => module.Cascader012,
-    ),
-  ),
-  "field-002": dynamic(() =>
-    import("@/registry/components/inputs/field-002/field-002").then(
-      (module) => module.Field002,
-    ),
-  ),
-  "field-003": dynamic(() =>
-    import("@/registry/components/inputs/field-003/field-003").then(
-      (module) => module.Field003,
-    ),
-  ),
-  "field-004": dynamic(() =>
-    import("@/registry/components/inputs/field-004/field-004").then(
-      (module) => module.Field004,
-    ),
-  ),
-  "field-005": dynamic(() =>
-    import("@/registry/components/inputs/field-005/field-005").then(
-      (module) => module.Field005,
-    ),
-  ),
-  "field-006": dynamic(() =>
-    import("@/registry/components/inputs/field-006/field-006").then(
-      (module) => module.Field006,
-    ),
-  ),
-  "field-007": dynamic(() =>
-    import("@/registry/components/inputs/field-007/field-007").then(
-      (module) => module.Field007,
-    ),
-  ),
-  "field-008": dynamic(() =>
-    import("@/registry/components/inputs/field-008/field-008").then(
-      (module) => module.Field008,
-    ),
-  ),
-  "field-009": dynamic(() =>
-    import("@/registry/components/inputs/field-009/field-009").then(
-      (module) => module.Field009,
-    ),
-  ),
-  "field-010": dynamic(() =>
-    import("@/registry/components/inputs/field-010/field-010").then(
-      (module) => module.Field010,
-    ),
-  ),
-  "file-002": dynamic(() =>
-    import("@/registry/components/inputs/file-002/file-002").then(
-      (module) => module.File002,
-    ),
-  ),
-  "file-003": dynamic(() =>
-    import("@/registry/components/inputs/file-003/file-003").then(
-      (module) => module.File003,
-    ),
-  ),
-  "file-004": dynamic(() =>
-    import("@/registry/components/inputs/file-004/file-004").then(
-      (module) => module.File004,
-    ),
-  ),
-  "file-005": dynamic(() =>
-    import("@/registry/components/inputs/file-005/file-005").then(
-      (module) => module.File005,
-    ),
-  ),
-  "file-006": dynamic(() =>
-    import("@/registry/components/inputs/file-006/file-006").then(
-      (module) => module.File006,
-    ),
-  ),
-  "file-007": dynamic(() =>
-    import("@/registry/components/inputs/file-007/file-007").then(
-      (module) => module.File007,
-    ),
-  ),
-  "file-008": dynamic(() =>
-    import("@/registry/components/inputs/file-008/file-008").then(
-      (module) => module.File008,
-    ),
-  ),
-  "file-009": dynamic(() =>
-    import("@/registry/components/inputs/file-009/file-009").then(
-      (module) => module.File009,
-    ),
-  ),
-  "file-010": dynamic(() =>
-    import("@/registry/components/inputs/file-010/file-010").then(
-      (module) => module.File010,
-    ),
-  ),
-  "filters-002": dynamic(() =>
-    import("@/registry/components/inputs/filters-002/filters-002").then(
-      (module) => module.Filters002,
-    ),
-  ),
-  "filters-003": dynamic(() =>
-    import("@/registry/components/inputs/filters-003/filters-003").then(
-      (module) => module.Filters003,
-    ),
-  ),
-  "filters-004": dynamic(() =>
-    import("@/registry/components/inputs/filters-004/filters-004").then(
-      (module) => module.Filters004,
-    ),
-  ),
-  "filters-005": dynamic(() =>
-    import("@/registry/components/inputs/filters-005/filters-005").then(
-      (module) => module.Filters005,
-    ),
-  ),
-  "filters-006": dynamic(() =>
-    import("@/registry/components/inputs/filters-006/filters-006").then(
-      (module) => module.Filters006,
-    ),
-  ),
-  "filters-007": dynamic(() =>
-    import("@/registry/components/inputs/filters-007/filters-007").then(
-      (module) => module.Filters007,
-    ),
-  ),
-  "filters-008": dynamic(() =>
-    import("@/registry/components/inputs/filters-008/filters-008").then(
-      (module) => module.Filters008,
-    ),
-  ),
-  "filters-009": dynamic(() =>
-    import("@/registry/components/inputs/filters-009/filters-009").then(
-      (module) => module.Filters009,
-    ),
-  ),
-  "input-006": dynamic(() =>
-    import("@/registry/components/inputs/input-006/input-006").then(
-      (module) => module.Input006,
-    ),
-  ),
-  "input-007": dynamic(() =>
-    import("@/registry/components/inputs/input-007/input-007").then(
-      (module) => module.Input007,
-    ),
-  ),
-  "input-008": dynamic(() =>
-    import("@/registry/components/inputs/input-008/input-008").then(
-      (module) => module.Input008,
-    ),
-  ),
-  "input-009": dynamic(() =>
-    import("@/registry/components/inputs/input-009/input-009").then(
-      (module) => module.Input009,
-    ),
-  ),
-  "input-010": dynamic(() =>
-    import("@/registry/components/inputs/input-010/input-010").then(
-      (module) => module.Input010,
-    ),
-  ),
-  "input-011": dynamic(() =>
-    import("@/registry/components/inputs/input-011/input-011").then(
-      (module) => module.Input011,
-    ),
-  ),
-  "input-012": dynamic(() =>
-    import("@/registry/components/inputs/input-012/input-012").then(
-      (module) => module.Input012,
-    ),
-  ),
-  "input-013": dynamic(() =>
-    import("@/registry/components/inputs/input-013/input-013").then(
-      (module) => module.Input013,
-    ),
-  ),
-  "input-014": dynamic(() =>
-    import("@/registry/components/inputs/input-014/input-014").then(
-      (module) => module.Input014,
-    ),
-  ),
-  "input-015": dynamic(() =>
-    import("@/registry/components/inputs/input-015/input-015").then(
-      (module) => module.Input015,
-    ),
-  ),
-  "inputgroup-001": dynamic(() =>
-    import("@/registry/components/inputs/inputgroup-001/inputgroup-001").then(
-      (module) => module.Inputgroup001,
-    ),
-  ),
-  "inputgroup-002": dynamic(() =>
-    import("@/registry/components/inputs/inputgroup-002/inputgroup-002").then(
-      (module) => module.Inputgroup002,
-    ),
-  ),
-  "inputgroup-003": dynamic(() =>
-    import("@/registry/components/inputs/inputgroup-003/inputgroup-003").then(
-      (module) => module.Inputgroup003,
-    ),
-  ),
-  "inputgroup-004": dynamic(() =>
-    import("@/registry/components/inputs/inputgroup-004/inputgroup-004").then(
-      (module) => module.Inputgroup004,
-    ),
-  ),
-  "inputgroup-005": dynamic(() =>
-    import("@/registry/components/inputs/inputgroup-005/inputgroup-005").then(
-      (module) => module.Inputgroup005,
-    ),
-  ),
-  "inputgroup-006": dynamic(() =>
-    import("@/registry/components/inputs/inputgroup-006/inputgroup-006").then(
-      (module) => module.Inputgroup006,
-    ),
-  ),
-  "inputgroup-007": dynamic(() =>
-    import("@/registry/components/inputs/inputgroup-007/inputgroup-007").then(
-      (module) => module.Inputgroup007,
-    ),
-  ),
-  "inputgroup-008": dynamic(() =>
-    import("@/registry/components/inputs/inputgroup-008/inputgroup-008").then(
-      (module) => module.Inputgroup008,
-    ),
-  ),
-  "inputgroup-009": dynamic(() =>
-    import("@/registry/components/inputs/inputgroup-009/inputgroup-009").then(
-      (module) => module.Inputgroup009,
-    ),
-  ),
-  "inputgroup-010": dynamic(() =>
-    import("@/registry/components/inputs/inputgroup-010/inputgroup-010").then(
-      (module) => module.Inputgroup010,
-    ),
-  ),
-  "otp-002": dynamic(() =>
-    import("@/registry/components/inputs/otp-002/otp-002").then(
-      (module) => module.Otp002,
-    ),
-  ),
-  "otp-003": dynamic(() =>
-    import("@/registry/components/inputs/otp-003/otp-003").then(
-      (module) => module.Otp003,
-    ),
-  ),
-  "otp-004": dynamic(() =>
-    import("@/registry/components/inputs/otp-004/otp-004").then(
-      (module) => module.Otp004,
-    ),
-  ),
-  "otp-005": dynamic(() =>
-    import("@/registry/components/inputs/otp-005/otp-005").then(
-      (module) => module.Otp005,
-    ),
-  ),
-  "otp-006": dynamic(() =>
-    import("@/registry/components/inputs/otp-006/otp-006").then(
-      (module) => module.Otp006,
-    ),
-  ),
-  "otp-007": dynamic(() =>
-    import("@/registry/components/inputs/otp-007/otp-007").then(
-      (module) => module.Otp007,
-    ),
-  ),
-  "select-002": dynamic(() =>
-    import("@/registry/components/inputs/select-002/select-002").then(
-      (module) => module.Select002,
-    ),
-  ),
-  "select-003": dynamic(() =>
-    import("@/registry/components/inputs/select-003/select-003").then(
-      (module) => module.Select003,
-    ),
-  ),
-  "select-004": dynamic(() =>
-    import("@/registry/components/inputs/select-004/select-004").then(
-      (module) => module.Select004,
-    ),
-  ),
-  "select-005": dynamic(() =>
-    import("@/registry/components/inputs/select-005/select-005").then(
-      (module) => module.Select005,
-    ),
-  ),
-  "select-006": dynamic(() =>
-    import("@/registry/components/inputs/select-006/select-006").then(
-      (module) => module.Select006,
-    ),
-  ),
-  "select-007": dynamic(() =>
-    import("@/registry/components/inputs/select-007/select-007").then(
-      (module) => module.Select007,
-    ),
-  ),
-  "select-008": dynamic(() =>
-    import("@/registry/components/inputs/select-008/select-008").then(
-      (module) => module.Select008,
-    ),
-  ),
-  "select-009": dynamic(() =>
-    import("@/registry/components/inputs/select-009/select-009").then(
-      (module) => module.Select009,
-    ),
-  ),
-  "switch-002": dynamic(() =>
-    import("@/registry/components/inputs/switch-002/switch-002").then(
-      (module) => module.Switch002,
-    ),
-  ),
-  "switch-003": dynamic(() =>
-    import("@/registry/components/inputs/switch-003/switch-003").then(
-      (module) => module.Switch003,
-    ),
-  ),
-  "switch-004": dynamic(() =>
-    import("@/registry/components/inputs/switch-004/switch-004").then(
-      (module) => module.Switch004,
-    ),
-  ),
-  "switch-005": dynamic(() =>
-    import("@/registry/components/inputs/switch-005/switch-005").then(
-      (module) => module.Switch005,
-    ),
-  ),
-  "switch-006": dynamic(() =>
-    import("@/registry/components/inputs/switch-006/switch-006").then(
-      (module) => module.Switch006,
-    ),
-  ),
-  "switch-007": dynamic(() =>
-    import("@/registry/components/inputs/switch-007/switch-007").then(
-      (module) => module.Switch007,
-    ),
-  ),
-  "switch-008": dynamic(() =>
-    import("@/registry/components/inputs/switch-008/switch-008").then(
-      (module) => module.Switch008,
-    ),
-  ),
-  "switch-009": dynamic(() =>
-    import("@/registry/components/inputs/switch-009/switch-009").then(
-      (module) => module.Switch009,
-    ),
-  ),
-  "slider-002": dynamic(() =>
-    import("@/registry/components/inputs/slider-002/slider-002").then(
-      (module) => module.Slider002,
-    ),
-  ),
-  "slider-003": dynamic(() =>
-    import("@/registry/components/inputs/slider-003/slider-003").then(
-      (module) => module.Slider003,
-    ),
-  ),
-  "slider-004": dynamic(() =>
-    import("@/registry/components/inputs/slider-004/slider-004").then(
-      (module) => module.Slider004,
-    ),
-  ),
-  "slider-005": dynamic(() =>
-    import("@/registry/components/inputs/slider-005/slider-005").then(
-      (module) => module.Slider005,
-    ),
-  ),
-  "slider-006": dynamic(() =>
-    import("@/registry/components/inputs/slider-006/slider-006").then(
-      (module) => module.Slider006,
-    ),
-  ),
-  "slider-007": dynamic(() =>
-    import("@/registry/components/inputs/slider-007/slider-007").then(
-      (module) => module.Slider007,
-    ),
-  ),
-  "slider-008": dynamic(() =>
-    import("@/registry/components/inputs/slider-008/slider-008").then(
-      (module) => module.Slider008,
-    ),
-  ),
-  "radio-002": dynamic(() =>
-    import("@/registry/components/inputs/radio-002/radio-002").then(
-      (module) => module.Radio002,
-    ),
-  ),
-  "radio-003": dynamic(() =>
-    import("@/registry/components/inputs/radio-003/radio-003").then(
-      (module) => module.Radio003,
-    ),
-  ),
-  "radio-004": dynamic(() =>
-    import("@/registry/components/inputs/radio-004/radio-004").then(
-      (module) => module.Radio004,
-    ),
-  ),
-  "radio-005": dynamic(() =>
-    import("@/registry/components/inputs/radio-005/radio-005").then(
-      (module) => module.Radio005,
-    ),
-  ),
-  "radio-006": dynamic(() =>
-    import("@/registry/components/inputs/radio-006/radio-006").then(
-      (module) => module.Radio006,
-    ),
-  ),
-  "radio-007": dynamic(() =>
-    import("@/registry/components/inputs/radio-007/radio-007").then(
-      (module) => module.Radio007,
-    ),
-  ),
-  "radio-008": dynamic(() =>
-    import("@/registry/components/inputs/radio-008/radio-008").then(
-      (module) => module.Radio008,
-    ),
-  ),
-  "textarea-003": dynamic(() =>
-    import("@/registry/components/inputs/textarea-003/textarea-003").then(
-      (module) => module.Textarea003,
-    ),
-  ),
-  "textarea-004": dynamic(() =>
-    import("@/registry/components/inputs/textarea-004/textarea-004").then(
-      (module) => module.Textarea004,
-    ),
-  ),
-  "textarea-005": dynamic(() =>
-    import("@/registry/components/inputs/textarea-005/textarea-005").then(
-      (module) => module.Textarea005,
-    ),
-  ),
-  "textarea-006": dynamic(() =>
-    import("@/registry/components/inputs/textarea-006/textarea-006").then(
-      (module) => module.Textarea006,
-    ),
-  ),
-  "textarea-007": dynamic(() =>
-    import("@/registry/components/inputs/textarea-007/textarea-007").then(
-      (module) => module.Textarea007,
-    ),
-  ),
-  "textarea-008": dynamic(() =>
-    import("@/registry/components/inputs/textarea-008/textarea-008").then(
-      (module) => module.Textarea008,
-    ),
-  ),
-  "cascader-013": dynamic(() =>
-    import("@/registry/components/inputs/cascader-013/cascader-013").then(
-      (module) => module.Cascader013,
-    ),
-  ),
-  "cascader-014": dynamic(() =>
-    import("@/registry/components/inputs/cascader-014/cascader-014").then(
-      (module) => module.Cascader014,
-    ),
-  ),
-  "cascader-015": dynamic(() =>
-    import("@/registry/components/inputs/cascader-015/cascader-015").then(
-      (module) => module.Cascader015,
-    ),
-  ),
-  "cascader-016": dynamic(() =>
-    import("@/registry/components/inputs/cascader-016/cascader-016").then(
-      (module) => module.Cascader016,
-    ),
-  ),
-  "cascader-017": dynamic(() =>
-    import("@/registry/components/inputs/cascader-017/cascader-017").then(
-      (module) => module.Cascader017,
-    ),
-  ),
-  "cascader-018": dynamic(() =>
-    import("@/registry/components/inputs/cascader-018/cascader-018").then(
-      (module) => module.Cascader018,
-    ),
-  ),
-  "cascader-019": dynamic(() =>
-    import("@/registry/components/inputs/cascader-019/cascader-019").then(
-      (module) => module.Cascader019,
-    ),
-  ),
-  "cascader-020": dynamic(() =>
-    import("@/registry/components/inputs/cascader-020/cascader-020").then(
-      (module) => module.Cascader020,
-    ),
-  ),
-  "number-002": dynamic(() =>
-    import("@/registry/components/inputs/number-002/number-002").then(
-      (module) => module.Number002,
-    ),
-  ),
-  "number-003": dynamic(() =>
-    import("@/registry/components/inputs/number-003/number-003").then(
-      (module) => module.Number003,
-    ),
-  ),
-  "number-004": dynamic(() =>
-    import("@/registry/components/inputs/number-004/number-004").then(
-      (module) => module.Number004,
-    ),
-  ),
-  "number-005": dynamic(() =>
-    import("@/registry/components/inputs/number-005/number-005").then(
-      (module) => module.Number005,
-    ),
-  ),
-  "number-006": dynamic(() =>
-    import("@/registry/components/inputs/number-006/number-006").then(
-      (module) => module.Number006,
-    ),
-  ),
-  "number-007": dynamic(() =>
-    import("@/registry/components/inputs/number-007/number-007").then(
-      (module) => module.Number007,
-    ),
-  ),
-  "number-008": dynamic(() =>
-    import("@/registry/components/inputs/number-008/number-008").then(
-      (module) => module.Number008,
-    ),
-  ),
-  "date-002": dynamic(() =>
-    import("@/registry/components/inputs/date-002/date-002").then(
-      (module) => module.Date002,
-    ),
-  ),
-  "date-003": dynamic(() =>
-    import("@/registry/components/inputs/date-003/date-003").then(
-      (module) => module.Date003,
-    ),
-  ),
-  "date-004": dynamic(() =>
-    import("@/registry/components/inputs/date-004/date-004").then(
-      (module) => module.Date004,
-    ),
-  ),
-  "date-005": dynamic(() =>
-    import("@/registry/components/inputs/date-005/date-005").then(
-      (module) => module.Date005,
-    ),
-  ),
-  "date-006": dynamic(() =>
-    import("@/registry/components/inputs/date-006/date-006").then(
-      (module) => module.Date006,
-    ),
-  ),
-  "date-007": dynamic(() =>
-    import("@/registry/components/inputs/date-007/date-007").then(
-      (module) => module.Date007,
-    ),
-  ),
-  "date-008": dynamic(() =>
-    import("@/registry/components/inputs/date-008/date-008").then(
-      (module) => module.Date008,
-    ),
-  ),
-  "rating-002": dynamic(() =>
-    import("@/registry/components/inputs/rating-002/rating-002").then(
-      (module) => module.Rating002,
-    ),
-  ),
-  "rating-003": dynamic(() =>
-    import("@/registry/components/inputs/rating-003/rating-003").then(
-      (module) => module.Rating003,
-    ),
-  ),
-  "rating-004": dynamic(() =>
-    import("@/registry/components/inputs/rating-004/rating-004").then(
-      (module) => module.Rating004,
-    ),
-  ),
-  "rating-005": dynamic(() =>
-    import("@/registry/components/inputs/rating-005/rating-005").then(
-      (module) => module.Rating005,
-    ),
-  ),
-  "rating-006": dynamic(() =>
-    import("@/registry/components/inputs/rating-006/rating-006").then(
-      (module) => module.Rating006,
-    ),
-  ),
-  "rating-007": dynamic(() =>
-    import("@/registry/components/inputs/rating-007/rating-007").then(
-      (module) => module.Rating007,
-    ),
-  ),
-  "rating-008": dynamic(() =>
-    import("@/registry/components/inputs/rating-008/rating-008").then(
-      (module) => module.Rating008,
-    ),
-  ),
-  "currency-002": dynamic(() =>
-    import("@/registry/components/inputs/currency-002/currency-002").then(
-      (module) => module.Currency002,
-    ),
-  ),
-  "currency-003": dynamic(() =>
-    import("@/registry/components/inputs/currency-003/currency-003").then(
-      (module) => module.Currency003,
-    ),
-  ),
-  "currency-004": dynamic(() =>
-    import("@/registry/components/inputs/currency-004/currency-004").then(
-      (module) => module.Currency004,
-    ),
-  ),
-  "currency-005": dynamic(() =>
-    import("@/registry/components/inputs/currency-005/currency-005").then(
-      (module) => module.Currency005,
-    ),
-  ),
-  "currency-006": dynamic(() =>
-    import("@/registry/components/inputs/currency-006/currency-006").then(
-      (module) => module.Currency006,
-    ),
-  ),
-  "currency-007": dynamic(() =>
-    import("@/registry/components/inputs/currency-007/currency-007").then(
-      (module) => module.Currency007,
-    ),
-  ),
-  "range-002": dynamic(() =>
-    import("@/registry/components/inputs/range-002/range-002").then(
-      (module) => module.Range002,
-    ),
-  ),
-  "range-003": dynamic(() =>
-    import("@/registry/components/inputs/range-003/range-003").then(
-      (module) => module.Range003,
-    ),
-  ),
-  "range-004": dynamic(() =>
-    import("@/registry/components/inputs/range-004/range-004").then(
-      (module) => module.Range004,
-    ),
-  ),
-  "range-005": dynamic(() =>
-    import("@/registry/components/inputs/range-005/range-005").then(
-      (module) => module.Range005,
-    ),
-  ),
-  "range-006": dynamic(() =>
-    import("@/registry/components/inputs/range-006/range-006").then(
-      (module) => module.Range006,
-    ),
-  ),
-  "range-007": dynamic(() =>
-    import("@/registry/components/inputs/range-007/range-007").then(
-      (module) => module.Range007,
-    ),
-  ),
-  "tags-002": dynamic(() =>
-    import("@/registry/components/inputs/tags-002/tags-002").then(
-      (module) => module.Tags002,
-    ),
-  ),
-  "tags-003": dynamic(() =>
-    import("@/registry/components/inputs/tags-003/tags-003").then(
-      (module) => module.Tags003,
-    ),
-  ),
-  "tags-004": dynamic(() =>
-    import("@/registry/components/inputs/tags-004/tags-004").then(
-      (module) => module.Tags004,
-    ),
-  ),
-  "tags-005": dynamic(() =>
-    import("@/registry/components/inputs/tags-005/tags-005").then(
-      (module) => module.Tags005,
-    ),
-  ),
-  "tags-006": dynamic(() =>
-    import("@/registry/components/inputs/tags-006/tags-006").then(
-      (module) => module.Tags006,
-    ),
-  ),
-  "tags-007": dynamic(() =>
-    import("@/registry/components/inputs/tags-007/tags-007").then(
-      (module) => module.Tags007,
-    ),
-  ),
-  "skeleton-001": dynamic(() =>
-    import("@/registry/components/display/skeleton-001/skeleton-001").then(
-      (module) => module.Skeleton001,
-    ),
-  ),
-  "progress-001": dynamic(() =>
-    import("@/registry/components/display/progress-001/progress-001").then(
-      (module) => module.Progress001,
-    ),
-  ),
-  "separator-001": dynamic(() =>
-    import("@/registry/components/display/separator-001/separator-001").then(
-      (module) => module.Separator001,
-    ),
-  ),
-  "kbd-001": dynamic(() =>
-    import("@/registry/components/display/kbd-001/kbd-001").then(
-      (module) => module.Kbd001,
-    ),
-  ),
-  "code-001": dynamic(() =>
-    import("@/registry/components/display/code-001/code-001").then(
-      (module) => module.Code001,
-    ),
-  ),
-  "timeline-001": dynamic(() =>
-    import("@/registry/components/display/timeline-001/timeline-001").then(
-      (module) => module.Timeline001,
-    ),
-  ),
-  "tree-001": dynamic(() =>
-    import("@/registry/components/display/tree-001/tree-001").then(
-      (module) => module.Tree001,
-    ),
-  ),
-  "scrollarea-001": dynamic(() =>
-    import("@/registry/components/display/scrollarea-001/scrollarea-001").then(
-      (module) => module.Scrollarea001,
-    ),
-  ),
-  "item-001": dynamic(() =>
-    import("@/registry/components/display/item-001/item-001").then(
-      (module) => module.Item001,
-    ),
-  ),
-  "spinner-001": dynamic(() =>
-    import("@/registry/components/display/spinner-001/spinner-001").then(
-      (module) => module.Spinner001,
-    ),
-  ),
-  "frame-001": dynamic(() =>
-    import("@/registry/components/display/frame-001/frame-001").then(
-      (module) => module.Frame001,
-    ),
-  ),
-  "icontile-001": dynamic(() =>
-    import("@/registry/components/display/icontile-001/icontile-001").then(
-      (module) => module.Icontile001,
-    ),
-  ),
-  "iconstack-001": dynamic(() =>
-    import("@/registry/components/display/iconstack-001/iconstack-001").then(
-      (module) => module.Iconstack001,
-    ),
-  ),
-  "sortable-001": dynamic(() =>
-    import("@/registry/components/display/sortable-001/sortable-001").then(
-      (module) => module.Sortable001,
-    ),
-  ),
-  "kanban-001": dynamic(() =>
-    import("@/registry/components/display/kanban-001/kanban-001").then(
-      (module) => module.Kanban001,
-    ),
-  ),
-  "collapsible-001": dynamic(() =>
-    import("@/registry/components/display/collapsible-001/collapsible-001").then(
-      (module) => module.Collapsible001,
-    ),
-  ),
-  "collapsible-002": dynamic(() =>
-    import("@/registry/components/display/collapsible-002/collapsible-002").then(
-      (module) => module.Collapsible002,
-    ),
-  ),
-  "collapsible-003": dynamic(() =>
-    import("@/registry/components/display/collapsible-003/collapsible-003").then(
-      (module) => module.Collapsible003,
-    ),
-  ),
-  "collapsible-004": dynamic(() =>
-    import("@/registry/components/display/collapsible-004/collapsible-004").then(
-      (module) => module.Collapsible004,
-    ),
-  ),
-  "collapsible-005": dynamic(() =>
-    import("@/registry/components/display/collapsible-005/collapsible-005").then(
-      (module) => module.Collapsible005,
-    ),
-  ),
-  "collapsible-006": dynamic(() =>
-    import("@/registry/components/display/collapsible-006/collapsible-006").then(
-      (module) => module.Collapsible006,
-    ),
-  ),
-  "collapsible-007": dynamic(() =>
-    import("@/registry/components/display/collapsible-007/collapsible-007").then(
-      (module) => module.Collapsible007,
-    ),
-  ),
-  "collapsible-008": dynamic(() =>
-    import("@/registry/components/display/collapsible-008/collapsible-008").then(
-      (module) => module.Collapsible008,
-    ),
-  ),
-  "collapsible-009": dynamic(() =>
-    import("@/registry/components/display/collapsible-009/collapsible-009").then(
-      (module) => module.Collapsible009,
-    ),
-  ),
-  "collapsible-010": dynamic(() =>
-    import("@/registry/components/display/collapsible-010/collapsible-010").then(
-      (module) => module.Collapsible010,
-    ),
-  ),
-  "frame-002": dynamic(() =>
-    import("@/registry/components/display/frame-002/frame-002").then(
-      (module) => module.Frame002,
-    ),
-  ),
-  "frame-003": dynamic(() =>
-    import("@/registry/components/display/frame-003/frame-003").then(
-      (module) => module.Frame003,
-    ),
-  ),
-  "frame-004": dynamic(() =>
-    import("@/registry/components/display/frame-004/frame-004").then(
-      (module) => module.Frame004,
-    ),
-  ),
-  "frame-005": dynamic(() =>
-    import("@/registry/components/display/frame-005/frame-005").then(
-      (module) => module.Frame005,
-    ),
-  ),
-  "frame-006": dynamic(() =>
-    import("@/registry/components/display/frame-006/frame-006").then(
-      (module) => module.Frame006,
-    ),
-  ),
-  "icontile-002": dynamic(() =>
-    import("@/registry/components/display/icontile-002/icontile-002").then(
-      (module) => module.Icontile002,
-    ),
-  ),
-  "icontile-003": dynamic(() =>
-    import("@/registry/components/display/icontile-003/icontile-003").then(
-      (module) => module.Icontile003,
-    ),
-  ),
-  "icontile-004": dynamic(() =>
-    import("@/registry/components/display/icontile-004/icontile-004").then(
-      (module) => module.Icontile004,
-    ),
-  ),
-  "icontile-005": dynamic(() =>
-    import("@/registry/components/display/icontile-005/icontile-005").then(
-      (module) => module.Icontile005,
-    ),
-  ),
-  "icontile-006": dynamic(() =>
-    import("@/registry/components/display/icontile-006/icontile-006").then(
-      (module) => module.Icontile006,
-    ),
-  ),
-  "iconstack-002": dynamic(() =>
-    import("@/registry/components/display/iconstack-002/iconstack-002").then(
-      (module) => module.Iconstack002,
-    ),
-  ),
-  "iconstack-003": dynamic(() =>
-    import("@/registry/components/display/iconstack-003/iconstack-003").then(
-      (module) => module.Iconstack003,
-    ),
-  ),
-  "iconstack-004": dynamic(() =>
-    import("@/registry/components/display/iconstack-004/iconstack-004").then(
-      (module) => module.Iconstack004,
-    ),
-  ),
-  "iconstack-005": dynamic(() =>
-    import("@/registry/components/display/iconstack-005/iconstack-005").then(
-      (module) => module.Iconstack005,
-    ),
-  ),
-  "kbd-002": dynamic(() =>
-    import("@/registry/components/display/kbd-002/kbd-002").then(
-      (module) => module.Kbd002,
-    ),
-  ),
-  "kbd-003": dynamic(() =>
-    import("@/registry/components/display/kbd-003/kbd-003").then(
-      (module) => module.Kbd003,
-    ),
-  ),
-  "kbd-004": dynamic(() =>
-    import("@/registry/components/display/kbd-004/kbd-004").then(
-      (module) => module.Kbd004,
-    ),
-  ),
-  "kbd-005": dynamic(() =>
-    import("@/registry/components/display/kbd-005/kbd-005").then(
-      (module) => module.Kbd005,
-    ),
-  ),
-  "kbd-006": dynamic(() =>
-    import("@/registry/components/display/kbd-006/kbd-006").then(
-      (module) => module.Kbd006,
-    ),
-  ),
-  "separator-002": dynamic(() =>
-    import("@/registry/components/display/separator-002/separator-002").then(
-      (module) => module.Separator002,
-    ),
-  ),
-  "separator-003": dynamic(() =>
-    import("@/registry/components/display/separator-003/separator-003").then(
-      (module) => module.Separator003,
-    ),
-  ),
-  "separator-004": dynamic(() =>
-    import("@/registry/components/display/separator-004/separator-004").then(
-      (module) => module.Separator004,
-    ),
-  ),
-  "separator-005": dynamic(() =>
-    import("@/registry/components/display/separator-005/separator-005").then(
-      (module) => module.Separator005,
-    ),
-  ),
-  "separator-006": dynamic(() =>
-    import("@/registry/components/display/separator-006/separator-006").then(
-      (module) => module.Separator006,
-    ),
-  ),
-  "spinner-002": dynamic(() =>
-    import("@/registry/components/display/spinner-002/spinner-002").then(
-      (module) => module.Spinner002,
-    ),
-  ),
-  "spinner-003": dynamic(() =>
-    import("@/registry/components/display/spinner-003/spinner-003").then(
-      (module) => module.Spinner003,
-    ),
-  ),
-  "spinner-004": dynamic(() =>
-    import("@/registry/components/display/spinner-004/spinner-004").then(
-      (module) => module.Spinner004,
-    ),
-  ),
-  "spinner-005": dynamic(() =>
-    import("@/registry/components/display/spinner-005/spinner-005").then(
-      (module) => module.Spinner005,
-    ),
-  ),
-  "spinner-006": dynamic(() =>
-    import("@/registry/components/display/spinner-006/spinner-006").then(
-      (module) => module.Spinner006,
-    ),
-  ),
-  "item-002": dynamic(() =>
-    import("@/registry/components/display/item-002/item-002").then(
-      (module) => module.Item002,
-    ),
-  ),
-  "item-003": dynamic(() =>
-    import("@/registry/components/display/item-003/item-003").then(
-      (module) => module.Item003,
-    ),
-  ),
-  "item-004": dynamic(() =>
-    import("@/registry/components/display/item-004/item-004").then(
-      (module) => module.Item004,
-    ),
-  ),
-  "item-005": dynamic(() =>
-    import("@/registry/components/display/item-005/item-005").then(
-      (module) => module.Item005,
-    ),
-  ),
-  "item-006": dynamic(() =>
-    import("@/registry/components/display/item-006/item-006").then(
-      (module) => module.Item006,
-    ),
-  ),
-  "item-007": dynamic(() =>
-    import("@/registry/components/display/item-007/item-007").then(
-      (module) => module.Item007,
-    ),
-  ),
-  "item-008": dynamic(() =>
-    import("@/registry/components/display/item-008/item-008").then(
-      (module) => module.Item008,
-    ),
-  ),
-  "item-009": dynamic(() =>
-    import("@/registry/components/display/item-009/item-009").then(
-      (module) => module.Item009,
-    ),
-  ),
-  "item-010": dynamic(() =>
-    import("@/registry/components/display/item-010/item-010").then(
-      (module) => module.Item010,
-    ),
-  ),
-  "kanban-002": dynamic(() =>
-    import("@/registry/components/display/kanban-002/kanban-002").then(
-      (module) => module.Kanban002,
-    ),
-  ),
-  "kanban-003": dynamic(() =>
-    import("@/registry/components/display/kanban-003/kanban-003").then(
-      (module) => module.Kanban003,
-    ),
-  ),
-  "kanban-004": dynamic(() =>
-    import("@/registry/components/display/kanban-004/kanban-004").then(
-      (module) => module.Kanban004,
-    ),
-  ),
-  "kanban-005": dynamic(() =>
-    import("@/registry/components/display/kanban-005/kanban-005").then(
-      (module) => module.Kanban005,
-    ),
-  ),
-  "kanban-006": dynamic(() =>
-    import("@/registry/components/display/kanban-006/kanban-006").then(
-      (module) => module.Kanban006,
-    ),
-  ),
-  "kanban-007": dynamic(() =>
-    import("@/registry/components/display/kanban-007/kanban-007").then(
-      (module) => module.Kanban007,
-    ),
-  ),
-  "sortable-002": dynamic(() =>
-    import("@/registry/components/display/sortable-002/sortable-002").then(
-      (module) => module.Sortable002,
-    ),
-  ),
-  "sortable-003": dynamic(() =>
-    import("@/registry/components/display/sortable-003/sortable-003").then(
-      (module) => module.Sortable003,
-    ),
-  ),
-  "sortable-004": dynamic(() =>
-    import("@/registry/components/display/sortable-004/sortable-004").then(
-      (module) => module.Sortable004,
-    ),
-  ),
-  "sortable-005": dynamic(() =>
-    import("@/registry/components/display/sortable-005/sortable-005").then(
-      (module) => module.Sortable005,
-    ),
-  ),
-  "sortable-006": dynamic(() =>
-    import("@/registry/components/display/sortable-006/sortable-006").then(
-      (module) => module.Sortable006,
-    ),
-  ),
-  "sortable-007": dynamic(() =>
-    import("@/registry/components/display/sortable-007/sortable-007").then(
-      (module) => module.Sortable007,
-    ),
-  ),
-  "progress-002": dynamic(() =>
-    import("@/registry/components/display/progress-002/progress-002").then(
-      (module) => module.Progress002,
-    ),
-  ),
-  "progress-003": dynamic(() =>
-    import("@/registry/components/display/progress-003/progress-003").then(
-      (module) => module.Progress003,
-    ),
-  ),
-  "progress-004": dynamic(() =>
-    import("@/registry/components/display/progress-004/progress-004").then(
-      (module) => module.Progress004,
-    ),
-  ),
-  "progress-005": dynamic(() =>
-    import("@/registry/components/display/progress-005/progress-005").then(
-      (module) => module.Progress005,
-    ),
-  ),
-  "progress-006": dynamic(() =>
-    import("@/registry/components/display/progress-006/progress-006").then(
-      (module) => module.Progress006,
-    ),
-  ),
-  "progress-007": dynamic(() =>
-    import("@/registry/components/display/progress-007/progress-007").then(
-      (module) => module.Progress007,
-    ),
-  ),
-  "progress-008": dynamic(() =>
-    import("@/registry/components/display/progress-008/progress-008").then(
-      (module) => module.Progress008,
-    ),
-  ),
-  "progress-009": dynamic(() =>
-    import("@/registry/components/display/progress-009/progress-009").then(
-      (module) => module.Progress009,
-    ),
-  ),
-  "skeleton-002": dynamic(() =>
-    import("@/registry/components/display/skeleton-002/skeleton-002").then(
-      (module) => module.Skeleton002,
-    ),
-  ),
-  "skeleton-003": dynamic(() =>
-    import("@/registry/components/display/skeleton-003/skeleton-003").then(
-      (module) => module.Skeleton003,
-    ),
-  ),
-  "skeleton-004": dynamic(() =>
-    import("@/registry/components/display/skeleton-004/skeleton-004").then(
-      (module) => module.Skeleton004,
-    ),
-  ),
-  "skeleton-005": dynamic(() =>
-    import("@/registry/components/display/skeleton-005/skeleton-005").then(
-      (module) => module.Skeleton005,
-    ),
-  ),
-  "skeleton-006": dynamic(() =>
-    import("@/registry/components/display/skeleton-006/skeleton-006").then(
-      (module) => module.Skeleton006,
-    ),
-  ),
-  "skeleton-007": dynamic(() =>
-    import("@/registry/components/display/skeleton-007/skeleton-007").then(
-      (module) => module.Skeleton007,
-    ),
-  ),
-  "skeleton-008": dynamic(() =>
-    import("@/registry/components/display/skeleton-008/skeleton-008").then(
-      (module) => module.Skeleton008,
-    ),
-  ),
-  "scrollarea-002": dynamic(() =>
-    import("@/registry/components/display/scrollarea-002/scrollarea-002").then(
-      (module) => module.Scrollarea002,
-    ),
-  ),
-  "scrollarea-003": dynamic(() =>
-    import("@/registry/components/display/scrollarea-003/scrollarea-003").then(
-      (module) => module.Scrollarea003,
-    ),
-  ),
-  "scrollarea-004": dynamic(() =>
-    import("@/registry/components/display/scrollarea-004/scrollarea-004").then(
-      (module) => module.Scrollarea004,
-    ),
-  ),
-  "scrollarea-005": dynamic(() =>
-    import("@/registry/components/display/scrollarea-005/scrollarea-005").then(
-      (module) => module.Scrollarea005,
-    ),
-  ),
-  "scrollarea-006": dynamic(() =>
-    import("@/registry/components/display/scrollarea-006/scrollarea-006").then(
-      (module) => module.Scrollarea006,
-    ),
-  ),
-  "scrollarea-007": dynamic(() =>
-    import("@/registry/components/display/scrollarea-007/scrollarea-007").then(
-      (module) => module.Scrollarea007,
-    ),
-  ),
-  "tree-002": dynamic(() =>
-    import("@/registry/components/display/tree-002/tree-002").then(
-      (module) => module.Tree002,
-    ),
-  ),
-  "tree-003": dynamic(() =>
-    import("@/registry/components/display/tree-003/tree-003").then(
-      (module) => module.Tree003,
-    ),
-  ),
-  "tree-004": dynamic(() =>
-    import("@/registry/components/display/tree-004/tree-004").then(
-      (module) => module.Tree004,
-    ),
-  ),
-  "tree-005": dynamic(() =>
-    import("@/registry/components/display/tree-005/tree-005").then(
-      (module) => module.Tree005,
-    ),
-  ),
-  "tree-006": dynamic(() =>
-    import("@/registry/components/display/tree-006/tree-006").then(
-      (module) => module.Tree006,
-    ),
-  ),
-  "tree-007": dynamic(() =>
-    import("@/registry/components/display/tree-007/tree-007").then(
-      (module) => module.Tree007,
-    ),
-  ),
-  "tree-008": dynamic(() =>
-    import("@/registry/components/display/tree-008/tree-008").then(
-      (module) => module.Tree008,
-    ),
-  ),
-  "timeline-002": dynamic(() =>
-    import("@/registry/components/display/timeline-002/timeline-002").then(
-      (module) => module.Timeline002,
-    ),
-  ),
-  "timeline-003": dynamic(() =>
-    import("@/registry/components/display/timeline-003/timeline-003").then(
-      (module) => module.Timeline003,
-    ),
-  ),
-  "timeline-004": dynamic(() =>
-    import("@/registry/components/display/timeline-004/timeline-004").then(
-      (module) => module.Timeline004,
-    ),
-  ),
-  "timeline-005": dynamic(() =>
-    import("@/registry/components/display/timeline-005/timeline-005").then(
-      (module) => module.Timeline005,
-    ),
-  ),
-  "timeline-006": dynamic(() =>
-    import("@/registry/components/display/timeline-006/timeline-006").then(
-      (module) => module.Timeline006,
-    ),
-  ),
-  "timeline-007": dynamic(() =>
-    import("@/registry/components/display/timeline-007/timeline-007").then(
-      (module) => module.Timeline007,
-    ),
-  ),
-  "timeline-008": dynamic(() =>
-    import("@/registry/components/display/timeline-008/timeline-008").then(
-      (module) => module.Timeline008,
-    ),
-  ),
-  "toast-001": dynamic(() =>
-    import("@/registry/components/feedback/toast-001/toast-001").then(
-      (module) => module.Toast001,
-    ),
-  ),
-  "empty-001": dynamic(() =>
-    import("@/registry/components/feedback/empty-001/empty-001").then(
-      (module) => module.Empty001,
+  "togglegroup-016": dynamic(() =>
+    import("@/registry/components/toggle-group/togglegroup-016/togglegroup-016").then(
+      (module) => module.Togglegroup016,
     ),
   ),
   "tooltip-001": dynamic(() =>
-    import("@/registry/components/feedback/tooltip-001/tooltip-001").then(
+    import("@/registry/components/tooltip/tooltip-001/tooltip-001").then(
       (module) => module.Tooltip001,
     ),
   ),
-  "banner-001": dynamic(() =>
-    import("@/registry/components/feedback/banner-001/banner-001").then(
-      (module) => module.Banner001,
-    ),
-  ),
-  "toast-002": dynamic(() =>
-    import("@/registry/components/feedback/toast-002/toast-002").then(
-      (module) => module.Toast002,
-    ),
-  ),
-  "toast-003": dynamic(() =>
-    import("@/registry/components/feedback/toast-003/toast-003").then(
-      (module) => module.Toast003,
-    ),
-  ),
-  "popover-001": dynamic(() =>
-    import("@/registry/components/feedback/popover-001/popover-001").then(
-      (module) => module.Popover001,
-    ),
-  ),
-  "drawer-001": dynamic(() =>
-    import("@/registry/components/feedback/drawer-001/drawer-001").then(
-      (module) => module.Drawer001,
-    ),
-  ),
-  "sheet-001": dynamic(() =>
-    import("@/registry/components/feedback/sheet-001/sheet-001").then(
-      (module) => module.Sheet001,
-    ),
-  ),
-  "hovercard-001": dynamic(() =>
-    import("@/registry/components/feedback/hovercard-001/hovercard-001").then(
-      (module) => module.Hovercard001,
-    ),
-  ),
-  "empty-002": dynamic(() =>
-    import("@/registry/components/feedback/empty-002/empty-002").then(
-      (module) => module.Empty002,
-    ),
-  ),
-  "drawer-002": dynamic(() =>
-    import("@/registry/components/feedback/drawer-002/drawer-002").then(
-      (module) => module.Drawer002,
-    ),
-  ),
-  "drawer-003": dynamic(() =>
-    import("@/registry/components/feedback/drawer-003/drawer-003").then(
-      (module) => module.Drawer003,
-    ),
-  ),
-  "drawer-004": dynamic(() =>
-    import("@/registry/components/feedback/drawer-004/drawer-004").then(
-      (module) => module.Drawer004,
-    ),
-  ),
-  "drawer-005": dynamic(() =>
-    import("@/registry/components/feedback/drawer-005/drawer-005").then(
-      (module) => module.Drawer005,
-    ),
-  ),
-  "drawer-006": dynamic(() =>
-    import("@/registry/components/feedback/drawer-006/drawer-006").then(
-      (module) => module.Drawer006,
-    ),
-  ),
-  "drawer-007": dynamic(() =>
-    import("@/registry/components/feedback/drawer-007/drawer-007").then(
-      (module) => module.Drawer007,
-    ),
-  ),
-  "drawer-008": dynamic(() =>
-    import("@/registry/components/feedback/drawer-008/drawer-008").then(
-      (module) => module.Drawer008,
-    ),
-  ),
-  "sheet-002": dynamic(() =>
-    import("@/registry/components/feedback/sheet-002/sheet-002").then(
-      (module) => module.Sheet002,
-    ),
-  ),
-  "sheet-003": dynamic(() =>
-    import("@/registry/components/feedback/sheet-003/sheet-003").then(
-      (module) => module.Sheet003,
-    ),
-  ),
-  "sheet-004": dynamic(() =>
-    import("@/registry/components/feedback/sheet-004/sheet-004").then(
-      (module) => module.Sheet004,
-    ),
-  ),
-  "sheet-005": dynamic(() =>
-    import("@/registry/components/feedback/sheet-005/sheet-005").then(
-      (module) => module.Sheet005,
-    ),
-  ),
-  "sheet-006": dynamic(() =>
-    import("@/registry/components/feedback/sheet-006/sheet-006").then(
-      (module) => module.Sheet006,
-    ),
-  ),
-  "sheet-007": dynamic(() =>
-    import("@/registry/components/feedback/sheet-007/sheet-007").then(
-      (module) => module.Sheet007,
-    ),
-  ),
-  "empty-003": dynamic(() =>
-    import("@/registry/components/feedback/empty-003/empty-003").then(
-      (module) => module.Empty003,
-    ),
-  ),
-  "empty-004": dynamic(() =>
-    import("@/registry/components/feedback/empty-004/empty-004").then(
-      (module) => module.Empty004,
-    ),
-  ),
-  "empty-005": dynamic(() =>
-    import("@/registry/components/feedback/empty-005/empty-005").then(
-      (module) => module.Empty005,
-    ),
-  ),
-  "empty-006": dynamic(() =>
-    import("@/registry/components/feedback/empty-006/empty-006").then(
-      (module) => module.Empty006,
-    ),
-  ),
-  "empty-007": dynamic(() =>
-    import("@/registry/components/feedback/empty-007/empty-007").then(
-      (module) => module.Empty007,
-    ),
-  ),
-  "empty-008": dynamic(() =>
-    import("@/registry/components/feedback/empty-008/empty-008").then(
-      (module) => module.Empty008,
-    ),
-  ),
-  "empty-009": dynamic(() =>
-    import("@/registry/components/feedback/empty-009/empty-009").then(
-      (module) => module.Empty009,
-    ),
-  ),
-  "toast-004": dynamic(() =>
-    import("@/registry/components/feedback/toast-004/toast-004").then(
-      (module) => module.Toast004,
-    ),
-  ),
-  "toast-005": dynamic(() =>
-    import("@/registry/components/feedback/toast-005/toast-005").then(
-      (module) => module.Toast005,
-    ),
-  ),
-  "toast-006": dynamic(() =>
-    import("@/registry/components/feedback/toast-006/toast-006").then(
-      (module) => module.Toast006,
-    ),
-  ),
-  "toast-007": dynamic(() =>
-    import("@/registry/components/feedback/toast-007/toast-007").then(
-      (module) => module.Toast007,
-    ),
-  ),
-  "toast-008": dynamic(() =>
-    import("@/registry/components/feedback/toast-008/toast-008").then(
-      (module) => module.Toast008,
-    ),
-  ),
-  "toast-009": dynamic(() =>
-    import("@/registry/components/feedback/toast-009/toast-009").then(
-      (module) => module.Toast009,
-    ),
-  ),
-  "toast-010": dynamic(() =>
-    import("@/registry/components/feedback/toast-010/toast-010").then(
-      (module) => module.Toast010,
-    ),
-  ),
   "tooltip-002": dynamic(() =>
-    import("@/registry/components/feedback/tooltip-002/tooltip-002").then(
+    import("@/registry/components/tooltip/tooltip-002/tooltip-002").then(
       (module) => module.Tooltip002,
     ),
   ),
   "tooltip-003": dynamic(() =>
-    import("@/registry/components/feedback/tooltip-003/tooltip-003").then(
+    import("@/registry/components/tooltip/tooltip-003/tooltip-003").then(
       (module) => module.Tooltip003,
     ),
   ),
   "tooltip-004": dynamic(() =>
-    import("@/registry/components/feedback/tooltip-004/tooltip-004").then(
+    import("@/registry/components/tooltip/tooltip-004/tooltip-004").then(
       (module) => module.Tooltip004,
     ),
   ),
   "tooltip-005": dynamic(() =>
-    import("@/registry/components/feedback/tooltip-005/tooltip-005").then(
+    import("@/registry/components/tooltip/tooltip-005/tooltip-005").then(
       (module) => module.Tooltip005,
     ),
   ),
   "tooltip-006": dynamic(() =>
-    import("@/registry/components/feedback/tooltip-006/tooltip-006").then(
+    import("@/registry/components/tooltip/tooltip-006/tooltip-006").then(
       (module) => module.Tooltip006,
     ),
   ),
   "tooltip-007": dynamic(() =>
-    import("@/registry/components/feedback/tooltip-007/tooltip-007").then(
+    import("@/registry/components/tooltip/tooltip-007/tooltip-007").then(
       (module) => module.Tooltip007,
     ),
   ),
   "tooltip-008": dynamic(() =>
-    import("@/registry/components/feedback/tooltip-008/tooltip-008").then(
+    import("@/registry/components/tooltip/tooltip-008/tooltip-008").then(
       (module) => module.Tooltip008,
     ),
   ),
   "tooltip-009": dynamic(() =>
-    import("@/registry/components/feedback/tooltip-009/tooltip-009").then(
+    import("@/registry/components/tooltip/tooltip-009/tooltip-009").then(
       (module) => module.Tooltip009,
     ),
   ),
-  "banner-002": dynamic(() =>
-    import("@/registry/components/feedback/banner-002/banner-002").then(
-      (module) => module.Banner002,
+  "tooltip-010": dynamic(() =>
+    import("@/registry/components/tooltip/tooltip-010/tooltip-010").then(
+      (module) => module.Tooltip010,
     ),
   ),
-  "banner-003": dynamic(() =>
-    import("@/registry/components/feedback/banner-003/banner-003").then(
-      (module) => module.Banner003,
+  "tooltip-011": dynamic(() =>
+    import("@/registry/components/tooltip/tooltip-011/tooltip-011").then(
+      (module) => module.Tooltip011,
     ),
   ),
-  "banner-004": dynamic(() =>
-    import("@/registry/components/feedback/banner-004/banner-004").then(
-      (module) => module.Banner004,
+  "tooltip-012": dynamic(() =>
+    import("@/registry/components/tooltip/tooltip-012/tooltip-012").then(
+      (module) => module.Tooltip012,
     ),
   ),
-  "banner-005": dynamic(() =>
-    import("@/registry/components/feedback/banner-005/banner-005").then(
-      (module) => module.Banner005,
+  "tooltip-013": dynamic(() =>
+    import("@/registry/components/tooltip/tooltip-013/tooltip-013").then(
+      (module) => module.Tooltip013,
     ),
   ),
-  "banner-006": dynamic(() =>
-    import("@/registry/components/feedback/banner-006/banner-006").then(
-      (module) => module.Banner006,
+  "tooltip-014": dynamic(() =>
+    import("@/registry/components/tooltip/tooltip-014/tooltip-014").then(
+      (module) => module.Tooltip014,
     ),
   ),
-  "banner-007": dynamic(() =>
-    import("@/registry/components/feedback/banner-007/banner-007").then(
-      (module) => module.Banner007,
+  "tooltip-015": dynamic(() =>
+    import("@/registry/components/tooltip/tooltip-015/tooltip-015").then(
+      (module) => module.Tooltip015,
     ),
   ),
-  "banner-008": dynamic(() =>
-    import("@/registry/components/feedback/banner-008/banner-008").then(
-      (module) => module.Banner008,
+  "tooltip-016": dynamic(() =>
+    import("@/registry/components/tooltip/tooltip-016/tooltip-016").then(
+      (module) => module.Tooltip016,
     ),
   ),
-  "popover-002": dynamic(() =>
-    import("@/registry/components/feedback/popover-002/popover-002").then(
-      (module) => module.Popover002,
+  "tree-001": dynamic(() =>
+    import("@/registry/components/tree/tree-001/tree-001").then(
+      (module) => module.Tree001,
     ),
   ),
-  "popover-003": dynamic(() =>
-    import("@/registry/components/feedback/popover-003/popover-003").then(
-      (module) => module.Popover003,
+  "tree-002": dynamic(() =>
+    import("@/registry/components/tree/tree-002/tree-002").then(
+      (module) => module.Tree002,
     ),
   ),
-  "popover-004": dynamic(() =>
-    import("@/registry/components/feedback/popover-004/popover-004").then(
-      (module) => module.Popover004,
+  "tree-003": dynamic(() =>
+    import("@/registry/components/tree/tree-003/tree-003").then(
+      (module) => module.Tree003,
     ),
   ),
-  "popover-005": dynamic(() =>
-    import("@/registry/components/feedback/popover-005/popover-005").then(
-      (module) => module.Popover005,
+  "tree-004": dynamic(() =>
+    import("@/registry/components/tree/tree-004/tree-004").then(
+      (module) => module.Tree004,
     ),
   ),
-  "popover-006": dynamic(() =>
-    import("@/registry/components/feedback/popover-006/popover-006").then(
-      (module) => module.Popover006,
+  "tree-005": dynamic(() =>
+    import("@/registry/components/tree/tree-005/tree-005").then(
+      (module) => module.Tree005,
     ),
   ),
-  "popover-007": dynamic(() =>
-    import("@/registry/components/feedback/popover-007/popover-007").then(
-      (module) => module.Popover007,
+  "tree-006": dynamic(() =>
+    import("@/registry/components/tree/tree-006/tree-006").then(
+      (module) => module.Tree006,
     ),
   ),
-  "popover-008": dynamic(() =>
-    import("@/registry/components/feedback/popover-008/popover-008").then(
-      (module) => module.Popover008,
+  "tree-007": dynamic(() =>
+    import("@/registry/components/tree/tree-007/tree-007").then(
+      (module) => module.Tree007,
     ),
   ),
-  "hovercard-002": dynamic(() =>
-    import("@/registry/components/feedback/hovercard-002/hovercard-002").then(
-      (module) => module.Hovercard002,
-    ),
-  ),
-  "hovercard-003": dynamic(() =>
-    import("@/registry/components/feedback/hovercard-003/hovercard-003").then(
-      (module) => module.Hovercard003,
-    ),
-  ),
-  "hovercard-004": dynamic(() =>
-    import("@/registry/components/feedback/hovercard-004/hovercard-004").then(
-      (module) => module.Hovercard004,
-    ),
-  ),
-  "hovercard-005": dynamic(() =>
-    import("@/registry/components/feedback/hovercard-005/hovercard-005").then(
-      (module) => module.Hovercard005,
-    ),
-  ),
-  "hovercard-006": dynamic(() =>
-    import("@/registry/components/feedback/hovercard-006/hovercard-006").then(
-      (module) => module.Hovercard006,
-    ),
-  ),
-  "hovercard-007": dynamic(() =>
-    import("@/registry/components/feedback/hovercard-007/hovercard-007").then(
-      (module) => module.Hovercard007,
-    ),
-  ),
-  "tabs-001": dynamic(() =>
-    import("@/registry/components/navigation/tabs-001/tabs-001").then(
-      (module) => module.Tabs001,
-    ),
-  ),
-  "stepper-001": dynamic(() =>
-    import("@/registry/components/navigation/stepper-001/stepper-001").then(
-      (module) => module.Stepper001,
-    ),
-  ),
-  "pagination-001": dynamic(() =>
-    import("@/registry/components/navigation/pagination-001/pagination-001").then(
-      (module) => module.Pagination001,
-    ),
-  ),
-  "sidebar-001": dynamic(() =>
-    import("@/registry/components/navigation/sidebar-001/sidebar-001").then(
-      (module) => module.Sidebar001,
-    ),
-  ),
-  "menubar-001": dynamic(() =>
-    import("@/registry/components/navigation/menubar-001/menubar-001").then(
-      (module) => module.Menubar001,
-    ),
-  ),
-  "command-001": dynamic(() =>
-    import("@/registry/components/navigation/command-001/command-001").then(
-      (module) => module.Command001,
-    ),
-  ),
-  "tabbar-001": dynamic(() =>
-    import("@/registry/components/navigation/tabbar-001/tabbar-001").then(
-      (module) => module.Tabbar001,
-    ),
-  ),
-  "scrollspy-001": dynamic(() =>
-    import("@/registry/components/navigation/scrollspy-001/scrollspy-001").then(
-      (module) => module.Scrollspy001,
-    ),
-  ),
-  "pagination-002": dynamic(() =>
-    import("@/registry/components/navigation/pagination-002/pagination-002").then(
-      (module) => module.Pagination002,
-    ),
-  ),
-  "contextmenu-001": dynamic(() =>
-    import("@/registry/components/navigation/contextmenu-001/contextmenu-001").then(
-      (module) => module.Contextmenu001,
-    ),
-  ),
-  "sidebar-002": dynamic(() =>
-    import("@/registry/components/navigation/sidebar-002/sidebar-002").then(
-      (module) => module.Sidebar002,
-    ),
-  ),
-  "tabs-002": dynamic(() =>
-    import("@/registry/components/navigation/tabs-002/tabs-002").then(
-      (module) => module.Tabs002,
-    ),
-  ),
-  "command-002": dynamic(() =>
-    import("@/registry/components/navigation/command-002/command-002").then(
-      (module) => module.Command002,
-    ),
-  ),
-  "command-003": dynamic(() =>
-    import("@/registry/components/navigation/command-003/command-003").then(
-      (module) => module.Command003,
-    ),
-  ),
-  "command-004": dynamic(() =>
-    import("@/registry/components/navigation/command-004/command-004").then(
-      (module) => module.Command004,
-    ),
-  ),
-  "command-005": dynamic(() =>
-    import("@/registry/components/navigation/command-005/command-005").then(
-      (module) => module.Command005,
-    ),
-  ),
-  "command-006": dynamic(() =>
-    import("@/registry/components/navigation/command-006/command-006").then(
-      (module) => module.Command006,
-    ),
-  ),
-  "command-007": dynamic(() =>
-    import("@/registry/components/navigation/command-007/command-007").then(
-      (module) => module.Command007,
-    ),
-  ),
-  "contextmenu-002": dynamic(() =>
-    import("@/registry/components/navigation/contextmenu-002/contextmenu-002").then(
-      (module) => module.Contextmenu002,
-    ),
-  ),
-  "contextmenu-003": dynamic(() =>
-    import("@/registry/components/navigation/contextmenu-003/contextmenu-003").then(
-      (module) => module.Contextmenu003,
-    ),
-  ),
-  "contextmenu-004": dynamic(() =>
-    import("@/registry/components/navigation/contextmenu-004/contextmenu-004").then(
-      (module) => module.Contextmenu004,
-    ),
-  ),
-  "contextmenu-005": dynamic(() =>
-    import("@/registry/components/navigation/contextmenu-005/contextmenu-005").then(
-      (module) => module.Contextmenu005,
-    ),
-  ),
-  "contextmenu-006": dynamic(() =>
-    import("@/registry/components/navigation/contextmenu-006/contextmenu-006").then(
-      (module) => module.Contextmenu006,
-    ),
-  ),
-  "contextmenu-007": dynamic(() =>
-    import("@/registry/components/navigation/contextmenu-007/contextmenu-007").then(
-      (module) => module.Contextmenu007,
-    ),
-  ),
-  "contextmenu-008": dynamic(() =>
-    import("@/registry/components/navigation/contextmenu-008/contextmenu-008").then(
-      (module) => module.Contextmenu008,
-    ),
-  ),
-  "command-008": dynamic(() =>
-    import("@/registry/components/navigation/command-008/command-008").then(
-      (module) => module.Command008,
-    ),
-  ),
-  "command-009": dynamic(() =>
-    import("@/registry/components/navigation/command-009/command-009").then(
-      (module) => module.Command009,
-    ),
-  ),
-  "command-010": dynamic(() =>
-    import("@/registry/components/navigation/command-010/command-010").then(
-      (module) => module.Command010,
-    ),
-  ),
-  "menubar-002": dynamic(() =>
-    import("@/registry/components/navigation/menubar-002/menubar-002").then(
-      (module) => module.Menubar002,
-    ),
-  ),
-  "menubar-003": dynamic(() =>
-    import("@/registry/components/navigation/menubar-003/menubar-003").then(
-      (module) => module.Menubar003,
-    ),
-  ),
-  "menubar-004": dynamic(() =>
-    import("@/registry/components/navigation/menubar-004/menubar-004").then(
-      (module) => module.Menubar004,
-    ),
-  ),
-  "menubar-005": dynamic(() =>
-    import("@/registry/components/navigation/menubar-005/menubar-005").then(
-      (module) => module.Menubar005,
-    ),
-  ),
-  "menubar-006": dynamic(() =>
-    import("@/registry/components/navigation/menubar-006/menubar-006").then(
-      (module) => module.Menubar006,
-    ),
-  ),
-  "menubar-007": dynamic(() =>
-    import("@/registry/components/navigation/menubar-007/menubar-007").then(
-      (module) => module.Menubar007,
-    ),
-  ),
-  "menubar-008": dynamic(() =>
-    import("@/registry/components/navigation/menubar-008/menubar-008").then(
-      (module) => module.Menubar008,
-    ),
-  ),
-  "navmenu-001": dynamic(() =>
-    import("@/registry/components/navigation/navmenu-001/navmenu-001").then(
-      (module) => module.Navmenu001,
-    ),
-  ),
-  "navmenu-002": dynamic(() =>
-    import("@/registry/components/navigation/navmenu-002/navmenu-002").then(
-      (module) => module.Navmenu002,
-    ),
-  ),
-  "navmenu-003": dynamic(() =>
-    import("@/registry/components/navigation/navmenu-003/navmenu-003").then(
-      (module) => module.Navmenu003,
-    ),
-  ),
-  "navmenu-004": dynamic(() =>
-    import("@/registry/components/navigation/navmenu-004/navmenu-004").then(
-      (module) => module.Navmenu004,
-    ),
-  ),
-  "navmenu-005": dynamic(() =>
-    import("@/registry/components/navigation/navmenu-005/navmenu-005").then(
-      (module) => module.Navmenu005,
-    ),
-  ),
-  "navmenu-006": dynamic(() =>
-    import("@/registry/components/navigation/navmenu-006/navmenu-006").then(
-      (module) => module.Navmenu006,
-    ),
-  ),
-  "navmenu-007": dynamic(() =>
-    import("@/registry/components/navigation/navmenu-007/navmenu-007").then(
-      (module) => module.Navmenu007,
-    ),
-  ),
-  "navmenu-008": dynamic(() =>
-    import("@/registry/components/navigation/navmenu-008/navmenu-008").then(
-      (module) => module.Navmenu008,
-    ),
-  ),
-  "pagination-003": dynamic(() =>
-    import("@/registry/components/navigation/pagination-003/pagination-003").then(
-      (module) => module.Pagination003,
-    ),
-  ),
-  "pagination-004": dynamic(() =>
-    import("@/registry/components/navigation/pagination-004/pagination-004").then(
-      (module) => module.Pagination004,
-    ),
-  ),
-  "pagination-005": dynamic(() =>
-    import("@/registry/components/navigation/pagination-005/pagination-005").then(
-      (module) => module.Pagination005,
-    ),
-  ),
-  "pagination-006": dynamic(() =>
-    import("@/registry/components/navigation/pagination-006/pagination-006").then(
-      (module) => module.Pagination006,
-    ),
-  ),
-  "pagination-007": dynamic(() =>
-    import("@/registry/components/navigation/pagination-007/pagination-007").then(
-      (module) => module.Pagination007,
-    ),
-  ),
-  "pagination-008": dynamic(() =>
-    import("@/registry/components/navigation/pagination-008/pagination-008").then(
-      (module) => module.Pagination008,
-    ),
-  ),
-  "pagination-009": dynamic(() =>
-    import("@/registry/components/navigation/pagination-009/pagination-009").then(
-      (module) => module.Pagination009,
-    ),
-  ),
-  "tabs-003": dynamic(() =>
-    import("@/registry/components/navigation/tabs-003/tabs-003").then(
-      (module) => module.Tabs003,
-    ),
-  ),
-  "tabs-004": dynamic(() =>
-    import("@/registry/components/navigation/tabs-004/tabs-004").then(
-      (module) => module.Tabs004,
-    ),
-  ),
-  "tabs-005": dynamic(() =>
-    import("@/registry/components/navigation/tabs-005/tabs-005").then(
-      (module) => module.Tabs005,
-    ),
-  ),
-  "tabs-006": dynamic(() =>
-    import("@/registry/components/navigation/tabs-006/tabs-006").then(
-      (module) => module.Tabs006,
-    ),
-  ),
-  "tabs-007": dynamic(() =>
-    import("@/registry/components/navigation/tabs-007/tabs-007").then(
-      (module) => module.Tabs007,
-    ),
-  ),
-  "tabs-008": dynamic(() =>
-    import("@/registry/components/navigation/tabs-008/tabs-008").then(
-      (module) => module.Tabs008,
-    ),
-  ),
-  "tabs-009": dynamic(() =>
-    import("@/registry/components/navigation/tabs-009/tabs-009").then(
-      (module) => module.Tabs009,
-    ),
-  ),
-  "tabs-010": dynamic(() =>
-    import("@/registry/components/navigation/tabs-010/tabs-010").then(
-      (module) => module.Tabs010,
-    ),
-  ),
-  "stepper-002": dynamic(() =>
-    import("@/registry/components/navigation/stepper-002/stepper-002").then(
-      (module) => module.Stepper002,
-    ),
-  ),
-  "stepper-003": dynamic(() =>
-    import("@/registry/components/navigation/stepper-003/stepper-003").then(
-      (module) => module.Stepper003,
-    ),
-  ),
-  "stepper-004": dynamic(() =>
-    import("@/registry/components/navigation/stepper-004/stepper-004").then(
-      (module) => module.Stepper004,
-    ),
-  ),
-  "stepper-005": dynamic(() =>
-    import("@/registry/components/navigation/stepper-005/stepper-005").then(
-      (module) => module.Stepper005,
-    ),
-  ),
-  "stepper-006": dynamic(() =>
-    import("@/registry/components/navigation/stepper-006/stepper-006").then(
-      (module) => module.Stepper006,
-    ),
-  ),
-  "stepper-007": dynamic(() =>
-    import("@/registry/components/navigation/stepper-007/stepper-007").then(
-      (module) => module.Stepper007,
-    ),
-  ),
-  "stepper-008": dynamic(() =>
-    import("@/registry/components/navigation/stepper-008/stepper-008").then(
-      (module) => module.Stepper008,
-    ),
-  ),
-  "stepper-009": dynamic(() =>
-    import("@/registry/components/navigation/stepper-009/stepper-009").then(
-      (module) => module.Stepper009,
-    ),
-  ),
-  "scrollspy-002": dynamic(() =>
-    import("@/registry/components/navigation/scrollspy-002/scrollspy-002").then(
-      (module) => module.Scrollspy002,
-    ),
-  ),
-  "scrollspy-003": dynamic(() =>
-    import("@/registry/components/navigation/scrollspy-003/scrollspy-003").then(
-      (module) => module.Scrollspy003,
-    ),
-  ),
-  "scrollspy-004": dynamic(() =>
-    import("@/registry/components/navigation/scrollspy-004/scrollspy-004").then(
-      (module) => module.Scrollspy004,
-    ),
-  ),
-  "scrollspy-005": dynamic(() =>
-    import("@/registry/components/navigation/scrollspy-005/scrollspy-005").then(
-      (module) => module.Scrollspy005,
-    ),
-  ),
-  "scrollspy-006": dynamic(() =>
-    import("@/registry/components/navigation/scrollspy-006/scrollspy-006").then(
-      (module) => module.Scrollspy006,
-    ),
-  ),
-  "scrollspy-007": dynamic(() =>
-    import("@/registry/components/navigation/scrollspy-007/scrollspy-007").then(
-      (module) => module.Scrollspy007,
-    ),
-  ),
-  "sidebar-003": dynamic(() =>
-    import("@/registry/components/navigation/sidebar-003/sidebar-003").then(
-      (module) => module.Sidebar003,
-    ),
-  ),
-  "sidebar-004": dynamic(() =>
-    import("@/registry/components/navigation/sidebar-004/sidebar-004").then(
-      (module) => module.Sidebar004,
-    ),
-  ),
-  "sidebar-005": dynamic(() =>
-    import("@/registry/components/navigation/sidebar-005/sidebar-005").then(
-      (module) => module.Sidebar005,
-    ),
-  ),
-  "sidebar-006": dynamic(() =>
-    import("@/registry/components/navigation/sidebar-006/sidebar-006").then(
-      (module) => module.Sidebar006,
-    ),
-  ),
-  "sidebar-007": dynamic(() =>
-    import("@/registry/components/navigation/sidebar-007/sidebar-007").then(
-      (module) => module.Sidebar007,
-    ),
-  ),
-  "sidebar-008": dynamic(() =>
-    import("@/registry/components/navigation/sidebar-008/sidebar-008").then(
-      (module) => module.Sidebar008,
-    ),
-  ),
-  "sidebar-009": dynamic(() =>
-    import("@/registry/components/navigation/sidebar-009/sidebar-009").then(
-      (module) => module.Sidebar009,
-    ),
-  ),
-  "table-001": dynamic(() =>
-    import("@/registry/components/tables/table-001/table-001").then(
-      (module) => module.Table001,
-    ),
-  ),
-  "table-002": dynamic(() =>
-    import("@/registry/components/tables/table-002/table-002").then(
-      (module) => module.Table002,
-    ),
-  ),
-  "table-003": dynamic(() =>
-    import("@/registry/components/tables/table-003/table-003").then(
-      (module) => module.Table003,
-    ),
-  ),
-  "table-004": dynamic(() =>
-    import("@/registry/components/tables/table-004/table-004").then(
-      (module) => module.Table004,
-    ),
-  ),
-  "table-005": dynamic(() =>
-    import("@/registry/components/tables/table-005/table-005").then(
-      (module) => module.Table005,
-    ),
-  ),
-  "table-006": dynamic(() =>
-    import("@/registry/components/tables/table-006/table-006").then(
-      (module) => module.Table006,
-    ),
-  ),
-  "table-007": dynamic(() =>
-    import("@/registry/components/tables/table-007/table-007").then(
-      (module) => module.Table007,
-    ),
-  ),
-  "table-008": dynamic(() =>
-    import("@/registry/components/tables/table-008/table-008").then(
-      (module) => module.Table008,
-    ),
-  ),
-  "table-009": dynamic(() =>
-    import("@/registry/components/tables/table-009/table-009").then(
-      (module) => module.Table009,
-    ),
-  ),
-  "table-010": dynamic(() =>
-    import("@/registry/components/tables/table-010/table-010").then(
-      (module) => module.Table010,
-    ),
-  ),
-  "table-011": dynamic(() =>
-    import("@/registry/components/tables/table-011/table-011").then(
-      (module) => module.Table011,
-    ),
-  ),
-  "table-012": dynamic(() =>
-    import("@/registry/components/tables/table-012/table-012").then(
-      (module) => module.Table012,
-    ),
-  ),
-  "table-013": dynamic(() =>
-    import("@/registry/components/tables/table-013/table-013").then(
-      (module) => module.Table013,
-    ),
-  ),
-  "table-014": dynamic(() =>
-    import("@/registry/components/tables/table-014/table-014").then(
-      (module) => module.Table014,
-    ),
-  ),
-  "table-015": dynamic(() =>
-    import("@/registry/components/tables/table-015/table-015").then(
-      (module) => module.Table015,
-    ),
-  ),
-  "table-016": dynamic(() =>
-    import("@/registry/components/tables/table-016/table-016").then(
-      (module) => module.Table016,
-    ),
-  ),
-  "table-017": dynamic(() =>
-    import("@/registry/components/tables/table-017/table-017").then(
-      (module) => module.Table017,
-    ),
-  ),
-  "table-018": dynamic(() =>
-    import("@/registry/components/tables/table-018/table-018").then(
-      (module) => module.Table018,
-    ),
-  ),
-  "table-019": dynamic(() =>
-    import("@/registry/components/tables/table-019/table-019").then(
-      (module) => module.Table019,
-    ),
-  ),
-  "table-020": dynamic(() =>
-    import("@/registry/components/tables/table-020/table-020").then(
-      (module) => module.Table020,
-    ),
-  ),
-  "chart-001": dynamic(() =>
-    import("@/registry/components/charts/chart-001/chart-001").then(
-      (module) => module.Chart001,
-    ),
-  ),
-  "chart-002": dynamic(() =>
-    import("@/registry/components/charts/chart-002/chart-002").then(
-      (module) => module.Chart002,
-    ),
-  ),
-  "sparkline-001": dynamic(() =>
-    import("@/registry/components/charts/sparkline-001/sparkline-001").then(
-      (module) => module.Sparkline001,
-    ),
-  ),
-  "chart-003": dynamic(() =>
-    import("@/registry/components/charts/chart-003/chart-003").then(
-      (module) => module.Chart003,
-    ),
-  ),
-  "chart-004": dynamic(() =>
-    import("@/registry/components/charts/chart-004/chart-004").then(
-      (module) => module.Chart004,
-    ),
-  ),
-  "chart-005": dynamic(() =>
-    import("@/registry/components/charts/chart-005/chart-005").then(
-      (module) => module.Chart005,
-    ),
-  ),
-  "chart-006": dynamic(() =>
-    import("@/registry/components/charts/chart-006/chart-006").then(
-      (module) => module.Chart006,
-    ),
-  ),
-  "chart-007": dynamic(() =>
-    import("@/registry/components/charts/chart-007/chart-007").then(
-      (module) => module.Chart007,
-    ),
-  ),
-  "chart-008": dynamic(() =>
-    import("@/registry/components/charts/chart-008/chart-008").then(
-      (module) => module.Chart008,
-    ),
-  ),
-  "chart-009": dynamic(() =>
-    import("@/registry/components/charts/chart-009/chart-009").then(
-      (module) => module.Chart009,
-    ),
-  ),
-  "gantt-001": dynamic(() =>
-    import("@/registry/components/charts/gantt-001/gantt-001").then(
-      (module) => module.Gantt001,
-    ),
-  ),
-  "chart-010": dynamic(() =>
-    import("@/registry/components/charts/chart-010/chart-010").then(
-      (module) => module.Chart010,
-    ),
-  ),
-  "chart-011": dynamic(() =>
-    import("@/registry/components/charts/chart-011/chart-011").then(
-      (module) => module.Chart011,
-    ),
-  ),
-  "chart-012": dynamic(() =>
-    import("@/registry/components/charts/chart-012/chart-012").then(
-      (module) => module.Chart012,
-    ),
-  ),
-  "chart-013": dynamic(() =>
-    import("@/registry/components/charts/chart-013/chart-013").then(
-      (module) => module.Chart013,
-    ),
-  ),
-  "chart-014": dynamic(() =>
-    import("@/registry/components/charts/chart-014/chart-014").then(
-      (module) => module.Chart014,
-    ),
-  ),
-  "chart-015": dynamic(() =>
-    import("@/registry/components/charts/chart-015/chart-015").then(
-      (module) => module.Chart015,
-    ),
-  ),
-  "chart-016": dynamic(() =>
-    import("@/registry/components/charts/chart-016/chart-016").then(
-      (module) => module.Chart016,
-    ),
-  ),
-  "chart-017": dynamic(() =>
-    import("@/registry/components/charts/chart-017/chart-017").then(
-      (module) => module.Chart017,
-    ),
-  ),
-  "chart-018": dynamic(() =>
-    import("@/registry/components/charts/chart-018/chart-018").then(
-      (module) => module.Chart018,
-    ),
-  ),
-  "chart-019": dynamic(() =>
-    import("@/registry/components/charts/chart-019/chart-019").then(
-      (module) => module.Chart019,
-    ),
-  ),
-  "chart-020": dynamic(() =>
-    import("@/registry/components/charts/chart-020/chart-020").then(
-      (module) => module.Chart020,
-    ),
-  ),
-  "chart-021": dynamic(() =>
-    import("@/registry/components/charts/chart-021/chart-021").then(
-      (module) => module.Chart021,
-    ),
-  ),
-  "chart-022": dynamic(() =>
-    import("@/registry/components/charts/chart-022/chart-022").then(
-      (module) => module.Chart022,
-    ),
-  ),
-  "sparkline-002": dynamic(() =>
-    import("@/registry/components/charts/sparkline-002/sparkline-002").then(
-      (module) => module.Sparkline002,
-    ),
-  ),
-  "gantt-002": dynamic(() =>
-    import("@/registry/components/charts/gantt-002/gantt-002").then(
-      (module) => module.Gantt002,
-    ),
-  ),
-  "gantt-003": dynamic(() =>
-    import("@/registry/components/charts/gantt-003/gantt-003").then(
-      (module) => module.Gantt003,
-    ),
-  ),
-  "gantt-004": dynamic(() =>
-    import("@/registry/components/charts/gantt-004/gantt-004").then(
-      (module) => module.Gantt004,
-    ),
-  ),
-  "gantt-005": dynamic(() =>
-    import("@/registry/components/charts/gantt-005/gantt-005").then(
-      (module) => module.Gantt005,
-    ),
-  ),
-  "gantt-006": dynamic(() =>
-    import("@/registry/components/charts/gantt-006/gantt-006").then(
-      (module) => module.Gantt006,
-    ),
-  ),
-  "gantt-007": dynamic(() =>
-    import("@/registry/components/charts/gantt-007/gantt-007").then(
-      (module) => module.Gantt007,
+  "tree-008": dynamic(() =>
+    import("@/registry/components/tree/tree-008/tree-008").then(
+      (module) => module.Tree008,
     ),
   ),
 } as unknown as Record<string, ComponentType<PreviewProps>>

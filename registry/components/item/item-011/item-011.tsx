@@ -1,0 +1,124 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Item011Props = Omit<
+  ComponentPropsWithoutRef<"li">,
+  "children" | "title"
+> & {
+  title?: string
+  due?: string
+  assignee?: string
+  assigneeName?: string
+  name?: string
+  defaultChecked?: boolean
+  accent?: string
+}
+
+// Идея компонента: строка задачи, где чекбокс держит нативный input, а не
+// React-состояние — компонент остаётся серверным и работает в обычной форме,
+// как в item-007. Но галочка тут переключает не подсветку строки, а
+// зачёркивание названия: выполненная задача читается сразу, без взгляда на
+// сам чекбокс. Инициалы исполнителя не единственный носитель имени — полное
+// имя лежит в aria-label плитки, а не только в её визуальных двух буквах.
+const STYLES = `
+:where([data-vibeui-block="item-011"]){
+--vibeui-item-011-bg:oklch(1 0 0);
+--vibeui-item-011-fg:oklch(0.23 0.014 265);
+--vibeui-item-011-muted:oklch(0.56 0.014 265);
+--vibeui-item-011-border:oklch(0.9 0.006 265);
+--vibeui-item-011-accent:oklch(0.55 0.19 262);
+--vibeui-item-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="item-011"]{
+display:flex;align-items:center;gap:0.75rem;
+width:100%;max-width:26rem;box-sizing:border-box;padding:0.625rem 0.75rem;
+list-style:none;
+background:var(--vibeui-item-011-bg);
+border:1px solid var(--vibeui-item-011-border);border-radius:0.75rem;
+font-family:var(--vibeui-item-011-font);color:var(--vibeui-item-011-fg);
+}
+[data-vibeui-block="item-011"] *{box-sizing:border-box}
+[data-vibeui-block="item-011"] [data-part="control"]{
+position:relative;display:flex;align-items:center;gap:0.625rem;cursor:pointer;
+flex:1 1 auto;min-width:0;
+}
+/* Input прозрачен и растянут по своей метке, но остаётся в потоке фокуса. */
+[data-vibeui-block="item-011"] input{position:absolute;inset:0;margin:0;opacity:0;cursor:pointer}
+[data-vibeui-block="item-011"]:has(input:focus-visible){outline:2px solid var(--vibeui-item-011-accent);outline-offset:2px}
+[data-vibeui-block="item-011"] [data-part="box"]{
+flex:none;display:grid;place-items:center;
+width:1.125rem;height:1.125rem;border-radius:0.375rem;
+border:1.5px solid var(--vibeui-item-011-border);
+color:transparent;font-size:0.6875rem;font-weight:800;line-height:1;
+transition:background-color .15s ease,border-color .15s ease,color .15s ease;
+}
+[data-vibeui-block="item-011"]:has(input:checked) [data-part="box"]{
+background:var(--vibeui-item-011-accent);border-color:var(--vibeui-item-011-accent);color:oklch(1 0 0);
+}
+[data-vibeui-block="item-011"] [data-part="title"]{
+font-size:0.875rem;font-weight:650;line-height:1.3;
+overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+transition:color .15s ease;
+}
+/* Зачёркивание — главный сигнал выполнения, а не только цвет чекбокса. */
+[data-vibeui-block="item-011"]:has(input:checked) [data-part="title"]{
+text-decoration:line-through;color:var(--vibeui-item-011-muted);
+}
+[data-vibeui-block="item-011"] [data-part="due"]{
+flex:none;font-size:0.75rem;color:var(--vibeui-item-011-muted);font-variant-numeric:tabular-nums;
+}
+[data-vibeui-block="item-011"] [data-part="assignee"]{
+flex:none;display:grid;place-items:center;
+width:1.75rem;height:1.75rem;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-item-011-accent) 16%,transparent);
+color:var(--vibeui-item-011-accent);font-size:0.625rem;font-weight:700;
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="item-011"] *{animation:none!important;transition:none!important}}
+`
+
+/**
+ * Строка задачи: чекбокс на нативном input, срок и исполнитель.
+ * Один файл, ноль зависимостей, собственная палитра.
+ */
+export function Item011({
+  title = "Согласовать смету на второй этап",
+  due = "12 мар",
+  assignee = "МК",
+  assigneeName = "Мария Ковалёва",
+  name = "task",
+  defaultChecked = false,
+  accent,
+  className,
+  style,
+  ...props
+}: Item011Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-item-011-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-item-011" precedence="medium">
+        {STYLES}
+      </style>
+      <li
+        {...props}
+        data-vibeui-block="item-011"
+        className={className}
+        style={palette}
+      >
+        <label data-part="control">
+          <input type="checkbox" name={name} defaultChecked={defaultChecked} />
+          <span data-part="box" aria-hidden="true">
+            ✓
+          </span>
+          <span data-part="title">{title}</span>
+        </label>
+        <span data-part="due">{due}</span>
+        <span data-part="assignee" aria-label={assigneeName} title={assigneeName}>
+          {assignee}
+        </span>
+      </li>
+    </>
+  )
+}

@@ -1,0 +1,203 @@
+"use client"
+
+import { useId, useMemo, useState } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+
+export type Select025Group = {
+  value: string
+  label: string
+  items: { value: string; label: string }[]
+}
+
+export type Select025Props = Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children"
+> & {
+  categoryLabel?: string
+  itemLabel?: string
+  name?: string
+  groups?: Select025Group[]
+  defaultCategory?: string
+  accent?: string
+}
+
+// Идея компонента: второй select существует только в контексте первого.
+// При смене категории список товаров пересобирается из данных новой
+// группы, а выбранное значение сбрасывается на первый пункт — иначе
+// вторым полем осталось бы значение, которого в новом списке уже нет.
+const STYLES = `
+:where([data-vibeui-block="select-025"]){
+--vibeui-select-025-surface:oklch(1 0 0);
+--vibeui-select-025-surface-border:oklch(0.91 0.006 265);
+--vibeui-select-025-fg:oklch(0.23 0.016 265);
+--vibeui-select-025-muted:oklch(0.55 0.014 265);
+--vibeui-select-025-field:oklch(0.985 0.002 265);
+--vibeui-select-025-border:oklch(0.87 0.008 265);
+--vibeui-select-025-accent:oklch(0.55 0.19 262);
+--vibeui-select-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-vibeui-block="select-025"]{
+display:flex;flex-direction:column;gap:0.75rem;
+width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
+background:var(--vibeui-select-025-surface);
+border:1px solid var(--vibeui-select-025-surface-border);border-radius:0.875rem;
+font-family:var(--vibeui-select-025-font);color:var(--vibeui-select-025-fg);
+container-type:inline-size;
+}
+[data-vibeui-block="select-025"] [data-part="row"]{display:flex;flex-direction:column;gap:0.375rem}
+[data-vibeui-block="select-025"] [data-part="label"]{font-size:0.8125rem;font-weight:600}
+[data-vibeui-block="select-025"] [data-part="field"]{position:relative;display:block}
+[data-vibeui-block="select-025"] select{
+appearance:none;-webkit-appearance:none;
+width:100%;box-sizing:border-box;margin:0;height:2.75rem;
+padding:0 2.5rem 0 0.875rem;
+border:1px solid var(--vibeui-select-025-border);border-radius:0.625rem;
+background:var(--vibeui-select-025-field);color:inherit;
+font:inherit;font-size:0.9375rem;cursor:pointer;
+transition:border-color .16s ease,box-shadow .16s ease;
+}
+[data-vibeui-block="select-025"] select:focus-visible{
+outline:none;border-color:var(--vibeui-select-025-accent);
+box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-select-025-accent) 22%,transparent);
+}
+[data-vibeui-block="select-025"] select:disabled{
+color:var(--vibeui-select-025-muted);cursor:not-allowed;
+background:color-mix(in oklab,var(--vibeui-select-025-border) 22%,var(--vibeui-select-025-field));
+}
+[data-vibeui-block="select-025"] [data-part="arrow"]{
+position:absolute;right:1rem;top:50%;
+width:0.4375rem;height:0.4375rem;margin-top:-0.3125rem;pointer-events:none;
+border-right:1.5px solid var(--vibeui-select-025-muted);
+border-bottom:1.5px solid var(--vibeui-select-025-muted);
+transform:rotate(45deg);
+}
+@container (max-width: 14rem){
+[data-vibeui-block="select-025"] [data-part="row"]{gap:0.25rem}
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="select-025"] *{animation:none!important;transition:none!important}}
+`
+
+const DEFAULT_GROUPS: Select025Group[] = [
+  {
+    value: "clothes",
+    label: "Одежда",
+    items: [
+      { value: "hoodie", label: "Худи" },
+      { value: "tshirt", label: "Футболка" },
+      { value: "jacket", label: "Куртка" },
+    ],
+  },
+  {
+    value: "shoes",
+    label: "Обувь",
+    items: [
+      { value: "sneakers", label: "Кроссовки" },
+      { value: "boots", label: "Ботинки" },
+    ],
+  },
+  {
+    value: "accessories",
+    label: "Аксессуары",
+    items: [
+      { value: "cap", label: "Кепка" },
+      { value: "bag", label: "Сумка" },
+      { value: "belt", label: "Ремень" },
+    ],
+  },
+]
+
+/**
+ * Связанные списки: второй select зависит от выбора в первом и
+ * пересобирается вместе с ним. Один файл, ноль зависимостей, клиентский
+ * компонент.
+ */
+export function Select025({
+  categoryLabel = "Категория",
+  itemLabel = "Товар",
+  name,
+  groups = DEFAULT_GROUPS,
+  defaultCategory = groups[0]?.value,
+  accent,
+  id,
+  className,
+  style,
+  ...props
+}: Select025Props) {
+  const generatedId = useId()
+  const categoryId = id ? `${id}-category` : `${generatedId}-category`
+  const itemId = id ? `${id}-item` : `${generatedId}-item`
+
+  const [category, setCategory] = useState(defaultCategory ?? groups[0]?.value)
+  const currentGroup =
+    groups.find((group) => group.value === category) ?? groups[0]
+  const [item, setItem] = useState(currentGroup?.items[0]?.value ?? "")
+
+  const items = useMemo(() => currentGroup?.items ?? [], [currentGroup])
+
+  function handleCategoryChange(nextCategory: string) {
+    setCategory(nextCategory)
+    const nextGroup = groups.find((group) => group.value === nextCategory)
+    setItem(nextGroup?.items[0]?.value ?? "")
+  }
+
+  const palette = {
+    ...(accent ? { "--vibeui-select-025-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+    <>
+      <style href="vibeui-select-025" precedence="medium">
+        {STYLES}
+      </style>
+      <div
+        {...props}
+        data-vibeui-block="select-025"
+        className={className}
+        style={palette}
+      >
+        <span data-part="row">
+          <label data-part="label" htmlFor={categoryId}>
+            {categoryLabel}
+          </label>
+          <span data-part="field">
+            <select
+              id={categoryId}
+              name={name ? `${name}Category` : undefined}
+              value={category}
+              onChange={(event) => handleCategoryChange(event.target.value)}
+            >
+              {groups.map((group) => (
+                <option key={group.value} value={group.value}>
+                  {group.label}
+                </option>
+              ))}
+            </select>
+            <span data-part="arrow" aria-hidden="true" />
+          </span>
+        </span>
+        <span data-part="row">
+          <label data-part="label" htmlFor={itemId}>
+            {itemLabel}
+          </label>
+          <span data-part="field">
+            <select
+              id={itemId}
+              name={name}
+              value={item}
+              disabled={items.length === 0}
+              onChange={(event) => setItem(event.target.value)}
+            >
+              {items.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <span data-part="arrow" aria-hidden="true" />
+          </span>
+        </span>
+      </div>
+    </>
+  )
+}

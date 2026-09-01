@@ -1,0 +1,1090 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "command-001",
+      "type": "registry:component",
+      "title": "Command Palette",
+      "description": "Командная палитра в нативном dialog: ловушка фокуса, Escape и затемнение достаются от браузера, а не пишутся заново.",
+      "categories": [
+        "command"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "command-001/command-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/command-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-001-*. Клиентский: \"use client\" ради поиска и стрелок. Модалка открывается методом showModal(), поэтому ловушка фокуса и закрытие по Escape работают сами. Стрелки идут по видимому порядку строк, а не по исходному массиву: после группировки он другой.",
+      "meta": {
+        "tags": [
+          "command",
+          "palette",
+          "search",
+          "dialog"
+        ],
+        "ai": {
+          "export": "Command001",
+          "usage": "<Command001 commands={[{ label: \"Создать компонент\", group: \"Действия\" }]} />",
+          "summary": "Командная палитра: кнопка с подсказкой ⌘K, поиск по названию, команды по группам и подсветка стрелками. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-command-001-* и не подменять её токенами вашей темы",
+            "нативный dialog: ловушка фокуса, Escape и затемнение достаются даром",
+            "порядок стрелок по видимому списку, а не по исходному массиву",
+            "одинаковый фон для подсветки стрелками и наведения: две разные путают",
+            "группы над строками — по ним палитру и сканируют",
+            "внятный пустой ответ вместо молчания при отсутствии совпадений"
+          ],
+          "adapt": [
+            "массив commands и группы",
+            "placeholder и triggerLabel",
+            "акцент через проп accent",
+            "ширину модалки"
+          ],
+          "notes": [
+            "Глобальное сочетание ⌘K компонент не вешает: подсказка на кнопке, обработчик — за вами.",
+            "Поиск идёт по подстроке названия: нечёткий поиск и синонимы добавляются в фильтре снаружи.",
+            "Enter по подсвеченной строке не срабатывает: строки открываются кликом, добавьте обработчик под свою модель.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "triggerLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Поиск команды",
+            "maxLength": 24
+          },
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Команда или переход…",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A command palette in a native dialog: focus trapping, Escape and the backdrop come from the browser instead of being rewritten.",
+            "ai": {
+              "summary": "A command palette: a trigger with a ⌘K hint, search by name, grouped commands and arrow-key highlighting. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-command-001-* palette — do not swap it for your theme tokens",
+                "the native dialog: focus trapping, Escape and the backdrop come free",
+                "arrow order following the visible list rather than the source array",
+                "the same background for arrow highlight and hover: two different ones confuse",
+                "the groups above the rows — that is how a palette gets scanned",
+                "a clear empty answer instead of silence when nothing matches"
+              ],
+              "adapt": [
+                "the commands array and their groups",
+                "placeholder and triggerLabel",
+                "the accent through the accent prop",
+                "the dialog width"
+              ],
+              "notes": [
+                "The component does not bind the global ⌘K: the hint is on the button, the handler is yours.",
+                "Search is a substring match on the label: fuzzy search and synonyms belong in your own filter.",
+                "Enter on the highlighted row does nothing: rows open on click, add a handler for your model.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Command001 commands={[{ label: \"New component\", group: \"Actions\" }]} />"
+            },
+            "controls": {
+              "triggerLabel": {
+                "label": "Trigger",
+                "default": "Search commands"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Command or page…"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "command-002",
+      "type": "registry:component",
+      "title": "Inline Palette",
+      "description": "Встроенная в страницу палитра с группами и полным договором combobox: поле, listbox и aria-activedescendant написаны руками.",
+      "categories": [
+        "command"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "command-002/command-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/command-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-002-*. Клиентский: \"use client\" ради поиска и клавиатуры. Панель не модальная, поэтому весь ARIA-договор объявлен явно: корень role=dialog, поле role=combobox с aria-expanded и aria-controls, список role=listbox, группы role=group, строки role=option. Фокус остаётся в поле, подсветка передаётся через aria-activedescendant. Стрелки ходят по плоскому видимому порядку — после группировки он не совпадает с исходным массивом.",
+      "meta": {
+        "tags": [
+          "command",
+          "palette",
+          "combobox",
+          "listbox"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Command002",
+          "usage": "<Command002 commands={[{ label: \"Новый компонент\", group: \"Действия\", keys: \"⌘N\" }]} />",
+          "summary": "Командная палитра прямо на странице: группы команд, поиск по подстроке, стрелки и Enter, Escape сбрасывает запрос. Роли combobox и listbox проставлены явно. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-command-002-* и не подменять её токенами вашей темы",
+            "связку role=combobox, role=listbox и aria-activedescendant: фокус остаётся в поле, и без неё скринридер не узнает о подсветке",
+            "порядок стрелок по видимому списку, а не по исходному массиву — после группировки он другой",
+            "одинаковый фон для подсветки стрелками и наведения: две разные читаются как две позиции",
+            "aria-selected только у активной строки: это признак подсветки, а не выбранности",
+            "внятный пустой ответ вместо молчания при отсутствии совпадений"
+          ],
+          "adapt": [
+            "массив commands и названия групп",
+            "подсказку поля через проп placeholder",
+            "имя палитры через проп label",
+            "акцент через проп accent и ширину панели"
+          ],
+          "notes": [
+            "Глобальное сочетание ⌘K компонент не вешает: панель встроена в страницу, обработчик за вами.",
+            "Ловушки фокуса здесь нет намеренно — панель не модальная; для модалки берите нативный dialog.",
+            "Поиск идёт по подстроке названия: нечёткий поиск и синонимы добавляются в вашем фильтре.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Команда или переход…",
+            "maxLength": 32
+          },
+          {
+            "prop": "label",
+            "label": "Имя палитры",
+            "type": "text",
+            "default": "Командная палитра",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A palette embedded in the page with groups and the full combobox contract: the field, the listbox and aria-activedescendant are all wired by hand.",
+            "ai": {
+              "summary": "A command palette right on the page: grouped commands, substring search, arrows and Enter, Escape to clear. The combobox and listbox roles are declared explicitly. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-command-002-* palette — do not swap it for your theme tokens",
+                "the role=combobox, role=listbox and aria-activedescendant trio: focus stays in the field, and without it the highlight is unannounced",
+                "arrow order following the visible list rather than the source array — grouping changes it",
+                "the same background for arrow highlight and hover: two different ones read as two positions",
+                "aria-selected only on the active row: it marks the highlight, not a chosen value",
+                "a clear empty answer instead of silence when nothing matches"
+              ],
+              "adapt": [
+                "the commands array and the group names",
+                "the field hint through the placeholder prop",
+                "the palette name through the label prop",
+                "the accent through the accent prop and the panel width"
+              ],
+              "notes": [
+                "The component does not bind the global ⌘K: the panel is inline, the handler is yours.",
+                "There is deliberately no focus trap — the panel is not modal; use a native dialog for that.",
+                "Search is a substring match on the label: fuzzy search and synonyms belong in your own filter.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Command002 commands={[{ label: \"New component\", group: \"Actions\", keys: \"⌘N\" }]} />"
+            },
+            "controls": {
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Command or page…"
+              },
+              "label": {
+                "label": "Palette name",
+                "default": "Command palette"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "command-003",
+      "type": "registry:component",
+      "title": "Recent Commands",
+      "description": "Палитра, которая на пустом запросе показывает недавние команды, а не весь алфавитный список: чаще всего повторяют последнее.",
+      "categories": [
+        "command"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "command-003/command-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/command-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-003-*. Клиентский: \"use client\" ради useState на запросе и истории. Пустой запрос переключает список на историю, любой ввод — на фильтр по полному набору команд; заголовок над списком меняется вместе с режимом. Запуск команды поднимает её в начало истории и обрезает список до четырёх записей, поэтому история не растёт. Роли combobox, listbox и option проставлены явно, подсветка передаётся aria-activedescendant.",
+      "meta": {
+        "tags": [
+          "command",
+          "palette",
+          "recent",
+          "history"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Command003",
+          "usage": "<Command003 commands={[\"Создать компонент\"]} recent={[\"Пересобрать реестр\"]} />",
+          "summary": "Палитра с историей: пустой ввод показывает недавние команды, ввод переключает на поиск, запуск поднимает команду наверх истории. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-command-003-* и не подменять её токенами вашей темы",
+            "недавние вместо полного списка на пустом запросе: алфавитный список в этот момент бесполезен",
+            "смену заголовка вместе с режимом — иначе непонятно, почему строк стало меньше",
+            "обрезку истории: без ограничения она превращается во второй полный список",
+            "связку role=combobox и aria-activedescendant: фокус остаётся в поле",
+            "разные значки у истории и результатов поиска: режим виден строкой, а не только шапкой"
+          ],
+          "adapt": [
+            "массивы commands и recent",
+            "подсказку поля через проп placeholder",
+            "глубину истории и текст кнопки очистки",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "История живёт только в состоянии компонента: сохранение между сессиями добавляется снаружи.",
+            "Enter запускает подсвеченную строку и очищает запрос — свяжите run со своей моделью команд.",
+            "Кнопка очистки появляется только в режиме истории: в результатах поиска ей нечего чистить.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Что нужно сделать?",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A palette that answers an empty query with recent commands instead of the whole alphabetical list: people mostly repeat their last action.",
+            "ai": {
+              "summary": "A palette with history: an empty field shows recent commands, typing switches to search, and running a command lifts it to the top of the history. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-command-003-* palette — do not swap it for your theme tokens",
+                "recents instead of the full list on an empty query: an alphabetical dump helps nobody there",
+                "the section heading changing with the mode — otherwise the shorter list looks broken",
+                "the history cap: unbounded, it becomes a second full list",
+                "the role=combobox plus aria-activedescendant pairing: focus stays in the field",
+                "the different glyphs for history and search results: the mode shows per row, not only in the header"
+              ],
+              "adapt": [
+                "the commands and recent arrays",
+                "the field hint through the placeholder prop",
+                "the history depth and the clear button wording",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "History lives in component state only: persisting it between sessions is added from outside.",
+                "Enter runs the highlighted row and clears the query — wire run to your own command model.",
+                "The clear button appears only in history mode: there is nothing to clear in search results.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Command003 commands={[\"New component\"]} recent={[\"Rebuild registry\"]} />"
+            },
+            "controls": {
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "What do you need?"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "command-004",
+      "type": "registry:component",
+      "title": "Nested Commands",
+      "description": "Двухуровневая палитра: Enter по команде с параметром входит в подкоманды, Backspace на пустом запросе возвращает назад.",
+      "categories": [
+        "command"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "command-004/command-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/command-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-004-*. Клиентский: \"use client\" ради состояния уровня и запроса. Команда с массивом children не выполняется, а открывает второй уровень: запрос сбрасывается, слева от поля появляется чип-крошка с именем родителя, список сменяется подкомандами. Возврат назад повешен на Backspace при пустом запросе и на Escape, а также на крестик в чипе. Роли combobox, listbox и option объявлены явно.",
+      "meta": {
+        "tags": [
+          "command",
+          "palette",
+          "nested",
+          "keyboard"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Command004",
+          "usage": "<Command004 commands={[{ label: \"Сменить тему\", children: [\"Светлая\", \"Тёмная\"] }]} />",
+          "summary": "Палитра с вложенными подкомандами: вход на второй уровень по Enter, чип-крошка у поля, выход по Backspace на пустом запросе. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-command-004-* и не подменять её токенами вашей темы",
+            "чип уровня рядом с полем, а не крошки над панелью: контекст должен быть там же, где курсор",
+            "выход по Backspace на пустом запросе — привычный жест, снимающий необходимость целиться в крестик",
+            "сброс запроса при входе на уровень: старый фильтр к подкомандам не относится",
+            "признак вложенности у строк со стрелкой: без него Enter ведёт себя непредсказуемо",
+            "связку role=combobox и aria-activedescendant: фокус остаётся в поле"
+          ],
+          "adapt": [
+            "массив commands и вложенные children",
+            "подсказку поля через проп placeholder",
+            "текст подвала с подсказкой клавиш",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Уровней ровно два: для более глубокого дерева храните путь массивом, а не одним родителем.",
+            "Escape сначала чистит запрос и только потом выходит на уровень выше — это разные шаги отмены.",
+            "Выполнение команды здесь только показывается в подвале: подключите свой обработчик в choose.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Команда…",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A two-level palette: Enter on a command that takes a parameter drills into its subcommands, and Backspace on an empty query steps back out.",
+            "ai": {
+              "summary": "A palette with nested subcommands: Enter drills in, a breadcrumb chip sits next to the field, and Backspace on an empty query steps back. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-command-004-* palette — do not swap it for your theme tokens",
+                "the level chip beside the field rather than breadcrumbs above the panel: context belongs where the caret is",
+                "stepping back with Backspace on an empty query — the familiar gesture that saves aiming at a close button",
+                "clearing the query when drilling in: the old filter does not apply to subcommands",
+                "the chevron marking rows that nest: without it Enter behaves unpredictably",
+                "the role=combobox plus aria-activedescendant pairing: focus stays in the field"
+              ],
+              "adapt": [
+                "the commands array and its nested children",
+                "the field hint through the placeholder prop",
+                "the footer text with the key hints",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "There are exactly two levels: for a deeper tree keep the path as an array instead of one parent.",
+                "Escape clears the query first and only then steps back — those are two distinct undo steps.",
+                "Running a command only prints into the footer here: hook your own handler into choose.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Command004 commands={[{ label: \"Change theme\", children: [\"Light\", \"Dark\"] }]} />"
+            },
+            "controls": {
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Command…"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "command-005",
+      "type": "registry:component",
+      "title": "Project Search",
+      "description": "Поиск по всему проекту, где файлы, символы, настройки и документы лежат в одном списке и различаются значком типа.",
+      "categories": [
+        "command"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "command-005/command-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/command-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-005-*. Клиентский: \"use client\" ради поиска и клавиатуры. Фильтр идёт и по названию, и по второй строке (путь или контекст), а группировка по полю kind считается из данных — новый тип сам заводит новую группу. Каждая строка несёт квадратный значок с первой буквой типа и приглушённый моноширинный путь с многоточием. Роли listbox, group и option объявлены явно, стрелки ходят по плоскому видимому порядку.",
+      "meta": {
+        "tags": [
+          "command",
+          "search",
+          "results",
+          "types"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Command005",
+          "usage": "<Command005 items={[{ label: \"registry.json\", kind: \"Файл\", detail: \"registry/components/navigation/\" }]} />",
+          "summary": "Поиск по проекту с типами результатов: файлы, символы, настройки и документы группируются по типу, у каждой строки значок и путь. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-command-005-* и не подменять её токенами вашей темы",
+            "значок типа у строки: без него файл и настройка выглядят одинаково",
+            "группировку, вычисляемую из данных, а не заданную руками: новый тип сам заведёт группу",
+            "вторую строку с путём — по ней различают одноимённые файлы",
+            "поиск и по названию, и по пути: путь часто помнят лучше имени",
+            "связку role=combobox и aria-activedescendant: фокус остаётся в поле"
+          ],
+          "adapt": [
+            "массив items и набор типов",
+            "подсказку поля через проп placeholder",
+            "цвета значков для новых типов",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Ранжирования нет: результаты идут в порядке массива, сортировку по релевантности добавляйте снаружи.",
+            "Цвета значков заданы для четырёх типов; для пятого добавьте своё правило, иначе он возьмёт цвет по умолчанию.",
+            "Enter здесь не переходит к результату: строки выбираются кликом, обработчик за вами.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Поиск по проекту…",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A project-wide search where files, symbols, settings and documents share one list and are told apart by a type badge.",
+            "ai": {
+              "summary": "Project search with typed results: files, symbols, settings and documents grouped by type, each row carrying a badge and a path. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-command-005-* palette — do not swap it for your theme tokens",
+                "the type badge on every row: without it a file and a setting look identical",
+                "grouping computed from the data rather than hand-written: a new type creates its own group",
+                "the secondary path line — it is how identically named files are told apart",
+                "searching both the label and the path: paths are often remembered better than names",
+                "the role=combobox plus aria-activedescendant pairing: focus stays in the field"
+              ],
+              "adapt": [
+                "the items array and the set of types",
+                "the field hint through the placeholder prop",
+                "the badge colours for new types",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "There is no ranking: results follow array order, add relevance sorting outside.",
+                "Badge colours are defined for four types; a fifth needs its own rule or it falls back to the default.",
+                "Enter does not navigate here: rows are picked by click, the handler is yours.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Command005 items={[{ label: \"registry.json\", kind: \"Файл\", detail: \"registry/components/navigation/\" }]} />"
+            },
+            "controls": {
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Search the project…"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "command-006",
+      "type": "registry:component",
+      "title": "Shortcut Cheatsheet",
+      "description": "Палитра-шпаргалка по горячим клавишам: сочетание хранится массивом клавиш, поиск идёт и по названию, и по самим клавишам.",
+      "categories": [
+        "command"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "command-006/command-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/command-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-006-*. Клиентский: \"use client\" ради поиска и стрелок. Сочетание описано массивом keys, а не строкой, поэтому каждая клавиша получает собственный <kbd> и последовательности вроде «G затем C» читаются как два нажатия. Фильтр проверяет и label, и склеенные клавиши: «⌘K» находит команду быстрее, чем попытка вспомнить её имя. Группе клавиш выдан aria-label, иначе строка озвучивается набором отдельных символов.",
+      "meta": {
+        "tags": [
+          "command",
+          "shortcuts",
+          "kbd",
+          "palette"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Command006",
+          "usage": "<Command006 commands={[{ label: \"Открыть палитру\", keys: [\"⌘\", \"K\"] }]} />",
+          "summary": "Палитра с горячими клавишами у каждой строки: клавиши в отдельных kbd, поиск по названию и по сочетанию, подсветка стрелками. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-command-006-* и не подменять её токенами вашей темы",
+            "массив клавиш вместо строки: только так последовательность читается как два нажатия",
+            "отдельный <kbd> на каждую клавишу — это семантика, а не украшение",
+            "поиск по клавишам наравне с названием: сочетание помнят чаще, чем имя команды",
+            "aria-label у группы клавиш: иначе скринридер прочитает набор символов",
+            "усиление рамки kbd у подсвеченной строки — подсветка не должна теряться на клавишах"
+          ],
+          "adapt": [
+            "массив commands и сами сочетания",
+            "подсказку поля через проп placeholder",
+            "оформление kbd под свою типографику",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Сами сочетания компонент не вешает: это справочник, обработчики клавиш остаются за вами.",
+            "Символы модификаторов подставляются как есть — для Windows подставьте Ctrl и Alt снаружи.",
+            "Enter по строке ничего не запускает: добавьте обработчик под свою модель команд.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Команда или сочетание…",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A shortcut cheatsheet palette: each combination is stored as an array of keys, and search matches both the label and the keys themselves.",
+            "ai": {
+              "summary": "A palette with a shortcut on every row: keys in separate kbd elements, search across names and combinations, arrow highlighting. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-command-006-* palette — do not swap it for your theme tokens",
+                "the key array instead of a string: only that makes a sequence read as two presses",
+                "a separate <kbd> per key — that is semantics, not decoration",
+                "searching keys alongside labels: the combination is remembered more often than the name",
+                "the aria-label on the key group: otherwise a screen reader reads a pile of symbols",
+                "the stronger kbd border on the highlighted row — the highlight must not vanish over the keys"
+              ],
+              "adapt": [
+                "the commands array and the combinations themselves",
+                "the field hint through the placeholder prop",
+                "the kbd styling to match your typography",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "The component does not bind the shortcuts: this is a reference, the key handlers stay yours.",
+                "Modifier glyphs render as given — substitute Ctrl and Alt for Windows from outside.",
+                "Enter on a row runs nothing: add a handler for your own command model.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Command006 commands={[{ label: \"Open palette\", keys: [\"⌘\", \"K\"] }]} />"
+            },
+            "controls": {
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Command or shortcut…"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "command-007",
+      "type": "registry:component",
+      "title": "Syntax Hints",
+      "description": "Палитра с префиксным синтаксисом, где пустой результат отвечает легендой символов, а не строчкой «ничего не найдено».",
+      "categories": [
+        "command"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "command-007/command-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/command-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-007-*. Клиентский: \"use client\" ради разбора запроса. Первый символ запроса определяет режим: > команды, @ символы, # строки; он же показывается чипом слева от поля, поэтому связь «набрал префикс — сменился список» очевидна. Пустой результат заменён легендой префиксов: список без строк — это место, где пользователь застрял, и подсказка там полезнее сообщения об отсутствии совпадений. Роли combobox, listbox и option объявлены явно.",
+      "meta": {
+        "tags": [
+          "command",
+          "syntax",
+          "empty-state",
+          "palette"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Command007",
+          "usage": "<Command007 entries={[{ label: \"Пересобрать реестр\", mode: \">\" }]} />",
+          "summary": "Палитра с режимами по префиксам > @ #: чип режима у поля, фильтр внутри режима и легенда синтаксиса вместо пустого списка. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-command-007-* и не подменять её токенами вашей темы",
+            "легенду вместо строчки «ничего не найдено»: пустой список — это место, где пользователь застрял",
+            "чип режима у поля: без него смена списка выглядит случайной",
+            "разбор режима по первому символу — так синтаксис остаётся предсказуемым",
+            "моноширинный шрифт префиксов: их набирают посимвольно",
+            "связку role=combobox и aria-activedescendant: фокус остаётся в поле"
+          ],
+          "adapt": [
+            "массив entries и набор префиксов",
+            "подсказку поля через проп placeholder",
+            "тексты легенды синтаксиса",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Режимов ровно три: для нового префикса добавьте его и в разбор, и в легенду, иначе список останется пустым.",
+            "Запрос без префикса намеренно ничего не ищет — так синтаксис объясняется сам собой.",
+            "Enter по строке ничего не выполняет: подключите свой обработчик под каждый режим.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Введите > @ или #",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A palette with prefix syntax where an empty result answers with a legend of the symbols instead of a bare \"nothing found\" line.",
+            "ai": {
+              "summary": "A palette with prefix modes > @ #: a mode chip at the field, filtering inside the mode and a syntax legend in place of an empty list. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-command-007-* palette — do not swap it for your theme tokens",
+                "the legend instead of a \"nothing found\" line: an empty list is where the user got stuck",
+                "the mode chip at the field: without it the list swap looks random",
+                "parsing the mode from the first character — that keeps the syntax predictable",
+                "the monospaced prefixes: they are typed character by character",
+                "the role=combobox plus aria-activedescendant pairing: focus stays in the field"
+              ],
+              "adapt": [
+                "the entries array and the set of prefixes",
+                "the field hint through the placeholder prop",
+                "the wording of the syntax legend",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "There are exactly three modes: a new prefix must be added to both the parser and the legend, or the list stays empty.",
+                "A query with no prefix deliberately searches nothing — that is what teaches the syntax.",
+                "Enter on a row runs nothing: wire your own handler per mode.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Command007 entries={[{ label: \"Rebuild registry\", mode: \">\" }]} />"
+            },
+            "controls": {
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Type > @ or #"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "command-008",
+      "type": "registry:component",
+      "title": "Go To File",
+      "description": "Режим «перейти к файлу»: имя отдельно от каталога, совпавший фрагмент в теге mark, полный путь закреплён в подвале.",
+      "categories": [
+        "command"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "command-008/command-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/command-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-008-*. Клиентский: \"use client\" ради поиска и клавиатуры. Строка разложена на имя файла и каталог: имя выделено весом, каталог приглушён и урезается многоточием слева через direction:rtl, поэтому конец пути остаётся виден. Совпадение подсвечивается тегом <mark>, а не span с классом — выделение несёт смысл и в скринридере. Полный путь подсвеченной строки закреплён в подвале, чтобы обрезка каталога не мешала проверить адрес.",
+      "meta": {
+        "tags": [
+          "command",
+          "files",
+          "path",
+          "palette"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Command008",
+          "usage": "<Command008 paths={[\"app/globals.css\", \"docs/PIPELINE.md\"]} />",
+          "summary": "Палитра перехода к файлу: имя и каталог разделены, совпадение в mark, полный путь в подвале. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-command-008-* и не подменять её токенами вашей темы",
+            "разделение имени файла и каталога: в длинном пути важно имя, а не начало адреса",
+            "урезание каталога слева — конец пути информативнее его начала",
+            "тег <mark> для совпадения: выделение обязано нести смысл, а не только цвет",
+            "моноширинный шрифт строк: пути сравнивают посимвольно",
+            "полный путь в подвале — обрезанный каталог иначе не проверить"
+          ],
+          "adapt": [
+            "массив paths",
+            "подсказку поля через проп placeholder",
+            "цвет подсветки совпадения",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Поиск идёт по подстроке всего пути: нечёткий поиск по инициалам добавляется в вашем фильтре.",
+            "Подсвечивается только первое совпадение в имени файла — для нескольких вхождений разбейте строку сами.",
+            "direction:rtl переворачивает пунктуацию в конце строки: для путей это незаметно, для обычного текста — нет.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Имя файла…",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A go-to-file mode: the file name separated from its directory, the matched fragment in a mark tag, and the full path pinned in the footer.",
+            "ai": {
+              "summary": "A go-to-file palette: name and directory split apart, the match wrapped in mark, the full path in the footer. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-command-008-* palette — do not swap it for your theme tokens",
+                "splitting the file name from the directory: in a long path the name is what matters",
+                "truncating the directory from the left — the end of a path beats its beginning",
+                "the <mark> tag for the match: a highlight must carry meaning, not only colour",
+                "the monospaced rows: paths get compared character by character",
+                "the full path in the footer — otherwise a truncated directory cannot be verified"
+              ],
+              "adapt": [
+                "the paths array",
+                "the field hint through the placeholder prop",
+                "the match highlight colour",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "Search is a substring match over the whole path: fuzzy initials matching belongs in your own filter.",
+                "Only the first match inside the file name is highlighted — split the string yourself for multiple hits.",
+                "direction:rtl flips trailing punctuation: harmless for paths, not for ordinary prose.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Command008 paths={[\"app/globals.css\", \"docs/PIPELINE.md\"]} />"
+            },
+            "controls": {
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "File name…"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "command-009",
+      "type": "registry:component",
+      "title": "Selection Actions",
+      "description": "Палитра действий над выделенным объектом: контекст закреплён над полем, опасное действие отделено линией и цветом.",
+      "categories": [
+        "command"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "command-009/command-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/command-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-009-*. Клиентский: \"use client\" ради поиска и клавиатуры. Строка объекта стоит над полем и не участвует в прокрутке списка, а её id отдан в aria-labelledby диалога — так палитра объявляется вместе с объектом, к которому относится. Действия с tone=\"danger\" получают отступ, разделительную линию и собственный цвет подсветки: промах стрелкой по удалению стоит слишком дорого. Роли combobox, listbox и option объявлены явно.",
+      "meta": {
+        "tags": [
+          "command",
+          "actions",
+          "context",
+          "palette"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Command009",
+          "usage": "<Command009 target=\"Hero background\" targetKind=\"Слой\" actions={[{ label: \"Удалить слой\", tone: \"danger\" }]} />",
+          "summary": "Контекстная палитра: сверху объект, ниже поиск и список действий над ним, опасное действие отделено. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-command-009-* и не подменять её токенами вашей темы",
+            "строку объекта над полем: обычная палитра отвечает «что сделать», контекстная — «что сделать с этим»",
+            "aria-labelledby диалога на строку объекта — иначе палитра объявляется без контекста",
+            "отделение опасного действия линией и отступом: промах стрелкой стоит слишком дорого",
+            "цвет опасного действия и в подсветке: одна лишь строка красным теряется при выделении",
+            "связку role=combobox и aria-activedescendant: фокус остаётся в поле"
+          ],
+          "adapt": [
+            "имя объекта через проп target",
+            "тип объекта через проп targetKind",
+            "массив actions и метки tone",
+            "акцент через проп accent"
+          ],
+          "notes": [
+            "Подтверждения удаления здесь нет: опасное действие только помечено, диалог подтверждения добавляйте снаружи.",
+            "Enter по строке ничего не выполняет: подключите свой обработчик действий.",
+            "Длинное имя объекта урезается многоточием — полное значение стоит дублировать в title.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "target",
+            "label": "Объект",
+            "type": "text",
+            "default": "Hero background",
+            "maxLength": 32
+          },
+          {
+            "prop": "targetKind",
+            "label": "Тип объекта",
+            "type": "text",
+            "default": "Слой",
+            "maxLength": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An action palette for the current selection: the context is pinned above the field and the destructive action is set apart by a rule and its colour.",
+            "ai": {
+              "summary": "A contextual palette: the object on top, search and its actions below, with the destructive one set apart. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-command-009-* palette — do not swap it for your theme tokens",
+                "the object row above the field: a plain palette answers \"what to do\", a contextual one \"what to do with this\"",
+                "the dialog's aria-labelledby pointing at the object row — otherwise the palette announces itself without context",
+                "setting the destructive action apart with a rule and spacing: an arrow-key slip is too expensive",
+                "the destructive colour in the highlight too: a red row alone disappears once selected",
+                "the role=combobox plus aria-activedescendant pairing: focus stays in the field"
+              ],
+              "adapt": [
+                "the object name through the target prop",
+                "the object type through the targetKind prop",
+                "the actions array and its tone flags",
+                "the accent through the accent prop"
+              ],
+              "notes": [
+                "There is no delete confirmation here: the destructive action is only marked, add the dialog outside.",
+                "Enter on a row runs nothing: hook up your own action handler.",
+                "A long object name truncates with an ellipsis — mirror the full value into a title attribute.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Command009 target=\"Hero background\" targetKind=\"Layer\" actions={[{ label: \"Delete layer\", tone: \"danger\" }]} />"
+            },
+            "controls": {
+              "target": {
+                "label": "Object",
+                "default": "Hero background"
+              },
+              "targetKind": {
+                "label": "Object type",
+                "default": "Layer"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "command-010",
+      "type": "registry:component",
+      "title": "Loading Results",
+      "description": "Палитра с серверным поиском: пока ответ в пути, вместо пустого списка показываются скелетоны той же высоты и полоса под полем.",
+      "categories": [
+        "command"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "command-010/command-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/command-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-010-*. Клиентский: \"use client\" ради useState и useEffect. Признак загрузки включается в обработчике ввода, а эффект только ждёт ответ по таймеру и перезапускается при смене запроса — так же ведёт себя обычный debounce вокруг настоящего запроса. Загрузка показана двумя способами: бегунок в полосе под полем и скелетоны строк той же высоты, поэтому после ответа список не прыгает. Поле несёт aria-busy, подвал — role=status, а стрелки во время загрузки заблокированы, чтобы подсветка не указывала на исчезающие строки.",
+      "meta": {
+        "tags": [
+          "command",
+          "loading",
+          "skeleton",
+          "async"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Command010",
+          "usage": "<Command010 items={[\"Открыть каталог компонентов\"]} delay={600} />",
+          "summary": "Палитра с индикатором загрузки: полоса под полем, скелетоны строк вместо пустого списка и подвал со статусом. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-command-010-* и не подменять её токенами вашей темы",
+            "скелетоны вместо пустого списка: «ничего не найдено» и «ещё не приехало» означают разное",
+            "равную высоту скелетона и строки — иначе список прыгнет в момент ответа",
+            "aria-busy у поля и role=status у подвала: загрузка должна озвучиваться, а не только рисоваться",
+            "блокировку стрелок во время загрузки: подсветка не должна указывать на исчезающие строки",
+            "правило prefers-reduced-motion — бесконечный бегунок особенно навязчив"
+          ],
+          "adapt": [
+            "массив items",
+            "задержку ответа через проп delay",
+            "подсказку поля через проп placeholder",
+            "число скелетонов и акцент через проп accent"
+          ],
+          "notes": [
+            "Таймер здесь изображает запрос: замените его своим fetch и не забудьте отменять устаревшие ответы.",
+            "Скелетоны помечены aria-hidden: озвучивать их бессмысленно, статус читается из подвала.",
+            "При delay равном нулю мигание всё равно возможно — для быстрых ответов лучше показывать загрузку с задержкой.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "delay",
+            "label": "Задержка, мс",
+            "type": "number",
+            "default": 600,
+            "min": 0,
+            "max": 3000
+          },
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Поиск на сервере…",
+            "maxLength": 32
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A palette backed by server search: while the answer is in flight it shows skeleton rows of the same height plus a bar under the field, never an empty list.",
+            "ai": {
+              "summary": "A palette with a loading state: a bar under the field, skeleton rows instead of an empty list and a status line in the footer. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-command-010-* palette — do not swap it for your theme tokens",
+                "skeletons instead of an empty list: \"nothing found\" and \"not here yet\" mean different things",
+                "matching skeleton and row heights — otherwise the list jumps when the answer lands",
+                "aria-busy on the field and role=status in the footer: loading must be announced, not merely drawn",
+                "disabling the arrows while loading: the highlight must not point at rows about to vanish",
+                "the prefers-reduced-motion rule — an endless progress bar is especially intrusive"
+              ],
+              "adapt": [
+                "the items array",
+                "the response latency through the delay prop",
+                "the field hint through the placeholder prop",
+                "the number of skeletons and the accent through the accent prop"
+              ],
+              "notes": [
+                "The timer stands in for a request: replace it with your fetch and cancel stale answers.",
+                "The skeletons are aria-hidden: announcing them is pointless, the footer carries the status.",
+                "Even with delay set to zero a flash is possible — show the loading state after a short grace period.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Command010 items={[\"Open the component catalog\"]} delay={600} />"
+            },
+            "controls": {
+              "delay": {
+                "label": "Latency, ms"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Searching the server…"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

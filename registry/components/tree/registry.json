@@ -1,0 +1,793 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "tree-001",
+      "type": "registry:component",
+      "title": "File Tree",
+      "description": "Дерево файлов на вложенных details: раскрытие, клавиатура и память об открытых ветках достаются от браузера.",
+      "categories": [
+        "tree"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-001/tree-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tree-001-*. Серверный: хуков нет, ветки рисуются рекурсивной функцией. Каждая папка — <details> с <summary>, лист — ссылка. Отступ вложенности отмечен левой линией у контейнера детей. Шрифт моноширинный: имена файлов сравнивают посимвольно.",
+      "meta": {
+        "tags": [
+          "tree",
+          "files",
+          "details",
+          "no-js"
+        ],
+        "ai": {
+          "export": "Tree001",
+          "usage": "<Tree001 nodes={[{ name: \"registry\", open: true, children: [{ name: \"index.ts\" }] }]} />",
+          "summary": "Дерево файлов: папки на details с поворачивающимся шевроном, листья ссылками, линия отступа у вложенных веток. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-001-* и не подменять её токенами вашей темы",
+            "details для папок: раскрытие и клавиатура достаются от браузера",
+            "линию отступа — по ней видно, к какой ветке относится строка",
+            "моноширинный шрифт: имена файлов сравнивают посимвольно",
+            "поворот шеврона по details[open] вместо смены символа",
+            "ссылки на листьях, а не div с обработчиком"
+          ],
+          "adapt": [
+            "массив nodes и стартовые open",
+            "адреса листьев",
+            "акцент через проп accent",
+            "ширину блока"
+          ],
+          "notes": [
+            "Полная клавиатурная модель дерева (стрелки по узлам) требует JS: здесь работает Tab и Enter.",
+            "Роль tree проставлена контейнеру, но узлы не размечены treeitem: для строгого соответствия нужна своя реализация.",
+            "Очень глубокая вложенность съедает ширину: от пятого уровня лучше показывать путь строкой.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A file tree on nested details: expansion, keyboard support and remembered branches come from the browser.",
+            "ai": {
+              "summary": "A file tree: folders as details with a rotating chevron, leaves as links and an indent line on nested branches. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-tree-001-* palette — do not swap it for your theme tokens",
+                "details for folders: expansion and keyboard support come free",
+                "the indent line — it shows which branch a row belongs to",
+                "the monospaced face: file names get compared character by character",
+                "rotating the chevron via details[open] instead of swapping glyphs",
+                "links on the leaves rather than divs with handlers"
+              ],
+              "adapt": [
+                "the nodes array and initial open flags",
+                "the leaf URLs",
+                "the accent through the accent prop",
+                "the block width"
+              ],
+              "notes": [
+                "A full tree keyboard model (arrow keys between nodes) needs JS: Tab and Enter work here.",
+                "The container carries role=tree but nodes are not marked treeitem: strict conformance needs a custom build.",
+                "Deep nesting eats width: past the fifth level show a path string instead.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree001 nodes={[{ name: \"registry\", open: true, children: [{ name: \"index.ts\" }] }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tree-002",
+      "type": "registry:component",
+      "title": "Typed File Tree",
+      "description": "Дерево файлов, где тип виден до чтения имени: оттенок значка считается из расширения хешем, поэтому новый тип получает свой цвет сам, без таблицы соответствий.",
+      "categories": [
+        "tree"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-002/tree-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tree-002-*. Клиентский: раскрытие живёт в useState, а не в details, потому что нужны role=\"treeitem\" и aria-expanded, которых у details нет. Видимые узлы разворачиваются в плоский список, отступ рисуется padding-left от уровня, а структуру объявляют aria-level, aria-posinset и aria-setsize — без них плоская разметка ничего не скажет скринридеру. Фокус ездит по узлам стрелками при одном таб-стопе на всё дерево: tabIndex=0 стоит только у текущего узла, остальные получают −1. Пометка состояния файла показана буквой, а не только цветом.",
+      "meta": {
+        "tags": [
+          "tree",
+          "files",
+          "icons",
+          "display"
+        ],
+        "ai": {
+          "export": "Tree002",
+          "usage": "<Tree002\n  label=\"Файлы проекта\"\n  nodes={[{ name: \"app\", open: true, children: [{ name: \"page.tsx\" }] }]}\n/>",
+          "summary": "Дерево файлов со значками типов и переездом фокуса стрелками: один таб-стоп, уровни объявлены атрибутами. Ноль зависимостей, один файл, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-002-* и не подменять её токенами вашей темы",
+            "aria-level вместе с aria-posinset и aria-setsize: в плоском списке структуру больше объявить нечем",
+            "роли tree и treeitem с aria-expanded на ветках — без них дерево звучит как обычный список",
+            "один таб-стоп на дерево: tabIndex=0 только у текущего узла, иначе Tab придётся жать десятки раз",
+            "букву состояния файла рядом с цветом — цвет один не читается при дальтонизме",
+            "собственную светлую подложку: без неё тёмные имена файлов пропадают на тёмном фоне"
+          ],
+          "adapt": [
+            "состав дерева через nodes, включая флаг open у веток",
+            "подпись дерева через label",
+            "формулу оттенка в функции hue под фирменную палитру",
+            "шаг отступа уровня переменной indent"
+          ],
+          "notes": [
+            "Идентификатором узла служит путь из имён: два одинаковых имени в одной папке склеятся в один узел.",
+            "Значок показывает первые два символа расширения — для длинных расширений это не полное имя типа.",
+            "Разметка плоская: обёртки role=\"group\" здесь нет намеренно, уровень несут атрибуты.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись дерева",
+            "type": "text",
+            "default": "Файлы проекта",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A file tree where the type is visible before you read the name: the badge hue is hashed from the extension, so a new file type gets its own colour without a lookup table.",
+            "ai": {
+              "summary": "A file tree with type badges and arrow-key focus movement: one tab stop, levels declared by attributes. Zero dependencies, one file, client component.",
+              "preserve": [
+                "the local --vibeui-tree-002-* palette — do not swap it for your theme tokens",
+                "aria-level together with aria-posinset and aria-setsize: in a flat list there is nothing else to declare structure with",
+                "the tree and treeitem roles with aria-expanded on branches — without them it sounds like a plain list",
+                "one tab stop for the tree: tabIndex=0 only on the current node, or Tab has to be pressed dozens of times",
+                "the status letter alongside the colour — colour alone fails for colour blindness",
+                "its own light surface: without it the dark file names disappear on a dark background"
+              ],
+              "adapt": [
+                "the tree contents through nodes, including the open flag on branches",
+                "the tree caption through label",
+                "the hue formula inside the hue function to match your brand",
+                "the level indent through the indent variable"
+              ],
+              "notes": [
+                "A node's identity is the path of names: two identical names in one folder collapse into one node.",
+                "The badge shows the first two characters of the extension — not a full type name for long ones.",
+                "The markup is flat: there is deliberately no role=\"group\" wrapper, the attributes carry the level.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree002\n  label=\"Project files\"\n  nodes={[{ name: \"app\", open: true, children: [{ name: \"page.tsx\" }] }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Tree caption",
+                "default": "Project files"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tree-003",
+      "type": "registry:component",
+      "title": "Details Only Tree",
+      "description": "Дерево разделов вообще без клиентского кода: раскрытие держит нативный details, поэтому оно работает до гидратации и находится встроенным поиском браузера.",
+      "categories": [
+        "tree"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-003/tree-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tree-003-*. Серверный: хуков нет, состояние веток хранит сам браузер. Вложенные details дают раскрытие, клавиатуру и память об открытых ветках даром; аria-level проставляется явно при обходе, потому что из вложенности details скринридер глубину не выводит. В бейдже стоит число листьев во всей ветке, а не в первом её уровне: countLeaves спускается до конца. Маркер summary снят и заменён треугольником на бордюрах, поэтому он поворачивается через transform и не зависит от отрисовки маркера в браузере.",
+      "meta": {
+        "tags": [
+          "tree",
+          "details",
+          "server",
+          "display"
+        ],
+        "ai": {
+          "export": "Tree003",
+          "usage": "<Tree003\n  label=\"Документация\"\n  nodes={[{ name: \"Начало работы\", open: true, children: [{ name: \"Установка\" }] }]}\n/>",
+          "summary": "Дерево разделов на нативных details: серверный рендер, клавиатура и память об открытых ветках от браузера. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-003-* и не подменять её токенами вашей темы",
+            "нативный details как источник состояния: своё состояние пришлось бы чинить в каждом браузере",
+            "явный aria-level: из вложенности details глубина не выводится",
+            "снятый маркер summary вместе с ::-webkit-details-marker — иначе останется второй треугольник",
+            "подсчёт листьев по всей ветке: число в бейдже иначе врёт на вложенных разделах",
+            "собственную светлую подложку: без неё тёмные подписи пропадают на тёмном фоне"
+          ],
+          "adapt": [
+            "состав дерева через nodes, включая флаг open у веток",
+            "подпись дерева через label",
+            "отступ и цвет линии уровня в CSS",
+            "содержимое бейджа, если счёт листьев не нужен"
+          ],
+          "notes": [
+            "Анимировать раскрытие details нечем: высота содержимого браузеру заранее неизвестна.",
+            "Ветки без флага open приходят свёрнутыми и на сервере, и на клиенте — состояние не переживает переход по ссылке.",
+            "Ключом узла служит имя: два одинаковых имени на одном уровне столкнутся.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись дерева",
+            "type": "text",
+            "default": "Документация",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A section tree with no client code at all: native details holds the expansion, so it works before hydration and is found by the browser's own in-page search.",
+            "ai": {
+              "summary": "A section tree on native details: server rendered, with keyboard support and open-branch memory provided by the browser. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-tree-003-* palette — do not swap it for your theme tokens",
+                "native details as the source of state: a hand-rolled one has to be fixed per browser",
+                "the explicit aria-level: details nesting does not imply depth for screen readers",
+                "the removed summary marker together with ::-webkit-details-marker — otherwise a second triangle remains",
+                "counting leaves across the whole branch: otherwise the badge number lies on nested sections",
+                "its own light surface: without it the dark captions disappear on a dark background"
+              ],
+              "adapt": [
+                "the tree contents through nodes, including the open flag on branches",
+                "the tree caption through label",
+                "the level indent and line colour in CSS",
+                "the badge contents if a leaf count is not what you need"
+              ],
+              "notes": [
+                "There is nothing to animate the details expansion with: the browser does not know the content height in advance.",
+                "Branches without the open flag arrive collapsed on both server and client — the state does not survive navigation.",
+                "The node key is its name: two identical names on one level collide.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree003\n  label=\"Documentation\"\n  nodes={[{ name: \"Getting started\", open: true, children: [{ name: \"Install\" }] }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Tree caption",
+                "default": "Documentation"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tree-004",
+      "type": "registry:component",
+      "title": "Selectable Keyboard Tree",
+      "description": "Дерево с выбранным узлом и полной клавиатурой: стрелки только переносят фокус, выбирает Enter или пробел, поэтому дерево не «выбирает» всё, над чем пробежали.",
+      "categories": [
+        "tree"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-004/tree-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tree-004-*. Клиентский: состояние раскрытия, фокуса и выбора живёт в useState, узлы держатся в ref-карте для программного focus(). Разметка вложенная — treeitem владеет своей группой, — а порядок обхода собирается отдельным плоским списком видимых узлов: по нему считаются стрелки вверх и вниз, Home и End. Стрелка вправо раскрывает ветку или спускается в неё, стрелка влево сворачивает или поднимается к родителю. Фокус и выбор разведены сознательно: aria-selected меняет только Enter и пробел. Выбранная строка помечена не только заливкой, но и полосой слева.",
+      "meta": {
+        "tags": [
+          "tree",
+          "keyboard",
+          "selection",
+          "display"
+        ],
+        "ai": {
+          "export": "Tree004",
+          "usage": "<Tree004\n  label=\"Направления\"\n  nodes={[{ name: \"Продажи\", open: true, children: [{ name: \"Партнёры\" }] }]}\n/>",
+          "summary": "Дерево с выбором узла и клавиатурой по образцу APG: стрелки, Home и End по плоскому порядку обхода, выбор — Enter и пробел. Ноль зависимостей, один файл, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-004-* и не подменять её токенами вашей темы",
+            "разведение фокуса и выбора: если выбирать стрелками, дерево «выберет» всё по пути",
+            "плоский порядок обхода для клавиш: по вложенной структуре стрелка вниз считается неверно",
+            "роли tree, treeitem и group с aria-level и aria-expanded — на них держится вся озвучка",
+            "полосу слева у выбранной строки — заливка одна не читается при дальтонизме",
+            "собственную светлую подложку: без неё тёмные подписи пропадают на тёмном фоне"
+          ],
+          "adapt": [
+            "состав дерева через nodes, включая флаг open у веток",
+            "подпись дерева через label",
+            "цвет выбранной строки переменными палитры",
+            "текст строки состояния под деревом"
+          ],
+          "notes": [
+            "Пробел здесь и выбирает, и раскрывает ветку: если нужен только выбор, уберите вызов toggle.",
+            "Клавиша перехода по первой букве (type-ahead) не реализована — в длинных деревьях её стоит добавить.",
+            "Идентификатор узла — путь из имён: два одинаковых имени в одной ветке склеятся.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись дерева",
+            "type": "text",
+            "default": "Направления",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tree with a selected node and a full keyboard: arrows only move focus, Enter or Space selects, so the tree does not \"select\" everything you pass over.",
+            "ai": {
+              "summary": "A tree with node selection and APG-style keyboard support: arrows, Home and End over a flat traversal order, selection on Enter and Space. Zero dependencies, one file, client component.",
+              "preserve": [
+                "the local --vibeui-tree-004-* palette — do not swap it for your theme tokens",
+                "keeping focus and selection separate: selecting with arrows would select everything on the way",
+                "the flat traversal order for the keys: computing Down over the nested structure gets it wrong",
+                "the tree, treeitem and group roles with aria-level and aria-expanded — all the speech rests on them",
+                "the left bar on the selected row — the fill alone fails for colour blindness",
+                "its own light surface: without it the dark captions disappear on a dark background"
+              ],
+              "adapt": [
+                "the tree contents through nodes, including the open flag on branches",
+                "the tree caption through label",
+                "the selected row colour through the palette variables",
+                "the status line copy under the tree"
+              ],
+              "notes": [
+                "Space both selects and expands here: drop the toggle call if you only want selection.",
+                "First-letter type-ahead is not implemented — worth adding for long trees.",
+                "A node's identity is the path of names: two identical names in one branch collapse.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree004\n  label=\"Business units\"\n  nodes={[{ name: \"Sales\", open: true, children: [{ name: \"Partners\" }] }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Tree caption",
+                "default": "Business units"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tree-005",
+      "type": "registry:component",
+      "title": "Partial Checkbox Tree",
+      "description": "Дерево чекбоксов с честным третьим состоянием: выбор хранится только по листьям, а галка ветки выводится из них, поэтому счётчик и вид родителя не могут разойтись.",
+      "categories": [
+        "tree"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-005/tree-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tree-005-*. Клиентский: множество выбранных листьев и множество раскрытых веток живут в useState, узлы чекбоксов держатся в ref-карте. Состояние ветки считается на лету: полностью выбрана, если выбраны все её листья, частично — если хотя бы один. Третье состояние в разметке объявить нечем, indeterminate — свойство узла, поэтому оно проставляется в эффекте после отрисовки, когда состав веток уже известен. Чекбоксы нативные: клавиатура, объявление состояния и связь с подписью достаются от браузера. Роли tree, treeitem и group с aria-level и aria-expanded описывают структуру.",
+      "meta": {
+        "tags": [
+          "tree",
+          "checkbox",
+          "selection",
+          "display"
+        ],
+        "ai": {
+          "export": "Tree005",
+          "usage": "<Tree005\n  label=\"Что присылать на почту\"\n  nodes={[{ name: \"Уведомления\", children: [{ name: \"Назначена задача\" }] }]}\n/>",
+          "summary": "Дерево чекбоксов: состояние хранится по листьям, ветки получают галку или indeterminate, счётчик считается из того же множества. Ноль зависимостей, один файл, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-005-* и не подменять её токенами вашей темы",
+            "хранение выбора только по листьям: параллельное состояние веток разойдётся с ними на первой же правке",
+            "простановку indeterminate в эффекте — атрибута для третьего состояния не существует",
+            "нативные чекбоксы: своя галка потеряет клавиатуру и объявление состояния",
+            "роли tree, treeitem и group с aria-level и aria-expanded на ветках",
+            "собственную светлую подложку: без неё тёмные подписи пропадают на тёмном фоне"
+          ],
+          "adapt": [
+            "состав дерева через nodes",
+            "подпись дерева через label",
+            "начальный набор выбранных листьев в коде компонента",
+            "цвет галки переменной акцента"
+          ],
+          "notes": [
+            "Свёрнутая ветка не размонтирует выбор: состояние живёт в множестве, а не в разметке.",
+            "Чекбокс ветки и её раскрытие — разные органы: нажатие на галку не разворачивает ветку.",
+            "Идентификатор листа — путь из имён: одинаковые имена в одной ветке склеятся в один пункт.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись дерева",
+            "type": "text",
+            "default": "Что присылать на почту",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A checkbox tree with an honest third state: the selection is stored on leaves only and a branch's tick is derived from them, so the counter and the parent can never disagree.",
+            "ai": {
+              "summary": "A checkbox tree: state lives on the leaves, branches derive a tick or indeterminate, and the counter comes from the same set. Zero dependencies, one file, client component.",
+              "preserve": [
+                "the local --vibeui-tree-005-* palette — do not swap it for your theme tokens",
+                "storing the selection on leaves only: a parallel branch state diverges on the first edit",
+                "setting indeterminate in an effect — there is no attribute for the third state",
+                "the native checkboxes: a hand-drawn tick loses keyboard support and state announcement",
+                "the tree, treeitem and group roles with aria-level and aria-expanded on branches",
+                "its own light surface: without it the dark captions disappear on a dark background"
+              ],
+              "adapt": [
+                "the tree contents through nodes",
+                "the tree caption through label",
+                "the initially selected leaves in the component code",
+                "the tick colour through the accent variable"
+              ],
+              "notes": [
+                "Collapsing a branch does not unmount its selection: the state lives in a set, not in the markup.",
+                "A branch checkbox and its expander are separate controls: ticking does not expand.",
+                "A leaf's identity is the path of names: identical names in one branch collapse into one item.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree005\n  label=\"Email notifications\"\n  nodes={[{ name: \"Task alerts\", children: [{ name: \"Assigned to me\" }] }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Tree caption",
+                "default": "Email notifications"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tree-006",
+      "type": "registry:component",
+      "title": "Searchable Tree Filter",
+      "description": "Поиск по дереву, который оставляет путь до находки: ветка остаётся в выдаче, если совпало её имя или имя любого потомка, иначе найденный файл повис бы без папки.",
+      "categories": [
+        "tree"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-006/tree-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tree-006-*. Клиентский: запрос живёт в useState, счёт совпадений мемоизирован. Фильтрация рекурсивная: узел проходит, если совпало его имя или совпало у любого потомка, поэтому вместе с находкой видна вся ветка над ней. Совпадение подсвечивается тегом mark, а не span с фоном: mark — семантика выделения, её объявляет и скринридер. Пока поле пустое, дерево показано целиком и ничего не сворачивается. Число совпадений объявлено в role=\"status\", чтобы результат поиска был слышен, а не только виден. Поле связано с подписью через useId.",
+      "meta": {
+        "tags": [
+          "tree",
+          "search",
+          "filter",
+          "display"
+        ],
+        "ai": {
+          "export": "Tree006",
+          "usage": "<Tree006\n  label=\"Файлы\"\n  placeholder=\"Поиск по дереву\"\n  nodes={[{ name: \"components\", children: [{ name: \"button.tsx\" }] }]}\n/>",
+          "summary": "Дерево с поиском: путь до находки сохраняется, совпадение подсвечено тегом mark, число совпадений объявлено живой областью. Ноль зависимостей, один файл, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-006-* и не подменять её токенами вашей темы",
+            "рекурсивное правило отбора: без пути до находки результат теряет смысл",
+            "тег mark для подсветки — фон на span не сообщает о выделении скринридеру",
+            "role=\"status\" на числе совпадений: результат поиска должен быть слышен",
+            "связь поля и подписи через useId, а не через placeholder вместо label",
+            "собственную светлую подложку: без неё тёмные подписи пропадают на тёмном фоне"
+          ],
+          "adapt": [
+            "состав дерева через nodes",
+            "подпись дерева через label",
+            "подсказку и доступное имя поля через placeholder",
+            "цвет подсветки переменной mark"
+          ],
+          "notes": [
+            "Поиск подстрочный и без учёта регистра: нечёткого совпадения и транслитерации здесь нет.",
+            "Подсвечивается только первое вхождение в имени, остальные остаются обычным текстом.",
+            "При запросе дерево показано раскрытым целиком: сворачивание веток в режиме поиска мешает.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись дерева",
+            "type": "text",
+            "default": "Файлы",
+            "maxLength": 40
+          },
+          {
+            "prop": "placeholder",
+            "label": "Подсказка поиска",
+            "type": "text",
+            "default": "Поиск по дереву",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tree search that keeps the path to the hit: a branch stays in the results if its own name or any descendant's name matches, otherwise the found file would hang without its folder.",
+            "ai": {
+              "summary": "A tree with search: the path to the hit is preserved, matches are highlighted with mark, and the match count is announced by a live region. Zero dependencies, one file, client component.",
+              "preserve": [
+                "the local --vibeui-tree-006-* palette — do not swap it for your theme tokens",
+                "the recursive filter rule: without the path to the hit the result is meaningless",
+                "the mark tag for highlighting — a background on a span announces nothing to screen readers",
+                "role=\"status\" on the match count: a search result has to be audible",
+                "the field-to-label link through useId rather than a placeholder standing in for a label",
+                "its own light surface: without it the dark captions disappear on a dark background"
+              ],
+              "adapt": [
+                "the tree contents through nodes",
+                "the tree caption through label",
+                "the field hint and accessible name through placeholder",
+                "the highlight colour through the mark variable"
+              ],
+              "notes": [
+                "The search is a case-insensitive substring match: there is no fuzzy matching or transliteration.",
+                "Only the first occurrence in a name is highlighted, the rest stays plain text.",
+                "While a query is active the tree is shown fully expanded: collapsing during search gets in the way.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree006\n  label=\"Files\"\n  placeholder=\"Search the tree\"\n  nodes={[{ name: \"components\", children: [{ name: \"button.tsx\" }] }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Tree caption",
+                "default": "Files"
+              },
+              "placeholder": {
+                "label": "Search hint",
+                "default": "Search the tree"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tree-007",
+      "type": "registry:component",
+      "title": "Lazy Branch Tree",
+      "description": "Дерево, где ветка подгружается при первом раскрытии, а не при показе: пока идёт запрос, она помечена aria-busy и держит место тремя строками-заглушками.",
+      "categories": [
+        "tree"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-007/tree-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tree-007-*. Клиентский: множества раскрытых и загружаемых веток плюс кэш пришедших детей живут в useState, таймеры имитации запроса собираются в ref и снимаются при размонтировании. Ветка с полем lazy грузится один раз: результат кладётся в кэш, и повторное раскрытие уже ничего не запрашивает. На время запроса ветка получает aria-busy и группу из трёх заглушек — без них дерево прыгает на высоту пришедшего списка. Строка ветки — настоящая кнопка, поэтому раскрытие работает с клавиатуры без своего обработчика клавиш.",
+      "meta": {
+        "tags": [
+          "tree",
+          "lazy",
+          "loading",
+          "display"
+        ],
+        "ai": {
+          "export": "Tree007",
+          "usage": "<Tree007\n  label=\"Сервисы\"\n  nodes={[{ name: \"Основной кластер\", lazy: [\"api-gateway\", \"auth-service\"] }]}\n  delay={900}\n/>",
+          "summary": "Дерево с ленивой подгрузкой ветки: запрос идёт при первом раскрытии, результат кэшируется, ожидание помечено aria-busy и заглушками. Ноль зависимостей, один файл, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-007-* и не подменять её токенами вашей темы",
+            "aria-busy на загружаемой ветке: без него ожидание не объявляется",
+            "заглушки на время запроса — без них дерево прыгает в момент прихода данных",
+            "кэш пришедших детей: повторный запрос при каждом раскрытии бьёт по сети без нужды",
+            "снятие таймеров при размонтировании, иначе состояние обновляется у исчезнувшего узла",
+            "собственную светлую подложку: без неё тёмные подписи пропадают на тёмном фоне"
+          ],
+          "adapt": [
+            "состав дерева и ленивые ветки через nodes",
+            "подпись дерева через label",
+            "задержку имитации запроса через delay",
+            "число и ширины заглушек в CSS"
+          ],
+          "notes": [
+            "Задержка здесь имитирует сеть через setTimeout: в бою замените её на свой запрос и обработку ошибки.",
+            "Ошибка загрузки не предусмотрена — добавьте состояние отказа с возможностью повтора.",
+            "Ленивые ветки в этом варианте только на первом уровне: вложенная ленивая загрузка потребует рекурсии.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись дерева",
+            "type": "text",
+            "default": "Сервисы",
+            "maxLength": 40
+          },
+          {
+            "prop": "delay",
+            "label": "Задержка, мс",
+            "type": "number",
+            "default": 900,
+            "min": 0,
+            "max": 5000
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A tree whose branch loads on first expansion rather than on render: while the request runs the branch is marked aria-busy and holds its space with three placeholder rows.",
+            "ai": {
+              "summary": "A tree with lazy branch loading: the request fires on first expansion, the result is cached, and the wait is marked with aria-busy and placeholders. Zero dependencies, one file, client component.",
+              "preserve": [
+                "the local --vibeui-tree-007-* palette — do not swap it for your theme tokens",
+                "aria-busy on the loading branch: without it the wait is never announced",
+                "the placeholders during the request — without them the tree jumps when the data lands",
+                "the cache of loaded children: refetching on every expansion hits the network for nothing",
+                "clearing the timers on unmount, otherwise state updates target a node that is gone",
+                "its own light surface: without it the dark captions disappear on a dark background"
+              ],
+              "adapt": [
+                "the tree contents and lazy branches through nodes",
+                "the tree caption through label",
+                "the simulated request delay through delay",
+                "the count and widths of the placeholders in CSS"
+              ],
+              "notes": [
+                "The delay here fakes the network with setTimeout: in production replace it with your request and error handling.",
+                "There is no failure state — add one with a retry affordance.",
+                "Lazy branches are first level only in this variant: nested lazy loading needs recursion.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree007\n  label=\"Services\"\n  nodes={[{ name: \"Production cluster\", lazy: [\"api-gateway\", \"auth-service\"] }]}\n  delay={900}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Tree caption",
+                "default": "Services"
+              },
+              "delay": {
+                "label": "Delay, ms"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "tree-008",
+      "type": "registry:component",
+      "title": "Guide Line Tree",
+      "description": "Развёрнутая структура с настоящими направляющими: у последнего узла в ветке вертикаль обрезается по высоте уголка, поэтому линия заканчивается на нём, а не уходит в пустоту.",
+      "categories": [
+        "tree"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-008/tree-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tree-008-*. Серверный: хуков нет, дерево всегда развёрнуто. Уголок рисуют два псевдоэлемента узла: ::before — вертикаль ветки, ::after — поперечина на середине строки; у :last-child вертикаль укорачивается до половины строки, и получается ровно то, что печатает команда tree в терминале. Псевдографика не уходит в текст: символы ├ и └ попали бы в буфер обмена при копировании имён. Высота строки вынесена в переменную, потому что от неё считается положение поперечины. Роли tree, treeitem и group с aria-level описывают структуру, aria-expanded на ветках объявлено постоянно истинным.",
+      "meta": {
+        "tags": [
+          "tree",
+          "guides",
+          "structure",
+          "display"
+        ],
+        "ai": {
+          "export": "Tree008",
+          "usage": "<Tree008\n  label=\"Состав пакета\"\n  nodes={[{ name: \"dist\", note: \"412 КБ\", children: [{ name: \"index.js\", note: \"184 КБ\" }] }]}\n/>",
+          "summary": "Развёрнутая структура с направляющими линиями уровней: уголки нарисованы псевдоэлементами, псевдографики в тексте нет. Ноль зависимостей, один файл, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-008-* и не подменять её токенами вашей темы",
+            "обрезку вертикали у последнего узла: без неё линия уходит в пустоту под веткой",
+            "рисование уголков псевдоэлементами, а не символами ├ и └ — те уедут в буфер при копировании",
+            "высоту строки в переменной: от неё считается положение поперечины",
+            "роли tree, treeitem и group с aria-level: линии рисуют структуру только глазу",
+            "собственную светлую подложку: без неё тёмные имена пропадают на тёмном фоне"
+          ],
+          "adapt": [
+            "состав структуры через nodes, включая заметку note у узла",
+            "подпись дерева через label",
+            "цвет и толщину направляющих переменной линии",
+            "шаг отступа уровня переменной indent"
+          ],
+          "notes": [
+            "Дерево всегда развёрнуто: сворачивания здесь нет, это витрина структуры, а не навигация.",
+            "Многострочное имя ломает положение поперечины: она считается от фиксированной высоты строки.",
+            "aria-expanded у веток всегда истинно — так и должно быть, свернуть их нечем.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись дерева",
+            "type": "text",
+            "default": "Состав пакета",
+            "maxLength": 40
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "An expanded structure with real guide lines: on the last node of a branch the vertical is cut to the elbow's height, so the line ends there instead of trailing into empty space.",
+            "ai": {
+              "summary": "An expanded structure with level guides: the elbows are drawn by pseudo-elements, with no box-drawing characters in the text. Zero dependencies, one file, server rendered.",
+              "preserve": [
+                "the local --vibeui-tree-008-* palette — do not swap it for your theme tokens",
+                "cutting the vertical on the last node: without it the line trails into empty space",
+                "drawing the elbows with pseudo-elements rather than ├ and └ — those end up in the clipboard on copy",
+                "the row height in a variable: the elbow position is measured from it",
+                "the tree, treeitem and group roles with aria-level: the lines draw structure for the eye only",
+                "its own light surface: without it the dark names disappear on a dark background"
+              ],
+              "adapt": [
+                "the structure through nodes, including the note on a node",
+                "the tree caption through label",
+                "the guide colour and weight through the line variable",
+                "the level indent through the indent variable"
+              ],
+              "notes": [
+                "The tree is always expanded: there is no collapsing, this is a structure display, not navigation.",
+                "A multiline name breaks the elbow position: it is measured from a fixed row height.",
+                "aria-expanded on branches is always true — as it should be, there is nothing to collapse them with.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree008\n  label=\"Package contents\"\n  nodes={[{ name: \"dist\", note: \"412 KB\", children: [{ name: \"index.js\", note: \"184 KB\" }] }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Tree caption",
+                "default": "Package contents"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

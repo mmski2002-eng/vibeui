@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Popover Dialog",
       "description": "Модальное окно на HTML popover: открытие, закрытие по Esc и по клику мимо, подложка и верхний слой — всё от браузера, без единой строки JS.",
-      "categories": ["dialog"],
+      "categories": [
+        "dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-001-*. Открытие держит HTML popover: кнопка объявляет цель атрибутом popovertarget, окно — popover=\"auto\". Отсюда бесплатно приходят закрытие по Esc и по клику мимо, подложка ::backdrop и верхний слой, в котором окно не зависит от overflow и z-index родителей. Анимация появления собрана на @starting-style и transition-behavior для display и overlay. Окно стилизуется по атрибуту [data-vibeui-dialog-001-window], а не по вложенности: в верхнем слое оно перестаёт быть потомком корня компонента.",
       "meta": {
-        "tags": ["dialog", "modal", "popover", "no-js"],
+        "tags": [
+          "dialog",
+          "modal",
+          "popover",
+          "no-js"
+        ],
         "ai": {
           "export": "Dialog001",
           "usage": "<Dialog001\n  id=\"delete-project\"\n  trigger=\"Удалить проект\"\n  title=\"Удалить проект?\"\n  description=\"Отменить это будет нельзя.\"\n  confirmLabel=\"Удалить\"\n/>",
@@ -143,7 +150,9 @@
       "type": "registry:component",
       "title": "Destructive Dialog",
       "description": "Окно необратимого удаления: перечень того, что исчезнет, вместо строки «все данные». Конкретика — единственное, что заставляет остановиться.",
-      "categories": ["dialog"],
+      "categories": [
+        "dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -155,7 +164,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-002-*. Открытие держит HTML popover: Esc, клик мимо, ::backdrop и верхний слой достаются от браузера, клиентского кода нет. Окно живёт в верхнем слое и потому стилизуется по атрибуту [data-vibeui-dialog-002-window] и получает палитру собственным style — наследование по вложенности там не работает. Роль alertdialog.",
       "meta": {
-        "tags": ["dialog", "confirm", "destructive", "no-js"],
+        "tags": [
+          "dialog",
+          "confirm",
+          "destructive",
+          "no-js"
+        ],
         "ai": {
           "export": "Dialog002",
           "usage": "<Dialog002\n  id=\"delete-project\"\n  title=\"Удалить проект?\"\n  losses={[\"18 страниц\", \"домен и сертификат\"]}\n/>",
@@ -256,7 +270,9 @@
       "type": "registry:component",
       "title": "Form Dialog",
       "description": "Окно с одним полем — переименовать, задать адрес, добавить метку. Внутри настоящая form method=\"dialog\": Enter отправляет, фокус сам уходит в поле.",
-      "categories": ["dialog"],
+      "categories": [
+        "dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -268,7 +284,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-003-*. Открытие держит HTML popover, отправку — <form method=\"dialog\">: Enter в поле срабатывает как отправка, отдельный обработчик не нужен. autoFocus у поля переводит на него фокус при открытии, поэтому печатать можно сразу.",
       "meta": {
-        "tags": ["dialog", "form", "input", "no-js"],
+        "tags": [
+          "dialog",
+          "form",
+          "input",
+          "no-js"
+        ],
         "ai": {
           "export": "Dialog003",
           "usage": "<Dialog003\n  id=\"rename\"\n  title=\"Переименовать проект\"\n  label=\"Название\"\n  defaultValue=\"Сайт студии\"\n/>",
@@ -376,7 +397,9 @@
       "type": "registry:component",
       "title": "Choice Dialog",
       "description": "Окно выбора одного варианта: карточки с нативными radio, подсветка выбранного правилом :has — без состояния и без JS.",
-      "categories": ["dialog"],
+      "categories": [
+        "dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -388,7 +411,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-004-*. Варианты — нативные radio внутри подписей-карточек: выбранная подсвечивается правилом :has(input:checked), поэтому подсветка не требует состояния, а стрелки клавиатуры работают как в родном списке. Точка внутри radio нарисована inset-тенью, а не отдельным элементом.",
       "meta": {
-        "tags": ["dialog", "choice", "radio", "no-js"],
+        "tags": [
+          "dialog",
+          "choice",
+          "radio",
+          "no-js"
+        ],
         "ai": {
           "export": "Dialog004",
           "usage": "<Dialog004\n  id=\"publish-mode\"\n  title=\"Что сделать с изменениями?\"\n  options={[{ value: \"draft\", label: \"Сохранить как черновик\" }]}\n/>",
@@ -427,7 +455,11 @@
             "label": "Выбрано",
             "type": "select",
             "default": "publish",
-            "options": ["draft", "publish", "schedule"]
+            "options": [
+              "draft",
+              "publish",
+              "schedule"
+            ]
           },
           {
             "prop": "accent",
@@ -484,7 +516,9 @@
       "type": "registry:component",
       "title": "Result Dialog",
       "description": "Окно результата операции: крупный знак сверху отвечает «получилось или нет» раньше, чем прочитан заголовок.",
-      "categories": ["dialog"],
+      "categories": [
+        "dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -496,7 +530,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-005-*. Два тона (успех и ошибка) переключаются data-атрибутом на корне и меняют одну переменную — цвет знака и главной кнопки. Содержимое выровнено по центру: у окна результата один смысловой центр, и колонка читается быстрее строки.",
       "meta": {
-        "tags": ["dialog", "result", "success", "error"],
+        "tags": [
+          "dialog",
+          "result",
+          "success",
+          "error"
+        ],
         "ai": {
           "export": "Dialog005",
           "usage": "<Dialog005\n  id=\"publish-result\"\n  tone=\"success\"\n  title=\"Проект опубликован\"\n  detail=\"studio-polet.ru\"\n  primaryHref=\"https://studio-polet.ru\"\n/>",
@@ -528,7 +567,10 @@
             "label": "Тон",
             "type": "select",
             "default": "success",
-            "options": ["success", "danger"]
+            "options": [
+              "success",
+              "danger"
+            ]
           },
           {
             "prop": "title",
@@ -594,7 +636,9 @@
       "type": "registry:component",
       "title": "Blocking Progress Dialog",
       "description": "Окно операции, которое не закрывается кликом мимо: popover=\"manual\". Перенос домена не должен исчезать с экрана от случайного нажатия.",
-      "categories": ["dialog"],
+      "categories": [
+        "dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -606,7 +650,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-006-*. Здесь popover=\"manual\", а не \"auto\": Esc и клик по подложке окно не закрывают, единственный выход — кнопка отмены. Полоса прогресса берёт ширину из переменной --vibeui-dialog-006-value; value={null} включает бегущий отрезок и снимает aria-valuenow. Спиннер нарисован рамкой с одним окрашенным краем.",
       "meta": {
-        "tags": ["dialog", "progress", "blocking", "operation"],
+        "tags": [
+          "dialog",
+          "progress",
+          "blocking",
+          "operation"
+        ],
         "ai": {
           "export": "Dialog006",
           "usage": "<Dialog006\n  id=\"domain-transfer\"\n  title=\"Переносим домен\"\n  step=\"Проверяем DNS — 2 из 5\"\n  value={40}\n/>",
@@ -714,7 +763,9 @@
       "type": "registry:component",
       "title": "Action Sheet",
       "description": "Лист действий, выезжающий снизу на телефоне и превращающийся в обычное окно на широком экране: одна разметка, две раскладки.",
-      "categories": ["dialog"],
+      "categories": [
+        "dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -726,7 +777,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-007-*. По умолчанию лист прижат к нижнему краю экрана и выезжает через translate; от 40rem ширины окна медиазапрос превращает его в обычное окно по центру. Медиазапрос здесь по ширине окна, а не блока: лист позиционируется относительно экрана, а не родителя, поэтому container-запрос был бы неверен.",
       "meta": {
-        "tags": ["dialog", "sheet", "mobile", "actions"],
+        "tags": [
+          "dialog",
+          "sheet",
+          "mobile",
+          "actions"
+        ],
         "ai": {
           "export": "Dialog007",
           "usage": "<Dialog007\n  id=\"project-actions\"\n  title=\"Сайт студии\"\n  actions={[{ label: \"Дублировать\", href: \"#\" }, { label: \"Удалить\", href: \"#\", danger: true }]}\n/>",
@@ -825,7 +881,9 @@
       "type": "registry:component",
       "title": "Share Dialog",
       "description": "Окно «поделиться»: ссылка в поле только для чтения, кнопка копирования и список тех, у кого доступ уже есть.",
-      "categories": ["dialog"],
+      "categories": [
+        "dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -837,7 +895,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-008-*. Ссылка лежит в readOnly-поле моноширинным: её видно целиком и можно выделить. Цвет инициалов в списке доступа выводится из имени детерминированной функцией — тот же приём, что в avatar-001, поэтому один участник всегда одного цвета. Компонент серверный: копирование вешает вызывающий код.",
       "meta": {
-        "tags": ["dialog", "share", "link", "access"],
+        "tags": [
+          "dialog",
+          "share",
+          "link",
+          "access"
+        ],
         "ai": {
           "export": "Dialog008",
           "usage": "<Dialog008\n  id=\"share\"\n  link=\"https://vibeui.ru/p/studio\"\n  people={[{ name: \"Анна Ковалёва\", role: \"Редактор\" }]}\n/>",
@@ -936,7 +999,9 @@
       "type": "registry:component",
       "title": "Two-Step Dialog",
       "description": "Мастер из двух шагов без состояния: текущий шаг держат скрытые radio, а экраны переключает правило :has — «Далее» и «Назад» это подписи, а не обработчики.",
-      "categories": ["dialog"],
+      "categories": [
+        "dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -948,7 +1013,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-009-*. Шаг хранят два скрытых radio, а видимость экранов переключает :has([data-part=\"state\"][value=…]:checked) на окне. Кнопки «Далее» и «Назад» — это <label for>, поэтому переход между шагами не требует ни состояния, ни обработчиков. Точки прогресса подсвечиваются тем же правилом.",
       "meta": {
-        "tags": ["dialog", "wizard", "steps", "no-js"],
+        "tags": [
+          "dialog",
+          "wizard",
+          "steps",
+          "no-js"
+        ],
         "ai": {
           "export": "Dialog009",
           "usage": "<Dialog009\n  id=\"create-project\"\n  steps={[{ title: \"Название\", description: \"…\", fieldLabel: \"Название\" }, { title: \"Адрес\", description: \"…\", fieldLabel: \"Адрес\" }]}\n/>",
@@ -1058,7 +1128,9 @@
       "type": "registry:component",
       "title": "Shortcuts Dialog",
       "description": "Справка по горячим клавишам: клавиши набраны kbd и выглядят клавишами, а список разбит на группы — плоские тридцать строк не запоминаются.",
-      "categories": ["dialog"],
+      "categories": [
+        "dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1070,7 +1142,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-010-*. Клавиши — семантические <kbd> с утолщённой нижней гранью: символ превращается в объект, который ищут глазами. Список сочетаний размечен как <dl> с парами dt/dd. Окно прокручивается внутри себя: справка обычно длиннее экрана.",
       "meta": {
-        "tags": ["dialog", "shortcuts", "keyboard", "help"],
+        "tags": [
+          "dialog",
+          "shortcuts",
+          "keyboard",
+          "help"
+        ],
         "ai": {
           "export": "Dialog010",
           "usage": "<Dialog010\n  id=\"shortcuts\"\n  groups={[{ title: \"Проект\", shortcuts: [{ keys: [\"Ctrl\", \"S\"], action: \"Сохранить\" }] }]}\n/>",
@@ -1160,7 +1237,9 @@
       "type": "registry:component",
       "title": "Preview Dialog",
       "description": "Окно с обложкой во всю ширину: картинка упирается в края, содержимое получает свой отступ. Обложка нарисована градиентами — внешних файлов у компонента быть не может.",
-      "categories": ["dialog"],
+      "categories": [
+        "dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1172,7 +1251,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-011-*. У окна нулевой padding и overflow:hidden, поэтому обложка упирается в скруглённые края; отступы живут во внутреннем [data-part=\"body\"]. Обложка держит пропорцию 16/9 и собрана из двух градиентов с затемнением снизу — заменить её на <img> можно, не трогая раскладку.",
       "meta": {
-        "tags": ["dialog", "preview", "media", "cover"],
+        "tags": [
+          "dialog",
+          "preview",
+          "media",
+          "cover"
+        ],
         "ai": {
           "export": "Dialog011",
           "usage": "<Dialog011\n  id=\"page-preview\"\n  title=\"Главная страница\"\n  meta=\"1440 × 900 · 320 КБ\"\n  primaryLabel=\"Опубликовать\"\n/>",
@@ -1269,7 +1353,9 @@
       "type": "registry:component",
       "title": "Secret Dialog",
       "description": "Окно с ключом, который показывают один раз: моноширинный текст переносится по символам, а предупреждение стоит под ним — его читают, увидев ключ.",
-      "categories": ["dialog"],
+      "categories": [
+        "dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1281,7 +1367,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-012-*. Ключ лежит в тёмном <code> с word-break:break-all: обрезанный многоточием секрет бесполезен, поэтому он переносится по символам. Предупреждение оформлено плашкой с восклицательным знаком на псевдоэлементе и стоит после ключа. Кнопка «Я сохранил» тихая, копирование — акцентное.",
       "meta": {
-        "tags": ["dialog", "secret", "api key", "copy"],
+        "tags": [
+          "dialog",
+          "secret",
+          "api key",
+          "copy"
+        ],
         "ai": {
           "export": "Dialog012",
           "usage": "<Dialog012\n  id=\"api-key\"\n  value={apiKey}\n  warning=\"Мы показываем ключ один раз.\"\n/>",
@@ -1380,7 +1471,9 @@
       "type": "registry:component",
       "title": "Feedback Dialog",
       "description": "Окно отзыва: оценка словами, а не звёздами — «тройка» без подписи ничего не значит ни для отвечающего, ни для того, кто читает ответы.",
-      "categories": ["dialog"],
+      "categories": [
+        "dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1392,7 +1485,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-013-*. Оценка — ряд нативных radio в подписях, выбранная подсвечивается через :has(input:checked); сами radio визуально скрыты, но остаются в потоке и доступны с клавиатуры. Поле комментария необязательное и стоит после оценки: сначала одно нажатие, потом слова.",
       "meta": {
-        "tags": ["dialog", "feedback", "survey", "rating"],
+        "tags": [
+          "dialog",
+          "feedback",
+          "survey",
+          "rating"
+        ],
         "ai": {
           "export": "Dialog013",
           "usage": "<Dialog013\n  id=\"feedback\"\n  title=\"Как прошла сборка страницы?\"\n  scale={[\"Мешало\", \"Терпимо\", \"Нормально\", \"Удобно\", \"Отлично\"]}\n/>",
@@ -1500,7 +1598,9 @@
       "type": "registry:component",
       "title": "Session Dialog",
       "description": "Окно истекающей сессии: полоса убывает CSS-анимацией ровно столько секунд, сколько названо в тексте, — таймер не тикает в React.",
-      "categories": ["dialog"],
+      "categories": [
+        "dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1512,7 +1612,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-014-*. Полоса времени — CSS-анимация scaleX, длительность приходит переменной --vibeui-dialog-014-seconds из пропа seconds: отсчёт не считается в JS и не перерисовывает страницу каждую секунду. Кнопка «остаться» акцентная и стоит справа: выход по бездействию должен требовать бездействия, а не клика.",
       "meta": {
-        "tags": ["dialog", "session", "timeout", "security"],
+        "tags": [
+          "dialog",
+          "session",
+          "timeout",
+          "security"
+        ],
         "ai": {
           "export": "Dialog014",
           "usage": "<Dialog014\n  id=\"session\"\n  seconds={60}\n  title=\"Сессия скоро закончится\"\n/>",
