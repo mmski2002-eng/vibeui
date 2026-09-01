@@ -10,7 +10,7 @@
 рабочая копия, где идёт сборка; `/srv/vibeui-live` — симлинк на текущий
 релиз в `/srv/vibeui-releases/<метка>`, откуда работает живой процесс.
 Порты 3000–3002 на этом сервере заняты другими проектами.
-Секреты — в `SECRETS.local.md` (не в git).
+Секреты — в `local/SECRETS.local.md` (не в git).
 
 Ниже `<domain>` — домен, `<user>` — пользователь, от которого работает
 приложение. Команды выполняются на сервере.
@@ -203,8 +203,10 @@ curl -s https://<domain>/r/hero-001.json | head -c 120
 set -e                          # без него рестарт случится и на упавшей сборке
 cd /srv/vibeui
 git checkout -- .               # сборка генерирует registry.json и registry/*.ts — они мешают git pull
+LOCK=$(md5sum package-lock.json | cut -d' ' -f1)
 git pull
-npm ci
+# npm ci на этом сервере стоит минуты, а лок-файл меняется редко
+[ "$LOCK" = "$(md5sum package-lock.json | cut -d' ' -f1)" ] || npm ci
 export REGISTRY_BASE_URL="https://<domain>/r"
 npm run build
 
@@ -221,6 +223,13 @@ systemctl restart vibeui
 # держим два последних релиза, остальное убираем
 ls -1dt /srv/vibeui-releases/* | tail -n +3 | xargs -r rm -rf
 ```
+
+Сборка идёт на Turbopack (`next build --turbopack` в `npm run build`): на
+каталоге в полторы тысячи items это ~76 с против ~230 с на webpack.
+
+Собирать релиз локально и заливать готовый `standalone` на сервер нельзя:
+в `node_modules` внутри него лежат нативные бинарники под платформу сборки
+(`@next/swc-win32-*`), на Linux они не запустятся.
 
 Релиз занимает около 190 МБ, поэтому старые чистятся сразу: на диске
 20 ГБ, и десяток забытых релизов его заполнит.

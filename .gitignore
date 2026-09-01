@@ -50,9 +50,5 @@ next-env.d.ts
 # playwright mcp artifacts
 /.playwright-mcp/
 
-# бизнес-документы, в репозиторий не идут
-/*.pptx
-/*.docx
-
-# секреты — только локально
-/SECRETS.local.md
+# локальные материалы: бизнес-документы и секреты, в репозиторий не идут
+/local/
