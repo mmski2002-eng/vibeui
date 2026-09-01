@@ -22,10 +22,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       # Та же мажорная версия, что и на сервере: standalone не несёт свой node.
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 20
           cache: npm
@@ -34,9 +34,11 @@ jobs:
 
       - run: npm run lint
 
-      - run: npm run typecheck
-
       - run: npm run build
+
+      # Только после сборки: LayoutProps и прочие типы маршрутов Next
+      # генерирует в .next/types, в чистом checkout их ещё нет.
+      - run: npm run typecheck
 
       # Standalone не копирует статику сам.
       - name: Собрать релиз
