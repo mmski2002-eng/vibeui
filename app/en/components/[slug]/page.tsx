@@ -23,7 +23,7 @@ export async function generateMetadata({
       (entry) => entry.slug === slug,
     )
 
-    return category ? { title: getCategoryLabel(category.slug) } : {}
+    return category ? { title: getCategoryLabel(category.slug, "en") } : {}
   }
 
   const block = localizeItem(found, "en")

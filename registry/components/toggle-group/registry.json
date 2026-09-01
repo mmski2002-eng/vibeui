@@ -4,7 +4,7 @@
     {
       "name": "togglegroup-001",
       "type": "registry:component",
-      "title": "Align Group",
+      "title": "Группа выравнивания",
       "description": "Группа кнопок-тумблеров с одиночным выбором: выравнивание применяется к образцу сразу, а внутри группы работает roving tabindex.",
       "categories": ["toggle-group"],
       "dependencies": [],
@@ -98,7 +98,8 @@
                 "label": "Group name",
                 "default": "Text alignment"
               }
-            }
+            },
+            "title": "Align Group"
           }
         }
       }
@@ -106,7 +107,7 @@
     {
       "name": "togglegroup-002",
       "type": "registry:component",
-      "title": "Format Group",
+      "title": "Группа начертаний",
       "description": "Группа тумблеров с множественным выбором: начертания складываются, поэтому нажатых кнопок может быть сколько угодно, а образец меняется сразу.",
       "categories": ["toggle-group"],
       "dependencies": [],
@@ -201,7 +202,8 @@
                 "label": "Sample",
                 "default": "Multiple selection: bold, italic and underline switch on independently of each other."
               }
-            }
+            },
+            "title": "Format Group"
           }
         }
       }
@@ -209,7 +211,7 @@
     {
       "name": "togglegroup-003",
       "type": "registry:component",
-      "title": "List View Group",
+      "title": "Вид списка",
       "description": "Группа выбора вида вместе со списком, которым она управляет: связь объявлена через aria-controls, а три вида — это три набора правил над одной разметкой.",
       "categories": ["toggle-group"],
       "dependencies": [],
@@ -303,7 +305,8 @@
                 "label": "Group name",
                 "default": "List view"
               }
-            }
+            },
+            "title": "List View Group"
           }
         }
       }
@@ -311,7 +314,7 @@
     {
       "name": "togglegroup-004",
       "type": "registry:component",
-      "title": "Weekday Filter",
+      "title": "Фильтр по дням недели",
       "description": "Фильтр по дням недели множественным выбором: семь кружков-тумблеров, живая строка итога и отдельная кнопка-действие «Только будни».",
       "categories": ["toggle-group"],
       "dependencies": [],
@@ -406,7 +409,8 @@
                 "label": "Note",
                 "default": "The courier comes only on the selected days."
               }
-            }
+            },
+            "title": "Weekday Filter"
           }
         }
       }
@@ -414,7 +418,7 @@
     {
       "name": "togglegroup-005",
       "type": "registry:component",
-      "title": "Size Picker",
+      "title": "Выбор размера",
       "description": "Выбор размера одиночным тумблером: закончившиеся размеры остаются в ряду перечёркнутыми и объясняют отказ, а не исчезают из списка.",
       "categories": ["toggle-group"],
       "dependencies": [],
@@ -508,7 +512,8 @@
                 "label": "Group name",
                 "default": "Size"
               }
-            }
+            },
+            "title": "Size Picker"
           }
         }
       }
@@ -516,7 +521,7 @@
     {
       "name": "togglegroup-006",
       "type": "registry:component",
-      "title": "Channel Group",
+      "title": "Группа каналов",
       "description": "Множественный выбор каналов уведомлений широкими карточками-тумблерами: пояснение под названием привязано через aria-describedby, а не вложено в имя кнопки.",
       "categories": ["toggle-group"],
       "dependencies": [],
@@ -611,7 +616,8 @@
                 "label": "Empty selection copy",
                 "default": "No channel selected — nothing will be sent."
               }
-            }
+            },
+            "title": "Channel Group"
           }
         }
       }
@@ -619,7 +625,7 @@
     {
       "name": "togglegroup-007",
       "type": "registry:component",
-      "title": "Format Toolbar",
+      "title": "Панель форматирования",
       "description": "Панель форматирования из двух групп-тумблеров с настоящими разделителями: слева множественный выбор начертаний, справа одиночный выбор выравнивания.",
       "categories": ["toggle-group"],
       "dependencies": [],
@@ -710,7 +716,8 @@
                 "label": "Toolbar name",
                 "default": "Formatting"
               }
-            }
+            },
+            "title": "Format Toolbar"
           }
         }
       }
@@ -718,7 +725,7 @@
     {
       "name": "togglegroup-008",
       "type": "registry:component",
-      "title": "Required Group",
+      "title": "Обязательная группа",
       "description": "Группа с обязательным минимумом: последняя нажатая кнопка помечена замком и aria-disabled и на нажатие отвечает объяснением, а не молчанием.",
       "categories": ["toggle-group"],
       "dependencies": [],
@@ -813,7 +820,8 @@
                 "label": "Refusal copy",
                 "default": "At least one column must stay visible."
               }
-            }
+            },
+            "title": "Required Group"
           }
         }
       }
@@ -821,7 +829,7 @@
     {
       "name": "togglegroup-009",
       "type": "registry:component",
-      "title": "Data View Switcher",
+      "title": "Переключатель представления данных",
       "description": "Одиночный выбор вида списка данных: сетка, список и таблица — это три разные HTML-разметки одних и тех же данных, а не перекраска одной вёрстки.",
       "categories": ["toggle-group"],
       "dependencies": [],
@@ -913,7 +921,8 @@
                 "label": "Group name",
                 "default": "List view"
               }
-            }
+            },
+            "title": "Data View Switcher"
           }
         }
       }
@@ -921,7 +930,7 @@
     {
       "name": "togglegroup-010",
       "type": "registry:component",
-      "title": "Inline Format Group",
+      "title": "Форматирование в строке",
       "description": "Множественный выбор начертаний с настоящей вложенностью тегов: жирный, курсив, зачёркнутый и моноширинный оборачивают образец друг в друга, а не красят его CSS-атрибутами.",
       "categories": ["toggle-group"],
       "dependencies": [],
@@ -1014,7 +1023,8 @@
                 "label": "Sample",
                 "default": "Marks stack inside one another and apply to the sample at once."
               }
-            }
+            },
+            "title": "Inline Format Group"
           }
         }
       }
@@ -1022,7 +1032,7 @@
     {
       "name": "togglegroup-011",
       "type": "registry:component",
-      "title": "Vertical Align Group",
+      "title": "Вертикальное выравнивание",
       "description": "Одиночный выбор вертикального выравнивания содержимого: сцена меняет align-items сразу, а «растянуть» — отдельное состояние, а не просто прижатие к краю.",
       "categories": ["toggle-group"],
       "dependencies": [],
@@ -1110,7 +1120,8 @@
                 "label": "Group name",
                 "default": "Vertical alignment"
               }
-            }
+            },
+            "title": "Vertical Align Group"
           }
         }
       }
@@ -1118,7 +1129,7 @@
     {
       "name": "togglegroup-012",
       "type": "registry:component",
-      "title": "Period Switcher",
+      "title": "Переключатель периода",
       "description": "Одиночный выбор периода графика: день, неделя, месяц и год — под каждым свой набор точек и подписей оси, график пересобирается целиком, а не растягивает прежние данные.",
       "categories": ["toggle-group"],
       "dependencies": [],
@@ -1206,7 +1217,8 @@
                 "label": "Group name",
                 "default": "Chart period"
               }
-            }
+            },
+            "title": "Period Switcher"
           }
         }
       }
@@ -1214,7 +1226,7 @@
     {
       "name": "togglegroup-013",
       "type": "registry:component",
-      "title": "Delivery Method Group",
+      "title": "Способ доставки",
       "description": "Вертикальная группа тумблеров с одиночным выбором и подписями: каждая кнопка несёт заголовок и пояснение, а roving tabindex ходит стрелками вверх-вниз.",
       "categories": ["toggle-group"],
       "dependencies": [],
@@ -1304,7 +1316,8 @@
                 "label": "Group name",
                 "default": "Delivery method"
               }
-            }
+            },
+            "title": "Delivery Method Group"
           }
         }
       }
@@ -1312,7 +1325,7 @@
     {
       "name": "togglegroup-014",
       "type": "registry:component",
-      "title": "Priority Tooltip Group",
+      "title": "Приоритет с подсказками",
       "description": "Одиночный выбор приоритета значками с собственной всплывающей подсказкой у каждого: подсказка появляется по наведению и по фокусу одинаково, а не только у мыши.",
       "categories": ["toggle-group"],
       "dependencies": [],
@@ -1402,7 +1415,8 @@
                 "label": "Group name",
                 "default": "Priority"
               }
-            }
+            },
+            "title": "Priority Tooltip Group"
           }
         }
       }
@@ -1410,7 +1424,7 @@
     {
       "name": "togglegroup-015",
       "type": "registry:component",
-      "title": "Task Filter Group",
+      "title": "Фильтр задач",
       "description": "Одиночный выбор сегмента-фильтра со счётчиком в каждой кнопке: цифра всегда считается от того же списка задач, что показывает область под группой.",
       "categories": ["toggle-group"],
       "dependencies": [],
@@ -1500,7 +1514,8 @@
                 "label": "Group name",
                 "default": "Tasks"
               }
-            }
+            },
+            "title": "Task Filter Group"
           }
         }
       }
@@ -1508,7 +1523,7 @@
     {
       "name": "togglegroup-016",
       "type": "registry:component",
-      "title": "Clearable Filter Group",
+      "title": "Сбрасываемый фильтр",
       "description": "Одиночный выбор с деселектом: повторный клик по нажатой кнопке возвращает группу в состояние «ничего не выбрано», а кнопка «Сбросить» делает то же одним действием.",
       "categories": ["toggle-group"],
       "dependencies": [],
@@ -1596,7 +1611,8 @@
                 "label": "Group name",
                 "default": "Quick filter"
               }
-            }
+            },
+            "title": "Clearable Filter Group"
           }
         }
       }

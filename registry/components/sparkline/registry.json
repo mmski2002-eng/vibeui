@@ -4,11 +4,9 @@
     {
       "name": "sparkline-001",
       "type": "registry:component",
-      "title": "Metric Sparkline",
+      "title": "Спарклайн показателя",
       "description": "Мини-график размером со строку: число отвечает «сколько», кривая — «куда идёт». Цвет считается из знака изменения, поэтому падение нельзя покрасить в зелёный.",
-      "categories": [
-        "sparkline"
-      ],
+      "categories": ["sparkline"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sparkline-001-*. Кривая — SVG-путь, посчитанный из массива значений на сервере: клиентского JS нет. Направление выводится из пропа delta и попадает в data-trend, от которого зависят и цвет линии, и поворот стрелки: цвет нельзя задать вручную вразрез со знаком. Компонент inline-flex, поэтому встаёт в ячейку таблицы и в строку карточки.",
       "meta": {
-        "tags": [
-          "sparkline",
-          "metric",
-          "kpi",
-          "trend"
-        ],
+        "tags": ["sparkline", "metric", "kpi", "trend"],
         "ai": {
           "export": "Sparkline001",
           "usage": "<Sparkline001\n  label=\"Установок за месяц\"\n  value=\"1 284\"\n  delta={12.4}\n  values={[12, 15, 13, 19, 24, 31, 41]}\n/>",
@@ -131,7 +124,8 @@
                 "label": "Unit",
                 "default": "%"
               }
-            }
+            },
+            "title": "Metric Sparkline"
           }
         }
       }
@@ -139,11 +133,9 @@
     {
       "name": "sparkline-002",
       "type": "registry:component",
-      "title": "Metric Table",
+      "title": "Таблица со спарклайнами",
       "description": "Таблица метрик, где динамика живёт прямо в строке: данные здесь уже текст, поэтому таблица и есть текстовая альтернатива кривым.",
-      "categories": [
-        "sparkline"
-      ],
+      "categories": ["sparkline"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -155,12 +147,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sparkline-002-*. Серверный: хуков нет. Корень — настоящая таблица, поэтому текстовая альтернатива графикам не нужна отдельно: кривые помечены aria-hidden. Путь спарклайна считается из массива значений в системе 100×24 с preserveAspectRatio=\"none\", а толщина линии держится vector-effect: non-scaling-stroke. Направление выводится из знака delta с порогом в полпроцента и попадает в data-trend на строке, от которого зависят и цвет кривой, и цвет изменения.",
       "meta": {
-        "tags": [
-          "sparkline",
-          "table",
-          "metrics",
-          "trend"
-        ],
+        "tags": ["sparkline", "table", "metrics", "trend"],
         "preview": {
           "width": "full"
         },
@@ -254,7 +241,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Metric Table"
           }
         }
       }

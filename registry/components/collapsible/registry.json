@@ -4,11 +4,9 @@
     {
       "name": "collapsible-001",
       "type": "registry:component",
-      "title": "Native Disclosure",
+      "title": "Нативное раскрытие",
       "description": "Базовая свёртка на нативном details: состояние живёт в разметке, клиентского кода нет, раскрытие работает до гидратации.",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-001-*. Серверный: хуков нет, корень блока — сам элемент details. Системный маркер снят через list-style:none и ::-webkit-details-marker, вместо него нарисован значок из двух граней квадрата, поворот привязан к селектору [open]. Подсказка справа прижата margin-left:auto, поэтому при её отсутствии значок берёт auto на себя через :only-child.",
       "meta": {
-        "tags": [
-          "collapsible",
-          "details",
-          "no-js",
-          "disclosure"
-        ],
+        "tags": ["collapsible", "details", "no-js", "disclosure"],
         "preview": {
           "width": "full"
         },
@@ -106,7 +99,8 @@
                 "label": "Hint",
                 "default": "30 seconds"
               }
-            }
+            },
+            "title": "Native Disclosure"
           }
         }
       }
@@ -114,11 +108,9 @@
     {
       "name": "collapsible-002",
       "type": "registry:component",
-      "title": "Animated Height",
+      "title": "Анимация высоты",
       "description": "Свёртка с плавной анимацией высоты: обёртка-грид едет от 0fr к 1fr, поэтому высота содержимого не нужна заранее.",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -130,12 +122,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-002-*. Клиентский: \"use client\" ради useState и aria-expanded. Анимация высоты сделана гридом: обёртка [data-part=\"wrap\"] переключает grid-template-rows с 0fr на 1fr, внутренний слой держит overflow:hidden и min-height:0 — без него строка грида не сжимается ниже содержимого. Скрытая часть помечена атрибутом inert, поэтому в свёрнутом виде её содержимое выпадает из табуляции.",
       "meta": {
-        "tags": [
-          "collapsible",
-          "animation",
-          "grid",
-          "disclosure"
-        ],
+        "tags": ["collapsible", "animation", "grid", "disclosure"],
         "preview": {
           "width": "full"
         },
@@ -214,7 +201,8 @@
               "defaultOpen": {
                 "label": "Open by default"
               }
-            }
+            },
+            "title": "Animated Height"
           }
         }
       }
@@ -222,11 +210,9 @@
     {
       "name": "collapsible-003",
       "type": "registry:component",
-      "title": "Read More",
+      "title": "Читать дальше",
       "description": "Свёртка длинного текста: обрез по числу строк, градиент вместо резкой границы и кнопка «Показать ещё».",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -238,12 +224,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-003-*. Клиентский: \"use client\" ради useState. Обрез сделан связкой display:-webkit-box, -webkit-box-orient:vertical и -webkit-line-clamp, где число строк приходит переменной --vibeui-collapsible-003-lines из пропса lines — поэтому граница всегда совпадает с базовой линией строки. Градиент лежит в ::after контейнера обреза и уходит в ту же переменную фона, что и вся карточка. Кнопка связана с абзацем через aria-controls и несёт aria-expanded.",
       "meta": {
-        "tags": [
-          "collapsible",
-          "read-more",
-          "line-clamp",
-          "text"
-        ],
+        "tags": ["collapsible", "read-more", "line-clamp", "text"],
         "preview": {
           "width": "full"
         },
@@ -324,7 +305,8 @@
                 "label": "Heading",
                 "default": "Why the component ships as one file"
               }
-            }
+            },
+            "title": "Read More"
           }
         }
       }
@@ -332,11 +314,9 @@
     {
       "name": "collapsible-004",
       "type": "registry:component",
-      "title": "Collapsed Log",
+      "title": "Свёрнутый лог",
       "description": "Свёрнутый вывод сборки: итог по строкам и ошибкам виден в заголовке, а сам лог разворачивается только при разборе.",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -348,12 +328,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-004-*. Серверный: хуков нет, корень — details. Количество ошибок считается из массива lines по полю level и попадает в summary, поэтому разворачивать блок ради подсчёта не нужно. Номера строк рисует счётчик CSS через counter-reset и li::before: в разметке их нет, и копия лога остаётся чистой. Поверхность тёмная, лог моноширинный, уровни различаются цветом строки.",
       "meta": {
-        "tags": [
-          "collapsible",
-          "log",
-          "details",
-          "counter"
-        ],
+        "tags": ["collapsible", "log", "details", "counter"],
         "preview": {
           "width": "full"
         },
@@ -432,7 +407,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Collapsed Log"
           }
         }
       }
@@ -440,11 +416,9 @@
     {
       "name": "collapsible-005",
       "type": "registry:component",
-      "title": "Exclusive Steps",
+      "title": "Взаимоисключающие шаги",
       "description": "Группа свёрток, где открыт ровно один шаг: взаимное исключение держит атрибут name у details, без React-состояния.",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -456,12 +430,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-005-*. Серверный: хуков нет. Общий атрибут name на всех details превращает их в радиогруппу — открытым остаётся только один, и состояние не дублируется в React. Номер шага рисует CSS-счётчик на summary::before, поэтому перестановка массива steps сразу меняет нумерацию. Открытый шаг подсвечивается заливкой кружка через селектор details[open].",
       "meta": {
-        "tags": [
-          "collapsible",
-          "steps",
-          "exclusive",
-          "no-js"
-        ],
+        "tags": ["collapsible", "steps", "exclusive", "no-js"],
         "preview": {
           "width": "full"
         },
@@ -540,7 +509,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Exclusive Steps"
           }
         }
       }
@@ -548,11 +518,9 @@
     {
       "name": "collapsible-006",
       "type": "registry:component",
-      "title": "Hidden Count",
+      "title": "Счётчик скрытого",
       "description": "Свёртка со счётчиком скрытого: первые участники видны в заголовке, остальные прячутся за кружком «+N».",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -564,12 +532,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-006-*. Серверный: хуков нет, корень — details. Массив people делится пропсом visible на видимую и скрытую части, размер скрытой части и есть подпись кружка «+N». Стек аватаров собран отрицательным margin-left и рамкой цвета фона, инициалы вычисляются из имени, поэтому картинки не нужны. Кружок счётчика в раскрытом состоянии меняет цвет через селектор [open].",
       "meta": {
-        "tags": [
-          "collapsible",
-          "avatars",
-          "counter",
-          "details"
-        ],
+        "tags": ["collapsible", "avatars", "counter", "details"],
         "preview": {
           "width": "full"
         },
@@ -650,7 +613,8 @@
                 "label": "Heading",
                 "default": "Project members"
               }
-            }
+            },
+            "title": "Hidden Count"
           }
         }
       }
@@ -658,11 +622,9 @@
     {
       "name": "collapsible-007",
       "type": "registry:component",
-      "title": "Icon Rail",
+      "title": "Полоса иконок",
       "description": "Боковая панель, сворачивающаяся не в ноль, а в узкую полосу иконок: навигация остаётся доступной в обоих состояниях.",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -674,12 +636,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-007-*. Клиентский: \"use client\" ради useState. Ширина панели едет по переменной --vibeui-collapsible-007-width, которую переопределяет селектор [data-collapsed=\"true\"] — переход описан одним свойством. Подписи не размонтируются, а схлопываются нулевой шириной с overflow:hidden, поэтому доступное имя кнопки сохраняется и порядок табуляции не меняется. В свёрнутом виде подпись дублируется в title кнопки.",
       "meta": {
-        "tags": [
-          "collapsible",
-          "sidebar",
-          "rail",
-          "navigation"
-        ],
+        "tags": ["collapsible", "sidebar", "rail", "navigation"],
         "preview": {
           "width": "full"
         },
@@ -758,7 +715,8 @@
               "defaultCollapsed": {
                 "label": "Collapsed by default"
               }
-            }
+            },
+            "title": "Icon Rail"
           }
         }
       }
@@ -766,11 +724,9 @@
     {
       "name": "collapsible-008",
       "type": "registry:component",
-      "title": "Changed Settings",
+      "title": "Изменённые настройки",
       "description": "Свёртка настроек с признаком «изменено»: число отличий от значений по умолчанию видно в заголовке до раскрытия.",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -782,12 +738,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-008-*. Серверный: хуков нет, корень — details. Количество изменённых параметров считается из массива settings по флагу changed и выводится плашкой в summary; при нуле плашка меняет текст и приглушается через атрибут data-clean. Строки собраны на dl/dt/dd — это описания значений, а не таблица; изменённая строка получает точку в dt::before, подложку и жирное моноширинное значение.",
       "meta": {
-        "tags": [
-          "collapsible",
-          "settings",
-          "diff",
-          "details"
-        ],
+        "tags": ["collapsible", "settings", "diff", "details"],
         "preview": {
           "width": "full"
         },
@@ -866,7 +817,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Changed Settings"
           }
         }
       }
@@ -874,11 +826,9 @@
     {
       "name": "collapsible-009",
       "type": "registry:component",
-      "title": "Markup State",
+      "title": "Состояние в разметке",
       "description": "История версий, где раскрытый раздел объявлен атрибутом open прямо в разметке: сервер отдаёт нужный раздел уже открытым.",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -890,12 +840,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-009-*. Серверный: хуков нет, флаг open каждого релиза уходит прямо в атрибут details. Это не «начальное значение стейта», а само состояние: до гидратации ничего не мигает, печать и поиск по странице видят содержимое. Подпись переключателя меняется без React — в разметке лежат два узла data-when, а показывает нужный селектор details[open].",
       "meta": {
-        "tags": [
-          "collapsible",
-          "changelog",
-          "ssr",
-          "no-js"
-        ],
+        "tags": ["collapsible", "changelog", "ssr", "no-js"],
         "preview": {
           "width": "full"
         },
@@ -974,7 +919,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Markup State"
           }
         }
       }
@@ -982,11 +928,9 @@
     {
       "name": "collapsible-010",
       "type": "registry:component",
-      "title": "Sticky Sections",
+      "title": "Липкие заголовки",
       "description": "Свёртки внутри карточки с прокруткой: заголовок раздела липнет к верху и не уезжает, пока не придёт следующий.",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -998,12 +942,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-010-*. Серверный: хуков нет. Прокрутка ограничена контейнером [data-part=\"scroll\"] с max-height и overscroll-behavior:contain, а summary внутри него получает position:sticky и top:0 — прилипание работает только потому, что скролл-контейнер свой, а не окно. Общее число элементов считается из массива sections и выводится в шапке карточки.",
       "meta": {
-        "tags": [
-          "collapsible",
-          "sticky",
-          "scroll",
-          "sections"
-        ],
+        "tags": ["collapsible", "sticky", "scroll", "sections"],
         "preview": {
           "width": "full"
         },
@@ -1082,7 +1021,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Sticky Sections"
           }
         }
       }

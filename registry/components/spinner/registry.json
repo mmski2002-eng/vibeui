@@ -4,11 +4,9 @@
     {
       "name": "spinner-001",
       "type": "registry:component",
-      "title": "Labelled Spinner",
+      "title": "Индикатор с подписью",
       "description": "Ожидание с обязательной подписью: кольцо само по себе не сообщает ни что происходит, ни сколько ждать.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-spinner-001-*. Серверный: хуков нет. Кольцо собрано из бордюра с окрашенной верхней гранью, размер задаётся одной переменной. Блок объявлен role=\"status\" с aria-live. При prefers-reduced-motion вращение заменяется пульсацией прозрачности.",
       "meta": {
-        "tags": [
-          "spinner",
-          "loading",
-          "status",
-          "a11y"
-        ],
+        "tags": ["spinner", "loading", "status", "a11y"],
         "ai": {
           "export": "Spinner001",
           "usage": "<Spinner001 label=\"Собираем каталог\" hint=\"Меньше минуты\" size=\"md\" />",
@@ -72,11 +65,7 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": [
-              "sm",
-              "md",
-              "lg"
-            ]
+            "options": ["sm", "md", "lg"]
           }
         ],
         "i18n": {
@@ -119,7 +108,8 @@
               "size": {
                 "label": "Size"
               }
-            }
+            },
+            "title": "Labelled Spinner"
           }
         }
       }
@@ -127,11 +117,9 @@
     {
       "name": "spinner-002",
       "type": "registry:component",
-      "title": "Dots Wave Loader",
+      "title": "Волна из точек",
       "description": "Ожидание тремя точками вместо кольца: точки занимают меньше высоты и встают в строку рядом с текстом, не раздвигая её.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -143,12 +131,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Волна собрана задержками, посчитанными от одной переменной --vibeui-spinner-002-speed через calc, поэтому темп меняется одним числом, а не тремя правками анимации. Точки декоративны и помечены aria-hidden, состояние объявлено role=status с aria-live=polite на корне — иначе скринридер молчит о том, что идёт работа. При prefers-reduced-motion анимация выключается, но точки замирают разной яркостью: сообщение «идёт работа» остаётся, мигание исчезает. Подложка светлая, потому что подпись тёмная.",
       "meta": {
-        "tags": [
-          "spinner",
-          "dots",
-          "loading",
-          "status"
-        ],
+        "tags": ["spinner", "dots", "loading", "status"],
         "ai": {
           "export": "Spinner002",
           "usage": "<Spinner002 label=\"Собираем каталог\" speed={1.2} />",
@@ -227,7 +210,8 @@
                 "label": "Tempo, s",
                 "default": 1.2
               }
-            }
+            },
+            "title": "Dots Wave Loader"
           }
         }
       }
@@ -235,11 +219,9 @@
     {
       "name": "spinner-003",
       "type": "registry:component",
-      "title": "Indeterminate Progress Bar",
+      "title": "Неопределённый прогресс",
       "description": "Полоса неопределённого прогресса без aria-valuenow: как только атрибут появляется, скринридер называет процент, которого никто не считал.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -251,12 +233,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Дорожка помечена role=progressbar с aria-busy и без aria-valuenow — это и есть корректное объявление неопределённого прогресса; выдуманный процент хуже его отсутствия. Отрезок ездит по дорожке анимацией transform, а не изменением left или width: браузер не пересчитывает раскладку на каждом кадре, и полоса не греет процессор в длинном списке. Толщина вынесена в проп height и подставляется переменной в пикселях. При prefers-reduced-motion отрезок занимает дорожку целиком и медленно дышит. Подложка светлая: подписи тёмные.",
       "meta": {
-        "tags": [
-          "spinner",
-          "progress",
-          "indeterminate",
-          "bar"
-        ],
+        "tags": ["spinner", "progress", "indeterminate", "bar"],
         "preview": {
           "width": "full"
         },
@@ -338,7 +315,8 @@
                 "label": "Thickness, px",
                 "default": 4
               }
-            }
+            },
+            "title": "Indeterminate Progress Bar"
           }
         }
       }
@@ -346,11 +324,9 @@
     {
       "name": "spinner-004",
       "type": "registry:component",
-      "title": "Percent Ring Meter",
+      "title": "Кольцо с процентами",
       "description": "Кольцо прогресса с числом внутри: дуга нарисована conic-gradient и вырезана маской, поэтому кольцо остаётся одним элементом без svg и круга-заглушки.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -362,12 +338,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Дуга — conic-gradient, из которого радиальная маска вырезает середину: так кольцо остаётся одним элементом, без svg и без второго круга, закрывающего центр. Число лежит поверх кольца отдельным узлом, а не внутри маскированного элемента, иначе маска вырезала бы и цифры. Значение зажимается в 0–100 внутри компонента и объявляется через role=progressbar с aria-valuenow, valuemin и valuemax. Цифры моноширинные: при обычных ширина «11 %» и «88 %» разная, и подпись дёргается на каждом обновлении. Подложка светлая: число и подписи тёмные.",
       "meta": {
-        "tags": [
-          "spinner",
-          "progress",
-          "ring",
-          "percent"
-        ],
+        "tags": ["spinner", "progress", "ring", "percent"],
         "ai": {
           "export": "Spinner004",
           "usage": "<Spinner004 value={68} label=\"Загружаем компоненты\" size=\"md\" />",
@@ -446,7 +417,8 @@
                 "label": "Caption",
                 "default": "Loading components"
               }
-            }
+            },
+            "title": "Percent Ring Meter"
           }
         }
       }
@@ -454,11 +426,9 @@
     {
       "name": "spinner-005",
       "type": "registry:component",
-      "title": "Blocking Busy Overlay",
+      "title": "Блокирующая подложка",
       "description": "Наложение поверх блока, которое действительно блокирует: содержимое помечено inert, поэтому под плёнкой не остаётся кликабельных кнопок и достижимых табом полей.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -470,12 +440,7 @@
       ],
       "docs": "Серверный компонент, хуков нет: состояние приходит пропом busy. Полупрозрачная плёнка сама по себе ничего не запрещает — под ней остаются рабочие кнопки и поля, до которых доходит таб. Здесь содержимое получает атрибут inert, который убирает его и из фокуса, и из дерева доступности, а на область ставится aria-busy, чтобы скринридер сообщил о работе. Плёнка сделана color-mix от цвета подложки плюс backdrop-filter: она приглушает содержимое, но не прячет его целиком, и пользователь видит, что именно сохраняется. При prefers-reduced-motion кольцо не крутится, а дышит.",
       "meta": {
-        "tags": [
-          "spinner",
-          "overlay",
-          "busy",
-          "inert"
-        ],
+        "tags": ["spinner", "overlay", "busy", "inert"],
         "preview": {
           "width": "full"
         },
@@ -555,7 +520,8 @@
                 "label": "Blocking",
                 "default": true
               }
-            }
+            },
+            "title": "Blocking Busy Overlay"
           }
         }
       }
@@ -563,11 +529,9 @@
     {
       "name": "spinner-006",
       "type": "registry:component",
-      "title": "Pulse Skeleton Card",
+      "title": "Пульсирующий скелетон",
       "description": "Скелетон карточки на пульсации прозрачности, а не на бегущем блике: пульс отдаётся композитору и почти ничего не стоит в списке из двадцати заглушек.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -579,12 +543,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Бегущий блик — это анимация большого градиента, и на списке заглушек он заметно греет процессор; пульсация прозрачности анимирует только opacity, что браузер отдаёт композитору. Заглушка повторяет метрику будущей карточки: та же высота строк, те же промежутки и та же пропорция картинки, поэтому при подстановке данных ничего не прыгает. Строки получают небольшие задержки, чтобы карточка не мигала одним куском. Для скринридера это одно сообщение role=status с именем, а не двадцать серых прямоугольников. Подложка светлая: серые плашки на тёмном фоне теряются.",
       "meta": {
-        "tags": [
-          "spinner",
-          "skeleton",
-          "pulse",
-          "placeholder"
-        ],
+        "tags": ["spinner", "skeleton", "pulse", "placeholder"],
         "preview": {
           "width": "full"
         },
@@ -665,7 +624,8 @@
                 "label": "Image",
                 "default": true
               }
-            }
+            },
+            "title": "Pulse Skeleton Card"
           }
         }
       }
@@ -673,11 +633,9 @@
     {
       "name": "spinner-007",
       "type": "registry:component",
-      "title": "Chasing Bubble Dots",
+      "title": "Догоняющие точки",
       "description": "Индикатор набора сообщения: три точки в чат-пузыре подсвечиваются по очереди, а не волной, и читаются как «печатает», а не как абстрактная загрузка.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -689,12 +647,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Форма — чат-пузырь с хвостиком-псевдоэлементом, внутри три точки. В отличие от волны точек, здесь очерёдность строгая: animation-timing-function steps(1,end) переключает яркость точки скачком, а не плавно, и в любой момент ярка ровно одна точка — так подсветка читается как «идёт набор», а не как общая загрузка. Задержки посчитаны от одной переменной --vibeui-spinner-007-speed, поэтому темп меняется одним числом. Блок объявлен role=\"status\" с aria-live, точки декоративны и помечены aria-hidden. При prefers-reduced-motion точки замирают разной яркостью. Подложка светлая: подпись тёмная.",
       "meta": {
-        "tags": [
-          "spinner",
-          "dots",
-          "typing",
-          "status"
-        ],
+        "tags": ["spinner", "dots", "typing", "status"],
         "ai": {
           "export": "Spinner007",
           "usage": "<Spinner007 label=\"Собеседник печатает\" speed={1.05} />",
@@ -775,7 +728,8 @@
                 "label": "Tempo, s",
                 "default": 1.05
               }
-            }
+            },
+            "title": "Chasing Bubble Dots"
           }
         }
       }
@@ -783,11 +737,9 @@
     {
       "name": "spinner-008",
       "type": "registry:component",
-      "title": "Barber Pole Loading Bar",
+      "title": "Полосатая полоса загрузки",
       "description": "Полоса неопределённого прогресса из движущихся диагональных полос: вся дорожка — единый закрашенный конвейер на background-position, без отдельного бегунка.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -799,12 +751,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. В отличие от дорожки с уезжающим сегментом, здесь вся полоса залита repeating-linear-gradient и целиком едет через background-position — «полосатый конвейер», один элемент вместо дорожки и бегунка. Дорожка помечена role=\"progressbar\" с aria-busy и без aria-valuenow: выдуманный процент хуже его отсутствия. При prefers-reduced-motion узор замирает на месте — полосы видны, движение исчезает. Толщина вынесена в проп height. Подложка светлая: подпись и подсказка тёмные.",
       "meta": {
-        "tags": [
-          "spinner",
-          "progress",
-          "indeterminate",
-          "bar"
-        ],
+        "tags": ["spinner", "progress", "indeterminate", "bar"],
         "preview": {
           "width": "full"
         },
@@ -886,7 +833,8 @@
                 "label": "Thickness, px",
                 "default": 6
               }
-            }
+            },
+            "title": "Barber Pole Loading Bar"
           }
         }
       }
@@ -894,11 +842,9 @@
     {
       "name": "spinner-009",
       "type": "registry:component",
-      "title": "Submit Lock Button",
+      "title": "Кнопка с блокировкой отправки",
       "description": "Кнопка со спиннером, которая блокирует повторное нажатие: подпись не меняется, но кнопка отключается на время работы, а скрытая область объявляет статус.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -910,12 +856,7 @@
       ],
       "docs": "Клиентский компонент: состояние pending хранится в useState, таймер снятия блокировки очищается в useEffect при размонтировании. По клику кнопка получает disabled, aria-disabled и aria-busy, рядом с видимой подписью появляются три подпрыгивающие точки — повторный клик во время работы игнорируется. Видимый текст кнопки не меняется, чтобы не дёргать раскладку; статус объявляет отдельная визуально скрытая область с role=\"status\" и aria-live=\"polite\". При prefers-reduced-motion точки замирают разной яркостью.",
       "meta": {
-        "tags": [
-          "spinner",
-          "button",
-          "loading",
-          "double-submit"
-        ],
+        "tags": ["spinner", "button", "loading", "double-submit"],
         "ai": {
           "export": "Spinner009",
           "usage": "<Spinner009 label=\"Сохранить настройки\" pendingDuration={1600} />",
@@ -1007,7 +948,8 @@
                 "label": "Duration, ms",
                 "default": 1600
               }
-            }
+            },
+            "title": "Submit Lock Button"
           }
         }
       }
@@ -1015,11 +957,9 @@
     {
       "name": "spinner-010",
       "type": "registry:component",
-      "title": "Shimmer Skeleton Row",
+      "title": "Строка с бликом",
       "description": "Заглушка строки таблицы с бегущим бликом: один накладной градиент едет поверх неподвижных ячеек через transform, вместо пульсации целой строки.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1031,12 +971,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. В отличие от карточки на пульсации прозрачности, здесь заглушка — строка таблицы, и по ней едет один накладной элемент с линейным градиентом через transform: translateX, не пересчитывая раскладку ячеек под собой. Аватар и ячейки строки статичны и лишь очерчивают будущую метрику ряда. Для скринридера это одно сообщение role=\"status\" с aria-label, а не пять серых прямоугольников. При prefers-reduced-motion блик замирает статичным пятном по центру. Подложка светлая: серые плашки на тёмном фоне теряются.",
       "meta": {
-        "tags": [
-          "spinner",
-          "skeleton",
-          "shimmer",
-          "table"
-        ],
+        "tags": ["spinner", "skeleton", "shimmer", "table"],
         "preview": {
           "width": "full"
         },
@@ -1118,7 +1053,8 @@
                 "label": "Caption",
                 "default": "Loading the table row"
               }
-            }
+            },
+            "title": "Shimmer Skeleton Row"
           }
         }
       }
@@ -1126,11 +1062,9 @@
     {
       "name": "spinner-011",
       "type": "registry:component",
-      "title": "Segmented Percent Dial",
+      "title": "Сегментный циферблат",
       "description": "Круговой индикатор процента из отдельных делений-«тиков», как измерительный прибор, а не гладкая заливка дуги — осознанная альтернатива conic-gradient.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1142,12 +1076,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. В отличие от кольца на conic-gradient, здесь циферблат собран из отдельных делений: каждое — короткая палочка, повёрнутая на свой угол через transform-origin в центре круга и inline-стиль rotate(), посчитанный в компоненте. Количество закрашенных делений считается от доли value. Число лежит поверх циферблата отдельным узлом. Значение зажимается в 0–100 и объявляется через role=\"progressbar\" с aria-valuenow, valuemin и valuemax. Цифры моноширинные, чтобы подпись не дёргалась при обновлении. Подложка светлая: число и подписи тёмные.",
       "meta": {
-        "tags": [
-          "spinner",
-          "progress",
-          "dial",
-          "percent"
-        ],
+        "tags": ["spinner", "progress", "dial", "percent"],
         "ai": {
           "export": "Spinner011",
           "usage": "<Spinner011 value={42} label=\"Обрабатываем видео\" segments={24} />",
@@ -1226,7 +1155,8 @@
                 "label": "Caption",
                 "default": "Processing the video"
               }
-            }
+            },
+            "title": "Segmented Percent Dial"
           }
         }
       }
@@ -1234,11 +1164,9 @@
     {
       "name": "spinner-012",
       "type": "registry:component",
-      "title": "Staged Status Message",
+      "title": "Сообщение по этапам",
       "description": "Индикатор с текстом стадии: три сообщения о ходе работы перетекают одно в другое по кругу через animation-delay, без единой строчки клиентского JS.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1250,12 +1178,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Три строки стадии наложены друг на друга абсолютным позиционированием и по очереди становятся видимыми через animation-delay, посчитанный от одной переменной --vibeui-spinner-012-speed — тот же приём, что и в очереди точек, только на тексте. Смена стадий декоративна и помечена aria-hidden: без состояния скринридеру нечего внятно объявлять на каждый кадр CSS-анимации, поэтому доступное имя — статичная подпись через aria-label на корневом role=\"status\". При prefers-reduced-motion видна только первая стадия, кольцо рядом с текстом дышит вместо вращения.",
       "meta": {
-        "tags": [
-          "spinner",
-          "stages",
-          "status",
-          "loading"
-        ],
+        "tags": ["spinner", "stages", "status", "loading"],
         "ai": {
           "export": "Spinner012",
           "usage": "<Spinner012 label=\"Идёт многоэтапная загрузка\" stages={[\"Готовим данные…\", \"Собираем результат…\", \"Почти готово\"]} />",
@@ -1336,7 +1259,8 @@
                 "label": "Loop duration, s",
                 "default": 4.5
               }
-            }
+            },
+            "title": "Staged Status Message"
           }
         }
       }

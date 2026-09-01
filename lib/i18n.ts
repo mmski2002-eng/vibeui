@@ -22,7 +22,12 @@ export function stripLocale(path: string): string {
 type Dictionary = {
   locale: Locale
   label: string
-  topbar: { components: string; blocks: string; items: string }
+  topbar: {
+    components: string
+    blocks: string
+    items: (count: number) => string
+    lab: string
+  }
   home: {
     title: string
     description: string
@@ -47,8 +52,6 @@ type Dictionary = {
   card: {
     copy: string
     copied: string
-    configure: string
-    closeConfigure: string
     toLight: string
     toDark: string
     reset: string
@@ -62,6 +65,14 @@ type Dictionary = {
     loading: string
   }
   control: { unset: string; clear: string }
+  viewport: {
+    desktop: string
+    tablet: string
+    mobile: string
+    hostTheme: string
+    light: string
+    dark: string
+  }
   item: {
     preview: string
     use: string
@@ -84,26 +95,48 @@ type Dictionary = {
 const RU: Dictionary = {
   locale: "ru",
   label: "Рус",
-  topbar: { components: "Компоненты", blocks: "Блоки", items: "items" },
+  topbar: {
+    components: "Компоненты",
+    blocks: "Блоки",
+    items: (count) => {
+      const tail = count % 100
+      const last = count % 10
+
+      if (tail > 10 && tail < 20) {
+        return `${count} элементов`
+      }
+
+      if (last === 1) {
+        return `${count} элемент`
+      }
+
+      if (last > 1 && last < 5) {
+        return `${count} элемента`
+      }
+
+      return `${count} элементов`
+    },
+    lab: "Рабочая область",
+  },
   home: {
     title: "Выбери дизайн. Отдай ИИ. Получи сайт.",
     description:
-      "Библиотека готовых компонентов для вайбкодинга. Открой компонент, нажми Copy for AI — агент поставит его из registry, а не пересоздаст похожий по описанию. Целые секции страницы — в",
+      "Библиотека готовых компонентов для вайбкодинга. Открой компонент, нажми «Копировать для ИИ» — агент поставит его из реестра, а не пересоздаст похожий по описанию. Целые секции страницы — в",
     blocksLink: "блоках",
     counts: (items, categories) =>
-      `items: ${items} · категорий: ${categories} · установка одной командой`,
+      `элементов: ${items} · категорий: ${categories} · установка одной командой`,
   },
   components: {
     title: "Компоненты",
     metaTitle: "Компоненты",
     description:
-      "Мелкие элементы интерфейса: кнопки, поля, индикаторы. Каждый ставится одной командой, не зависит от темы вашего проекта и приходит с инструкцией для AI-агента.",
+      "Мелкие элементы интерфейса: кнопки, поля, индикаторы. Каждый ставится одной командой, не зависит от темы вашего проекта и приходит с инструкцией для ИИ-агента.",
   },
   blocks: {
     title: "Блоки",
     metaTitle: "Блоки",
     description:
-      "Готовые секции лендинга целиком. Каждая ставится одной командой, не зависит от темы вашего проекта и приходит с инструкцией для AI-агента.",
+      "Готовые секции лендинга целиком. Каждая ставится одной командой, не зависит от темы вашего проекта и приходит с инструкцией для ИИ-агента.",
   },
   nav: { heading: "Каталог", all: "Всё", filter: "Фильтр каталога" },
   catalog: {
@@ -135,14 +168,12 @@ const RU: Dictionary = {
     inCategory: "в категории",
   },
   card: {
-    copy: "Copy for AI",
+    copy: "Копировать для ИИ",
     copied: "Ссылка скопирована",
-    configure: "Настроить компонент",
-    closeConfigure: "Закрыть настройку",
     toLight: "Светлая подложка превью",
     toDark: "Тёмная подложка превью",
     reset: "Сбросить настройки",
-    getCode: "Get Code",
+    getCode: "Показать код",
     install: "Установка",
     code: "Код",
     copyCode: "Скопировать код",
@@ -152,13 +183,21 @@ const RU: Dictionary = {
     loading: "Загружается…",
   },
   control: { unset: "по умолчанию", clear: "сбросить" },
+  viewport: {
+    desktop: "Десктоп",
+    tablet: "Планшет",
+    mobile: "Телефон",
+    hostTheme: "Тема страницы",
+    light: "Светлая",
+    dark: "Тёмная",
+  },
   item: {
     preview: "Превью",
-    use: "Использовать с AI",
+    use: "Использовать с ИИ",
     steps: [
       "Скопируйте ссылку.",
       "Напишите агенту своими словами и вставьте её в предложение.",
-      "Агент откроет ссылку и поставит компонент из registry.",
+      "Агент откроет ссылку и поставит компонент из реестра.",
     ],
     example: "размести это в шапке:",
     showFull: "Показать полную инструкцию",
@@ -171,7 +210,7 @@ const RU: Dictionary = {
       "Тот же файл, который поставит агент. Нужен, если вы предпочитаете скопировать код руками.",
     copyCode: "Копировать код",
     copyCommand: "Копировать команду",
-    registryUrl: "Registry URL",
+    registryUrl: "Ссылка на реестр",
     noCommand: "Команда установки недоступна: переменная окружения",
     noSource: "Исходник компонента не найден.",
   },
@@ -182,7 +221,12 @@ const RU: Dictionary = {
 const EN: Dictionary = {
   locale: "en",
   label: "Eng",
-  topbar: { components: "Components", blocks: "Blocks", items: "items" },
+  topbar: {
+    components: "Components",
+    blocks: "Blocks",
+    items: (count) => `${count} items`,
+    lab: "Workspace",
+  },
   home: {
     title: "Pick a design. Hand it to your AI. Ship the page.",
     description:
@@ -218,8 +262,6 @@ const EN: Dictionary = {
   card: {
     copy: "Copy for AI",
     copied: "Link copied",
-    configure: "Configure component",
-    closeConfigure: "Close configuration",
     toLight: "Switch preview to a light surface",
     toDark: "Switch preview to a dark surface",
     reset: "Reset settings",
@@ -233,6 +275,14 @@ const EN: Dictionary = {
     loading: "Loading…",
   },
   control: { unset: "default", clear: "clear" },
+  viewport: {
+    desktop: "Desktop",
+    tablet: "Tablet",
+    mobile: "Mobile",
+    hostTheme: "Host theme",
+    light: "Light",
+    dark: "Dark",
+  },
   item: {
     preview: "Preview",
     use: "Use it with AI",

@@ -4,11 +4,9 @@
     {
       "name": "tabs-001",
       "type": "registry:component",
-      "title": "Keyboard Tabs",
+      "title": "Вкладки с клавиатурой",
       "description": "Вкладки, которые слушаются клавиатуры так же, как системные: стрелки переводят выбор, Home и End прыгают к краям. Полоска едет за активной вкладкой.",
-      "categories": [
-        "tabs"
-      ],
+      "categories": ["tabs"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-001-*. Разметка следует паттерну tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby. В Tab-порядке живёт только активная вкладка (roving tabindex), остальные переключаются стрелками. Полоска под вкладкой — собственный ::after каждой вкладки, ширина берётся от текста, поэтому ничего не измеряется в JS.",
       "meta": {
-        "tags": [
-          "tabs",
-          "navigation",
-          "keyboard",
-          "aria"
-        ],
+        "tags": ["tabs", "navigation", "keyboard", "aria"],
         "preview": {
           "width": "full"
         },
@@ -63,11 +56,7 @@
             "label": "Открыта вкладка",
             "type": "select",
             "default": "overview",
-            "options": [
-              "overview",
-              "pages",
-              "domains"
-            ]
+            "options": ["overview", "pages", "domains"]
           },
           {
             "prop": "accent",
@@ -113,7 +102,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Keyboard Tabs"
           }
         }
       }
@@ -121,11 +111,9 @@
     {
       "name": "tabbar-001",
       "type": "registry:component",
-      "title": "Mobile Tab Bar",
+      "title": "Полоса вкладок на телефоне",
       "description": "Нижняя панель навигации для телефона: высота учитывает safe area, активный пункт помечен и точкой, не только цветом.",
-      "categories": [
-        "tabs"
-      ],
+      "categories": ["tabs"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -137,12 +125,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabbar-001-*. Серверный: хуков нет. Нижний отступ берётся из env(safe-area-inset-bottom), иначе на iPhone пункт уходит под системную полосу. Значок со счётчиком спрятан от скринридера, а число попадает в aria-label ссылки.",
       "meta": {
-        "tags": [
-          "tabbar",
-          "mobile",
-          "navigation",
-          "safe-area"
-        ],
+        "tags": ["tabbar", "mobile", "navigation", "safe-area"],
         "ai": {
           "export": "Tabbar001",
           "usage": "<Tabbar001 items={[{ label: \"Каталог\" }, { label: \"Заказы\", count: 3 }]} activeLabel=\"Каталог\" />",
@@ -174,12 +157,7 @@
             "label": "Активный",
             "type": "select",
             "default": "Каталог",
-            "options": [
-              "Каталог",
-              "Поиск",
-              "Заказы",
-              "Профиль"
-            ]
+            "options": ["Каталог", "Поиск", "Заказы", "Профиль"]
           },
           {
             "prop": "accent",
@@ -223,7 +201,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Mobile Tab Bar"
           }
         }
       }
@@ -231,11 +210,9 @@
     {
       "name": "tabs-002",
       "type": "registry:component",
-      "title": "CSS Tabs",
+      "title": "Вкладки на CSS",
       "description": "Вкладки на радиокнопках: переключение, выбор одной из группы и стрелки достаются от браузера, JS не нужен.",
-      "categories": [
-        "tabs"
-      ],
+      "categories": ["tabs"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -247,12 +224,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-002-*. Серверный: хуков нет, состояние держат радиокнопки. Панель показывает селектор :has() по отмеченной кнопке, поэтому правила выписаны на шесть вкладок. Полоса вкладок прокручивается по горизонтали: на узком экране подписи не переносятся.",
       "meta": {
-        "tags": [
-          "tabs",
-          "radio",
-          "no-js",
-          "css"
-        ],
+        "tags": ["tabs", "radio", "no-js", "css"],
         "ai": {
           "export": "Tabs002",
           "usage": "<Tabs002 tabs={[{ label: \"Обзор\", text: \"…\" }]} name=\"docs\" />",
@@ -328,7 +300,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "CSS Tabs"
           }
         }
       }
@@ -336,11 +309,9 @@
     {
       "name": "tabs-003",
       "type": "registry:component",
-      "title": "Sliding Underline",
+      "title": "Скользящее подчёркивание",
       "description": "Вкладки с одним переезжающим индикатором: позиция считается арифметикой в CSS от индекса и количества, ничего не измеряется в JS.",
-      "categories": [
-        "tabs"
-      ],
+      "categories": ["tabs"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -352,12 +323,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-003-*. Клиентский: \"use client\" ради выбранной вкладки и клавиатуры. Вкладки лежат в сетке равными колонками, а индикатор абсолютно спозиционирован и потому не занимает колонку. Его ширина — 100%/count, сдвиг — translateX(index * 100%); оба числа приходят переменными --vibeui-tabs-003-count и --vibeui-tabs-003-index. Разметка следует паттерну tabs из WAI-ARIA, в Tab-порядке живёт только активная вкладка.",
       "meta": {
-        "tags": [
-          "tabs",
-          "indicator",
-          "keyboard",
-          "aria"
-        ],
+        "tags": ["tabs", "indicator", "keyboard", "aria"],
         "preview": {
           "width": "full"
         },
@@ -392,11 +358,7 @@
             "label": "Открыта вкладка",
             "type": "select",
             "default": "brief",
-            "options": [
-              "brief",
-              "team",
-              "budget"
-            ]
+            "options": ["brief", "team", "budget"]
           },
           {
             "prop": "accent",
@@ -439,7 +401,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Sliding Underline"
           }
         }
       }
@@ -447,11 +410,9 @@
     {
       "name": "tabs-004",
       "type": "registry:component",
-      "title": "Pill Tabs",
+      "title": "Вкладки-пилюли",
       "description": "Вкладки-пилюли как в системном сегментированном переключателе: активная залита акцентом, между неактивными — тонкие разделители.",
-      "categories": [
-        "tabs"
-      ],
+      "categories": ["tabs"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -463,12 +424,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-004-*. Клиентский: \"use client\" ради выбранной вкладки и клавиатуры. Разделитель — ::before у каждой вкладки, кроме первой; рядом с активной пилюлей он гасится правилами по aria-selected, иначе линия у края заливки выглядит грязью. Разметка следует паттерну tabs из WAI-ARIA, в Tab-порядке живёт только активная вкладка.",
       "meta": {
-        "tags": [
-          "tabs",
-          "segmented",
-          "pills",
-          "aria"
-        ],
+        "tags": ["tabs", "segmented", "pills", "aria"],
         "ai": {
           "export": "Tabs004",
           "usage": "<Tabs004\n  defaultId=\"week\"\n  items={[\n    { id: \"day\", label: \"Сутки\", content: \"1 284 визита\" },\n    { id: \"week\", label: \"Неделя\", content: \"9 470 визитов\" },\n  ]}\n/>",
@@ -500,11 +456,7 @@
             "label": "Период",
             "type": "select",
             "default": "day",
-            "options": [
-              "day",
-              "week",
-              "month"
-            ]
+            "options": ["day", "week", "month"]
           },
           {
             "prop": "accent",
@@ -547,7 +499,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Pill Tabs"
           }
         }
       }
@@ -555,11 +508,9 @@
     {
       "name": "tabs-005",
       "type": "registry:component",
-      "title": "Vertical Tabs",
+      "title": "Вертикальные вкладки",
       "description": "Вертикальные вкладки настроек: список слева читается сверху вниз, поэтому подписи с пояснениями помещаются целиком.",
-      "categories": [
-        "tabs"
-      ],
+      "categories": ["tabs"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -571,12 +522,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-005-*. Клиентский: \"use client\" ради выбранной вкладки и клавиатуры. Список помечен aria-orientation=\"vertical\", и стрелки соответственно вертикальные: вверх и вниз, плюс Home и End. Две колонки появляются контейнерным запросом на внутреннем [data-part=\"shell\"], потому что правило внутри @container не действует на сам контейнер; в узком блоке список ложится над содержимым.",
       "meta": {
-        "tags": [
-          "tabs",
-          "vertical",
-          "settings",
-          "container-query"
-        ],
+        "tags": ["tabs", "vertical", "settings", "container-query"],
         "preview": {
           "width": "full"
         },
@@ -611,12 +557,7 @@
             "label": "Раздел",
             "type": "select",
             "default": "profile",
-            "options": [
-              "profile",
-              "security",
-              "alerts",
-              "billing"
-            ]
+            "options": ["profile", "security", "alerts", "billing"]
           },
           {
             "prop": "accent",
@@ -659,7 +600,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Vertical Tabs"
           }
         }
       }
@@ -667,11 +609,9 @@
     {
       "name": "tabs-006",
       "type": "registry:component",
-      "title": "Counter Tabs",
+      "title": "Вкладки со счётчиками",
       "description": "Вкладки почтовых папок: значок, подпись и счётчик в одной строке, причём число уходит в имя вкладки, а не читается отдельной цифрой.",
-      "categories": [
-        "tabs"
-      ],
+      "categories": ["tabs"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -683,12 +623,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-006-*. Клиентский: \"use client\" ради выбранной вкладки и клавиатуры. Значки нарисованы бордюрами и clip-path по атрибуту data-glyph, поэтому иконочный шрифт не нужен. Счётчик помечен aria-hidden, а число попадает в aria-label вкладки. Разметка следует паттерну tabs из WAI-ARIA, ряд прокручивается по горизонтали со скрытой полосой прокрутки.",
       "meta": {
-        "tags": [
-          "tabs",
-          "icons",
-          "counters",
-          "mail"
-        ],
+        "tags": ["tabs", "icons", "counters", "mail"],
         "preview": {
           "width": "full"
         },
@@ -723,12 +658,7 @@
             "label": "Папка",
             "type": "select",
             "default": "inbox",
-            "options": [
-              "inbox",
-              "star",
-              "later",
-              "trash"
-            ]
+            "options": ["inbox", "star", "later", "trash"]
           },
           {
             "prop": "accent",
@@ -771,7 +701,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Counter Tabs"
           }
         }
       }
@@ -779,11 +710,9 @@
     {
       "name": "tabs-007",
       "type": "registry:component",
-      "title": "Scrolling Tabs",
+      "title": "Прокручиваемые вкладки",
       "description": "Прокручиваемый ряд вкладок с тенями по краям: тень появляется только с той стороны, где содержимое ещё осталось, и всё это без JS.",
-      "categories": [
-        "tabs"
-      ],
+      "categories": ["tabs"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -795,12 +724,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-007-*. Клиентский: \"use client\" ради выбранной вкладки и клавиатуры, но тени по краям сделаны чистым CSS: четыре градиента с разной привязкой фона — «маска» цвета фона едет вместе с содержимым (background-attachment:local), а сама тень стоит на месте (scroll), поэтому у докрученного края тень закрывается маской. Стрелки дополнительно доводят выбранную вкладку в поле зрения через scrollIntoView.",
       "meta": {
-        "tags": [
-          "tabs",
-          "scroll",
-          "shadow",
-          "overflow"
-        ],
+        "tags": ["tabs", "scroll", "shadow", "overflow"],
         "ai": {
           "export": "Tabs007",
           "usage": "<Tabs007\n  defaultId=\"msk\"\n  items={[\n    { id: \"all\", label: \"Все\", content: \"Полный список\" },\n    { id: \"msk\", label: \"Москва\", content: \"Доставка в день заказа\" },\n  ]}\n/>",
@@ -832,15 +756,7 @@
             "label": "Город",
             "type": "select",
             "default": "all",
-            "options": [
-              "all",
-              "msk",
-              "spb",
-              "ekb",
-              "nsk",
-              "kzn",
-              "sochi"
-            ]
+            "options": ["all", "msk", "spb", "ekb", "nsk", "kzn", "sochi"]
           },
           {
             "prop": "accent",
@@ -883,7 +799,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Scrolling Tabs"
           }
         }
       }
@@ -891,11 +808,9 @@
     {
       "name": "tabs-008",
       "type": "registry:component",
-      "title": "Overflow Tabs",
+      "title": "Вкладки с переполнением",
       "description": "Вкладки со свёрткой лишних в «ещё»: выбранная из списка занимает последнее видимое место, поэтому активная вкладка всегда на виду.",
-      "categories": [
-        "tabs"
-      ],
+      "categories": ["tabs"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -907,12 +822,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-008-*. Клиентский: \"use client\" ради выбора, открытия списка и подмены видимой вкладки. Видимый ряд — первые visible вкладок, где последнее место отдано вкладке, выбранной из «ещё»; вытесненная уходит в список. Панель одна на все вкладки, её aria-labelledby указывает на активную. Разметка следует паттерну tabs из WAI-ARIA, стрелки ходят по видимому ряду.",
       "meta": {
-        "tags": [
-          "tabs",
-          "overflow",
-          "more menu",
-          "responsive"
-        ],
+        "tags": ["tabs", "overflow", "more menu", "responsive"],
         "preview": {
           "width": "full"
         },
@@ -993,7 +903,8 @@
                 "label": "Button",
                 "default": "More"
               }
-            }
+            },
+            "title": "Overflow Tabs"
           }
         }
       }
@@ -1001,11 +912,9 @@
     {
       "name": "tabs-009",
       "type": "registry:component",
-      "title": "Editor Tabs",
+      "title": "Вкладки редактора",
       "description": "Вкладки редактора с закрытием: у несохранённого файла крестик заменён точкой, поэтому правки не теряются одним промахом мыши.",
-      "categories": [
-        "tabs"
-      ],
+      "categories": ["tabs"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1017,12 +926,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-009-*. Клиентский: \"use client\" ради списка открытых файлов и выбора. Вкладка — элемент с role=\"tab\", а крестик внутри неё — отдельная кнопка с tabIndex -1 и остановкой всплытия, поэтому закрытие не срабатывает при переключении. Точка несохранённого файла подменяется крестиком по :hover и :focus-within. Закрытая вкладка отдаёт выбор соседу слева.",
       "meta": {
-        "tags": [
-          "tabs",
-          "editor",
-          "close",
-          "dirty state"
-        ],
+        "tags": ["tabs", "editor", "close", "dirty state"],
         "preview": {
           "width": "full"
         },
@@ -1057,11 +961,7 @@
             "label": "Открыт файл",
             "type": "select",
             "default": "page",
-            "options": [
-              "page",
-              "layout",
-              "styles"
-            ]
+            "options": ["page", "layout", "styles"]
           },
           {
             "prop": "accent",
@@ -1104,7 +1004,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Editor Tabs"
           }
         }
       }
@@ -1112,11 +1013,9 @@
     {
       "name": "tabs-010",
       "type": "registry:component",
-      "title": "Radio Tabs",
+      "title": "Вкладки на радиокнопках",
       "description": "Вкладки без JS, но с переезжающим индикатором: выбор держат радиокнопки, а положение полосы задаёт правило :has() и арифметика в CSS.",
-      "categories": [
-        "tabs"
-      ],
+      "categories": ["tabs"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1128,12 +1027,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-010-*. Серверный: хуков нет, выбор держат радиокнопки, и браузер сам даёт по ним переход стрелками. Отмеченная кнопка через :has() выставляет переменную --vibeui-tabs-010-index, от которой считается сдвиг индикатора; панели показываются такими же правилами по data-index. Правила заданы на шесть вкладок — больше требует ещё двух строк CSS.",
       "meta": {
-        "tags": [
-          "tabs",
-          "no-js",
-          "radio",
-          "has-selector"
-        ],
+        "tags": ["tabs", "no-js", "radio", "has-selector"],
         "preview": {
           "width": "full"
         },
@@ -1201,7 +1095,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Radio Tabs"
           }
         }
       }

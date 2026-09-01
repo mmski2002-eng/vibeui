@@ -4,6 +4,7 @@ import {
   type ItemGroup,
   type ItemKind,
 } from "@/registry/categories"
+import type { Locale } from "@/lib/i18n"
 import type { CatalogItem } from "@/registry/meta"
 import { SOURCES } from "@/registry/sources"
 
@@ -64,8 +65,19 @@ export function getItemDirectory(slug: string): string | undefined {
   return BY_SLUG.get(slug)?.directory
 }
 
-export function getCategoryLabel(slug: string): string {
-  return CATEGORIES.find((category) => category.slug === slug)?.label ?? slug
+/**
+ * Подпись категории. Базовый язык каталога русский, английское имя типа
+ * лежит рядом: у компонентов оно совпадает с именем в чужих библиотеках,
+ * и на английской витрине показывается именно оно.
+ */
+export function getCategoryLabel(slug: string, locale: Locale = "ru"): string {
+  const category = CATEGORIES.find((entry) => entry.slug === slug)
+
+  if (!category) {
+    return slug
+  }
+
+  return locale === "ru" ? category.label : category.en
 }
 
 type CategoryCount = {
@@ -78,7 +90,10 @@ type CategoryCount = {
  * Категории, в которых реально есть items, с количеством. Без аргумента —
  * по всему каталогу, с `kind` — только внутри типа.
  */
-export function getUsedCategories(kind?: ItemKind): CategoryCount[] {
+export function getUsedCategories(
+  kind?: ItemKind,
+  locale: Locale = "ru",
+): CategoryCount[] {
   const counts = new Map<string, number>()
 
   for (const entry of ITEMS) {
@@ -92,7 +107,7 @@ export function getUsedCategories(kind?: ItemKind): CategoryCount[] {
   return CATEGORIES.filter((category) => counts.has(category.slug)).map(
     (category) => ({
       slug: category.slug,
-      label: category.label,
+      label: locale === "ru" ? category.label : category.en,
       count: counts.get(category.slug) ?? 0,
     }),
   )
@@ -111,13 +126,16 @@ export type CatalogNavSection = {
  * Пустые типы не показываются. С аргументом — только один тип: каталог и
  * страница блоков живут на разных маршрутах и показывают каждый своё.
  */
-export function getCatalogNavSections(kind?: ItemKind): CatalogNavSection[] {
+export function getCatalogNavSections(
+  kind?: ItemKind,
+  locale: Locale = "ru",
+): CatalogNavSection[] {
   return KINDS.filter((entry) => !kind || entry.slug === kind)
     .map((entry) => ({
       kind: entry.slug,
       label: entry.label,
       count: getItemsByKind(entry.slug).length,
-      categories: getUsedCategories(entry.slug),
+      categories: getUsedCategories(entry.slug, locale),
     }))
     .filter((section) => section.count > 0)
 }
@@ -136,10 +154,13 @@ export type CategoryCard = {
   search: string
 }
 
-export function getCategoryCards(kind: ItemKind): CategoryCard[] {
+export function getCategoryCards(
+  kind: ItemKind,
+  locale: Locale = "ru",
+): CategoryCard[] {
   // По алфавиту, а не в порядке объявления: порядок в `categories.ts` — это
   // очередь работ, и глазами по нему категорию не найти.
-  return [...getUsedCategories(kind)]
+  return [...getUsedCategories(kind, locale)]
     .sort((first, second) =>
       first.label.localeCompare(second.label, undefined, {
         sensitivity: "base",

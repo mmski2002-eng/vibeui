@@ -4,7 +4,7 @@
     {
       "name": "tooltip-001",
       "type": "registry:component",
-      "title": "Keyboard Tooltip",
+      "title": "Подсказка с клавиатуры",
       "description": "Подсказка, которая открывается и по наведению, и по фокусу с клавиатуры. Второе обычно забывают, и подсказка остаётся недоступной половине пользователей.",
       "categories": ["tooltip"],
       "dependencies": [],
@@ -106,7 +106,8 @@
               "side": {
                 "label": "Side"
               }
-            }
+            },
+            "title": "Keyboard Tooltip"
           }
         }
       }
@@ -114,7 +115,7 @@
     {
       "name": "tooltip-002",
       "type": "registry:component",
-      "title": "Native Versus",
+      "title": "Своя против нативной",
       "description": "Сравнение на одном экране: слева кнопка с нативным title, справа своя подсказка — со стрелкой, мгновенная и доступная с клавиатуры.",
       "categories": ["tooltip"],
       "dependencies": [],
@@ -209,7 +210,8 @@
                 "label": "Left button",
                 "default": "Native title"
               }
-            }
+            },
+            "title": "Native Versus"
           }
         }
       }
@@ -217,7 +219,7 @@
     {
       "name": "tooltip-003",
       "type": "registry:component",
-      "title": "Shortcut Tooltip",
+      "title": "Подсказка с сочетанием",
       "description": "Подсказка, которая заодно учит горячей клавише: название действия слева, сочетание клавишами справа — она становится справочником, а не повтором подписи.",
       "categories": ["tooltip"],
       "dependencies": [],
@@ -298,7 +300,8 @@
                 "label": "Action",
                 "default": "Open search"
               }
-            }
+            },
+            "title": "Shortcut Tooltip"
           }
         }
       }
@@ -306,7 +309,7 @@
     {
       "name": "tooltip-004",
       "type": "registry:component",
-      "title": "Icon Toolbar",
+      "title": "Панель иконок",
       "description": "Панель иконок, где подсказка служит единственной подписью: у каждой кнопки своя доступная метка, а видимая подсказка привязана к своей ячейке.",
       "categories": ["tooltip"],
       "dependencies": [],
@@ -386,7 +389,8 @@
               "side": {
                 "label": "Side"
               }
-            }
+            },
+            "title": "Icon Toolbar"
           }
         }
       }
@@ -394,7 +398,7 @@
     {
       "name": "tooltip-005",
       "type": "registry:component",
-      "title": "Wrapped Tooltip",
+      "title": "Подсказка с переносом",
       "description": "Подсказка для длинного объяснения: ограниченная ширина, выключка по левому краю и перенос по словам — строка на 400 пикселей не читается.",
       "categories": ["tooltip"],
       "dependencies": [],
@@ -486,7 +490,8 @@
                 "label": "Width",
                 "default": "17rem"
               }
-            }
+            },
+            "title": "Wrapped Tooltip"
           }
         }
       }
@@ -494,7 +499,7 @@
     {
       "name": "tooltip-006",
       "type": "registry:component",
-      "title": "Edge Flip",
+      "title": "Переворот у края",
       "description": "Подсказка, которая не вылезает за край: у крайних кнопок она прижимается к своей стороне, а стрелка съезжает к триггеру, чтобы связь не потерялась.",
       "categories": ["tooltip"],
       "dependencies": [],
@@ -578,7 +583,8 @@
                 "label": "Tooltip",
                 "default": "Export to CSV"
               }
-            }
+            },
+            "title": "Edge Flip"
           }
         }
       }
@@ -586,7 +592,7 @@
     {
       "name": "tooltip-007",
       "type": "registry:component",
-      "title": "Field Hint",
+      "title": "Подсказка к полю",
       "description": "Подсказка у поля ввода, привязанная к фокусу, а не к наведению: требования к паролю нужны в момент набора, а курсор мыши в этот момент не при делах.",
       "categories": ["tooltip"],
       "dependencies": [],
@@ -681,7 +687,8 @@
                 "label": "Rules",
                 "default": "At least 12 characters, one digit and one symbol. Spaces count."
               }
-            }
+            },
+            "title": "Field Hint"
           }
         }
       }
@@ -689,7 +696,7 @@
     {
       "name": "tooltip-008",
       "type": "registry:component",
-      "title": "Term Underline",
+      "title": "Подчёркнутый термин",
       "description": "Объяснение термина прямо в тексте: слово подчёркнуто пунктиром и остаётся в строке, а подсказка выезжает поверх и ничего не сдвигает.",
       "categories": ["tooltip"],
       "dependencies": [],
@@ -784,7 +791,8 @@
                 "label": "Explanation",
                 "default": "The top five percent of the month's samples are dropped and the bill uses the next value."
               }
-            }
+            },
+            "title": "Term Underline"
           }
         }
       }
@@ -792,7 +800,7 @@
     {
       "name": "tooltip-009",
       "type": "registry:component",
-      "title": "Delayed Tooltip",
+      "title": "Подсказка с задержкой",
       "description": "Подсказка появляется с задержкой, а прячется мгновенно: пролёт курсора по строке кнопок не устраивает мигание подсказок.",
       "categories": ["tooltip"],
       "dependencies": [],
@@ -887,7 +895,8 @@
                 "label": "Tooltip",
                 "default": "Acts on the selected row"
               }
-            }
+            },
+            "title": "Delayed Tooltip"
           }
         }
       }
@@ -895,7 +904,7 @@
     {
       "name": "tooltip-010",
       "type": "registry:component",
-      "title": "Menu Hotkey",
+      "title": "Горячая клавиша в меню",
       "description": "Меню иконок-кнопок, где подсказка на пункте несёт встроенный чип горячей клавиши — один компактный ярлык, а не ряд отдельных клавиш рядом с подписью.",
       "categories": ["tooltip"],
       "dependencies": [],
@@ -961,7 +970,8 @@
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Tooltip010\n  items={[{ glyph: \"↩\", label: \"Undo\", shortcut: \"⌘Z\" }]}\n/>"
-            }
+            },
+            "title": "Menu Hotkey"
           }
         }
       }
@@ -969,7 +979,7 @@
     {
       "name": "tooltip-011",
       "type": "registry:component",
-      "title": "Dwell Delay",
+      "title": "Задержка при наведении",
       "description": "Сетка статус-точек мониторинга: подсказка ждёт долю секунды перед появлением, но прячется мгновенно — пробег курсором по сетке не устраивает мигание.",
       "categories": ["tooltip"],
       "dependencies": [],
@@ -1053,7 +1063,8 @@
               "delay": {
                 "label": "Delay, s"
               }
-            }
+            },
+            "title": "Dwell Delay"
           }
         }
       }
@@ -1061,7 +1072,7 @@
     {
       "name": "tooltip-012",
       "type": "registry:component",
-      "title": "Question Bubble",
+      "title": "Пузырь с вопросом",
       "description": "Круглая иконка-вопрос без подписи рядом: подсказка внутри всегда держит две строки — жирный заголовок и обычное пояснение под ним, а не сплошной абзац.",
       "categories": ["tooltip"],
       "dependencies": [],
@@ -1153,7 +1164,8 @@
                 "label": "Explanation",
                 "default": "14 days with full access. No card required, cancel any time."
               }
-            }
+            },
+            "title": "Question Bubble"
           }
         }
       }
@@ -1161,7 +1173,7 @@
     {
       "name": "tooltip-013",
       "type": "registry:component",
-      "title": "Side Switch",
+      "title": "Смена стороны",
       "description": "Подсказка переключает сторону всплытия по месту на экране: у верхнего края раскрывается вниз, у нижнего — вверх, а стрелка каждый раз указывает на триггер.",
       "categories": ["tooltip"],
       "dependencies": [],
@@ -1245,7 +1257,8 @@
                 "label": "Tooltip",
                 "default": "Add to bookmarks"
               }
-            }
+            },
+            "title": "Side Switch"
           }
         }
       }
@@ -1253,7 +1266,7 @@
     {
       "name": "tooltip-014",
       "type": "registry:component",
-      "title": "Disabled Reason",
+      "title": "Причина недоступности",
       "description": "Подсказка на визуально отключённой кнопке: aria-disabled вместо disabled оставляет её доступной наведению и фокусу, а подсказка объясняет, чего не хватает.",
       "categories": ["tooltip"],
       "dependencies": [],
@@ -1345,7 +1358,8 @@
                 "label": "Reason",
                 "default": "Fill in the required fields first: a title and at least one picture."
               }
-            }
+            },
+            "title": "Disabled Reason"
           }
         }
       }
@@ -1353,7 +1367,7 @@
     {
       "name": "tooltip-015",
       "type": "registry:component",
-      "title": "Preview Card",
+      "title": "Карточка предпросмотра",
       "description": "Подсказка-карточка с миниатюрой изображения: ссылка на файл сама по себе ничего не показывает, а наведение и фокус раскрывают картинку-превью и подпись.",
       "categories": ["tooltip"],
       "dependencies": [],
@@ -1445,7 +1459,8 @@
                 "label": "Caption under preview",
                 "default": "1600×1000 · added today"
               }
-            }
+            },
+            "title": "Preview Card"
           }
         }
       }
@@ -1453,7 +1468,7 @@
     {
       "name": "tooltip-016",
       "type": "registry:component",
-      "title": "Focus Format",
+      "title": "Подсказка по фокусу",
       "description": "Подсказка-инструкция у поля формы, раскрывающаяся именно по фокусу с клавиатуры: клик мышью по select её не показывает, а переход табом — показывает.",
       "categories": ["tooltip"],
       "dependencies": [],
@@ -1548,7 +1563,8 @@
                 "label": "Instruction",
                 "default": "Applies to every report and notification in the account. The change takes effect on your next sign-in."
               }
-            }
+            },
+            "title": "Focus Format"
           }
         }
       }

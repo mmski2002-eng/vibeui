@@ -4,7 +4,7 @@
     {
       "name": "blog-001",
       "type": "registry:block",
-      "title": "Article Grid",
+      "title": "Сетка статей",
       "description": "Лента статей карточками с обложкой-градиентом: оттенок считается из названия рубрики, поэтому одинаковые рубрики красятся одинаково без таблицы соответствий.",
       "categories": ["blog"],
       "dependencies": [],
@@ -99,7 +99,8 @@
                 "label": "Overline",
                 "default": "Journal"
               }
-            }
+            },
+            "title": "Article Grid"
           }
         }
       }
@@ -107,7 +108,7 @@
     {
       "name": "blog-002",
       "type": "registry:block",
-      "title": "Article Reader",
+      "title": "Чтение статьи",
       "description": "Страница статьи с оглавлением: на широком блоке оно липнет сбоку, на узком сворачивается в details, чтобы не съедать половину экрана.",
       "categories": ["blog"],
       "dependencies": [],
@@ -202,7 +203,8 @@
                 "label": "Contents heading",
                 "default": "In this article"
               }
-            }
+            },
+            "title": "Article Reader"
           }
         }
       }
@@ -210,7 +212,7 @@
     {
       "name": "blog-003",
       "type": "registry:block",
-      "title": "Featured Post",
+      "title": "Главный материал",
       "description": "Крупный анонс одной статьи: обложка-градиент слева, а рядом с именем автора — время чтения и объём текста, то есть ответ на вопрос перед кликом.",
       "categories": ["blog"],
       "dependencies": [],
@@ -305,7 +307,8 @@
               "hue": {
                 "label": "Cover hue"
               }
-            }
+            },
+            "title": "Featured Post"
           }
         }
       }
@@ -313,7 +316,7 @@
     {
       "name": "blog-004",
       "type": "registry:block",
-      "title": "Newsletter Signup",
+      "title": "Подписка на рассылку",
       "description": "Подписка на рассылку с проверяемым обещанием: три пункта о содержимом письма, периодичность и число подписчиков рядом с полем.",
       "categories": ["blog"],
       "dependencies": [],
@@ -408,7 +411,8 @@
                 "label": "Button caption",
                 "default": "Subscribe"
               }
-            }
+            },
+            "title": "Newsletter Signup"
           }
         }
       }
@@ -416,7 +420,7 @@
     {
       "name": "blog-005",
       "type": "registry:block",
-      "title": "Topic Feed",
+      "title": "Лента по темам",
       "description": "Архив статей строками с фильтром по рубрикам: рубрики собираются из самих записей, поэтому счётчик всегда совпадает с тем, что покажет фильтр.",
       "categories": ["blog"],
       "dependencies": [],
@@ -511,7 +515,8 @@
                 "label": "«All» caption",
                 "default": "All"
               }
-            }
+            },
+            "title": "Topic Feed"
           }
         }
       }
@@ -519,7 +524,7 @@
     {
       "name": "blog-006",
       "type": "registry:block",
-      "title": "Related Posts",
+      "title": "Похожие материалы",
       "description": "Похожие статьи с объяснением связи: у каждой карточки есть строка «почему рядом» — продолжение разбора, общая тема или противоположный вывод.",
       "categories": ["blog"],
       "dependencies": [],
@@ -614,7 +619,8 @@
                 "label": "Article just read",
                 "default": "Container queries over breakpoints"
               }
-            }
+            },
+            "title": "Related Posts"
           }
         }
       }

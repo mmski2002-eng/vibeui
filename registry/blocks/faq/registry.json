@@ -4,7 +4,7 @@
     {
       "name": "faq-001",
       "type": "registry:block",
-      "title": "Sticky FAQ",
+      "title": "Вопросы с липким заголовком",
       "description": "Секция вопросов: заголовок слева остаётся на месте при прокрутке, ответы справа раскрываются нативными details — без JS и с поиском по странице.",
       "categories": ["faq"],
       "dependencies": [],
@@ -76,7 +76,8 @@
                 "Do not lift the CSS variables into globals.css: the block has to stay a single file."
               ],
               "usage": "<Faq001\n  title=\"How this works, briefly\"\n  items={[{ question: \"What do I get?\", answer: \"One file in your project.\" }]}\n/>"
-            }
+            },
+            "title": "Sticky FAQ"
           }
         }
       }
@@ -84,7 +85,7 @@
     {
       "name": "faq-002",
       "type": "registry:block",
-      "title": "Two Column FAQ",
+      "title": "Вопросы в две колонки",
       "description": "Вопросы в две колонки на CSS columns: порядок чтения остаётся вертикальным, карточки не разрываются между колонками, каждый вопрос пронумерован.",
       "categories": ["faq"],
       "dependencies": [],
@@ -183,7 +184,8 @@
                 "label": "Intro paragraph",
                 "default": "The things support gets asked about most often."
               }
-            }
+            },
+            "title": "Two Column FAQ"
           }
         }
       }
@@ -191,7 +193,7 @@
     {
       "name": "faq-003",
       "type": "registry:block",
-      "title": "Tabbed FAQ",
+      "title": "Вопросы по вкладкам",
       "description": "Вопросы, разложенные по категориям-вкладкам. Переключение живёт на радио-кнопках: без JS, без состояния и со штатной работой стрелок клавиатуры.",
       "categories": ["faq"],
       "dependencies": [],
@@ -292,7 +294,8 @@
                 "label": "Group id",
                 "default": "vibeui-faq-003"
               }
-            }
+            },
+            "title": "Tabbed FAQ"
           }
         }
       }
@@ -300,7 +303,7 @@
     {
       "name": "faq-004",
       "type": "registry:block",
-      "title": "Exclusive Accordion FAQ",
+      "title": "Вопросы с одним открытым",
       "description": "Аккордеон, в котором одновременно открыт только один ответ. Согласование делает сам браузер через одинаковый атрибут name у всех details — без JS.",
       "categories": ["faq"],
       "dependencies": [],
@@ -401,7 +404,8 @@
                 "label": "Group name",
                 "default": "vibeui-faq-004"
               }
-            }
+            },
+            "title": "Exclusive Accordion FAQ"
           }
         }
       }
@@ -409,7 +413,7 @@
     {
       "name": "faq-005",
       "type": "registry:block",
-      "title": "Searchable FAQ",
+      "title": "Вопросы с поиском",
       "description": "Вопросы с поиском по списку: фильтрация идёт по вопросу, ответу и теме, а число найденного объявляется вслух — иначе изменение списка остаётся незамеченным.",
       "categories": ["faq"],
       "dependencies": [],
@@ -512,7 +516,8 @@
                 "label": "Search hint",
                 "default": "For example: when will my order arrive"
               }
-            }
+            },
+            "title": "Searchable FAQ"
           }
         }
       }
@@ -520,7 +525,7 @@
     {
       "name": "faq-006",
       "type": "registry:block",
-      "title": "Ask Support FAQ",
+      "title": "Вопросы с обращением в поддержку",
       "description": "Вопросы с карточкой «не нашли ответ» рядом со списком, а не после него: на широкой раскладке карточка залипает, и до контактов не нужно долистывать.",
       "categories": ["faq"],
       "dependencies": [],
@@ -623,7 +628,8 @@
                 "label": "List heading",
                 "default": "Common questions about the service"
               }
-            }
+            },
+            "title": "Ask Support FAQ"
           }
         }
       }

@@ -4,11 +4,9 @@
     {
       "name": "kbd-001",
       "type": "registry:component",
-      "title": "Shortcut List",
+      "title": "Список сочетаний",
       "description": "Список горячих клавиш: клавиши набраны тегом kbd, а плюс между ними стоит в разметке, чтобы сочетание читалось вслух.",
-      "categories": [
-        "kbd"
-      ],
+      "categories": ["kbd"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kbd-001-*. Серверный: хуков нет. Клавиши выводятся тегом kbd с утолщённой нижней гранью — так они читаются как физические. Разделитель между клавишами лежит в разметке, поэтому скринридер произносит «command плюс K», а не две отдельные клавиши.",
       "meta": {
-        "tags": [
-          "kbd",
-          "shortcuts",
-          "help",
-          "keyboard"
-        ],
+        "tags": ["kbd", "shortcuts", "help", "keyboard"],
         "ai": {
           "export": "Kbd001",
           "usage": "<Kbd001 rows={[{ action: \"Поиск\", keys: [\"⌘\", \"K\"] }]} />",
@@ -92,7 +85,8 @@
                 "label": "Heading",
                 "default": "Keyboard shortcuts"
               }
-            }
+            },
+            "title": "Shortcut List"
           }
         }
       }
@@ -100,11 +94,9 @@
     {
       "name": "kbd-002",
       "type": "registry:component",
-      "title": "Key Chord Separator",
+      "title": "Разделитель аккорда",
       "description": "Сочетание клавиш с явным разделителем: «⌘ + K» и «⌘ затем K» — разные действия, и слово между клавишами избавляет пользователя от угадывания.",
-      "categories": [
-        "kbd"
-      ],
+      "categories": ["kbd"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -116,12 +108,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Клавиши набраны тегом kbd — это его прямое назначение, скринридер объявит их как ввод. Разделитель лежит в разметке отдельным узлом, а не рисуется псевдоэлементом: содержимое ::before не попадает в поток чтения, и вслух сочетание превратилось бы в две несвязанные клавиши. Вариант разделителя переключается атрибутом data-separator, набор вариантов вынесен в объект: plus для одновременного нажатия, then для последовательного, arrow для перехода. Подложка светлая, потому что и клавиши, и подпись тёмные.",
       "meta": {
-        "tags": [
-          "kbd",
-          "shortcut",
-          "chord",
-          "keyboard"
-        ],
+        "tags": ["kbd", "shortcut", "chord", "keyboard"],
         "ai": {
           "export": "Kbd002",
           "usage": "<Kbd002 keys={[\"⌘\", \"⇧\", \"P\"]} separator=\"plus\" caption=\"Палитра команд\" />",
@@ -153,11 +140,7 @@
             "label": "Разделитель",
             "type": "select",
             "default": "plus",
-            "options": [
-              "plus",
-              "then",
-              "arrow"
-            ]
+            "options": ["plus", "then", "arrow"]
           },
           {
             "prop": "caption",
@@ -203,7 +186,8 @@
                 "label": "Caption",
                 "default": "Command palette"
               }
-            }
+            },
+            "title": "Key Chord Separator"
           }
         }
       }
@@ -211,11 +195,9 @@
     {
       "name": "kbd-003",
       "type": "registry:component",
-      "title": "Inline Text Key",
+      "title": "Клавиша внутри текста",
       "description": "Клавиша внутри строки текста, которая не рвёт интерлиньяж: высота задана в em, вертикальные отступы нулевые, объём даёт горизонтальный паддинг.",
-      "categories": [
-        "kbd"
-      ],
+      "categories": ["kbd"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -227,12 +209,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Обычная kbd с вертикальным паддингом делает свою строку выше соседних, и абзац «разъезжается». Здесь высота клавиши выражена в em и вписана в строку, вертикальные отступы нулевые, а точная посадка на базовую линию сделана сдвигом на 0.05em — не изменением line-height абзаца, которое поехало бы на весь текст. Кегль клавиши задан долей от текста (0.85em), поэтому она масштабируется вместе с абзацем. Сочетание обёрнуто в nowrap, чтобы «⌘ + K» не разорвался переносом. Подложка светлая: текст тёмный.",
       "meta": {
-        "tags": [
-          "kbd",
-          "inline",
-          "typography",
-          "text"
-        ],
+        "tags": ["kbd", "inline", "typography", "text"],
         "preview": {
           "width": "full"
         },
@@ -313,7 +290,8 @@
                 "label": "Text after",
                 "default": "to open the catalog search — the input appears above the page."
               }
-            }
+            },
+            "title": "Inline Text Key"
           }
         }
       }
@@ -321,11 +299,9 @@
     {
       "name": "kbd-004",
       "type": "registry:component",
-      "title": "Shortcut Hint Bar",
+      "title": "Полоса подсказок",
       "description": "Ряд подсказок горячих клавиш для нижней служебной полосы: пары «клавиша — действие» не переносятся, потому что разорванная подсказка бесполезна.",
-      "categories": [
-        "kbd"
-      ],
+      "categories": ["kbd"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -337,12 +313,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Полоса читается боковым зрением, поэтому подсказки разделены только промежутком: рамка вокруг каждой пары превращает служебную строку в панель кнопок. Каждая пара помечена white-space:nowrap, так что при нехватке ширины полоса переносит подсказки целиком, а не рвёт «↵ выбрать» пополам. Выравнивание переключается атрибутом data-align (start, center, between), плотность — data-size. Клавиши набраны тегом kbd. Подложка светлая, потому что вся полоса набрана тёмным.",
       "meta": {
-        "tags": [
-          "kbd",
-          "hints",
-          "footer",
-          "shortcuts"
-        ],
+        "tags": ["kbd", "hints", "footer", "shortcuts"],
         "preview": {
           "width": "full"
         },
@@ -377,21 +348,14 @@
             "label": "Выравнивание",
             "type": "select",
             "default": "start",
-            "options": [
-              "start",
-              "center",
-              "between"
-            ]
+            "options": ["start", "center", "between"]
           },
           {
             "prop": "size",
             "label": "Плотность",
             "type": "select",
             "default": "sm",
-            "options": [
-              "sm",
-              "md"
-            ]
+            "options": ["sm", "md"]
           }
         ],
         "i18n": {
@@ -430,7 +394,8 @@
                 "label": "Density",
                 "default": "sm"
               }
-            }
+            },
+            "title": "Shortcut Hint Bar"
           }
         }
       }
@@ -438,11 +403,9 @@
     {
       "name": "kbd-005",
       "type": "registry:component",
-      "title": "Platform Aware Keys",
+      "title": "Клавиши по платформе",
       "description": "Платформозависимое сочетание: на macOS модификатор пишется знаком ⌘, на Windows и Linux — словом Ctrl, потому что подсказка с чужим знаком читается как ошибка.",
-      "categories": [
-        "kbd"
-      ],
+      "categories": ["kbd"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -454,12 +417,7 @@
       ],
       "docs": "Клиентский компонент: систему определяет useEffect после гидрации, поэтому в файле есть «use client». Сервер не знает системы клиента, и попытка угадать её при рендере даёт рассинхрон разметки — до определения показывается вариант с Ctrl, понятный на любой системе, в отличие от ⌘. Проп platform позволяет отключить автоопределение и зафиксировать вариант для документации. Ширина клавиши модификатора увеличена для ⌘ атрибутом data-system: знак шире буквы, и без правки ряд клавиш выглядит неровным. Подложка светлая: клавиши и подписи тёмные.",
       "meta": {
-        "tags": [
-          "kbd",
-          "platform",
-          "shortcut",
-          "macos"
-        ],
+        "tags": ["kbd", "platform", "shortcut", "macos"],
         "ai": {
           "export": "Kbd005",
           "usage": "<Kbd005 platform=\"auto\" action=\"Открыть поиск\" letter=\"K\" />",
@@ -491,11 +449,7 @@
             "label": "Платформа",
             "type": "select",
             "default": "auto",
-            "options": [
-              "auto",
-              "mac",
-              "windows"
-            ]
+            "options": ["auto", "mac", "windows"]
           },
           {
             "prop": "action",
@@ -541,7 +495,8 @@
                 "label": "Action",
                 "default": "Open search"
               }
-            }
+            },
+            "title": "Platform Aware Keys"
           }
         }
       }
@@ -549,11 +504,9 @@
     {
       "name": "kbd-006",
       "type": "registry:component",
-      "title": "Wide Label Keys",
+      "title": "Клавиши с длинной подписью",
       "description": "Ряд клавиш с длинными подписями: «Backspace» и «Page Down» не влезают в квадрат, поэтому у ряда два честных режима ширины вместо одного компромисса.",
-      "categories": [
-        "kbd"
-      ],
+      "categories": ["kbd"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -565,12 +518,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Режим auto даёт клавише ширину по содержимому при общей минимальной — ряд выглядит как настоящая клавиатура с разными клавишами. Режим even переводит ряд на grid с repeat(auto-fit, minmax(4.5rem, 1fr)), и все клавиши получают равные колонки: это нужно, когда ряд должен читаться строем, например в легенде. Высота и кегль в обоих режимах общие, поэтому переключение не меняет ритм строки. Подписи помечены nowrap, чтобы «Page Down» не разорвался. Подложка светлая: клавиши и подпись тёмные.",
       "meta": {
-        "tags": [
-          "kbd",
-          "keyboard",
-          "layout",
-          "labels"
-        ],
+        "tags": ["kbd", "keyboard", "layout", "labels"],
         "preview": {
           "width": "full"
         },
@@ -605,10 +553,7 @@
             "label": "Ширина клавиш",
             "type": "select",
             "default": "auto",
-            "options": [
-              "auto",
-              "even"
-            ]
+            "options": ["auto", "even"]
           },
           {
             "prop": "caption",
@@ -654,7 +599,8 @@
                 "label": "Caption",
                 "default": "Editor keys"
               }
-            }
+            },
+            "title": "Wide Label Keys"
           }
         }
       }

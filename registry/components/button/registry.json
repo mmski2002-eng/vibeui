@@ -4,11 +4,9 @@
     {
       "name": "button-001",
       "type": "registry:component",
-      "title": "Action Button",
+      "title": "Кнопка действия",
       "description": "Основная кнопка действия: три размера, три тона и состояние загрузки. Самодостаточна: один файл, без зависимостей, не зависит от темы проекта.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-001-*. Акцент меняется пропом accent, размеры и тона — data-атрибутами, объявленными внутри компонента. Принимает любые пропсы нативного <button>. Спиннер на чистом CSS, иконочные библиотеки не нужны.",
       "meta": {
-        "tags": [
-          "button",
-          "action",
-          "inline",
-          "cta"
-        ],
+        "tags": ["button", "action", "inline", "cta"],
         "ai": {
           "export": "Button001",
           "usage": "<Button001 tone=\"solid\" size=\"md\" onClick={handleSubmit}>\n  Get started\n</Button001>",
@@ -68,22 +61,14 @@
             "label": "Тон",
             "type": "select",
             "default": "solid",
-            "options": [
-              "solid",
-              "soft",
-              "outline"
-            ]
+            "options": ["solid", "soft", "outline"]
           },
           {
             "prop": "size",
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": [
-              "sm",
-              "md",
-              "lg"
-            ]
+            "options": ["sm", "md", "lg"]
           },
           {
             "prop": "loading",
@@ -155,7 +140,8 @@
               "accentForeground": {
                 "label": "Label color"
               }
-            }
+            },
+            "title": "Action Button"
           }
         }
       }
@@ -163,11 +149,9 @@
     {
       "name": "button-002",
       "type": "registry:component",
-      "title": "Split Action Button",
+      "title": "Кнопка с раздельным меню",
       "description": "Кнопка с приставкой вариантов: основное действие слева, вызов альтернатив справа, между ними волосяная линия. Самодостаточна: один файл, без зависимостей.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -179,13 +163,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-002-*. Корень — group из двух кнопок, поэтому className попадает на группу, а нативные пропсы button — на основную зону. Вторая зона вызывает onMenuClick и обязана иметь menuLabel: у неё нет видимой подписи.",
       "meta": {
-        "tags": [
-          "button",
-          "split",
-          "action",
-          "dropdown",
-          "toolbar"
-        ],
+        "tags": ["button", "split", "action", "dropdown", "toolbar"],
         "ai": {
           "export": "Button002",
           "usage": "<Button002 onClick={publish} onMenuClick={openVariants} menuLabel=\"Другие варианты\">\n  Опубликовать\n</Button002>",
@@ -279,7 +257,8 @@
               "accentForeground": {
                 "label": "Label color"
               }
-            }
+            },
+            "title": "Split Action Button"
           }
         }
       }
@@ -287,11 +266,9 @@
     {
       "name": "button-003",
       "type": "registry:component",
-      "title": "Magnetic CTA Button",
+      "title": "Притягивающаяся кнопка",
       "description": "Крупная CTA с эффектом притяжения: на наведении поднимается, свечение разрастается, по поверхности проходит блик. Самодостаточна: один файл, без зависимостей.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -303,13 +280,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-003-*. Эффект целиком на CSS: ни JS, ни отслеживания курсора, поэтому компонент остаётся серверным. Градиент собирается из двух переменных accent и accent-2.",
       "meta": {
-        "tags": [
-          "button",
-          "cta",
-          "gradient",
-          "animated",
-          "hero"
-        ],
+        "tags": ["button", "cta", "gradient", "animated", "hero"],
         "ai": {
           "export": "Button003",
           "usage": "<Button003 onClick={startTrial}>Начать бесплатно</Button003>",
@@ -392,7 +363,8 @@
               "accentForeground": {
                 "label": "Label color"
               }
-            }
+            },
+            "title": "Magnetic CTA Button"
           }
         }
       }
@@ -400,11 +372,9 @@
     {
       "name": "button-004",
       "type": "registry:component",
-      "title": "Quiet Secondary Button",
+      "title": "Тихая второстепенная кнопка",
       "description": "Тихое второстепенное действие: без рамки и фона в покое, подложка проявляется только на наведении и фокусе. Самодостаточна: один файл, без зависимостей.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -416,13 +386,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-004-*. Точка-маркер отключается пропом marker, если кнопка стоит в плотном ряду. Цвет маркера меняется пропом tint.",
       "meta": {
-        "tags": [
-          "button",
-          "secondary",
-          "ghost",
-          "quiet",
-          "toolbar"
-        ],
+        "tags": ["button", "secondary", "ghost", "quiet", "toolbar"],
         "ai": {
           "export": "Button004",
           "usage": "<Button004 onClick={cancel}>Отменить</Button004>",
@@ -505,7 +469,8 @@
               "tint": {
                 "label": "Dot color"
               }
-            }
+            },
+            "title": "Quiet Secondary Button"
           }
         }
       }
@@ -513,11 +478,9 @@
     {
       "name": "button-005",
       "type": "registry:component",
-      "title": "Confirm Button",
+      "title": "Кнопка подтверждения",
       "description": "Подтверждение в два шага прямо в кнопке: первый клик открывает окно подтверждения с убывающей полосой времени, второй подтверждает. Самодостаточна: один файл, без зависимостей.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -529,13 +492,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-005-*. Клиентский компонент: окно подтверждения — внутреннее состояние. Длительность окна задаётся пропом timeout, подтверждение приходит в onConfirm; обычный onClick компонент не принимает намеренно.",
       "meta": {
-        "tags": [
-          "button",
-          "confirm",
-          "destructive",
-          "two-step",
-          "stateful"
-        ],
+        "tags": ["button", "confirm", "destructive", "two-step", "stateful"],
         "ai": {
           "export": "Button005",
           "usage": "<Button005 onConfirm={deleteProject} confirmLabel=\"Точно удалить?\" timeout={3000}>\n  Удалить проект\n</Button005>",
@@ -633,7 +590,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Confirm Button"
           }
         }
       }
@@ -641,11 +599,9 @@
     {
       "name": "button-006",
       "type": "registry:component",
-      "title": "Danger Action Button",
+      "title": "Кнопка опасного действия",
       "description": "Необратимое действие: по левому краю выезжает предупреждающая штриховка, подпись отодвигается. Самодостаточна: один файл, без зависимостей.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -657,13 +613,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-006-*. Штриховка рисуется repeating-linear-gradient и выезжает и на hover, и на focus-visible, поэтому предупреждение видно и с клавиатуры.",
       "meta": {
-        "tags": [
-          "button",
-          "danger",
-          "destructive",
-          "warning",
-          "hatch"
-        ],
+        "tags": ["button", "danger", "destructive", "warning", "hatch"],
         "ai": {
           "export": "Button006",
           "usage": "<Button006 onClick={dropDatabase}>Удалить навсегда</Button006>",
@@ -737,7 +687,8 @@
               "danger": {
                 "label": "Danger color"
               }
-            }
+            },
+            "title": "Danger Action Button"
           }
         }
       }
@@ -745,11 +696,9 @@
     {
       "name": "button-007",
       "type": "registry:component",
-      "title": "Social Proof Button",
+      "title": "Кнопка с социальным доводом",
       "description": "CTA с социальным доказательством внутри: стопка аватаров из инициалов и тихий счётчик рядом с подписью. Самодостаточна: один файл, без зависимостей.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -761,13 +710,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-007-*. Аватары рисуются CSS из инициалов: ни картинок, ни сетевых запросов. Первые три аватара получают разные оттенки автоматически.",
       "meta": {
-        "tags": [
-          "button",
-          "cta",
-          "social-proof",
-          "avatars",
-          "signup"
-        ],
+        "tags": ["button", "cta", "social-proof", "avatars", "signup"],
         "ai": {
           "export": "Button007",
           "usage": "<Button007 people={[\"АК\", \"МД\", \"ЛП\"]} hint=\"+2 400 команд\" onClick={signUp}>\n  Присоединиться\n</Button007>",
@@ -856,7 +799,8 @@
               "accent": {
                 "label": "Avatar color"
               }
-            }
+            },
+            "title": "Social Proof Button"
           }
         }
       }
@@ -864,11 +808,9 @@
     {
       "name": "button-008",
       "type": "registry:component",
-      "title": "Command Button",
+      "title": "Командная кнопка",
       "description": "Кнопка команды с подсказкой горячей клавиши: справа настоящие клавиши с объёмом, которые нажимаются на наведении. Самодостаточна: один файл, без зависимостей.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -880,13 +822,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-008-*. Клавиши задаются массивом keys и рисуются тегом kbd; объём даётся нижней гранью через box-shadow. Сам обработчик горячей клавиши компонент не вешает — это задача приложения.",
       "meta": {
-        "tags": [
-          "button",
-          "command",
-          "shortcut",
-          "keyboard",
-          "search"
-        ],
+        "tags": ["button", "command", "shortcut", "keyboard", "search"],
         "ai": {
           "export": "Button008",
           "usage": "<Button008 keys={[\"⌘\", \"K\"]} onClick={openCommandMenu}>\n  Быстрый поиск\n</Button008>",
@@ -960,7 +896,8 @@
               "accent": {
                 "label": "Key color"
               }
-            }
+            },
+            "title": "Command Button"
           }
         }
       }
@@ -968,11 +905,9 @@
     {
       "name": "button-009",
       "type": "registry:component",
-      "title": "Pill Toggle Button",
+      "title": "Кнопка-пилюля",
       "description": "Кнопка-переключатель: подпись и дорожка с бегунком в одном пятне, состояние объявлено через aria-pressed. Самодостаточна: один файл, без зависимостей.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -984,13 +919,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-009-*. Клиентский компонент: состояние переключателя внутреннее, наружу отдаётся через onPressedChange. Начальное состояние — defaultPressed.",
       "meta": {
-        "tags": [
-          "button",
-          "toggle",
-          "switch",
-          "pill",
-          "stateful"
-        ],
+        "tags": ["button", "toggle", "switch", "pill", "stateful"],
         "ai": {
           "export": "Button009",
           "usage": "<Button009\n  defaultPressed={false}\n  onPressedChange={setNotifications}\n  onLabel=\"Уведомления включены\"\n  offLabel=\"Уведомления выключены\"\n/>",
@@ -1084,7 +1013,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Pill Toggle Button"
           }
         }
       }
@@ -1092,11 +1022,9 @@
     {
       "name": "button-010",
       "type": "registry:component",
-      "title": "Download Button",
+      "title": "Кнопка скачивания",
       "description": "Кнопка загрузки, у которой прогресс заливает саму подложку: статус и проценты управляются снаружи. Самодостаточна: один файл, без зависимостей.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1108,13 +1036,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-010-*. Прогресс приходит пропами status и progress — компонент ничего не качает сам и не знает про сеть. В состоянии loading кнопка становится disabled и получает aria-busy.",
       "meta": {
-        "tags": [
-          "button",
-          "download",
-          "progress",
-          "status",
-          "async"
-        ],
+        "tags": ["button", "download", "progress", "status", "async"],
         "ai": {
           "export": "Button010",
           "usage": "<Button010 status={status} progress={percent} onClick={startDownload}>\n  Скачать отчёт\n</Button010>",
@@ -1154,11 +1076,7 @@
             "label": "Статус",
             "type": "select",
             "default": "idle",
-            "options": [
-              "idle",
-              "loading",
-              "done"
-            ]
+            "options": ["idle", "loading", "done"]
           },
           {
             "prop": "progress",
@@ -1239,7 +1157,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Download Button"
           }
         }
       }
@@ -1247,11 +1166,9 @@
     {
       "name": "button-011",
       "type": "registry:component",
-      "title": "Minimal Link Button",
+      "title": "Кнопка-ссылка без оформления",
       "description": "Самое лёгкое действие набора: текст со стрелкой, подчёркивание прочерчивается слева направо на наведении. Самодостаточна: один файл, без зависимостей.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1263,13 +1180,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-011-*. Это button, а не ссылка: у неё нет фона, рамки и фиксированной высоты, поэтому она встаёт прямо в строку текста. Для перехода по адресу используйте обычный <a>.",
       "meta": {
-        "tags": [
-          "button",
-          "link",
-          "minimal",
-          "inline",
-          "text"
-        ],
+        "tags": ["button", "link", "minimal", "inline", "text"],
         "ai": {
           "export": "Button011",
           "usage": "<Button011 onClick={openFeatures}>Смотреть все возможности</Button011>",
@@ -1352,7 +1263,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Minimal Link Button"
           }
         }
       }
@@ -1360,11 +1272,9 @@
     {
       "name": "button-012",
       "type": "registry:component",
-      "title": "Icon Button",
+      "title": "Кнопка-иконка",
       "description": "Кнопка без подписи, у которой имя всё равно есть: оно уходит в aria-label и title, а значки нарисованы бордюрами.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1376,12 +1286,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-012-*. Серверный: хуков нет. Размер задан одной переменной, форма и тон — атрибутами data-shape и data-tone. Четыре значка (плюс, крестик, многоточие, лупа) собраны из бордюров и псевдоэлементов, поэтому иконочный пакет не подключается. Имя действия обязательно и дублируется в title.",
       "meta": {
-        "tags": [
-          "button",
-          "icon",
-          "compact",
-          "a11y"
-        ],
+        "tags": ["button", "icon", "compact", "a11y"],
         "ai": {
           "export": "Button012",
           "usage": "<Button012 label=\"Добавить\" icon=\"plus\" tone=\"accent\" />",
@@ -1420,32 +1325,21 @@
             "label": "Значок",
             "type": "select",
             "default": "plus",
-            "options": [
-              "plus",
-              "close",
-              "more",
-              "search"
-            ]
+            "options": ["plus", "close", "more", "search"]
           },
           {
             "prop": "shape",
             "label": "Форма",
             "type": "select",
             "default": "square",
-            "options": [
-              "square",
-              "circle"
-            ]
+            "options": ["square", "circle"]
           },
           {
             "prop": "tone",
             "label": "Тон",
             "type": "select",
             "default": "neutral",
-            "options": [
-              "neutral",
-              "accent"
-            ]
+            "options": ["neutral", "accent"]
           }
         ],
         "i18n": {
@@ -1489,7 +1383,8 @@
               "tone": {
                 "label": "Tone"
               }
-            }
+            },
+            "title": "Icon Button"
           }
         }
       }
@@ -1497,11 +1392,9 @@
     {
       "name": "button-013",
       "type": "registry:component",
-      "title": "Segmented Control",
+      "title": "Сегментированный переключатель",
       "description": "Сегментированный переключатель на настоящих radio: стрелки, Home/End и объявление позиции достаются от браузера.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1513,12 +1406,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-013-*. Клиентский: \"use client\". Внутри настоящие input type=\"radio\" с общим именем из useId; они прозрачны и растянуты на подпись, поэтому клавиатурная модель радиогруппы работает без единой строки обработчиков. Выбранный сегмент стилизуется через :has(input:checked).",
       "meta": {
-        "tags": [
-          "button",
-          "segmented",
-          "radio",
-          "keyboard"
-        ],
+        "tags": ["button", "segmented", "radio", "keyboard"],
         "ai": {
           "export": "Button013",
           "usage": "<Button013 options={[\"День\", \"Неделя\"]} defaultValue=\"Неделя\" onChange={setRange} />",
@@ -1594,7 +1482,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Segmented Control"
           }
         }
       }
@@ -1602,11 +1491,9 @@
     {
       "name": "button-014",
       "type": "registry:component",
-      "title": "Expanding FAB",
+      "title": "Раскрывающаяся плавающая кнопка",
       "description": "Круглая кнопка главного действия: подпись раскрывается по ширине при наведении и при фокусе, а не всплывает поверх соседей.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1618,12 +1505,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-014-*. Серверный: хуков нет. Подпись всегда в разметке, но её max-width равен нулю и растёт до 12rem на hover и focus-visible — так кнопка расширяется в потоке, а не накрывает соседей. Имя действия продублировано в aria-label. Плюс нарисован двумя полосками.",
       "meta": {
-        "tags": [
-          "button",
-          "fab",
-          "hover",
-          "action"
-        ],
+        "tags": ["button", "fab", "hover", "action"],
         "ai": {
           "export": "Button014",
           "usage": "<Button014 label=\"Новая задача\" accent=\"oklch(0.55 0.17 265)\" />",
@@ -1699,7 +1581,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Expanding FAB"
           }
         }
       }
@@ -1707,11 +1590,9 @@
     {
       "name": "button-015",
       "type": "registry:component",
-      "title": "Copy Button",
+      "title": "Кнопка копирования",
       "description": "Кнопка копирования отчитывается в себе: подпись меняется на «Скопировано» и возвращается через пару секунд.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1723,12 +1604,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-015-*. Клиентский: \"use client\". Запись в буфер идёт через navigator.clipboard в try/catch: при отказе состояние не меняется, потому что ложное «скопировано» хуже молчания. Таймер возврата снимается при размонтировании. Подпись объявлена aria-live=\"polite\".",
       "meta": {
-        "tags": [
-          "button",
-          "copy",
-          "clipboard",
-          "feedback"
-        ],
+        "tags": ["button", "copy", "clipboard", "feedback"],
         "ai": {
           "export": "Button015",
           "usage": "<Button015 value=\"npm i vibeui\" label=\"Скопировать\" />",
@@ -1817,7 +1693,8 @@
               "hold": {
                 "label": "Hold, ms"
               }
-            }
+            },
+            "title": "Copy Button"
           }
         }
       }
@@ -1825,11 +1702,9 @@
     {
       "name": "button-016",
       "type": "registry:component",
-      "title": "Link Button",
+      "title": "Кнопка-ссылка",
       "description": "Ссылка в виде кнопки: адрес можно скопировать и открыть в новой вкладке — с button onClick всё это теряется.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1841,12 +1716,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-016-*. Серверный: хуков нет. Это <a>, а не <button>: сохраняются контекстное меню, средний клик и статусная строка. Для внешней ссылки проставляются target=\"_blank\" и rel=\"noopener noreferrer\", рисуется значок и добавляется скрытая строка «откроется в новой вкладке».",
       "meta": {
-        "tags": [
-          "button",
-          "link",
-          "external",
-          "a11y"
-        ],
+        "tags": ["button", "link", "external", "a11y"],
         "ai": {
           "export": "Button016",
           "usage": "<Button016 label=\"Открыть документацию\" href=\"https://example.com\" external />",
@@ -1891,10 +1761,7 @@
             "label": "Тон",
             "type": "select",
             "default": "neutral",
-            "options": [
-              "neutral",
-              "accent"
-            ]
+            "options": ["neutral", "accent"]
           }
         ],
         "i18n": {
@@ -1935,7 +1802,8 @@
               "tone": {
                 "label": "Tone"
               }
-            }
+            },
+            "title": "Link Button"
           }
         }
       }
@@ -1943,11 +1811,9 @@
     {
       "name": "button-017",
       "type": "registry:component",
-      "title": "Submit Once",
+      "title": "Отправка один раз",
       "description": "Кнопка отправки, которую нельзя нажать дважды: она блокируется на время работы и держит ширину при смене подписи.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1959,12 +1825,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-017-*. Клиентский: \"use client\". Состояние — idle, pending или done; в pending кнопка disabled и aria-busy, повторный вызов отсекается ранним возвратом. Минимальная ширина задана по самой длинной подписи, поэтому смена текста не дёргает раскладку. Таймер возврата снимается при размонтировании.",
       "meta": {
-        "tags": [
-          "button",
-          "submit",
-          "async",
-          "loading"
-        ],
+        "tags": ["button", "submit", "async", "loading"],
         "ai": {
           "export": "Button017",
           "usage": "<Button017 label=\"Отправить заявку\" action={() => api.send(form)} />",
@@ -2062,7 +1923,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Submit Once"
           }
         }
       }
@@ -2070,11 +1932,9 @@
     {
       "name": "button-018",
       "type": "registry:component",
-      "title": "Quantity Stepper",
+      "title": "Счётчик количества",
       "description": "Счётчик количества: две кнопки вокруг настоящего поля — набрать «12» быстрее, чем нажать плюс двенадцать раз.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2086,12 +1946,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-018-*. Клиентский: \"use client\". Значение живёт в input type=\"number\" со скрытой подписью через useId; стрелки браузера убраны, потому что рядом стоят собственные кнопки. На границах диапазона кнопки disabled, а их aria-label содержит будущее значение.",
       "meta": {
-        "tags": [
-          "button",
-          "stepper",
-          "quantity",
-          "form"
-        ],
+        "tags": ["button", "stepper", "quantity", "form"],
         "ai": {
           "export": "Button018",
           "usage": "<Button018 defaultValue={2} min={1} max={20} onChange={setQty} />",
@@ -2180,7 +2035,8 @@
                 "label": "Unit",
                 "default": "pcs"
               }
-            }
+            },
+            "title": "Quantity Stepper"
           }
         }
       }
@@ -2188,11 +2044,9 @@
     {
       "name": "button-019",
       "type": "registry:component",
-      "title": "Reaction Button",
+      "title": "Кнопка реакции",
       "description": "Кнопка-реакция со счётчиком: состояние объявлено через aria-pressed, а не сменой подписи на «Не нравится».",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2204,12 +2058,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-019-*. Клиентский: \"use client\". Нажатое состояние — aria-pressed, и по нему же идёт стилизация. Счётчик пересчитывается на клиенте сразу, поэтому отклик мгновенный. Сердце собрано из двух повёрнутых фигур и заливается в нажатом состоянии — цвет не единственный признак.",
       "meta": {
-        "tags": [
-          "button",
-          "reaction",
-          "toggle",
-          "counter"
-        ],
+        "tags": ["button", "reaction", "toggle", "counter"],
         "ai": {
           "export": "Button019",
           "usage": "<Button019 label=\"Нравится\" count={128} onChange={send} />",
@@ -2296,7 +2145,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Reaction Button"
           }
         }
       }
@@ -2304,11 +2154,9 @@
     {
       "name": "button-020",
       "type": "registry:component",
-      "title": "Mobile Checkout Bar",
+      "title": "Полоса оформления на телефоне",
       "description": "Кнопка нижней панели телефона: во всю ширину, с ценой внутри и отступом на домашнюю полоску через safe-area.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2320,12 +2168,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-020-*. Серверный: хуков нет. Нижний отступ считается как базовый плюс env(safe-area-inset-bottom): без него на iPhone край кнопки уходит под системную черту. Высота кнопки 3rem, цена выровнена по правому краю табличными цифрами.",
       "meta": {
-        "tags": [
-          "button",
-          "mobile",
-          "checkout",
-          "safe-area"
-        ],
+        "tags": ["button", "mobile", "checkout", "safe-area"],
         "preview": {
           "width": "full"
         },
@@ -2426,7 +2269,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Mobile Checkout Bar"
           }
         }
       }
@@ -2434,11 +2278,9 @@
     {
       "name": "button-021",
       "type": "registry:component",
-      "title": "Retry Action Button",
+      "title": "Кнопка повтора",
       "description": "Длинное действие с тремя исходами: пока запрос идёт, кнопка становится «Отмена», после сбоя предлагает повтор и считает попытки. Ширина не прыгает при смене подписи.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2450,12 +2292,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-021-*. Клиентский: состояния idle/pending/error/done внутренние. Работа передаётся пропом action, который получает AbortSignal внутреннего AbortController, поэтому клик во время работы отменяет запрос. Четыре подписи лежат друг на друге в одной ячейке grid, неактивные скрыты visibility:hidden — ширина считается по самой длинной. Дефолтный action — витринная заглушка, которая падает на первой попытке.",
       "meta": {
-        "tags": [
-          "button",
-          "async",
-          "retry",
-          "cancel"
-        ],
+        "tags": ["button", "async", "retry", "cancel"],
         "ai": {
           "export": "Button021",
           "usage": "<Button021\n  label=\"Синхронизировать\"\n  action={(signal) => syncProject(signal)}\n/>",
@@ -2535,7 +2372,8 @@
                 "label": "Working label",
                 "default": "Cancel"
               }
-            }
+            },
+            "title": "Retry Action Button"
           }
         }
       }
@@ -2543,11 +2381,9 @@
     {
       "name": "button-022",
       "type": "registry:component",
-      "title": "Hold To Confirm",
+      "title": "Подтверждение удержанием",
       "description": "Подтверждение удержанием: кнопку нужно продержать нажатой, заливка ползёт слева направо, и только в конце срабатывает действие. Отпустил раньше — откат.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2559,12 +2395,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-022-*. Клиентский: удержание отслеживается pointer-событиями и дублируется клавиатурой (keydown/keyup на пробеле и Enter, повтор автоповтора отсекается по event.repeat). Длительность приходит пропом hold и уходит в CSS-переменную --vibeui-button-022-hold, по которой заливка едет ровно столько же. Действие вызывается один раз в конце и приходит в onConfirm.",
       "meta": {
-        "tags": [
-          "button",
-          "confirm",
-          "hold",
-          "destructive"
-        ],
+        "tags": ["button", "confirm", "hold", "destructive"],
         "ai": {
           "export": "Button022",
           "usage": "<Button022 hold={1200} onConfirm={deleteAccount}>\n  Держите, чтобы удалить\n</Button022>",
@@ -2644,7 +2475,8 @@
               "hold": {
                 "label": "Hold, ms"
               }
-            }
+            },
+            "title": "Hold To Confirm"
           }
         }
       }
@@ -2652,11 +2484,9 @@
     {
       "name": "button-023",
       "type": "registry:component",
-      "title": "Secret Copy Field",
+      "title": "Поле с секретом",
       "description": "Копируется не подпись, а значение, которое видно на месте: ключ лежит в моноширинном поле, кнопкой служит всё поле, длинная строка усечена — но в буфер уходит целиком.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2668,12 +2498,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-023-*. Клиентский: подпись «Скопировано» держится hold миллисекунд и откатывается по таймеру, таймер чистится при размонтировании. Значение усечено визуально через text-overflow, в navigator.clipboard.writeText уходит полный value. Отказ буфера ловится try/catch и состояние не меняется — кнопка не отчитывается о том, чего не сделала.",
       "meta": {
-        "tags": [
-          "button",
-          "copy",
-          "clipboard",
-          "token"
-        ],
+        "tags": ["button", "copy", "clipboard", "token"],
         "preview": {
           "width": "full"
         },
@@ -2756,7 +2581,8 @@
               "hold": {
                 "label": "Confirmation, ms"
               }
-            }
+            },
+            "title": "Secret Copy Field"
           }
         }
       }
@@ -2764,11 +2590,9 @@
     {
       "name": "button-024",
       "type": "registry:component",
-      "title": "Tri-State Select",
+      "title": "Выбор из трёх состояний",
       "description": "Переключатель с третьим состоянием: кроме «всё» и «ничего» у списка есть «выбрано 3 из 8», и оно объявлено через aria-pressed=\"mixed\", а не спрятано в цвет.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2780,12 +2604,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-024-*. Клиентский: число выбранного хранится внутри и отдаётся наружу через onSelectedChange. Значение aria-pressed считается из счётчика: 0 — false, total — true, между ними — mixed. Значок в квадрате переключается между галочкой и тире, счётчик набран tabular-nums.",
       "meta": {
-        "tags": [
-          "button",
-          "toggle",
-          "mixed",
-          "selection"
-        ],
+        "tags": ["button", "toggle", "mixed", "selection"],
         "ai": {
           "export": "Button024",
           "usage": "<Button024 total={8} defaultSelected={3} onSelectedChange={setChecked} />",
@@ -2865,7 +2684,8 @@
               "total": {
                 "label": "Items total"
               }
-            }
+            },
+            "title": "Tri-State Select"
           }
         }
       }
@@ -2873,11 +2693,9 @@
     {
       "name": "button-025",
       "type": "registry:component",
-      "title": "Hotkey Bound Button",
+      "title": "Кнопка с горячей клавишей",
       "description": "Кнопка сама держит своё сочетание клавиш: вешает слушатель, показывает ⌘ на macOS и Ctrl на остальных и подсвечивается, когда сочетание сработало.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2889,12 +2707,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-025-*. Клиентский: слушатель keydown висит на window, combo вида «mod+s» разбирается на модификаторы и основную клавишу. Платформа читается через useSyncExternalStore: серверный снимок всегда false, поэтому разметка сервера и клиента совпадает, а после гидратации клавиши перерисовываются под систему. Пока фокус в поле ввода или contenteditable, сочетание не перехватывается. Обработчик держится в ref, чтобы слушатель не переподписывался на каждый рендер.",
       "meta": {
-        "tags": [
-          "button",
-          "hotkey",
-          "keyboard",
-          "shortcut"
-        ],
+        "tags": ["button", "hotkey", "keyboard", "shortcut"],
         "ai": {
           "export": "Button025",
           "usage": "<Button025 combo=\"mod+s\" onAction={saveDraft} label=\"Сохранить черновик\" />",
@@ -2974,7 +2787,8 @@
                 "label": "Shortcut",
                 "default": "mod+s"
               }
-            }
+            },
+            "title": "Hotkey Bound Button"
           }
         }
       }
@@ -2982,11 +2796,9 @@
     {
       "name": "button-026",
       "type": "registry:component",
-      "title": "File Download Link",
+      "title": "Ссылка на файл",
       "description": "Ссылка скачивания, которая называет вес и формат до клика: плашка расширения, имя файла и размер рядом. Это настоящий <a download>, а не кнопка.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2998,12 +2810,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-026-*. Серверный: хуков нет. Корень — тег <a> с атрибутом download, поэтому работают средняя кнопка мыши, «сохранить как» и копирование адреса. Формат вычисляется из расширения fileName и уходит в data-format, который перекрашивает плашку. Размер приходит строкой: считать вес файла — работа сервера.",
       "meta": {
-        "tags": [
-          "button",
-          "download",
-          "link",
-          "file"
-        ],
+        "tags": ["button", "download", "link", "file"],
         "preview": {
           "width": "full"
         },
@@ -3086,7 +2893,8 @@
                 "label": "File size",
                 "default": "2.4 MB"
               }
-            }
+            },
+            "title": "File Download Link"
           }
         }
       }
@@ -3094,11 +2902,9 @@
     {
       "name": "button-027",
       "type": "registry:component",
-      "title": "Resend Countdown",
+      "title": "Повтор с отсчётом",
       "description": "Повторная отправка кода с паузой: кнопка заблокирована, кольцо убывает, время идёт моноширинными цифрами, по нулю она сама разблокируется.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3110,12 +2916,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-027-*. Клиентский: остаток секунд хранится в состоянии и уменьшается setTimeout'ом раз в секунду, начальное значение совпадает на сервере и клиенте. Доля остатка уходит в CSS-переменную --vibeui-button-027-left, по которой conic-gradient рисует кольцо. Живая область объявляет только момент разблокировки: секунды не зачитываются каждую секунду.",
       "meta": {
-        "tags": [
-          "button",
-          "countdown",
-          "resend",
-          "otp"
-        ],
+        "tags": ["button", "countdown", "resend", "otp"],
         "ai": {
           "export": "Button027",
           "usage": "<Button027 seconds={30} onResend={sendCodeAgain} />",
@@ -3195,7 +2996,8 @@
               "seconds": {
                 "label": "Pause, seconds"
               }
-            }
+            },
+            "title": "Resend Countdown"
           }
         }
       }
@@ -3203,11 +3005,9 @@
     {
       "name": "button-028",
       "type": "registry:component",
-      "title": "Tooltip Icon Button",
+      "title": "Кнопка-иконка с подсказкой",
       "description": "Кнопка со значком, у которой подпись всё-таки есть: одна строка уходит и в aria-label, и в подсказку, поэтому имя действия не может разойтись.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3219,12 +3019,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-028-*. Серверный: хуков нет, подсказка целиком на CSS. Показ идёт по соседнему селектору button:hover + [data-part=\"tip\"] и button:focus-visible + [data-part=\"tip\"]: по мыши с задержкой 0.35s, по клавиатуре сразу. Сторона задаётся data-side на корне. Значки info, trash и edit собраны из бордюров и псевдоэлементов.",
       "meta": {
-        "tags": [
-          "button",
-          "icon",
-          "tooltip",
-          "a11y"
-        ],
+        "tags": ["button", "icon", "tooltip", "a11y"],
         "ai": {
           "export": "Button028",
           "usage": "<Button028 label=\"Удалить черновик\" icon=\"trash\" side=\"top\" />",
@@ -3264,11 +3059,7 @@
             "label": "Значок",
             "type": "select",
             "default": "trash",
-            "options": [
-              "info",
-              "trash",
-              "edit"
-            ]
+            "options": ["info", "trash", "edit"]
           }
         ],
         "i18n": {
@@ -3307,7 +3098,8 @@
               "icon": {
                 "label": "Glyph"
               }
-            }
+            },
+            "title": "Tooltip Icon Button"
           }
         }
       }
@@ -3315,11 +3107,9 @@
     {
       "name": "button-029",
       "type": "registry:component",
-      "title": "Form Footer Actions",
+      "title": "Действия в подвале формы",
       "description": "Концовка формы целиком: на узкой колонке обе кнопки во всю ширину друг под другом, от 26rem собственной ширины они перестраиваются в ряд.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3331,12 +3121,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-029-*. Серверный: хуков нет. Раскладка считается от собственной ширины блока через container-type:inline-size, а правила @container висят на внутреннем [data-part=\"shell\"] — контейнерный запрос не действует на сам контейнер. Основная кнопка объявлена type=\"submit\", вторая — type=\"button\", чтобы она не отправляла форму.",
       "meta": {
-        "tags": [
-          "button",
-          "form",
-          "mobile",
-          "container-query"
-        ],
+        "tags": ["button", "form", "mobile", "container-query"],
         "preview": {
           "width": "full"
         },
@@ -3419,7 +3204,8 @@
                 "label": "Fine print",
                 "default": "We answer within one business day"
               }
-            }
+            },
+            "title": "Form Footer Actions"
           }
         }
       }
@@ -3427,11 +3213,9 @@
     {
       "name": "button-030",
       "type": "registry:component",
-      "title": "Notification Badge",
+      "title": "Кнопка со счётчиком",
       "description": "Счётчик поверх угла кнопки: число попадает и в бейдж, и в aria-label, большие значения схлопываются в «99+», а ноль убирает бейдж целиком.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3443,12 +3227,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-030-*. Серверный: число приходит пропом count, компонент ничего не считает сам. Бейдж обведён кольцом цвета подложки через box-shadow, поэтому не сливается с колокольчиком. Порог схлопывания задаётся пропом cap. Ореол — CSS-анимация, которая полностью выключается при prefers-reduced-motion.",
       "meta": {
-        "tags": [
-          "button",
-          "badge",
-          "counter",
-          "notifications"
-        ],
+        "tags": ["button", "badge", "counter", "notifications"],
         "ai": {
           "export": "Button030",
           "usage": "<Button030 label=\"Уведомления\" count={12} onClick={openInbox} />",
@@ -3528,7 +3307,8 @@
               "count": {
                 "label": "Counter"
               }
-            }
+            },
+            "title": "Notification Badge"
           }
         }
       }
@@ -3536,11 +3316,9 @@
     {
       "name": "button-031",
       "type": "registry:component",
-      "title": "File Picker Button",
+      "title": "Кнопка выбора файла",
       "description": "Выбор файла поверх настоящего input[type=file]: клик, Tab и Enter работают сами, а JS добавлен только ради имени файла, веса и перетаскивания.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3552,12 +3330,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-031-*. Клиентский: имя и вес выбранного файла держатся в состоянии, файл отдаётся наружу через onFileChange. Скрытый input лежит внутри label, поэтому диалог открывает браузер без обработчиков; фокусное кольцо рисуется на плашке через :has(input:focus-visible). При перетаскивании файл кладётся в сам input через ref, чтобы форма отправилась обычным способом.",
       "meta": {
-        "tags": [
-          "button",
-          "upload",
-          "file",
-          "drag-drop"
-        ],
+        "tags": ["button", "upload", "file", "drag-drop"],
         "preview": {
           "width": "full"
         },
@@ -3640,7 +3413,8 @@
                 "label": "Constraints",
                 "default": "PDF or PNG, up to 10 MB"
               }
-            }
+            },
+            "title": "File Picker Button"
           }
         }
       }
@@ -3648,11 +3422,9 @@
     {
       "name": "button-032",
       "type": "registry:component",
-      "title": "Overflow Menu Button",
+      "title": "Кнопка меню действий",
       "description": "Кнопка «ещё» с меню на нативном popover: Esc и клик мимо закрывают слой силами браузера, а под кнопку он встаёт через CSS anchor positioning.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3664,12 +3436,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-032-*. Серверный: хуков нет, JS нет вовсе. Слой открывается атрибутом popover и парой popovertarget, пункты закрывают его через popovertargetaction=\"hide\". Позиционирование под кнопкой включается внутри @supports (anchor-name: --a); где anchor не поддержан, popover остаётся по центру экрана. Появление сделано на @starting-style с transition-behavior для display и overlay. Роль menu не выставлена намеренно: она требует навигации стрелками, которой без JS не будет.",
       "meta": {
-        "tags": [
-          "button",
-          "menu",
-          "popover",
-          "anchor"
-        ],
+        "tags": ["button", "menu", "popover", "anchor"],
         "ai": {
           "export": "Button032",
           "usage": "<Button032\n  label=\"Ещё действия\"\n  items={[\"Переименовать\", \"Дублировать\"]}\n  dangerLabel=\"Удалить\"\n/>",
@@ -3709,10 +3476,7 @@
             "label": "Выравнивание",
             "type": "select",
             "default": "end",
-            "options": [
-              "start",
-              "end"
-            ]
+            "options": ["start", "end"]
           }
         ],
         "i18n": {
@@ -3751,7 +3515,8 @@
               "align": {
                 "label": "Alignment"
               }
-            }
+            },
+            "title": "Overflow Menu Button"
           }
         }
       }
@@ -3759,11 +3524,9 @@
     {
       "name": "button-033",
       "type": "registry:component",
-      "title": "Ghost Button",
+      "title": "Призрачная кнопка",
       "description": "Кнопка-призрак на собственной поверхности: в покое ни рамки, ни фона, вес приходит только на наведении, а включённое состояние держится акцентной подложкой.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3775,12 +3538,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-033-*. Серверный компонент. Корень блока — не сама кнопка, а бумажная поверхность, на которой призрак только и читается; кнопка лежит внутри и помечена data-part=\"button\". Активное состояние объявлено через aria-current, поэтому его видно и скринридеру, а не только по цвету. Подложки собраны через color-mix от акцента, отдельных переменных под оттенки нет.",
       "meta": {
-        "tags": [
-          "button",
-          "ghost",
-          "secondary",
-          "toolbar"
-        ],
+        "tags": ["button", "ghost", "secondary", "toolbar"],
         "ai": {
           "export": "Button033",
           "usage": "<Button033 active onClick={openSettings}>\n  Настройки\n</Button033>",
@@ -3867,7 +3625,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Ghost Button"
           }
         }
       }
@@ -3875,11 +3634,9 @@
     {
       "name": "button-034",
       "type": "registry:component",
-      "title": "Outline Button",
+      "title": "Контурная кнопка",
       "description": "Кнопка на обводке: бумажная середина, акцентный контур и три толщины линии; на наведении заливка и рамка меняются местами.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3891,12 +3648,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-034-*. Серверный компонент, корень — сам <button>, поэтому все нативные пропсы проходят насквозь. Толщина обводки вынесена в переменную --vibeui-button-034-line и переключается data-атрибутом emphasis: то же значение управляет и толщиной кольца в значке, поэтому линии не расходятся. Фокус вынесен наружу с отступом 3px — иначе обводка сливается с рамкой.",
       "meta": {
-        "tags": [
-          "button",
-          "outline",
-          "secondary",
-          "border"
-        ],
+        "tags": ["button", "outline", "secondary", "border"],
         "ai": {
           "export": "Button034",
           "usage": "<Button034 emphasis=\"regular\" onClick={openPricing}>\n  Подробнее о тарифах\n</Button034>",
@@ -3936,11 +3688,7 @@
             "label": "Толщина контура",
             "type": "select",
             "default": "regular",
-            "options": [
-              "hairline",
-              "regular",
-              "heavy"
-            ]
+            "options": ["hairline", "regular", "heavy"]
           },
           {
             "prop": "accent",
@@ -3988,7 +3736,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Outline Button"
           }
         }
       }
@@ -3996,11 +3745,9 @@
     {
       "name": "button-035",
       "type": "registry:component",
-      "title": "Inline Link Button",
+      "title": "Ссылка внутри текста",
       "description": "Кнопка-ссылка без рамки прямо внутри фразы: она наследует кегль и межстрочник абзаца, а подчёркивание нарисовано пунктирной линейкой из фона.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4012,12 +3759,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-035-*. Серверный компонент. Корень — <p> с текстом до и после кнопки: без окружения проверить наследование типографики нельзя, поэтому оно часть компонента. Сама кнопка объявлена font:inherit и padding:0, поэтому не ломает строку; подчёркивание сделано background-image с background-size, а не text-decoration, — так его толщина и отступ управляются точно и анимируются.",
       "meta": {
-        "tags": [
-          "button",
-          "link",
-          "inline",
-          "typography"
-        ],
+        "tags": ["button", "link", "inline", "typography"],
         "preview": {
           "width": "full"
         },
@@ -4109,7 +3851,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Inline Link Button"
           }
         }
       }
@@ -4117,11 +3860,9 @@
     {
       "name": "button-036",
       "type": "registry:component",
-      "title": "Dual Icon Button",
+      "title": "Кнопка с двумя иконками",
       "description": "Кнопка со значками с двух сторон: левый называет действие, правый обещает продолжение, и на наведении они ведут себя по-разному.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4133,12 +3874,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-036-*. Серверный компонент. Оба значка — пустые span с data-part=\"lead\"/\"trail\" и data-icon, форма рисуется гранями и фоном псевдоэлементов, поэтому ни SVG, ни иконочного шрифта не нужно. Левый паддинг меньше правого: значок оптически тяжелее пустоты. Значения \"none\" убирают узел из разметки.",
       "meta": {
-        "tags": [
-          "button",
-          "icon",
-          "leading",
-          "trailing"
-        ],
+        "tags": ["button", "icon", "leading", "trailing"],
         "ai": {
           "export": "Button036",
           "usage": "<Button036 leading=\"plus\" trailing=\"chevron\" onClick={createProject}>\n  Создать проект\n</Button036>",
@@ -4178,22 +3914,14 @@
             "label": "Значок слева",
             "type": "select",
             "default": "plus",
-            "options": [
-              "plus",
-              "search",
-              "none"
-            ]
+            "options": ["plus", "search", "none"]
           },
           {
             "prop": "trailing",
             "label": "Значок справа",
             "type": "select",
             "default": "chevron",
-            "options": [
-              "chevron",
-              "arrow",
-              "none"
-            ]
+            "options": ["chevron", "arrow", "none"]
           }
         ],
         "i18n": {
@@ -4235,7 +3963,8 @@
               "trailing": {
                 "label": "Trailing icon"
               }
-            }
+            },
+            "title": "Dual Icon Button"
           }
         }
       }
@@ -4243,11 +3972,9 @@
     {
       "name": "button-037",
       "type": "registry:component",
-      "title": "Speed Dial FAB",
+      "title": "Плавающая кнопка с веером",
       "description": "Круглая кнопка главного действия, из-под которой лесенкой выезжают быстрые действия с подписями; Esc закрывает веер.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4259,12 +3986,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-037-*. Клиентский компонент: раскрытие — внутреннее состояние, наружу уходит только выбранный id через onSelect. Лесенка сделана на transition-delay, который считается из индекса элемента через переменную --vibeui-button-037-index, — никаких таймеров в JS. Список абсолютно позиционирован над кнопкой и скрыт атрибутом hidden, поэтому закрытые пункты не попадают в порядок обхода Tab.",
       "meta": {
-        "tags": [
-          "button",
-          "fab",
-          "speed-dial",
-          "actions"
-        ],
+        "tags": ["button", "fab", "speed-dial", "actions"],
         "ai": {
           "export": "Button037",
           "usage": "<Button037\n  label=\"Быстрые действия\"\n  actions={[\n    { id: \"task\", label: \"Новая задача\" },\n    { id: \"note\", label: \"Заметка\" },\n  ]}\n  onSelect={run}\n/>",
@@ -4351,7 +4073,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Speed Dial FAB"
           }
         }
       }
@@ -4359,11 +4082,9 @@
     {
       "name": "button-038",
       "type": "registry:component",
-      "title": "Wrapping Label Button",
+      "title": "Кнопка с переносом подписи",
       "description": "Кнопка с длинной подписью, которая честно переносится на две строки: значок прибит к первой строке, а не уплывает в вертикальный центр.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4375,12 +4096,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-038-*. Серверный компонент. Ширина ограничена переменной --vibeui-button-038-width, которую задаёт проп width в rem; включены text-wrap:balance, overflow-wrap:anywhere и hyphens:auto, поэтому длинное слово не выламывает кнопку. align-items:flex-start плюс высота значка, равная line-height первой строки, держат его на верхней строке.",
       "meta": {
-        "tags": [
-          "button",
-          "wrap",
-          "multiline",
-          "long-label"
-        ],
+        "tags": ["button", "wrap", "multiline", "long-label"],
         "preview": {
           "width": "full"
         },
@@ -4463,7 +4179,8 @@
               "width": {
                 "label": "Width, rem"
               }
-            }
+            },
+            "title": "Wrapping Label Button"
           }
         }
       }
@@ -4471,11 +4188,9 @@
     {
       "name": "button-039",
       "type": "registry:component",
-      "title": "Scale Ramp Button",
+      "title": "Шкала размеров кнопки",
       "description": "Размерная шкала sm/md/lg/xl из одного числа: высота, паддинги, кегль, радиус и значок считаются через calc от общего шага.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4487,12 +4202,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-039-*. Серверный компонент. Переменная --vibeui-button-039-step переключается data-атрибутом size и умножает базовые метрики: высоту (--vibeui-button-039-unit), паддинг, кегль, радиус, толщину обводки фокуса и размер значка. Разрядка, наоборот, делится на шаг — крупный кегль требует меньшего трекинга. Новый размер добавляется одной строкой с новым значением step.",
       "meta": {
-        "tags": [
-          "button",
-          "size",
-          "scale",
-          "tokens"
-        ],
+        "tags": ["button", "size", "scale", "tokens"],
         "ai": {
           "export": "Button039",
           "usage": "<Button039 size=\"lg\" onClick={addBlock}>\n  Добавить блок\n</Button039>",
@@ -4532,12 +4242,7 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": [
-              "sm",
-              "md",
-              "lg",
-              "xl"
-            ]
+            "options": ["sm", "md", "lg", "xl"]
           },
           {
             "prop": "accent",
@@ -4585,7 +4290,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Scale Ramp Button"
           }
         }
       }
@@ -4593,11 +4299,9 @@
     {
       "name": "button-040",
       "type": "registry:component",
-      "title": "Full Width Button",
+      "title": "Кнопка во всю ширину",
       "description": "Кнопка во всю ширину колонки с двумя раскладками: подпись по центру для коротких строк и разнесённая пара «подпись с уточнением — стрелка».",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4609,12 +4313,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-040-*. Серверный компонент, корень — сам <button> с width:100% и max-width, поэтому ширину задаёт родитель, а не вьюпорт. Раскладка переключается data-атрибутом align: center центрирует содержимое, between разносит текстовый блок и стрелку. Вторая строка hint набрана tabular-nums — в ней обычно цена или срок.",
       "meta": {
-        "tags": [
-          "button",
-          "full-width",
-          "form",
-          "cta"
-        ],
+        "tags": ["button", "full-width", "form", "cta"],
         "preview": {
           "width": "full"
         },
@@ -4664,10 +4363,7 @@
             "label": "Раскладка",
             "type": "select",
             "default": "between",
-            "options": [
-              "center",
-              "between"
-            ]
+            "options": ["center", "between"]
           }
         ],
         "i18n": {
@@ -4710,7 +4406,8 @@
               "align": {
                 "label": "Layout"
               }
-            }
+            },
+            "title": "Full Width Button"
           }
         }
       }
@@ -4718,11 +4415,9 @@
     {
       "name": "button-041",
       "type": "registry:component",
-      "title": "Gradient Border Button",
+      "title": "Кнопка с градиентной рамкой",
       "description": "Градиент живёт в рамке, а не в заливке: два фона по padding-box и border-box, и отдельно решённый фокус, который градиент обычно съедает.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4734,12 +4429,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-041-*. Серверный компонент. Приём: border:2px solid transparent и два фона — сплошной по padding-box для середины и линейный градиент по border-box для границы. Из-за прозрачной рамки системная обводка фокуса теряется на градиенте, поэтому focus-visible даёт outline с отступом 3px плюс белое кольцо box-shadow, отделяющее обводку от границы.",
       "meta": {
-        "tags": [
-          "button",
-          "gradient",
-          "border",
-          "focus"
-        ],
+        "tags": ["button", "gradient", "border", "focus"],
         "ai": {
           "export": "Button041",
           "usage": "<Button041 onClick={build}>Собрать страницу</Button041>",
@@ -4826,7 +4516,8 @@
               "accentEnd": {
                 "label": "Gradient end"
               }
-            }
+            },
+            "title": "Gradient Border Button"
           }
         }
       }
@@ -4834,11 +4525,9 @@
     {
       "name": "button-042",
       "type": "registry:component",
-      "title": "Beveled Corner Button",
+      "title": "Кнопка со срезанным углом",
       "description": "Кнопка со срезанным углом на clip-path и с внутренним кольцом фокуса: обычная обводка такой фигурой обрезается и исчезает.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4850,12 +4539,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-042-*. Серверный компонент. Срез задан clip-path-полигоном, величина угла — переменная --vibeui-button-042-cut, её задаёт проп cut в пикселях. Побочный эффект приёма: clip-path обрезает outline, поэтому focus-visible обнуляет outline и рисует двойное внутреннее кольцо через inset box-shadow. Контрастная засечка в углу повторяет срез тем же значением переменной.",
       "meta": {
-        "tags": [
-          "button",
-          "bevel",
-          "clip-path",
-          "technical"
-        ],
+        "tags": ["button", "bevel", "clip-path", "technical"],
         "ai": {
           "export": "Button042",
           "usage": "<Button042 cut={12} onClick={runBuild}>Запустить сборку</Button042>",
@@ -4944,7 +4628,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Beveled Corner Button"
           }
         }
       }
@@ -4952,11 +4637,9 @@
     {
       "name": "button-043",
       "type": "registry:component",
-      "title": "Lift Shadow Button",
+      "title": "Кнопка с подъёмом",
       "description": "Кнопка, которая отрывается от поверхности: три слоя тени растут и размываются вместе с подъёмом, а нажатие возвращает её на стол.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4968,12 +4651,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-043-*. Серверный компонент, корень — сам <button>. Тень собрана из трёх слоёв: контактного без размытия, среднего и дальнего; на наведении меняются смещение и размытие двух дальних, контактный остаётся. Высота подъёма вынесена в переменную --vibeui-button-043-lift и задаётся пропом lift в пикселях. Переходы идут на cubic-bezier(0.16,1,0.3,1).",
       "meta": {
-        "tags": [
-          "button",
-          "shadow",
-          "hover",
-          "elevation"
-        ],
+        "tags": ["button", "shadow", "hover", "elevation"],
         "ai": {
           "export": "Button043",
           "usage": "<Button043 lift={6} onClick={openCard}>Открыть карточку</Button043>",
@@ -5062,7 +4740,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Lift Shadow Button"
           }
         }
       }
@@ -5070,11 +4749,9 @@
     {
       "name": "button-044",
       "type": "registry:component",
-      "title": "Running Border Button",
+      "title": "Кнопка с бегущей рамкой",
       "description": "По рамке кнопки бежит светлый сектор: вращающийся conic-gradient в подложке, из которого видна только полоска толщиной в границу.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5086,12 +4763,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-044-*. Серверный компонент. Корень блока — обёртка с padding 1.5px и overflow:hidden; её псевдоэлемент — квадрат в 220% ширины с conic-gradient, который крутится анимацией. Поверх лежит кнопка с непрозрачным фоном, поэтому от сектора остаётся только рамка. Размер 220% не случаен: меньший квадрат не покрывает диагональ, и сектор рвётся на углах. Скорость оборота — проп speed в секундах.",
       "meta": {
-        "tags": [
-          "button",
-          "border",
-          "animated",
-          "conic-gradient"
-        ],
+        "tags": ["button", "border", "animated", "conic-gradient"],
         "ai": {
           "export": "Button044",
           "usage": "<Button044 speed={4} onClick={stop}>Идёт генерация</Button044>",
@@ -5180,7 +4852,8 @@
               "accent": {
                 "label": "Sector color"
               }
-            }
+            },
+            "title": "Running Border Button"
           }
         }
       }
@@ -5188,11 +4861,9 @@
     {
       "name": "button-045",
       "type": "registry:component",
-      "title": "Deep Press Button",
+      "title": "Кнопка с глубоким нажатием",
       "description": "Настоящий ход клавиши: объём даёт жёсткая нижняя грань, а при нажатии кнопка опускается ровно на её высоту, не сдвигая соседей.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5204,12 +4875,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-045-*. Серверный компонент. Объём даёт box-shadow без размытия высотой --vibeui-button-045-depth (проп depth в пикселях); на :active грань обнуляется, а кнопка сдвигается вниз ровно на ту же величину, поэтому суммарная высота пятна постоянна и ряд кнопок не дёргается. Внутренний блик сверху — второй inset-слой той же тени.",
       "meta": {
-        "tags": [
-          "button",
-          "press",
-          "3d",
-          "tactile"
-        ],
+        "tags": ["button", "press", "3d", "tactile"],
         "ai": {
           "export": "Button045",
           "usage": "<Button045 depth={5} onClick={submit}>Нажми меня</Button045>",
@@ -5298,7 +4964,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Deep Press Button"
           }
         }
       }
@@ -5306,11 +4973,9 @@
     {
       "name": "button-046",
       "type": "registry:component",
-      "title": "Back To Top Button",
+      "title": "Кнопка «наверх»",
       "description": "Кнопка «наверх» с кольцом прочитанного: обработчик прокрутки заполняет кольцо и, если нужно, прячет кнопку до заданного порога.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5322,12 +4987,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-046-*. Клиентский компонент: слушатели scroll и resize висят на window, scroll повешен с passive:true, оба снимаются при размонтировании. Доля прокрутки уходит в переменную --vibeui-button-046-progress и рисует кольцо conic-gradient. Прячется кнопка только при autoHide; в скрытом виде она получает pointer-events:none, aria-hidden и tabIndex -1, поэтому не ловит Tab. Прокрутка наверх идёт behavior:smooth, а при prefers-reduced-motion — мгновенно.",
       "meta": {
-        "tags": [
-          "button",
-          "scroll",
-          "progress",
-          "navigation"
-        ],
+        "tags": ["button", "scroll", "progress", "navigation"],
         "ai": {
           "export": "Button046",
           "usage": "<Button046 autoHide threshold={320} label=\"Наверх\" />",
@@ -5416,7 +5076,8 @@
               "autoHide": {
                 "label": "Hide until threshold"
               }
-            }
+            },
+            "title": "Back To Top Button"
           }
         }
       }
@@ -5424,11 +5085,9 @@
     {
       "name": "button-047",
       "type": "registry:component",
-      "title": "External Link Button",
+      "title": "Кнопка внешней ссылки",
       "description": "Ссылка на внешний ресурс, которая называет домен назначения до клика и добавляет скрытую строку «откроется в новой вкладке».",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5440,12 +5099,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-047-*. Серверный компонент, корень — настоящий <a> с target=\"_blank\" и rel=\"noreferrer noopener\": адрес можно скопировать, открыть в новой вкладке и увидеть в строке состояния. Домен вынимается из href через URL с запасным разбором строки. Значок «стрелка из рамки» нарисован гранями псевдоэлементов; скрытая строка для скринридера спрятана clip-path.",
       "meta": {
-        "tags": [
-          "link",
-          "external",
-          "navigation",
-          "security"
-        ],
+        "tags": ["link", "external", "navigation", "security"],
         "ai": {
           "export": "Button047",
           "usage": "<Button047 href=\"https://ui.shadcn.com/docs\">Документация shadcn</Button047>",
@@ -5534,7 +5188,8 @@
               "showHost": {
                 "label": "Show host"
               }
-            }
+            },
+            "title": "External Link Button"
           }
         }
       }
@@ -5542,11 +5197,9 @@
     {
       "name": "button-048",
       "type": "registry:component",
-      "title": "Provider Sign In",
+      "title": "Вход через сервис",
       "description": "Кнопка входа через провайдера: знак прижат к левому краю, а подпись центрируется по всей ширине, поэтому колонка кнопок держит общую ось.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5558,12 +5211,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-048-*. Серверный компонент. Знак вынут из потока (position:absolute) и не влияет на центрирование подписи — из-за этого несколько кнопок разных провайдеров выстраиваются с общей осью текста. Знаки условные, собраны из conic-gradient и псевдоэлементов; реальные логотипы приносит проект. Подпись по умолчанию берётся из карты LABELS по значению provider.",
       "meta": {
-        "tags": [
-          "button",
-          "auth",
-          "oauth",
-          "sign-in"
-        ],
+        "tags": ["button", "auth", "oauth", "sign-in"],
         "preview": {
           "width": "full"
         },
@@ -5599,11 +5247,7 @@
             "label": "Провайдер",
             "type": "select",
             "default": "google",
-            "options": [
-              "google",
-              "github",
-              "apple"
-            ]
+            "options": ["google", "github", "apple"]
           }
         ],
         "i18n": {
@@ -5638,7 +5282,8 @@
               "provider": {
                 "label": "Provider"
               }
-            }
+            },
+            "title": "Provider Sign In"
           }
         }
       }
@@ -5646,11 +5291,9 @@
     {
       "name": "button-049",
       "type": "registry:component",
-      "title": "Add To Cart Button",
+      "title": "Кнопка «в корзину»",
       "description": "Кнопка «в корзину», у которой после добавления меняется не только вид, но и смысл клика: теперь она ведёт в корзину.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5662,12 +5305,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-049-*. Клиентский компонент: состояние «в корзине» внутреннее, наружу уходят два разных обработчика — onAdd и onOpenCart, компонент сам решает, какой вызвать. Минимальная ширина зафиксирована, поэтому при смене подписи кнопка не прыгает. Смена состояния объявляется скрытой строкой role=\"status\" с aria-live=\"polite\".",
       "meta": {
-        "tags": [
-          "button",
-          "cart",
-          "commerce",
-          "stateful"
-        ],
+        "tags": ["button", "cart", "commerce", "stateful"],
         "ai": {
           "export": "Button049",
           "usage": "<Button049 onAdd={addToCart} onOpenCart={openCart}>\n  В корзину\n</Button049>",
@@ -5756,7 +5394,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Add To Cart Button"
           }
         }
       }
@@ -5764,11 +5403,9 @@
     {
       "name": "button-050",
       "type": "registry:component",
-      "title": "Favorite Toggle",
+      "title": "Кнопка «в избранное»",
       "description": "Круглая кнопка избранного: сердце собрано из двух кругов и повёрнутого квадрата, а при включении из-под него расходится кольцо-вспышка.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5780,12 +5417,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-050-*. Клиентский компонент: состояние внутреннее, наружу уходит через onChange. Состояние объявлено через aria-pressed, а имя кнопки меняется вместе с ним — подписи нет, поэтому aria-label единственный носитель смысла. Сердце нарисовано двумя псевдоэлементами с общим transform-origin, заливка приходит через background-color. Кольцо-вспышка — отдельная анимация, привязанная к aria-pressed.",
       "meta": {
-        "tags": [
-          "button",
-          "favorite",
-          "toggle",
-          "icon"
-        ],
+        "tags": ["button", "favorite", "toggle", "icon"],
         "ai": {
           "export": "Button050",
           "usage": "<Button050 defaultPressed={false} onChange={setFavorite} label=\"В избранное\" />",
@@ -5883,7 +5515,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Favorite Toggle"
           }
         }
       }
@@ -5891,11 +5524,9 @@
     {
       "name": "button-051",
       "type": "registry:component",
-      "title": "Follow Button",
+      "title": "Кнопка подписки",
       "description": "Кнопка подписки с тремя подписями на два состояния: «Вы подписаны» честно превращается в «Отписаться» под курсором и на фокусе.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5907,12 +5538,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-051-*. Клиентский компонент: состояние внутреннее, наружу уходит через onChange, дополнительно объявлено через aria-pressed. Подмена подписи сделана двумя слоями в одной grid-ячейке (grid-area:1/1): обе строки всегда в разметке, ширина берётся по длинной, поэтому кнопка не меняет размер под курсором. Подмена срабатывает и на :focus-visible, а не только на :hover.",
       "meta": {
-        "tags": [
-          "button",
-          "follow",
-          "subscribe",
-          "toggle"
-        ],
+        "tags": ["button", "follow", "subscribe", "toggle"],
         "ai": {
           "export": "Button051",
           "usage": "<Button051 defaultFollowing onChange={setFollowing} />",
@@ -6012,7 +5638,8 @@
               "defaultFollowing": {
                 "label": "Already following"
               }
-            }
+            },
+            "title": "Follow Button"
           }
         }
       }
@@ -6020,11 +5647,9 @@
     {
       "name": "button-052",
       "type": "registry:component",
-      "title": "Call Link Button",
+      "title": "Кнопка звонка",
       "description": "Кнопка связи на настоящей ссылке tel:: номер виден и копируется, а пульсирующее кольцо и строка часов говорят, что линия открыта.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6036,12 +5661,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-052-*. Серверный компонент, корень — <a href=\"tel:…\">: на телефоне вызов уходит в звонилку, на десктопе — в приложение пользователя. Из видимой записи номера пробелы и разделители вычищаются только в href, поэтому человекочитаемый вид сохраняется. Трубка нарисована рамкой с прозрачными гранями, кольцо доступности — анимация на псевдоэлементе, номер набран моноширинным с tabular-nums.",
       "meta": {
-        "tags": [
-          "button",
-          "call",
-          "tel",
-          "contact"
-        ],
+        "tags": ["button", "call", "tel", "contact"],
         "ai": {
           "export": "Button052",
           "usage": "<Button052 phone=\"+7 495 120-45-90\" hint=\"Отвечаем с 9:00 до 21:00\">\n  Позвонить в поддержку\n</Button052>",
@@ -6132,7 +5752,8 @@
                 "label": "Hours",
                 "default": "We answer 9:00–21:00"
               }
-            }
+            },
+            "title": "Call Link Button"
           }
         }
       }
@@ -6140,11 +5761,9 @@
     {
       "name": "button-053",
       "type": "registry:component",
-      "title": "Print Button",
+      "title": "Кнопка печати",
       "description": "Кнопка печати, которая исчезает с самой распечатки: собственное правило @media print убирает её, а клик зовёт системный диалог.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6156,12 +5775,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-053-*. Клиентский компонент: обработчик вызывает window.print(). Пользовательский onClick вызывается первым, и если он сделал preventDefault, диалог не открывается — так печать можно отменить или подменить. В блоке стилей есть собственное @media print с display:none, поэтому прятать кнопку снаружи не нужно. Принтер нарисован тремя фигурами: корпус, лоток и выезжающий лист.",
       "meta": {
-        "tags": [
-          "button",
-          "print",
-          "document",
-          "utility"
-        ],
+        "tags": ["button", "print", "document", "utility"],
         "ai": {
           "export": "Button053",
           "usage": "<Button053 hint=\"Ctrl + P\">Распечатать счёт</Button053>",
@@ -6250,7 +5864,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Print Button"
           }
         }
       }
@@ -6258,11 +5873,9 @@
     {
       "name": "button-054",
       "type": "registry:component",
-      "title": "Native Share Button",
+      "title": "Кнопка «поделиться»",
       "description": "Кнопка «поделиться» с двумя путями: системный лист там, где он есть, и тихое копирование ссылки с отчётом там, где его нет.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6274,12 +5887,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-054-*. Клиентский компонент. Обработчик проверяет navigator.share и при его наличии открывает системный лист; отказ пользователя (AbortError) перехватывается и не считается ошибкой. Иначе ссылка уходит в navigator.clipboard, и кнопка на 2,2 секунды переходит в состояние «скопировано» — таймер снимается в useEffect. Пустой url означает текущий адрес страницы, поэтому компонент безопасен при серверном рендере.",
       "meta": {
-        "tags": [
-          "button",
-          "share",
-          "clipboard",
-          "progressive"
-        ],
+        "tags": ["button", "share", "clipboard", "progressive"],
         "ai": {
           "export": "Button054",
           "usage": "<Button054 url=\"https://vibeui.dev/blocks\" title=\"VibeUI\">\n  Поделиться\n</Button054>",
@@ -6370,7 +5978,8 @@
                 "label": "Link",
                 "default": ""
               }
-            }
+            },
+            "title": "Native Share Button"
           }
         }
       }
@@ -6378,11 +5987,9 @@
     {
       "name": "button-055",
       "type": "registry:component",
-      "title": "Modifier Guard Button",
+      "title": "Кнопка с модификатором",
       "description": "Опасное действие с предохранителем на клавише: кнопка заблокирована, пока не удерживают Alt, и подпись объясняет, что нужно сделать.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6394,12 +6001,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-055-*. Клиентский компонент: слушатели keydown и keyup висят на window и читают флаг модификатора (altKey, shiftKey или ctrlKey) прямо из события, поэтому состояние не рассинхронизируется при переключении раскладки. Дополнительно слушается blur окна: отпущенная вне вкладки клавиша иначе оставила бы кнопку взведённой. Взведённость объявляется через aria-disabled, а клик в заблокированном состоянии отменяется.",
       "meta": {
-        "tags": [
-          "button",
-          "danger",
-          "guard",
-          "keyboard"
-        ],
+        "tags": ["button", "danger", "guard", "keyboard"],
         "ai": {
           "export": "Button055",
           "usage": "<Button055 modifier=\"Alt\" onConfirm={wipeWorkspace}>\n  Стереть все данные\n</Button055>",
@@ -6439,11 +6041,7 @@
             "label": "Клавиша",
             "type": "select",
             "default": "Alt",
-            "options": [
-              "Alt",
-              "Shift",
-              "Control"
-            ]
+            "options": ["Alt", "Shift", "Control"]
           },
           {
             "prop": "lockedLabel",
@@ -6493,7 +6091,8 @@
                 "label": "Locked label",
                 "default": "Hold to erase"
               }
-            }
+            },
+            "title": "Modifier Guard Button"
           }
         }
       }
@@ -6501,11 +6100,9 @@
     {
       "name": "button-056",
       "type": "registry:component",
-      "title": "Language Picker Button",
+      "title": "Кнопка выбора языка",
       "description": "Кнопка выбора языка на настоящем select: клавиатура, поиск по первой букве и системный список на телефоне достаются от браузера.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6517,12 +6114,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-056-*. Серверный компонент, JS не нужен вовсе: внутри плашки стоит настоящий <select> с appearance:none, глобус и шеврон нарисованы CSS. Фокус приходит на select, а обводку рисует плашка через :has(select:focus-visible) — поэтому кольцо охватывает всю кнопку. Шеврон помечен pointer-events:none, чтобы клик по нему открывал список.",
       "meta": {
-        "tags": [
-          "button",
-          "language",
-          "select",
-          "no-js"
-        ],
+        "tags": ["button", "language", "select", "no-js"],
         "ai": {
           "export": "Button056",
           "usage": "<Button056 defaultValue=\"ru\" onChange={switchLocale} label=\"Язык интерфейса\" />",
@@ -6562,13 +6154,7 @@
             "label": "Выбранный язык",
             "type": "select",
             "default": "ru",
-            "options": [
-              "ru",
-              "en",
-              "de",
-              "fr",
-              "es"
-            ]
+            "options": ["ru", "en", "de", "fr", "es"]
           },
           {
             "prop": "accent",
@@ -6616,7 +6202,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Language Picker Button"
           }
         }
       }
@@ -6624,11 +6211,9 @@
     {
       "name": "button-057",
       "type": "registry:component",
-      "title": "View Count Button",
+      "title": "Кнопка со счётчиком просмотров",
       "description": "Кнопка-показатель со счётчиком просмотров и столбиками динамики: сокращённое число на виду, полное — в aria-label и подсказке.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6640,12 +6225,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-057-*. Серверный компонент. Число сокращается до «тыс.» и «млн» с запятой как десятичным разделителем; полное значение через toLocaleString уходит в title и aria-label, потому что сокращение округляет и врёт. Столбики нормируются по максимуму массива trend, минимальная высота 12% не даёт нулевым значениям исчезнуть. Последний столбик подсвечен как текущий период.",
       "meta": {
-        "tags": [
-          "button",
-          "stats",
-          "counter",
-          "sparkline"
-        ],
+        "tags": ["button", "stats", "counter", "sparkline"],
         "ai": {
           "export": "Button057",
           "usage": "<Button057 count={12400} trend={[3, 5, 4, 7, 6, 9, 8, 12]} onClick={openStats}>\n  Просмотры\n</Button057>",
@@ -6734,7 +6314,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "View Count Button"
           }
         }
       }
@@ -6742,11 +6323,9 @@
     {
       "name": "button-058",
       "type": "registry:component",
-      "title": "Reveal Password Button",
+      "title": "Кнопка показа пароля",
       "description": "Кнопка «показать пароль» внутри поля: она переключает только type, поэтому введённый текст и позиция каретки остаются на месте.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6758,12 +6337,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-058-*. Клиентский компонент: состояние показа внутреннее. Поле всегда одно и то же — меняется только атрибут type, поэтому React не пересоздаёт узел и каретка не сбрасывается. Состояние объявлено через aria-pressed, а имя кнопки меняется вместе с ним. Обводку фокуса рисует обёртка поля через :has(input:focus-visible). Перечёркивание глаза — отдельный узел с тенью цвета подложки, дающей вырез.",
       "meta": {
-        "tags": [
-          "input",
-          "password",
-          "toggle",
-          "form"
-        ],
+        "tags": ["input", "password", "toggle", "form"],
         "preview": {
           "width": "full"
         },
@@ -6857,7 +6431,8 @@
                 "label": "Value",
                 "default": "correct-horse-battery"
               }
-            }
+            },
+            "title": "Reveal Password Button"
           }
         }
       }
@@ -6865,11 +6440,9 @@
     {
       "name": "button-059",
       "type": "registry:component",
-      "title": "Validity Gated Submit",
+      "title": "Отправка после проверки",
       "description": "Кнопка отправки, заблокированная до готовности формы: правило :has(:invalid) гасит её без JS, а подсказка под ней держит место всегда.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6881,12 +6454,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-059-*. Серверный компонент, JS не нужен: корень — <form>, а правило form:has(:invalid) гасит кнопку и показывает подсказку. Валидность считает браузер по required и type=\"email\", а не наш код. Подсказка занимает место всегда (visibility, а не display), поэтому раскладка не прыгает при смене статуса. Кнопка остаётся кликабельной для скринридера — вместо disabled используется визуальное гашение, и попытка отправки покажет системное сообщение о поле.",
       "meta": {
-        "tags": [
-          "button",
-          "submit",
-          "form",
-          "validation"
-        ],
+        "tags": ["button", "submit", "form", "validation"],
         "preview": {
           "width": "full"
         },
@@ -6980,7 +6548,8 @@
                 "label": "Hint",
                 "default": "Enter an address to send"
               }
-            }
+            },
+            "title": "Validity Gated Submit"
           }
         }
       }
@@ -6988,11 +6557,9 @@
     {
       "name": "button-060",
       "type": "registry:component",
-      "title": "Filter Chip Button",
+      "title": "Кнопка-чип фильтра",
       "description": "Фильтр-чип из двух кнопок в одном пятне: левая включает фильтр и несёт число совпадений, правая сбрасывает его и появляется только у включённого.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7004,12 +6571,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-060-*. Клиентский компонент: включённость внутренняя, наружу уходит через onToggle и onClear. Вложить кнопку в кнопку нельзя, поэтому обе лежат соседями внутри общей обёртки с overflow:hidden и общим скруглением. Обводка фокуса нарисована с отрицательным offset — иначе она обрезалась бы обёрткой. Включённость объявлена через aria-pressed на левой кнопке.",
       "meta": {
-        "tags": [
-          "button",
-          "filter",
-          "chip",
-          "counter"
-        ],
+        "tags": ["button", "filter", "chip", "counter"],
         "ai": {
           "export": "Button060",
           "usage": "<Button060 count={24} onToggle={setStatusFilter} onClear={resetStatus}>\n  В работе\n</Button060>",
@@ -7098,7 +6660,8 @@
               "defaultActive": {
                 "label": "Active"
               }
-            }
+            },
+            "title": "Filter Chip Button"
           }
         }
       }
@@ -7106,11 +6669,9 @@
     {
       "name": "button-061",
       "type": "registry:component",
-      "title": "Cancel With Elapsed",
+      "title": "Отмена с таймером",
       "description": "Отмена длительной операции с честным таймером: прошедшее время идёт моноширинными цифрами, а после порога плашка меняет тон и объясняет задержку.",
-      "categories": [
-        "button"
-      ],
+      "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7122,12 +6683,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-061-*. Клиентский компонент: интервал заводится в useEffect при running и снимается при остановке или размонтировании, счётчик сбрасывается на каждом запуске. Сама операция живёт в приложении — компонент только считает время и зовёт onCancel. Порог slowAfter в секундах переводит плашку в предупреждающий тон через data-slow; спиннер и рамка меняют цвет вместе. Время выведено моноширинным с tabular-nums.",
       "meta": {
-        "tags": [
-          "button",
-          "cancel",
-          "progress",
-          "async"
-        ],
+        "tags": ["button", "cancel", "progress", "async"],
         "preview": {
           "width": "full"
         },
@@ -7230,7 +6786,8 @@
               "slowAfter": {
                 "label": "Threshold, s"
               }
-            }
+            },
+            "title": "Cancel With Elapsed"
           }
         }
       }

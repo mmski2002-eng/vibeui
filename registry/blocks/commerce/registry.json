@@ -4,7 +4,7 @@
     {
       "name": "commerce-001",
       "type": "registry:block",
-      "title": "Product Grid",
+      "title": "Сетка товаров",
       "description": "Витрина товаров: карточка ведёт на товар, кнопка кладёт в корзину — два действия, которые нельзя объединять в одну цель.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -99,7 +99,8 @@
                 "label": "Button",
                 "default": "Add to cart"
               }
-            }
+            },
+            "title": "Product Grid"
           }
         }
       }
@@ -107,7 +108,7 @@
     {
       "name": "commerce-002",
       "type": "registry:block",
-      "title": "Product Detail",
+      "title": "Карточка товара",
       "description": "Карточка товара: размеры радиокнопками, недоступный вариант остаётся видимым, срок доставки стоит рядом с кнопкой.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -213,7 +214,8 @@
                 "label": "Delivery",
                 "default": "Arrives tomorrow if ordered today"
               }
-            }
+            },
+            "title": "Product Detail"
           }
         }
       }
@@ -221,7 +223,7 @@
     {
       "name": "commerce-003",
       "type": "registry:block",
-      "title": "Shopping Cart",
+      "title": "Корзина",
       "description": "Корзина: итог считается из строк, а полоса до бесплатной доставки стоит над кнопкой — это причина добрать товар.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -316,7 +318,8 @@
               "freeFrom": {
                 "label": "Free from"
               }
-            }
+            },
+            "title": "Shopping Cart"
           }
         }
       }
@@ -324,7 +327,7 @@
     {
       "name": "commerce-004",
       "type": "registry:block",
-      "title": "Checkout Step",
+      "title": "Шаг оформления",
       "description": "Шаг оформления: способ доставки радиогруппой, итог рядом с формой, а кнопка оплаты подписана суммой.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -419,7 +422,8 @@
                 "label": "Button",
                 "default": "Continue to payment"
               }
-            }
+            },
+            "title": "Checkout Step"
           }
         }
       }
@@ -427,7 +431,7 @@
     {
       "name": "commerce-005",
       "type": "registry:block",
-      "title": "Category Tiles",
+      "title": "Плитки категорий",
       "description": "Витрина категорий мозаикой: крупная плитка задаётся флагом в данных, а число товаров видно до перехода.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -522,7 +526,8 @@
                 "label": "Subheading",
                 "default": "Every tile opens a selection — the count is visible first."
               }
-            }
+            },
+            "title": "Category Tiles"
           }
         }
       }
@@ -530,7 +535,7 @@
     {
       "name": "commerce-006",
       "type": "registry:block",
-      "title": "Reviews Summary",
+      "title": "Сводка отзывов",
       "description": "Отзывы с разбивкой по оценкам: доли считаются из массива, а пометка о покупке стоит у автора, а не под текстом.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -625,7 +630,8 @@
               "average": {
                 "label": "Average"
               }
-            }
+            },
+            "title": "Reviews Summary"
           }
         }
       }
@@ -633,7 +639,7 @@
     {
       "name": "commerce-007",
       "type": "registry:block",
-      "title": "Category Storefront",
+      "title": "Витрина категории",
       "description": "Витрина категории: сортировка и число найденного стоят в одной строке с заголовком, а снятые фильтры видно чипами.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -728,7 +734,8 @@
               "found": {
                 "label": "Found"
               }
-            }
+            },
+            "title": "Category Storefront"
           }
         }
       }
@@ -736,7 +743,7 @@
     {
       "name": "commerce-008",
       "type": "registry:block",
-      "title": "Gallery Product",
+      "title": "Товар с галереей",
       "description": "Страница товара с галереей на радиокнопках: кадр переключается без JS, а вариант выбирается образцом цвета с подписью.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -831,7 +838,8 @@
                 "label": "Price",
                 "default": "$389"
               }
-            }
+            },
+            "title": "Gallery Product"
           }
         }
       }
@@ -839,7 +847,7 @@
     {
       "name": "commerce-009",
       "type": "registry:block",
-      "title": "Cart With Shelf",
+      "title": "Корзина с полкой рекомендаций",
       "description": "Корзина с полкой «отложено»: товар, который не готовы купить сейчас, сохраняется отдельно и не мешает считать итог.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -934,7 +942,8 @@
                 "label": "Button",
                 "default": "Go to checkout"
               }
-            }
+            },
+            "title": "Cart With Shelf"
           }
         }
       }
@@ -942,7 +951,7 @@
     {
       "name": "commerce-010",
       "type": "registry:block",
-      "title": "One Screen Checkout",
+      "title": "Оформление на одном экране",
       "description": "Оформление в один экран: контакты, доставка и оплата без шагов, а поля карты появляются только под выбранной оплатой картой.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -1037,7 +1046,8 @@
                 "label": "Button",
                 "default": "Pay"
               }
-            }
+            },
+            "title": "One Screen Checkout"
           }
         }
       }
@@ -1045,7 +1055,7 @@
     {
       "name": "commerce-011",
       "type": "registry:block",
-      "title": "Order Confirmed",
+      "title": "Заказ оформлен",
       "description": "Подтверждение заказа: номер и срок доставки набраны крупно и стоят выше состава, а ниже перечислено, что произойдёт дальше.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -1140,7 +1150,8 @@
                 "label": "Arrives",
                 "default": "12 March, by 6 pm"
               }
-            }
+            },
+            "title": "Order Confirmed"
           }
         }
       }
@@ -1148,7 +1159,7 @@
     {
       "name": "commerce-012",
       "type": "registry:block",
-      "title": "Delivery Tracking",
+      "title": "Отслеживание доставки",
       "description": "Отслеживание доставки: этапы различаются формой значка, а не цветом, полоса разворачивается по ширине блока, история спрятана в details.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -1243,7 +1254,8 @@
                 "label": "Status",
                 "default": "On the way"
               }
-            }
+            },
+            "title": "Delivery Tracking"
           }
         }
       }
@@ -1251,7 +1263,7 @@
     {
       "name": "commerce-013",
       "type": "registry:block",
-      "title": "Order History",
+      "title": "История заказов",
       "description": "Список заказов покупателя: у каждой строки одно действие по её состоянию, а состав свёрнут в стопку миниатюр с остатком числом.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -1346,7 +1358,8 @@
                 "label": "Empty",
                 "default": "No orders in this tab."
               }
-            }
+            },
+            "title": "Order History"
           }
         }
       }
@@ -1354,7 +1367,7 @@
     {
       "name": "commerce-014",
       "type": "registry:block",
-      "title": "Return Request",
+      "title": "Заявка на возврат",
       "description": "Заявка на возврат: причина выбирается из списка, поле для подробностей появляется только у «другого», а срок возврата стоит вверху.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -1449,7 +1462,8 @@
                 "label": "Window",
                 "default": "Returnable until 26 March — 9 days left"
               }
-            }
+            },
+            "title": "Return Request"
           }
         }
       }
@@ -1457,7 +1471,7 @@
     {
       "name": "commerce-015",
       "type": "registry:block",
-      "title": "Filtered Reviews",
+      "title": "Отзывы с фильтрами",
       "description": "Отзывы с фильтром, который показывает число совпадений до нажатия: пустой фильтр выключен, а под кнопками стоит «показано N из M».",
       "categories": ["commerce"],
       "dependencies": [],
@@ -1552,7 +1566,8 @@
                 "label": "Empty",
                 "default": "No reviews match this filter — clear it to see the rest."
               }
-            }
+            },
+            "title": "Filtered Reviews"
           }
         }
       }
@@ -1560,7 +1575,7 @@
     {
       "name": "commerce-016",
       "type": "registry:block",
-      "title": "Bundle Picker",
+      "title": "Выбор комплекта",
       "description": "Комплект «часто берут вместе»: сумма пересчитывается от галочек, а основной товар нельзя снять — иначе получается набор без товара.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -1655,7 +1670,8 @@
               "saving": {
                 "label": "Discount, %"
               }
-            }
+            },
+            "title": "Bundle Picker"
           }
         }
       }
@@ -1663,7 +1679,7 @@
     {
       "name": "commerce-017",
       "type": "registry:block",
-      "title": "Compare Table",
+      "title": "Таблица сравнения",
       "description": "Сравнение товаров таблицей: одинаковые строки прячутся одной галочкой, первая колонка залипает при прокрутке, лучшее значение подписано словом.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -1758,7 +1774,8 @@
                 "label": "Toggle",
                 "default": "Differences only"
               }
-            }
+            },
+            "title": "Compare Table"
           }
         }
       }
@@ -1766,7 +1783,7 @@
     {
       "name": "commerce-018",
       "type": "registry:block",
-      "title": "Store Stock",
+      "title": "Наличие в магазинах",
       "description": "Наличие по магазинам: количество названо числом, а строка без товара показывает срок подвоза и предлагает подписку вместо тупика.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -1861,7 +1878,8 @@
                 "label": "Product",
                 "default": "Khmar armchair, sand"
               }
-            }
+            },
+            "title": "Store Stock"
           }
         }
       }
@@ -1869,7 +1887,7 @@
     {
       "name": "commerce-019",
       "type": "registry:block",
-      "title": "Subscribe And Save",
+      "title": "Подписка со скидкой",
       "description": "Подписка на товар: разовая цена и цена по подписке видны рядом, периодичность появляется под подпиской и сразу называет дату первой доставки.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -1964,7 +1982,8 @@
               "discount": {
                 "label": "Saving, %"
               }
-            }
+            },
+            "title": "Subscribe And Save"
           }
         }
       }
@@ -1972,7 +1991,7 @@
     {
       "name": "commerce-020",
       "type": "registry:block",
-      "title": "Promo Code",
+      "title": "Промокод",
       "description": "Промокод в корзине: скидка сразу становится отдельной строкой итога, ошибка объявляется в aria-live, применённый код можно снять.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -2067,7 +2086,8 @@
                 "label": "Button",
                 "default": "Apply"
               }
-            }
+            },
+            "title": "Promo Code"
           }
         }
       }
@@ -2075,7 +2095,7 @@
     {
       "name": "commerce-021",
       "type": "registry:block",
-      "title": "Shipping Options",
+      "title": "Способы доставки",
       "description": "Выбор доставки: у каждого способа названы обе цены — деньги и время, а день и интервал появляются только под курьером.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -2170,7 +2190,8 @@
                 "label": "Button",
                 "default": "Confirm delivery"
               }
-            }
+            },
+            "title": "Shipping Options"
           }
         }
       }
@@ -2178,7 +2199,7 @@
     {
       "name": "commerce-022",
       "type": "registry:block",
-      "title": "Saved Cards",
+      "title": "Сохранённые карты",
       "description": "Оплата сохранёнными картами: карта узнаётся по банку и четырём цифрам, истекающая помечена заранее, новая карта — такой же вариант списка.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -2273,7 +2294,8 @@
                 "label": "Button",
                 "default": "Pay"
               }
-            }
+            },
+            "title": "Saved Cards"
           }
         }
       }
@@ -2281,7 +2303,7 @@
     {
       "name": "commerce-023",
       "type": "registry:block",
-      "title": "Tax Receipt",
+      "title": "Чек с налогами",
       "description": "Чек с позициями и налогом: НДС посчитан по ставкам и подписан «в том числе», суммы выведены из позиций, нижний край вырезан маской.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -2376,7 +2398,8 @@
               "shipping": {
                 "label": "Shipping"
               }
-            }
+            },
+            "title": "Tax Receipt"
           }
         }
       }
@@ -2384,7 +2407,7 @@
     {
       "name": "commerce-024",
       "type": "registry:block",
-      "title": "Wishlist Grid",
+      "title": "Сетка избранного",
       "description": "Избранное как список ожидания: падение цены и возврат в продажу названы словами, а удаление можно отменить строкой возврата.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -2479,7 +2502,8 @@
                 "label": "Button",
                 "default": "Add to cart"
               }
-            }
+            },
+            "title": "Wishlist Grid"
           }
         }
       }
@@ -2487,7 +2511,7 @@
     {
       "name": "commerce-025",
       "type": "registry:block",
-      "title": "Filter Sidebar",
+      "title": "Боковые фильтры",
       "description": "Боковые фильтры каталога: у каждого значения стоит число товаров, группы свёрнуты в details, выбранное собрано чипами наверху.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -2582,7 +2606,8 @@
               "found": {
                 "label": "Found"
               }
-            }
+            },
+            "title": "Filter Sidebar"
           }
         }
       }
@@ -2590,7 +2615,7 @@
     {
       "name": "commerce-026",
       "type": "registry:block",
-      "title": "Empty Cart",
+      "title": "Пустая корзина",
       "description": "Пустая корзина, которая продолжает разговор: под объяснением стоит подборка из недавно просмотренного, а картинка нарисована CSS.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -2685,7 +2710,8 @@
                 "label": "Button",
                 "default": "Browse the catalog"
               }
-            }
+            },
+            "title": "Empty Cart"
           }
         }
       }
@@ -2693,7 +2719,7 @@
     {
       "name": "commerce-027",
       "type": "registry:block",
-      "title": "Storefront Home",
+      "title": "Главная магазина",
       "description": "Главная магазина: баннер акции со сроком словами, ряд кураторских подборок и сетка ходовых товаров одним экраном.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -2788,7 +2814,8 @@
                 "label": "Button",
                 "default": "Shop the sale"
               }
-            }
+            },
+            "title": "Storefront Home"
           }
         }
       }
@@ -2796,7 +2823,7 @@
     {
       "name": "commerce-028",
       "type": "registry:block",
-      "title": "Brand Page",
+      "title": "Страница бренда",
       "description": "Страница бренда: монограмма вместо файла логотипа, факты о производителе строкой цифр и сетка его товаров под навигацией разделов.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -2891,7 +2918,8 @@
                 "label": "Follow button",
                 "default": "Follow this brand"
               }
-            }
+            },
+            "title": "Brand Page"
           }
         }
       }
@@ -2899,7 +2927,7 @@
     {
       "name": "commerce-029",
       "type": "registry:block",
-      "title": "Search Results",
+      "title": "Результаты поиска",
       "description": "Экран поиска: исправление опечатки объявлено словами со ссылкой на исходный запрос, а уточнения стоят чипами выше выдачи.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -2994,7 +3022,8 @@
               "found": {
                 "label": "Found"
               }
-            }
+            },
+            "title": "Search Results"
           }
         }
       }
@@ -3002,7 +3031,7 @@
     {
       "name": "commerce-030",
       "type": "registry:block",
-      "title": "Size Table",
+      "title": "Таблица размеров",
       "description": "Выбор размера с таблицей мерок рядом: таблица открывается в details, а раскупленный размер остаётся видимым и зачёркнутым.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -3097,7 +3126,8 @@
                 "label": "Fit hint",
                 "default": "This sweatshirt runs loose. Between sizes? Take the smaller one — it will not shrink in the wash."
               }
-            }
+            },
+            "title": "Size Table"
           }
         }
       }
@@ -3105,7 +3135,7 @@
     {
       "name": "commerce-031",
       "type": "registry:block",
-      "title": "Pickup Map",
+      "title": "Карта пунктов самовывоза",
       "description": "Доставка и самовывоз одним экраном: список пунктов с картой-заглушкой раскрывается только под выбранным самовывозом.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -3200,7 +3230,8 @@
                 "label": "Button",
                 "default": "Save delivery choice"
               }
-            }
+            },
+            "title": "Pickup Map"
           }
         }
       }
@@ -3208,7 +3239,7 @@
     {
       "name": "commerce-032",
       "type": "registry:block",
-      "title": "Stepped Checkout",
+      "title": "Пошаговое оформление",
       "description": "Оформление в три шага: пройденный шаг сворачивается в строку с готовым ответом и кнопкой «Изменить», открыт всегда один.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -3303,7 +3334,8 @@
                 "label": "Button",
                 "default": "Continue to payment"
               }
-            }
+            },
+            "title": "Stepped Checkout"
           }
         }
       }
@@ -3311,7 +3343,7 @@
     {
       "name": "commerce-033",
       "type": "registry:block",
-      "title": "Guest Checkout",
+      "title": "Оформление без регистрации",
       "description": "Заказ без регистрации: гостевой путь стоит первым и выбран по умолчанию, а польза аккаунта названа списком рядом.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -3406,7 +3438,8 @@
                 "label": "Button",
                 "default": "Continue to delivery"
               }
-            }
+            },
+            "title": "Guest Checkout"
           }
         }
       }
@@ -3414,7 +3447,7 @@
     {
       "name": "commerce-034",
       "type": "registry:block",
-      "title": "Installment Plan",
+      "title": "Рассрочка",
       "description": "Оплата с рассрочкой: платёж и переплата считаются из суммы заказа, а график платежей показан датами, а не количеством частей.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -3509,7 +3542,8 @@
                 "label": "Button",
                 "default": "Take the installment"
               }
-            }
+            },
+            "title": "Installment Plan"
           }
         }
       }
@@ -3517,7 +3551,7 @@
     {
       "name": "commerce-035",
       "type": "registry:block",
-      "title": "Gift Wrapping",
+      "title": "Подарочная упаковка",
       "description": "Подарочная упаковка и открытка: образцы коробок нарисованы CSS, а текст открытки сразу показан так, как его увидит получатель.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -3612,7 +3646,8 @@
               "limit": {
                 "label": "Card characters"
               }
-            }
+            },
+            "title": "Gift Wrapping"
           }
         }
       }
@@ -3620,7 +3655,7 @@
     {
       "name": "commerce-036",
       "type": "registry:block",
-      "title": "Delivery Calendar",
+      "title": "Календарь доставки",
       "description": "Подписка на регулярную доставку: выбранная периодичность сразу отмечена датами на календаре месяца, первая доставка обведена.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -3714,7 +3749,8 @@
                 "label": "Button",
                 "default": "Start the subscription"
               }
-            }
+            },
+            "title": "Delivery Calendar"
           }
         }
       }
@@ -3722,7 +3758,7 @@
     {
       "name": "commerce-037",
       "type": "registry:block",
-      "title": "Return Items",
+      "title": "Выбор товаров к возврату",
       "description": "Возврат с выбором позиций: у каждой строки заказа своя причина и своё количество, а невозвратная позиция остаётся с объяснением.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -3817,7 +3853,8 @@
                 "label": "Return deadline",
                 "default": "Returnable until 14 March — 9 days left"
               }
-            }
+            },
+            "title": "Return Items"
           }
         }
       }
@@ -3825,7 +3862,7 @@
     {
       "name": "commerce-038",
       "type": "registry:block",
-      "title": "Warranty Terms",
+      "title": "Условия гарантии",
       "description": "Гарантия и сервис: покрытые и непокрытые случаи стоят в одной таблице, а покрытие помечено значком и словом, а не цветом строки.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -3920,7 +3957,8 @@
                 "label": "Button",
                 "default": "Open a service request"
               }
-            }
+            },
+            "title": "Warranty Terms"
           }
         }
       }
@@ -3928,7 +3966,7 @@
     {
       "name": "commerce-039",
       "type": "registry:block",
-      "title": "Outlet Grid",
+      "title": "Сетка уценённого",
       "description": "Витрина уценки, где на каждой карточке написана причина скидки: «витринный образец» продаёт лучше и возвращается реже, чем голое «−40%».",
       "categories": ["commerce"],
       "dependencies": [],
@@ -4023,7 +4061,8 @@
                 "label": "Button",
                 "default": "Add to cart"
               }
-            }
+            },
+            "title": "Outlet Grid"
           }
         }
       }
@@ -4031,7 +4070,7 @@
     {
       "name": "commerce-040",
       "type": "registry:block",
-      "title": "Preorder Release",
+      "title": "Предзаказ и релиз",
       "description": "Предзаказ, где дата выхода набрана крупнее цены: сначала отвечаем «когда», потом «сколько», а условие списания стоит рядом с кнопкой.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -4126,7 +4165,8 @@
               "progress": {
                 "label": "Progress to launch"
               }
-            }
+            },
+            "title": "Preorder Release"
           }
         }
       }
@@ -4134,7 +4174,7 @@
     {
       "name": "commerce-041",
       "type": "registry:block",
-      "title": "Kit Chain",
+      "title": "Цепочка комплекта",
       "description": "Набор товаров комплектом: цепочка карточек со знаком «плюс», а выгода доказана сравнением суммы по отдельности и цены набора.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -4229,7 +4269,8 @@
                 "label": "Button",
                 "default": "Buy as a kit"
               }
-            }
+            },
+            "title": "Kit Chain"
           }
         }
       }
@@ -4237,7 +4278,7 @@
     {
       "name": "commerce-042",
       "type": "registry:block",
-      "title": "Loyalty Points",
+      "title": "Бонусные баллы",
       "description": "Бонусные баллы: рядом с балансом названы курс к рублю, срок сгорания и предел списания — без них число баллов ни о чём не говорит.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -4332,7 +4373,8 @@
                 "label": "Button",
                 "default": "Spend points on this order"
               }
-            }
+            },
+            "title": "Loyalty Points"
           }
         }
       }
@@ -4340,7 +4382,7 @@
     {
       "name": "commerce-043",
       "type": "registry:block",
-      "title": "Seller Offers",
+      "title": "Предложения продавцов",
       "description": "Сравнение продавцов по итоговой цене: сумма товара с доставкой считается в блоке, а ярлык лучшего предложения объясняет, чем оно лучшее.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -4435,7 +4477,8 @@
                 "label": "Button",
                 "default": "Choose this seller"
               }
-            }
+            },
+            "title": "Seller Offers"
           }
         }
       }
@@ -4443,7 +4486,7 @@
     {
       "name": "commerce-044",
       "type": "registry:block",
-      "title": "Product Questions",
+      "title": "Вопросы о товаре",
       "description": "Вопросы о товаре: ответ продавца и ответ покупателя помечены по-разному, потому что один и тот же текст весит от них по-разному.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -4538,7 +4581,8 @@
                 "label": "Button",
                 "default": "Send the question"
               }
-            }
+            },
+            "title": "Product Questions"
           }
         }
       }
@@ -4546,7 +4590,7 @@
     {
       "name": "commerce-045",
       "type": "registry:block",
-      "title": "Buyer Addresses",
+      "title": "Адреса покупателя",
       "description": "Профиль покупателя вокруг адресов: основной помечен словом и стоит первым, у каждого адреса свой получатель и своя подсказка курьеру.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -4641,7 +4685,8 @@
                 "label": "Add button",
                 "default": "Add an address"
               }
-            }
+            },
+            "title": "Buyer Addresses"
           }
         }
       }
@@ -4649,7 +4694,7 @@
     {
       "name": "commerce-046",
       "type": "registry:block",
-      "title": "Sticky Cart",
+      "title": "Липкая корзина",
       "description": "Корзина под узкий экран: итог с кнопкой прилипает к нижнему краю, а под панелью оставлен отступ, чтобы последняя строка не пряталась.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -4744,7 +4789,8 @@
                 "label": "Button",
                 "default": "Checkout for $321"
               }
-            }
+            },
+            "title": "Sticky Cart"
           }
         }
       }
@@ -4752,7 +4798,7 @@
     {
       "name": "commerce-047",
       "type": "registry:block",
-      "title": "Season Home",
+      "title": "Сезонная главная",
       "description": "Главная магазина вокруг сезона: у подборки есть срок и число товаров, а крупная плитка задаётся флагом в данных.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -4847,7 +4893,8 @@
                 "label": "Heading",
                 "default": "Everything that makes an evening longer"
               }
-            }
+            },
+            "title": "Season Home"
           }
         }
       }
@@ -4855,7 +4902,7 @@
     {
       "name": "commerce-048",
       "type": "registry:block",
-      "title": "Sale Countdown",
+      "title": "Отсчёт до конца распродажи",
       "description": "Лендинг распродажи с таймером: цифры приходят пропами и подтверждены датой в теге time, а пороги скидки стоят рядом со сроком.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -4950,7 +4997,8 @@
               "soldPercent": {
                 "label": "Sold, %"
               }
-            }
+            },
+            "title": "Sale Countdown"
           }
         }
       }
@@ -4958,7 +5006,7 @@
     {
       "name": "commerce-049",
       "type": "registry:block",
-      "title": "Collection Banner",
+      "title": "Баннер коллекции",
       "description": "Страница коллекции с баннером: над обложкой стоит контекст — кто собрал, когда и сколько вещей внутри.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -5053,7 +5101,8 @@
                 "label": "Curator",
                 "default": "Ples workshop"
               }
-            }
+            },
+            "title": "Collection Banner"
           }
         }
       }
@@ -5061,7 +5110,7 @@
     {
       "name": "commerce-050",
       "type": "registry:block",
-      "title": "Infinite Catalog",
+      "title": "Каталог с автоподгрузкой",
       "description": "Каталог с бесконечной прокруткой, у которого есть выход: скелетоны, счётчик в aria-live и кнопка «показать ещё».",
       "categories": ["commerce"],
       "dependencies": [],
@@ -5156,7 +5205,8 @@
               "skeletons": {
                 "label": "Skeletons"
               }
-            }
+            },
+            "title": "Infinite Catalog"
           }
         }
       }
@@ -5164,7 +5214,7 @@
     {
       "name": "commerce-051",
       "type": "registry:block",
-      "title": "Grid List Switch",
+      "title": "Переключатель сетки и списка",
       "description": "Каталог с переключателем «плиткой или списком»: раскладку и состав полей меняет :has(), без единой строки JS.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -5259,7 +5309,8 @@
               "found": {
                 "label": "Found"
               }
-            }
+            },
+            "title": "Grid List Switch"
           }
         }
       }
@@ -5267,7 +5318,7 @@
     {
       "name": "commerce-052",
       "type": "registry:block",
-      "title": "Video Product",
+      "title": "Товар с видео",
       "description": "Страница товара с видеообзором: запуск только вручную, главы с таймкодами рядом, расшифровка в details.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -5362,7 +5413,8 @@
                 "label": "Duration",
                 "default": "9:12"
               }
-            }
+            },
+            "title": "Video Product"
           }
         }
       }
@@ -5370,7 +5422,7 @@
     {
       "name": "commerce-053",
       "type": "registry:block",
-      "title": "Option Configurator",
+      "title": "Конфигуратор опций",
       "description": "Конфигуратор товара: цена и срок изготовления считаются из выбранных опций, а код конфигурации собирается из их значений.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -5465,7 +5517,8 @@
               "base": {
                 "label": "Base price"
               }
-            }
+            },
+            "title": "Option Configurator"
           }
         }
       }
@@ -5473,7 +5526,7 @@
     {
       "name": "commerce-054",
       "type": "registry:block",
-      "title": "Price Calculator",
+      "title": "Калькулятор цены",
       "description": "Расчёт стоимости услуги по параметрам: видно не только число, но и как оно получилось, и когда включается минимальный заказ.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -5568,7 +5621,8 @@
               "minimum": {
                 "label": "Minimum order"
               }
-            }
+            },
+            "title": "Price Calculator"
           }
         }
       }
@@ -5576,7 +5630,7 @@
     {
       "name": "commerce-055",
       "type": "registry:block",
-      "title": "Compatibility Table",
+      "title": "Таблица совместимости",
       "description": "Таблица совместимости товара с моделями: состояние названо словом и формой значка, а первая колонка залипает при прокрутке.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -5671,7 +5725,8 @@
                 "label": "Heading",
                 "default": "Which models it fits"
               }
-            }
+            },
+            "title": "Compatibility Table"
           }
         }
       }
@@ -5679,7 +5734,7 @@
     {
       "name": "commerce-056",
       "type": "registry:block",
-      "title": "Digital License",
+      "title": "Цифровая лицензия",
       "description": "Страница цифрового товара: три лицензии радиокнопками, панель прав переключается на :has(), а разрешённое и запрещённое разведены.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -5774,7 +5829,8 @@
                 "label": "Button",
                 "default": "Buy and download"
               }
-            }
+            },
+            "title": "Digital License"
           }
         }
       }
@@ -5782,7 +5838,7 @@
     {
       "name": "commerce-057",
       "type": "registry:block",
-      "title": "Service Booking",
+      "title": "Запись на услугу",
       "description": "Запись на услугу: занятое время остаётся видимым и отключённым, а сетка нужного дня показывается через :has() без JS.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -5877,7 +5933,8 @@
                 "label": "Price",
                 "default": "$74"
               }
-            }
+            },
+            "title": "Service Booking"
           }
         }
       }
@@ -5885,7 +5942,7 @@
     {
       "name": "commerce-058",
       "type": "registry:block",
-      "title": "Course Syllabus",
+      "title": "Программа курса",
       "description": "Страница курса с программой в details: у каждого урока стоит хронометраж, а бесплатные помечены отдельно.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -5980,7 +6037,8 @@
                 "label": "Price",
                 "default": "$124"
               }
-            }
+            },
+            "title": "Course Syllabus"
           }
         }
       }
@@ -5988,7 +6046,7 @@
     {
       "name": "commerce-059",
       "type": "registry:block",
-      "title": "Multi Seller Cart",
+      "title": "Корзина с несколькими продавцами",
       "description": "Корзина маркетплейса: товары сгруппированы по продавцам, у каждой группы свои условия доставки, срок и промежуточный итог.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -6083,7 +6141,8 @@
                 "label": "Total",
                 "default": "$676"
               }
-            }
+            },
+            "title": "Multi Seller Cart"
           }
         }
       }
@@ -6091,7 +6150,7 @@
     {
       "name": "commerce-060",
       "type": "registry:block",
-      "title": "Split Shipment Cart",
+      "title": "Корзина с разделением отправлений",
       "description": "Корзина с раздельной доставкой: две посылки с причиной задержки у каждой и выбор между ожиданием и отправкой частями.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -6186,7 +6245,8 @@
                 "label": "Button",
                 "default": "Continue to payment"
               }
-            }
+            },
+            "title": "Split Shipment Cart"
           }
         }
       }
@@ -6194,7 +6254,7 @@
     {
       "name": "commerce-061",
       "type": "registry:block",
-      "title": "Address Book",
+      "title": "Адресная книга",
       "description": "Шаг оформления с адресной книгой: сохранённые адреса радиогруппой, а форма нового раскрывается на :has() только под своим вариантом.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -6289,7 +6349,8 @@
                 "label": "Button",
                 "default": "Continue to payment"
               }
-            }
+            },
+            "title": "Address Book"
           }
         }
       }
@@ -6297,7 +6358,7 @@
     {
       "name": "commerce-062",
       "type": "registry:block",
-      "title": "Pickup Points",
+      "title": "Пункты выдачи",
       "description": "Выбор пункта выдачи списком по расстоянию: часы работы, срок хранения и ограничения по габаритам видны до выбора.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -6392,7 +6453,8 @@
                 "label": "Button",
                 "default": "Continue to payment"
               }
-            }
+            },
+            "title": "Pickup Points"
           }
         }
       }
@@ -6400,7 +6462,7 @@
     {
       "name": "commerce-063",
       "type": "registry:block",
-      "title": "Split Payment",
+      "title": "Оплата по частям",
       "description": "Оплата двумя картами: сумма второй считается как остаток, поэтому недоплата невозможна, а перебор объявляется ошибкой.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -6495,7 +6557,8 @@
                 "label": "Button",
                 "default": "Pay with two cards"
               }
-            }
+            },
+            "title": "Split Payment"
           }
         }
       }
@@ -6503,7 +6566,7 @@
     {
       "name": "commerce-064",
       "type": "registry:block",
-      "title": "Crypto Payment",
+      "title": "Оплата криптовалютой",
       "description": "Оплата криптовалютой: сеть выбирается явно, адрес выделяется целиком, а предупреждение о неверной сети стоит над кнопкой.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -6598,7 +6661,8 @@
                 "label": "Memo",
                 "default": "ORD-2024-1187"
               }
-            }
+            },
+            "title": "Crypto Payment"
           }
         }
       }
@@ -6606,7 +6670,7 @@
     {
       "name": "commerce-065",
       "type": "registry:block",
-      "title": "Payment Receipt",
+      "title": "Квитанция об оплате",
       "description": "Экран успешной оплаты с чеком: сумма набрана крупно, номер операции копируется целиком, нижний край чека вырезан маской.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -6701,7 +6765,8 @@
                 "label": "Status",
                 "default": "Payment went through"
               }
-            }
+            },
+            "title": "Payment Receipt"
           }
         }
       }
@@ -6709,7 +6774,7 @@
     {
       "name": "commerce-066",
       "type": "registry:block",
-      "title": "Payment Declined",
+      "title": "Платёж отклонён",
       "description": "Экран отказа в оплате: причина набрана крупнее статуса, код банка стоит отдельной строкой, а срок брони заказа назван.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -6804,7 +6869,8 @@
                 "label": "Bank code",
                 "default": "51 · insufficient_limit"
               }
-            }
+            },
+            "title": "Payment Declined"
           }
         }
       }
@@ -6812,7 +6878,7 @@
     {
       "name": "commerce-067",
       "type": "registry:block",
-      "title": "Account Balance",
+      "title": "Баланс счёта",
       "description": "Кабинет с балансом: доступная сумма отделена от денег в пути, а бонусы и кэшбэк разложены по карманам со сроками сгорания.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -6907,7 +6973,8 @@
                 "label": "Top-up button",
                 "default": "Top up the account"
               }
-            }
+            },
+            "title": "Account Balance"
           }
         }
       }
@@ -6915,7 +6982,7 @@
     {
       "name": "commerce-068",
       "type": "registry:block",
-      "title": "Payment History",
+      "title": "История платежей",
       "description": "История платежей: итоги периода стоят над таблицей, статус назван словом и подкреплён формой значка, возвраты идут в общем списке.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -7015,7 +7082,8 @@
                 "label": "Spent",
                 "default": "$787"
               }
-            }
+            },
+            "title": "Payment History"
           }
         }
       }
@@ -7023,7 +7091,7 @@
     {
       "name": "commerce-069",
       "type": "registry:block",
-      "title": "Subscription Manager",
+      "title": "Управление подписками",
       "description": "Управление подписками: суммы в месяц и в год посчитаны сверху, а у каждой строки видна дата списания, карта и кнопка паузы рядом с отменой.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -7118,7 +7186,8 @@
                 "label": "Per month",
                 "default": "$24"
               }
-            }
+            },
+            "title": "Subscription Manager"
           }
         }
       }
@@ -7126,7 +7195,7 @@
     {
       "name": "commerce-070",
       "type": "registry:block",
-      "title": "Parcel Map",
+      "title": "Карта отправлений",
       "description": "Отслеживание посылки на карте-заглушке: карта нарисована CSS, а все точки продублированы списком со временем.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -7221,7 +7290,8 @@
                 "label": "Status",
                 "default": "The courier is on the way"
               }
-            }
+            },
+            "title": "Parcel Map"
           }
         }
       }
@@ -7229,7 +7299,7 @@
     {
       "name": "commerce-071",
       "type": "registry:block",
-      "title": "Buy Again",
+      "title": "Купить снова",
       "description": "Блок «купить снова» из истории: частота покупок и дата последней видны до нажатия, а подорожание названо словами.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -7324,7 +7394,8 @@
                 "label": "Button",
                 "default": "Add"
               }
-            }
+            },
+            "title": "Buy Again"
           }
         }
       }
@@ -7332,7 +7403,7 @@
     {
       "name": "commerce-072",
       "type": "registry:block",
-      "title": "Personal Picks",
+      "title": "Персональная подборка",
       "description": "Персональные рекомендации с причиной у каждой карточки и кнопкой «не интересно», которая правит выдачу.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -7427,7 +7498,8 @@
                 "label": "Hide",
                 "default": "Not interested"
               }
-            }
+            },
+            "title": "Personal Picks"
           }
         }
       }
@@ -7435,7 +7507,7 @@
     {
       "name": "commerce-073",
       "type": "registry:block",
-      "title": "Recently Viewed",
+      "title": "Недавно смотрели",
       "description": "Недавно просмотренное по дням: у каждой строки время просмотра и своё удаление, а над списком — кнопка очистки истории.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -7530,7 +7602,8 @@
                 "label": "Clear",
                 "default": "Clear history"
               }
-            }
+            },
+            "title": "Recently Viewed"
           }
         }
       }
@@ -7538,7 +7611,7 @@
     {
       "name": "commerce-074",
       "type": "registry:block",
-      "title": "Gift Card",
+      "title": "Подарочная карта",
       "description": "Покупка подарочного сертификата: номинал и дизайн радиокнопками, превью открытки меняется на :has(), правила стоят рядом с кнопкой.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -7633,7 +7706,8 @@
                 "label": "Button",
                 "default": "Buy the gift card"
               }
-            }
+            },
+            "title": "Gift Card"
           }
         }
       }
@@ -7641,7 +7715,7 @@
     {
       "name": "commerce-075",
       "type": "registry:block",
-      "title": "Charity Roundup",
+      "title": "Округление в пользу фонда",
       "description": "Благотворительное округление суммы: надбавка считается от реального чека, а галочка снята по умолчанию.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -7736,7 +7810,8 @@
               "roundTo": {
                 "label": "Round to"
               }
-            }
+            },
+            "title": "Charity Roundup"
           }
         }
       }
@@ -7744,7 +7819,7 @@
     {
       "name": "commerce-076",
       "type": "registry:block",
-      "title": "Wholesale Tiers",
+      "title": "Оптовые уровни цен",
       "description": "Оптовый прайс по количеству: пороги таблицей, текущий уровень помечен словом, а до следующего посчитан конкретный шаг.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -7839,7 +7914,8 @@
                 "label": "Button",
                 "default": "Add the batch to the order"
               }
-            }
+            },
+            "title": "Wholesale Tiers"
           }
         }
       }
@@ -7847,7 +7923,7 @@
     {
       "name": "commerce-077",
       "type": "registry:block",
-      "title": "Nearby Stock",
+      "title": "Наличие поблизости",
       "description": "Наличие в магазинах поблизости: расстояние продублировано временем в пути, последний экземпляр помечен, есть выход для тех, у кого рядом ничего нет.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -7942,7 +8018,8 @@
                 "label": "Hold button",
                 "default": "Hold it for me"
               }
-            }
+            },
+            "title": "Nearby Stock"
           }
         }
       }
@@ -7950,7 +8027,7 @@
     {
       "name": "commerce-078",
       "type": "registry:block",
-      "title": "Loyalty Program",
+      "title": "Программа лояльности",
       "description": "Программа лояльности покупателя: уровень с датой удержания, полоса прогресса до следующего и сравнение уровней колонками.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -8045,7 +8122,8 @@
               "progress": {
                 "label": "Progress, %"
               }
-            }
+            },
+            "title": "Loyalty Program"
           }
         }
       }
@@ -8053,7 +8131,7 @@
     {
       "name": "commerce-079",
       "type": "registry:block",
-      "title": "Price History",
+      "title": "История цены",
       "description": "Сравнение цены с историей: минимум за период и дата минимума рядом со скидкой, график столбиками без библиотеки.",
       "categories": ["commerce"],
       "dependencies": [],
@@ -8148,7 +8226,8 @@
                 "label": "Minimum",
                 "default": "$399"
               }
-            }
+            },
+            "title": "Price History"
           }
         }
       }

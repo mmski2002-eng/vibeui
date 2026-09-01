@@ -4,11 +4,9 @@
     {
       "name": "nativeselect-001",
       "type": "registry:component",
-      "title": "Native Basic",
+      "title": "Нативный список",
       "description": "Нативный select с подписью и собственной стрелкой: оболочка наша, а выпадающий список рисует операционная система.",
-      "categories": [
-        "native-select"
-      ],
+      "categories": ["native-select"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-nativeselect-001-*. Серверный: из хуков только useId. appearance:none снимает штатную стрелку платформы, вместо неё рисуется своя из двух граней квадрата; стрелка помечена pointer-events:none, поэтому вся площадь поля остаётся целью самого select. Правый отступ поля рассчитан под стрелку: без него длинный пункт заезжает под неё. Подсветка стрелки при фокусе сделана через :has(select:focus-visible) на обёртке. Список остаётся системным — на телефоне это привычное колесо, которое не ломается при масштабировании страницы и не требует ни строчки JS.",
       "meta": {
-        "tags": [
-          "select",
-          "native",
-          "form",
-          "mobile"
-        ],
+        "tags": ["select", "native", "form", "mobile"],
         "preview": {
           "width": "full"
         },
@@ -106,7 +99,8 @@
                 "label": "Hint",
                 "default": "Reminders and reports are counted in it."
               }
-            }
+            },
+            "title": "Native Basic"
           }
         }
       }
@@ -114,11 +108,9 @@
     {
       "name": "nativeselect-002",
       "type": "registry:component",
-      "title": "Grouped Options",
+      "title": "Список с группами",
       "description": "Нативный select с разделами на <optgroup>: одинаковые названия перестают путаться, потому что система сама подписывает группы.",
-      "categories": [
-        "native-select"
-      ],
+      "categories": ["native-select"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -130,12 +122,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-nativeselect-002-*. Серверный: из хуков только useId. Разделы объявлены штатным <optgroup label>: браузер сам рисует заголовки некликабельными, а экранный диктор произносит название раздела перед пунктом — в самодельном списке то же самое приходится собирать из role=\"group\" и aria-labelledby. Начертание заголовков — единственное, на что можно влиять внутри раскрытого списка, поэтому optgroup получает font-weight и цвет, а option возвращает обычный вес. Стрелка нарисована двумя гранями и не ловит клики.",
       "meta": {
-        "tags": [
-          "select",
-          "optgroup",
-          "native",
-          "grouping"
-        ],
+        "tags": ["select", "optgroup", "native", "grouping"],
         "preview": {
           "width": "full"
         },
@@ -216,7 +203,8 @@
                 "label": "Hint",
                 "default": "Inside each section addresses are sorted by load."
               }
-            }
+            },
+            "title": "Grouped Options"
           }
         }
       }
@@ -224,11 +212,9 @@
     {
       "name": "nativeselect-003",
       "type": "registry:component",
-      "title": "Placeholder Required",
+      "title": "Обязательный выбор с подсказкой",
       "description": "Нативный select с заглушкой вместо отсутствующего placeholder: пустой пункт скрыт из списка, а незаполненное поле видно по цвету.",
-      "categories": [
-        "native-select"
-      ],
+      "categories": ["native-select"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -240,12 +226,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-nativeselect-003-*. Серверный: из хуков только useId. У select нет атрибута placeholder, поэтому первый пункт всегда выглядит выбранным — здесь роль заглушки играет <option value=\"\" disabled hidden>: она показана в закрытом поле, но недоступна в раскрытом списке. Выбор задаётся через defaultValue=\"\" на самом select, а не атрибутом selected у option: React иначе предупреждает. Пока выбрана заглушка, поле не проходит required, и правило select:required:invalid красит текст приглушённым — состояние «не выбрано» видно без скрипта. Звёздочка помечена aria-hidden, её смысл несёт визуально скрытый текст.",
       "meta": {
-        "tags": [
-          "select",
-          "placeholder",
-          "required",
-          "validation"
-        ],
+        "tags": ["select", "placeholder", "required", "validation"],
         "preview": {
           "width": "full"
         },
@@ -326,7 +307,8 @@
                 "label": "Placeholder",
                 "default": "Choose a reason"
               }
-            }
+            },
+            "title": "Placeholder Required"
           }
         }
       }
@@ -334,11 +316,9 @@
     {
       "name": "nativeselect-004",
       "type": "registry:component",
-      "title": "Multiple List",
+      "title": "Список с множественным выбором",
       "description": "Множественный нативный select с заранее раскрытым списком и подсказкой о клавишах: без объяснения про Ctrl такой выбор не работает.",
-      "categories": [
-        "native-select"
-      ],
+      "categories": ["native-select"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -350,12 +330,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-nativeselect-004-*. Серверный: из хуков только useId, состояние держит сам select с атрибутом multiple. Список раскрыт заранее атрибутом size (проп rows): закрытое множественное поле показывает лишь первую строку и врёт про количество выбранного. Под полем стоит строка с <kbd>, прямо называющая клавиши, — иначе про Ctrl и Shift никто не догадывается. appearance:none здесь не нужен: у раскрытого списка нет стрелки, поэтому рамка и скругление задаются напрямую. Выбранные пункты подсвечиваются правилом option:checked, но глубина стилизации зависит от платформы.",
       "meta": {
-        "tags": [
-          "select",
-          "multiple",
-          "native",
-          "keyboard"
-        ],
+        "tags": ["select", "multiple", "native", "keyboard"],
         "preview": {
           "width": "full"
         },
@@ -437,7 +412,8 @@
                 "label": "Visible rows",
                 "default": 5
               }
-            }
+            },
+            "title": "Multiple List"
           }
         }
       }
@@ -445,11 +421,9 @@
     {
       "name": "nativeselect-005",
       "type": "registry:component",
-      "title": "Filter Inline",
+      "title": "Фильтр в строке",
       "description": "Компактные нативные select'ы в строке фильтров: без рамки, шириной по выбранному тексту, с подписями слева в той же строке.",
-      "categories": [
-        "native-select"
-      ],
+      "categories": ["native-select"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -461,12 +435,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-nativeselect-005-*. Серверный: из хуков только useId, идентификаторы двух полей выводятся из одного корня. В строке фильтров поле не должно выглядеть полем формы: рамка прозрачная и проявляется на наведении и фокусе, ширина select оставлена auto — браузер берёт её по самому длинному пункту, поэтому строка не растягивается. Подпись стоит слева от поля и остаётся настоящим <label> с htmlFor: связь с полем важнее компактности. Строка переносится (flex-wrap), поэтому на узком экране пары «подпись — поле» встают друг под друга.",
       "meta": {
-        "tags": [
-          "select",
-          "filter",
-          "compact",
-          "toolbar"
-        ],
+        "tags": ["select", "filter", "compact", "toolbar"],
         "preview": {
           "width": "full"
         },
@@ -547,7 +516,8 @@
                 "label": "Second caption",
                 "default": "Show"
               }
-            }
+            },
+            "title": "Filter Inline"
           }
         }
       }
@@ -555,11 +525,9 @@
     {
       "name": "nativeselect-006",
       "type": "registry:component",
-      "title": "Invalid Select",
+      "title": "Список с ошибкой",
       "description": "Нативный select с постоянным сообщением об ошибке вместо всплывающей подсказки браузера, которая исчезает через пару секунд.",
-      "categories": [
-        "native-select"
-      ],
+      "categories": ["native-select"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -571,12 +539,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-nativeselect-006-*. Серверный: из хуков только useId. Единственный источник состояния — aria-invalid на поле: от него красятся рамка, стрелка (через :has() на корне), подпись и обводка фокуса, отдельного класса «error» нет и состояния не расходятся. Сообщение остаётся в разметке постоянно и связано с полем через aria-describedby — в отличие от штатной подсказки браузера, которая показывается один раз и пропадает. Цвет незаполненного поля даёт правило select:not(:invalid), а заглушка сделана option с пустым value.",
       "meta": {
-        "tags": [
-          "select",
-          "error",
-          "validation",
-          "a11y"
-        ],
+        "tags": ["select", "error", "validation", "a11y"],
         "preview": {
           "width": "full"
         },
@@ -657,7 +620,8 @@
                 "label": "Error text",
                 "default": "Choose a payment method to place the order."
               }
-            }
+            },
+            "title": "Invalid Select"
           }
         }
       }
@@ -665,11 +629,9 @@
     {
       "name": "nativeselect-007",
       "type": "registry:component",
-      "title": "Size Scale",
+      "title": "Шкала размеров",
       "description": "Нативный select с размерной шкалой sm / md / lg: три ступени описаны одним набором правил и четырьмя переменными геометрии.",
-      "categories": [
-        "native-select"
-      ],
+      "categories": ["native-select"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -681,12 +643,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-nativeselect-007-*. Серверный: из хуков только useId. Размер выражен атрибутом data-size на корне, который переопределяет четыре переменные: высоту, кегль, отступ и сторону стрелки. Правила поля написаны один раз и читают эти переменные, поэтому новая ступень — это четыре строки, а не копия компонента. Правый отступ поля посчитан формулой из отступа и стороны стрелки, поэтому текст не заезжает под стрелку ни на одной ступени, а сама стрелка центрируется сдвигом на половину своей стороны.",
       "meta": {
-        "tags": [
-          "select",
-          "sizes",
-          "scale",
-          "tokens"
-        ],
+        "tags": ["select", "sizes", "scale", "tokens"],
         "preview": {
           "width": "full"
         },
@@ -721,11 +678,7 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": [
-              "sm",
-              "md",
-              "lg"
-            ]
+            "options": ["sm", "md", "lg"]
           },
           {
             "prop": "label",
@@ -770,7 +723,8 @@
                 "label": "Label",
                 "default": "Package size"
               }
-            }
+            },
+            "title": "Size Scale"
           }
         }
       }

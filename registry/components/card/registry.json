@@ -4,11 +4,9 @@
     {
       "name": "card-001",
       "type": "registry:component",
-      "title": "Content Card",
+      "title": "Карточка материала",
       "description": "Карточка материала: обложка, надзаголовок, заголовок и подвал. Кликается вся площадь, но ссылка внутри остаётся одна.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-001-*. Приём с ::after у ссылки заголовка растягивает её область на всю карточку: клик работает по любому месту, а в дереве доступности остаётся одна ссылка. Обложка нарисована градиентами и не требует картинки. Внутренние отступы и кегль заголовка считаются от собственной ширины карточки через @container, поэтому карточка одинаково выглядит в узкой колонке и в широкой сетке.",
       "meta": {
-        "tags": [
-          "card",
-          "content",
-          "link",
-          "grid"
-        ],
+        "tags": ["card", "content", "link", "grid"],
         "preview": {
           "width": "full"
         },
@@ -141,7 +134,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Content Card"
           }
         }
       }
@@ -149,11 +143,9 @@
     {
       "name": "card-002",
       "type": "registry:component",
-      "title": "Metric Card",
+      "title": "Карточка показателя",
       "description": "Карточка показателя: число крупно, изменение со знаком и стрелкой, под ними столбики динамики — одно число не отличает тренд от случайности.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -165,12 +157,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-002-*. Серверный: хуков нет. Столбики динамики — флекс с процентными высотами от максимума ряда, поэтому график не тянет библиотеку. Хорошее направление задаётся пропом goodDirection: у оттока рост — плохая новость. Изменение продублировано словами в aria-label.",
       "meta": {
-        "tags": [
-          "card",
-          "metric",
-          "dashboard",
-          "chart"
-        ],
+        "tags": ["card", "metric", "dashboard", "chart"],
         "ai": {
           "export": "Card002",
           "usage": "<Card002 title=\"Выручка\" value=\"1 284 000 ₽\" change={12.4} series={[42, 55, 61]} />",
@@ -268,7 +255,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Metric Card"
           }
         }
       }
@@ -276,11 +264,9 @@
     {
       "name": "card-003",
       "type": "registry:component",
-      "title": "Person Card",
+      "title": "Карточка человека",
       "description": "Карточка человека: аватар, роль, цифры в ряд и два действия; текст «о себе» обрезан двумя строками, чтобы сетка не рассыпалась.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -292,12 +278,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-003-*. Серверный: хуков нет. Оттенок аватара считается из имени FNV-1a по двенадцати ступеням круга. Текст обрезается -webkit-line-clamp двумя строками, цифры вынесены в ряд между границами, действия занимают равную ширину.",
       "meta": {
-        "tags": [
-          "card",
-          "person",
-          "team",
-          "profile"
-        ],
+        "tags": ["card", "person", "team", "profile"],
         "ai": {
           "export": "Card003",
           "usage": "<Card003 name=\"Мария Гурова\" role=\"Дизайнер\" stats={[{ label: \"Проектов\", value: \"14\" }]} />",
@@ -386,7 +367,8 @@
                 "label": "Action",
                 "default": "Message"
               }
-            }
+            },
+            "title": "Person Card"
           }
         }
       }
@@ -394,11 +376,9 @@
     {
       "name": "card-004",
       "type": "registry:component",
-      "title": "Product Card",
+      "title": "Карточка товара",
       "description": "Карточка товара для сетки: кнопка «в корзину» — отдельная цель поверх ссылки, иначе добавление начнёт открывать страницу.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -410,12 +390,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-004-*. Серверный: хуков нет. Ссылка растянута на карточку псевдоэлементом ::after, а кнопка поднята z-index, поэтому обе цели не конфликтуют. Обводка фокуса ставится на карточку через :has(). Звезда нарисована clip-path, рейтинг продублирован текстом в aria-label.",
       "meta": {
-        "tags": [
-          "card",
-          "product",
-          "commerce",
-          "grid"
-        ],
+        "tags": ["card", "product", "commerce", "grid"],
         "ai": {
           "export": "Card004",
           "usage": "<Card004 title=\"Лампа «Полёт»\" price=\"4 900 ₽\" rating={4.7} reviews={128} />",
@@ -515,7 +490,8 @@
                 "label": "Button",
                 "default": "Add to cart"
               }
-            }
+            },
+            "title": "Product Card"
           }
         }
       }
@@ -523,11 +499,9 @@
     {
       "name": "card-005",
       "type": "registry:component",
-      "title": "Choice Cards",
+      "title": "Карточки выбора",
       "description": "Выбор тарифа карточками на настоящих radio: цель нажатия размером с карточку, а не с кружок в 16 пикселей.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -539,12 +513,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-005-*. Клиентский: \"use client\". Вся карточка — <label> с прозрачным radio внутри, поэтому клавиатурная модель радиогруппы работает без обработчиков. Выбранная карточка стилизуется через :has(input:checked) и отличается рамкой, кружком и внутренней обводкой.",
       "meta": {
-        "tags": [
-          "card",
-          "radio",
-          "pricing",
-          "choice"
-        ],
+        "tags": ["card", "radio", "pricing", "choice"],
         "preview": {
           "width": "full"
         },
@@ -623,7 +592,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Choice Cards"
           }
         }
       }
@@ -631,11 +601,9 @@
     {
       "name": "card-006",
       "type": "registry:component",
-      "title": "Task Card",
+      "title": "Карточка задачи",
       "description": "Карточка задачи: статус плашкой, прогресс подзадач числами «7 из 12» и срок, который краснеет только когда прошёл.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -647,12 +615,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-006-*. Серверный: хуков нет. Статус переключается data-status и красит плашку через color-mix от одной переменной. Полоса прогресса объявлена role=\"progressbar\" с aria-valuenow и подписью. Оттенок аватара исполнителя выводится из имени.",
       "meta": {
-        "tags": [
-          "card",
-          "task",
-          "progress",
-          "kanban"
-        ],
+        "tags": ["card", "task", "progress", "kanban"],
         "ai": {
           "export": "Card006",
           "usage": "<Card006 title=\"Собрать каталог\" status=\"doing\" done={7} total={12} />",
@@ -691,12 +654,7 @@
             "label": "Статус",
             "type": "select",
             "default": "doing",
-            "options": [
-              "todo",
-              "doing",
-              "review",
-              "done"
-            ]
+            "options": ["todo", "doing", "review", "done"]
           },
           {
             "prop": "done",
@@ -756,7 +714,8 @@
               "total": {
                 "label": "Total"
               }
-            }
+            },
+            "title": "Task Card"
           }
         }
       }
@@ -764,11 +723,9 @@
     {
       "name": "card-007",
       "type": "registry:component",
-      "title": "Notification Card",
+      "title": "Карточка уведомления",
       "description": "Уведомление с действиями внутри: ответить можно не открывая письмо, а после ответа карточка остаётся с отчётом.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -780,12 +737,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-007-*. Клиентский: \"use client\". После ответа кнопки заменяются строкой результата с role=\"status\", поэтому смена состояния объявляется скринридеру. Точка непрочитанного помечена aria-label. Оттенок аватара считается из имени отправителя.",
       "meta": {
-        "tags": [
-          "card",
-          "notification",
-          "inbox",
-          "actions"
-        ],
+        "tags": ["card", "notification", "inbox", "actions"],
         "preview": {
           "width": "full"
         },
@@ -888,7 +840,8 @@
                 "label": "Secondary action",
                 "default": "Decline"
               }
-            }
+            },
+            "title": "Notification Card"
           }
         }
       }
@@ -896,11 +849,9 @@
     {
       "name": "card-008",
       "type": "registry:component",
-      "title": "Add Card",
+      "title": "Карточка добавления",
       "description": "Пустая карточка «добавить»: пунктирная и прозрачная, потому что не содержит данных и не должна выглядеть как настоящая.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -912,12 +863,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-008-*. Серверный: хуков нет. Корень — <button>, а не div с onClick: роль, клавиатура и фокус достаются даром. Минимальная высота задана так, чтобы карточка совпадала с настоящими в ряду. Плюс нарисован кругом с двумя псевдоэлементами.",
       "meta": {
-        "tags": [
-          "card",
-          "empty",
-          "add",
-          "grid"
-        ],
+        "tags": ["card", "empty", "add", "grid"],
         "ai": {
           "export": "Card008",
           "usage": "<Card008 title=\"Добавить проект\" hint=\"Пустой проект с одной страницей\" />",
@@ -1004,7 +950,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Add Card"
           }
         }
       }
@@ -1012,11 +959,9 @@
     {
       "name": "card-009",
       "type": "registry:component",
-      "title": "Details Card",
+      "title": "Карточка с подробностями",
       "description": "Карточка с подробностями на нативном details: главное видно всегда, под кат уходит то, что нужно не каждому.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1028,12 +973,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-009-*. Серверный компонент: раскрытие держит нативный <details>, useId нужен для имени группы. Подробности выложены словарём dl с display:contents у строк, поэтому пары «подпись — значение» остаются парами в разметке и раскладываются сеткой.",
       "meta": {
-        "tags": [
-          "card",
-          "details",
-          "order",
-          "no-js"
-        ],
+        "tags": ["card", "details", "order", "no-js"],
         "preview": {
           "props": {
             "defaultOpen": true
@@ -1125,7 +1065,8 @@
               "defaultOpen": {
                 "label": "Start expanded"
               }
-            }
+            },
+            "title": "Details Card"
           }
         }
       }
@@ -1133,11 +1074,9 @@
     {
       "name": "card-010",
       "type": "registry:component",
-      "title": "Card Skeleton",
+      "title": "Скелетон карточки",
       "description": "Заглушка карточки товара: обложка квадратом и строки той же длины — совпадение метрик и есть смысл заглушки.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1149,12 +1088,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-010-*. Серверный: хуков нет. Пропорции повторяют card-004: квадратная обложка, две строки заголовка и короткая строка цены. Блик — движущийся градиент с задержкой по строкам; в prefers-reduced-motion он снимается, а фигуры заливаются ровным тоном.",
       "meta": {
-        "tags": [
-          "card",
-          "skeleton",
-          "loading",
-          "grid"
-        ],
+        "tags": ["card", "skeleton", "loading", "grid"],
         "ai": {
           "export": "Card010",
           "usage": "<Card010 label=\"Загружается карточка товара\" lines={3} />",
@@ -1241,7 +1175,8 @@
                 "label": "Label",
                 "default": "Loading a product card"
               }
-            }
+            },
+            "title": "Card Skeleton"
           }
         },
         "preview": {
@@ -1252,11 +1187,9 @@
     {
       "name": "card-011",
       "type": "registry:component",
-      "title": "Bookmark Card",
+      "title": "Карточка закладки",
       "description": "Карточка-закладка на внешний материал: домен виден до перехода, кликается вся площадь, а ссылка в разметке остаётся одна.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1268,12 +1201,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-011-*. Серверный: хуков нет. Ссылка заголовка растянута псевдоэлементом ::after на всю карточку, поэтому цель нажатия — вся площадь, а в списке ссылок остаётся одна запись на карточку. Обводку фокуса карточка берёт на себя через :has(a:focus-visible). Оттенок буквенного знака выводится из домена по FNV-1a, поэтому один источник всегда одного цвета. Внешняя ссылка получает target и rel, а предупреждение о новой вкладке уезжает в визуально скрытый текст.",
       "meta": {
-        "tags": [
-          "card",
-          "link",
-          "bookmark",
-          "external"
-        ],
+        "tags": ["card", "link", "bookmark", "external"],
         "preview": {
           "width": "full"
         },
@@ -1363,7 +1291,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Bookmark Card"
           }
         }
       }
@@ -1371,11 +1300,9 @@
     {
       "name": "card-012",
       "type": "registry:component",
-      "title": "Ratio Media Card",
+      "title": "Карточка с кадром",
       "description": "Карточка с кадром сверху и жёстким соотношением сторон: место под картинку занято до её загрузки, поэтому текст под кадром не прыгает.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1387,12 +1314,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-012-*. Серверный: хуков нет. Кадр держит пропорцию через aspect-ratio, значение приходит из data-ratio и переменной, поэтому четыре соотношения живут без дублирования правил. Плашка и длительность лежат поверх кадра на полупрозрачных подложках, а не рядом с ним. Пустой кадр залит градиентами — картинка не обязательна; переданный <img> получает object-fit:cover и заполняет кадр без искажений.",
       "meta": {
-        "tags": [
-          "card",
-          "media",
-          "aspect-ratio",
-          "grid"
-        ],
+        "tags": ["card", "media", "aspect-ratio", "grid"],
         "preview": {
           "width": "full"
         },
@@ -1427,12 +1349,7 @@
             "label": "Соотношение",
             "type": "select",
             "default": "16/9",
-            "options": [
-              "16/9",
-              "4/3",
-              "3/2",
-              "1/1"
-            ]
+            "options": ["16/9", "4/3", "3/2", "1/1"]
           },
           {
             "prop": "title",
@@ -1488,7 +1405,8 @@
                 "label": "Duration",
                 "default": "12:40"
               }
-            }
+            },
+            "title": "Ratio Media Card"
           }
         }
       }
@@ -1496,11 +1414,9 @@
     {
       "name": "card-013",
       "type": "registry:component",
-      "title": "Adaptive Layout Card",
+      "title": "Карточка с адаптивной раскладкой",
       "description": "Карточка, которая сама решает, быть ей строкой или плиткой: в узкой колонке кадр сверху, в широкой — слева. Считает по своей ширине, а не по окну.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1512,12 +1428,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-013-*. Серверный: хуков нет. Корень объявлен container-type:inline-size, а вся раскладка лежит на внутреннем [data-part=\"shell\"] — контейнерный запрос действует на потомков, но не на сам контейнер, и правило на корне молча ничего бы не изменило. Порогов два: на 30rem карточка становится горизонтальной, на 44rem кадр сужается, а описание ужимается до двух строк.",
       "meta": {
-        "tags": [
-          "card",
-          "container-query",
-          "responsive",
-          "layout"
-        ],
+        "tags": ["card", "container-query", "responsive", "layout"],
         "preview": {
           "width": "full"
         },
@@ -1607,7 +1518,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Adaptive Layout Card"
           }
         }
       }
@@ -1615,11 +1527,9 @@
     {
       "name": "card-014",
       "type": "registry:component",
-      "title": "Delta Tile",
+      "title": "Плитка с изменением",
       "description": "Плитка показателя, где главное — изменение: знак, процент и абсолютная величина рядом с базой сравнения, потому что «+12 %» без базы ничего не значит.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1631,12 +1541,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-014-*. Серверный: хуков нет. Направление и тон вычисляются один раз и уезжают в data-direction и data-tone, поэтому цвет и поворот стрелки живут в CSS, а не в разметке. Проп invert переворачивает трактовку для метрик, где рост — плохая новость. Слово «рост»/«снижение» продублировано визуально скрытым текстом: стрелка вслух не читается.",
       "meta": {
-        "tags": [
-          "card",
-          "metric",
-          "delta",
-          "dashboard"
-        ],
+        "tags": ["card", "metric", "delta", "dashboard"],
         "preview": {
           "width": "full"
         },
@@ -1726,7 +1631,8 @@
               "invert": {
                 "label": "Growth is bad"
               }
-            }
+            },
+            "title": "Delta Tile"
           }
         }
       }
@@ -1734,11 +1640,9 @@
     {
       "name": "card-015",
       "type": "registry:component",
-      "title": "Checklist Card",
+      "title": "Карточка-чеклист",
       "description": "Карточка задачи с видимым чек-листом: прогресс собран из сегментов — по одному на пункт, поэтому «сколько осталось» видно и без чтения подписи.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1750,12 +1654,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-015-*. Серверный: хуков нет. Прогресс — не полоса, а ряд равных сегментов по числу пунктов, объявленный role=\"progressbar\" с aria-valuemax по длине списка. Пункты — обычный ul; состояние живёт в data-done, поэтому галочка, цвет рамки и зачёркивание переключаются одним атрибутом. Слова «выполнено»/«не выполнено» уезжают в визуально скрытый текст: зачёркивание вслух не читается.",
       "meta": {
-        "tags": [
-          "card",
-          "checklist",
-          "progress",
-          "task"
-        ],
+        "tags": ["card", "checklist", "progress", "task"],
         "preview": {
           "width": "full"
         },
@@ -1843,7 +1742,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Checklist Card"
           }
         }
       }
@@ -1851,11 +1751,9 @@
     {
       "name": "card-016",
       "type": "registry:component",
-      "title": "File Row Card",
+      "title": "Карточка файла",
       "description": "Карточка файла для списка: значок-лист с расширением, имя в одну строку и ряд фактов через точку — тип, размер, дата.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1867,12 +1765,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-016-*. Серверный: хуков нет. Значок — не иконка формата, а «уголок листа»: одна фигура на clip-path плюс псевдоэлемент загнутого угла, цвет приходит из data-kind через одну переменную. Расширение вырезается из имени и печатается на значке, поэтому обрезанное многоточием имя не теряет тип. Факты выложены рядом с разделителями на ::before, а не тремя строками: в списке из сорока файлов высота строки дороже подробностей.",
       "meta": {
-        "tags": [
-          "card",
-          "file",
-          "list",
-          "download"
-        ],
+        "tags": ["card", "file", "list", "download"],
         "preview": {
           "width": "full"
         },
@@ -1914,14 +1807,7 @@
             "label": "Тип",
             "type": "select",
             "default": "pdf",
-            "options": [
-              "pdf",
-              "doc",
-              "sheet",
-              "image",
-              "archive",
-              "code"
-            ]
+            "options": ["pdf", "doc", "sheet", "image", "archive", "code"]
           },
           {
             "prop": "size",
@@ -1970,7 +1856,8 @@
                 "label": "Size",
                 "default": "2.4 MB"
               }
-            }
+            },
+            "title": "File Row Card"
           }
         }
       }
@@ -1978,11 +1865,9 @@
     {
       "name": "card-017",
       "type": "registry:component",
-      "title": "Quote Card",
+      "title": "Карточка с цитатой",
       "description": "Карточка отзыва на figure и blockquote: автор связан с цитатой разметкой, а не соседством, а оценка продублирована числом.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1994,12 +1879,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-017-*. Серверный: хуков нет. Разметка — figure с blockquote и figcaption: связь автора с цитатой описана стандартом, а не близостью в вёрстке. Декоративная кавычка нарисована псевдоэлементом и потому отсутствует в дереве доступности. Звёзды вырезаны clip-path и помечены aria-hidden, а оценка продублирована визуально скрытой строкой «Оценка 5 из 5». Оттенок кружка с инициалами считается из имени по FNV-1a.",
       "meta": {
-        "tags": [
-          "card",
-          "testimonial",
-          "quote",
-          "rating"
-        ],
+        "tags": ["card", "testimonial", "quote", "rating"],
         "preview": {
           "width": "full"
         },
@@ -2091,7 +1971,8 @@
               "rating": {
                 "label": "Rating"
               }
-            }
+            },
+            "title": "Quote Card"
           }
         }
       }
@@ -2099,11 +1980,9 @@
     {
       "name": "card-018",
       "type": "registry:component",
-      "title": "Featured Plan Card",
+      "title": "Карточка выделенного тарифа",
       "description": "Карточка тарифа с рекомендованным состоянием: выделение — флаг featured, а не отдельный компонент, поэтому соседние тарифы не разъезжаются по вёрстке.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2115,12 +1994,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-018-*. Серверный: хуков нет. Выделение включается атрибутом data-featured и меняет три вещи сразу: рамку, лёгкую подложку-градиент и заливку кнопки; лента лежит на absolute поверх верхней границы. Подложка выделенного варианта остаётся светлой намеренно — тёмная карточка в ряду светлых читается как отключённая, а не как главная. Список возможностей — ul с галочкой на inline-SVG.",
       "meta": {
-        "tags": [
-          "card",
-          "pricing",
-          "plan",
-          "featured"
-        ],
+        "tags": ["card", "pricing", "plan", "featured"],
         "preview": {
           "width": "full"
         },
@@ -2210,7 +2084,8 @@
               "featured": {
                 "label": "Recommended"
               }
-            }
+            },
+            "title": "Featured Plan Card"
           }
         }
       }
@@ -2218,11 +2093,9 @@
     {
       "name": "card-019",
       "type": "registry:component",
-      "title": "Empty State Card",
+      "title": "Карточка пустого состояния",
       "description": "Пустое состояние с ровно одним выходом: рисунок из трёх листов, объяснение и одна кнопка. Подсказка внизу — текст, а не вторая кнопка.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2234,12 +2107,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-019-*. Серверный: хуков нет. Рисунок собран из трёх пустых «листов» на обычных span с поворотами transform — картинка не нужна, иконочный шрифт тоже. Весь блок помечен aria-hidden, потому что смысл несёт текст. Действие ровно одно, а альтернатива дана строкой текста: две равные кнопки в пустом состоянии превращают выход в вопрос.",
       "meta": {
-        "tags": [
-          "card",
-          "empty-state",
-          "onboarding",
-          "cta"
-        ],
+        "tags": ["card", "empty-state", "onboarding", "cta"],
         "preview": {
           "width": "full"
         },
@@ -2329,7 +2197,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Empty State Card"
           }
         }
       }
@@ -2337,11 +2206,9 @@
     {
       "name": "card-020",
       "type": "registry:component",
-      "title": "Timed Alert Card",
+      "title": "Карточка со сроком",
       "description": "Системное уведомление с важностью и меткой времени: «12 мин назад» лежит в <time datetime>, поэтому для машин это точная дата, а не фраза.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2353,12 +2220,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-020-*. Серверный: хуков нет. Важность приходит атрибутом data-severity и через одну переменную красит рельс на ::before, кружок значка и ссылку действия; форма значка выбирается по той же важности из карты путей SVG. Слово важности продублировано визуально скрытым текстом перед заголовком — цветной рельс вслух не читается. Время выводится тегом <time> с машиночитаемым datetime.",
       "meta": {
-        "tags": [
-          "card",
-          "notification",
-          "alert",
-          "time"
-        ],
+        "tags": ["card", "notification", "alert", "time"],
         "preview": {
           "width": "full"
         },
@@ -2393,12 +2255,7 @@
             "label": "Важность",
             "type": "select",
             "default": "success",
-            "options": [
-              "info",
-              "success",
-              "warning",
-              "error"
-            ]
+            "options": ["info", "success", "warning", "error"]
           },
           {
             "prop": "title",
@@ -2454,7 +2311,8 @@
                 "label": "Time",
                 "default": "12 min ago"
               }
-            }
+            },
+            "title": "Timed Alert Card"
           }
         }
       }
@@ -2462,11 +2320,9 @@
     {
       "name": "card-021",
       "type": "registry:component",
-      "title": "Feed Skeleton",
+      "title": "Скелетон ленты",
       "description": "Заглушка ленты комментариев: строки с аватаром и двумя строками текста, блик волной по строкам, а в prefers-reduced-motion — ровная заливка.",
-      "categories": [
-        "card"
-      ],
+      "categories": ["card"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2478,12 +2334,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-card-021-*. Серверный: хуков нет. Блик — один @keyframes, двигающий background-position по градиенту шириной 300 %; задержка задана по nth-child строки, поэтому движение читается волной, а не синхронным миганием. В prefers-reduced-motion анимация снимается целиком, а фигуры заливаются ровным тоном — половинчатое замедление тут не помогает. Корень объявлен role=\"status\" с aria-busy, подпись уходит в визуально скрытый текст, а сами фигуры помечены aria-hidden.",
       "meta": {
-        "tags": [
-          "card",
-          "skeleton",
-          "loading",
-          "feed"
-        ],
+        "tags": ["card", "skeleton", "loading", "feed"],
         "preview": {
           "width": "full"
         },
@@ -2573,7 +2424,8 @@
                 "label": "Caption",
                 "default": "Loading comments"
               }
-            }
+            },
+            "title": "Feed Skeleton"
           }
         }
       }

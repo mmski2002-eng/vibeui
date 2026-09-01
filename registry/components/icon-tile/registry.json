@@ -4,11 +4,9 @@
     {
       "name": "icontile-001",
       "type": "registry:component",
-      "title": "Icon Tile",
+      "title": "Плитка с иконкой",
       "description": "Плитка под иконку: постоянный размер и место, а фон со знаком считаются от одного оттенка, а не подбираются вручную.",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-icontile-001-*. Серверный: хуков нет. Тон задаётся парой переменных оттенка и насыщенности, а цвета фона и знака выводятся из них функцией oklch — поэтому новый тон добавляется одной строкой. Без подписи плитка скрыта от скринридера как декоративная.",
       "meta": {
-        "tags": [
-          "icon",
-          "tile",
-          "tone",
-          "list"
-        ],
+        "tags": ["icon", "tile", "tone", "list"],
         "ai": {
           "export": "Icontile001",
           "usage": "<Icontile001 glyph=\"◆\" tone=\"success\" size=\"md\" label=\"Готово\" />",
@@ -57,34 +50,21 @@
             "label": "Тон",
             "type": "select",
             "default": "accent",
-            "options": [
-              "neutral",
-              "accent",
-              "success",
-              "warning",
-              "danger"
-            ]
+            "options": ["neutral", "accent", "success", "warning", "danger"]
           },
           {
             "prop": "size",
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": [
-              "sm",
-              "md",
-              "lg"
-            ]
+            "options": ["sm", "md", "lg"]
           },
           {
             "prop": "shape",
             "label": "Форма",
             "type": "select",
             "default": "square",
-            "options": [
-              "square",
-              "circle"
-            ]
+            "options": ["square", "circle"]
           }
         ],
         "i18n": {
@@ -124,7 +104,8 @@
               "shape": {
                 "label": "Shape"
               }
-            }
+            },
+            "title": "Icon Tile"
           }
         }
       }
@@ -132,11 +113,9 @@
     {
       "name": "icontile-002",
       "type": "registry:component",
-      "title": "Gradient Icon Tile",
+      "title": "Градиентная плитка",
       "description": "Градиентная плитка под иконку, где вся пара цветов считается от одного угла оттенка: рассогласовать градиент случайным подбором нельзя.",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -148,12 +127,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Оба края градиента выведены из переменной --vibeui-icontile-002-hue: второй берётся сдвигом на 32° по тому же кругу oklch, поэтому пара всегда согласована, а перекрасить плитку можно одним числом. Внутренняя светлая рамка сделана inset-тенью, а не border: border съедал бы размер плитки и сбивал сетку иконок. Размер задаётся data-size и одной переменной, от которой считаются радиус и кегль знака. Плитка декоративна: без label она получает aria-hidden, с label — role=img и доступное имя.",
       "meta": {
-        "tags": [
-          "icontile",
-          "gradient",
-          "icon",
-          "hue"
-        ],
+        "tags": ["icontile", "gradient", "icon", "hue"],
         "ai": {
           "export": "Icontile002",
           "usage": "<Icontile002 glyph=\"◆\" hue={262} size=\"md\" label=\"Проекты\" />",
@@ -232,7 +206,8 @@
                 "label": "Hue",
                 "default": 262
               }
-            }
+            },
+            "title": "Gradient Icon Tile"
           }
         }
       }
@@ -240,11 +215,9 @@
     {
       "name": "icontile-003",
       "type": "registry:component",
-      "title": "Status Shape Tile",
+      "title": "Плитка формы состояния",
       "description": "Статусная плитка, где смысл несёт форма: круг, треугольник, восьмиугольник и ромб различимы при дальтонизме и в чёрно-белой печати.",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -256,12 +229,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Форма статуса вырезана clip-path из одной квадратной плитки, поэтому размер и положение в строке общие для всех статусов, и список не пляшет по высоте. Цвет считается от переменной --vibeui-icontile-003-hue, которую переключает атрибут data-status: цвет усиливает форму, но не остаётся единственным носителем смысла — это требование доступности, а не украшение. Знак внутри плитки помечен aria-hidden, значение проговаривает текстовая подпись. Компонент несёт свою белую подложку в форме пилюли: подпись тёмная.",
       "meta": {
-        "tags": [
-          "icontile",
-          "status",
-          "shape",
-          "accessibility"
-        ],
+        "tags": ["icontile", "status", "shape", "accessibility"],
         "ai": {
           "export": "Icontile003",
           "usage": "<Icontile003 status=\"warning\" label=\"Требует внимания\" />",
@@ -293,13 +261,7 @@
             "label": "Статус",
             "type": "select",
             "default": "success",
-            "options": [
-              "success",
-              "warning",
-              "danger",
-              "info",
-              "pending"
-            ]
+            "options": ["success", "warning", "danger", "info", "pending"]
           },
           {
             "prop": "label",
@@ -345,7 +307,8 @@
                 "label": "Caption",
                 "default": "Check passed"
               }
-            }
+            },
+            "title": "Status Shape Tile"
           }
         }
       }
@@ -353,11 +316,9 @@
     {
       "name": "icontile-004",
       "type": "registry:component",
-      "title": "Tile Size Scale",
+      "title": "Шкала размеров плитки",
       "description": "Размерная шкала плитки одним экспонатом: три ступени считаются от общего шага, а радиус и кегль знака берутся долей размера.",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -369,12 +330,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Ступени sm, md и lg объявлены как кратные переменной --vibeui-icontile-004-step, поэтому шкала правится одним числом, а не тремя. Радиус и кегль знака вычисляются от размера ступени в calc, из-за чего пропорции плитки на всех ступенях одинаковые — это и есть смысл шкалы. Форма переключается на корне через data-shape и действует сразу на весь ряд. Каждая ступень подписана именем и значением в пикселях, поэтому размер выбирают глазами и не изобретают четвёртый. Подложка светлая: подписи ступеней тёмные.",
       "meta": {
-        "tags": [
-          "icontile",
-          "scale",
-          "sizes",
-          "design-system"
-        ],
+        "tags": ["icontile", "scale", "sizes", "design-system"],
         "ai": {
           "export": "Icontile004",
           "usage": "<Icontile004 glyph=\"◆\" shape=\"squircle\" />",
@@ -413,11 +369,7 @@
             "label": "Форма",
             "type": "select",
             "default": "square",
-            "options": [
-              "square",
-              "circle",
-              "squircle"
-            ]
+            "options": ["square", "circle", "squircle"]
           }
         ],
         "i18n": {
@@ -456,7 +408,8 @@
                 "label": "Shape",
                 "default": "square"
               }
-            }
+            },
+            "title": "Tile Size Scale"
           }
         }
       }
@@ -464,11 +417,9 @@
     {
       "name": "icontile-005",
       "type": "registry:component",
-      "title": "Counter Badge Tile",
+      "title": "Плитка со счётчиком",
       "description": "Плитка со счётчиком в углу: бейдж отделён от плитки кольцом цвета подложки, а число обрезано порогом «99+», чтобы угол не разъезжался.",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -480,12 +431,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Бейдж позиционирован absolute относительно плитки и вырезан из неё кольцом box-shadow цвета подложки — отступом такого разделения не добиться, бейдж отъезжает от угла. Порог задаётся пропом max: всё, что больше, показывается как «99+», иначе трёхзначное число растягивает бейдж. Нулевой счётчик прячет бейдж целиком: пустой кружок сообщает «непрочитанных нет» хуже, чем его отсутствие. У бейджа есть aria-label, поэтому «12» читается как «12 непрочитанных». Подложка светлая, подпись тёмная.",
       "meta": {
-        "tags": [
-          "icontile",
-          "badge",
-          "counter",
-          "notification"
-        ],
+        "tags": ["icontile", "badge", "counter", "notification"],
         "ai": {
           "export": "Icontile005",
           "usage": "<Icontile005 glyph=\"✉\" count={12} label=\"Входящие\" max={99} />",
@@ -564,7 +510,8 @@
                 "label": "Caption",
                 "default": "Inbox"
               }
-            }
+            },
+            "title": "Counter Badge Tile"
           }
         }
       }
@@ -572,11 +519,9 @@
     {
       "name": "icontile-006",
       "type": "registry:component",
-      "title": "Pressed Tile Button",
+      "title": "Нажимаемая плитка",
       "description": "Плитка-кнопка с честным нажатым состоянием: включённость объявлена через aria-pressed и показана утопленной тенью, а не одним цветом.",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -588,12 +533,7 @@
       ],
       "docs": "Клиентский компонент: держит состояние в useState, поэтому в файле есть «use client». Состояние объявлено атрибутом aria-pressed, а не классом — без него скринридер сообщит просто «кнопка» и не скажет, включено ли. Визуально нажатие показано двумя признаками сразу: заливка меняется и плитка утоплена inset-тенью со сдвигом на пиксель, поэтому включённость видна и в чёрно-белом режиме. Доступное имя берётся из label, знак помечен aria-hidden. Заливка в покое светлая, так что кнопка читается на тёмной подложке каталога.",
       "meta": {
-        "tags": [
-          "icontile",
-          "toggle",
-          "button",
-          "pressed"
-        ],
+        "tags": ["icontile", "toggle", "button", "pressed"],
         "ai": {
           "export": "Icontile006",
           "usage": "<Icontile006 glyph=\"★\" label=\"В избранное\" defaultPressed />",
@@ -671,7 +611,8 @@
                 "label": "Glyph",
                 "default": "★"
               }
-            }
+            },
+            "title": "Pressed Tile Button"
           }
         }
       }
@@ -679,11 +620,9 @@
     {
       "name": "icontile-007",
       "type": "registry:component",
-      "title": "Inline Caption Tile",
+      "title": "Плитка с подписью",
       "description": "Плитка с подписью и описанием в одну строку: описание обрезается многоточием и прячется на узком контейнере, чтобы список не наползал сам на себя.",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -695,12 +634,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Заголовок и описание — блочные строки с white-space:nowrap и text-overflow:ellipsis, поэтому длинный текст обрезается многоточием, а не переносится и не растягивает высоту строки. Контейнер объявлен через container-type:inline-size, и на ширине контейнера меньше 220px описание скрывается полностью через @container — остаётся только заголовок рядом с плиткой. Иконка внутри плитки — инлайновый svg с aria-hidden, три варианта на выбор через icon.",
       "meta": {
-        "tags": [
-          "icontile",
-          "caption",
-          "row",
-          "list"
-        ],
+        "tags": ["icontile", "caption", "row", "list"],
         "ai": {
           "export": "Icontile007",
           "usage": "<Icontile007 icon=\"bolt\" title=\"Автозапуск\" description=\"Задача стартует сразу после сохранения\" tone=\"success\" />",
@@ -725,24 +659,14 @@
             "label": "Иконка",
             "type": "select",
             "default": "spark",
-            "options": [
-              "spark",
-              "bolt",
-              "shield"
-            ]
+            "options": ["spark", "bolt", "shield"]
           },
           {
             "prop": "tone",
             "label": "Тон",
             "type": "select",
             "default": "accent",
-            "options": [
-              "neutral",
-              "accent",
-              "success",
-              "warning",
-              "danger"
-            ]
+            "options": ["neutral", "accent", "success", "warning", "danger"]
           }
         ],
         "i18n": {
@@ -772,7 +696,8 @@
               "tone": {
                 "label": "Tone"
               }
-            }
+            },
+            "title": "Inline Caption Tile"
           }
         }
       }
@@ -780,11 +705,9 @@
     {
       "name": "icontile-008",
       "type": "registry:component",
-      "title": "Category Tile Grid",
+      "title": "Сетка плиток категорий",
       "description": "Сетка плиток-категорий с ховером: число колонок считается от ширины контейнера, а наведение поднимает плитку тенью и сдвигом, а не одним цветом.",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -796,12 +719,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Каждая плитка — кнопка type=\"button\", поэтому ряд фокусируется и листается с клавиатуры без дополнительного JS. Корневой блок только объявляет container-type:inline-size, а сама сетка живёт на вложенном data-part=\"grid\": число колонок переключается через @container, нацеленный на этот вложенный узел (2 → 3 → 4), а не через медиазапрос окна и не на сам контейнер — иначе запрос молча не сработает. Наведение показано сразу двумя признаками — тенью и сдвигом вверх, а не одним цветом, и оба отключаются в prefers-reduced-motion. Оттенок плитки-иконки берётся из inline custom property --vibeui-icontile-008-item-hue, выставленной на кнопке под конкретную категорию из items.",
       "meta": {
-        "tags": [
-          "icontile",
-          "grid",
-          "category",
-          "hover"
-        ],
+        "tags": ["icontile", "grid", "category", "hover"],
         "ai": {
           "export": "Icontile008",
           "usage": "<Icontile008 items={[{ label: \"Дизайн\", icon: \"design\", count: 12 }]} />",
@@ -839,7 +757,8 @@
                 "the column count through the @container thresholds"
               ],
               "usage": "<Icontile008 items={[{ label: \"Design\", icon: \"design\", count: 12 }]} />"
-            }
+            },
+            "title": "Category Tile Grid"
           }
         }
       }
@@ -847,11 +766,9 @@
     {
       "name": "icontile-009",
       "type": "registry:component",
-      "title": "Squircle Shadow Tile",
+      "title": "Плитка-squircle с тенью",
       "description": "Плитка со скруглением-«сквиркл» и мягкой окрашенной тенью: угол круче обычного квадрата, а тень подобрана в тон плитке, а не серая.",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -863,12 +780,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Радиус скругления считается как 0.44 от размера плитки — круче обычного квадрата (0.28 в соседних item'ах), из-за чего форма читается как сквиркл, а не просто скруглённый квадрат. Тень двухслойная: дальний мягкий слой и ближний плотный, оба окрашены в тот же оттенок --vibeui-icontile-009-hue, что и фон плитки, поэтому смена tone красит плитку и тень согласованно одной переменной. Плитка декоративна: без label она скрыта от скринридера, с label — получает role=img и доступное имя.",
       "meta": {
-        "tags": [
-          "icontile",
-          "squircle",
-          "shadow",
-          "icon"
-        ],
+        "tags": ["icontile", "squircle", "shadow", "icon"],
         "ai": {
           "export": "Icontile009",
           "usage": "<Icontile009 icon=\"shield\" tone=\"success\" size=\"lg\" label=\"Защита данных\" />",
@@ -893,35 +805,21 @@
             "label": "Иконка",
             "type": "select",
             "default": "spark",
-            "options": [
-              "spark",
-              "bolt",
-              "shield"
-            ]
+            "options": ["spark", "bolt", "shield"]
           },
           {
             "prop": "tone",
             "label": "Тон",
             "type": "select",
             "default": "accent",
-            "options": [
-              "neutral",
-              "accent",
-              "success",
-              "warning",
-              "danger"
-            ]
+            "options": ["neutral", "accent", "success", "warning", "danger"]
           },
           {
             "prop": "size",
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": [
-              "sm",
-              "md",
-              "lg"
-            ]
+            "options": ["sm", "md", "lg"]
           }
         ],
         "i18n": {
@@ -954,7 +852,8 @@
               "size": {
                 "label": "Size"
               }
-            }
+            },
+            "title": "Squircle Shadow Tile"
           }
         }
       }
@@ -962,11 +861,9 @@
     {
       "name": "icontile-010",
       "type": "registry:component",
-      "title": "Circular Progress Tile",
+      "title": "Плитка с круговым прогрессом",
       "description": "Плитка с прогрессом по кругу: длина обхода кольца считается от радиуса один раз, а состояние объявлено через role=\"progressbar\".",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -978,12 +875,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Длина обхода кольца вычисляется один раз из фиксированного радиуса (2πr), а не подбирается на глаз, поэтому число в центре и заполнение кольца никогда не расходятся. Кольцо повёрнуто CSS-трансформом всего svg на -90deg, чтобы заполнение начиналось сверху, — координаты самих окружностей не пересчитываются. Значение объявлено доступно: role=\"progressbar\" с aria-valuenow/aria-valuemin/aria-valuemax и aria-label из label, поэтому цвет кольца — иллюстрация, а не единственный носитель состояния. Value обрезается диапазоном 0–100 внутри компонента.",
       "meta": {
-        "tags": [
-          "icontile",
-          "progress",
-          "circle",
-          "status"
-        ],
+        "tags": ["icontile", "progress", "circle", "status"],
         "ai": {
           "export": "Icontile010",
           "usage": "<Icontile010 value={64} label=\"Загрузка профиля\" tone=\"accent\" size=\"md\" />",
@@ -1016,24 +908,14 @@
             "label": "Тон",
             "type": "select",
             "default": "accent",
-            "options": [
-              "neutral",
-              "accent",
-              "success",
-              "warning",
-              "danger"
-            ]
+            "options": ["neutral", "accent", "success", "warning", "danger"]
           },
           {
             "prop": "size",
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": [
-              "sm",
-              "md",
-              "lg"
-            ]
+            "options": ["sm", "md", "lg"]
           }
         ],
         "i18n": {
@@ -1066,7 +948,8 @@
               "size": {
                 "label": "Size"
               }
-            }
+            },
+            "title": "Circular Progress Tile"
           }
         }
       }
@@ -1074,11 +957,9 @@
     {
       "name": "icontile-011",
       "type": "registry:component",
-      "title": "Integration Status Tile",
+      "title": "Плитка статуса интеграции",
       "description": "Плитка интеграции: монограмма сервиса вместо чужого логотипа, название и статус подключения, продублированный точкой и текстом.",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1090,12 +971,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Логотип сервиса — не библиотека чужих svg-брендов, а монограмма из первых букв name, посчитанная функцией getInitials в рантейме, поэтому плитка работает с любым названием без набора иконок. Статус подключения объявлен дважды: цветом точки data-part=\"dot\" и текстом рядом из таблицы STATUS_LABEL — цвет один не читается при нарушении цветовосприятия. На узком контейнере статус скрывается через @container, монограмма и название остаются всегда.",
       "meta": {
-        "tags": [
-          "icontile",
-          "integration",
-          "status",
-          "connection"
-        ],
+        "tags": ["icontile", "integration", "status", "connection"],
         "ai": {
           "export": "Icontile011",
           "usage": "<Icontile011 name=\"Notion\" status=\"connected\" tone=\"accent\" />",
@@ -1120,24 +996,14 @@
             "label": "Статус",
             "type": "select",
             "default": "connected",
-            "options": [
-              "connected",
-              "pending",
-              "disconnected"
-            ]
+            "options": ["connected", "pending", "disconnected"]
           },
           {
             "prop": "tone",
             "label": "Тон",
             "type": "select",
             "default": "accent",
-            "options": [
-              "neutral",
-              "accent",
-              "success",
-              "warning",
-              "danger"
-            ]
+            "options": ["neutral", "accent", "success", "warning", "danger"]
           }
         ],
         "i18n": {
@@ -1167,7 +1033,8 @@
               "tone": {
                 "label": "Tone"
               }
-            }
+            },
+            "title": "Integration Status Tile"
           }
         }
       }
@@ -1175,11 +1042,9 @@
     {
       "name": "icontile-012",
       "type": "registry:component",
-      "title": "File Type Tile",
+      "title": "Плитка типа файла",
       "description": "Плитка типа файла: расширение и цвет переключаются одним атрибутом, форма файла с загнутым уголком нарисована одним svg-путём.",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1191,12 +1056,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Форма файла с загнутым уголком — один инлайновый svg-путь FileIcon, помеченный aria-hidden; сокращение расширения печатается поверх него текстом в data-part=\"ext\". Цвет плитки переключается атрибутом data-extension на пяти правилах CSS (pdf, doc, xls, img, zip), поэтому добавление шестого типа не требует нового компонента. Имя файла и его размер идут отдельной колонкой текста, размер скрывается на узком контейнере через @container.",
       "meta": {
-        "tags": [
-          "icontile",
-          "file",
-          "extension",
-          "type"
-        ],
+        "tags": ["icontile", "file", "extension", "type"],
         "ai": {
           "export": "Icontile012",
           "usage": "<Icontile012 extension=\"pdf\" name=\"Отчёт-Q3.pdf\" fileSize=\"2.4 МБ\" />",
@@ -1221,13 +1081,7 @@
             "label": "Тип файла",
             "type": "select",
             "default": "pdf",
-            "options": [
-              "pdf",
-              "doc",
-              "xls",
-              "img",
-              "zip"
-            ]
+            "options": ["pdf", "doc", "xls", "img", "zip"]
           }
         ],
         "i18n": {
@@ -1254,7 +1108,8 @@
               "extension": {
                 "label": "File type"
               }
-            }
+            },
+            "title": "File Type Tile"
           }
         }
       }
@@ -1262,11 +1117,9 @@
     {
       "name": "icontile-013",
       "type": "registry:component",
-      "title": "Achievement Ribbon Tile",
+      "title": "Плитка достижения",
       "description": "Плитка достижения: иконка в круге и симметричная лента из двух зеркальных хвостов, вырезанных clip-path из общего прямоугольника.",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1278,12 +1131,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Лента под кругом — два одинаковых элемента data-part=\"tail\" с общим clip-path-хвостом, правый отражён transform:scaleX(-1), поэтому оба хвоста гарантированно симметричны при любой ширине и tier, а не подгоняются раздельно числами. Круг и лента окрашены от одной переменной --vibeui-icontile-013-hue, которую переключает tier (bronze, silver, gold), — металл достижения нигде не подобран вручную отдельным цветом. Круг лежит поверх ленты через z-index, подпись — текст под ним, на узком контейнере скрывается через @container.",
       "meta": {
-        "tags": [
-          "icontile",
-          "achievement",
-          "badge",
-          "ribbon"
-        ],
+        "tags": ["icontile", "achievement", "badge", "ribbon"],
         "ai": {
           "export": "Icontile013",
           "usage": "<Icontile013 icon=\"trophy\" label=\"Первая интеграция\" tier=\"gold\" />",
@@ -1308,22 +1156,14 @@
             "label": "Иконка",
             "type": "select",
             "default": "trophy",
-            "options": [
-              "trophy",
-              "star",
-              "medal"
-            ]
+            "options": ["trophy", "star", "medal"]
           },
           {
             "prop": "tier",
             "label": "Тир",
             "type": "select",
             "default": "gold",
-            "options": [
-              "bronze",
-              "silver",
-              "gold"
-            ]
+            "options": ["bronze", "silver", "gold"]
           }
         ],
         "i18n": {
@@ -1353,7 +1193,8 @@
               "tier": {
                 "label": "Tier"
               }
-            }
+            },
+            "title": "Achievement Ribbon Tile"
           }
         }
       }
@@ -1361,11 +1202,9 @@
     {
       "name": "icontile-014",
       "type": "registry:component",
-      "title": "Notification Badge Tile",
+      "title": "Плитка с уведомлением",
       "description": "Плитка уведомлений с бейджем-счётчиком и честным состоянием «выключено»: при отключении бейдж прячется, а колокольчик перечёркивается.",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1377,12 +1216,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Бейдж-счётчик показывается только когда count больше нуля и disabled ложно — выключенный источник не может присылать уведомления, поэтому оба состояния взаимоисключающие, а не два независимых свитча. При disabled колокольчик получает перечёркивающую линию OffIcon поверх себя и плитка теряет цвет, а под подписью появляется текстовая строка состояния из data-part=\"state\" — обесцвечивания одного недостаточно для чёрно-белого режима. Число в бейдже обрезается порогом max так же, как в icontile-005.",
       "meta": {
-        "tags": [
-          "icontile",
-          "notification",
-          "badge",
-          "disabled"
-        ],
+        "tags": ["icontile", "notification", "badge", "disabled"],
         "ai": {
           "export": "Icontile014",
           "usage": "<Icontile014 label=\"Комментарии\" count={5} disabled={false} tone=\"accent\" />",
@@ -1421,13 +1255,7 @@
             "label": "Тон",
             "type": "select",
             "default": "accent",
-            "options": [
-              "neutral",
-              "accent",
-              "success",
-              "warning",
-              "danger"
-            ]
+            "options": ["neutral", "accent", "success", "warning", "danger"]
           }
         ],
         "i18n": {
@@ -1460,7 +1288,8 @@
               "tone": {
                 "label": "Tone"
               }
-            }
+            },
+            "title": "Notification Badge Tile"
           }
         }
       }
@@ -1468,11 +1297,9 @@
     {
       "name": "icontile-015",
       "type": "registry:component",
-      "title": "Payment Method Tile",
+      "title": "Плитка способа оплаты",
       "description": "Плитка выбора способа оплаты: карта, кошелёк и счёт как настоящий radiogroup со стрелочной навигацией и явной двойной отметкой выбранного варианта.",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1484,12 +1311,7 @@
       ],
       "docs": "Клиентский компонент: держит выбранный способ в useState и различает управляемый/неуправляемый режим через сравнение method с undefined, поэтому в файле есть «use client». Группа собрана как настоящий role=\"radiogroup\" с role=\"radio\" на каждой плитке: фокус табом входит в группу один раз, дальше по вариантам водят стрелки через roving tabindex (tabIndex 0 у выбранного, -1 у остальных) — это нативное поведение <input type=\"radio\">, реализованное вручную. Выбранный вариант отмечен сразу двумя признаками — рамкой и галочкой в углу, — потому что один цвет заливки не читается при нарушении цветовосприятия. На узком контейнере плитки складываются в один столбец и разворачиваются в строку.",
       "meta": {
-        "tags": [
-          "icontile",
-          "payment",
-          "radiogroup",
-          "selection"
-        ],
+        "tags": ["icontile", "payment", "radiogroup", "selection"],
         "ai": {
           "export": "Icontile015",
           "usage": "<Icontile015 label=\"Способ оплаты\" defaultMethod=\"card\" />",
@@ -1521,11 +1343,7 @@
             "label": "Способ по умолчанию",
             "type": "select",
             "default": "card",
-            "options": [
-              "card",
-              "wallet",
-              "invoice"
-            ]
+            "options": ["card", "wallet", "invoice"]
           }
         ],
         "i18n": {
@@ -1556,7 +1374,8 @@
               "defaultMethod": {
                 "label": "Default method"
               }
-            }
+            },
+            "title": "Payment Method Tile"
           }
         }
       }
@@ -1564,11 +1383,9 @@
     {
       "name": "icontile-016",
       "type": "registry:component",
-      "title": "Action Hotkey Tile",
+      "title": "Плитка с горячей клавишей",
       "description": "Плитка-действие с горячей клавишей в углу: сочетание показано плашкой и продублировано атрибутом aria-keyshortcuts на самой кнопке.",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1580,12 +1397,7 @@
       ],
       "docs": "Серверный компонент, хуков нет: плитка — обычная семантическая <button type=\"button\">, поэтому фокус и активация с клавиатуры работают без единой строки JS. Сочетание клавиш продублировано дважды — визуальной плашкой из отдельных <kbd> в углу и атрибутом aria-keyshortcuts на самой кнопке; плашка целиком помечена aria-hidden, потому что скринридер уже объявляет сочетание из атрибута, и повторное побуквенное чтение символов вроде «⌘» было бы шумом поверх названия действия. Иконка переключается через icon (search, add, command), цвет плитки-иконки — через tone по общей для категории формуле «фон и знак от одного оттенка». Описание скрывается на узком контейнере через @container, заголовок остаётся всегда.",
       "meta": {
-        "tags": [
-          "icontile",
-          "action",
-          "hotkey",
-          "shortcut"
-        ],
+        "tags": ["icontile", "action", "hotkey", "shortcut"],
         "ai": {
           "export": "Icontile016",
           "usage": "<Icontile016 label=\"Быстрый поиск\" hotkey={[\"⌘\", \"K\"]} hotkeyAriaLabel=\"Meta+K\" icon=\"search\" />",
@@ -1618,24 +1430,14 @@
             "label": "Иконка",
             "type": "select",
             "default": "search",
-            "options": [
-              "search",
-              "add",
-              "command"
-            ]
+            "options": ["search", "add", "command"]
           },
           {
             "prop": "tone",
             "label": "Тон",
             "type": "select",
             "default": "accent",
-            "options": [
-              "neutral",
-              "accent",
-              "success",
-              "warning",
-              "danger"
-            ]
+            "options": ["neutral", "accent", "success", "warning", "danger"]
           }
         ],
         "i18n": {
@@ -1670,7 +1472,8 @@
               "tone": {
                 "label": "Tone"
               }
-            }
+            },
+            "title": "Action Hotkey Tile"
           }
         }
       }
@@ -1678,11 +1481,9 @@
     {
       "name": "icontile-017",
       "type": "registry:component",
-      "title": "Folder Attachments Tile",
+      "title": "Плитка папки с вложениями",
       "description": "Плитка папки: значок, название, число вложений со склонением по правилам русского языка и дата последнего изменения в одной строке.",
-      "categories": [
-        "icon-tile"
-      ],
+      "categories": ["icon-tile"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1694,12 +1495,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Число вложений склоняется функцией pluralizeFiles по стандартным правилам русского языка (1 файл, 3 файла, 12 файлов), а не выводится статичным словом — иначе плитка с любым count, кроме единицы на «1», звучала бы неграмотно. Строка метаданных собрана из трёх частей — счётчика, декоративной точки-разделителя и даты: на узком контейнере дата и точка скрываются через @container первыми, счётчик вложений остаётся всегда, потому что он важнее конкретной даты для беглого просмотра списка. itemCount обрезается снизу нулём внутри компонента. Цвет плитки-иконки берётся по общей для категории формуле «фон и знак от одного оттенка», переключаемой tone.",
       "meta": {
-        "tags": [
-          "icontile",
-          "folder",
-          "file",
-          "date"
-        ],
+        "tags": ["icontile", "folder", "file", "date"],
         "ai": {
           "export": "Icontile017",
           "usage": "<Icontile017 name=\"Дизайн-макеты\" itemCount={12} modifiedLabel=\"Изменено 3 дня назад\" tone=\"accent\" />",
@@ -1739,13 +1535,7 @@
             "label": "Тон",
             "type": "select",
             "default": "accent",
-            "options": [
-              "neutral",
-              "accent",
-              "success",
-              "warning",
-              "danger"
-            ]
+            "options": ["neutral", "accent", "success", "warning", "danger"]
           }
         ],
         "i18n": {
@@ -1779,7 +1569,8 @@
               "tone": {
                 "label": "Tone"
               }
-            }
+            },
+            "title": "Folder Attachments Tile"
           }
         }
       }

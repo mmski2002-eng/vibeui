@@ -4,7 +4,7 @@
     {
       "name": "input-001",
       "type": "registry:component",
-      "title": "Floating Label Input",
+      "title": "Поле с плавающей подписью",
       "description": "Текстовое поле, у которого подпись уезжает внутрь рамки при вводе. Подпись видна всегда, отдельной строки над полем не нужно. Состояния подсказки и ошибки встроены.",
       "categories": ["input"],
       "dependencies": [],
@@ -139,7 +139,8 @@
               "disabled": {
                 "label": "Disabled"
               }
-            }
+            },
+            "title": "Floating Label Input"
           }
         },
         "preview": {
@@ -150,7 +151,7 @@
     {
       "name": "input-002",
       "type": "registry:component",
-      "title": "Input Group",
+      "title": "Группа полей",
       "description": "Поле с неизменяемой приставкой и окончанием внутри одной рамки: домен, протокол, единица измерения. Фокус подсвечивает группу целиком, а не только середину.",
       "categories": ["input"],
       "dependencies": [],
@@ -286,7 +287,8 @@
               "disabled": {
                 "label": "Disabled"
               }
-            }
+            },
+            "title": "Input Group"
           }
         },
         "preview": {
@@ -297,7 +299,7 @@
     {
       "name": "input-003",
       "type": "registry:component",
-      "title": "Password Field",
+      "title": "Поле пароля",
       "description": "Пароль с показом и оценкой словами: полоска без подписи не отвечает, что именно надо исправить.",
       "categories": ["input"],
       "dependencies": [],
@@ -398,7 +400,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Password Field"
           }
         }
       }
@@ -406,7 +409,7 @@
     {
       "name": "input-004",
       "type": "registry:component",
-      "title": "Search Field",
+      "title": "Поле поиска",
       "description": "Поле поиска с очисткой: крестик появляется только с текстом, а после очистки фокус возвращается в поле.",
       "categories": ["input"],
       "dependencies": [],
@@ -507,7 +510,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Search Field"
           }
         }
       }
@@ -515,7 +519,7 @@
     {
       "name": "input-005",
       "type": "registry:component",
-      "title": "Phone Field",
+      "title": "Поле телефона",
       "description": "Телефон с маской от цифр: вставка из буфера в любом формате не ломает поле, а стирание не застревает на скобке.",
       "categories": ["input"],
       "dependencies": [],
@@ -618,7 +622,8 @@
                 "label": "Hint",
                 "default": "We will text you a confirmation code"
               }
-            }
+            },
+            "title": "Phone Field"
           }
         }
       }
@@ -626,7 +631,7 @@
     {
       "name": "input-006",
       "type": "registry:component",
-      "title": "Email Typo Guard",
+      "title": "Защита от опечатки в почте",
       "description": "Поле почты с двойной проверкой: сначала формат адреса, потом домен — «gmial.com» ловится и исправляется одной кнопкой.",
       "categories": ["input"],
       "dependencies": [],
@@ -727,7 +732,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Email Typo Guard"
           }
         }
       }
@@ -735,7 +741,7 @@
     {
       "name": "input-007",
       "type": "registry:component",
-      "title": "Scheme Autofill",
+      "title": "Автоподстановка протокола",
       "description": "Поле адреса сайта, которое само дописывает https:// по уходу из фокуса и показывает разбор ссылки на схему, домен и путь.",
       "categories": ["input"],
       "dependencies": [],
@@ -826,7 +832,8 @@
               "scheme": {
                 "label": "Scheme"
               }
-            }
+            },
+            "title": "Scheme Autofill"
           }
         }
       }
@@ -834,7 +841,7 @@
     {
       "name": "input-008",
       "type": "registry:component",
-      "title": "Card Mask",
+      "title": "Маска карты",
       "description": "Номер карты с маской по четвёркам, определением платёжной системы по первым цифрам и проверкой Луна перед отправкой.",
       "categories": ["input"],
       "dependencies": [],
@@ -926,7 +933,8 @@
                 "label": "Number",
                 "default": "4276380000000000"
               }
-            }
+            },
+            "title": "Card Mask"
           }
         }
       }
@@ -934,7 +942,7 @@
     {
       "name": "input-009",
       "type": "registry:component",
-      "title": "Shortcut Search",
+      "title": "Поиск по горячей клавише",
       "description": "Поиск с подсказкой сочетания клавиш, которое действительно работает: клавиша уводит фокус в поле, Escape очищает его.",
       "categories": ["input"],
       "dependencies": [],
@@ -1026,7 +1034,8 @@
                 "label": "Key",
                 "default": "K"
               }
-            }
+            },
+            "title": "Shortcut Search"
           }
         }
       }
@@ -1034,7 +1043,7 @@
     {
       "name": "input-010",
       "type": "registry:component",
-      "title": "Unit Dropdown",
+      "title": "Единица списком",
       "description": "Число с выпадающим выбором единицы в одной рамке: у каждой единицы есть пояснение словом, а под полем видно значение в базовых единицах.",
       "categories": ["input"],
       "dependencies": [],
@@ -1126,7 +1135,8 @@
               "defaultValue": {
                 "label": "Value"
               }
-            }
+            },
+            "title": "Unit Dropdown"
           }
         }
       }
@@ -1134,7 +1144,7 @@
     {
       "name": "input-011",
       "type": "registry:component",
-      "title": "Password Rules",
+      "title": "Правила пароля",
       "description": "Пароль с сегментной шкалой и списком требований: видно не только «слабо», но и что именно осталось исправить.",
       "categories": ["input"],
       "dependencies": [],
@@ -1226,7 +1236,8 @@
               "minLength": {
                 "label": "Minimum length"
               }
-            }
+            },
+            "title": "Password Rules"
           }
         }
       }
@@ -1234,7 +1245,7 @@
     {
       "name": "input-012",
       "type": "registry:component",
-      "title": "History Suggest",
+      "title": "Подсказки из истории",
       "description": "Поле с автоподстановкой из истории ввода: подсказку можно выбрать стрелками, а можно забыть крестиком — история остаётся управляемой.",
       "categories": ["input"],
       "dependencies": [],
@@ -1324,7 +1335,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "History Suggest"
           }
         }
       }
@@ -1332,7 +1344,7 @@
     {
       "name": "input-013",
       "type": "registry:component",
-      "title": "Promo Code",
+      "title": "Промокод",
       "description": "Поле промокода с тремя состояниями: ввод, ожидание ответа и применённый код, который уже нельзя править — только снять.",
       "categories": ["input"],
       "dependencies": [],
@@ -1422,7 +1434,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Promo Code"
           }
         }
       }
@@ -1430,7 +1443,7 @@
     {
       "name": "input-014",
       "type": "registry:component",
-      "title": "Handle Check",
+      "title": "Проверка ника",
       "description": "Имя пользователя с проверкой занятости и готовыми свободными вариантами: занятое имя не просто отвергается, взамен предлагаются три работающих.",
       "categories": ["input"],
       "dependencies": [],
@@ -1520,7 +1533,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Handle Check"
           }
         }
       }
@@ -1528,7 +1542,7 @@
     {
       "name": "input-015",
       "type": "registry:component",
-      "title": "Live Thousands",
+      "title": "Разряды на лету",
       "description": "Сумма с разделителями разрядов прямо во время набора: курсор остаётся на месте, а под полем сумма продублирована коротко.",
       "categories": ["input"],
       "dependencies": [],
@@ -1631,7 +1645,8 @@
               "max": {
                 "label": "Limit"
               }
-            }
+            },
+            "title": "Live Thousands"
           }
         }
       }
@@ -1639,7 +1654,7 @@
     {
       "name": "input-016",
       "type": "registry:component",
-      "title": "Password Generator",
+      "title": "Генератор пароля",
       "description": "Пароль с генерацией случайной строки по кнопке, копированием в буфер и оценкой в битах энтропии словами вместо цветной полоски надёжности.",
       "categories": ["input"],
       "dependencies": [],
@@ -1736,7 +1751,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Password Generator"
           }
         }
       }
@@ -1744,7 +1760,7 @@
     {
       "name": "input-017",
       "type": "registry:component",
-      "title": "Async Search",
+      "title": "Поиск с сервера",
       "description": "Поле поиска с честным состоянием загрузки: лупа уступает место вращающемуся кольцу на время ожидания, а счётчик результатов появляется только после паузы, как от настоящего запроса.",
       "categories": ["input"],
       "dependencies": [],
@@ -1841,7 +1857,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Async Search"
           }
         }
       }
@@ -1849,7 +1866,7 @@
     {
       "name": "input-018",
       "type": "registry:component",
-      "title": "IBAN Field",
+      "title": "Поле IBAN",
       "description": "Номер банковского счёта IBAN с маской по четвёркам, определением страны по первым буквам и проверкой по остатку от деления на 97 перед отправкой.",
       "categories": ["input"],
       "dependencies": [],
@@ -1946,7 +1963,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "IBAN Field"
           }
         }
       }
@@ -1954,7 +1972,7 @@
     {
       "name": "input-019",
       "type": "registry:component",
-      "title": "Soft Limit Field",
+      "title": "Поле с мягким лимитом",
       "description": "Текстовое поле со счётчиком символов и мягким лимитом: превышение только предупреждает и красит поле, печатать не прерывает, а жёсткий предел стоит дальше и уже не пускает.",
       "categories": ["input"],
       "dependencies": [],
@@ -2084,7 +2102,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Soft Limit Field"
           }
         }
       }
@@ -2092,7 +2111,7 @@
     {
       "name": "input-020",
       "type": "registry:component",
-      "title": "Workspace Slug Check",
+      "title": "Проверка адреса пространства",
       "description": "Адрес рабочего пространства с проверкой занятости: бейдж «занято / свободно» у подписи и живое превью итоговой ссылки под полем.",
       "categories": ["input"],
       "dependencies": [],
@@ -2200,7 +2219,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Workspace Slug Check"
           }
         }
       }
@@ -2208,7 +2228,7 @@
     {
       "name": "input-021",
       "type": "registry:component",
-      "title": "Coupon Key Mask",
+      "title": "Маска ключа купона",
       "description": "Код купона-ключа с автоматическими дефисами по четвёркам символов и тремя состояниями: ввод, ожидание ответа и применённый код, который снимают, а не редактируют.",
       "categories": ["input"],
       "dependencies": [],
@@ -2296,7 +2316,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Coupon Key Mask"
           }
         }
       }
@@ -2304,7 +2325,7 @@
     {
       "name": "input-022",
       "type": "registry:component",
-      "title": "Weight Unit Toggle",
+      "title": "Переключатель единиц веса",
       "description": "Поле веса или роста с переключателем единиц из двух кнопок: при смене кг на фунты (или обратно) число пересчитывается, а не остаётся прежним.",
       "categories": ["input"],
       "dependencies": [],
@@ -2425,7 +2446,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Weight Unit Toggle"
           }
         }
       }
@@ -2433,7 +2455,7 @@
     {
       "name": "input-023",
       "type": "registry:component",
-      "title": "Submitted Value History",
+      "title": "История отправленных значений",
       "description": "Поле с историей отправленных значений: запись сохраняется в localStorage по Enter, список открывается стрелкой вниз и показывает последние значения целиком, без фильтра по набранному тексту.",
       "categories": ["input"],
       "dependencies": [],
@@ -2532,7 +2554,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Submitted Value History"
           }
         }
       }
@@ -2540,7 +2563,7 @@
     {
       "name": "input-024",
       "type": "registry:component",
-      "title": "Domain Tab Complete",
+      "title": "Дополнение домена по Tab",
       "description": "Поле email с подсказкой домена: после @ серым текстом дописывается остаток популярного домена (gmail.com, yandex.ru и другие), Tab принимает подсказку вместо перехода к следующему полю.",
       "categories": ["input"],
       "dependencies": [],
@@ -2633,7 +2656,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Domain Tab Complete"
           }
         }
       }
@@ -2641,7 +2665,7 @@
     {
       "name": "input-025",
       "type": "registry:component",
-      "title": "INN Checksum",
+      "title": "Проверка ИНН",
       "description": "Поле ИНН с проверкой контрольной суммы по формуле ФНС: тип (10 цифр для юрлица или 12 для физлица/ИП) определяется по длине, а сходимость проверяется на каждый введённый символ.",
       "categories": ["input"],
       "dependencies": [],
@@ -2734,7 +2758,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "INN Checksum"
           }
         }
       }
@@ -2742,7 +2767,7 @@
     {
       "name": "input-026",
       "type": "registry:component",
-      "title": "Quarter Hour Time",
+      "title": "Время по четверти часа",
       "description": "Поле времени с шагом 15 минут: ручной ввод округляется до ближайшего шага, а под полем лежат чипы с частыми значениями для выбора в один клик.",
       "categories": ["input"],
       "dependencies": [],
@@ -2835,7 +2860,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Quarter Hour Time"
           }
         }
       }
@@ -2843,7 +2869,7 @@
     {
       "name": "input-027",
       "type": "registry:component",
-      "title": "Hex Swatch Field",
+      "title": "Поле цвета в hex",
       "description": "Текстовое поле hex-цвета с превью-квадратом: пока значение неполное или не hex, квадрат остаётся клетчатым, а как только hex сходится — заливается получившимся цветом.",
       "categories": ["input"],
       "dependencies": [],
@@ -2936,7 +2962,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Hex Swatch Field"
           }
         }
       }
@@ -2944,7 +2971,7 @@
     {
       "name": "input-028",
       "type": "registry:component",
-      "title": "Locked Field Reason",
+      "title": "Причина блокировки поля",
       "description": "Readonly-поле с замком в рамке и объяснением причины блокировки под полем, связанным с ним через aria-describedby, плюс необязательная кнопка действия в обход неё.",
       "categories": ["input"],
       "dependencies": [],
@@ -3048,7 +3075,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Locked Field Reason"
           }
         }
       }
@@ -3056,7 +3084,7 @@
     {
       "name": "input-029",
       "type": "registry:component",
-      "title": "Voice Dictation Field",
+      "title": "Голосовой ввод",
       "description": "Текстовое поле с голосовым вводом через Web Speech API: кнопка микрофона запускает запись, распознанный текст дописывается к введённому, а при отсутствии поддержки браузером кнопка недоступна с объяснением.",
       "categories": ["input"],
       "dependencies": [],
@@ -3151,7 +3179,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Voice Dictation Field"
           }
         }
       }
@@ -3159,7 +3188,7 @@
     {
       "name": "input-030",
       "type": "registry:component",
-      "title": "Address Suggest Below",
+      "title": "Подсказка адреса снизу",
       "description": "Поле адреса с подсказками под полем: список сужается на каждый введённый символ по совпадению подстроки, а совпавший кусок в каждом варианте подсвечен жирным.",
       "categories": ["input"],
       "dependencies": [],
@@ -3252,7 +3281,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Address Suggest Below"
           }
         }
       }
@@ -3260,7 +3290,7 @@
     {
       "name": "input-031",
       "type": "registry:component",
-      "title": "Required Field Error",
+      "title": "Ошибка обязательного поля",
       "description": "Обязательное поле со звёздочкой у подписи (и скрытым текстом для скринридера) и текстом ошибки под ним: ошибка появляется после потери фокуса пустым полем, а не на каждый введённый символ.",
       "categories": ["input"],
       "dependencies": [],
@@ -3364,7 +3394,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Required Field Error"
           }
         }
       }

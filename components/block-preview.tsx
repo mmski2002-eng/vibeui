@@ -2,10 +2,12 @@
 
 import { useEffect, useRef, useState } from "react"
 
+import { getDictionary, type Locale } from "@/lib/i18n"
+
 const VIEWPORTS = [
-  { id: "desktop", label: "Desktop", width: 1440 },
-  { id: "tablet", label: "Tablet", width: 768 },
-  { id: "mobile", label: "Mobile", width: 375 },
+  { id: "desktop", width: 1440 },
+  { id: "tablet", width: 768 },
+  { id: "mobile", width: 375 },
 ] as const
 
 type ViewportId = (typeof VIEWPORTS)[number]["id"]
@@ -29,13 +31,16 @@ export function BlockPreview({
   slug,
   compact = false,
   theme,
+  locale,
   onThemeChange,
 }: {
   slug: string
   compact?: boolean
   theme: HostTheme
+  locale: Locale
   onThemeChange: (next: HostTheme) => void
 }) {
+  const t = getDictionary(locale)
   const frameHeight = compact ? COMPONENT_FRAME_HEIGHT : SECTION_FRAME_HEIGHT
   const [viewport, setViewport] = useState<ViewportId>("desktop")
   const [containerWidth, setContainerWidth] = useState<number | null>(null)
@@ -76,7 +81,7 @@ export function BlockPreview({
       <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
         <div
           role="group"
-          aria-label="Preview viewport"
+          aria-label={t.item.preview}
           className="border-shell-border inline-flex rounded-md border p-0.5"
         >
           {VIEWPORTS.map((item) => (
@@ -95,7 +100,7 @@ export function BlockPreview({
                   : "text-shell-muted hover:text-shell-fg")
               }
             >
-              {item.label}
+              {t.viewport[item.id]}
             </button>
           ))}
         </div>
@@ -103,13 +108,13 @@ export function BlockPreview({
         <div className="text-shell-muted flex min-w-0 flex-wrap items-center gap-2 text-xs">
           <span>{frameWidth}px</span>
           <span aria-hidden="true">·</span>
-          <span>Host theme</span>
+          <span>{t.viewport.hostTheme}</span>
           <button
             type="button"
             onClick={() => onThemeChange(theme === "light" ? "dark" : "light")}
             className="focus-visible:ring-shell-ring hover:text-shell-fg border-shell-border hover:border-shell-border-strong rounded border px-2 py-1 transition-colors focus-visible:ring-2 focus-visible:outline-none"
           >
-            {theme === "light" ? "Light" : "Dark"}
+            {theme === "light" ? t.viewport.light : t.viewport.dark}
           </button>
         </div>
       </div>
@@ -129,7 +134,7 @@ export function BlockPreview({
         >
           <iframe
             title={`Preview of ${slug}`}
-            src={`/preview/${slug}?theme=${theme}`}
+            src={`/preview/${slug}?theme=${theme}&lang=${locale}`}
             width={frameWidth}
             height={frameHeight}
             className={

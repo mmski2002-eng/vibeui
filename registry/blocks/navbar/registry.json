@@ -4,7 +4,7 @@
     {
       "name": "navbar-001",
       "type": "registry:block",
-      "title": "Glass Navbar",
+      "title": "Стеклянная шапка",
       "description": "Шапка сайта со стеклянной подложкой: логотип, меню, кнопка действия. Мобильное меню открывается через HTML popover — без единой строки JS.",
       "categories": ["navbar"],
       "dependencies": [],
@@ -78,7 +78,8 @@
                 "Do not lift the CSS variables into globals.css: the block has to stay a single file."
               ],
               "usage": "<Navbar001\n  brand=\"Flight\"\n  links={[{ label: \"Pricing\", href: \"/pricing\" }]}\n  actionLabel=\"Start free\"\n  actionHref=\"/signup\"\n/>"
-            }
+            },
+            "title": "Glass Navbar"
           }
         }
       }
@@ -86,7 +87,7 @@
     {
       "name": "navbar-002",
       "type": "registry:block",
-      "title": "Pill Rail Navbar",
+      "title": "Шапка с пилюлями",
       "description": "Тёмная шапка, в которой меню собрано в одну пилюлю: разделы читаются как единый объект, а в узкой колонке пилюля не прячется в бургер, а превращается в ленту с горизонтальной прокруткой.",
       "categories": ["navbar"],
       "dependencies": [],
@@ -189,7 +190,8 @@
                 "label": "Button",
                 "default": "Demo"
               }
-            }
+            },
+            "title": "Pill Rail Navbar"
           }
         }
       }
@@ -197,7 +199,7 @@
     {
       "name": "navbar-003",
       "type": "registry:block",
-      "title": "Dropdown Sections Navbar",
+      "title": "Шапка с разделами в меню",
       "description": "Шапка с выпадающими разделами: панель раскрывается по наведению и по фокусу, каждый пункт несёт поясняющую строку. Ни строки JS и ни одного состояния в React.",
       "categories": ["navbar"],
       "dependencies": [],
@@ -300,7 +302,8 @@
                 "label": "Plain section",
                 "default": "Pricing"
               }
-            }
+            },
+            "title": "Dropdown Sections Navbar"
           }
         }
       }
@@ -308,7 +311,7 @@
     {
       "name": "navbar-004",
       "type": "registry:block",
-      "title": "Scroll Shrink Navbar",
+      "title": "Шапка, сжимающаяся при прокрутке",
       "description": "Прозрачная шапка поверх обложки, которая уплотняется при прокрутке. Делает это анимация по прогрессу прокрутки — без слушателя scroll и без клиентского состояния.",
       "categories": ["navbar"],
       "dependencies": [],
@@ -411,7 +414,8 @@
                 "label": "Button",
                 "default": "Book a seat"
               }
-            }
+            },
+            "title": "Scroll Shrink Navbar"
           }
         }
       }
@@ -419,7 +423,7 @@
     {
       "name": "navbar-005",
       "type": "registry:block",
-      "title": "Search First Navbar",
+      "title": "Шапка с поиском в центре",
       "description": "Шапка, построенная вокруг поиска: поле стоит в середине и забирает всю свободную ширину, разделы ужимаются вокруг него. Настоящая форма, работает и без JS.",
       "categories": ["navbar"],
       "dependencies": [],
@@ -522,7 +526,8 @@
                 "label": "Search hint",
                 "default": "Search the docs and examples"
               }
-            }
+            },
+            "title": "Search First Navbar"
           }
         }
       }
@@ -530,7 +535,7 @@
     {
       "name": "navbar-006",
       "type": "registry:block",
-      "title": "Locale Switch Navbar",
+      "title": "Шапка с переключателем языка",
       "description": "Шапка международного сайта: рядом с меню стоит переключатель языка, открывающий список локализованных версий ссылками, а не состоянием интерфейса.",
       "categories": ["navbar"],
       "dependencies": [],
@@ -633,7 +638,8 @@
                 "label": "Current language",
                 "default": "RU"
               }
-            }
+            },
+            "title": "Locale Switch Navbar"
           }
         }
       }
@@ -641,7 +647,7 @@
     {
       "name": "navbar-007",
       "type": "registry:block",
-      "title": "Free Trial Navbar",
+      "title": "Шапка с бесплатным периодом",
       "description": "Шапка продукта с пробным периодом: вход остаётся текстовой ссылкой, кнопка одна, а под ней мелкая строка, снимающая возражение про банковскую карту.",
       "categories": ["navbar"],
       "dependencies": [],
@@ -744,7 +750,8 @@
                 "label": "Line under button",
                 "default": "No card needed"
               }
-            }
+            },
+            "title": "Free Trial Navbar"
           }
         }
       }
@@ -752,7 +759,7 @@
     {
       "name": "navbar-008",
       "type": "registry:block",
-      "title": "Workspace App Navbar",
+      "title": "Шапка рабочего пространства",
       "description": "Шапка внутреннего приложения: рабочее пространство с тарифом слева, вкладки разделов с подчёркиванием текущего, колокол со счётчиком и меню аккаунта.",
       "categories": ["navbar"],
       "dependencies": [],
@@ -856,7 +863,8 @@
                 "label": "Notifications",
                 "default": 7
               }
-            }
+            },
+            "title": "Workspace App Navbar"
           }
         }
       }
@@ -864,7 +872,7 @@
     {
       "name": "navbar-009",
       "type": "registry:block",
-      "title": "Announcement Navbar",
+      "title": "Шапка с объявлением",
       "description": "Шапка с полосой объявления над ней. Полоса закрывается без JS: скрытый чекбокс держит состояние, а :has() убирает объявление, когда он отмечен.",
       "categories": ["navbar"],
       "dependencies": [],
@@ -967,7 +975,8 @@
                 "label": "Brand",
                 "default": "Impulse"
               }
-            }
+            },
+            "title": "Announcement Navbar"
           }
         }
       }
@@ -975,7 +984,7 @@
     {
       "name": "navbar-010",
       "type": "registry:block",
-      "title": "Storefront Navbar",
+      "title": "Шапка магазина",
       "description": "Шапка магазина: поиск с кнопкой, кабинет и корзина, где рядом со счётчиком стоит сумма заказа. Ниже — лента категорий и строка про сроки доставки.",
       "categories": ["navbar"],
       "dependencies": [],
@@ -1081,7 +1090,8 @@
                 "label": "Cart total",
                 "default": "$94.20"
               }
-            }
+            },
+            "title": "Storefront Navbar"
           }
         }
       }
@@ -1089,7 +1099,7 @@
     {
       "name": "navbar-011",
       "type": "registry:block",
-      "title": "Docs Version Navbar",
+      "title": "Шапка документации с версиями",
       "description": "Шапка документации с выбором версии: человек, пришедший из поисковика, сразу видит, к какой версии относится страница. Выбор — нативный select, без JS.",
       "categories": ["navbar"],
       "dependencies": [],
@@ -1192,7 +1202,8 @@
                 "label": "Version",
                 "default": "v4.2 (текущая)"
               }
-            }
+            },
+            "title": "Docs Version Navbar"
           }
         }
       }
@@ -1200,7 +1211,7 @@
     {
       "name": "navbar-012",
       "type": "registry:block",
-      "title": "Drawer Menu Navbar",
+      "title": "Шапка с меню-шторкой",
       "description": "Компактная шапка, у которой меню всегда ящик: панель во всю высоту уезжает справа и остаётся такой на любой ширине — для сайтов с длинным деревом разделов.",
       "categories": ["navbar"],
       "dependencies": [],
@@ -1303,7 +1314,8 @@
                 "label": "Tagline",
                 "default": "Family clinic"
               }
-            }
+            },
+            "title": "Drawer Menu Navbar"
           }
         }
       }
@@ -1311,7 +1323,7 @@
     {
       "name": "navbar-013",
       "type": "registry:block",
-      "title": "Two Tier Navbar",
+      "title": "Двухъярусная шапка",
       "description": "Двухуровневая шапка для сайта с большим деревом разделов: служебная полоса сверху, основные разделы посередине и подразделы текущего в третьем ряду.",
       "categories": ["navbar"],
       "dependencies": [],
@@ -1414,7 +1426,8 @@
                 "label": "Button",
                 "default": "Apply now"
               }
-            }
+            },
+            "title": "Two Tier Navbar"
           }
         }
       }

@@ -23,7 +23,7 @@ export function CatalogPage({
   const t = getDictionary(locale)
   const kind = variant === "blocks" ? "block" : "component"
   const items = getItemsByKind(kind)
-  const categories = getCategoryCards(kind)
+  const categories = getCategoryCards(kind, locale)
 
   const heading =
     variant === "home" ? (

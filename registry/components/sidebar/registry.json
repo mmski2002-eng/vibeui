@@ -4,11 +4,9 @@
     {
       "name": "sidebar-001",
       "type": "registry:component",
-      "title": "App Sidebar Nav",
+      "title": "Боковое меню приложения",
       "description": "Вертикальная навигация приложения: разделы, счётчики и текущий пункт, отмеченный полосой у края, а не только цветом текста.",
-      "categories": [
-        "sidebar"
-      ],
+      "categories": ["sidebar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sidebar-001-*. Разметка семантическая: <nav> с подписью, внутри разделы с заголовками и списки <ul>. Активный пункт определяется сравнением подписи с activeLabel и получает aria-current=\"page\", плотный фон и полосу через ::before. Счётчик — необязательное число справа с tabular-nums.",
       "meta": {
-        "tags": [
-          "sidebar",
-          "navigation",
-          "app shell",
-          "menu"
-        ],
+        "tags": ["sidebar", "navigation", "app shell", "menu"],
         "ai": {
           "export": "Sidebar001",
           "usage": "<Sidebar001\n  activeLabel=\"Страницы\"\n  sections={[\n    { title: \"Проект\", items: [{ label: \"Обзор\", href: \"/\" }, { label: \"Страницы\", href: \"/pages\", count: 12 }] },\n  ]}\n/>",
@@ -109,7 +102,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "App Sidebar Nav"
           }
         }
       }
@@ -117,11 +111,9 @@
     {
       "name": "sidebar-002",
       "type": "registry:component",
-      "title": "Collapsible Sidebar",
+      "title": "Сворачиваемое боковое меню",
       "description": "Сворачиваемая боковая навигация без JS: ширину меняет одна переменная, а подписи сжимаются, а не исчезают из разметки.",
-      "categories": [
-        "sidebar"
-      ],
+      "categories": ["sidebar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -133,12 +125,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sidebar-002-*. Серверный: хуков нет, состояние держит чекбокс. Свёрнутый вид получается сменой одной переменной ширины через :has(), а подписи сжимаются до нуля с overflow:hidden и остаются в дереве доступности.",
       "meta": {
-        "tags": [
-          "sidebar",
-          "collapse",
-          "no-js",
-          "navigation"
-        ],
+        "tags": ["sidebar", "collapse", "no-js", "navigation"],
         "ai": {
           "export": "Sidebar002",
           "usage": "<Sidebar002 items={[{ label: \"Компоненты\", count: 225 }]} activeLabel=\"Компоненты\" />",
@@ -177,12 +164,7 @@
             "label": "Активный",
             "type": "select",
             "default": "Компоненты",
-            "options": [
-              "Обзор",
-              "Компоненты",
-              "Блоки",
-              "Настройки"
-            ]
+            "options": ["Обзор", "Компоненты", "Блоки", "Настройки"]
           }
         ],
         "i18n": {
@@ -221,7 +203,8 @@
                 "label": "Active",
                 "default": "Компоненты"
               }
-            }
+            },
+            "title": "Collapsible Sidebar"
           }
         }
       }
@@ -229,11 +212,9 @@
     {
       "name": "sidebar-003",
       "type": "registry:component",
-      "title": "Icon Rail Sidebar",
+      "title": "Полоса иконок",
       "description": "Меню сворачивается в полосу иконок, а не исчезает: подписи схлопываются по ширине, оставаясь в разметке для скринридера и поиска по странице.",
-      "categories": [
-        "sidebar"
-      ],
+      "categories": ["sidebar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -245,12 +226,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-003-*. Клиентский (\"use client\") — состояние сворачивания держит useState. Ширина колонки задана одной переменной --vibeui-sidebar-003-width, которую переопределяет правило на [data-collapsed=\"true\"]: всё остальное подстраивается само. Подписи не удаляются из DOM, а сжимаются max-width и opacity, поэтому доступное имя ссылки не теряется. Иконки — инлайновые пути SVG из props, иконочная библиотека не нужна. В свёрнутом виде у ссылок появляется title, а у кнопки — aria-expanded.",
       "meta": {
-        "tags": [
-          "sidebar",
-          "collapse",
-          "icons",
-          "navigation"
-        ],
+        "tags": ["sidebar", "collapse", "icons", "navigation"],
         "ai": {
           "export": "Sidebar003",
           "usage": "<Sidebar003\n  activeLabel=\"Задачи\"\n  items={[\n    { label: \"Обзор\", href: \"/\", icon: \"M2 8.5 8 3l6 5.5M4 8v5h8V8\" },\n    { label: \"Задачи\", href: \"/tasks\", icon: \"M3 4h10M3 8h10M3 12h6\" },\n  ]}\n/>",
@@ -327,7 +303,8 @@
                 "label": "Accent",
                 "default": ""
               }
-            }
+            },
+            "title": "Icon Rail Sidebar"
           }
         }
       }
@@ -335,11 +312,9 @@
     {
       "name": "sidebar-004",
       "type": "registry:component",
-      "title": "Grouped Nav",
+      "title": "Меню с группами",
       "description": "Меню с разделами и подпунктами без единой строки JS: группы собраны на <details>, а группа с текущим пунктом открыта заранее.",
-      "categories": [
-        "sidebar"
-      ],
+      "categories": ["sidebar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -351,12 +326,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-004-*. Серверный: хуков нет, состояние раскрытия держит браузер через <details>. Атрибут open вычисляется на рендере из того, лежит ли активный пункт внутри группы: меню не должно требовать клика, чтобы показать, где пользователь находится. Свёрнутая группа с активным потомком помечена точкой в summary — после закрытия раздела текущее место иначе пропадает из виду. Галка нарисована бордюрами псевдоэлемента, маркер details скрыт.",
       "meta": {
-        "tags": [
-          "sidebar",
-          "groups",
-          "details",
-          "navigation"
-        ],
+        "tags": ["sidebar", "groups", "details", "navigation"],
         "ai": {
           "export": "Sidebar004",
           "usage": "<Sidebar004\n  activeLabel=\"Возвраты\"\n  groups={[\n    { label: \"Каталог\", children: [{ label: \"Товары\", href: \"/goods\" }] },\n    { label: \"Продажи\", children: [{ label: \"Возвраты\", href: \"/returns\" }] },\n  ]}\n/>",
@@ -433,7 +403,8 @@
                 "label": "Accent",
                 "default": ""
               }
-            }
+            },
+            "title": "Grouped Nav"
           }
         }
       }
@@ -441,11 +412,9 @@
     {
       "name": "sidebar-005",
       "type": "registry:component",
-      "title": "Filterable Menu",
+      "title": "Меню с фильтром",
       "description": "Меню с поиском по собственным пунктам: совпавшая часть подписи подсвечена, число найденного объявляется через aria-live, Escape очищает запрос.",
-      "categories": [
-        "sidebar"
-      ],
+      "categories": ["sidebar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -457,12 +426,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-005-*. Клиентский (\"use client\") — запрос держит useState, группировка результатов считается в useMemo. Фильтр простой: подстрока без учёта регистра; совпадение оборачивается в <mark>, потому что иначе непонятно, почему пункт остался в списке. Пустая выдача даёт текстовое объяснение, а не пустоту. Число найденного лежит в визуально скрытом абзаце с role=\"status\": «список стал короче» — событие, невидимое для скринридера.",
       "meta": {
-        "tags": [
-          "sidebar",
-          "search",
-          "filter",
-          "navigation"
-        ],
+        "tags": ["sidebar", "search", "filter", "navigation"],
         "ai": {
           "export": "Sidebar005",
           "usage": "<Sidebar005\n  placeholder=\"Поиск по меню\"\n  activeLabel=\"Ключи API\"\n  items={[\n    { label: \"Профиль\", href: \"/profile\", group: \"Аккаунт\" },\n    { label: \"Ключи API\", href: \"/keys\", group: \"Разработка\" },\n  ]}\n/>",
@@ -539,7 +503,8 @@
                 "label": "Accent",
                 "default": ""
               }
-            }
+            },
+            "title": "Filterable Menu"
           }
         }
       }
@@ -547,11 +512,9 @@
     {
       "name": "sidebar-006",
       "type": "registry:component",
-      "title": "Profile Footer Nav",
+      "title": "Профиль в подвале меню",
       "description": "Меню с карточкой профиля внизу колонки: настройки и выход раскрываются вверх и не стоят в общем списке разделов.",
-      "categories": [
-        "sidebar"
-      ],
+      "categories": ["sidebar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -563,12 +526,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-006-*. Серверный: хуков нет, меню профиля собрано на <details>, состояние держит браузер. Профиль прижат к низу распоркой flex:1, а не отступом: высота колонки бывает разной. Список меню позиционирован абсолютно и раскрывается вверх — внизу колонки места нет, а обрезанное меню бесполезно. Инициалы считаются из имени на рендере. Выход и настройки живут рядом с именем, поэтому их невозможно нажать по ошибке при выборе раздела.",
       "meta": {
-        "tags": [
-          "sidebar",
-          "profile",
-          "account",
-          "footer"
-        ],
+        "tags": ["sidebar", "profile", "account", "footer"],
         "ai": {
           "export": "Sidebar006",
           "usage": "<Sidebar006\n  userName=\"Ольга Дорн\"\n  userMeta=\"olga@studio.ru\"\n  activeLabel=\"Проекты\"\n  items={[{ label: \"Лента\", href: \"/\" }, { label: \"Проекты\", href: \"/projects\" }]}\n/>",
@@ -645,7 +603,8 @@
                 "label": "Accent",
                 "default": ""
               }
-            }
+            },
+            "title": "Profile Footer Nav"
           }
         }
       }
@@ -653,11 +612,9 @@
     {
       "name": "sidebar-007",
       "type": "registry:component",
-      "title": "Badge Counters",
+      "title": "Счётчики в меню",
       "description": "Счётчики в меню разного веса: серая цифра для обычного числа, залитая плашка для срочного и точка для «есть новое» без числа.",
-      "categories": [
-        "sidebar"
-      ],
+      "categories": ["sidebar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -669,12 +626,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-007-*. Серверный: хуков нет. Вес бейджа задаётся атрибутом data-tone на строке списка: один одинаковый бейдж на всё превращает меню в рябь из цифр, и срочное в ней теряется. Большие числа обрезаются до «99+» по пропу cap — точное значение всё равно не читают, а ширина колонки от него уезжает. Смысл числа продублирован визуально скрытым словом: «7» без пояснения скринридеру ничего не говорит.",
       "meta": {
-        "tags": [
-          "sidebar",
-          "badge",
-          "counter",
-          "navigation"
-        ],
+        "tags": ["sidebar", "badge", "counter", "navigation"],
         "ai": {
           "export": "Sidebar007",
           "usage": "<Sidebar007\n  cap={99}\n  activeLabel=\"Требуют ответа\"\n  items={[\n    { label: \"Входящие\", href: \"/inbox\", count: 128, tone: \"muted\" },\n    { label: \"Требуют ответа\", href: \"/todo\", count: 7, tone: \"alert\" },\n    { label: \"Обновления\", href: \"/news\", tone: \"new\" },\n  ]}\n/>",
@@ -752,7 +704,8 @@
                 "label": "Accent",
                 "default": ""
               }
-            }
+            },
+            "title": "Badge Counters"
           }
         }
       }
@@ -760,11 +713,9 @@
     {
       "name": "sidebar-008",
       "type": "registry:component",
-      "title": "Workspace Switcher",
+      "title": "Переключатель пространств",
       "description": "Переключатель рабочего пространства над меню: он всегда показывает, где вы работаете, а текущее пространство в списке помечено галочкой.",
-      "categories": [
-        "sidebar"
-      ],
+      "categories": ["sidebar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -776,12 +727,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-008-*. Серверный: хуков нет, раскрытие держит <details>. Список пространств позиционирован абсолютно и лежит поверх меню: раскрытие не должно двигать разделы. Текущее пространство помечено галочкой из бордюров, а не только заливкой строки — заливку путают с наведением. Переключатель стоит над разделами, потому что одинаковые разделы в двух пространствах выглядят одинаково, и без подписи сверху правку легко внести не туда.",
       "meta": {
-        "tags": [
-          "sidebar",
-          "workspace",
-          "switcher",
-          "details"
-        ],
+        "tags": ["sidebar", "workspace", "switcher", "details"],
         "ai": {
           "export": "Sidebar008",
           "usage": "<Sidebar008\n  current=\"Студия Восход\"\n  spaces={[\n    { name: \"Студия Восход\", plan: \"Команда · 8 человек\", href: \"/w/voskhod\" },\n    { name: \"Личное\", plan: \"Бесплатный\", href: \"/w/personal\" },\n  ]}\n  activeLabel=\"Проекты\"\n/>",
@@ -858,7 +804,8 @@
                 "label": "Accent",
                 "default": ""
               }
-            }
+            },
+            "title": "Workspace Switcher"
           }
         }
       }
@@ -866,11 +813,9 @@
     {
       "name": "sidebar-009",
       "type": "registry:component",
-      "title": "Drawer Nav",
+      "title": "Меню-шторка",
       "description": "Мобильное меню-ящик: выезжает слева, затемняет содержимое и закрывается нажатием по затемнению, Escape или крестиком.",
-      "categories": [
-        "sidebar"
-      ],
+      "categories": ["sidebar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -882,12 +827,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-009-*. Клиентский (\"use client\") — состояние ящика держит useState. Затемнение это кнопка с aria-hidden и tabIndex −1: оно ловит нажатие мимо панели, но не попадает в порядок обхода. Закрытый ящик помечен inert, поэтому таб не проваливается в невидимые ссылки; при открытии фокус уезжает на крестик, а при закрытии возвращается на кнопку-бургер. Escape ловится на корне блока. Ящик позиционирован внутри блока, а не относительно окна: демонстрация не захватывает страницу.",
       "meta": {
-        "tags": [
-          "sidebar",
-          "drawer",
-          "mobile",
-          "overlay"
-        ],
+        "tags": ["sidebar", "drawer", "mobile", "overlay"],
         "ai": {
           "export": "Sidebar009",
           "usage": "<Sidebar009\n  title=\"Меню\"\n  activeLabel=\"Заказы\"\n  items={[{ label: \"Каталог\", href: \"/catalog\" }, { label: \"Заказы\", href: \"/orders\" }]}\n/>",
@@ -964,7 +904,8 @@
                 "label": "Accent",
                 "default": ""
               }
-            }
+            },
+            "title": "Drawer Nav"
           }
         }
       }

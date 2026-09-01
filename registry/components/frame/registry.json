@@ -4,11 +4,9 @@
     {
       "name": "frame-001",
       "type": "registry:component",
-      "title": "Demo Frame",
+      "title": "Демонстрационная рамка",
       "description": "Обрамление демо: условная рамка браузера или телефона вокруг слота, без подделки интерфейса до кнопок и вкладок.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-frame-001-*. Серверный: хуков нет. Содержимое приходит через children, поэтому внутрь встаёт картинка, iframe или другой блок. Вариант phone ограничивает ширину и увеличивает скругление, вариант plain оставляет чистую рамку.",
       "meta": {
-        "tags": [
-          "frame",
-          "mockup",
-          "browser",
-          "demo"
-        ],
+        "tags": ["frame", "mockup", "browser", "demo"],
         "preview": {
           "width": "full"
         },
@@ -60,11 +53,7 @@
             "label": "Вид",
             "type": "select",
             "default": "browser",
-            "options": [
-              "browser",
-              "phone",
-              "plain"
-            ]
+            "options": ["browser", "phone", "plain"]
           },
           {
             "prop": "url",
@@ -120,7 +109,8 @@
                 "label": "Caption",
                 "default": "The catalog in a browser"
               }
-            }
+            },
+            "title": "Demo Frame"
           }
         }
       }
@@ -128,11 +118,9 @@
     {
       "name": "frame-002",
       "type": "registry:component",
-      "title": "Aspect Video Frame",
+      "title": "Кадр под видео",
       "description": "Рамка встраивания с фиксированным соотношением сторон: место под ролик занято до того, как iframe успел загрузиться, поэтому страница не прыгает.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -144,12 +132,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Соотношение сторон объявлено переменной --vibeui-frame-002-ratio на самой рамке, а варианты 4:3, 1:1 и 21:9 переопределяют её через атрибут data-ratio — так пропорция задаётся одной строкой, а не набором классов. Вложенный iframe, img или video растягиваются правилом для :where(iframe,img,video) на inset:0: без него iframe держит собственные 150px высоты и пропорция рамки перестаёт что-либо значить. Заглушка с треугольником нарисована рамками через ::before, чтобы не тащить svg. Компонент несёт свою белую подложку — тёмный экран внутри белой карточки читается на любом фоне каталога.",
       "meta": {
-        "tags": [
-          "frame",
-          "video",
-          "embed",
-          "aspect-ratio"
-        ],
+        "tags": ["frame", "video", "embed", "aspect-ratio"],
         "preview": {
           "width": "full"
         },
@@ -184,12 +167,7 @@
             "label": "Пропорция",
             "type": "select",
             "default": "16:9",
-            "options": [
-              "16:9",
-              "4:3",
-              "1:1",
-              "21:9"
-            ]
+            "options": ["16:9", "4:3", "1:1", "21:9"]
           },
           {
             "prop": "title",
@@ -235,7 +213,8 @@
                 "label": "Stub caption",
                 "default": "VibeUI catalog tour"
               }
-            }
+            },
+            "title": "Aspect Video Frame"
           }
         }
       }
@@ -243,11 +222,9 @@
     {
       "name": "frame-003",
       "type": "registry:component",
-      "title": "Browser Window Frame",
+      "title": "Окно браузера",
       "description": "Окно браузера с вкладкой и адресной строкой вокруг слота: читатель сразу понимает, что внутри страница, а не иллюстрация на сайте.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -259,12 +236,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Хром окна собран из трёх полос: вкладка со скруглением только сверху, строка адреса и тело со слотом. Замок в адресной строке нарисован блоком и ::before, а не эмодзи: эмодзи меняет начертание от системы и сбивает вертикальный ритм строки. Адрес обрезается многоточием (overflow + text-overflow), иначе длинный URL растягивает окно и ломает раскладку на телефоне. Хром помечен aria-hidden: для скринридера это декорация, а не навигация. Собственная белая подложка обязательна — вся типографика окна тёмная.",
       "meta": {
-        "tags": [
-          "frame",
-          "browser",
-          "mockup",
-          "screenshot"
-        ],
+        "tags": ["frame", "browser", "mockup", "screenshot"],
         "preview": {
           "width": "full"
         },
@@ -345,7 +317,8 @@
                 "label": "Tab",
                 "default": "VibeUI — component catalog"
               }
-            }
+            },
+            "title": "Browser Window Frame"
           }
         }
       }
@@ -353,11 +326,9 @@
     {
       "name": "frame-004",
       "type": "registry:component",
-      "title": "Phone Screenshot Frame",
+      "title": "Экран телефона",
       "description": "Рамка телефона под скриншот: экран задан пропорцией 9 / 19.5, поэтому картинка любого размера ложится в него без обрезки и чёрных полей.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -369,12 +340,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Экран держит aspect-ratio 9 / 19.5 вместо фиксированной высоты, а корпус ограничен width:min(100%, 15rem) — рамка ужимается на телефоне, но не растекается на десктопе. Островок вынесен из потока в absolute: в потоке он сдвигал бы статус-строку вниз и съедал верх скриншота. Сигнал и батарея нарисованы блоками и градиентом, без иконочного шрифта. Корпус светлый с тонкой обводкой сознательно: тёмный корпус на тёмной подложке каталога сливается, и от телефона остаётся плавающий белый прямоугольник. Статус-строка помечена aria-hidden — это декорация макета.",
       "meta": {
-        "tags": [
-          "frame",
-          "phone",
-          "mockup",
-          "screenshot"
-        ],
+        "tags": ["frame", "phone", "mockup", "screenshot"],
         "preview": {
           "width": "full"
         },
@@ -455,7 +421,8 @@
                 "label": "Carrier",
                 "default": "VibeUI"
               }
-            }
+            },
+            "title": "Phone Screenshot Frame"
           }
         }
       }
@@ -463,11 +430,9 @@
     {
       "name": "frame-005",
       "type": "registry:component",
-      "title": "Laptop Device Frame",
+      "title": "Экран ноутбука",
       "description": "Рамка ноутбука с экраном 16 / 10 и трапецией основания на clip-path: корпус сужается книзу без единой картинки и масштабируется вместе с экраном.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -479,12 +444,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Крышка — обычный блок со скруглением сверху, экран держит aspect-ratio 16 / 10 (стандарт ноутбучной матрицы; 16 / 9 читается как телевизор). Основание нарисовано clip-path:polygon и потому сужается книзу без второго прямоугольника и без изображений; оно чуть шире крышки, что и даёт силуэт устройства. Оттенок корпуса переключается атрибутом data-tone: silver и graphite меняют три переменные палитры разом. Экран белый, поэтому конструкция читается и на тёмной подложке каталога; вся типографика демо-содержимого лежит внутри белого экрана.",
       "meta": {
-        "tags": [
-          "frame",
-          "laptop",
-          "device",
-          "mockup"
-        ],
+        "tags": ["frame", "laptop", "device", "mockup"],
         "preview": {
           "width": "full"
         },
@@ -526,10 +486,7 @@
             "label": "Корпус",
             "type": "select",
             "default": "silver",
-            "options": [
-              "silver",
-              "graphite"
-            ]
+            "options": ["silver", "graphite"]
           }
         ],
         "i18n": {
@@ -568,7 +525,8 @@
                 "label": "Body",
                 "default": "silver"
               }
-            }
+            },
+            "title": "Laptop Device Frame"
           }
         }
       }
@@ -576,11 +534,9 @@
     {
       "name": "frame-006",
       "type": "registry:component",
-      "title": "Captioned Figure Frame",
+      "title": "Иллюстрация с подписью",
       "description": "Рамка с нумерованной подписью под содержимым: номер рисунка, текст и строка источника разведены по трём уровням, поэтому подпись читается, а не сливается.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -592,12 +548,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Разметка — figure с figcaption внутри, а не картинка и абзац рядом: только так связь изображения и подписи видна скринридеру. Номер рисунка вынесен в отдельный элемент с white-space:nowrap, поэтому «Рис. 12» не разрывается переносом; текст подписи и строка источника отличаются кеглем и цветом, иначе всё склеивается в одно предложение. Медиа-слот держит пропорцию 16 / 10, чтобы подпись не уезжала при разной высоте картинок. Выравнивание переключается атрибутом data-align. Подложка светлая: вся типографика подписи тёмная.",
       "meta": {
-        "tags": [
-          "frame",
-          "caption",
-          "figure",
-          "gallery"
-        ],
+        "tags": ["frame", "caption", "figure", "gallery"],
         "preview": {
           "width": "full"
         },
@@ -679,7 +630,8 @@
                 "label": "Figure number",
                 "default": 2
               }
-            }
+            },
+            "title": "Captioned Figure Frame"
           }
         }
       }
@@ -687,11 +639,9 @@
     {
       "name": "frame-007",
       "type": "registry:component",
-      "title": "Terminal Frame",
+      "title": "Окно терминала",
       "description": "Кадр терминала со строкой заголовка, точками и моноширинным выводом команд: демонстрация CLI-сценария без скриншота настоящей консоли.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -703,12 +653,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Хром окна — точки и заголовок — заголовок несёт содержательный текст и не скрыт от скринридера, а точки помечены aria-hidden. lines принимает массив { text, type }: тип command добавляет приглашение prompt, output выводит текст без него. Курсор — блок с CSS-анимацией моргания vibeui-frame-007-blink, которая отключается через prefers-reduced-motion. Слот children подменяет весь блок вывода целиком, включая курсор.",
       "meta": {
-        "tags": [
-          "frame",
-          "terminal",
-          "cli",
-          "mockup"
-        ],
+        "tags": ["frame", "terminal", "cli", "mockup"],
         "preview": {
           "width": "full"
         },
@@ -785,7 +730,8 @@
                 "label": "Prompt",
                 "default": "❯"
               }
-            }
+            },
+            "title": "Terminal Frame"
           }
         }
       }
@@ -793,11 +739,9 @@
     {
       "name": "frame-008",
       "type": "registry:component",
-      "title": "Tablet Landscape Frame",
+      "title": "Планшет горизонтально",
       "description": "Планшет в альбомной ориентации под скриншот интерфейса: экран держит пропорцию 4 / 3, поэтому картинка любой ширины ложится без обрезки.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -809,12 +753,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Корпус — блок с обводкой и внутренним отступом, экран держит aspect-ratio 4 / 3 и overflow:hidden, чтобы скриншот со своими углами не вылезал за скругление. Камера — точка в absolute на боковой грани корпуса: в альбомной ориентации она уходит с верхнего края, как у настоящего планшета. Домашняя полоса — тонкая линия внизу экрана, деталь макета без физической кнопки. Подпись — обычный figcaption под фигурой.",
       "meta": {
-        "tags": [
-          "frame",
-          "tablet",
-          "landscape",
-          "mockup"
-        ],
+        "tags": ["frame", "tablet", "landscape", "mockup"],
         "preview": {
           "width": "full"
         },
@@ -880,7 +819,8 @@
                 "label": "Caption",
                 "default": "UI on a tablet in landscape orientation"
               }
-            }
+            },
+            "title": "Tablet Landscape Frame"
           }
         }
       }
@@ -888,11 +828,9 @@
     {
       "name": "frame-009",
       "type": "registry:component",
-      "title": "Map Pin Frame",
+      "title": "Кадр карты с меткой",
       "description": "Кадр карты с меткой и масштабной линейкой поверх условной сетки улиц: готовый шаблон для превью адреса или геолокации.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -904,12 +842,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Карта — условная сетка из двух repeating-linear-gradient на фоне земли, полностью декоративна и заменяется содержимым слота children. Метка нарисована каплей: круг со срезанным углом (border-radius) развёрнут через transform:rotate(-45deg), внутри — маленький кружок фона поверх исходного поворота. Масштабная линейка — три чередующихся сегмента и подпись в углу карты. И метка, и линейка обёрнуты в контейнер с aria-label, а визуальные детали внутри скрыты aria-hidden, чтобы текст не звучал дважды.",
       "meta": {
-        "tags": [
-          "frame",
-          "map",
-          "location",
-          "pin"
-        ],
+        "tags": ["frame", "map", "location", "pin"],
         "preview": {
           "width": "full"
         },
@@ -986,7 +919,8 @@
                 "label": "Scale",
                 "default": "500 m"
               }
-            }
+            },
+            "title": "Map Pin Frame"
           }
         }
       }
@@ -994,11 +928,9 @@
     {
       "name": "frame-010",
       "type": "registry:component",
-      "title": "Overlapping Frame Collage",
+      "title": "Коллаж из кадров",
       "description": "Коллаж из трёх кадров внахлёст со смещением и поворотом в процентах: приём для обложек и hero-секций, когда одной картинки мало.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1010,12 +942,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Три карточки — data-part=\"card\" с data-role back, middle и front — расположены absolute внутри stage с aspect-ratio 6 / 5. Смещения (top, left), ширина и поворот заданы в процентах и градусах на каждой карточке отдельно, z-index растёт от заднего кадра к переднему. На узкой ширине контейнера @container уменьшает смещения и повороты, чтобы коллаж не вылезал за stage. Пустой слот показывает подпись-заглушку «Кадр N».",
       "meta": {
-        "tags": [
-          "frame",
-          "collage",
-          "hero",
-          "gallery"
-        ],
+        "tags": ["frame", "collage", "hero", "gallery"],
         "preview": {
           "width": "full"
         },
@@ -1081,7 +1008,8 @@
                 "label": "Caption",
                 "default": "Three overlapping frames: a cover collage"
               }
-            }
+            },
+            "title": "Overlapping Frame Collage"
           }
         }
       }
@@ -1089,11 +1017,9 @@
     {
       "name": "frame-011",
       "type": "registry:component",
-      "title": "3D Tilt Frame",
+      "title": "Кадр с наклоном",
       "description": "Кадр с 3D-разворотом скриншота: perspective и rotateX/rotateY имитируют вид на экран сбоку — приём для hero-секций продукта.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1105,12 +1031,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Карточка внутри stage с perspective развёрнута через rotateX/rotateY; направление разворота задаёт data-tilt со значениями left или right. При наведении на stage разворот выравнивается CSS-псевдоклассом :hover — эффект достигается без JS. На узкой ширине через @container угол разворота уменьшается, чтобы карточка не вылезала за stage.",
       "meta": {
-        "tags": [
-          "frame",
-          "3d",
-          "perspective",
-          "mockup"
-        ],
+        "tags": ["frame", "3d", "perspective", "mockup"],
         "preview": {
           "width": "full"
         },
@@ -1141,10 +1062,7 @@
             "prop": "tilt",
             "label": "Направление разворота",
             "type": "select",
-            "options": [
-              "left",
-              "right"
-            ],
+            "options": ["left", "right"],
             "default": "left"
           }
         ],
@@ -1176,7 +1094,8 @@
               "tilt": {
                 "label": "Tilt direction"
               }
-            }
+            },
+            "title": "3D Tilt Frame"
           }
         }
       }
@@ -1184,11 +1103,9 @@
     {
       "name": "frame-012",
       "type": "registry:component",
-      "title": "Before After Comparison Frame",
+      "title": "Сравнение «до и после»",
       "description": "Сравнение «до» и «после» двумя кадрами с вертикальным разделителем и подписями — приём для демонстрации результата изменений.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1200,12 +1117,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Два слота before и after занимают по 50% ширины stage во flex-раскладке, разделены линией и декоративной ручкой по центру. Подписи beforeLabel и afterLabel — настоящий текст в углах, а не оверлей на картинке. На узкой ширине через @container панели переключаются в колонку, разделитель становится горизонтальным.",
       "meta": {
-        "tags": [
-          "frame",
-          "comparison",
-          "before-after",
-          "mockup"
-        ],
+        "tags": ["frame", "comparison", "before-after", "mockup"],
         "preview": {
           "width": "full"
         },
@@ -1284,7 +1196,8 @@
                 "label": "After label",
                 "default": "After"
               }
-            }
+            },
+            "title": "Before After Comparison Frame"
           }
         }
       }
@@ -1292,11 +1205,9 @@
     {
       "name": "frame-013",
       "type": "registry:component",
-      "title": "App Shell Frame",
+      "title": "Каркас приложения",
       "description": "Кадр приложения с боковой панелью навигации и шапкой над рабочей областью — макет для скриншотов дашбордов и SaaS-интерфейсов.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1308,12 +1219,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Каркас — flex из aside-панели с nav/ul-списком пунктов и основной области с header и рабочим телом. Активный пункт меню помечен aria-current=\"page\" и подсвечен фоном. Слот children подменяет только рабочее тело под шапкой; панель и шапка остаются неизменной частью каркаса. На узкой ширине через @container панель сужается и сетка заглушек становится одноколоночной.",
       "meta": {
-        "tags": [
-          "frame",
-          "app",
-          "dashboard",
-          "mockup"
-        ],
+        "tags": ["frame", "app", "dashboard", "mockup"],
         "preview": {
           "width": "full"
         },
@@ -1392,7 +1298,8 @@
                 "label": "Page title",
                 "default": "Overview"
               }
-            }
+            },
+            "title": "App Shell Frame"
           }
         }
       }
@@ -1400,11 +1307,9 @@
     {
       "name": "frame-014",
       "type": "registry:component",
-      "title": "Email Message Frame",
+      "title": "Письмо",
       "description": "Кадр письма: строка отправителя с аватаром-инициалом, тема и тело сообщения — макет для превью email-рассылок.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1416,12 +1321,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Строка meta несёт аватар-инициал (первая буква sender, вычисляется на сервере), имя и адрес отправителя и дату. Тема — отдельный h2 крупнее тела письма. Слот children подменяет тело письма целиком вместо строк по умолчанию. На узкой ширине через @container строка meta переносится, а тема немного уменьшается.",
       "meta": {
-        "tags": [
-          "frame",
-          "email",
-          "message",
-          "mockup"
-        ],
+        "tags": ["frame", "email", "message", "mockup"],
         "preview": {
           "width": "full"
         },
@@ -1489,7 +1389,8 @@
                 "label": "Subject",
                 "default": "New email layout is ready for review"
               }
-            }
+            },
+            "title": "Email Message Frame"
           }
         }
       }
@@ -1497,11 +1398,9 @@
     {
       "name": "frame-015",
       "type": "registry:component",
-      "title": "Video Player Frame",
+      "title": "Проигрыватель видео",
       "description": "Кадр видеоплеера: тёмная обложка, кнопка воспроизведения в центре и дорожка времени с пройденной долей внизу кадра.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1513,12 +1412,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Обложка ролика лежит в aspect-ratio 16 / 9 и держит своё пространство до того, как медиа подгрузится. Кнопка воспроизведения и заголовок — поверх затемнения снизу (scrim), которое гарантирует контраст текста на любой обложке. Дорожка времени — трек с заполненной долей: процент передаётся пропом progress и выражается единственным инлайн-стилем в файле, остальная разметка держится на CSS-переменных.",
       "meta": {
-        "tags": [
-          "frame",
-          "video",
-          "player",
-          "mockup"
-        ],
+        "tags": ["frame", "video", "player", "mockup"],
         "preview": {
           "width": "full"
         },
@@ -1595,7 +1489,8 @@
               "progress": {
                 "label": "Watch progress"
               }
-            }
+            },
+            "title": "Video Player Frame"
           }
         }
       }
@@ -1603,11 +1498,9 @@
     {
       "name": "frame-016",
       "type": "registry:component",
-      "title": "Smart Watch Frame",
+      "title": "Экран смарт-часов",
       "description": "Кадр умных часов с круглым экраном: ремешок и коронка нарисованы на CSS clip-path, а не картинкой, циферблат передаётся через children.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1619,12 +1512,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Корпус — окружность с внутренним отступом и слотом-экраном, тоже кругом, чтобы содержимое циферблата не вылезало за скругление. Ремешок над и под корпусом нарисован clip-path:polygon — тем же приёмом, что и основание ноутбука в frame-005, без второй картинки. Коронка сбоку — маленький прямоугольник в absolute за пределами круга. Корпус светлый металлик: тёмный силуэт растворился бы в тёмной подложке каталога, а тёмный экран держит контраст текста на себе.",
       "meta": {
-        "tags": [
-          "frame",
-          "watch",
-          "wearable",
-          "mockup"
-        ],
+        "tags": ["frame", "watch", "wearable", "mockup"],
         "preview": {
           "width": "full"
         },
@@ -1701,7 +1589,8 @@
                 "label": "Caption",
                 "default": "6,482 steps"
               }
-            }
+            },
+            "title": "Smart Watch Frame"
           }
         }
       }
@@ -1709,11 +1598,9 @@
     {
       "name": "frame-017",
       "type": "registry:component",
-      "title": "Presentation Slide Frame",
+      "title": "Слайд презентации",
       "description": "Кадр слайда презентации с полем 16 / 9 и подписью: строка снизу считает номер слайда и рисует точки положения в колоде.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1725,12 +1612,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Поле держит aspect-ratio 16 / 9 независимо от содержимого слота, поэтому кадр не меняет пропорцию при разных слайдах. Строка под полем показывает текстовый счётчик «index / total» — обычный текст для скринридера — и ряд точек-индикаторов, помеченных aria-hidden как декоративное дублирование того же счётчика. Число точек ограничено восемью: большая колода рисуется тем же счётчиком без ленты из полусотни точек.",
       "meta": {
-        "tags": [
-          "frame",
-          "slide",
-          "presentation",
-          "mockup"
-        ],
+        "tags": ["frame", "slide", "presentation", "mockup"],
         "preview": {
           "width": "full"
         },
@@ -1807,7 +1689,8 @@
               "total": {
                 "label": "Total slides"
               }
-            }
+            },
+            "title": "Presentation Slide Frame"
           }
         }
       }
@@ -1815,11 +1698,9 @@
     {
       "name": "frame-018",
       "type": "registry:component",
-      "title": "Chat Message Frame",
+      "title": "Сообщение в чате",
       "description": "Кадр чата: заголовок с собеседником, лента пузырей сообщений и поле ввода снизу — макет для превью переписки в мессенджере.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1831,12 +1712,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Своё сообщение выравнивается вправо и красится акцентным цветом, чужое — влево на нейтральном фоне; хвостик пузыря срезан скруглением с той стороны, что и выравнивание, поэтому направление читается без подписи отправителя у каждой реплики. Лента обёрнута в role=\"log\" с aria-label на имя собеседника. Поле ввода и кнопка отправки — настоящие disabled input и button: честно сообщают вспомогательным технологиям, что это макет, а не рабочая форма, и не требуют клиентского JS.",
       "meta": {
-        "tags": [
-          "frame",
-          "chat",
-          "messenger",
-          "mockup"
-        ],
+        "tags": ["frame", "chat", "messenger", "mockup"],
         "preview": {
           "width": "full"
         },
@@ -1915,7 +1791,8 @@
                 "label": "Input placeholder",
                 "default": "Message…"
               }
-            }
+            },
+            "title": "Chat Message Frame"
           }
         }
       }
@@ -1923,11 +1800,9 @@
     {
       "name": "frame-019",
       "type": "registry:component",
-      "title": "Gradient Glow Frame",
+      "title": "Кадр со свечением",
       "description": "Кадр с рамкой-градиентом и мягким свечением под ним: сплошная заливка держит середину рамки, размытый слой позади создаёт подсветку.",
-      "categories": [
-        "frame"
-      ],
+      "categories": ["frame"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1939,12 +1814,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Градиентная рамка нарисована без border: внешний блок залит линейным градиентом и держит паддинг 2px, внутренний блок сплошным фоном перекрывает середину, оставляя градиент только по кромке. Свечение — отдельный слой позади кадра с двумя радиальными градиентами и большим blur, сдвинутый вниз и увеличенный за границы рамки, поэтому читается как подсветка из-под кадра. Едва заметная пульсация свечения — CSS keyframes, отключаемая через prefers-reduced-motion.",
       "meta": {
-        "tags": [
-          "frame",
-          "gradient",
-          "glow",
-          "mockup"
-        ],
+        "tags": ["frame", "gradient", "glow", "mockup"],
         "preview": {
           "width": "full"
         },
@@ -1993,7 +1863,8 @@
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Frame019 caption=\"A product cover in a gradient frame\"><img src=\"/shots/product.jpg\" alt=\"\" /></Frame019>"
-            }
+            },
+            "title": "Gradient Glow Frame"
           }
         }
       }

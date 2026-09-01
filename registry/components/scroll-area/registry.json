@@ -4,11 +4,9 @@
     {
       "name": "scrollarea-001",
       "type": "registry:component",
-      "title": "Scroll Area",
+      "title": "Область прокрутки",
       "description": "Область прокрутки с подтёртыми краями: тень у границы — единственный честный признак, что список продолжается.",
-      "categories": [
-        "scroll-area"
-      ],
+      "categories": ["scroll-area"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-scrollarea-001-*. Серверный: хуков нет. Края подтёрты mask-градиентом сверху и снизу, высота задаётся переменной. Область получает tabIndex и role=\"group\" с именем: иначе с клавиатуры её не прокрутить. Полоса прокрутки остаётся видимой.",
       "meta": {
-        "tags": [
-          "scroll",
-          "list",
-          "mask",
-          "overflow"
-        ],
+        "tags": ["scroll", "list", "mask", "overflow"],
         "ai": {
           "export": "Scrollarea001",
           "usage": "<Scrollarea001 title=\"Последние\" items={items} height=\"12rem\" />",
@@ -103,7 +96,8 @@
                 "label": "Height",
                 "default": "12rem"
               }
-            }
+            },
+            "title": "Scroll Area"
           }
         }
       }
@@ -111,11 +105,9 @@
     {
       "name": "scrollarea-002",
       "type": "registry:component",
-      "title": "Edge Shadow Scroll",
+      "title": "Тени у краёв",
       "description": "Область прокрутки, где тени у краёв появляются только с той стороны, где ещё есть содержимое, и делает это чистый CSS: четыре слоя фона вместо обработчика прокрутки.",
-      "categories": [
-        "scroll-area"
-      ],
+      "categories": ["scroll-area"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -127,12 +119,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-scrollarea-002-*. Серверный: хуков и обработчиков нет. Приём держится на background-attachment: две «крышки» цвета подложки объявлены как local и едут вместе с содержимым, две радиальные тени объявлены как scroll и приколоты к рамке. Пока лента не сдвинута, крышка накрывает тень; при прокрутке крышка уезжает и тень открывается. Прокручиваемый узел получает tabindex=\"0\" и role=\"region\" с aria-label: без них область нельзя пролистать с клавиатуры и она не попадает в список ориентиров. overscroll-behavior: contain не даёт прокрутке провалиться на страницу.",
       "meta": {
-        "tags": [
-          "scrollarea",
-          "shadow",
-          "css",
-          "display"
-        ],
+        "tags": ["scrollarea", "shadow", "css", "display"],
         "ai": {
           "export": "Scrollarea002",
           "usage": "<Scrollarea002 title=\"Очередь работ\" items={[\"Пересобрать реестр\", \"Проверить типы\"]} height=\"13rem\" />",
@@ -210,7 +197,8 @@
                 "label": "Height",
                 "default": "13rem"
               }
-            }
+            },
+            "title": "Edge Shadow Scroll"
           }
         }
       }
@@ -218,11 +206,9 @@
     {
       "name": "scrollarea-003",
       "type": "registry:component",
-      "title": "Snap Card Rail",
+      "title": "Полка карточек с прилипанием",
       "description": "Горизонтальная лента с прилипанием: остановка всегда приходится на начало карточки, а не на её середину, и последняя карточка не упирается в край области.",
-      "categories": [
-        "scroll-area"
-      ],
+      "categories": ["scroll-area"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -234,12 +220,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-scrollarea-003-*. Серверный: хуков и обработчиков нет. Прилипание собрано из пары свойств: scroll-snap-type: x mandatory на ленте и scroll-snap-align: start на карточках; scroll-padding-inline повторяет внутренний отступ, поэтому прилипшая карточка не прижимается к самой границе. Внутренние отступы у ленты, а не у контейнера: иначе последняя карточка обрезалась бы краем прокрутки. Лента получает tabindex=\"0\" и role=\"region\" с aria-label, чтобы её можно было листать с клавиатуры. Ширина карточки вынесена в переменную: от неё зависит, сколько видно за раз.",
       "meta": {
-        "tags": [
-          "scrollarea",
-          "carousel",
-          "snap",
-          "display"
-        ],
+        "tags": ["scrollarea", "carousel", "snap", "display"],
         "ai": {
           "export": "Scrollarea003",
           "usage": "<Scrollarea003\n  title=\"Готовые блоки\"\n  cards={[{ title: \"Hero Split\", meta: \"блок · 2 мин\" }]}\n  cardWidth=\"9.5rem\"\n/>",
@@ -317,7 +298,8 @@
                 "label": "Card width",
                 "default": "9.5rem"
               }
-            }
+            },
+            "title": "Snap Card Rail"
           }
         }
       }
@@ -325,11 +307,9 @@
     {
       "name": "scrollarea-004",
       "type": "registry:component",
-      "title": "Sticky Group Headers",
+      "title": "Липкие заголовки групп",
       "description": "Область прокрутки, где заголовок раздела липнет к её верху, а не к верху страницы: сама область и есть предок прокрутки, от которого считается sticky.",
-      "categories": [
-        "scroll-area"
-      ],
+      "categories": ["scroll-area"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -341,12 +321,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-scrollarea-004-*. Серверный: хуков нет. Список собран как один dl: dt — заголовок раздела с position: sticky и top: 0, dd — строки; группы обёрнуты фрагментами, поэтому между dl и dt нет лишнего узла с overflow, который отменил бы прилипание. Sticky считает верх от ближайшего предка с прокруткой, поэтому область обязана быть этим предком — отсюда фиксированная высота и overflow-y на ней. Прокручиваемый узел получает tabindex=\"0\" и role=\"region\" с aria-label. Непрозрачный фон заголовка обязателен: сквозь прозрачный просвечивают уезжающие строки.",
       "meta": {
-        "tags": [
-          "scrollarea",
-          "sticky",
-          "list",
-          "display"
-        ],
+        "tags": ["scrollarea", "sticky", "list", "display"],
         "ai": {
           "export": "Scrollarea004",
           "usage": "<Scrollarea004\n  title=\"Контакты\"\n  groups={[{ title: \"Сегодня\", items: [\"Анна Реброва\"] }]}\n  height=\"14rem\"\n/>",
@@ -424,7 +399,8 @@
                 "label": "Height",
                 "default": "14rem"
               }
-            }
+            },
+            "title": "Sticky Group Headers"
           }
         }
       }
@@ -432,11 +408,9 @@
     {
       "name": "scrollarea-005",
       "type": "registry:component",
-      "title": "Row Counted Panel",
+      "title": "Панель со счётчиком строк",
       "description": "Область, высота которой задана числом видимых строк, а не пикселями: обрезка всегда приходится на границу строки, и подпись «видно 6 из 12» не врёт.",
-      "categories": [
-        "scroll-area"
-      ],
+      "categories": ["scroll-area"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -448,12 +422,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-scrollarea-005-*. Серверный: хуков нет. Высота считается как строка × число строк из двух переменных, поэтому нижняя граница области совпадает с границей строки и полустрока не появляется. Нумерация рисуется CSS-счётчиком в псевдоэлементе: в разметке номеров нет, и при смене порядка список не надо перенумеровывать руками. Прокручиваемый узел получает tabindex=\"0\" и role=\"region\" с aria-label. В подвале стоит честное «видно N из M», где N зажат числом элементов: если строк меньше, чем помещается, подпись не обещает лишнего.",
       "meta": {
-        "tags": [
-          "scrollarea",
-          "counter",
-          "list",
-          "display"
-        ],
+        "tags": ["scrollarea", "counter", "list", "display"],
         "ai": {
           "export": "Scrollarea005",
           "usage": "<Scrollarea005 title=\"История сборок\" items={[\"Сборка 4821 · успешно\"]} rows={6} />",
@@ -531,7 +500,8 @@
               "rows": {
                 "label": "Visible rows"
               }
-            }
+            },
+            "title": "Row Counted Panel"
           }
         }
       }
@@ -539,11 +509,9 @@
     {
       "name": "scrollarea-006",
       "type": "registry:component",
-      "title": "Reveal Active Item",
+      "title": "Показ активного пункта",
       "description": "Область, которая при первом показе сама встаёт на активный элемент, а кнопка «К текущему» возвращает вид на место после ручной прокрутки.",
-      "categories": [
-        "scroll-area"
-      ],
+      "categories": ["scroll-area"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -555,12 +523,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-scrollarea-006-*. Клиентский: нужны useRef на область и активный элемент плюс useEffect для первой установки. Позиция считается руками — scrollTop от offsetTop с поправкой на половину высоты области, — а не через scrollIntoView: тот прокручивает и всех предков, и вместе с областью уезжает страница. Кнопка вызывает тот же расчёт с плавным поведением. Прокручиваемый узел получает tabindex=\"0\" и role=\"region\" с aria-label. Активная строка помечена aria-current и, помимо заливки, несёт толстую отметку слева: цвет один не читается при дальтонизме.",
       "meta": {
-        "tags": [
-          "scrollarea",
-          "active",
-          "scroll",
-          "display"
-        ],
+        "tags": ["scrollarea", "active", "scroll", "display"],
         "ai": {
           "export": "Scrollarea006",
           "usage": "<Scrollarea006 title=\"Разделы урока\" items={[\"00:00 Введение\"]} activeIndex={5} height=\"12rem\" />",
@@ -638,7 +601,8 @@
               "activeIndex": {
                 "label": "Active item"
               }
-            }
+            },
+            "title": "Reveal Active Item"
           }
         }
       }
@@ -646,11 +610,9 @@
     {
       "name": "scrollarea-007",
       "type": "registry:component",
-      "title": "Thin Scrollbar Area",
+      "title": "Тонкая полоса прокрутки",
       "description": "Область с тонкой полосой прокрутки, объявленной дважды: стандартными свойствами и запасным вариантом на псевдоэлементах WebKit — вид одинаков во всех браузерах.",
-      "categories": [
-        "scroll-area"
-      ],
+      "categories": ["scroll-area"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -662,12 +624,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-scrollarea-007-*. Серверный: хуков нет. Сначала объявлены стандартные scrollbar-width и scrollbar-color — их понимают Firefox и свежие сборки Chrome и Safari. Затем, под @supports not (scrollbar-width: thin), тот же вид собирается правилами ::-webkit-scrollbar: запасной путь не включается там, где работает стандартный, поэтому две реализации не спорят. scrollbar-gutter: stable резервирует место под полосу, и содержимое не дёргается, когда она появляется. Полосу не прячем: без неё исчезает и признак прокрутки, и возможность тащить её мышью. Прокручиваемый узел получает tabindex=\"0\" и role=\"region\" с aria-label.",
       "meta": {
-        "tags": [
-          "scrollarea",
-          "scrollbar",
-          "fallback",
-          "display"
-        ],
+        "tags": ["scrollarea", "scrollbar", "fallback", "display"],
         "ai": {
           "export": "Scrollarea007",
           "usage": "<Scrollarea007 title=\"Условия использования\" height=\"12rem\" barWidth=\"0.5rem\" />",
@@ -745,7 +702,8 @@
                 "label": "Bar thickness",
                 "default": "0.5rem"
               }
-            }
+            },
+            "title": "Thin Scrollbar Area"
           }
         }
       }

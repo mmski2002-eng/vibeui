@@ -4,7 +4,7 @@
     {
       "name": "ai-001",
       "type": "registry:block",
-      "title": "Assistant Chat",
+      "title": "Чат с ассистентом",
       "description": "Окно чата с ассистентом: лента объявлена role=\"log\", Enter отправляет, Shift+Enter переносит строку.",
       "categories": ["ai"],
       "dependencies": [],
@@ -99,7 +99,8 @@
                 "label": "Status",
                 "default": "Usually replies in seconds"
               }
-            }
+            },
+            "title": "Assistant Chat"
           }
         }
       }
@@ -107,7 +108,7 @@
     {
       "name": "ai-002",
       "type": "registry:block",
-      "title": "Prompt Composer",
+      "title": "Составитель запроса",
       "description": "Панель запроса к модели: пресеты, приложенные файлы и выбор модели рядом с полем, счётчик появляется у предела.",
       "categories": ["ai"],
       "dependencies": [],
@@ -202,7 +203,8 @@
               "limit": {
                 "label": "Limit"
               }
-            }
+            },
+            "title": "Prompt Composer"
           }
         }
       }
@@ -210,7 +212,7 @@
     {
       "name": "ai-003",
       "type": "registry:block",
-      "title": "Agent Run",
+      "title": "Запуск агента",
       "description": "Лента шагов агента: состояние передаётся формой значка, подробности каждого шага спрятаны в details.",
       "categories": ["ai"],
       "dependencies": [],
@@ -303,7 +305,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Agent Run"
           }
         }
       }
@@ -311,7 +314,7 @@
     {
       "name": "ai-004",
       "type": "registry:block",
-      "title": "Chat Workspace",
+      "title": "Рабочее место чата",
       "description": "Рабочее окно длинного диалога: закреплённый контекст задачи слева, разделители дней в переписке и действия над репликой ассистента.",
       "categories": ["ai"],
       "dependencies": [],
@@ -406,7 +409,8 @@
                 "label": "Context heading",
                 "default": "Task context"
               }
-            }
+            },
+            "title": "Chat Workspace"
           }
         }
       }
@@ -414,7 +418,7 @@
     {
       "name": "ai-005",
       "type": "registry:block",
-      "title": "Sourced Answer",
+      "title": "Ответ с источниками",
       "description": "Ответ ассистента со сносками прямо в тексте и карточками источников, где у каждого есть цитата — тот самый фрагмент, на который опирается ответ.",
       "categories": ["ai"],
       "dependencies": [],
@@ -509,7 +513,8 @@
                 "label": "List heading",
                 "default": "Sources"
               }
-            }
+            },
+            "title": "Sourced Answer"
           }
         }
       }
@@ -517,7 +522,7 @@
     {
       "name": "ai-006",
       "type": "registry:block",
-      "title": "Streaming Reply",
+      "title": "Потоковый ответ",
       "description": "Ответ, который печатается: слова проявляются каскадом, каретка мигает, а при prefers-reduced-motion текст показывается целиком и сразу.",
       "categories": ["ai"],
       "dependencies": [],
@@ -612,7 +617,8 @@
               "speed": {
                 "label": "Word delay, ms"
               }
-            }
+            },
+            "title": "Streaming Reply"
           }
         }
       }
@@ -620,7 +626,7 @@
     {
       "name": "ai-007",
       "type": "registry:block",
-      "title": "Prompt Library",
+      "title": "Библиотека запросов",
       "description": "Библиотека готовых запросов с рубриками-вкладками: карточка — целиком кнопка, которая подставляет формулировку в поле ввода.",
       "categories": ["ai"],
       "dependencies": [],
@@ -715,7 +721,8 @@
                 "label": "Action caption",
                 "default": "Insert into the field"
               }
-            }
+            },
+            "title": "Prompt Library"
           }
         }
       }
@@ -723,7 +730,7 @@
     {
       "name": "ai-008",
       "type": "registry:block",
-      "title": "Answer Compare",
+      "title": "Сравнение ответов",
       "description": "Два ответа на один запрос рядом с разбором сильных и слабых сторон: выбор лучшего сделан радиогруппой без единой строки JS.",
       "categories": ["ai"],
       "dependencies": [],
@@ -818,7 +825,8 @@
                 "label": "Button caption",
                 "default": "Save the choice"
               }
-            }
+            },
+            "title": "Answer Compare"
           }
         }
       }
@@ -826,7 +834,7 @@
     {
       "name": "ai-009",
       "type": "registry:block",
-      "title": "Tool Call",
+      "title": "Вызов инструмента",
       "description": "Карточка вызова инструмента: аргументы словарём, результат рядом с ними, состояние формой значка и сырой ответ в раскрывающемся блоке.",
       "categories": ["ai"],
       "dependencies": [],
@@ -920,7 +928,8 @@
               "state": {
                 "label": "State"
               }
-            }
+            },
+            "title": "Tool Call"
           }
         }
       }
@@ -928,7 +937,7 @@
     {
       "name": "ai-010",
       "type": "registry:block",
-      "title": "Agent Plan Board",
+      "title": "Доска плана агента",
       "description": "План агента доской из трёх колонок: очередь, работа и готовое видны разом, сверху — доля выполненных задач.",
       "categories": ["ai"],
       "dependencies": [],
@@ -1023,7 +1032,8 @@
                 "label": "Progress caption",
                 "default": "Tasks completed"
               }
-            }
+            },
+            "title": "Agent Plan Board"
           }
         }
       }
@@ -1031,7 +1041,7 @@
     {
       "name": "ai-011",
       "type": "registry:block",
-      "title": "Model Settings",
+      "title": "Настройки модели",
       "description": "Настройки ответа модели, где каждый ползунок подписан следствием: видно, что изменится в ответе, а не только какое стало число.",
       "categories": ["ai"],
       "dependencies": [],
@@ -1126,7 +1136,8 @@
               "maxTokens": {
                 "label": "Answer length"
               }
-            }
+            },
+            "title": "Model Settings"
           }
         }
       }
@@ -1134,7 +1145,7 @@
     {
       "name": "ai-012",
       "type": "registry:block",
-      "title": "Context Upload",
+      "title": "Загрузка контекста",
       "description": "Сбор контекста файлами: зона перетаскивания, стадии чтения и индексации у каждого файла и доля занятого окна контекста.",
       "categories": ["ai"],
       "dependencies": [],
@@ -1229,7 +1240,8 @@
               "budgetUsed": {
                 "label": "Window used, %"
               }
-            }
+            },
+            "title": "Context Upload"
           }
         }
       }
@@ -1237,7 +1249,7 @@
     {
       "name": "ai-013",
       "type": "registry:block",
-      "title": "Answer Feedback",
+      "title": "Оценка ответа",
       "description": "Оценка ответа, у которой есть продолжение: палец вниз раскрывает список причин и поле комментария — раскрытие держит :has() без JS.",
       "categories": ["ai"],
       "dependencies": [],
@@ -1332,7 +1344,8 @@
                 "label": "Negative rating",
                 "default": "Not helpful"
               }
-            }
+            },
+            "title": "Answer Feedback"
           }
         }
       }
@@ -1340,7 +1353,7 @@
     {
       "name": "ai-014",
       "type": "registry:block",
-      "title": "Token Budget",
+      "title": "Бюджет токенов",
       "description": "Расход окна контекста долями: системная инструкция, файлы, переписка и остаток — с числами, объяснением и предупреждением у предела.",
       "categories": ["ai"],
       "dependencies": [],
@@ -1435,7 +1448,8 @@
               "limit": {
                 "label": "Window size"
               }
-            }
+            },
+            "title": "Token Budget"
           }
         }
       }
@@ -1443,7 +1457,7 @@
     {
       "name": "ai-015",
       "type": "registry:block",
-      "title": "Chat History",
+      "title": "История чатов",
       "description": "Боковая колонка истории диалогов: поиск идёт и по заголовку, и по первой реплике, а записи сгруппированы по закреплённым и датам.",
       "categories": ["ai"],
       "dependencies": [],
@@ -1538,7 +1552,8 @@
                 "label": "Active thread",
                 "default": "t2"
               }
-            }
+            },
+            "title": "Chat History"
           }
         }
       }
@@ -1546,7 +1561,7 @@
     {
       "name": "ai-016",
       "type": "registry:block",
-      "title": "Action Approval",
+      "title": "Подтверждение действия",
       "description": "Подтверждение действия ассистента: последствия списком, диф правки со знаками «плюс» и «минус» и три равнозначные кнопки решения.",
       "categories": ["ai"],
       "dependencies": [],
@@ -1641,7 +1656,8 @@
                 "label": "Edit target",
                 "default": "app/page.tsx · hero-002"
               }
-            }
+            },
+            "title": "Action Approval"
           }
         }
       }
@@ -1649,7 +1665,7 @@
     {
       "name": "ai-017",
       "type": "registry:block",
-      "title": "Model Error",
+      "title": "Ошибка модели",
       "description": "Экран отказа модели, после которого понятно, что делать: объяснение без «что-то пошло не так», шаги, сохранённый черновик и код для поддержки.",
       "categories": ["ai"],
       "dependencies": [],
@@ -1744,7 +1760,8 @@
                 "label": "Error code",
                 "default": "503 · req_8c41d9"
               }
-            }
+            },
+            "title": "Model Error"
           }
         }
       }
@@ -1752,7 +1769,7 @@
     {
       "name": "ai-018",
       "type": "registry:block",
-      "title": "Document Citation",
+      "title": "Цитата из документа",
       "description": "Цитата из документа вместе с соседними предложениями и выводом, который на ней стоит: видно, что фрагмент не обрезан по удобному слову.",
       "categories": ["ai"],
       "dependencies": [],
@@ -1847,7 +1864,8 @@
                 "label": "Place in the document",
                 "default": "p. 7, cl. 5.2"
               }
-            }
+            },
+            "title": "Document Citation"
           }
         }
       }
@@ -1855,7 +1873,7 @@
     {
       "name": "ai-019",
       "type": "registry:block",
-      "title": "Empty Chat",
+      "title": "Пустой чат",
       "description": "Первый экран чата: вместо перечня возможностей — готовые запросы, которые можно нажать, и честный список того, чего ассистент не умеет.",
       "categories": ["ai"],
       "dependencies": [],
@@ -1950,7 +1968,8 @@
                 "label": "Button caption",
                 "default": "Ask"
               }
-            }
+            },
+            "title": "Empty Chat"
           }
         }
       }

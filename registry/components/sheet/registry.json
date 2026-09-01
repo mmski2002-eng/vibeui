@@ -4,11 +4,9 @@
     {
       "name": "sheet-001",
       "type": "registry:component",
-      "title": "Bottom Sheet",
+      "title": "Нижний лист",
       "description": "Лист снизу на нативном dialog: за верхним краем видно страницу — это и отличает лист от полноэкранного окна.",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-001-*. Клиентский: \"use client\" — нужен ref для showModal и close. Высота ограничена min(28rem, 85dvh), нижний отступ учитывает env(safe-area-inset-bottom). Выезд снизу сделан переходом translate с @starting-style. Сводка выложена словарём dl.",
       "meta": {
-        "tags": [
-          "sheet",
-          "mobile",
-          "dialog",
-          "checkout"
-        ],
+        "tags": ["sheet", "mobile", "dialog", "checkout"],
         "ai": {
           "export": "Sheet001",
           "usage": "<Sheet001 triggerLabel=\"Показать заказ\" rows={rows} primaryLabel=\"Оформить\" />",
@@ -114,7 +107,8 @@
                 "label": "Action",
                 "default": "Checkout"
               }
-            }
+            },
+            "title": "Bottom Sheet"
           }
         }
       }
@@ -122,11 +116,9 @@
     {
       "name": "sheet-002",
       "type": "registry:component",
-      "title": "Settings Sheet",
+      "title": "Лист настроек",
       "description": "Лист настроек справа, висящий карточкой с отступом от края: тумблеры применяются сразу, кнопки «Сохранить» здесь нет — у настроек-переключателей подтверждение только мешает.",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -138,12 +130,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-002-*. Клиентский: \"use client\" — ref для showModal и close. Лист отстоит от края окна на 0.625rem, поэтому inset задан явно и margin:0 не даёт dialog прилипнуть к углу. Тумблер собран на input[type=checkbox] с appearance:none и role=\"switch\": состояние читается скринридером само. Прокручивается только средняя область.",
       "meta": {
-        "tags": [
-          "sheet",
-          "settings",
-          "switch",
-          "dialog"
-        ],
+        "tags": ["sheet", "settings", "switch", "dialog"],
         "ai": {
           "export": "Sheet002",
           "usage": "<Sheet002 triggerLabel=\"Настройки\" title=\"Настройки\" groups={groups} />",
@@ -223,7 +210,8 @@
                 "label": "Heading",
                 "default": "Settings"
               }
-            }
+            },
+            "title": "Settings Sheet"
           }
         }
       }
@@ -231,11 +219,9 @@
     {
       "name": "sheet-003",
       "type": "registry:component",
-      "title": "Tabbed Sheet",
+      "title": "Лист с вкладками",
       "description": "Лист с разделами внутри: переключатель собран на группе радиокнопок, поэтому стрелки, Home и End работают от браузера, а не от самописной логики вкладок.",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -247,12 +233,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-003-*. Клиентский: \"use client\", useState держит активный раздел, useId — имя группы радиокнопок, useRef — showModal и close. Сегментированный переключатель — fieldset с радиокнопками, спрятанными clip-path; активная вкладка подсвечивается через :has(input:checked). Высота листа зафиксирована, поэтому смена раздела не дёргает страницу.",
       "meta": {
-        "tags": [
-          "sheet",
-          "tabs",
-          "radiogroup",
-          "dialog"
-        ],
+        "tags": ["sheet", "tabs", "radiogroup", "dialog"],
         "ai": {
           "export": "Sheet003",
           "usage": "<Sheet003 triggerLabel=\"Показатели проекта\" tabs={tabs} />",
@@ -332,7 +313,8 @@
                 "label": "Button",
                 "default": "Project metrics"
               }
-            }
+            },
+            "title": "Tabbed Sheet"
           }
         }
       }
@@ -340,11 +322,9 @@
     {
       "name": "sheet-004",
       "type": "registry:component",
-      "title": "File Sheet",
+      "title": "Лист файла",
       "description": "Лист предпросмотра файла: сначала крупная область самого документа, и только потом размер, дата и автор — файл узнают глазами, а не по строке свойств.",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -356,12 +336,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-004-*. Клиентский: \"use client\" — ref для showModal и close. Область предпросмотра нарисована двумя градиентами, расширение вычисляется из имени файла, поэтому компонент не тащит ни картинок, ни иконочного шрифта. Факты выложены сеткой auto-fit, имя файла переносится по overflow-wrap:anywhere.",
       "meta": {
-        "tags": [
-          "sheet",
-          "file",
-          "preview",
-          "download"
-        ],
+        "tags": ["sheet", "file", "preview", "download"],
         "ai": {
           "export": "Sheet004",
           "usage": "<Sheet004\n  fileName=\"Договор-подряда-2024.pdf\"\n  fileKind=\"Документ PDF · загружен 12 марта\"\n  facts={facts}\n/>",
@@ -441,7 +416,8 @@
                 "label": "Download",
                 "default": "Download"
               }
-            }
+            },
+            "title": "File Sheet"
           }
         }
       }
@@ -449,11 +425,9 @@
     {
       "name": "sheet-005",
       "type": "registry:component",
-      "title": "Picker Sheet",
+      "title": "Лист выбора",
       "description": "Лист выбора из длинного списка: выпадающий список на сотню строк на телефоне неработоспособен, поэтому выбор переезжает в лист с поиском и подтверждением внизу.",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -465,12 +439,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-005-*. Клиентский: \"use client\", useState держит строку поиска и выбранное значение, useId — имя группы радиокнопок, useRef — showModal и close. Фильтрация идёт по подстроке в нижнем регистре. Поиск и подтверждение вынесены из прокручиваемой области, список — fieldset с радиокнопками.",
       "meta": {
-        "tags": [
-          "sheet",
-          "picker",
-          "search",
-          "mobile"
-        ],
+        "tags": ["sheet", "picker", "search", "mobile"],
         "ai": {
           "export": "Sheet005",
           "usage": "<Sheet005\n  triggerLabel=\"Выбрать регион\"\n  title=\"Регион доставки\"\n  options={options}\n/>",
@@ -550,7 +519,8 @@
                 "label": "Search",
                 "default": "Find a region"
               }
-            }
+            },
+            "title": "Picker Sheet"
           }
         }
       }
@@ -558,11 +528,9 @@
     {
       "name": "sheet-006",
       "type": "registry:component",
-      "title": "Confirm Sheet",
+      "title": "Лист подтверждения",
       "description": "Подтверждение опасного действия на телефоне: вопрос приезжает снизу, последствия перечислены списком, а фокус при открытии стоит на отказе.",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -574,12 +542,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-006-*. Клиентский: \"use client\" — ref для showModal, дальше работает форма method=\"dialog\": обе кнопки закрывают лист сами и возвращают своё value. Заголовок связан с dialog через aria-labelledby и useId. Знак опасности нарисован псевдоэлементами, кнопки уложены в столбик и имеют высоту 3rem.",
       "meta": {
-        "tags": [
-          "sheet",
-          "confirm",
-          "destructive",
-          "mobile"
-        ],
+        "tags": ["sheet", "confirm", "destructive", "mobile"],
         "ai": {
           "export": "Sheet006",
           "usage": "<Sheet006\n  title=\"Удалить проект «Витрина»?\"\n  consequences={consequences}\n  confirmLabel=\"Удалить навсегда\"\n/>",
@@ -659,7 +622,8 @@
                 "label": "Confirm",
                 "default": "Delete forever"
               }
-            }
+            },
+            "title": "Confirm Sheet"
           }
         }
       }
@@ -667,11 +631,9 @@
     {
       "name": "sheet-007",
       "type": "registry:component",
-      "title": "Nested Sheet",
+      "title": "Вложенный лист",
       "description": "Лист с двумя уровнями вместо второго окна поверх первого: уровни лежат в одной дорожке и сдвигаются вбок, поэтому переход читается как «вглубь».",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -683,12 +645,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-007-*. Клиентский: \"use client\", useState держит открытый раздел, useRef — showModal и close. Оба уровня лежат в дорожке шириной 200% и сдвигаются через translate по data-level; неактивный уровень помечен inert, поэтому его кнопки выпадают из Tab-порядка. Стрелка и шеврон нарисованы бордюрами повёрнутого квадрата.",
       "meta": {
-        "tags": [
-          "sheet",
-          "nested",
-          "navigation",
-          "mobile"
-        ],
+        "tags": ["sheet", "nested", "navigation", "mobile"],
         "ai": {
           "export": "Sheet007",
           "usage": "<Sheet007\n  triggerLabel=\"Настройки приложения\"\n  title=\"Настройки\"\n  sections={sections}\n/>",
@@ -768,7 +725,8 @@
                 "label": "Button",
                 "default": "App settings"
               }
-            }
+            },
+            "title": "Nested Sheet"
           }
         }
       }
@@ -776,11 +734,9 @@
     {
       "name": "menu-007",
       "type": "registry:component",
-      "title": "Action Sheet",
+      "title": "Лист действий",
       "description": "Лист действий снизу: крупные цели у нижнего края и отдельная кнопка отмены — закрыть должно быть так же легко, как открыть.",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -792,12 +748,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-007-*. Клиентский: \"use client\". Нижний отступ учитывает env(safe-area-inset-bottom), высота пункта 2.75rem — цель под большой палец. У пунктов есть пояснения второй строкой, опасное действие красится текстом, отмена вынесена отдельной кнопкой во всю ширину.",
       "meta": {
-        "tags": [
-          "menu",
-          "sheet",
-          "mobile",
-          "actions"
-        ],
+        "tags": ["menu", "sheet", "mobile", "actions"],
         "preview": {
           "width": "full"
         },
@@ -887,7 +838,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Action Sheet"
           }
         }
       }

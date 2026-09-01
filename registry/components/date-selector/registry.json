@@ -4,11 +4,9 @@
     {
       "name": "date-001",
       "type": "registry:component",
-      "title": "Date Field",
+      "title": "Поле даты",
       "description": "Поле даты на нативном input: календарь, локаль и системный выбор на телефоне достаются от браузера.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-date-001-*. Серверный: хуков нет. Значение хранится в формате ГГГГ-ММ-ДД, а показывается по настройкам системы. Границы заданы min и max, поэтому недоступные даты отсекает сам браузер, а пояснение связано с полем через aria-describedby.",
       "meta": {
-        "tags": [
-          "date",
-          "native",
-          "form",
-          "calendar"
-        ],
+        "tags": ["date", "native", "form", "calendar"],
         "ai": {
           "export": "Date001",
           "usage": "<Date001 label=\"Дата поездки\" min=\"2026-08-31\" max=\"2026-09-30\" />",
@@ -105,7 +98,8 @@
                 "label": "Note",
                 "default": "Dates through the end of September."
               }
-            }
+            },
+            "title": "Date Field"
           }
         }
       }
@@ -113,11 +107,9 @@
     {
       "name": "date-002",
       "type": "registry:component",
-      "title": "Calendar Button",
+      "title": "Кнопка календаря",
       "description": "Поле даты с настоящей кнопкой календаря рядом: родная иконка внутри поля крошечная, а в части браузеров её вообще не видно.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -129,12 +121,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-date-002-*. Клиентский: нужен ref на поле и обработчик клика. Кнопка вызывает input.showPicker() — тот же системный календарь, что открывает родная иконка, но зона нажатия 2.75rem вместо нескольких пикселей. Метод знают не все браузеры, поэтому есть запасной путь: фокус в поле и ввод с клавиатуры. Родной индикатор скрыт, чтобы рядом не оказалось двух кнопок с одинаковым смыслом.",
       "meta": {
-        "tags": [
-          "date",
-          "calendar",
-          "picker",
-          "form"
-        ],
+        "tags": ["date", "calendar", "picker", "form"],
         "ai": {
           "export": "Date002",
           "usage": "<Date002 label=\"Дата визита\" defaultValue=\"2026-09-15\" min=\"2026-09-01\" max=\"2026-12-31\" />",
@@ -218,7 +205,8 @@
                 "label": "Date",
                 "default": "2026-09-15"
               }
-            }
+            },
+            "title": "Calendar Button"
           }
         }
       }
@@ -226,11 +214,9 @@
     {
       "name": "date-003",
       "type": "registry:component",
-      "title": "Range Two Fields",
+      "title": "Диапазон двумя полями",
       "description": "Диапазон дат двумя полями, где порядок чинится сам: конец подтягивается за началом, а длительность считается тут же.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -242,12 +228,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-date-003-*. Клиентский: обе даты в состоянии, они связаны. Второму полю ставится min по первому, поэтому системный календарь просто не даёт выбрать дату раньше начала. Если начало сдвинули за уже выбранный конец, конец переносится на следующий день вместо ошибки. Даты сравниваются как строки ISO — при одинаковом формате это корректно и не требует парсинга. legend лежит во float, поэтому у ряда полей стоит clear:both.",
       "meta": {
-        "tags": [
-          "date",
-          "range",
-          "booking",
-          "validation"
-        ],
+        "tags": ["date", "range", "booking", "validation"],
         "ai": {
           "export": "Date003",
           "usage": "<Date003 legend=\"Даты проживания\" defaultFrom=\"2026-09-14\" defaultTo=\"2026-09-19\" min=\"2026-09-01\" />",
@@ -329,7 +310,8 @@
                 "label": "Check-in",
                 "default": "2026-09-14"
               }
-            }
+            },
+            "title": "Range Two Fields"
           }
         }
       }
@@ -337,11 +319,9 @@
     {
       "name": "date-004",
       "type": "registry:component",
-      "title": "Date Time Pair",
+      "title": "Дата и время",
       "description": "Дата и время двумя полями в одной рамке, с явной подписью часового пояса: «в 19:00» без пояса срывает встречи чаще всего.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -353,12 +333,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-date-004-*. Серверный: состояние не нужно, оба значения забирает форма по именам name-date и name-time. Вместо datetime-local два родных поля в общей рамке: на телефоне datetime-local открывает два экрана подряд, а на десктопе даёт длинную маску, где легко промахнуться мимо сегмента. Рамка одна, focus-within подсвечивает её целиком, поэтому пара читается как одно значение.",
       "meta": {
-        "tags": [
-          "date",
-          "time",
-          "schedule",
-          "timezone"
-        ],
+        "tags": ["date", "time", "schedule", "timezone"],
         "ai": {
           "export": "Date004",
           "usage": "<Date004 label=\"Начало встречи\" defaultDate=\"2026-09-08\" defaultTime=\"19:00\" timezone=\"Время московское, UTC+3\" />",
@@ -440,7 +415,8 @@
                 "label": "Timezone",
                 "default": "Moscow time, UTC+3"
               }
-            }
+            },
+            "title": "Date Time Pair"
           }
         }
       }
@@ -448,11 +424,9 @@
     {
       "name": "date-005",
       "type": "registry:component",
-      "title": "Relative Presets",
+      "title": "Относительные пресеты",
       "description": "Поле даты с кнопками «сегодня» и «завтра»: человек думает словами, а вводить его заставляют числами.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -464,12 +438,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-date-005-*. Клиентский: дата и выбранный пресет в состоянии. Системные часы читаются в обработчике нажатия, а не при отрисовке: вычислить «сегодня» на сервере и на клиенте — верный способ получить разные даты на границе поясов и расхождение при гидратации. День недели считается из выбранного значения разбором по частям, потому что Date.parse трактует «2026-09-16» как UTC и в минусовых поясах отдаёт предыдущий день.",
       "meta": {
-        "tags": [
-          "date",
-          "presets",
-          "quick",
-          "form"
-        ],
+        "tags": ["date", "presets", "quick", "form"],
         "ai": {
           "export": "Date005",
           "usage": "<Date005 label=\"Дата доставки\" defaultValue=\"2026-09-16\" presets={[{ text: \"Сегодня\", days: 0 }, { text: \"Завтра\", days: 1 }]} />",
@@ -551,7 +520,8 @@
                 "label": "Date",
                 "default": "2026-09-16"
               }
-            }
+            },
+            "title": "Relative Presets"
           }
         }
       }
@@ -559,11 +529,9 @@
     {
       "name": "date-006",
       "type": "registry:component",
-      "title": "Deadline Warning",
+      "title": "Предупреждение о сроке",
       "description": "Поле срока, которое само говорит, что дата уже прошла: браузер прошедшую дату считает валидной и молчит.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -575,12 +543,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-date-006-*. Клиентский: дата в состоянии, а сегодняшний день читается через useSyncExternalStore — серверный снимок пустой, поэтому сравнивать нечего и гидратация не расходится; считать «сегодня» при отрисовке значит получить на сервере и на клиенте разные даты. Состояний три: прошло, скоро, в запасе; они помечаются data-state на корне и переопределяют одну переменную акцента, поэтому цвет рамки, полосы и текста меняется разом. До первого клиентского снимка состояние нейтральное.",
       "meta": {
-        "tags": [
-          "date",
-          "deadline",
-          "warning",
-          "task"
-        ],
+        "tags": ["date", "deadline", "warning", "task"],
         "ai": {
           "export": "Date006",
           "usage": "<Date006 label=\"Срок сдачи\" defaultValue=\"2026-09-04\" soonInDays={3} />",
@@ -662,7 +625,8 @@
               "soonInDays": {
                 "label": "\"Soon\" threshold"
               }
-            }
+            },
+            "title": "Deadline Warning"
           }
         }
       }
@@ -670,11 +634,9 @@
     {
       "name": "date-007",
       "type": "registry:component",
-      "title": "Three Selects",
+      "title": "Три списка",
       "description": "Дата рождения тремя списками: долистать календарь до 1987 года — сорок нажатий, а маска требует помнить порядок частей.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -686,12 +648,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-date-007-*. Клиентский: число дней зависит от выбранных месяца и года. Количество дней берётся из new Date(year, month, 0).getDate() — нулевой день следующего месяца и есть последний день текущего, поэтому високосный февраль считается сам. Если выбранный день выпал из месяца, он подтягивается к последнему существующему, а не обнуляется. legend лежит во float, поэтому у ряда стоит clear:both.",
       "meta": {
-        "tags": [
-          "date",
-          "select",
-          "birthday",
-          "form"
-        ],
+        "tags": ["date", "select", "birthday", "form"],
         "ai": {
           "export": "Date007",
           "usage": "<Date007 legend=\"Дата рождения\" defaultValue=\"1987-04-12\" fromYear={1940} toYear={2010} />",
@@ -773,7 +730,8 @@
               "fromYear": {
                 "label": "First year"
               }
-            }
+            },
+            "title": "Three Selects"
           }
         }
       }
@@ -781,11 +739,9 @@
     {
       "name": "date-008",
       "type": "registry:component",
-      "title": "Quarter Hour Slots",
+      "title": "Слоты по четверти часа",
       "description": "Время по сетке в четверть часа: любое введённое значение округляется до ближайшей четверти, а кнопки сдвигают по шагу.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -797,12 +753,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-date-008-*. Клиентский: время в состоянии, кнопки и округление меняют его. Время переводится в минуты от полуночи — так сдвиг и выравнивание по сетке становятся обычной арифметикой, без разбора строк на каждом шаге. Округление к ближайшей четверти делается по blur, а не на каждое нажатие, иначе поле начнёт прыгать во время набора. Границы приёма заданы через min и max и учитываются и кнопками, и клавиатурой.",
       "meta": {
-        "tags": [
-          "time",
-          "slots",
-          "booking",
-          "step"
-        ],
+        "tags": ["time", "slots", "booking", "step"],
         "ai": {
           "export": "Date008",
           "usage": "<Date008 label=\"Время записи\" defaultValue=\"14:30\" stepMinutes={15} openAt=\"09:00\" closeAt=\"20:00\" />",
@@ -884,7 +835,8 @@
               "stepMinutes": {
                 "label": "Step, min"
               }
-            }
+            },
+            "title": "Quarter Hour Slots"
           }
         }
       }

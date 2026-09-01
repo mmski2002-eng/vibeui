@@ -4,7 +4,7 @@
     {
       "name": "field-001",
       "type": "registry:component",
-      "title": "Field With Error",
+      "title": "Поле с ошибкой",
       "description": "Обвязка поля: пояснение и ошибка связаны через aria-describedby и читаются вслух вместе со значением, а не отдельно.",
       "categories": ["field"],
       "dependencies": [],
@@ -98,7 +98,8 @@
                 "label": "Error",
                 "default": "The address has no \"@\" — check the spelling."
               }
-            }
+            },
+            "title": "Field With Error"
           }
         }
       }
@@ -106,7 +107,7 @@
     {
       "name": "field-002",
       "type": "registry:component",
-      "title": "Field Shell",
+      "title": "Оболочка поля",
       "description": "Каркас поля: рамка обнимает подпись и контрол вместе, а подсказка и ошибка делят одну строку снизу — форма не прыгает при появлении ошибки.",
       "categories": ["field"],
       "dependencies": [],
@@ -236,7 +237,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Field Shell"
           }
         }
       }
@@ -244,7 +246,7 @@
     {
       "name": "field-003",
       "type": "registry:component",
-      "title": "Required Marker",
+      "title": "Отметка обязательного",
       "description": "Обязательное поле со звёздочкой, которая объясняет себя: расшифровка в <abbr>, скрытое слово для screen reader и сноска рядом с полями.",
       "categories": ["field"],
       "dependencies": [],
@@ -363,7 +365,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Required Marker"
           }
         }
       }
@@ -371,7 +374,7 @@
     {
       "name": "field-004",
       "type": "registry:component",
-      "title": "Counter Ring",
+      "title": "Кольцо счётчика",
       "description": "Поле со счётчиком остатка в виде кольца: доля заполнения видна краем глаза, точное число стоит внутри кольца, а последняя четверть краснеет.",
       "categories": ["field"],
       "dependencies": [],
@@ -479,7 +482,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Counter Ring"
           }
         }
       }
@@ -487,7 +491,7 @@
     {
       "name": "field-005",
       "type": "registry:component",
-      "title": "Unit Affix",
+      "title": "Единица у поля",
       "description": "Поле с текстовой приставкой слева и выбором единицы справа в одной рамке: значение и единица вводятся рядом и уходят на сервер двумя полями.",
       "categories": ["field"],
       "dependencies": [],
@@ -606,7 +610,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Unit Affix"
           }
         }
       }
@@ -614,7 +619,7 @@
     {
       "name": "field-006",
       "type": "registry:component",
-      "title": "Action Field",
+      "title": "Поле с действием",
       "description": "Поле с кнопкой действия внутри рамки: Enter отправляет без обработчика клавиш, а пока поле пустое, кнопка выключена — нажимать нечего.",
       "categories": ["field"],
       "dependencies": [],
@@ -733,7 +738,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Action Field"
           }
         }
       }
@@ -741,7 +747,7 @@
     {
       "name": "field-007",
       "type": "registry:component",
-      "title": "Copy Field",
+      "title": "Поле с копированием",
       "description": "Поле только для чтения с кнопкой копирования: значение лежит в настоящем input, а при отказе буфера оно просто выделяется целиком.",
       "categories": ["field"],
       "dependencies": [],
@@ -860,7 +866,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Copy Field"
           }
         }
       }
@@ -868,7 +875,7 @@
     {
       "name": "field-008",
       "type": "registry:component",
-      "title": "Availability Check",
+      "title": "Проверка занятости",
       "description": "Поле с проверкой занятости на лету: через паузу после ввода состояние показывается и значком, и словом — «проверяем», «занято», «свободно».",
       "categories": ["field"],
       "dependencies": [],
@@ -987,7 +994,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Availability Check"
           }
         }
       }
@@ -995,7 +1003,7 @@
     {
       "name": "field-009",
       "type": "registry:component",
-      "title": "Inline Label Row",
+      "title": "Подпись в строке",
       "description": "Строка формы с подписью слева: на широкой ширине колонка подписей выравнивает форму по одной вертикали, на узкой строка складывается в столбец.",
       "categories": ["field"],
       "dependencies": [],
@@ -1114,7 +1122,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Inline Label Row"
           }
         }
       }
@@ -1122,7 +1131,7 @@
     {
       "name": "field-010",
       "type": "registry:component",
-      "title": "Grouped Error",
+      "title": "Ошибка группы полей",
       "description": "Группа полей даты с одной общей ошибкой: «31 февраля» неверно целиком, поэтому сообщение живёт на fieldset, а не под одним из трёх полей.",
       "categories": ["field"],
       "dependencies": [],
@@ -1241,7 +1250,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Grouped Error"
           }
         }
       }
@@ -1249,7 +1259,7 @@
     {
       "name": "field-011",
       "type": "registry:component",
-      "title": "Draft Autosave",
+      "title": "Автосохранение черновика",
       "description": "Поле черновика с автосохранением: пауза после ввода сама запускает сохранение, а под текстом остаётся отметка времени последнего успешного сохранения.",
       "categories": ["field"],
       "dependencies": [],
@@ -1352,7 +1362,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Draft Autosave"
           }
         }
       }

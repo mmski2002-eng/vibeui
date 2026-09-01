@@ -23,7 +23,7 @@ export function CatalogTopbar({
             VibeUI
           </Link>
           <span className="border-shell-border text-shell-muted hidden rounded-full border px-2 py-0.5 text-xs sm:inline">
-            {itemCount} {t.topbar.items}
+            {t.topbar.items(itemCount)}
           </span>
         </div>
 
@@ -39,6 +39,14 @@ export function CatalogTopbar({
             className="hover:text-shell-fg focus-visible:ring-shell-ring rounded-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
           >
             {t.topbar.blocks}
+          </Link>
+          {/* Внутренняя страница согласования дизайна: одна на весь сайт,
+              без языковой пары, поэтому ссылка без префикса локали. */}
+          <Link
+            href="/lab"
+            className="hover:text-shell-fg focus-visible:ring-shell-ring rounded-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+          >
+            {t.topbar.lab}
           </Link>
           <LocaleSwitch locale={locale} />
         </nav>

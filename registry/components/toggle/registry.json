@@ -4,11 +4,9 @@
     {
       "name": "toggle-001",
       "type": "registry:component",
-      "title": "Bold Toggle",
+      "title": "Переключатель жирного",
       "description": "Кнопка начертания над образцом текста: нажатие меняет образец сразу, поэтому видно, что toggle — это действие над объектом, а не настройка формы.",
-      "categories": [
-        "toggle"
-      ],
+      "categories": ["toggle"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, собственная палитра --vibeui-toggle-001-*. Клиентский: состояние держит useState. Кнопка объявляет состояние через aria-pressed, а не через checked: toggle — мгновенное действие над видом или объектом (сделать выделение жирным), switch — настройка, которая включает режим, checkbox — поле формы, которое уедет на сервер при отправке. Вид нажатой кнопки выбирается селектором button[aria-pressed=\"true\"], поэтому разметка и стиль не могут разойтись. Образец текста лежит рядом и получает font-weight через data-bold на корне — эффект виден в тот же миг.",
       "meta": {
-        "tags": [
-          "toggle",
-          "aria-pressed",
-          "formatting",
-          "editor"
-        ],
+        "tags": ["toggle", "aria-pressed", "formatting", "editor"],
         "preview": {
           "width": "full"
         },
@@ -106,7 +99,8 @@
                 "label": "Button name",
                 "default": "Bold"
               }
-            }
+            },
+            "title": "Bold Toggle"
           }
         }
       }
@@ -114,11 +108,9 @@
     {
       "name": "toggle-002",
       "type": "registry:component",
-      "title": "Pin Toggle",
+      "title": "Закрепление",
       "description": "Toggle с иконкой и постоянной подписью: подпись остаётся именем действия, а результат объявляет живая строка под кнопкой.",
-      "categories": [
-        "toggle"
-      ],
+      "categories": ["toggle"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -130,12 +122,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-002-*. Клиентский: useState. Подпись кнопки не меняется при нажатии — меняется только aria-pressed и живая строка role=\"status\" под ней. Это осознанное решение: подпись — имя кнопки, и если её переписать на «Открепить», скринридер прочитает новое имя вместе с состоянием и получится «Открепить, нажато». Нажатое состояние показано тремя признаками сразу — заливкой значка (fill:currentColor у path), фоном и словом в строке, — потому что один цвет не читается при дальтонизме. В отличие от switch, действие применяется мгновенно и к конкретному объекту.",
       "meta": {
-        "tags": [
-          "toggle",
-          "aria-pressed",
-          "pin",
-          "icon"
-        ],
+        "tags": ["toggle", "aria-pressed", "pin", "icon"],
         "ai": {
           "export": "Toggle002",
           "usage": "<Toggle002\n  label=\"Закрепить\"\n  onLabel=\"Закреплено вверху списка\"\n  defaultPressed\n/>",
@@ -213,7 +200,8 @@
                 "label": "Result",
                 "default": "Pinned to the top of the list"
               }
-            }
+            },
+            "title": "Pin Toggle"
           }
         }
       }
@@ -221,11 +209,9 @@
     {
       "name": "toggle-003",
       "type": "registry:component",
-      "title": "Favorite Star",
+      "title": "Звезда избранного",
       "description": "Кнопка избранного со счётчиком: звезда заливается, число рядом меняется в тот же миг, а сам счётчик вынесен из имени кнопки.",
-      "categories": [
-        "toggle"
-      ],
+      "categories": ["toggle"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -237,12 +223,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-003-*. Клиентский: useState. Счётчик лежит вне кнопки в span с role=\"status\": внутри он приклеился бы к имени и скринридер читал бы «В избранное 128, нажато». Отметка показана двумя признаками — заливкой звезды через fill:currentColor и цветом рамки, — а короткая анимация появления привязана к [aria-pressed=\"true\"] и отключается по prefers-reduced-motion. Это toggle, а не checkbox: избранное меняется сразу и относится к объекту, а не к полю формы.",
       "meta": {
-        "tags": [
-          "toggle",
-          "favorite",
-          "counter",
-          "aria-pressed"
-        ],
+        "tags": ["toggle", "favorite", "counter", "aria-pressed"],
         "preview": {
           "width": "full"
         },
@@ -323,7 +304,8 @@
               "count": {
                 "label": "Counter"
               }
-            }
+            },
+            "title": "Favorite Star"
           }
         }
       }
@@ -331,11 +313,9 @@
     {
       "name": "toggle-004",
       "type": "registry:component",
-      "title": "Grid Overlay",
+      "title": "Сетка поверх",
       "description": "Toggle «показать сетку»: кнопка связана с холстом через aria-controls, а сетка включается отдельным слоем поверх макета и ничего в нём не двигает.",
-      "categories": [
-        "toggle"
-      ],
+      "categories": ["toggle"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -347,12 +327,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-004-*. Клиентский: useState и useId. Кнопка объявляет aria-controls на холст — так связь «кнопка → область» есть не только в голове автора. Сетка нарисована двумя linear-gradient на отдельном слое с pointer-events:none и включается прозрачностью, поэтому макет под ней не перерисовывается и не дёргается. Шаг клетки приходит пропом step и уезжает в CSS-переменную --vibeui-toggle-004-step инлайном — это динамическое значение, классом его не выразить. Toggle, а не switch: вид меняется здесь и сейчас.",
       "meta": {
-        "tags": [
-          "toggle",
-          "grid",
-          "aria-controls",
-          "canvas"
-        ],
+        "tags": ["toggle", "grid", "aria-controls", "canvas"],
         "preview": {
           "width": "full"
         },
@@ -433,7 +408,8 @@
               "step": {
                 "label": "Grid step"
               }
-            }
+            },
+            "title": "Grid Overlay"
           }
         }
       }
@@ -441,11 +417,9 @@
     {
       "name": "toggle-005",
       "type": "registry:component",
-      "title": "Mute Toggle",
+      "title": "Отключение звука",
       "description": "Кнопка отключения звука с двумя значками состояния: оба лежат в разметке, показывается тот, что совпал с aria-pressed.",
-      "categories": [
-        "toggle"
-      ],
+      "categories": ["toggle"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -457,12 +431,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-005-*. Клиентский: useState. Приём: два <svg> всегда в разметке, а видимость выбирается селекторами button[aria-pressed=\"false\"] [data-part=\"sound\"] и button[aria-pressed=\"true\"] [data-part=\"silent\"] — значок не может разойтись с состоянием, потому что источник у них один атрибут. Имя кнопки остаётся постоянным, состояние проговаривает строка role=\"status\". Полоса громкости гаснет через data-muted на корне: состояние обязано читаться не только по значку. Это toggle: звук выключается сразу, а не после подтверждения.",
       "meta": {
-        "tags": [
-          "toggle",
-          "mute",
-          "icon-state",
-          "audio"
-        ],
+        "tags": ["toggle", "mute", "icon-state", "audio"],
         "preview": {
           "width": "full"
         },
@@ -543,7 +512,8 @@
               "volume": {
                 "label": "Volume"
               }
-            }
+            },
+            "title": "Mute Toggle"
           }
         }
       }
@@ -551,11 +521,9 @@
     {
       "name": "toggle-006",
       "type": "registry:component",
-      "title": "Saving Toggle",
+      "title": "Переключатель с сохранением",
       "description": "Toggle с запросом на сервер: пока идёт сохранение, кнопка помечена aria-busy и держит старое состояние, поэтому она не обещает того, чего ещё не произошло.",
-      "categories": [
-        "toggle"
-      ],
+      "categories": ["toggle"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -567,12 +535,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-006-*. Клиентский: useState, useRef и useEffect для отмены таймера при размонтировании (setTimeout здесь заменяет запрос). Состояние переключается только после ответа: до этого стоит aria-busy=\"true\", значок меняется на волчок, а aria-pressed остаётся прежним. Ширина кнопки зафиксирована min-width, иначе она прыгает при каждой смене значка. Строка role=\"status\" называет исход словами. В отличие от checkbox в форме, здесь нет кнопки «Сохранить» — сохранение и есть само переключение.",
       "meta": {
-        "tags": [
-          "toggle",
-          "loading",
-          "aria-busy",
-          "async"
-        ],
+        "tags": ["toggle", "loading", "aria-busy", "async"],
         "preview": {
           "width": "full"
         },
@@ -653,7 +616,8 @@
               "delay": {
                 "label": "Delay, ms"
               }
-            }
+            },
+            "title": "Saving Toggle"
           }
         }
       }
@@ -661,11 +625,9 @@
     {
       "name": "toggle-007",
       "type": "registry:component",
-      "title": "Text Scale",
+      "title": "Масштаб текста",
       "description": "Toggle размерной шкалы: одно нажатие меняет множитель, от которого считаются все размеры образца, поэтому крупный режим не ломает пропорции.",
-      "categories": [
-        "toggle"
-      ],
+      "categories": ["toggle"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -677,12 +639,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-007-*. Клиентский: useState. Вся типографика образца считается через calc() от одной переменной --vibeui-toggle-007-scale, которая приезжает инлайном как множитель (1 или scale/100): заголовок, абзац и отступы растут вместе, а не превращаются в лесенку. На самой кнопке нарисована шкала — две «A» разного кегля, — поэтому смысл читается без подписи; доступное имя даёт aria-label. Toggle, а не switch: масштаб применяется к видимому образцу мгновенно.",
       "meta": {
-        "tags": [
-          "toggle",
-          "scale",
-          "typography",
-          "accessibility"
-        ],
+        "tags": ["toggle", "scale", "typography", "accessibility"],
         "preview": {
           "width": "full"
         },
@@ -763,7 +720,8 @@
               "scale": {
                 "label": "Scale, %"
               }
-            }
+            },
+            "title": "Text Scale"
           }
         }
       }
@@ -771,11 +729,9 @@
     {
       "name": "toggle-008",
       "type": "registry:component",
-      "title": "Hinted Toggle",
+      "title": "Переключатель с подсказкой",
       "description": "Toggle с подсказкой о текущем состоянии: она привязана через aria-describedby и всплывает и по наведению, и по фокусу, а подпись кнопки не меняется.",
-      "categories": [
-        "toggle"
-      ],
+      "categories": ["toggle"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -787,12 +743,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-008-*. Клиентский: useState и useId для связи aria-describedby. Подсказка — обычный элемент разметки с role=\"tooltip\", спрятанный видимостью и прозрачностью; показывается правилами button:hover + [data-part=\"tip\"] и button:focus-visible + [data-part=\"tip\"], поэтому доступна и мыши, и клавиатуре. Атрибут title тут не подошёл бы: браузер не показывает его по фокусу. Подпись кнопки постоянна, состояние несут aria-pressed и текст подсказки; сверху у панели есть запас на всплывающий слой.",
       "meta": {
-        "tags": [
-          "toggle",
-          "tooltip",
-          "aria-describedby",
-          "hint"
-        ],
+        "tags": ["toggle", "tooltip", "aria-describedby", "hint"],
         "preview": {
           "width": "full"
         },
@@ -873,7 +824,8 @@
                 "label": "Pressed hint",
                 "default": "Notifications are hidden until morning"
               }
-            }
+            },
+            "title": "Hinted Toggle"
           }
         }
       }
@@ -881,11 +833,9 @@
     {
       "name": "toggle-009",
       "type": "registry:component",
-      "title": "Heart Favorite",
+      "title": "Сердце избранного",
       "description": "Круглая кнопка сердца с числовым бейджем поверх угла: бейдж вынесен из кнопки абсолютным позиционированием и объявляет счёт отдельной живой цифрой.",
-      "categories": [
-        "toggle"
-      ],
+      "categories": ["toggle"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -897,12 +847,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-009-*. Клиентский: useState. Кнопка сердца несёт aria-pressed, а числовой бейдж лежит рядом абсолютным позиционированием поверх её угла, как счётчик у иконки корзины: он не часть текста кнопки, поэтому скринридер не склеивает число с именем и состоянием в одно announcement. Смена числа объявлена через role=\"status\" на самом бейдже. Заливка сердца выбирается селектором button[aria-pressed=\"true\"] svg path — вид и состояние не могут разойтись.",
       "meta": {
-        "tags": [
-          "toggle",
-          "aria-pressed",
-          "favorite",
-          "badge"
-        ],
+        "tags": ["toggle", "aria-pressed", "favorite", "badge"],
         "preview": {
           "width": "full"
         },
@@ -983,7 +928,8 @@
               "count": {
                 "label": "Count"
               }
-            }
+            },
+            "title": "Heart Favorite"
           }
         }
       }
@@ -991,11 +937,9 @@
     {
       "name": "toggle-010",
       "type": "registry:component",
-      "title": "Equalizer Mute",
+      "title": "Эквалайзер и тишина",
       "description": "Кнопка звука с тремя столбиками эквалайзера вместо значка-волны: они анимированы вразнобой, только пока звук включён, а рядом всегда видна подпись состояния.",
-      "categories": [
-        "toggle"
-      ],
+      "categories": ["toggle"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1007,12 +951,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-010-*. Клиентский: useState. Внутри кнопки три span-столбика: пока звук включён (aria-pressed=\"false\"), они анимируются волной вразнобой через animation-delay, а при выключении застывают на одной низкой высоте — тишина видна без чтения текста. Рядом постоянная, а не всплывающая подпись состояния помечена role=\"status\", вторая строка — статичная подпись плеера. aria-label кнопки описывает следующее действие, потому что видимого текста внутри неё нет.",
       "meta": {
-        "tags": [
-          "toggle",
-          "sound",
-          "equalizer",
-          "aria-pressed"
-        ],
+        "tags": ["toggle", "sound", "equalizer", "aria-pressed"],
         "preview": {
           "width": "full"
         },
@@ -1080,7 +1019,8 @@
                 "label": "Player caption",
                 "default": "Player sound"
               }
-            }
+            },
+            "title": "Equalizer Mute"
           }
         }
       }
@@ -1088,11 +1028,9 @@
     {
       "name": "toggle-011",
       "type": "registry:component",
-      "title": "Theme Switcher",
+      "title": "Переключатель темы",
       "description": "Кнопка темы с солнцем и луной: оба значка лежат в разметке одновременно и меняются прозрачностью с поворотом, а не display, поэтому смена темы выглядит плавной.",
-      "categories": [
-        "toggle"
-      ],
+      "categories": ["toggle"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1104,12 +1042,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-011-*. Клиентский: useState. Солнце и луна — два всегда смонтированных svg с абсолютным позиционированием: у активного opacity:1 и transform:rotate(0), у неактивного — приглушённые прозрачность и поворот. Оба свойства анимируются transition, поэтому смена темы выглядит плавным кроссфейдом, а не мгновенным щелчком display:none. Панель и карточка-образец меняют фон и цвет тем же атрибутом data-theme на корне, чтобы эффект был виден не только на кнопке.",
       "meta": {
-        "tags": [
-          "toggle",
-          "theme",
-          "dark-mode",
-          "transition"
-        ],
+        "tags": ["toggle", "theme", "dark-mode", "transition"],
         "preview": {
           "width": "full"
         },
@@ -1190,7 +1123,8 @@
                 "label": "Sample text",
                 "default": "This is how a content card will look."
               }
-            }
+            },
+            "title": "Theme Switcher"
           }
         }
       }
@@ -1198,11 +1132,9 @@
     {
       "name": "toggle-012",
       "type": "registry:component",
-      "title": "Notify Subscribe",
+      "title": "Подписка на уведомления",
       "description": "Переключатель подписки на уведомления: это role=\"switch\", а не aria-pressed, потому что подписка — настройка на будущее, и запрос держит старое состояние до ответа.",
-      "categories": [
-        "toggle"
-      ],
+      "categories": ["toggle"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1214,12 +1146,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-012-*. Клиентский: useState, useRef и useEffect для отмены таймера при размонтировании (setTimeout заменяет запрос к серверу). Переключатель объявлен role=\"switch\" и aria-checked, а не aria-pressed: подписка на уведомления — настройка режима на будущее, а не мгновенное действие над объектом. До ответа сервера состояние не меняется, кнопка помечена aria-busy, а бегунок показывает спиннер вместо смещения. Строка role=\"status\" рядом называет исход словами.",
       "meta": {
-        "tags": [
-          "toggle",
-          "switch",
-          "aria-busy",
-          "notifications"
-        ],
+        "tags": ["toggle", "switch", "aria-busy", "notifications"],
         "preview": {
           "width": "full"
         },
@@ -1300,7 +1227,8 @@
               "delay": {
                 "label": "Delay, ms"
               }
-            }
+            },
+            "title": "Notify Subscribe"
           }
         }
       }
@@ -1308,11 +1236,9 @@
     {
       "name": "toggle-013",
       "type": "registry:component",
-      "title": "Password Reveal",
+      "title": "Показ пароля",
       "description": "Поле пароля с кнопкой видимости внутри поля: aria-controls связывает кнопку с input, а живая строка снаружи объявляет исход тем, кто не видит текст на экране.",
-      "categories": [
-        "toggle"
-      ],
+      "categories": ["toggle"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1324,12 +1250,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-013-*. Клиентский: useState и useId для связи label, input и aria-controls. Кнопка глаза стоит внутри одной рамки с полем, а не отдельно от него, и переключает type у input между password и text. aria-pressed отражает видимость, а aria-label и видимый текст кнопки называют следующее действие («Показать» → «Скрыть»), потому что это мгновенное действие над полем, а не постоянное имя элемента. Строка role=\"status\" снаружи повторяет исход словами для скринридера.",
       "meta": {
-        "tags": [
-          "toggle",
-          "password",
-          "aria-controls",
-          "form"
-        ],
+        "tags": ["toggle", "password", "aria-controls", "form"],
         "preview": {
           "width": "full"
         },
@@ -1410,7 +1331,8 @@
                 "label": "Field value",
                 "default": "SuperSecret123"
               }
-            }
+            },
+            "title": "Password Reveal"
           }
         }
       }
@@ -1418,11 +1340,9 @@
     {
       "name": "toggle-014",
       "type": "registry:component",
-      "title": "Pin Rotate",
+      "title": "Поворот булавки",
       "description": "Строка списка с кнопкой булавки: значок поворачивается на 45° вместо смены цвета, а фон всей строки подсвечивается через data-pinned на корне.",
-      "categories": [
-        "toggle"
-      ],
+      "categories": ["toggle"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1434,12 +1354,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-toggle-014-*. Клиентский: useState. Значок булавки поворачивается на 45deg через transform в правиле button[aria-pressed=\"true\"] svg — поворот читается и без восприятия цвета, в отличие от одной лишь заливки. Фон и рамка всей строки меняются через data-pinned на корне, поэтому закреплённый пункт заметен даже боковым зрением, а не только по кнопке. Вторая строка текста замещается статусом «Закреплено вверху списка» через role=\"status\".",
       "meta": {
-        "tags": [
-          "toggle",
-          "pin",
-          "rotate",
-          "aria-pressed"
-        ],
+        "tags": ["toggle", "pin", "rotate", "aria-pressed"],
         "preview": {
           "width": "full"
         },
@@ -1520,7 +1435,8 @@
                 "label": "Note",
                 "default": "Updated yesterday"
               }
-            }
+            },
+            "title": "Pin Rotate"
           }
         }
       }

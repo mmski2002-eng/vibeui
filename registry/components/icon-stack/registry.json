@@ -4,11 +4,9 @@
     {
       "name": "iconstack-001",
       "type": "registry:component",
-      "title": "Avatar Stack",
+      "title": "Стопка аватаров",
       "description": "Стопка участников: перекрытие задано обратным флексом вместо z-index, а остаток свёрнут в «+N».",
-      "categories": [
-        "icon-stack"
-      ],
+      "categories": ["icon-stack"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-iconstack-001-*. Серверный: хуков нет. Порядок наложения задан flex-direction: row-reverse, поэтому левый кружок лежит поверх правого без z-index на каждом элементе. Оттенок кружка считается хешем FNV-1a от имени.",
       "meta": {
-        "tags": [
-          "avatar",
-          "stack",
-          "team",
-          "overlap"
-        ],
+        "tags": ["avatar", "stack", "team", "overlap"],
         "ai": {
           "export": "Iconstack001",
           "usage": "<Iconstack001 names={[\"Анна Реброва\", \"Илья Мохов\"]} max={4} />",
@@ -66,11 +59,7 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": [
-              "sm",
-              "md",
-              "lg"
-            ]
+            "options": ["sm", "md", "lg"]
           }
         ],
         "i18n": {
@@ -108,7 +97,8 @@
               "size": {
                 "label": "Size"
               }
-            }
+            },
+            "title": "Avatar Stack"
           }
         }
       }
@@ -116,11 +106,9 @@
     {
       "name": "iconstack-002",
       "type": "registry:component",
-      "title": "Tech Stack Row",
+      "title": "Строка технологий",
       "description": "Стопка технологий с подписью: перекрытые квадратные плитки читаются слева направо, а список названий под ними расшифровывает монограммы словами.",
-      "categories": [
-        "icon-stack"
-      ],
+      "categories": ["icon-stack"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -132,12 +120,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Перекрытие сделано обратным флексом (row-reverse и отрицательный margin-right), поэтому левая плитка ложится поверх правой без z-index на каждом элементе. Плитки — скруглённые квадраты, а не круги: продуктовые логотипы почти всегда квадратные, круг их обрезает. Оттенок каждой плитки выводится из имени FNV-хешем, поэтому набор технологий раскрашивается стабильно и без ручного словаря. Величина перекрытия вынесена в проп overlap и подставляется переменной в пикселях. Стопка декоративна и помечена aria-hidden, смысл несёт строка названий.",
       "meta": {
-        "tags": [
-          "iconstack",
-          "stack",
-          "tech",
-          "overlap"
-        ],
+        "tags": ["iconstack", "stack", "tech", "overlap"],
         "ai": {
           "export": "Iconstack002",
           "usage": "<Iconstack002\n  items={[\"React\", \"Next.js\", \"TypeScript\"]}\n  caption=\"Стек проекта\"\n  overlap={10}\n/>",
@@ -216,7 +199,8 @@
                 "label": "Overlap",
                 "default": 10
               }
-            }
+            },
+            "title": "Tech Stack Row"
           }
         }
       }
@@ -224,11 +208,9 @@
     {
       "name": "iconstack-003",
       "type": "registry:component",
-      "title": "Expandable Stack Count",
+      "title": "Раскрывающийся счётчик стопки",
       "description": "Стопка со счётчиком «+N», который не тупик, а вход в полный список: раскрытие сделано на details, поэтому имена доступны без строчки клиентского кода.",
-      "categories": [
-        "icon-stack"
-      ],
+      "categories": ["icon-stack"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -240,12 +222,7 @@
       ],
       "docs": "Серверный компонент, хуков нет: раскрытие держит нативный details, состояние живёт в DOM. Стопка и счётчик лежат внутри summary, у которого убран стандартный маркер (list-style:none и ::-webkit-details-marker) и добавлена видимая обводка фокуса — summary фокусируется по табу, и без обводки цель нажатия невидима. Счётчик поставлен слева от стопки: справа он читается как ещё один участник. Перекрытие собрано обратным флексом, оттенок кружка выводится из имени FNV-хешем. Подложка светлая, потому что раскрытый список имён набран тёмным.",
       "meta": {
-        "tags": [
-          "iconstack",
-          "details",
-          "overflow",
-          "avatars"
-        ],
+        "tags": ["iconstack", "details", "overflow", "avatars"],
         "ai": {
           "export": "Iconstack003",
           "usage": "<Iconstack003\n  names={[\"Анна Реброва\", \"Илья Мохов\", \"Ким Сон\", \"Пётр Гай\", \"Мария Лоза\"]}\n  max={4}\n  label=\"участников\"\n/>",
@@ -324,7 +301,8 @@
                 "label": "Group caption",
                 "default": "members"
               }
-            }
+            },
+            "title": "Expandable Stack Count"
           }
         }
       }
@@ -332,11 +310,9 @@
     {
       "name": "iconstack-004",
       "type": "registry:component",
-      "title": "Vertical Avatar Stack",
+      "title": "Вертикальная стопка аватаров",
       "description": "Вертикальная стопка участников для узкой колонки: она растёт вниз и занимает ширину одного кружка, а не ломает сайдбар горизонтальным рядом.",
-      "categories": [
-        "icon-stack"
-      ],
+      "categories": ["icon-stack"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -348,12 +324,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Перекрытие собрано column-reverse и отрицательным margin-bottom, поэтому верхний кружок ложится поверх нижнего без z-index, а первое имя списка остаётся первым сверху — порядок чтения совпадает с порядком данных. Размер и величина перекрытия связаны одной парой переменных и переключаются атрибутом data-size, так что sm, md и lg сохраняют одинаковую плотность. Кружки декоративны и помечены aria-hidden: смысл несёт подпись с числом. Подложка светлая, поскольку подпись тёмная.",
       "meta": {
-        "tags": [
-          "iconstack",
-          "vertical",
-          "sidebar",
-          "avatars"
-        ],
+        "tags": ["iconstack", "vertical", "sidebar", "avatars"],
         "ai": {
           "export": "Iconstack004",
           "usage": "<Iconstack004\n  names={[\"Анна Реброва\", \"Илья Мохов\", \"Ким Сон\"]}\n  size=\"md\"\n  label=\"на смене\"\n/>",
@@ -385,11 +356,7 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": [
-              "sm",
-              "md",
-              "lg"
-            ]
+            "options": ["sm", "md", "lg"]
           },
           {
             "prop": "label",
@@ -435,7 +402,8 @@
                 "label": "Caption",
                 "default": "on shift"
               }
-            }
+            },
+            "title": "Vertical Avatar Stack"
           }
         }
       }
@@ -443,11 +411,9 @@
     {
       "name": "iconstack-005",
       "type": "registry:component",
-      "title": "Surface Ring Stack",
+      "title": "Стопка с кольцом подложки",
       "description": "Стопка с обводкой под цвет подложки: одна и та же группа показана на светлой и тёмной полосе, поэтому видно, что обводка — это фон, а не белая рамка.",
-      "categories": [
-        "icon-stack"
-      ],
+      "categories": ["icon-stack"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -459,12 +425,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Цвет обводки вынесен в переменную --vibeui-iconstack-005-ring и задаётся полосой, а не кружком: тёмная полоса переопределяет её своим фоном, светлая берёт значение из пропа ring и красит им же собственную заливку. Из-за этого обводка физически не может разойтись с подложкой. Обе полосы показаны одновременно, чтобы разница читалась без переключения темы. Перекрытие собрано обратным флексом, оттенок кружка выводится из имени хешем. Внешняя подложка светлая: подпись светлой полосы тёмная.",
       "meta": {
-        "tags": [
-          "iconstack",
-          "ring",
-          "surface",
-          "contrast"
-        ],
+        "tags": ["iconstack", "ring", "surface", "contrast"],
         "ai": {
           "export": "Iconstack005",
           "usage": "<Iconstack005\n  names={[\"Анна Реброва\", \"Илья Мохов\", \"Ким Сон\"]}\n  ring=\"#ffffff\"\n  label=\"обводка равна цвету подложки\"\n/>",
@@ -541,7 +502,8 @@
                 "label": "Caption",
                 "default": "the ring equals the surface"
               }
-            }
+            },
+            "title": "Surface Ring Stack"
           }
         }
       }
@@ -549,11 +511,9 @@
     {
       "name": "iconstack-006",
       "type": "registry:component",
-      "title": "Integration Stack",
+      "title": "Стопка интеграций",
       "description": "Стопка логотипов интеграций с подписью «и ещё N сервисов»: квадратные значки вместо аватаров и предложение вместо голого счётчика.",
-      "categories": [
-        "icon-stack"
-      ],
+      "categories": ["icon-stack"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -565,12 +525,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-iconstack-006-*. Серверный: хуков нет. Плитки — скруглённые квадраты с тенью, а не кружки: так стопка читается как значки приложений, а не как группа людей. Остаток сверх max не сворачивается в голое «+N», а договаривается в предложение под стопкой: сначала видимые названия, потом «и ещё N сервисов» с верным русским склонением числа.",
       "meta": {
-        "tags": [
-          "icon-stack",
-          "integrations",
-          "logos",
-          "overlap"
-        ],
+        "tags": ["icon-stack", "integrations", "logos", "overlap"],
         "ai": {
           "export": "Iconstack006",
           "usage": "<Iconstack006 services={[\"Slack\", \"Notion\", \"Figma\", \"Zoom\"]} max={3} />",
@@ -646,7 +601,8 @@
               "max": {
                 "label": "Show"
               }
-            }
+            },
+            "title": "Integration Stack"
           }
         }
       }

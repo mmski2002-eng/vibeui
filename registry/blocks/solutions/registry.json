@@ -4,7 +4,7 @@
     {
       "name": "solutions-001",
       "type": "registry:block",
-      "title": "Traffic Analytics",
+      "title": "Аналитика трафика",
       "description": "Аналитика посещений: график с заливкой на SVG и таблица источников, где доля нарисована фоном ячейки.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -99,7 +99,8 @@
                 "label": "Period",
                 "default": "8–14 March"
               }
-            }
+            },
+            "title": "Traffic Analytics"
           }
         }
       }
@@ -107,7 +108,7 @@
     {
       "name": "solutions-002",
       "type": "registry:block",
-      "title": "Billing Usage",
+      "title": "Потребление по тарифу",
       "description": "Биллинг: расход полосой и цифрами, а превышение лимита названо строкой, а не молча упирается в край шкалы.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -202,7 +203,8 @@
               "limit": {
                 "label": "Limit"
               }
-            }
+            },
+            "title": "Billing Usage"
           }
         }
       }
@@ -210,7 +212,7 @@
     {
       "name": "solutions-003",
       "type": "registry:block",
-      "title": "Sales Pipeline",
+      "title": "Воронка продаж",
       "description": "Воронка сделок: ширина ступени считается от первой, а возраст сделки написан словами и помечен тоном.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -305,7 +307,8 @@
                 "label": "Button",
                 "default": "Add deal"
               }
-            }
+            },
+            "title": "Sales Pipeline"
           }
         }
       }
@@ -313,7 +316,7 @@
     {
       "name": "solutions-004",
       "type": "registry:block",
-      "title": "Files Manager",
+      "title": "Менеджер файлов",
       "description": "Файловый список: тип подписан тремя буквами на плитке, а занятое место показано полосой до загрузки, а не после.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -408,7 +411,8 @@
               "usedShare": {
                 "label": "Used, %"
               }
-            }
+            },
+            "title": "Files Manager"
           }
         }
       }
@@ -416,7 +420,7 @@
     {
       "name": "solutions-005",
       "type": "registry:block",
-      "title": "Inventory Stock",
+      "title": "Складские остатки",
       "description": "Остатки склада: состояние выводится из остатка и порога, поэтому цифра и метка не расходятся после списания.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -511,7 +515,8 @@
                 "label": "Button",
                 "default": "Reorder"
               }
-            }
+            },
+            "title": "Inventory Stock"
           }
         }
       }
@@ -519,7 +524,7 @@
     {
       "name": "solutions-006",
       "type": "registry:block",
-      "title": "Booking Slots",
+      "title": "Слоты бронирования",
       "description": "Сетка слотов на день: занятые остаются видимыми и подписаны, свободные — кнопки, а часовой пояс написан рядом с датой.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -614,7 +619,8 @@
                 "label": "Day",
                 "default": "Friday, 13 March · UTC+3"
               }
-            }
+            },
+            "title": "Booking Slots"
           }
         }
       }
@@ -622,7 +628,7 @@
     {
       "name": "solutions-007",
       "type": "registry:block",
-      "title": "Deal Board",
+      "title": "Доска сделок",
       "description": "Доска сделок по этапам: в шапке колонки стоит сумма этапа, а прогноз внизу взвешен вероятностью каждой сделки.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -717,7 +723,8 @@
                 "label": "Forecast caption",
                 "default": "Weighted quarter forecast"
               }
-            }
+            },
+            "title": "Deal Board"
           }
         }
       }
@@ -725,7 +732,7 @@
     {
       "name": "solutions-008",
       "type": "registry:block",
-      "title": "Deal Record",
+      "title": "Карточка сделки",
       "description": "Карточка сделки: следующий шаг стоит над историей и в рамке, а просрочка меняет рамку, подпись и тон сразу.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -818,7 +825,8 @@
               "overdue": {
                 "label": "Step overdue"
               }
-            }
+            },
+            "title": "Deal Record"
           }
         }
       }
@@ -826,7 +834,7 @@
     {
       "name": "solutions-009",
       "type": "registry:block",
-      "title": "Subscription Renewals",
+      "title": "Продления подписок",
       "description": "Подписки с продлениями: срок написан обратным отсчётом, а выключенное автопродление помечено как предупреждение, а не как настройка.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -921,7 +929,8 @@
               "window": {
                 "label": "Attention window, days"
               }
-            }
+            },
+            "title": "Subscription Renewals"
           }
         }
       }
@@ -929,7 +938,7 @@
     {
       "name": "solutions-010",
       "type": "registry:block",
-      "title": "Revenue Breakdown",
+      "title": "Структура выручки",
       "description": "Отчёт по выручке: столбик месяца собран из сегментов со штриховкой, поэтому итог и состав сравниваются одним взглядом.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -1024,7 +1033,8 @@
                 "label": "Units",
                 "default": "$ thousands"
               }
-            }
+            },
+            "title": "Revenue Breakdown"
           }
         }
       }
@@ -1032,7 +1042,7 @@
     {
       "name": "solutions-011",
       "type": "registry:block",
-      "title": "Expense Limits",
+      "title": "Лимиты расходов",
       "description": "Расходы по категориям: шкала у всех общая, лимит помечен засечкой, а перерасход рисуется за ней, а не упирается в край.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -1127,7 +1137,8 @@
                 "label": "Period and plan",
                 "default": "March · plan $6,500"
               }
-            }
+            },
+            "title": "Expense Limits"
           }
         }
       }
@@ -1135,7 +1146,7 @@
     {
       "name": "solutions-012",
       "type": "registry:block",
-      "title": "Invoice Ledger",
+      "title": "Реестр счетов",
       "description": "Реестр счетов: сверху суммы по статусам, а просроченная строка помечена полосой и числом дней прямо у срока оплаты.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -1230,7 +1241,8 @@
                 "label": "Button",
                 "default": "New invoice"
               }
-            }
+            },
+            "title": "Invoice Ledger"
           }
         }
       }
@@ -1238,7 +1250,7 @@
     {
       "name": "solutions-013",
       "type": "registry:block",
-      "title": "Warehouse Flow",
+      "title": "Движение на складе",
       "description": "Смена на складе: приёмка и отгрузка стоят двумя потоками рядом, а готовность документа написана дробью «собрано из позиций».",
       "categories": ["solutions"],
       "dependencies": [],
@@ -1333,7 +1345,8 @@
                 "label": "Inbound heading",
                 "default": "Inbound"
               }
-            }
+            },
+            "title": "Warehouse Flow"
           }
         }
       }
@@ -1341,7 +1354,7 @@
     {
       "name": "solutions-014",
       "type": "registry:block",
-      "title": "Supplier Ratings",
+      "title": "Рейтинг поставщиков",
       "description": "Поставщики с рейтингом: оценка нарисована пятью сегментами и продублирована числом, а под ней стоят метрики, из которых она сложилась.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -1436,7 +1449,8 @@
                 "label": "Scale caption",
                 "default": "of 5"
               }
-            }
+            },
+            "title": "Supplier Ratings"
           }
         }
       }
@@ -1444,7 +1458,7 @@
     {
       "name": "solutions-015",
       "type": "registry:block",
-      "title": "Delivery Routes",
+      "title": "Маршруты доставки",
       "description": "Маршруты доставки: остановки нарисованы лентой, положение машины видно точкой на линии, а опоздание написано минутами.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -1539,7 +1553,8 @@
                 "label": "Delay caption",
                 "default": "running late by"
               }
-            }
+            },
+            "title": "Delivery Routes"
           }
         }
       }
@@ -1547,7 +1562,7 @@
     {
       "name": "solutions-016",
       "type": "registry:block",
-      "title": "Shift Roster",
+      "title": "График смен",
       "description": "График смен на неделю: матрица «человек × день» с липкой первой колонкой и строкой покрытия, которая показывает дыры в смене.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -1642,7 +1657,8 @@
               "normHours": {
                 "label": "Weekly norm, h"
               }
-            }
+            },
+            "title": "Shift Roster"
           }
         }
       }
@@ -1650,7 +1666,7 @@
     {
       "name": "solutions-017",
       "type": "registry:block",
-      "title": "Time Tracking",
+      "title": "Учёт рабочего времени",
       "description": "Учёт времени за день: длительность записана и часами, и полосой, а идущая прямо сейчас запись помечена рамкой и мигающей точкой.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -1745,7 +1761,8 @@
               "dayNorm": {
                 "label": "Daily norm, min"
               }
-            }
+            },
+            "title": "Time Tracking"
           }
         }
       }
@@ -1753,7 +1770,7 @@
     {
       "name": "solutions-018",
       "type": "registry:block",
-      "title": "Leave Calendar",
+      "title": "Календарь отпусков",
       "description": "Календарь отсутствий: отпуск занимает диапазон ячеек гридом, а вертикальная линия сегодняшнего дня отделяет «идёт» от «запланировано».",
       "categories": ["solutions"],
       "dependencies": [],
@@ -1848,7 +1865,8 @@
               "today": {
                 "label": "Today's day"
               }
-            }
+            },
+            "title": "Leave Calendar"
           }
         }
       }
@@ -1856,7 +1874,7 @@
     {
       "name": "solutions-019",
       "type": "registry:block",
-      "title": "Hiring Funnel",
+      "title": "Воронка найма",
       "description": "Воронка найма: между ступенями подписана конверсия шага, а кандидаты со сроком на этапе выше норматива помечены полосой.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -1951,7 +1969,8 @@
               "slaDays": {
                 "label": "Stage norm, days"
               }
-            }
+            },
+            "title": "Hiring Funnel"
           }
         }
       }
@@ -1959,7 +1978,7 @@
     {
       "name": "solutions-020",
       "type": "registry:block",
-      "title": "Property Listings",
+      "title": "Объекты недвижимости",
       "description": "Подборка объектов: фильтр собран на радиокнопках и :has(), поэтому работает без JS, а цена за квадратный метр считается из цены и площади.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -2053,7 +2072,8 @@
               "activeFilter": {
                 "label": "Selected filter"
               }
-            }
+            },
+            "title": "Property Listings"
           }
         }
       }
@@ -2061,7 +2081,7 @@
     {
       "name": "solutions-021",
       "type": "registry:block",
-      "title": "Room Booking",
+      "title": "Бронирование переговорных",
       "description": "Сетка переговорных: матрица «комната × час», где бронь занимает диапазон колонок, а свободный час остаётся кнопкой.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -2156,7 +2176,8 @@
                 "label": "Day and time zone",
                 "default": "Thursday, 14 March · 3rd floor · UTC+3"
               }
-            }
+            },
+            "title": "Room Booking"
           }
         }
       }
@@ -2164,7 +2185,7 @@
     {
       "name": "solutions-022",
       "type": "registry:block",
-      "title": "Clinic Schedule",
+      "title": "Расписание клиники",
       "description": "Расписание приёма врача: время стоит отдельной колонкой, окно между приёмами названо словами, а отменённый приём остаётся зачёркнутым.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -2259,7 +2280,8 @@
                 "label": "Doctor",
                 "default": "Dr. Ivantsova · therapist"
               }
-            }
+            },
+            "title": "Clinic Schedule"
           }
         }
       }
@@ -2267,7 +2289,7 @@
     {
       "name": "solutions-023",
       "type": "registry:block",
-      "title": "Class Groups",
+      "title": "Учебные группы",
       "description": "Учебные группы: дни занятий показаны семью клетками вместо строки «пн, ср, пт», а свободные места названы числом, а не процентом.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -2362,7 +2384,8 @@
                 "label": "Full-group caption",
                 "default": "no seats left"
               }
-            }
+            },
+            "title": "Class Groups"
           }
         }
       }
@@ -2370,7 +2393,7 @@
     {
       "name": "solutions-024",
       "type": "registry:block",
-      "title": "Newsletter Segments",
+      "title": "Сегменты рассылки",
       "description": "База рассылки по сегментам: у каждого сегмента написано правило отбора, а пересечения названы словами, а не спрятаны нормализацией долей.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -2465,7 +2488,8 @@
               "baseSize": {
                 "label": "Base size"
               }
-            }
+            },
+            "title": "Newsletter Segments"
           }
         }
       }
@@ -2473,7 +2497,7 @@
     {
       "name": "solutions-025",
       "type": "registry:block",
-      "title": "Moderation Queue",
+      "title": "Очередь модерации",
       "description": "Очередь модерации: спорный текст показан цитатой целиком, у каждой карточки написан срок ожидания, а безвозвратное решение стоит последним.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -2568,7 +2592,8 @@
                 "label": "Approve button",
                 "default": "Publish"
               }
-            }
+            },
+            "title": "Moderation Queue"
           }
         }
       }
@@ -2576,7 +2601,7 @@
     {
       "name": "solutions-026",
       "type": "registry:block",
-      "title": "Affiliate Payouts",
+      "title": "Выплаты партнёрам",
       "description": "Партнёрская программа: порог выплаты нарисован полосой с недостающей суммой, а комиссия каждого партнёра подкреплена его воронкой.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -2671,7 +2696,8 @@
               "threshold": {
                 "label": "Payout threshold"
               }
-            }
+            },
+            "title": "Affiliate Payouts"
           }
         }
       }
@@ -2679,7 +2705,7 @@
     {
       "name": "solutions-027",
       "type": "registry:block",
-      "title": "Asset Register",
+      "title": "Реестр оборудования",
       "description": "Реестр основных средств: остаточная стоимость и процент износа считаются из баланса и накопленной амортизации, а износ показан полосой в строке.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -2774,7 +2800,8 @@
                 "label": "Subheading",
                 "default": "Warehouse 2 · stocktake as of 1 March 2026"
               }
-            }
+            },
+            "title": "Asset Register"
           }
         }
       }
@@ -2782,7 +2809,7 @@
     {
       "name": "solutions-028",
       "type": "registry:block",
-      "title": "Stocktake Variance",
+      "title": "Расхождения инвентаризации",
       "description": "Инвентаризация с расхождениями: недостача и излишек считаются из учётного и фактического количества, полоса отклонения растёт от центра в сторону знака.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -2877,7 +2904,8 @@
                 "label": "Subheading",
                 "default": "Electrical warehouse · recount as of 3 March 2026"
               }
-            }
+            },
+            "title": "Stocktake Variance"
           }
         }
       }
@@ -2885,7 +2913,7 @@
     {
       "name": "solutions-029",
       "type": "registry:block",
-      "title": "Production Orders",
+      "title": "Производственные заказы",
       "description": "Производственные заказы по цехам: выполнение плана считается из плановых и выпущенных штук, стадия обработки — степпер точек, загрузка линии — отдельная полоса.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -2980,7 +3008,8 @@
                 "label": "Subheading",
                 "default": "Assembly area · today's shift"
               }
-            }
+            },
+            "title": "Production Orders"
           }
         }
       }
@@ -2988,7 +3017,7 @@
     {
       "name": "solutions-030",
       "type": "registry:block",
-      "title": "Routing Sheet",
+      "title": "Маршрутный лист",
       "description": "Технологическая карта маршрута изготовления: операции по порядку лентой с оборудованием и разрядом, накопленное время считается нарастающим итогом.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -3083,7 +3112,8 @@
                 "label": "Route number",
                 "default": "RT-0842 · drive shaft VP-12"
               }
-            }
+            },
+            "title": "Routing Sheet"
           }
         }
       }
@@ -3091,7 +3121,7 @@
     {
       "name": "solutions-031",
       "type": "registry:block",
-      "title": "Quality Control",
+      "title": "Контроль качества",
       "description": "Контроль качества с браком: доля брака по партии считается из проверенного и бракованного количества, причины дефектов собраны в диаграмму Парето с накопленным итогом.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -3186,7 +3216,8 @@
                 "label": "Subheading",
                 "default": "Incoming inspection batches · casting and machining area"
               }
-            }
+            },
+            "title": "Quality Control"
           }
         }
       }
@@ -3194,7 +3225,7 @@
     {
       "name": "solutions-032",
       "type": "registry:block",
-      "title": "Purchase Requests",
+      "title": "Заявки на закупку",
       "description": "Заявки на закупку с цепочкой согласования: степпер из 4 узлов показывает пройденные и текущий шаг, держатель и просрочка по сроку считаются из данных.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -3289,7 +3320,8 @@
                 "label": "Subtitle",
                 "default": "All departments, current quarter"
               }
-            }
+            },
+            "title": "Purchase Requests"
           }
         }
       }
@@ -3297,7 +3329,7 @@
     {
       "name": "solutions-033",
       "type": "registry:block",
-      "title": "Tender Bids",
+      "title": "Тендерные предложения",
       "description": "Тендер по лоту: отклонение цены от стартовой считается из чисел, минимальное предложение помечено полосой, а дедлайн подачи идёт обратным отсчётом.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -3392,7 +3424,8 @@
               "deadlineHours": {
                 "label": "Hours to deadline"
               }
-            }
+            },
+            "title": "Tender Bids"
           }
         }
       }
@@ -3400,7 +3433,7 @@
     {
       "name": "solutions-034",
       "type": "registry:block",
-      "title": "Lease Contracts",
+      "title": "Договоры аренды",
       "description": "Реестр договоров аренды: прошедший срок нарисован полосой, а окно уведомления о продлении считается из остатка месяцев и порога.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -3495,7 +3528,8 @@
               "renewalWindowMonths": {
                 "label": "Renewal window, months"
               }
-            }
+            },
+            "title": "Lease Contracts"
           }
         }
       }
@@ -3503,7 +3537,7 @@
     {
       "name": "solutions-035",
       "type": "registry:block",
-      "title": "Utility Meters",
+      "title": "Показания счётчиков",
       "description": "Показания приборов учёта: расход и сумма считаются из предыдущего и текущего показания с тарифом, а аномальный расход помечен сравнением со средним.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -3598,7 +3632,8 @@
               "anomalyThreshold": {
                 "label": "Anomaly threshold, %"
               }
-            }
+            },
+            "title": "Utility Meters"
           }
         }
       }
@@ -3606,7 +3641,7 @@
     {
       "name": "solutions-036",
       "type": "registry:block",
-      "title": "Maintenance Tickets",
+      "title": "Заявки на обслуживание",
       "description": "Диспетчерские заявки ЖКХ: норматив реагирования нарисован полосой из прошедшего времени, а приоритет несёт букву в бейдже, не только цвет.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -3701,7 +3736,8 @@
                 "label": "Subtitle",
                 "default": "Property manager \"Dvor\" · today"
               }
-            }
+            },
+            "title": "Maintenance Tickets"
           }
         }
       }
@@ -3709,7 +3745,7 @@
     {
       "name": "solutions-037",
       "type": "registry:block",
-      "title": "Fleet Service",
+      "title": "Обслуживание автопарка",
       "description": "Экран техобслуживания автопарка: остаток пробега до планового ТО и просрочка считаются сравнением одометра с интервалом, а не хранятся отдельной меткой.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -3804,7 +3840,8 @@
               "warnThresholdKm": {
                 "label": "\"Due soon\" threshold, km"
               }
-            }
+            },
+            "title": "Fleet Service"
           }
         }
       }
@@ -3812,7 +3849,7 @@
     {
       "name": "solutions-038",
       "type": "registry:block",
-      "title": "Trip Sheets",
+      "title": "Путевые листы",
       "description": "Лента путевых листов за смену: маршрут визуализирован полосой суток с выездом и возвратом, а пробег считается разницей показаний одометра.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -3907,7 +3944,8 @@
                 "label": "Shift caption",
                 "default": "Shift, March 5, crew 1"
               }
-            }
+            },
+            "title": "Trip Sheets"
           }
         }
       }
@@ -3915,7 +3953,7 @@
     {
       "name": "solutions-039",
       "type": "registry:block",
-      "title": "Fuel Log",
+      "title": "Журнал заправок",
       "description": "Заправки по картам таблицей и расход л/100 км по машине против нормы: перерасход нарисован отдельным заштрихованным отрезком поверх отметки нормы.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -4010,7 +4048,8 @@
                 "label": "Period caption",
                 "default": "March, all vehicles"
               }
-            }
+            },
+            "title": "Fuel Log"
           }
         }
       }
@@ -4018,7 +4057,7 @@
     {
       "name": "solutions-040",
       "type": "registry:block",
-      "title": "Insurance Policies",
+      "title": "Страховые полисы",
       "description": "Страховые полисы карточками: срок действия полосой и обратный отсчёт до окончания, тон которого считается из чисел totalDays и daysLeft.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -4113,7 +4152,8 @@
               "expiryWarnDays": {
                 "label": "\"Expiring soon\" threshold, days"
               }
-            }
+            },
+            "title": "Insurance Policies"
           }
         }
       }
@@ -4121,7 +4161,7 @@
     {
       "name": "solutions-041",
       "type": "registry:block",
-      "title": "Claims Desk",
+      "title": "Работа с убытками",
       "description": "Доска претензий колонками по стадии: срок ответа по закону и его просрочка считаются из даты направления, а не хранятся отдельной меткой.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -4216,7 +4256,8 @@
                 "label": "Caption",
                 "default": "Pre-trial work, active cases"
               }
-            }
+            },
+            "title": "Claims Desk"
           }
         }
       }
@@ -4224,7 +4265,7 @@
     {
       "name": "solutions-042",
       "type": "registry:block",
-      "title": "Court Cases",
+      "title": "Судебные дела",
       "description": "Реестр судебных дел раскрывающимися карточками: стороны и заседание видны сразу, лента процессуальных событий — по клику.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -4319,7 +4360,8 @@
               "soonInDays": {
                 "label": "Urgency threshold, days"
               }
-            }
+            },
+            "title": "Court Cases"
           }
         }
       }
@@ -4327,7 +4369,7 @@
     {
       "name": "solutions-043",
       "type": "registry:block",
-      "title": "Bank Statement",
+      "title": "Банковская выписка",
       "description": "Выписка по счёту: приход и расход в раздельных столбцах, исходящий остаток посчитан из входящего и проведённых операций.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -4422,7 +4464,8 @@
               "openingBalance": {
                 "label": "Opening balance"
               }
-            }
+            },
+            "title": "Bank Statement"
           }
         }
       }
@@ -4430,7 +4473,7 @@
     {
       "name": "solutions-044",
       "type": "registry:block",
-      "title": "Payment Orders",
+      "title": "Платёжные поручения",
       "description": "Реестр платёжных поручений: статус двойной подписи виден точками, итог к списанию считается только по подписанным строкам.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -4525,7 +4568,8 @@
               "requiredSignatures": {
                 "label": "Signatures needed"
               }
-            }
+            },
+            "title": "Payment Orders"
           }
         }
       }
@@ -4533,7 +4577,7 @@
     {
       "name": "solutions-045",
       "type": "registry:block",
-      "title": "FX Operations",
+      "title": "Валютные операции",
       "description": "Журнал валютных операций: отклонение курса сделки от курса ЦБ считается тут же, позиции по валютам показаны полосой относительно лимита.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -4628,7 +4672,8 @@
                 "label": "Caption",
                 "default": "Treasury · week 10"
               }
-            }
+            },
+            "title": "FX Operations"
           }
         }
       }
@@ -4636,7 +4681,7 @@
     {
       "name": "solutions-046",
       "type": "registry:block",
-      "title": "Tax Filings",
+      "title": "Налоговая отчётность",
       "description": "Календарь налоговой отчётности: статус формы и обратный отсчёт до срока считаются из флагов сдачи и числа дней, а не задаются меткой.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -4731,7 +4776,8 @@
               "soonInDays": {
                 "label": "\"Due soon\" threshold, days"
               }
-            }
+            },
+            "title": "Tax Filings"
           }
         }
       }
@@ -4739,7 +4785,7 @@
     {
       "name": "solutions-047",
       "type": "registry:block",
-      "title": "Account Reconciliation",
+      "title": "Сверка счетов",
       "description": "Акт сверки взаиморасчётов с контрагентом: обороты по нашим данным против данных контрагента, расхождения по документам построчно и итоговое сальдо с указанием, в чью пользу.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -4834,7 +4880,8 @@
                 "label": "Counterparty",
                 "default": "Versta Logistics LLC"
               }
-            }
+            },
+            "title": "Account Reconciliation"
           }
         }
       }
@@ -4842,7 +4889,7 @@
     {
       "name": "solutions-048",
       "type": "registry:block",
-      "title": "Receivables Aging",
+      "title": "Дебиторка по срокам",
       "description": "Дебиторская задолженность по корзинам срока: 0–30, 31–60, 61–90 и 90+ дней, сумма и доля каждой корзины, состав долга и список худших плательщиков.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -4937,7 +4984,8 @@
                 "label": "As of",
                 "default": "as of March 31, 2024"
               }
-            }
+            },
+            "title": "Receivables Aging"
           }
         }
       }
@@ -4945,7 +4993,7 @@
     {
       "name": "solutions-049",
       "type": "registry:block",
-      "title": "Register Shifts",
+      "title": "Смены на кассе",
       "description": "Кассовые смены за день: время открытия и закрытия, выручка наличными и картой, число чеков, средний чек, возвраты и расхождение по кассе при закрытии.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -5040,7 +5088,8 @@
                 "label": "Date",
                 "default": "Thursday, March 14, 2024"
               }
-            }
+            },
+            "title": "Register Shifts"
           }
         }
       }
@@ -5048,7 +5097,7 @@
     {
       "name": "solutions-050",
       "type": "registry:block",
-      "title": "Loyalty Tiers",
+      "title": "Уровни лояльности",
       "description": "Уровни программы лояльности с порогами: где сейчас клиент и сколько до следующего уровня, привилегии каждого уровня и сгорание баллов по датам.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -5143,7 +5192,8 @@
                 "label": "Client name",
                 "default": "Maria Lunyova"
               }
-            }
+            },
+            "title": "Loyalty Tiers"
           }
         }
       }
@@ -5151,7 +5201,7 @@
     {
       "name": "solutions-051",
       "type": "registry:block",
-      "title": "Promo Coupons",
+      "title": "Промо-купоны",
       "description": "Витрина промоакций с механикой скидка/подарок/кэшбэк: полоса расхода лимита активаций и пара «выручка/стоимость» на каждой карточке.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -5246,7 +5296,8 @@
                 "label": "Subheading",
                 "default": "Active and recently ended"
               }
-            }
+            },
+            "title": "Promo Coupons"
           }
         }
       }
@@ -5254,7 +5305,7 @@
     {
       "name": "solutions-052",
       "type": "registry:block",
-      "title": "Franchise Network",
+      "title": "Сеть франшизы",
       "description": "Реестр точек франшизы: выручка против плана одной шкалой с меткой плана, роялти суммой из ставки и соответствие стандартам трёхуровневой шкалой.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -5349,7 +5400,8 @@
                 "label": "Period note",
                 "default": "42 locations · Q1"
               }
-            }
+            },
+            "title": "Franchise Network"
           }
         }
       }
@@ -5357,7 +5409,7 @@
     {
       "name": "solutions-053",
       "type": "registry:block",
-      "title": "Courier Dispatch",
+      "title": "Диспетчерская курьеров",
       "description": "Диспетчерская курьеров: число заказов в руках, следующий адрес с окном доставки и опозданием в минутах, отдельная очередь нераспределённых заказов.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -5452,7 +5504,8 @@
                 "label": "Shift note",
                 "default": "Shift 12:00–20:00 · Downtown"
               }
-            }
+            },
+            "title": "Courier Dispatch"
           }
         }
       }
@@ -5460,7 +5513,7 @@
     {
       "name": "solutions-054",
       "type": "registry:block",
-      "title": "Customer Feedback",
+      "title": "Отзывы клиентов",
       "description": "Экран отзывов и жалоб: гистограмма распределения оценок, доля отвеченных и срок первого ответа, лента отзывов с каналом и темой в реквизитах.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -5555,7 +5608,8 @@
                 "label": "Period note",
                 "default": "All channels · last 7 days"
               }
-            }
+            },
+            "title": "Customer Feedback"
           }
         }
       }
@@ -5563,7 +5617,7 @@
     {
       "name": "solutions-055",
       "type": "registry:block",
-      "title": "Escalation Desk",
+      "title": "Стол эскалаций",
       "description": "Стол горячих обращений с эскалацией L1→L2→L3: дорожка уровней с владельцем на каждом, SLA-таймер с остатком времени и причина подъёма.",
       "categories": ["solutions"],
       "dependencies": [],
@@ -5658,7 +5712,8 @@
                 "label": "Line note",
                 "default": "Support · hotline"
               }
-            }
+            },
+            "title": "Escalation Desk"
           }
         }
       }

@@ -10,7 +10,7 @@ export async function generateMetadata({
 }) {
   const { category } = await params
 
-  return { title: getCategoryLabel(category) }
+  return { title: getCategoryLabel(category, "en") }
 }
 
 export function generateStaticParams() {

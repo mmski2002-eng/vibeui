@@ -4,7 +4,7 @@
     {
       "name": "pricing-001",
       "type": "registry:block",
-      "title": "Inverted Pricing",
+      "title": "Тарифы с инверсией",
       "description": "Светлая секция тарифов из трёх планов: рекомендованный выделен инвертированной тёмной панелью, остальные остаются лёгкими. Самодостаточна: не зависит от темы и стиля проекта.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -93,7 +93,8 @@
                 "If you change accent, check the text contrast on the accent CTA and on the badge: 4.5:1 minimum.",
                 "Keep the link semantics. For internal navigation your router's component is fine, as long as the visual styling, the accessibility and the href behaviour survive."
               ]
-            }
+            },
+            "title": "Inverted Pricing"
           }
         }
       }
@@ -101,7 +102,7 @@
     {
       "name": "pricing-002",
       "type": "registry:block",
-      "title": "Recommended Trio",
+      "title": "Три тарифа с рекомендуемым",
       "description": "Три тарифа с выделенным рекомендованным: он поднят над соседями и несёт бейдж словами, а не только цветную рамку. Кнопки прижаты к низу карточек.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -196,7 +197,8 @@
                 "label": "Eyebrow",
                 "default": "Pricing"
               }
-            }
+            },
+            "title": "Recommended Trio"
           }
         }
       }
@@ -204,7 +206,7 @@
     {
       "name": "pricing-003",
       "type": "registry:block",
-      "title": "Period Switch Pricing",
+      "title": "Тарифы с переключением периода",
       "description": "Тарифы с переключателем месяц/год: состояние держат две радиокнопки, цены переключаются селектором :has() — без единой строки JavaScript.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -299,7 +301,8 @@
                 "label": "Discount badge",
                 "default": "−17%"
               }
-            }
+            },
+            "title": "Period Switch Pricing"
           }
         }
       }
@@ -307,7 +310,7 @@
     {
       "name": "pricing-004",
       "type": "registry:block",
-      "title": "Plan Comparison Table",
+      "title": "Таблица сравнения тарифов",
       "description": "Полная таблица сравнения тарифов: строки сгруппированы по разделам, шапка с ценами и кнопками залипает при прокрутке, на узкой ширине таблица прокручивается вбок.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -402,7 +405,8 @@
                 "label": "Eyebrow",
                 "default": "Comparison"
               }
-            }
+            },
+            "title": "Plan Comparison Table"
           }
         }
       }
@@ -410,7 +414,7 @@
     {
       "name": "pricing-005",
       "type": "registry:block",
-      "title": "Single Plan Panel",
+      "title": "Панель одного тарифа",
       "description": "Один тариф и всё, что в него входит: цена со старой ценой слева, полный перечень в две колонки справа. Выбирать не из чего, и секция этим пользуется.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -505,7 +509,8 @@
                 "label": "Period",
                 "default": "per year"
               }
-            }
+            },
+            "title": "Single Plan Panel"
           }
         }
       }
@@ -513,7 +518,7 @@
     {
       "name": "pricing-006",
       "type": "registry:block",
-      "title": "Volume Calculator",
+      "title": "Калькулятор объёма",
       "description": "Калькулятор цены по объёму: ползунок, ступенчатый тариф и живой итог. Сумма складывается по ступеням, поэтому следующая тысяча стоит дешевле предыдущей.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -609,7 +614,8 @@
                 "label": "Starting volume",
                 "default": 25000
               }
-            }
+            },
+            "title": "Volume Calculator"
           }
         }
       }
@@ -617,7 +623,7 @@
     {
       "name": "pricing-007",
       "type": "registry:block",
-      "title": "Enterprise Contact",
+      "title": "Корпоративный тариф",
       "description": "Корпоративный тариф без цены, зато с формой: слева четыре аргумента за договор, справа короткая форма из четырёх полей и прямой адрес почты.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -712,7 +718,8 @@
                 "label": "Form heading",
                 "default": "Tell us about the project"
               }
-            }
+            },
+            "title": "Enterprise Contact"
           }
         }
       }
@@ -720,7 +727,7 @@
     {
       "name": "pricing-008",
       "type": "registry:block",
-      "title": "Free Versus Paid",
+      "title": "Бесплатный против платного",
       "description": "Бесплатный тариф рядом с платным: светлая карточка против тёмной. В платной список делится на «всё из бесплатного» и «и сверх того», без повторов.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -815,7 +822,8 @@
                 "label": "Note",
                 "default": "You can move from free to paid at any time — the sections you installed stay yours."
               }
-            }
+            },
+            "title": "Free Versus Paid"
           }
         }
       }
@@ -823,7 +831,7 @@
     {
       "name": "pricing-009",
       "type": "registry:block",
-      "title": "Currency Picker Pricing",
+      "title": "Тарифы с выбором валюты",
       "description": "Тарифы с выбором валюты: три суммы лежат в разметке, лишние скрыты селектором :has(). Цены округлены под рынок, а не пересчитаны по курсу.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -918,7 +926,8 @@
                 "label": "Switch label",
                 "default": "Currency"
               }
-            }
+            },
+            "title": "Currency Picker Pricing"
           }
         }
       }
@@ -926,7 +935,7 @@
     {
       "name": "pricing-010",
       "type": "registry:block",
-      "title": "Trial Timeline",
+      "title": "Лента пробного периода",
       "description": "Тариф с пробным периодом: слева число дней и цена после, справа лента событий — что произойдёт сегодня, за три дня до конца и в день окончания.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -1022,7 +1031,8 @@
                 "label": "Trial days",
                 "default": 14
               }
-            }
+            },
+            "title": "Trial Timeline"
           }
         }
       }
@@ -1030,7 +1040,7 @@
     {
       "name": "pricing-011",
       "type": "registry:block",
-      "title": "Billing FAQ",
+      "title": "Вопросы об оплате",
       "description": "Частые вопросы именно о деньгах: гармошка на <details>, работает без JavaScript, ищется поиском по странице и печатается развёрнутой.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -1125,7 +1135,8 @@
                 "label": "Eyebrow",
                 "default": "Money questions"
               }
-            }
+            },
+            "title": "Billing FAQ"
           }
         }
       }
@@ -1133,7 +1144,7 @@
     {
       "name": "pricing-012",
       "type": "registry:block",
-      "title": "Refund Guarantee",
+      "title": "Гарантия возврата",
       "description": "Гарантия возврата как процедура, а не штамп: печать с числом дней слева, три шага возврата с точными сроками справа и условия отдельным абзацем.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -1229,7 +1240,8 @@
                 "label": "Seal caption",
                 "default": "days to refund"
               }
-            }
+            },
+            "title": "Refund Guarantee"
           }
         }
       }
@@ -1237,7 +1249,7 @@
     {
       "name": "pricing-013",
       "type": "registry:block",
-      "title": "Per Seat Pricing",
+      "title": "Тарифы за место",
       "description": "Тариф для команд с ценой за место: счётчик участников на кнопках и <output>, живой пересчёт счёта и явное указание, сколько мест входит в тариф.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -1334,7 +1346,8 @@
                 "label": "Seats included",
                 "default": 3
               }
-            }
+            },
+            "title": "Per Seat Pricing"
           }
         }
       }
@@ -1342,7 +1355,7 @@
     {
       "name": "pricing-014",
       "type": "registry:block",
-      "title": "Add-ons Builder",
+      "title": "Конструктор дополнений",
       "description": "Конструктор тарифа на чекбоксах: цена каждой допуслуги стоит в её строке, итог складывается на месте и объявляется голосом.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -1438,7 +1451,8 @@
                 "label": "Base price",
                 "default": 1490
               }
-            }
+            },
+            "title": "Add-ons Builder"
           }
         }
       }
@@ -1446,7 +1460,7 @@
     {
       "name": "pricing-015",
       "type": "registry:block",
-      "title": "Receipt Total",
+      "title": "Итог как в чеке",
       "description": "Итог, оформленный как кассовый чек: моноширинные суммы, точечные разделители, скидка и налог отдельными строками до итога, перфорация краёв нарисована маской.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -1541,7 +1555,8 @@
                 "label": "Total",
                 "default": "$421.60"
               }
-            }
+            },
+            "title": "Receipt Total"
           }
         }
       }
@@ -1549,7 +1564,7 @@
     {
       "name": "pricing-016",
       "type": "registry:block",
-      "title": "Promo Code Panel",
+      "title": "Панель промокода",
       "description": "Поле промокода, которое отвечает сразу: код проверяется на месте, результат объявляется через role=\"status\", старая цена остаётся зачёркнутой рядом с новой.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -1645,7 +1660,8 @@
                 "label": "Price before discount",
                 "default": 14880
               }
-            }
+            },
+            "title": "Promo Code Panel"
           }
         }
       }
@@ -1653,7 +1669,7 @@
     {
       "name": "pricing-017",
       "type": "registry:block",
-      "title": "Swipeable Plans",
+      "title": "Тарифы перелистыванием",
       "description": "Тарифы карточками под палец: на узкой ширине горизонтальная лента со scroll-snap и подсказкой о свайпе, от 52rem — обычная сетка в три колонки.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -1748,7 +1764,8 @@
                 "label": "Swipe hint",
                 "default": "Swipe sideways to see every plan"
               }
-            }
+            },
+            "title": "Swipeable Plans"
           }
         }
       }
@@ -1756,7 +1773,7 @@
     {
       "name": "pricing-018",
       "type": "registry:block",
-      "title": "Everything Included",
+      "title": "Всё включено",
       "description": "Развёрнутый ответ на «что входит»: двенадцать пунктов разложены по трём разделам с подписями, у каждого пункта уточнение об объёме. Цена стоит в липкой колонке.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -1851,7 +1868,8 @@
                 "label": "Price",
                 "default": "$19"
               }
-            }
+            },
+            "title": "Everything Included"
           }
         }
       }
@@ -1859,7 +1877,7 @@
     {
       "name": "pricing-019",
       "type": "registry:block",
-      "title": "Current Plan Upgrade",
+      "title": "Повышение текущего тарифа",
       "description": "Экран биллинга внутри продукта: слева текущий план с расходом лимитов на <progress>, справа предложение апгрейда с разницей в счёте.",
       "categories": ["pricing"],
       "dependencies": [],
@@ -1954,7 +1972,8 @@
                 "label": "Upgrade plan",
                 "default": "Agency plan"
               }
-            }
+            },
+            "title": "Current Plan Upgrade"
           }
         }
       }

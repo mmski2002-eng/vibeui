@@ -4,7 +4,7 @@
     {
       "name": "features-001",
       "type": "registry:block",
-      "title": "Spotlight Features",
+      "title": "Возможности с акцентом",
       "description": "Тёмная секция возможностей с иерархией: полноширинная шапка, крупная панель с одной главной возможностью и абстрактной геометрией, рядом три второстепенные строки на волосяных линиях. Самодостаточна: не зависит от темы и стиля проекта.",
       "categories": ["features"],
       "dependencies": [],
@@ -89,7 +89,8 @@
                 "If you change accent, check the contrast of the accent text on the dark background: 4.5:1 minimum.",
                 "Keep the link semantics. For internal navigation your router's component is fine, as long as the visual styling, the accessibility and the href behaviour survive."
               ]
-            }
+            },
+            "title": "Spotlight Features"
           }
         }
       }
@@ -97,7 +98,7 @@
     {
       "name": "features-002",
       "type": "registry:block",
-      "title": "Icon Grid Features",
+      "title": "Сетка возможностей с иконками",
       "description": "Сетка из шести возможностей с иконками: ячейки лежат на линиях зазора, а не в рамках карточек. Иконки нарисованы inline-путями, библиотека иконок не нужна.",
       "categories": ["features"],
       "dependencies": [],
@@ -192,7 +193,8 @@
                 "label": "Eyebrow",
                 "default": "Features"
               }
-            }
+            },
+            "title": "Icon Grid Features"
           }
         }
       }
@@ -200,7 +202,7 @@
     {
       "name": "features-003",
       "type": "registry:block",
-      "title": "Editorial Columns",
+      "title": "Редакторские колонки",
       "description": "Журнальная полоса в три колонки: верхние линейки, римские номера и serif-заголовки. Ни карточек, ни иконок — иерархию держат типографика и линии.",
       "categories": ["features"],
       "dependencies": [],
@@ -295,7 +297,8 @@
                 "label": "Subhead",
                 "default": "Not a checklist but an editorial spread: every column explains one decision and points at the docs."
               }
-            }
+            },
+            "title": "Editorial Columns"
           }
         }
       }
@@ -303,7 +306,7 @@
     {
       "name": "features-004",
       "type": "registry:block",
-      "title": "Zigzag Features",
+      "title": "Возможности зигзагом",
       "description": "Чередование текст/картинка: ряды идут змейкой, у чётных иллюстрация уезжает в первую колонку через order. Картинки нарисованы градиентами со своим оттенком у каждого ряда.",
       "categories": ["features"],
       "dependencies": [],
@@ -398,7 +401,8 @@
                 "label": "Eyebrow",
                 "default": "How it works"
               }
-            }
+            },
+            "title": "Zigzag Features"
           }
         }
       }
@@ -406,7 +410,7 @@
     {
       "name": "features-005",
       "type": "registry:block",
-      "title": "Checklist Features",
+      "title": "Возможности чеклистом",
       "description": "Список с галочками, у которого есть вторая половина: две колонки того, что входит, и честная колонка того, чего нет. Маркеры нарисованы псевдоэлементами.",
       "categories": ["features"],
       "dependencies": [],
@@ -501,7 +505,8 @@
                 "label": "Exclusions heading",
                 "default": "What is not here"
               }
-            }
+            },
+            "title": "Checklist Features"
           }
         }
       }
@@ -509,7 +514,7 @@
     {
       "name": "features-006",
       "type": "registry:block",
-      "title": "Versus Table",
+      "title": "Таблица сравнения",
       "description": "Таблица сравнения с альтернативой: настоящая <table> с caption и scope, своя колонка подсвечена на всю высоту, на узкой ширине таблица прокручивается вбок.",
       "categories": ["features"],
       "dependencies": [],
@@ -604,7 +609,8 @@
                 "label": "Alternative column",
                 "default": "Copy-paste"
               }
-            }
+            },
+            "title": "Versus Table"
           }
         }
       }
@@ -612,7 +618,7 @@
     {
       "name": "features-007",
       "type": "registry:block",
-      "title": "Three Step Flow",
+      "title": "Три шага",
       "description": "Блок «как это работает» в три шага: нумерованные кружки на соединительной линии, у каждого шага описание и техническая деталь в рамке.",
       "categories": ["features"],
       "dependencies": [],
@@ -707,7 +713,8 @@
                 "label": "Eyebrow",
                 "default": "How it works"
               }
-            }
+            },
+            "title": "Three Step Flow"
           }
         }
       }
@@ -715,7 +722,7 @@
     {
       "name": "features-008",
       "type": "registry:block",
-      "title": "CSS Tabs Features",
+      "title": "Возможности по вкладкам на CSS",
       "description": "Вкладки по возможностям без единой строки JavaScript: переключение держится на группе радиокнопок и селекторе :checked. Панель показывает описание, список и метрику.",
       "categories": ["features"],
       "dependencies": [],
@@ -810,7 +817,8 @@
                 "label": "Eyebrow",
                 "default": "Features"
               }
-            }
+            },
+            "title": "CSS Tabs Features"
           }
         }
       }
@@ -818,7 +826,7 @@
     {
       "name": "features-009",
       "type": "registry:block",
-      "title": "Achievement Figures",
+      "title": "Цифры достижений",
       "description": "Блок цифр и достижений: четыре крупных показателя на линиях сетки, у каждого единица измерения, подпись и сноска о том, что именно измерялось.",
       "categories": ["features"],
       "dependencies": [],
@@ -913,7 +921,8 @@
                 "label": "Eyebrow",
                 "default": "The year in figures"
               }
-            }
+            },
+            "title": "Achievement Figures"
           }
         }
       }
@@ -921,7 +930,7 @@
     {
       "name": "features-010",
       "type": "registry:block",
-      "title": "Integration Tiles",
+      "title": "Плитки интеграций",
       "description": "Витрина интеграций без единого логотипа-картинки: плитки с монограммами, оттенок каждой посчитан из названия. Сетка автозаполняемая и зависит от ширины блока.",
       "categories": ["features"],
       "dependencies": [],
@@ -1016,7 +1025,8 @@
                 "label": "Eyebrow",
                 "default": "Integrations"
               }
-            }
+            },
+            "title": "Integration Tiles"
           }
         }
       }
@@ -1024,7 +1034,7 @@
     {
       "name": "features-011",
       "type": "registry:block",
-      "title": "Lead Benefit Band",
+      "title": "Полоса главной выгоды",
       "description": "Преимущества с акцентом на главном: залитая акцентом полоса сверху с одним утверждением, числом и кнопкой, под ней четыре второстепенных пункта нейтральным текстом.",
       "categories": ["features"],
       "dependencies": [],
@@ -1119,7 +1129,8 @@
                 "label": "Eyebrow",
                 "default": "Why it works"
               }
-            }
+            },
+            "title": "Lead Benefit Band"
           }
         }
       }
@@ -1127,7 +1138,7 @@
     {
       "name": "features-012",
       "type": "registry:block",
-      "title": "Roles Cards",
+      "title": "Карточки ролей",
       "description": "Блок «для кого» с ролями: у каждой карточки зачёркнутая боль и акцентный результат, ниже три конкретные задачи роли и ссылка на сценарий.",
       "categories": ["features"],
       "dependencies": [],
@@ -1222,7 +1233,8 @@
                 "label": "Eyebrow",
                 "default": "Who it is for"
               }
-            }
+            },
+            "title": "Roles Cards"
           }
         }
       }
@@ -1230,7 +1242,7 @@
     {
       "name": "features-013",
       "type": "registry:block",
-      "title": "Compliance Shields",
+      "title": "Щиты соответствия",
       "description": "Блок безопасности и соответствия: ряд щитов с явным статусом словами, четыре контроля обычным списком и ссылки на документы под ними.",
       "categories": ["features"],
       "dependencies": [],
@@ -1325,7 +1337,8 @@
                 "label": "Eyebrow",
                 "default": "Security"
               }
-            }
+            },
+            "title": "Compliance Shields"
           }
         }
       }
@@ -1333,7 +1346,7 @@
     {
       "name": "features-014",
       "type": "registry:block",
-      "title": "Quote And Metric",
+      "title": "Цитата и показатель",
       "description": "Большая цитата клиента слева и один измеримый результат справа: <figure> с <blockquote> и подписью, рядом панель с крупным числом и двумя вспомогательными показателями.",
       "categories": ["features"],
       "dependencies": [],
@@ -1428,7 +1441,8 @@
                 "label": "Company",
                 "default": "Litera"
               }
-            }
+            },
+            "title": "Quote And Metric"
           }
         }
       }
@@ -1436,7 +1450,7 @@
     {
       "name": "features-015",
       "type": "registry:block",
-      "title": "Spec Sheet",
+      "title": "Лист характеристик",
       "description": "Технические характеристики в стиле даташита: три группы пар «параметр — значение», значения моноширинным шрифтом, между парами точечная линия.",
       "categories": ["features"],
       "dependencies": [],
@@ -1531,7 +1545,8 @@
                 "label": "Eyebrow",
                 "default": "Specification"
               }
-            }
+            },
+            "title": "Spec Sheet"
           }
         }
       }

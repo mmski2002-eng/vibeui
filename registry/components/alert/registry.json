@@ -4,11 +4,9 @@
     {
       "name": "alert-001",
       "type": "registry:component",
-      "title": "Inline Alert",
+      "title": "Строчное уведомление",
       "description": "Встроенное уведомление, где тон несёт полоса слева и значок, а не заливка во всю ширину. Три сообщения подряд не превращают экран в светофор.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-001-*. Четыре тона переключаются data-атрибутом и меняют одну переменную: цвет полосы слева и значка. Роль выбирается по тону: danger объявляется как alert (скринридер прерывает чтение), остальные — как status. В узкой колонке действие уходит под текст через @container, а не сжимает его.",
       "meta": {
-        "tags": [
-          "alert",
-          "notification",
-          "inline",
-          "status"
-        ],
+        "tags": ["alert", "notification", "inline", "status"],
         "preview": {
           "width": "full"
         },
@@ -61,12 +54,7 @@
             "label": "Тон",
             "type": "select",
             "default": "warning",
-            "options": [
-              "info",
-              "success",
-              "warning",
-              "danger"
-            ]
+            "options": ["info", "success", "warning", "danger"]
           },
           {
             "prop": "title",
@@ -134,7 +122,8 @@
                 "label": "Action",
                 "default": "Connect"
               }
-            }
+            },
+            "title": "Inline Alert"
           }
         }
       }
@@ -142,11 +131,9 @@
     {
       "name": "alert-002",
       "type": "registry:component",
-      "title": "Solid Alert",
+      "title": "Заливное уведомление",
       "description": "Залитый тоном алерт — самый тяжёлый вес в наборе. Для единственного случая, когда сообщение нельзя пропустить: оплата не прошла, сервис лежит, данные вот-вот удалятся.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -158,12 +145,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-002-*. Четыре тона переключаются data-атрибутом и меняют фон, цвет текста и приглушённый оттенок описания разом. Значок нарисован обводкой currentColor, поэтому на любой заливке остаётся читаемым без второго цвета. Роль выбирается по тону: danger объявляется как alert, остальные — как status. В узкой колонке действие переносится под текст через @container.",
       "meta": {
-        "tags": [
-          "alert",
-          "solid",
-          "critical",
-          "notification"
-        ],
+        "tags": ["alert", "solid", "critical", "notification"],
         "preview": {
           "width": "full"
         },
@@ -199,12 +181,7 @@
             "label": "Тон",
             "type": "select",
             "default": "danger",
-            "options": [
-              "info",
-              "success",
-              "warning",
-              "danger"
-            ]
+            "options": ["info", "success", "warning", "danger"]
           },
           {
             "prop": "title",
@@ -272,7 +249,8 @@
                 "label": "Action",
                 "default": "Update card"
               }
-            }
+            },
+            "title": "Solid Alert"
           }
         }
       }
@@ -280,11 +258,9 @@
     {
       "name": "alert-003",
       "type": "registry:component",
-      "title": "Field Alert",
+      "title": "Уведомление у поля",
       "description": "Однострочное сообщение под полем формы: точка тона и фраза. Ни заголовка, ни описания — второй уровень текста в таком месте не читают.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -296,12 +272,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-003-*. Это <p> с точкой тона: высота строки совпадает с подписью поля, поэтому появление сообщения не сдвигает раскладку формы. Точка выровнена по первой строке текста, а не по центру блока — при переносе на две строки центрирование увело бы её вниз. В тоне danger текст окрашивается целиком: ошибка поля должна читаться без сравнения с соседями.",
       "meta": {
-        "tags": [
-          "alert",
-          "form",
-          "inline",
-          "validation"
-        ],
+        "tags": ["alert", "form", "inline", "validation"],
         "preview": {
           "width": "full"
         },
@@ -336,12 +307,7 @@
             "label": "Тон",
             "type": "select",
             "default": "danger",
-            "options": [
-              "info",
-              "success",
-              "warning",
-              "danger"
-            ]
+            "options": ["info", "success", "warning", "danger"]
           },
           {
             "prop": "message",
@@ -386,7 +352,8 @@
                 "label": "Message",
                 "default": "That address belongs to another project — try a different one."
               }
-            }
+            },
+            "title": "Field Alert"
           }
         }
       }
@@ -394,11 +361,9 @@
     {
       "name": "alert-004",
       "type": "registry:component",
-      "title": "Decision Alert",
+      "title": "Уведомление с выбором",
       "description": "Алерт, который требует решения здесь и сейчас: две кнопки под текстом. В опасном режиме подтверждение краснеет, но не становится главной кнопкой.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -410,12 +375,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-004-*. Кнопки стоят под текстом, а не в строке заголовка: решение принимают, дочитав. Проп destructive перекрашивает значок, рамку и подтверждение в опасный тон и переводит роль в alertdialog. В узкой колонке кнопки растягиваются на всю ширину через @container.",
       "meta": {
-        "tags": [
-          "alert",
-          "confirm",
-          "actions",
-          "decision"
-        ],
+        "tags": ["alert", "confirm", "actions", "decision"],
         "preview": {
           "width": "full"
         },
@@ -527,7 +487,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Decision Alert"
           }
         }
       }
@@ -535,11 +496,9 @@
     {
       "name": "alert-005",
       "type": "registry:component",
-      "title": "Dismissible Alert",
+      "title": "Закрываемое уведомление",
       "description": "Закрываемое сообщение: крестик появляется только вместе с обработчиком, а «больше не показывать» стоит отдельной строкой — это разные решения.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -551,12 +510,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-005-*. Тон живёт в вертикальной полосе слева, которая тянется на высоту блока. Крестик спозиционирован в правом верхнем углу, а не стоит в потоке: в потоке он тянул бы на себя первую строку текста. Строка footnote под описанием предназначена для «больше не показывать» — отдельного решения, которое нельзя прятать в тот же крестик.",
       "meta": {
-        "tags": [
-          "alert",
-          "dismiss",
-          "notice",
-          "tip"
-        ],
+        "tags": ["alert", "dismiss", "notice", "tip"],
         "preview": {
           "width": "full"
         },
@@ -593,12 +547,7 @@
             "label": "Тон",
             "type": "select",
             "default": "info",
-            "options": [
-              "info",
-              "success",
-              "warning",
-              "danger"
-            ]
+            "options": ["info", "success", "warning", "danger"]
           },
           {
             "prop": "title",
@@ -667,7 +616,8 @@
                 "label": "Footnote",
                 "default": "Don't show again"
               }
-            }
+            },
+            "title": "Dismissible Alert"
           }
         }
       }
@@ -675,11 +625,9 @@
     {
       "name": "alert-006",
       "type": "registry:component",
-      "title": "Feature Alert",
+      "title": "Уведомление о новинке",
       "description": "Рассказ о новой возможности, а не сообщение о проблеме: слева сцена из плиток вместо значка статуса, тон спокойный.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -691,12 +639,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-006-*. Слева не значок статуса, а маленькая сцена из трёх плиток — намёк на интерфейс, о котором идёт речь; она собрана позиционированными span'ами и не требует картинки. Подсветка угла — радиальный градиент в фоне. На узкой ширине действия переносятся под текст, на очень узкой сцена скрывается через @container.",
       "meta": {
-        "tags": [
-          "alert",
-          "feature",
-          "announcement",
-          "product"
-        ],
+        "tags": ["alert", "feature", "announcement", "product"],
         "preview": {
           "width": "full"
         },
@@ -810,7 +753,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Feature Alert"
           }
         }
       }
@@ -818,11 +762,9 @@
     {
       "name": "alert-007",
       "type": "registry:component",
-      "title": "Message Alert",
+      "title": "Уведомление с текстом",
       "description": "Уведомление о сообщении от человека: инициалы с оттенком из имени, текст до трёх строк и ответ. Уведомление показывает начало разговора, а не сам разговор.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -834,12 +776,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-007-*. Оттенок аватара считается из имени детерминированной функцией и подставляется в --vibeui-alert-007-hue: тот же приём, что в avatar-001, поэтому один человек всегда одного цвета. Текст сообщения обрезается тремя строками через -webkit-line-clamp. Время прижимается вправо через margin-left:auto и переносится в узкой колонке.",
       "meta": {
-        "tags": [
-          "alert",
-          "message",
-          "notification",
-          "avatar"
-        ],
+        "tags": ["alert", "message", "notification", "avatar"],
         "preview": {
           "width": "full"
         },
@@ -946,7 +883,8 @@
                 "label": "Time",
                 "default": "12 minutes ago"
               }
-            }
+            },
+            "title": "Message Alert"
           }
         }
       }
@@ -954,11 +892,9 @@
     {
       "name": "alert-008",
       "type": "registry:component",
-      "title": "Progress Alert",
+      "title": "Уведомление с прогрессом",
       "description": "Алерт выполняющейся операции: шаг, процент и полоса, встроенная в нижнюю кромку блока. Неизвестная длительность честно показывается бегущим отрезком.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -970,12 +906,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-008-*. Полоса прогресса — абсолютно спозиционированная кромка блока, а не строка в потоке: сообщение остаётся плотным. Ширина заполнения приходит переменной --vibeui-alert-008-value. value={null} включает состояние неизвестной длительности: отрезок ходит по кромке, aria-valuenow не выставляется. Спиннер нарисован рамкой с одним окрашенным краем.",
       "meta": {
-        "tags": [
-          "alert",
-          "progress",
-          "loading",
-          "operation"
-        ],
+        "tags": ["alert", "progress", "loading", "operation"],
         "preview": {
           "width": "full"
         },
@@ -1082,7 +1013,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Progress Alert"
           }
         }
       }
@@ -1090,11 +1022,9 @@
     {
       "name": "alert-009",
       "type": "registry:component",
-      "title": "Countdown Alert",
+      "title": "Уведомление с отсчётом",
       "description": "Срок, который заканчивается: остаток крупно, действие рядом, полоса под текстом сжимается к нулю. Три способа сказать одно и то же, потому что строку пропускают.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1106,12 +1036,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-009-*. Отсчёт не считается внутри: строка остатка и доля прошедшего срока приходят пропами, потому что таймер в компоненте означал бы тикающий рендер на каждой странице. Полоса показывает остаток, а не пройденное — её ширина считается как 100 минус elapsed. Левая граница окрашена в тон, а не вся рамка.",
       "meta": {
-        "tags": [
-          "alert",
-          "trial",
-          "countdown",
-          "deadline"
-        ],
+        "tags": ["alert", "trial", "countdown", "deadline"],
         "preview": {
           "width": "full"
         },
@@ -1227,7 +1152,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Countdown Alert"
           }
         }
       }
@@ -1235,11 +1161,9 @@
     {
       "name": "alert-010",
       "type": "registry:component",
-      "title": "Form Errors Alert",
+      "title": "Ошибки формы",
       "description": "Сводка ошибок формы над кнопкой отправки: число в заголовке и строки-ссылки на поля. В длинной форме искать поле глазами дороже, чем щёлкнуть.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1251,12 +1175,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-010-*. Заголовок собирается сам из числа ошибок, если не передан явно. Каждая строка — подпись поля жирным и текст ошибки обычным: сначала «где», потом «что». При переданном href строка становится ссылкой на якорь поля. Роль alert выставлена всегда: сводка появляется в ответ на отправку и должна быть объявлена сразу.",
       "meta": {
-        "tags": [
-          "alert",
-          "form",
-          "errors",
-          "validation"
-        ],
+        "tags": ["alert", "form", "errors", "validation"],
         "preview": {
           "width": "full"
         },
@@ -1324,7 +1243,8 @@
                 "label": "Heading",
                 "default": "Could not save: 3 errors"
               }
-            }
+            },
+            "title": "Form Errors Alert"
           }
         }
       }
@@ -1332,11 +1252,9 @@
     {
       "name": "alert-011",
       "type": "registry:component",
-      "title": "Technical Error Alert",
+      "title": "Техническая ошибка",
       "description": "Ошибка, с которой пойдут в поддержку: человеческое объяснение сверху, технические подробности — в свёрнутом блоке под ним.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1348,12 +1266,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-011-*. Подробности свёрнуты в нативный <details>, поэтому раскрытие не требует состояния и работает до гидратации. Сам текст лежит в тёмном моноширинном <pre> с горизонтальной прокруткой: его копируют целиком, а не читают. Идентификатор обращения показан моноширинным — по нему ищут в поддержке.",
       "meta": {
-        "tags": [
-          "alert",
-          "error",
-          "support",
-          "details"
-        ],
+        "tags": ["alert", "error", "support", "details"],
         "preview": {
           "width": "full"
         },
@@ -1449,7 +1362,8 @@
                 "label": "Reference",
                 "default": "Case 8f2c-41ab"
               }
-            }
+            },
+            "title": "Technical Error Alert"
           }
         }
       }
@@ -1457,11 +1371,9 @@
     {
       "name": "alert-012",
       "type": "registry:component",
-      "title": "Update Alert",
+      "title": "Уведомление об обновлении",
       "description": "Сообщение о доступном обновлении: номер версии в плашке, две-три строки изменений и кнопка. Без списка изменений кнопку жмут вслепую или не жмут вовсе.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1473,12 +1385,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-012-*. Номер версии набран моноширинным в плашке: его сверяют символ за символом. Список изменений — обычный ul с точками на псевдоэлементах. Полный список уходит по ссылке, прижатой вправо через margin-left:auto; в узкой колонке она возвращается в поток.",
       "meta": {
-        "tags": [
-          "alert",
-          "update",
-          "release",
-          "changelog"
-        ],
+        "tags": ["alert", "update", "release", "changelog"],
         "preview": {
           "width": "full"
         },
@@ -1581,7 +1488,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Update Alert"
           }
         }
       }
@@ -1589,11 +1497,9 @@
     {
       "name": "alert-013",
       "type": "registry:component",
-      "title": "Consent Alert",
+      "title": "Запрос согласия",
       "description": "Запрос согласия на cookie, где отказ равен согласию по весу. Это не вежливость: кнопка «Отклонить» не может быть серее и мельче «Принять».",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1605,12 +1511,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-013-*. Кнопки согласия и отказа одного размера и одной высоты: разный вес здесь — тёмный приём, а не оформление. Настройка вынесена третьей тихой ссылкой, чтобы выбор из двух вариантов оставался очевидным. В узкой колонке блок складывается в столбик, кнопки растягиваются поровну через @container.",
       "meta": {
-        "tags": [
-          "alert",
-          "cookie",
-          "consent",
-          "privacy"
-        ],
+        "tags": ["alert", "cookie", "consent", "privacy"],
         "preview": {
           "width": "full"
         },
@@ -1713,7 +1614,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Consent Alert"
           }
         }
       }
@@ -1721,11 +1623,9 @@
     {
       "name": "alert-014",
       "type": "registry:component",
-      "title": "Status Alert",
+      "title": "Уведомление о состоянии",
       "description": "Сводка состояния сервиса: точка пульсирует только когда что-то не так, и обязательно указано время последнего обновления.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1737,12 +1637,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-014-*. Четыре состояния переключаются data-атрибутом и меняют одну переменную цвета. Пульс — псевдоэлемент точки с анимацией масштаба, и он включён только для нештатных состояний: ровное не должно моргать часами. Роль alert выставляется только при полном отказе.",
       "meta": {
-        "tags": [
-          "alert",
-          "status",
-          "uptime",
-          "incident"
-        ],
+        "tags": ["alert", "status", "uptime", "incident"],
         "preview": {
           "width": "full"
         },
@@ -1779,12 +1674,7 @@
             "label": "Состояние",
             "type": "select",
             "default": "degraded",
-            "options": [
-              "operational",
-              "degraded",
-              "down",
-              "maintenance"
-            ]
+            "options": ["operational", "degraded", "down", "maintenance"]
           },
           {
             "prop": "title",
@@ -1842,7 +1732,8 @@
                 "label": "Updated",
                 "default": "updated 2 minutes ago"
               }
-            }
+            },
+            "title": "Status Alert"
           }
         }
       }
@@ -1850,11 +1741,9 @@
     {
       "name": "alert-015",
       "type": "registry:component",
-      "title": "Quota Alert",
+      "title": "Уведомление о лимите",
       "description": "Лимит на исходе: полоса и счётчик считаются из одних данных, а цвет переключается сам на 80 и 100 процентах — исчерпанную квоту нельзя показать зелёной.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1866,12 +1755,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-015-*. Доля считается из used и total, попадает в переменную --vibeui-alert-015-ratio и одновременно определяет уровень: до 80 процентов обычный тон, дальше предупреждающий, на 100 — опасный. Тона нет в пропах намеренно: он производная от данных, а не решение вызывающего кода.",
       "meta": {
-        "tags": [
-          "alert",
-          "quota",
-          "limit",
-          "billing"
-        ],
+        "tags": ["alert", "quota", "limit", "billing"],
         "preview": {
           "width": "full"
         },
@@ -1987,7 +1871,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Quota Alert"
           }
         }
       }
@@ -1995,11 +1880,9 @@
     {
       "name": "alert-016",
       "type": "registry:component",
-      "title": "Grouped Alerts",
+      "title": "Сгруппированные уведомления",
       "description": "Несколько сообщений в одной рамке вместо стопки отдельных: общий заголовок, одна кнопка «Очистить», хвост списка сворачивается в строку-счётчик.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2011,12 +1894,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-016-*. Записи разделены линиями, а не отступами: общая рамка держит их как один объект. Тон каждой записи задаётся data-атрибутом и меняет только цвет точки. Хвост длиннее visible сворачивается в строку со счётчиком, поэтому блок не растёт бесконечно.",
       "meta": {
-        "tags": [
-          "alert",
-          "notifications",
-          "list",
-          "inbox"
-        ],
+        "tags": ["alert", "notifications", "list", "inbox"],
         "preview": {
           "width": "full"
         },
@@ -2112,7 +1990,8 @@
                 "label": "Clear",
                 "default": "Clear"
               }
-            }
+            },
+            "title": "Grouped Alerts"
           }
         }
       }
@@ -2120,11 +1999,9 @@
     {
       "name": "alert-017",
       "type": "registry:component",
-      "title": "Maintenance Alert",
+      "title": "Технические работы",
       "description": "Предупреждение о плановых работах: окно времени отдельной плашкой и список того, что будет недоступно. Тон нейтральный — работы это не авария.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2136,12 +2013,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-017-*. Значок-календарь нарисован рамкой и двумя штрихами на псевдоэлементах: иконочная библиотека не нужна. Время работ вынесено в моноширинную плашку — его переписывают в календарь, поэтому оно не должно теряться в абзаце. Затронутые сервисы перечислены плашками, а не строкой через запятую.",
       "meta": {
-        "tags": [
-          "alert",
-          "maintenance",
-          "schedule",
-          "downtime"
-        ],
+        "tags": ["alert", "maintenance", "schedule", "downtime"],
         "preview": {
           "width": "full"
         },
@@ -2237,7 +2109,8 @@
                 "label": "Description",
                 "default": "We are upgrading storage. Published sites keep serving — only the dashboard goes offline."
               }
-            }
+            },
+            "title": "Maintenance Alert"
           }
         }
       }
@@ -2245,11 +2118,9 @@
     {
       "name": "alert-018",
       "type": "registry:component",
-      "title": "Offline Alert",
+      "title": "Нет соединения",
       "description": "Полоса «нет соединения», которая следит за состоянием сама через события браузера. Сообщения «связь вернулась» здесь нет: о возврате говорит исчезновение полосы.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2261,12 +2132,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-018-*. Состояние читается через useSyncExternalStore с подпиской на события online и offline: это штатный способ читать внешний источник, он не вызывает лишних рендеров и корректно ведёт себя при серверной отрисовке, где снимок всегда «связь есть». Пока связь есть, компонент возвращает null. Проп force показывает полосу принудительно — для витрины и отладки.",
       "meta": {
-        "tags": [
-          "alert",
-          "offline",
-          "network",
-          "status"
-        ],
+        "tags": ["alert", "offline", "network", "status"],
         "preview": {
           "props": {
             "force": true
@@ -2360,7 +2226,8 @@
               "force": {
                 "label": "Show"
               }
-            }
+            },
+            "title": "Offline Alert"
           }
         }
       }
@@ -2368,11 +2235,9 @@
     {
       "name": "alert-019",
       "type": "registry:component",
-      "title": "Instruction Alert",
+      "title": "Уведомление с инструкцией",
       "description": "Алерт с инструкцией: пронумерованные шаги вместо абзаца. Обычное сообщение говорит, что не так; это — что сделать.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2384,12 +2249,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-019-*. Номера шагов рисуются счётчиком CSS, а не текстом в разметке: список нельзя рассинхронизировать, добавив пункт в середину. Подпись справа в шапке (срок, ответственный) скрывается в узкой колонке через @container, чтобы заголовок не сжимался.",
       "meta": {
-        "tags": [
-          "alert",
-          "instruction",
-          "steps",
-          "howto"
-        ],
+        "tags": ["alert", "instruction", "steps", "howto"],
         "preview": {
           "width": "full"
         },
@@ -2503,7 +2363,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Instruction Alert"
           }
         }
       }
@@ -2511,11 +2372,9 @@
     {
       "name": "alert-020",
       "type": "registry:component",
-      "title": "Confirm Word Alert",
+      "title": "Подтверждение словом",
       "description": "Подтверждение необратимого действия: перечень того, что исчезнет, и поле, куда нужно ввести название. Пауза, которая отделяет случайный клик от решения.",
-      "categories": [
-        "alert"
-      ],
+      "categories": ["alert"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2527,12 +2386,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-020-*. Пока поле пустое, подтверждение недоступно — это делает правило `:has(input:placeholder-shown)`, то есть без единой строки JS. Точное совпадение проверяет атрибут pattern (значение экранируется) и, окончательно, вызывающий код на отправке формы: CSS сравнивать строки не умеет. Список потерь стоит выше поля намеренно — его должны прочитать до того, как начнут печатать.",
       "meta": {
-        "tags": [
-          "alert",
-          "confirm",
-          "destructive",
-          "danger"
-        ],
+        "tags": ["alert", "confirm", "destructive", "danger"],
         "preview": {
           "width": "full"
         },
@@ -2628,7 +2482,8 @@
                 "label": "Button",
                 "default": "Delete forever"
               }
-            }
+            },
+            "title": "Confirm Word Alert"
           }
         }
       }

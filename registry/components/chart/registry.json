@@ -4,7 +4,7 @@
     {
       "name": "chart-001",
       "type": "registry:component",
-      "title": "Line Chart",
+      "title": "Линейный график",
       "description": "Линейный график на чистом SVG: путь считается из массива точек на сервере. Ни библиотеки графиков, ни клиентского JS — картинка видна до гидратации и печатается.",
       "categories": ["chart"],
       "dependencies": [],
@@ -125,7 +125,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Line Chart"
           }
         }
       }
@@ -133,7 +134,7 @@
     {
       "name": "chart-002",
       "type": "registry:component",
-      "title": "Bar Chart",
+      "title": "Столбчатый график",
       "description": "Столбчатая диаграмма на разметке: высота столбца — процент в CSS-переменной, а не SVG. График остаётся текстом, поэтому масштабируется и печатается.",
       "categories": ["chart"],
       "dependencies": [],
@@ -252,7 +253,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Bar Chart"
           }
         }
       }
@@ -260,7 +262,7 @@
     {
       "name": "chart-003",
       "type": "registry:component",
-      "title": "Donut Chart",
+      "title": "Кольцевая диаграмма",
       "description": "Кольцевая диаграмма на conic-gradient: доли складываются в один градиент, дырка вырезается маской, легенда обязательна.",
       "categories": ["chart"],
       "dependencies": [],
@@ -361,7 +363,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Donut Chart"
           }
         }
       }
@@ -369,7 +372,7 @@
     {
       "name": "chart-004",
       "type": "registry:component",
-      "title": "Ranking Bars",
+      "title": "Полосы рейтинга",
       "description": "Рейтинг горизонтальными полосами: длину глаз сравнивает точнее угла, а числа справа отвечают «насколько».",
       "categories": ["chart"],
       "dependencies": [],
@@ -470,7 +473,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Ranking Bars"
           }
         }
       }
@@ -478,7 +482,7 @@
     {
       "name": "chart-005",
       "type": "registry:component",
-      "title": "Stacked Bar",
+      "title": "Столбцы с накоплением",
       "description": "Одна полоса, разложенная на доли: «из чего состоит целое» в одну строку там, где кольцо съело бы треть карточки.",
       "categories": ["chart"],
       "dependencies": [],
@@ -582,7 +586,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Stacked Bar"
           }
         }
       }
@@ -590,7 +595,7 @@
     {
       "name": "chart-006",
       "type": "registry:component",
-      "title": "Area Chart",
+      "title": "График с заливкой",
       "description": "График с заливкой под линией на чистом SVG: заливка подчёркивает объём, но линия остаётся главной.",
       "categories": ["chart"],
       "dependencies": [],
@@ -694,7 +699,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Area Chart"
           }
         }
       }
@@ -702,7 +708,7 @@
     {
       "name": "chart-007",
       "type": "registry:component",
-      "title": "Gauge",
+      "title": "Спидометр",
       "description": "Полукруглая шкала показателя с риской цели: пустая часть дуги показывает, сколько осталось до плана.",
       "categories": ["chart"],
       "dependencies": [],
@@ -805,7 +811,8 @@
                 "label": "Heading",
                 "default": "Sales plan"
               }
-            }
+            },
+            "title": "Gauge"
           }
         }
       }
@@ -813,7 +820,7 @@
     {
       "name": "chart-008",
       "type": "registry:component",
-      "title": "Funnel",
+      "title": "Воронка",
       "description": "Воронка с процентами перехода: главное в ней не ширина полос, а сколько людей теряется между шагами.",
       "categories": ["chart"],
       "dependencies": [],
@@ -917,7 +924,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Funnel"
           }
         }
       }
@@ -925,7 +933,7 @@
     {
       "name": "chart-009",
       "type": "registry:component",
-      "title": "Compare Bars",
+      "title": "Полосы сравнения",
       "description": "Две серии столбиков рядом: пары стоят вплотную, а группы разделены зазором — сравнение идёт внутри пары.",
       "categories": ["chart"],
       "dependencies": [],
@@ -1031,7 +1039,8 @@
                 "label": "Previous period",
                 "default": "Last week"
               }
-            }
+            },
+            "title": "Compare Bars"
           }
         }
       }
@@ -1039,7 +1048,7 @@
     {
       "name": "chart-010",
       "type": "registry:component",
-      "title": "Axis Columns",
+      "title": "Колонки с осью",
       "description": "Столбцы с настоящей осью значений: верх шкалы округляется до круглого числа, поэтому деления подписаны как 0 / 300 / 600, а не как 0 / 217 / 434.",
       "categories": ["chart"],
       "dependencies": [],
@@ -1145,7 +1154,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Axis Columns"
           }
         }
       }
@@ -1153,7 +1163,7 @@
     {
       "name": "chart-011",
       "type": "registry:component",
-      "title": "Dotted Trend",
+      "title": "Тренд пунктиром",
       "description": "Линия с отмеченными точками и выноской последнего значения прямо на графике: «где узлы» и «сколько сейчас» отвечаются одной картинкой.",
       "categories": ["chart"],
       "dependencies": [],
@@ -1259,7 +1269,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Dotted Trend"
           }
         }
       }
@@ -1267,7 +1278,7 @@
     {
       "name": "chart-012",
       "type": "registry:component",
-      "title": "Gradient Area",
+      "title": "Градиентная заливка",
       "description": "Площадь с вертикальным градиентом и пунктиром среднего: заливка гаснет к оси и не спорит с линией, а среднее даёт точку отсчёта.",
       "categories": ["chart"],
       "dependencies": [],
@@ -1373,7 +1384,8 @@
               "showAverage": {
                 "label": "Average"
               }
-            }
+            },
+            "title": "Gradient Area"
           }
         }
       }
@@ -1381,7 +1393,7 @@
     {
       "name": "chart-013",
       "type": "registry:component",
-      "title": "Donut Total",
+      "title": "Кольцо с итогом",
       "description": "Кольцо, у которого дырка занята делом: в центре стоит итог, секторы разделены настоящими зазорами, а легенда несёт числа и проценты.",
       "categories": ["chart"],
       "dependencies": [],
@@ -1489,7 +1501,8 @@
                 "label": "Unit",
                 "default": "signups per month"
               }
-            }
+            },
+            "title": "Donut Total"
           }
         }
       }
@@ -1497,7 +1510,7 @@
     {
       "name": "chart-014",
       "type": "registry:component",
-      "title": "Zoned Gauge",
+      "title": "Спидометр с зонами",
       "description": "Полукруговой датчик с окрашенными зонами и стрелкой: стрелка отвечает «сколько», зоны — «это норма или уже плохо».",
       "categories": ["chart"],
       "dependencies": [],
@@ -1602,7 +1615,8 @@
                 "label": "Unit",
                 "default": "points out of 100"
               }
-            }
+            },
+            "title": "Zoned Gauge"
           }
         }
       }
@@ -1610,7 +1624,7 @@
     {
       "name": "chart-015",
       "type": "registry:component",
-      "title": "Stacked Columns",
+      "title": "Колонки с накоплением",
       "description": "Столбцы, разложенные на слои: высота отвечает «сколько всего», доли внутри — «из чего», а легенда называет серии по именам.",
       "categories": ["chart"],
       "dependencies": [],
@@ -1716,7 +1730,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Stacked Columns"
           }
         }
       }
@@ -1724,7 +1739,7 @@
     {
       "name": "chart-016",
       "type": "registry:component",
-      "title": "Plan Versus Fact",
+      "title": "План против факта",
       "description": "Bullet-график «план против факта»: тонкая полоса факта на качественных диапазонах, риска плана поперёк и процент выполнения числом.",
       "categories": ["chart"],
       "dependencies": [],
@@ -1832,7 +1847,8 @@
               "scaleMax": {
                 "label": "Scale headroom"
               }
-            }
+            },
+            "title": "Plan Versus Fact"
           }
         }
       }
@@ -1840,7 +1856,7 @@
     {
       "name": "chart-017",
       "type": "registry:component",
-      "title": "Conversion Funnel",
+      "title": "Воронка конверсии",
       "description": "Симметричная воронка настоящей формы: каждая ступень — трапеция на clip-path, скос между шагами и есть потеря, а процент перехода подписан.",
       "categories": ["chart"],
       "dependencies": [],
@@ -1943,7 +1959,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Conversion Funnel"
           }
         },
         "preview": {
@@ -1954,7 +1971,7 @@
     {
       "name": "chart-018",
       "type": "registry:component",
-      "title": "Waterfall Flow",
+      "title": "Каскадный график",
       "description": "Waterfall: как из начального остатка получился конечный. Приходы и расходы висят на накопленной сумме, итоги стоят на нуле, перемычки держат уровень.",
       "categories": ["chart"],
       "dependencies": [],
@@ -2060,7 +2077,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Waterfall Flow"
           }
         }
       }
@@ -2068,7 +2086,7 @@
     {
       "name": "chart-019",
       "type": "registry:component",
-      "title": "Scatter Plot",
+      "title": "Диаграмма рассеяния",
       "description": "Диаграмма рассеяния для связи двух величин: обе оси подписаны и начинаются с нуля, деления округлены, точки полупрозрачны — наложения видно.",
       "categories": ["chart"],
       "dependencies": [],
@@ -2174,7 +2192,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Scatter Plot"
           }
         }
       }
@@ -2182,7 +2201,7 @@
     {
       "name": "chart-020",
       "type": "registry:component",
-      "title": "Radial Metrics",
+      "title": "Радиальные показатели",
       "description": "Несколько показателей одним объектом: концентрические дуги на общем центре и легенда с процентами и абсолютными числами.",
       "categories": ["chart"],
       "dependencies": [],
@@ -2288,7 +2307,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Radial Metrics"
           }
         }
       }
@@ -2296,7 +2316,7 @@
     {
       "name": "chart-021",
       "type": "registry:component",
-      "title": "Activity Heatmap",
+      "title": "Тепловая карта активности",
       "description": "Тепловая карта «день недели × время суток»: насыщенность клетки считается через color-mix от доли максимума, шкала — одна переменная акцента.",
       "categories": ["chart"],
       "dependencies": [],
@@ -2402,7 +2422,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Activity Heatmap"
           }
         }
       }
@@ -2410,7 +2431,7 @@
     {
       "name": "chart-022",
       "type": "registry:component",
-      "title": "Rank Movers",
+      "title": "Движение в рейтинге",
       "description": "Рейтинг, в котором место важнее величины: номер позиции отдельной колонкой и движение относительно прошлого замера — «был четвёртым, стал вторым».",
       "categories": ["chart"],
       "dependencies": [],
@@ -2513,7 +2534,8 @@
               "showMoves": {
                 "label": "Movement"
               }
-            }
+            },
+            "title": "Rank Movers"
           }
         }
       }
@@ -2521,7 +2543,7 @@
     {
       "name": "chart-023",
       "type": "registry:component",
-      "title": "Tapered Funnel",
+      "title": "Сужающаяся воронка",
       "description": "Воронка продаж одной сплошной сужающейся фигурой: полосы этапов стыкуются без зазоров, а название, число и процент перехода вынесены на выносные линии сбоку.",
       "categories": ["chart"],
       "dependencies": [],
@@ -2613,7 +2635,8 @@
                 "label": "Unit",
                 "default": "deals per month"
               }
-            }
+            },
+            "title": "Tapered Funnel"
           }
         }
       }
@@ -2621,7 +2644,7 @@
     {
       "name": "chart-024",
       "type": "registry:component",
-      "title": "Budget Bridge",
+      "title": "Мост бюджета",
       "description": "Waterfall на боку: статьи бюджета строками, шкала со значениями сверху, а уголковый пунктирный коннектор ведёт от конца одной полосы к началу следующей.",
       "categories": ["chart"],
       "dependencies": [],
@@ -2713,7 +2736,8 @@
                 "label": "Unit",
                 "default": "thousand rubles"
               }
-            }
+            },
+            "title": "Budget Bridge"
           }
         }
       }
@@ -2721,7 +2745,7 @@
     {
       "name": "chart-025",
       "type": "registry:component",
-      "title": "Punch Card",
+      "title": "Карта по часам",
       "description": "Тепловая карта «день × час» кружками вместо заливки клеток: величина закодирована радиусом, поэтому карта читается и там, где цветовой контраст слабый.",
       "categories": ["chart"],
       "dependencies": [],
@@ -2813,7 +2837,8 @@
                 "label": "Unit",
                 "default": "events per hour"
               }
-            }
+            },
+            "title": "Punch Card"
           }
         }
       }

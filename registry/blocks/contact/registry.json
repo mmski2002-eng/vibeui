@@ -4,7 +4,7 @@
     {
       "name": "contact-001",
       "type": "registry:block",
-      "title": "Contact Form",
+      "title": "Форма обратной связи",
       "description": "Форма связи, где тема обращения спрашивается первым полем, а рядом с ней стоят прямые контакты для тех, кто формы не заполняет никогда.",
       "categories": ["contact"],
       "dependencies": [],
@@ -99,7 +99,8 @@
                 "label": "Button caption",
                 "default": "Send the message"
               }
-            }
+            },
+            "title": "Contact Form"
           }
         }
       }
@@ -107,7 +108,7 @@
     {
       "name": "contact-002",
       "type": "registry:block",
-      "title": "Office Map Card",
+      "title": "Карточка офиса с картой",
       "description": "Контакты офиса с нарисованной CSS-заглушкой карты: ни одного внешнего запроса, зато есть адрес текстом, часы работы таблицей и подсказка про вход.",
       "categories": ["contact"],
       "dependencies": [],
@@ -202,7 +203,8 @@
                 "label": "Marker caption",
                 "default": "Studio"
               }
-            }
+            },
+            "title": "Office Map Card"
           }
         }
       }
@@ -210,7 +212,7 @@
     {
       "name": "contact-003",
       "type": "registry:block",
-      "title": "Demo Request",
+      "title": "Заявка на демо",
       "description": "Заявка на демо, где три шага встречи стоят над формой: человек решает, оставлять ли контакты, до того как начнёт заполнять поля.",
       "categories": ["contact"],
       "dependencies": [],
@@ -305,7 +307,8 @@
                 "label": "Heading",
                 "default": "We will show it on your own tasks"
               }
-            }
+            },
+            "title": "Demo Request"
           }
         }
       }
@@ -313,7 +316,7 @@
     {
       "name": "contact-004",
       "type": "registry:block",
-      "title": "Support FAQ Form",
+      "title": "Форма поддержки с вопросами",
       "description": "Частые вопросы и короткая форма рядом: половина обращений закрывается списком, и форма стоит после него, а не вместо.",
       "categories": ["contact"],
       "dependencies": [],
@@ -408,7 +411,8 @@
                 "label": "Form heading",
                 "default": "Still stuck?"
               }
-            }
+            },
+            "title": "Support FAQ Form"
           }
         }
       }
@@ -416,7 +420,7 @@
     {
       "name": "contact-005",
       "type": "registry:block",
-      "title": "Department Contacts",
+      "title": "Контакты отделов",
       "description": "Контакты отделов списком, где у каждого есть назначение и обещанное время ответа, а внизу — общий адрес на случай «не знаю, кому писать».",
       "categories": ["contact"],
       "dependencies": [],
@@ -511,7 +515,8 @@
                 "label": "Catch-all address",
                 "default": "hello@studio.ru"
               }
-            }
+            },
+            "title": "Department Contacts"
           }
         }
       }
@@ -519,7 +524,7 @@
     {
       "name": "contact-006",
       "type": "registry:block",
-      "title": "Callback Slots",
+      "title": "Слоты для звонка",
       "description": "Заявка на обратный звонок с выбором дня и получасового окна: занятые слоты остаются в сетке и подписаны, а не исчезают.",
       "categories": ["contact"],
       "dependencies": [],
@@ -614,7 +619,8 @@
                 "label": "Phone caption",
                 "default": "Phone"
               }
-            }
+            },
+            "title": "Callback Slots"
           }
         }
       }

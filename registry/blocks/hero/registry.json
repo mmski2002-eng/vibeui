@@ -4,7 +4,7 @@
     {
       "name": "hero-001",
       "type": "registry:block",
-      "title": "Aurora Hero",
+      "title": "Первый экран с сиянием",
       "description": "Тёмный SaaS hero с ambient-свечением, grid-подложкой, badge и парой CTA. Самодостаточен: не зависит от темы и стиля проекта.",
       "categories": ["hero"],
       "dependencies": [],
@@ -72,7 +72,8 @@
                 "Do not add a motion library: the animations are already CSS.",
                 "Do not lift the CSS variables into globals.css: the block has to stay a single file."
               ]
-            }
+            },
+            "title": "Aurora Hero"
           }
         }
       }
@@ -80,7 +81,7 @@
     {
       "name": "hero-002",
       "type": "registry:block",
-      "title": "Console Hero",
+      "title": "Первый экран с консолью",
       "description": "Светлый B2B SaaS hero со split-раскладкой: слева текст и пара CTA, справа декоративная визуализация продукта. Самодостаточен: не зависит от темы и стиля проекта.",
       "categories": ["hero"],
       "dependencies": [],
@@ -160,7 +161,8 @@
                 "If you change accent, check the text contrast on the button: 4.5:1 minimum.",
                 "Keep the link semantics. For internal navigation your router's component is fine, as long as the visual styling, the accessibility and the href behaviour survive."
               ]
-            }
+            },
+            "title": "Console Hero"
           }
         }
       }
@@ -168,7 +170,7 @@
     {
       "name": "hero-003",
       "type": "registry:block",
-      "title": "Mosaic Hero",
+      "title": "Первый экран мозаикой",
       "description": "Тёплый светлый hero, собранный мозаикой из пяти плиток: offer-плитка с заголовком и CTA, метрика, залитая акцентом плитка-утверждение, короткий чеклист и декоративный паттерн. Самодостаточен: не зависит от темы и стиля проекта.",
       "categories": ["hero"],
       "dependencies": [],
@@ -256,7 +258,8 @@
                 "If you change accent, check the text contrast on the filled tile: 4.5:1 minimum.",
                 "Keep the link semantics. For internal navigation your router's component is fine, as long as the visual styling, the accessibility and the href behaviour survive."
               ]
-            }
+            },
+            "title": "Mosaic Hero"
           }
         }
       }
@@ -264,7 +267,7 @@
     {
       "name": "hero-004",
       "type": "registry:block",
-      "title": "Plain Centred Hero",
+      "title": "Простой центрированный экран",
       "description": "Спокойный текстовый hero: короткие линейки сверху и снизу, крупный заголовок, подзаголовок и пара кнопок по центру. Ни мокапа, ни картинки — только слова и воздух.",
       "categories": ["hero"],
       "dependencies": [],
@@ -359,7 +362,8 @@
                 "label": "Eyebrow",
                 "default": "Now open"
               }
-            }
+            },
+            "title": "Plain Centred Hero"
           }
         }
       }
@@ -367,7 +371,7 @@
     {
       "name": "hero-005",
       "type": "registry:block",
-      "title": "Product Shot Hero",
+      "title": "Первый экран со снимком продукта",
       "description": "Тёмный hero со снимком продукта: текст по центру, под ним окно приложения во всю ширину, обрезанное нижним краем. Снимок нарисован разметкой, внешних картинок нет.",
       "categories": ["hero"],
       "dependencies": [],
@@ -462,7 +466,8 @@
                 "label": "Window caption",
                 "default": "acme — workspace"
               }
-            }
+            },
+            "title": "Product Shot Hero"
           }
         }
       }
@@ -470,7 +475,7 @@
     {
       "name": "hero-006",
       "type": "registry:block",
-      "title": "Subscribe Hero",
+      "title": "Первый экран с подпиской",
       "description": "Hero, у которого главный элемент — поле подписки: email и кнопка в одной рамке с общим фокусным кольцом, под ними согласие, счётчик подписчиков и три коротких факта.",
       "categories": ["hero"],
       "dependencies": [],
@@ -565,7 +570,8 @@
                 "label": "Button",
                 "default": "Subscribe"
               }
-            }
+            },
+            "title": "Subscribe Hero"
           }
         }
       }
@@ -573,7 +579,7 @@
     {
       "name": "hero-007",
       "type": "registry:block",
-      "title": "Video Poster Hero",
+      "title": "Первый экран с постером видео",
       "description": "Hero вокруг ролика: нарисованный градиентами постер 16:9 с кнопкой воспроизведения, длительностью и списком глав под ним. Плеер не загружается до перехода по ссылке.",
       "categories": ["hero"],
       "dependencies": [],
@@ -668,7 +674,8 @@
                 "label": "Duration",
                 "default": "6:24"
               }
-            }
+            },
+            "title": "Video Poster Hero"
           }
         }
       }
@@ -676,7 +683,7 @@
     {
       "name": "hero-008",
       "type": "registry:block",
-      "title": "Client Logos Hero",
+      "title": "Первый экран с логотипами клиентов",
       "description": "Hero с полосой клиентов внизу: текст и пара кнопок сверху, под линией — сетка текстовых логотипов на отдельной подложке. Логотипы набраны шрифтом, картинок нет.",
       "categories": ["hero"],
       "dependencies": [],
@@ -771,7 +778,8 @@
                 "label": "Strip caption",
                 "default": "Trusted by"
               }
-            }
+            },
+            "title": "Client Logos Hero"
           }
         }
       }
@@ -779,7 +787,7 @@
     {
       "name": "hero-009",
       "type": "registry:block",
-      "title": "Metrics Hero",
+      "title": "Первый экран с показателями",
       "description": "Hero, который спорит цифрами: узкая колонка текста слева и три крупных счётчика на линиях справа. Единицы измерения вынесены отдельным кеглем, числа выровнены tabular-nums.",
       "categories": ["hero"],
       "dependencies": [],
@@ -874,7 +882,8 @@
                 "label": "Eyebrow",
                 "default": "This year"
               }
-            }
+            },
+            "title": "Metrics Hero"
           }
         }
       }
@@ -882,7 +891,7 @@
     {
       "name": "hero-010",
       "type": "registry:block",
-      "title": "Split Image Hero",
+      "title": "Первый экран с картинкой сбоку",
       "description": "Hero пополам без полей: текст с чеклистом в левой половине, изображение во всю высоту секции в правой. Композиция картинки собрана градиентами и clip-path.",
       "categories": ["hero"],
       "dependencies": [],
@@ -977,7 +986,8 @@
                 "label": "Image caption",
                 "default": "Your photo goes here"
               }
-            }
+            },
+            "title": "Split Image Hero"
           }
         }
       }
@@ -985,7 +995,7 @@
     {
       "name": "hero-011",
       "type": "registry:block",
-      "title": "Grid Glow Hero",
+      "title": "Первый экран со светящейся сеткой",
       "description": "Тёмный hero, где фон и есть дизайн: сетка из повторяющихся градиентов, погашенная радиальной маской, и два цветных пятна поверх. Ни одного лишнего слоя в разметке.",
       "categories": ["hero"],
       "dependencies": [],
@@ -1080,7 +1090,8 @@
                 "label": "Headline accent",
                 "default": "half the work"
               }
-            }
+            },
+            "title": "Grid Glow Hero"
           }
         }
       }
@@ -1088,7 +1099,7 @@
     {
       "name": "hero-012",
       "type": "registry:block",
-      "title": "Announcement Hero",
+      "title": "Первый экран с объявлением",
       "description": "Hero вокруг анонса: кликабельная строка «новое» со стрелкой сверху, заголовок с кнопками и карточка релиза с датой, версией и тремя строками изменений снизу.",
       "categories": ["hero"],
       "dependencies": [],
@@ -1183,7 +1194,8 @@
                 "label": "Badge",
                 "default": "New"
               }
-            }
+            },
+            "title": "Announcement Hero"
           }
         }
       }
@@ -1191,7 +1203,7 @@
     {
       "name": "hero-013",
       "type": "registry:block",
-      "title": "Catalog Search Hero",
+      "title": "Первый экран с поиском по каталогу",
       "description": "Hero каталога, где вход в продукт — строка поиска: форма GET с полем и кнопкой, счётчик найденного под ней и популярные запросы ссылками.",
       "categories": ["hero"],
       "dependencies": [],
@@ -1286,7 +1298,8 @@
                 "label": "Field placeholder",
                 "default": "Try: pricing with a toggle"
               }
-            }
+            },
+            "title": "Catalog Search Hero"
           }
         }
       }
@@ -1294,7 +1307,7 @@
     {
       "name": "hero-014",
       "type": "registry:block",
-      "title": "Event Countdown Hero",
+      "title": "Первый экран с отсчётом до события",
       "description": "Hero мероприятия: тип события, заголовок, дата в <time>, место и четыре плитки обратного отсчёта. Значения приходят пропсами и не тикают на сервере.",
       "categories": ["hero"],
       "dependencies": [],
@@ -1389,7 +1402,8 @@
                 "label": "Event type",
                 "default": "Online conference"
               }
-            }
+            },
+            "title": "Event Countdown Hero"
           }
         }
       }
@@ -1397,7 +1411,7 @@
     {
       "name": "hero-015",
       "type": "registry:block",
-      "title": "Editorial Text Hero",
+      "title": "Текстовый первый экран",
       "description": "Минималистичный текстовый hero студийного сайта: крупный serif-заголовок с курсивным акцентом, одна подчёркивающаяся ссылка и выходные данные мелким кеглем внизу.",
       "categories": ["hero"],
       "dependencies": [],
@@ -1492,7 +1506,8 @@
                 "label": "Studio name",
                 "default": "Versta Studio"
               }
-            }
+            },
+            "title": "Editorial Text Hero"
           }
         }
       }
@@ -1500,7 +1515,7 @@
     {
       "name": "hero-016",
       "type": "registry:block",
-      "title": "Two Paths Hero",
+      "title": "Первый экран с двумя путями",
       "description": "Hero с развилкой вместо одной кнопки: две равные карточки-пути, у каждой свой список из трёх пунктов и своя ссылка. Ни один путь не выделен цветом.",
       "categories": ["hero"],
       "dependencies": [],
@@ -1595,7 +1610,8 @@
                 "label": "Eyebrow",
                 "default": "Two ways to start"
               }
-            }
+            },
+            "title": "Two Paths Hero"
           }
         }
       }

@@ -4,11 +4,9 @@
     {
       "name": "skeleton-001",
       "type": "registry:component",
-      "title": "Content Skeleton",
+      "title": "Скелетон текста",
       "description": "Заглушка загрузки, повторяющая метрику будущего содержимого: те же высоты строк и промежутки, поэтому при появлении данных страница не прыгает.",
-      "categories": [
-        "skeleton"
-      ],
+      "categories": ["skeleton"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-001-*. Блик — движение background-position у градиента шириной 200%, а не отдельный слой: перерисовывается только фон. Три формы (text, avatar, block) переключаются data-атрибутом. Контейнер объявлен как role=\"status\" с aria-busy и подписью, поэтому скринридер сообщает о загрузке, а не молчит.",
       "meta": {
-        "tags": [
-          "skeleton",
-          "loading",
-          "placeholder",
-          "shimmer"
-        ],
+        "tags": ["skeleton", "loading", "placeholder", "shimmer"],
         "preview": {
           "width": "full"
         },
@@ -61,11 +54,7 @@
             "label": "Форма",
             "type": "select",
             "default": "text",
-            "options": [
-              "text",
-              "avatar",
-              "block"
-            ]
+            "options": ["text", "avatar", "block"]
           },
           {
             "prop": "lines",
@@ -122,7 +111,8 @@
                 "label": "Label",
                 "default": "Loading"
               }
-            }
+            },
+            "title": "Content Skeleton"
           }
         }
       }
@@ -130,11 +120,9 @@
     {
       "name": "skeleton-002",
       "type": "registry:component",
-      "title": "Card Skeleton",
+      "title": "Скелетон карточки",
       "description": "Заглушка карточки, повторяющая её каркас целиком: обложка с заданной пропорцией, заголовок, две строки текста и ряд кнопок — при подстановке данных высота не меняется.",
-      "categories": [
-        "skeleton"
-      ],
+      "categories": ["skeleton"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -146,12 +134,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-002-*. Серверный: хуков нет. Место под обложку занято через aspect-ratio, а не фиксированной высотой, поэтому карточка держит одну и ту же высоту при любой ширине колонки и соседи по сетке не прыгают. Заливка объявлена одним правилом сразу для обложки, полос и кнопок: блик и база не могут разойтись между частями. Блик едет background-position, а не transform, — элементы остаются на своих местах. Корень помечен role=\"status\" и aria-busy, поэтому вспомогательные технологии сообщают о загрузке, а не читают пустые прямоугольники.",
       "meta": {
-        "tags": [
-          "skeleton",
-          "card",
-          "loading",
-          "display"
-        ],
+        "tags": ["skeleton", "card", "loading", "display"],
         "ai": {
           "export": "Skeleton002",
           "usage": "<Skeleton002 ratio=\"16 / 9\" label=\"Карточка загружается\" />",
@@ -183,11 +166,7 @@
             "label": "Пропорция обложки",
             "type": "select",
             "default": "16 / 9",
-            "options": [
-              "16 / 9",
-              "4 / 3",
-              "1 / 1"
-            ]
+            "options": ["16 / 9", "4 / 3", "1 / 1"]
           },
           {
             "prop": "label",
@@ -232,7 +211,8 @@
                 "label": "Caption",
                 "default": "Card is loading"
               }
-            }
+            },
+            "title": "Card Skeleton"
           }
         }
       }
@@ -240,11 +220,9 @@
     {
       "name": "skeleton-003",
       "type": "registry:component",
-      "title": "List Rows Skeleton",
+      "title": "Скелетон строк списка",
       "description": "Заглушка списка, где строки оживают волной: каждой задана своя задержка анимации, поэтому блик идёт сверху вниз и список читается как один объект, а не пачка мигающих полос.",
-      "categories": [
-        "skeleton"
-      ],
+      "categories": ["skeleton"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -256,12 +234,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-003-*. Серверный: хуков нет. Задержка передаётся строке инлайновой переменной --vibeui-skeleton-003-delay и подхватывается правилом animation-delay, поэтому число строк можно менять пропсом, не трогая CSS. Ширины текстовых полос чередуются через :nth-child: одинаковые прямоугольники читаются как таблица, а не как список людей. Аватар и полосы делят одно правило заливки, чтобы блик шёл по строке целиком. Корень помечен role=\"status\" и aria-busy; при prefers-reduced-motion блик снимается, остаётся ровная заливка.",
       "meta": {
-        "tags": [
-          "skeleton",
-          "list",
-          "loading",
-          "display"
-        ],
+        "tags": ["skeleton", "list", "loading", "display"],
         "ai": {
           "export": "Skeleton003",
           "usage": "<Skeleton003 rows={5} label=\"Список загружается\" />",
@@ -339,7 +312,8 @@
                 "label": "Caption",
                 "default": "List is loading"
               }
-            }
+            },
+            "title": "List Rows Skeleton"
           }
         }
       }
@@ -347,11 +321,9 @@
     {
       "name": "skeleton-004",
       "type": "registry:component",
-      "title": "Table Skeleton",
+      "title": "Скелетон таблицы",
       "description": "Заглушка таблицы, которая держит ширины будущих колонок: шапка и строки лежат на одной сетке grid-template-columns, поэтому при подстановке данных ничего не разъезжается.",
-      "categories": [
-        "skeleton"
-      ],
+      "categories": ["skeleton"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -363,12 +335,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-004-*. Серверный: хуков нет. Раскладка задана единственной переменной --vibeui-skeleton-004-columns, которую подхватывают и шапка, и все строки: колонки не могут разойтись, потому что у них буквально одна сетка. Длины ячеек чередуются атрибутом data-fill и правилами :nth-child, иначе заглушка читается как решётка. Шапка выделена фоном и нижней границей, поэтому таблица узнаётся до появления текста. Корень помечен role=\"status\" и aria-busy; при prefers-reduced-motion блик снимается.",
       "meta": {
-        "tags": [
-          "skeleton",
-          "table",
-          "grid",
-          "display"
-        ],
+        "tags": ["skeleton", "table", "grid", "display"],
         "ai": {
           "export": "Skeleton004",
           "usage": "<Skeleton004\n  rows={5}\n  columns=\"1.5rem 2fr 1fr 1fr 4rem\"\n  label=\"Таблица загружается\"\n/>",
@@ -446,7 +413,8 @@
                 "label": "Columns",
                 "default": "1.5rem 2fr 1fr 1fr 4rem"
               }
-            }
+            },
+            "title": "Table Skeleton"
           }
         }
       }
@@ -454,11 +422,9 @@
     {
       "name": "skeleton-005",
       "type": "registry:component",
-      "title": "Profile Header Skeleton",
+      "title": "Скелетон шапки профиля",
       "description": "Заглушка шапки профиля с самой хрупкой её деталью — круглым аватаром, наезжающим на обложку: наезд считается от той же переменной, что и высота обложки.",
-      "categories": [
-        "skeleton"
-      ],
+      "categories": ["skeleton"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -470,12 +436,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-005-*. Серверный: хуков нет. Высота обложки объявлена переменной, а отрицательный margin аватара считается как половина его диаметра, поэтому при смене высоты каркас не разъезжается и настоящая шапка встаёт ровно на место заглушки. Кольцо вокруг аватара нарисовано box-shadow цветом подложки — это дешевле бордюра и не увеличивает размер круга. Метрики разложены сеткой из трёх равных колонок, столько же, сколько в настоящей шапке. Корень помечен role=\"status\" и aria-busy; при prefers-reduced-motion блик становится ровной заливкой.",
       "meta": {
-        "tags": [
-          "skeleton",
-          "profile",
-          "header",
-          "display"
-        ],
+        "tags": ["skeleton", "profile", "header", "display"],
         "ai": {
           "export": "Skeleton005",
           "usage": "<Skeleton005 cover=\"5.5rem\" label=\"Профиль загружается\" />",
@@ -553,7 +514,8 @@
                 "label": "Caption",
                 "default": "Profile is loading"
               }
-            }
+            },
+            "title": "Profile Header Skeleton"
           }
         }
       }
@@ -561,11 +523,9 @@
     {
       "name": "skeleton-006",
       "type": "registry:component",
-      "title": "Masked Paragraph Skeleton",
+      "title": "Скелетон абзаца по маске",
       "description": "Абзацы-заглушки, нарисованные одним элементом: строки вырезаны повторяющейся маской, поэтому их число меняется переменной, а интерлиньяж по определению совпадает с будущим текстом.",
-      "categories": [
-        "skeleton"
-      ],
+      "categories": ["skeleton"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -577,12 +537,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-006-*. Серверный: хуков нет. Абзац — один элемент, у которого фон-блик вырезан repeating-linear-gradient в свойстве mask: число строк задаёт переменная, а не количество узлов, и высота считается формулой строки и шага. Недописанная последняя строка нарисована накладкой цвета подложки, которая лежит соседом, а не ребёнком: внутри маскированного элемента её вырезало бы вместе со строками. Длины хвостов берутся из фиксированного массива, а не случайно, — случайные разъехались бы между сервером и клиентом при гидратации. Корень помечен role=\"status\" и aria-busy.",
       "meta": {
-        "tags": [
-          "skeleton",
-          "text",
-          "mask",
-          "display"
-        ],
+        "tags": ["skeleton", "text", "mask", "display"],
         "ai": {
           "export": "Skeleton006",
           "usage": "<Skeleton006 paragraphs={[3, 4, 2]} label=\"Текст загружается\" />",
@@ -649,7 +604,8 @@
                 "label": "Caption",
                 "default": "Text is loading"
               }
-            }
+            },
+            "title": "Masked Paragraph Skeleton"
           }
         }
       }
@@ -657,11 +613,9 @@
     {
       "name": "skeleton-007",
       "type": "registry:component",
-      "title": "Tile Grid Skeleton",
+      "title": "Скелетон сетки плиток",
       "description": "Заглушка галереи, которая считает колонки сама: auto-fill с minmax берёт ширину блока, а не окна, поэтому в узкой карточке плиток две, а на широкой странице шесть.",
-      "categories": [
-        "skeleton"
-      ],
+      "categories": ["skeleton"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -673,12 +627,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-007-*. Серверный: хуков нет. Сетка объявлена как repeat(auto-fill, minmax(var(--vibeui-skeleton-007-min), 1fr)): число колонок считается от собственной ширины блока, поэтому раскладка одинаково честна и в карточке каталога, и на полной странице. Плитка квадратная по aspect-ratio, а не по высоте, поэтому тянется вместе с колонкой. Задержка блика раздаётся по кругу из шести значений: волна идёт по сетке, но не растягивается бесконечно при росте числа плиток. Корень помечен role=\"status\" и aria-busy.",
       "meta": {
-        "tags": [
-          "skeleton",
-          "grid",
-          "gallery",
-          "display"
-        ],
+        "tags": ["skeleton", "grid", "gallery", "display"],
         "ai": {
           "export": "Skeleton007",
           "usage": "<Skeleton007 tiles={8} minTile=\"6rem\" label=\"Галерея загружается\" />",
@@ -756,7 +705,8 @@
                 "label": "Tile minimum",
                 "default": "6rem"
               }
-            }
+            },
+            "title": "Tile Grid Skeleton"
           }
         }
       }
@@ -764,11 +714,9 @@
     {
       "name": "skeleton-008",
       "type": "registry:component",
-      "title": "Chart Skeleton",
+      "title": "Скелетон графика",
       "description": "Заглушка столбчатого графика с полем фиксированной высоты и линиями сетки: без сетки серые столбики читаются как список, а не как график.",
-      "categories": [
-        "skeleton"
-      ],
+      "categories": ["skeleton"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -780,12 +728,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-008-*. Серверный: хуков нет. Поле графика держит высоту переменной, а линии сетки нарисованы repeating-linear-gradient на самом поле, поэтому отдельных элементов под них нет. Высоты столбиков заданы явным массивом и передаются каждому инлайновой переменной: случайные числа разъехались бы между сервером и клиентом при гидратации и React сообщил бы о несовпадении. Легенда сверху и подписи оси снизу занимают место заранее, поэтому появление настоящего графика не сдвигает соседний текст. Корень помечен role=\"status\" и aria-busy.",
       "meta": {
-        "tags": [
-          "skeleton",
-          "chart",
-          "loading",
-          "display"
-        ],
+        "tags": ["skeleton", "chart", "loading", "display"],
         "ai": {
           "export": "Skeleton008",
           "usage": "<Skeleton008 bars={[42, 68, 55, 88, 34, 72, 61]} height=\"8.5rem\" label=\"График загружается\" />",
@@ -863,7 +806,8 @@
                 "label": "Caption",
                 "default": "Chart is loading"
               }
-            }
+            },
+            "title": "Chart Skeleton"
           }
         }
       }
@@ -871,11 +815,9 @@
     {
       "name": "skeleton-009",
       "type": "registry:component",
-      "title": "Product Card Skeleton",
+      "title": "Скелетон карточки товара",
       "description": "Заглушка карточки товара: обложка с заданной пропорцией, две строки названия и отдельная полоса цены — толще и короче текстовых строк, поэтому узнаётся сама по себе.",
-      "categories": [
-        "skeleton"
-      ],
+      "categories": ["skeleton"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -887,12 +829,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-009-*. Серверный: хуков нет. Место под обложку занято через aspect-ratio, а не фиксированной высотой, поэтому карточка держит одну и ту же высоту при любой ширине колонки сетки. Заливка объявлена одним правилом сразу для обложки, строк названия и полосы цены — блик не может разойтись между частями. Полоса цены короче и толще строк названия и стоит отдельным элементом с отступом сверху, поэтому глаз узнаёт в заглушке карточку товара, а не произвольный текстовый блок. Вся декоративная разметка помечена aria-hidden, текст-заглушка для скринридера лежит в aria-label корня.",
       "meta": {
-        "tags": [
-          "skeleton",
-          "card",
-          "product",
-          "loading"
-        ],
+        "tags": ["skeleton", "card", "product", "loading"],
         "ai": {
           "export": "Skeleton009",
           "usage": "<Skeleton009 ratio=\"1 / 1\" label=\"Товар загружается\" />",
@@ -924,11 +861,7 @@
             "label": "Пропорция обложки",
             "type": "select",
             "default": "1 / 1",
-            "options": [
-              "1 / 1",
-              "4 / 3",
-              "16 / 9"
-            ]
+            "options": ["1 / 1", "4 / 3", "16 / 9"]
           },
           {
             "prop": "label",
@@ -973,7 +906,8 @@
                 "label": "Caption",
                 "default": "Product is loading"
               }
-            }
+            },
+            "title": "Product Card Skeleton"
           }
         }
       }
@@ -981,11 +915,9 @@
     {
       "name": "skeleton-010",
       "type": "registry:component",
-      "title": "Data Table Skeleton",
+      "title": "Скелетон таблицы данных",
       "description": "Заглушка таблицы на пять строк с шапкой, собранная на настоящей разметке table/thead/tbody: таблица помечена aria-hidden как декоративная, текст-заглушка лежит в aria-label обёртки.",
-      "categories": [
-        "skeleton"
-      ],
+      "categories": ["skeleton"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -997,12 +929,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-skeleton-010-*. Серверный: хуков нет. В отличие от skeleton-004, где шапка и строки нарисованы сеткой из div, здесь используется настоящая разметка table, thead и tbody: семантика таблицы сохраняется, хотя данных в ней ещё нет. Поэтому сам элемент table помечён aria-hidden — он декоративен, а текст-заглушка для скринридера лежит в aria-label обёртки с role=\"status\" и aria-busy. По умолчанию рисуется пять строк: это размер первой страницы выдачи, для которого заглушку просят чаще всего. Длины ячеек чередуются по столбцу и по номеру строки, поэтому заглушка не читается как решётка.",
       "meta": {
-        "tags": [
-          "skeleton",
-          "table",
-          "data",
-          "loading"
-        ],
+        "tags": ["skeleton", "table", "data", "loading"],
         "ai": {
           "export": "Skeleton010",
           "usage": "<Skeleton010 rows={5} label=\"Таблица загружается\" />",
@@ -1080,7 +1007,8 @@
                 "label": "Caption",
                 "default": "Table is loading"
               }
-            }
+            },
+            "title": "Data Table Skeleton"
           }
         }
       }

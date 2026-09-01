@@ -4,7 +4,7 @@
     {
       "name": "cta-001",
       "type": "registry:block",
-      "title": "Horizon CTA",
+      "title": "Призыв с горизонтом",
       "description": "Финальная секция призыва: тёмное пятно в конце светлой страницы, одно главное действие и снимающая возражение строка под ним.",
       "categories": ["cta"],
       "dependencies": [],
@@ -72,7 +72,8 @@
                 "Do not lift the CSS variables into globals.css: the block has to stay a single file."
               ],
               "usage": "<Cta001\n  title=\"Build your first page today\"\n  primaryAction={{ label: \"Start free\", href: \"/signup\" }}\n  note=\"No card. 14 days of full access.\"\n/>"
-            }
+            },
+            "title": "Horizon CTA"
           }
         }
       }
@@ -80,7 +81,7 @@
     {
       "name": "cta-002",
       "type": "registry:block",
-      "title": "Centered Dual CTA",
+      "title": "Два действия по центру",
       "description": "Светлый центрированный призыв на карточке: две равные по весу кнопки для двух честных входов и строка коротких подтверждений вместо ещё одного абзаца.",
       "categories": ["cta"],
       "dependencies": [],
@@ -183,7 +184,8 @@
                 "label": "Primary button",
                 "default": "Start free"
               }
-            }
+            },
+            "title": "Centered Dual CTA"
           }
         }
       }
@@ -191,7 +193,7 @@
     {
       "name": "cta-003",
       "type": "registry:block",
-      "title": "Newsletter CTA",
+      "title": "Призыв подписаться",
       "description": "Призыв с формой почты: настоящая форма с видимой подписью поля, честным согласием и строкой про частоту писем — вместо голого поля с кнопкой.",
       "categories": ["cta"],
       "dependencies": [],
@@ -294,7 +296,8 @@
                 "label": "Frequency",
                 "default": "Two letters a month"
               }
-            }
+            },
+            "title": "Newsletter CTA"
           }
         }
       }
@@ -302,7 +305,7 @@
     {
       "name": "cta-004",
       "type": "registry:block",
-      "title": "Color Slab CTA",
+      "title": "Призыв на цветной плашке",
       "description": "Призыв на сплошной цветной плите: узор из повторяющихся градиентов, погашенный маской к краям, крупная цифра-доказательство и одна белая кнопка.",
       "categories": ["cta"],
       "dependencies": [],
@@ -405,7 +408,8 @@
                 "label": "Heading",
                 "default": "Move your site to a new engine without pausing sales"
               }
-            }
+            },
+            "title": "Color Slab CTA"
           }
         }
       }
@@ -413,7 +417,7 @@
     {
       "name": "cta-005",
       "type": "registry:block",
-      "title": "Split Media CTA",
+      "title": "Призыв с картинкой",
       "description": "Призыв с картинкой сбоку: место под изображение держит соотношение сторон, а без картинки в нём рисуется CSS-заглушка — блок выглядит законченным без внешних файлов.",
       "categories": ["cta"],
       "dependencies": [],
@@ -516,7 +520,8 @@
                 "label": "Side note",
                 "default": "We work across the city and the region"
               }
-            }
+            },
+            "title": "Split Media CTA"
           }
         }
       }
@@ -524,7 +529,7 @@
     {
       "name": "cta-006",
       "type": "registry:block",
-      "title": "Guarantee CTA",
+      "title": "Призыв с гарантией",
       "description": "Призыв с гарантией: круглая печать, условия списком определений и честный мелкий шрифт, набранный читаемым кеглем там, где его действительно ищут.",
       "categories": ["cta"],
       "dependencies": [],
@@ -627,7 +632,8 @@
                 "label": "Heading",
                 "default": "Try it calmly: we refund without questions"
               }
-            }
+            },
+            "title": "Guarantee CTA"
           }
         }
       }

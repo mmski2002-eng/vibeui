@@ -4,11 +4,9 @@
     {
       "name": "resizable-001",
       "type": "registry:component",
-      "title": "Two Panes",
+      "title": "Две панели",
       "description": "Две панели с перетаскиваемым разделителем, у которого мышь не единственный способ: разделитель берёт фокус, стрелки меняют размер, Home и End уводят к краям.",
-      "categories": [
-        "resizable"
-      ],
+      "categories": ["resizable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-resizable-001-*. Клиентский: useState, useRef на рамку и useId. Разделитель — это role=\"separator\" с tabIndex 0, aria-orientation=\"vertical\", aria-valuenow/min/max и aria-controls на левую панель, то есть паттерн window splitter целиком. Перетаскивание держится на setPointerCapture: события продолжают приходить, даже когда курсор ушёл за пределы полосы, а touch-action:none не даёт странице прокрутиться под пальцем. Размер хранится в процентах и применяется к левой панели, правая занимает остаток — сумма не может разъехаться.",
       "meta": {
-        "tags": [
-          "resizable",
-          "splitter",
-          "keyboard",
-          "panes"
-        ],
+        "tags": ["resizable", "splitter", "keyboard", "panes"],
         "preview": {
           "width": "full"
         },
@@ -106,7 +99,8 @@
                 "label": "Separator name",
                 "default": "List width"
               }
-            }
+            },
+            "title": "Two Panes"
           }
         }
       }
@@ -114,11 +108,9 @@
     {
       "name": "resizable-002",
       "type": "registry:component",
-      "title": "Three Panes",
+      "title": "Три панели",
       "description": "Три панели и два разделителя: состояние хранится как положения границ, поэтому каждая граница просто зажимается между соседями и панели не разъезжаются.",
-      "categories": [
-        "resizable"
-      ],
+      "categories": ["resizable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -130,12 +122,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-resizable-002-*. Клиентский: useState с массивом из двух границ, useRef на рамку, useId на идентификаторы панелей. Модель данных выбрана осознанно: хранятся не три ширины, а две границы — тогда ограничение сводится к зажиму между соседней границей и минимумом, а сумма всегда сходится, потому что третья панель забирает остаток. Оба разделителя — полноценные role=\"separator\" с tabIndex 0, aria-valuenow/min/max, aria-controls и обработкой стрелок, Home и End; тяга держится на setPointerCapture.",
       "meta": {
-        "tags": [
-          "resizable",
-          "splitter",
-          "three-panes",
-          "keyboard"
-        ],
+        "tags": ["resizable", "splitter", "three-panes", "keyboard"],
         "preview": {
           "width": "full"
         },
@@ -216,7 +203,8 @@
               "defaultMiddle": {
                 "label": "Middle pane, %"
               }
-            }
+            },
+            "title": "Three Panes"
           }
         }
       }
@@ -224,11 +212,9 @@
     {
       "name": "resizable-003",
       "type": "registry:component",
-      "title": "Stacked Split",
+      "title": "Разделение по вертикали",
       "description": "Вертикальное разделение: редактор сверху, результат снизу. Разделитель горизонтальный, поэтому размер меняют стрелки вверх и вниз, а не влево и вправо.",
-      "categories": [
-        "resizable"
-      ],
+      "categories": ["resizable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -240,12 +226,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-resizable-003-*. Клиентский: useState, useRef и useId. Ось задана честно: разделитель объявлен aria-orientation=\"horizontal\", клавиши — ArrowUp и ArrowDown, курсор row-resize, а размер считается от clientY и высоты рамки. Совпадение направления клавиш с осью движения обязательно: иначе с клавиатуры панель ведёт себя наугад. Верхняя панель хранит высоту в процентах, нижняя занимает остаток. Полоса захватывает указатель через setPointerCapture и запрещает прокрутку под пальцем через touch-action.",
       "meta": {
-        "tags": [
-          "resizable",
-          "vertical",
-          "editor",
-          "preview"
-        ],
+        "tags": ["resizable", "vertical", "editor", "preview"],
         "preview": {
           "width": "full"
         },
@@ -326,7 +307,8 @@
                 "label": "Separator name",
                 "default": "Editor height"
               }
-            }
+            },
+            "title": "Stacked Split"
           }
         }
       }
@@ -334,11 +316,9 @@
     {
       "name": "resizable-004",
       "type": "registry:component",
-      "title": "Clamped Sidebar",
+      "title": "Боковая панель с пределами",
       "description": "Панель с настоящими пределами в пикселях: размер зажат между минимумом и максимумом, а упор в предел показан цветом полосы и подписью, а не молчанием.",
-      "categories": [
-        "resizable"
-      ],
+      "categories": ["resizable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -350,12 +330,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-resizable-004-*. Клиентский: useState, useRef, useId. Размер хранится в пикселях, а не в процентах: меню шириной «двадцать процентов» на узком экране превращается в обрубок, а минимум в пикселях держит подписи читаемыми. aria-valuenow отдаёт то же число, что и в стиле, а aria-valuetext проговаривает единицы. Упор в предел не проглатывается: корень получает data-limit, полоса красится, рядом появляется плашка с числом — иначе перетаскивание выглядит как зависший интерфейс.",
       "meta": {
-        "tags": [
-          "resizable",
-          "min-max",
-          "sidebar",
-          "pixels"
-        ],
+        "tags": ["resizable", "min-max", "sidebar", "pixels"],
         "preview": {
           "width": "full"
         },
@@ -436,7 +411,8 @@
                 "label": "Separator name",
                 "default": "Menu width"
               }
-            }
+            },
+            "title": "Clamped Sidebar"
           }
         }
       }
@@ -444,11 +420,9 @@
     {
       "name": "resizable-005",
       "type": "registry:component",
-      "title": "Collapsible Pane",
+      "title": "Сворачиваемая панель",
       "description": "Разделитель со сворачиванием панели в ноль: двойное нажатие и Enter делают одно и то же, а прошлый размер запоминается и возвращается при развороте.",
-      "categories": [
-        "resizable"
-      ],
+      "categories": ["resizable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -460,12 +434,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-resizable-005-*. Клиентский: useState на размер, useRef на запомненный размер и на рамку, useId. Сворачивание доступно тремя путями: двойным нажатием, клавишей Enter на разделителе и тягой ниже половины минимума. Ноль остаётся честным значением aria-valuenow, а aria-valuetext проговаривает «свёрнута» — панель не исчезает из разметки, у неё просто нулевая ширина. Прошлый размер хранится в ref, поэтому разворот возвращает панель туда же, откуда её убрали. Стрелка на полосе показывает направление следующего движения.",
       "meta": {
-        "tags": [
-          "resizable",
-          "collapse",
-          "keyboard",
-          "sidebar"
-        ],
+        "tags": ["resizable", "collapse", "keyboard", "sidebar"],
         "preview": {
           "width": "full"
         },
@@ -546,7 +515,8 @@
                 "label": "Separator name",
                 "default": "Filters pane width"
               }
-            }
+            },
+            "title": "Collapsible Pane"
           }
         }
       }
@@ -554,11 +524,9 @@
     {
       "name": "resizable-006",
       "type": "registry:component",
-      "title": "Nested Split",
+      "title": "Вложенное разделение",
       "description": "Вложенное разделение: горизонтальный разделитель внутри вертикального. У каждого своя система координат, поэтому панели не едут вслед за чужой тягой.",
-      "categories": [
-        "resizable"
-      ],
+      "categories": ["resizable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -570,12 +538,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-resizable-006-*. Клиентский: два useState на доли, две ссылки useRef на разные контейнеры, useId на связи aria-controls. Ключевое: внешний разделитель меряет высоту всей рабочей области, внутренний — ширину только верхней части, поэтому у них разные рамки для getBoundingClientRect. Общий контейнер на двоих даёт панель, которая едет не туда, куда тянут. Оба разделителя объявлены role=\"separator\" со своей aria-orientation и своим набором клавиш: вверх-вниз для внешнего, влево-вправо для внутреннего.",
       "meta": {
-        "tags": [
-          "resizable",
-          "nested",
-          "workspace",
-          "splitter"
-        ],
+        "tags": ["resizable", "nested", "workspace", "splitter"],
         "preview": {
           "width": "full"
         },
@@ -656,7 +619,8 @@
               "defaultColumn": {
                 "label": "File tree, %"
               }
-            }
+            },
+            "title": "Nested Split"
           }
         }
       }
@@ -664,11 +628,9 @@
     {
       "name": "resizable-007",
       "type": "registry:component",
-      "title": "Ratio Panes",
+      "title": "Панели по пропорции",
       "description": "Две панели, которые держат пропорцию: доли заданы в fr прямо в разметке, поэтому при смене ширины контейнера отношение сохраняется само.",
-      "categories": [
-        "resizable"
-      ],
+      "categories": ["resizable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -680,12 +642,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-resizable-007-*. Клиентский: useState, useRef, useId. Пропорция живёт в grid-template-columns: две доли в calc(var(--vibeui-resizable-007-left) * 1fr) и полоса между ними. Из этого следует главное свойство: при изменении ширины контейнера панели делят место в том же отношении — без обработчика resize, без пересчёта пикселей и без прыжка после гидратации. Разделитель полноценный: role=\"separator\", tabIndex 0, aria-valuenow и aria-valuetext с отношением, стрелки, Home и End; кнопка «Поровну» ставит 50 на 50.",
       "meta": {
-        "tags": [
-          "resizable",
-          "ratio",
-          "grid",
-          "responsive"
-        ],
+        "tags": ["resizable", "ratio", "grid", "responsive"],
         "preview": {
           "width": "full"
         },
@@ -766,7 +723,8 @@
                 "label": "Separator name",
                 "default": "Pane ratio"
               }
-            }
+            },
+            "title": "Ratio Panes"
           }
         }
       }
@@ -774,11 +732,9 @@
     {
       "name": "resizable-008",
       "type": "registry:component",
-      "title": "Code Preview Split",
+      "title": "Код и предпросмотр",
       "description": "Панель кода слева и живое превью справа с перетаскиваемой вертикальной границей: тёмная подложка редактора и светлая подложка превью различимы даже без чтения текста.",
-      "categories": [
-        "resizable"
-      ],
+      "categories": ["resizable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -790,12 +746,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-resizable-008-*. Клиентский: useState, useRef, useId. Левая панель — код на моноширинном шрифте с тёмной подложкой, правая — превью на светлой: контраст подложек виден даже боковым зрением, без чтения текста. Ширина хранится в процентах и применяется к левой панели инлайн-стилем, правая забирает остаток. Разделитель — role=\"separator\" с tabIndex 0, aria-orientation=\"vertical\", aria-valuenow/min/max, стрелками влево-вправо и Home/End; тяга держится на setPointerCapture.",
       "meta": {
-        "tags": [
-          "resizable",
-          "splitter",
-          "code",
-          "preview"
-        ],
+        "tags": ["resizable", "splitter", "code", "preview"],
         "preview": {
           "width": "full"
         },
@@ -876,7 +827,8 @@
                 "label": "Separator name",
                 "default": "Code width"
               }
-            }
+            },
+            "title": "Code Preview Split"
           }
         }
       }
@@ -884,11 +836,9 @@
     {
       "name": "resizable-009",
       "type": "registry:component",
-      "title": "Mail Columns",
+      "title": "Колонки почты",
       "description": "Три колонки почтового клиента с двумя независимыми разделителями в пикселях: у папок и списка писем свои пределы, а колонка чтения забирает остаток ширины.",
-      "categories": [
-        "resizable"
-      ],
+      "categories": ["resizable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -900,12 +850,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-resizable-009-*. Клиентский: useState на ширину папок и ширину писем по отдельности, useRef на рамку, useId на связи aria-controls. В отличие от связанной модели границ, здесь у каждого разделителя свой размер и свои пределы — ширина папок не тянет за собой ширину списка писем. Оба разделителя — role=\"separator\" с tabIndex 0, aria-orientation=\"vertical\", aria-valuenow в пикселях, стрелками влево-вправо и Home/End. Колонка чтения размер не хранит и забирает остаток ширины рамки.",
       "meta": {
-        "tags": [
-          "resizable",
-          "splitter",
-          "three-panes",
-          "pixels"
-        ],
+        "tags": ["resizable", "splitter", "three-panes", "pixels"],
         "preview": {
           "width": "full"
         },
@@ -986,7 +931,8 @@
               "defaultList": {
                 "label": "Message list width, px"
               }
-            }
+            },
+            "title": "Mail Columns"
           }
         }
       }
@@ -994,11 +940,9 @@
     {
       "name": "resizable-010",
       "type": "registry:component",
-      "title": "Vertical Ratio Split",
+      "title": "Вертикальное разделение по доле",
       "description": "Вертикальное разделение списка задач и подробностей, где доля хранится в fr прямо в grid-template-rows и переживает изменение высоты рамки без обработчика resize.",
-      "categories": [
-        "resizable"
-      ],
+      "categories": ["resizable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1010,12 +954,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-resizable-010-*. Клиентский: useState, useRef, useId. Пропорция живёт в grid-template-rows: доля списка в calc(var(--vibeui-resizable-010-top) * 1fr), затем полоса, затем доля подробностей тем же приёмом. При изменении высоты рамки список и подробности делят место в той же пропорции без обработчика resize и без прыжка после гидратации. Разделитель горизонтальный: role=\"separator\", aria-orientation=\"horizontal\", tabIndex 0, aria-valuenow/min/max, стрелки вверх-вниз, Home и End; кнопка «Поровну» ставит 50 на 50.",
       "meta": {
-        "tags": [
-          "resizable",
-          "vertical",
-          "ratio",
-          "list-detail"
-        ],
+        "tags": ["resizable", "vertical", "ratio", "list-detail"],
         "preview": {
           "width": "full"
         },
@@ -1096,7 +1035,8 @@
                 "label": "Separator name",
                 "default": "List height"
               }
-            }
+            },
+            "title": "Vertical Ratio Split"
           }
         }
       }

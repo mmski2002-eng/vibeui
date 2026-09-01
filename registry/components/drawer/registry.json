@@ -4,11 +4,9 @@
     {
       "name": "drawer-001",
       "type": "registry:component",
-      "title": "Side Drawer",
+      "title": "Боковая шторка",
       "description": "Панель, выезжающая сбоку, на нативном dialog: ловушка фокуса, затемнение и Escape достаются без единой строки логики.",
-      "categories": [
-        "drawer"
-      ],
+      "categories": ["drawer"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-001-*. Клиентский: \"use client\" — нужен только ref для showModal и close. Выезд сделан переходом translate с transition-behavior для overlay и display, стартовое положение задано в @starting-style. Действия прижаты к низу панели через margin-top: auto.",
       "meta": {
-        "tags": [
-          "drawer",
-          "dialog",
-          "panel",
-          "modal"
-        ],
+        "tags": ["drawer", "dialog", "panel", "modal"],
         "ai": {
           "export": "Drawer001",
           "usage": "<Drawer001 triggerLabel=\"Открыть панель\" title=\"Настройки\" />",
@@ -114,7 +107,8 @@
                 "label": "Action",
                 "default": "Save"
               }
-            }
+            },
+            "title": "Side Drawer"
           }
         }
       }
@@ -122,11 +116,9 @@
     {
       "name": "drawer-002",
       "type": "registry:component",
-      "title": "Action Drawer",
+      "title": "Шторка действий",
       "description": "Список действий, выезжающий снизу под большой палец: на телефоне контекстное меню у края экрана недостижимо, а крупные строки — да.",
-      "categories": [
-        "drawer"
-      ],
+      "categories": ["drawer"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -138,12 +130,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-002-*. Клиентский: \"use client\" — нужен ref для showModal и close. Ящик прижат к низу нативным dialog с явным inset, поэтому margin:auto не требуется. Escape и клик по затемнению закрывают лист: первое даёт браузер, второе — сравнение event.target с самим dialog. Карта действий и кнопка отмены разделены зазором, у опасного действия свой тон через data-tone.",
       "meta": {
-        "tags": [
-          "drawer",
-          "action sheet",
-          "mobile",
-          "dialog"
-        ],
+        "tags": ["drawer", "action sheet", "mobile", "dialog"],
         "ai": {
           "export": "Drawer002",
           "usage": "<Drawer002\n  triggerLabel=\"Действия\"\n  title=\"Проект «Витрина»\"\n  actions={[{ label: \"Переименовать\" }, { label: \"Удалить\", tone: \"danger\" }]}\n/>",
@@ -223,7 +210,8 @@
                 "label": "Object",
                 "default": "Project Vitrina"
               }
-            }
+            },
+            "title": "Action Drawer"
           }
         }
       }
@@ -231,11 +219,9 @@
     {
       "name": "drawer-003",
       "type": "registry:component",
-      "title": "Filter Drawer",
+      "title": "Шторка фильтров",
       "description": "Боковой ящик фильтров, который ничего не применяет сам: выбор копится внутри и уходит одной кнопкой, поэтому список за спиной не перестраивается после каждой галочки.",
-      "categories": [
-        "drawer"
-      ],
+      "categories": ["drawer"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -247,12 +233,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-003-*. Клиентский: \"use client\", useState держит выбранные значения, useRef — showModal и close. Ящик выезжает слева, прокручивается только средняя область (flex + min-height:0), шапка со сбросом и подвал с кнопкой применения стоят на месте. Галочка нарисована псевдоэлементом на appearance:none — иконок нет.",
       "meta": {
-        "tags": [
-          "drawer",
-          "filters",
-          "sidebar",
-          "dialog"
-        ],
+        "tags": ["drawer", "filters", "sidebar", "dialog"],
         "ai": {
           "export": "Drawer003",
           "usage": "<Drawer003\n  triggerLabel=\"Фильтры\"\n  title=\"Фильтры\"\n  groups={groups}\n  applyLabel=\"Показать результаты\"\n/>",
@@ -332,7 +313,8 @@
                 "label": "Apply",
                 "default": "Show results"
               }
-            }
+            },
+            "title": "Filter Drawer"
           }
         }
       }
@@ -340,11 +322,9 @@
     {
       "name": "drawer-004",
       "type": "registry:component",
-      "title": "Detail Drawer",
+      "title": "Шторка подробностей",
       "description": "Ящик деталей одной записи: строку списка не нужно открывать отдельной страницей — детали приезжают сбоку, а список остаётся на месте.",
-      "categories": [
-        "drawer"
-      ],
+      "categories": ["drawer"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -356,12 +336,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-004-*. Клиентский: \"use client\" — ref для showModal и close. Поля выложены словарём dl с сеткой из двух колонок, история событий — списком с вертикальной линией на border-left и точками-псевдоэлементами. Инициалы в метке считаются из заголовка, цвет метки — color-mix от акцента.",
       "meta": {
-        "tags": [
-          "drawer",
-          "details",
-          "record",
-          "dialog"
-        ],
+        "tags": ["drawer", "details", "record", "dialog"],
         "ai": {
           "export": "Drawer004",
           "usage": "<Drawer004\n  triggerLabel=\"Открыть заказ\"\n  title=\"Заказ ORD-2481\"\n  status=\"Оплачен\"\n  fields={fields}\n  events={events}\n/>",
@@ -441,7 +416,8 @@
                 "label": "Status",
                 "default": "Paid"
               }
-            }
+            },
+            "title": "Detail Drawer"
           }
         }
       }
@@ -449,11 +425,9 @@
     {
       "name": "drawer-005",
       "type": "registry:component",
-      "title": "Cart Drawer",
+      "title": "Шторка корзины",
       "description": "Ящик корзины, где итог всегда на экране: количество меняется в строке, сумма пересчитывается тут же, а подвал с итогом не уезжает при прокрутке.",
-      "categories": [
-        "drawer"
-      ],
+      "categories": ["drawer"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -465,12 +439,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-005-*. Клиентский: \"use client\", useState держит количество по строкам, useRef — showModal и close. Суммы считаются на лету и печатаются через toLocaleString, миниатюры нарисованы градиентом. Список прокручивается, подвал с итогом и кнопкой оформления прижат к низу flex-колонки.",
       "meta": {
-        "tags": [
-          "drawer",
-          "cart",
-          "checkout",
-          "commerce"
-        ],
+        "tags": ["drawer", "cart", "checkout", "commerce"],
         "ai": {
           "export": "Drawer005",
           "usage": "<Drawer005\n  triggerLabel=\"Корзина\"\n  title=\"Корзина\"\n  lines={lines}\n  delivery={390}\n/>",
@@ -550,7 +519,8 @@
               "delivery": {
                 "label": "Delivery"
               }
-            }
+            },
+            "title": "Cart Drawer"
           }
         }
       }
@@ -558,11 +528,9 @@
     {
       "name": "drawer-006",
       "type": "registry:component",
-      "title": "Guarded Form Drawer",
+      "title": "Шторка с защитой от закрытия",
       "description": "Ящик с формой, который не даёт закрыть себя молча: первое нажатие Escape при заполненной форме поднимает предупреждение, а не теряет введённое.",
-      "categories": [
-        "drawer"
-      ],
+      "categories": ["drawer"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -574,12 +542,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-006-*. Клиентский: \"use client\", useState хранит признак изменений и показ предупреждения. Escape перехватывается штатным событием cancel у dialog: event.preventDefault() отменяет закрытие. Форма объявлена method=\"dialog\", поэтому отправка закрывает ящик без обработчика. Признак изменений ставится одним onInput на форме, а не подпиской на каждое поле.",
       "meta": {
-        "tags": [
-          "drawer",
-          "form",
-          "unsaved",
-          "dialog"
-        ],
+        "tags": ["drawer", "form", "unsaved", "dialog"],
         "ai": {
           "export": "Drawer006",
           "usage": "<Drawer006\n  triggerLabel=\"Редактировать профиль\"\n  title=\"Профиль\"\n  warning=\"Изменения не сохранены. Закрыть панель и потерять их?\"\n/>",
@@ -661,7 +624,8 @@
                 "label": "Warning",
                 "default": "Changes are not saved. Close the panel and lose them?"
               }
-            }
+            },
+            "title": "Guarded Form Drawer"
           }
         }
       }
@@ -669,11 +633,9 @@
     {
       "name": "drawer-007",
       "type": "registry:component",
-      "title": "Reading Drawer",
+      "title": "Шторка для чтения",
       "description": "Ящик во всю высоту для длинного текста: заголовки разделов прилипают к верху, а подвал с согласием стоит на месте — до действия не нужно доезжать до конца.",
-      "categories": [
-        "drawer"
-      ],
+      "categories": ["drawer"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -685,12 +647,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-007-*. Клиентский: \"use client\", useState держит согласие, useRef — showModal и close. Прокручивается только средняя колонка (flex:1 и min-height:0), заголовки разделов держатся на position:sticky с непрозрачным фоном, иначе текст просвечивает под ними. Кнопка принятия заблокирована, пока флажок не отмечен.",
       "meta": {
-        "tags": [
-          "drawer",
-          "long read",
-          "sticky",
-          "consent"
-        ],
+        "tags": ["drawer", "long read", "sticky", "consent"],
         "ai": {
           "export": "Drawer007",
           "usage": "<Drawer007\n  triggerLabel=\"Читать условия\"\n  title=\"Обновлённые условия\"\n  sections={sections}\n  acceptLabel=\"Принять\"\n/>",
@@ -770,7 +727,8 @@
                 "label": "Accept",
                 "default": "Accept"
               }
-            }
+            },
+            "title": "Reading Drawer"
           }
         }
       }
@@ -778,11 +736,9 @@
     {
       "name": "drawer-008",
       "type": "registry:component",
-      "title": "Step Drawer",
+      "title": "Пошаговая шторка",
       "description": "Ящик с несколькими шагами вместо длинной формы: за раз виден один вопрос, полоса сверху показывает, сколько осталось, «Назад» возвращает на шаг, а не закрывает панель.",
-      "categories": [
-        "drawer"
-      ],
+      "categories": ["drawer"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -794,12 +750,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-drawer-008-*. Клиентский: \"use client\", useState держит номер шага, useId — имя группы радиокнопок, useRef — showModal и close. Полоса шагов сделана сегментами и объявлена role=\"progressbar\" с aria-valuenow. Варианты — радиокнопки с подсветкой выбранной карточки через :has(input:checked).",
       "meta": {
-        "tags": [
-          "drawer",
-          "wizard",
-          "steps",
-          "onboarding"
-        ],
+        "tags": ["drawer", "wizard", "steps", "onboarding"],
         "ai": {
           "export": "Drawer008",
           "usage": "<Drawer008\n  triggerLabel=\"Подключить проект\"\n  title=\"Подключение проекта\"\n  steps={steps}\n  finishLabel=\"Готово\"\n/>",
@@ -879,7 +830,8 @@
                 "label": "Finish",
                 "default": "Done"
               }
-            }
+            },
+            "title": "Step Drawer"
           }
         }
       }

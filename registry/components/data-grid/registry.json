@@ -4,7 +4,7 @@
     {
       "name": "datagrid-001",
       "type": "registry:component",
-      "title": "Priority Sort",
+      "title": "Сортировка по приоритету",
       "description": "Сетка с сортировкой сразу по нескольким колонкам: порядок кликов задаёт приоритет ключей, и он показан цифрой в заголовке и фишками в панели.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -99,7 +99,8 @@
                 "label": "Density",
                 "default": "comfortable"
               }
-            }
+            },
+            "title": "Priority Sort"
           }
         }
       }
@@ -107,7 +108,7 @@
     {
       "name": "datagrid-002",
       "type": "registry:component",
-      "title": "Bulk Action Bar",
+      "title": "Полоса массовых действий",
       "description": "Сетка с выбором строк: шапка превращается в панель массовых действий со счётчиком и суммой по выбранному, не сдвигая таблицу.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -202,7 +203,8 @@
                 "label": "Action",
                 "default": "Issue invoice"
               }
-            }
+            },
+            "title": "Bulk Action Bar"
           }
         }
       }
@@ -210,7 +212,7 @@
     {
       "name": "datagrid-003",
       "type": "registry:component",
-      "title": "Frozen Edges",
+      "title": "Закреплённые края",
       "description": "Широкая сетка с закреплёнными крайними колонками: подпись строки слева и ответственный справа стоят на месте, а недели уезжают между ними.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -305,7 +307,8 @@
                 "label": "Hint",
                 "default": "Scroll sideways: the edge columns are frozen"
               }
-            }
+            },
+            "title": "Frozen Edges"
           }
         }
       }
@@ -313,7 +316,7 @@
     {
       "name": "datagrid-004",
       "type": "registry:component",
-      "title": "Pinned Totals",
+      "title": "Закреплённые итоги",
       "description": "Длинная сетка с прокруткой внутри рамки: шапка липнет сверху, строка итога — снизу, поэтому сумма видна и на середине списка.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -409,7 +412,8 @@
                 "label": "Viewport height, rem",
                 "default": 16
               }
-            }
+            },
+            "title": "Pinned Totals"
           }
         }
       }
@@ -417,7 +421,7 @@
     {
       "name": "datagrid-005",
       "type": "registry:component",
-      "title": "Inline Cell Edit",
+      "title": "Правка ячейки на месте",
       "description": "Сетка с правкой значения прямо в ячейке: Enter подтверждает, Escape возвращает прежнее, а изменённые ячейки помечены до нажатия «Сохранить».",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -512,7 +516,8 @@
                 "label": "Hint",
                 "default": "Price and stock are editable"
               }
-            }
+            },
+            "title": "Inline Cell Edit"
           }
         }
       }
@@ -520,7 +525,7 @@
     {
       "name": "datagrid-006",
       "type": "registry:component",
-      "title": "Header Filters",
+      "title": "Фильтры в шапке",
       "description": "Сетка, у которой фильтр стоит в шапке своей колонки: текстовые поля и список статусов вместо одной общей строки поиска.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -615,7 +620,8 @@
                 "label": "Field hint",
                 "default": "Start typing"
               }
-            }
+            },
+            "title": "Header Filters"
           }
         }
       }
@@ -623,7 +629,7 @@
     {
       "name": "datagrid-007",
       "type": "registry:component",
-      "title": "Grouped Rows",
+      "title": "Сгруппированные строки",
       "description": "Сетка с группировкой строк: у каждой группы своя строка-заголовок с числом задач и суммой часов, а сама группа сворачивается одной кнопкой.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -717,7 +723,8 @@
                 "label": "Start collapsed",
                 "default": false
               }
-            }
+            },
+            "title": "Grouped Rows"
           }
         }
       }
@@ -725,7 +732,7 @@
     {
       "name": "datagrid-008",
       "type": "registry:component",
-      "title": "Detail Row",
+      "title": "Строка с подробностями",
       "description": "Сетка, у которой строка раскрывает подробности прямо под собой: панель на всю ширину, а связь кнопки и панели объявлена через aria-controls.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -819,7 +826,8 @@
                 "label": "One row at a time",
                 "default": true
               }
-            }
+            },
+            "title": "Detail Row"
           }
         }
       }
@@ -827,7 +835,7 @@
     {
       "name": "datagrid-009",
       "type": "registry:component",
-      "title": "Resizable Columns",
+      "title": "Колонки с изменением ширины",
       "description": "Сетка с изменением ширины колонок: разделитель между заголовками тянется мышью и настраивается стрелками с клавиатуры.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -923,7 +931,8 @@
                 "label": "Minimum width, px",
                 "default": 96
               }
-            }
+            },
+            "title": "Resizable Columns"
           }
         }
       }
@@ -931,7 +940,7 @@
     {
       "name": "datagrid-010",
       "type": "registry:component",
-      "title": "Paged Grid",
+      "title": "Постраничная таблица",
       "description": "Сетка с постраничным просмотром: выбор числа строк на странице, диапазон записей и номера страниц в настоящей навигации.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -1027,7 +1036,8 @@
                 "label": "Rows per page",
                 "default": 5
               }
-            }
+            },
+            "title": "Paged Grid"
           }
         }
       }
@@ -1035,7 +1045,7 @@
     {
       "name": "datagrid-011",
       "type": "registry:component",
-      "title": "Empty Result",
+      "title": "Пустой результат",
       "description": "Сетка с пустым состоянием: когда фильтры сошлись в ноль, тело таблицы называет причину, перечисляет активные фильтры и предлагает их сбросить.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -1130,7 +1140,8 @@
                 "label": "Empty heading",
                 "default": "No request matched"
               }
-            }
+            },
+            "title": "Empty Result"
           }
         }
       }
@@ -1138,7 +1149,7 @@
     {
       "name": "datagrid-012",
       "type": "registry:component",
-      "title": "Loading Skeleton",
+      "title": "Скелетон загрузки",
       "description": "Сетка со скелетоном загрузки: полоски повторяют раскладку колонок и разной длины, область помечена aria-busy, а статус продублирован текстом.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -1234,7 +1245,8 @@
                 "label": "Skeleton rows",
                 "default": 6
               }
-            }
+            },
+            "title": "Loading Skeleton"
           }
         }
       }
@@ -1242,7 +1254,7 @@
     {
       "name": "datagrid-013",
       "type": "registry:component",
-      "title": "Column Visibility",
+      "title": "Видимость колонок",
       "description": "Сетка с меню видимости колонок: читатель сам собирает набор столбцов флажками, а последнюю оставшуюся колонку выключить нельзя.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -1337,7 +1349,8 @@
                 "label": "Menu button",
                 "default": "Columns"
               }
-            }
+            },
+            "title": "Column Visibility"
           }
         }
       }
@@ -1345,7 +1358,7 @@
     {
       "name": "datagrid-014",
       "type": "registry:component",
-      "title": "Pin On Demand",
+      "title": "Закрепление по требованию",
       "description": "Широкая сетка, где закрепить колонку решает читатель: булавка в заголовке переводит столбец в липкий режим, а смещение считается от уже закреплённых соседей.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -1441,7 +1454,8 @@
                 "label": "Maximum pinned",
                 "default": 2
               }
-            }
+            },
+            "title": "Pin On Demand"
           }
         }
       }
@@ -1449,7 +1463,7 @@
     {
       "name": "datagrid-015",
       "type": "registry:component",
-      "title": "Reorder Rows",
+      "title": "Перестановка строк",
       "description": "Сетка с перестановкой строк: ручка захвата тянется мышью, а стрелки, Home и End двигают строку с клавиатуры, объявляя новую позицию вслух.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -1544,7 +1558,8 @@
                 "label": "Announcement template",
                 "default": "«{шаг}» is now at position {позиция} of {всего}"
               }
-            }
+            },
+            "title": "Reorder Rows"
           }
         }
       }
@@ -1552,7 +1567,7 @@
     {
       "name": "datagrid-016",
       "type": "registry:component",
-      "title": "Selection Summary",
+      "title": "Итог по выделению",
       "description": "Сетка, где строка итога считается только по отмеченным строкам, а функцию свёртки — сумму, среднее, минимум или максимум — выбирает читатель.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -1647,7 +1662,8 @@
                 "label": "Fold",
                 "default": "sum"
               }
-            }
+            },
+            "title": "Selection Summary"
           }
         }
       }
@@ -1655,7 +1671,7 @@
     {
       "name": "datagrid-017",
       "type": "registry:component",
-      "title": "Export Confirm",
+      "title": "Подтверждение выгрузки",
       "description": "Сетка с выгрузкой отмеченных строк через подтверждение: нативный диалог называет число строк, сумму, формат и примерный размер файла до начала экспорта.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -1750,7 +1766,8 @@
                 "label": "Export button",
                 "default": "Export"
               }
-            }
+            },
+            "title": "Export Confirm"
           }
         }
       }
@@ -1758,7 +1775,7 @@
     {
       "name": "datagrid-018",
       "type": "registry:component",
-      "title": "Grid Search",
+      "title": "Поиск по таблице",
       "description": "Сетка со сквозным поиском по всем колонкам: найденное подсвечено тегом mark, а счётчик отдельно считает совпадения и строки, в которых они нашлись.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -1853,7 +1870,8 @@
                 "label": "Field hint",
                 "default": "Search the table"
               }
-            }
+            },
+            "title": "Grid Search"
           }
         }
       }
@@ -1861,7 +1879,7 @@
     {
       "name": "datagrid-019",
       "type": "registry:component",
-      "title": "Filter Builder",
+      "title": "Конструктор фильтров",
       "description": "Сетка с конструктором условий: поле, оператор и значение в каждой строке, одна связка «и/или» на весь набор и живой счётчик подошедших строк.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -1956,7 +1974,8 @@
                 "label": "Joiner",
                 "default": "and"
               }
-            }
+            },
+            "title": "Filter Builder"
           }
         }
       }
@@ -1964,7 +1983,7 @@
     {
       "name": "datagrid-020",
       "type": "registry:component",
-      "title": "Saved Views",
+      "title": "Сохранённые виды",
       "description": "Сетка с сохранёнными представлениями: вкладка восстанавливает фильтр и сортировку разом, а отклонение от сохранённого набора помечено словом «изменено».",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -2059,7 +2078,8 @@
                 "label": "View",
                 "default": "hot"
               }
-            }
+            },
+            "title": "Saved Views"
           }
         }
       }
@@ -2067,7 +2087,7 @@
     {
       "name": "datagrid-021",
       "type": "registry:component",
-      "title": "Batch Edit",
+      "title": "Пакетная правка",
       "description": "Сетка с пакетной правкой: числовые ячейки редактируются разом, журнал показывает «было → стало» с точечной отменой, а сохранение одно на весь черновик.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -2162,7 +2182,8 @@
                 "label": "Edit mode",
                 "default": "Edit mode"
               }
-            }
+            },
+            "title": "Batch Edit"
           }
         }
       }
@@ -2170,7 +2191,7 @@
     {
       "name": "datagrid-022",
       "type": "registry:component",
-      "title": "Cell Validation",
+      "title": "Проверка ячейки",
       "description": "Сетка с валидацией на месте: ошибка стоит под самим значением, поле помечено aria-invalid и связано с текстом ошибки, а сохранение заблокировано до починки.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -2266,7 +2287,8 @@
                 "label": "Maximum hours",
                 "default": 200
               }
-            }
+            },
+            "title": "Cell Validation"
           }
         }
       }
@@ -2274,7 +2296,7 @@
     {
       "name": "datagrid-023",
       "type": "registry:component",
-      "title": "Paste Rows",
+      "title": "Вставка строк",
       "description": "Сетка со вставкой нескольких строк из буфера: текст разбирается по разделителям, битые строки называются с номером и причиной, а в таблицу уходят только целые.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -2369,7 +2391,8 @@
                 "label": "Line format",
                 "default": "sku ⇥ name ⇥ quantity"
               }
-            }
+            },
+            "title": "Paste Rows"
           }
         }
       }
@@ -2377,7 +2400,7 @@
     {
       "name": "datagrid-024",
       "type": "registry:component",
-      "title": "Tree Grid",
+      "title": "Таблица-дерево",
       "description": "Сетка-дерево с раскрывающимися дочерними строками: уровень объявлен через aria-level, отступ считается из него, а сумма родителя пересчитывается по ветке.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -2473,7 +2496,8 @@
                 "label": "Indent step, px",
                 "default": 20
               }
-            }
+            },
+            "title": "Tree Grid"
           }
         }
       }
@@ -2481,7 +2505,7 @@
     {
       "name": "datagrid-025",
       "type": "registry:component",
-      "title": "Infinite Scroll",
+      "title": "Бесконечная прокрутка",
       "description": "Длинная сетка с догрузкой по прокрутке: счётчик и полоса показывают, сколько строк уже подгружено, а кнопка «Загрузить ещё» повторяет автозагрузку для клавиатуры.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -2577,7 +2601,8 @@
                 "label": "Rows per batch",
                 "default": 12
               }
-            }
+            },
+            "title": "Infinite Scroll"
           }
         }
       }
@@ -2585,7 +2610,7 @@
     {
       "name": "datagrid-026",
       "type": "registry:component",
-      "title": "Compare Row",
+      "title": "Строка сравнения",
       "description": "Сетка с закреплённой строкой сравнения: выбранная радиокнопкой модель липнет под шапкой, а остальные строки показывают отклонение от неё со знаком.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -2679,7 +2704,8 @@
                 "label": "Show deviation",
                 "default": true
               }
-            }
+            },
+            "title": "Compare Row"
           }
         }
       }
@@ -2687,7 +2713,7 @@
     {
       "name": "datagrid-027",
       "type": "registry:component",
-      "title": "Density Switch",
+      "title": "Переключатель плотности",
       "description": "Сетка с переключателем плотности: компактно, обычно и просторно меняют отступ, кегль и высоту строки разом, а на просторной плотности появляется примечание.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -2782,7 +2808,8 @@
                 "label": "Density",
                 "default": "regular"
               }
-            }
+            },
+            "title": "Density Switch"
           }
         }
       }
@@ -2790,7 +2817,7 @@
     {
       "name": "datagrid-028",
       "type": "registry:component",
-      "title": "Row Actions Menu",
+      "title": "Меню действий строки",
       "description": "Сетка с колонкой действий: пять команд убраны в меню, оно ходит стрелками, закрывается по Escape с возвратом фокуса, а удаление отделено линией.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -2885,7 +2912,8 @@
                 "label": "Menu button",
                 "default": "Actions"
               }
-            }
+            },
+            "title": "Row Actions Menu"
           }
         }
       }
@@ -2893,7 +2921,7 @@
     {
       "name": "datagrid-030",
       "type": "registry:component",
-      "title": "Frozen Lead Column",
+      "title": "Закреплённая первая колонка",
       "description": "График смен с закреплённой только первой колонкой: имя сотрудника остаётся на месте, а дни прокручиваются вбок без второй закреплённой границы справа.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -2988,7 +3016,8 @@
                 "label": "Hint",
                 "default": "Scroll sideways: the name column is frozen"
               }
-            }
+            },
+            "title": "Frozen Lead Column"
           }
         }
       }
@@ -2996,7 +3025,7 @@
     {
       "name": "datagrid-029",
       "type": "registry:component",
-      "title": "Load Error",
+      "title": "Ошибка загрузки",
       "description": "Сетка с состоянием ошибки загрузки: шапка остаётся на месте, а в теле стоит объяснение с кодом ошибки, кнопкой повтора и счётчиком попыток.",
       "categories": ["data-grid"],
       "dependencies": [],
@@ -3091,7 +3120,8 @@
                 "label": "Error code",
                 "default": "ERR_GATEWAY_504"
               }
-            }
+            },
+            "title": "Load Error"
           }
         }
       }

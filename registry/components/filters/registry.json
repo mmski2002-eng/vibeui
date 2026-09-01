@@ -4,11 +4,9 @@
     {
       "name": "filters-001",
       "type": "registry:component",
-      "title": "Filter Builder",
+      "title": "Конструктор фильтров",
       "description": "Строитель условий: поле, оператор и значение в строке, а связка «и» написана словом, а не подразумевается.",
-      "categories": [
-        "filters"
-      ],
+      "categories": ["filters"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-filters-001-*. Клиентский: \"use client\" ради набора условий. Строка условия собрана из нативных select и input, поэтому клавиатура и мобильный выбор работают сами. Кнопка удаления называет условие целиком, а не «удалить строку 2».",
       "meta": {
-        "tags": [
-          "filters",
-          "query",
-          "conditions",
-          "table"
-        ],
+        "tags": ["filters", "query", "conditions", "table"],
         "preview": {
           "width": "full"
         },
@@ -104,7 +97,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Filter Builder"
           }
         }
       }
@@ -112,11 +106,9 @@
     {
       "name": "filters-002",
       "type": "registry:component",
-      "title": "Active Chips",
+      "title": "Активные чипы",
       "description": "Строка активных фильтров: каждая фишка называет группу и значение, снимается по одному, а «сбросить всё» появляется только от двух условий.",
-      "categories": [
-        "filters"
-      ],
+      "categories": ["filters"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -128,12 +120,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-filters-002-*. Клиентский: \"use client\" ради снятия условий. Фишка показывает группу и значение вместе, а подпись кнопки удаления называет условие целиком, а не номер. Счётчик найденного стоит в aria-live=\"polite\": он меняется от действий пользователя. Кнопка «сбросить всё» появляется от двух фишек — на одной она дублирует крестик.",
       "meta": {
-        "tags": [
-          "filters",
-          "chips",
-          "reset",
-          "catalog"
-        ],
+        "tags": ["filters", "chips", "reset", "catalog"],
         "preview": {
           "width": "full"
         },
@@ -227,7 +214,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Active Chips"
           }
         }
       }
@@ -235,11 +223,9 @@
     {
       "name": "filters-003",
       "type": "registry:component",
-      "title": "Facet Sidebar",
+      "title": "Панель фасетов",
       "description": "Боковая панель фильтров со счётчиком у каждого значения: количество отвечает до нажатия, а значения с нулём гаснут, но остаются на месте.",
-      "categories": [
-        "filters"
-      ],
+      "categories": ["filters"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -251,12 +237,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-filters-003-*. Серверный: раскрытие групп держит нативный <details>, чекбоксы некотролируемые. Каждая группа — <fieldset> с визуально скрытым <legend>: заголовок уже стоит в <summary>, а группа обязана быть группой и в разметке. Пустые значения помечены disabled и приглушены, но не удалены: исчезающие строки заставляют искать пропавший пункт.",
       "meta": {
-        "tags": [
-          "filters",
-          "facets",
-          "sidebar",
-          "checkbox"
-        ],
+        "tags": ["filters", "facets", "sidebar", "checkbox"],
         "preview": {
           "width": "full"
         },
@@ -339,7 +320,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Facet Sidebar"
           }
         }
       }
@@ -347,11 +329,9 @@
     {
       "name": "filters-004",
       "type": "registry:component",
-      "title": "Number Range",
+      "title": "Числовой диапазон",
       "description": "Диапазон числами, а не ползунком: быстрые пресеты сверху, два поля снизу, а перевёрнутые границы меняются местами по уходу фокуса.",
-      "categories": [
-        "filters"
-      ],
+      "categories": ["filters"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -363,12 +343,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-filters-004-*. Клиентский: \"use client\" ради значений и пресетов. Пресеты — кнопки с aria-pressed, они подсвечиваются, когда оба поля совпали с набором. Границы меняются местами в обработчике onBlur, а не подсвечиваются ошибкой: перепутанные «от» и «до» человек и так уже видит. Сводка стоит в role=\"status\" и повторяет итог словами.",
       "meta": {
-        "tags": [
-          "filters",
-          "range",
-          "number",
-          "presets"
-        ],
+        "tags": ["filters", "range", "number", "presets"],
         "preview": {
           "width": "full"
         },
@@ -462,7 +437,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Number Range"
           }
         }
       }
@@ -470,11 +446,9 @@
     {
       "name": "filters-005",
       "type": "registry:component",
-      "title": "Date Presets",
+      "title": "Пресеты дат",
       "description": "Период выбирают словами: «за 7 дней» и «этот квартал» стоят первыми, а пара дат появляется только под пунктом «свой период» — на чистом CSS.",
-      "categories": [
-        "filters"
-      ],
+      "categories": ["filters"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -486,12 +460,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-filters-005-*. Серверный: пресеты — радиокнопки внутри <fieldset> с <legend>, а пара дат показывается селектором :has по отмеченной радиокнопке с data-choice=\"custom\". Состояния нет, поэтому пустые поля дат не мешают и не уезжают в форму без надобности. Радиокнопки нарисованы через appearance:none толщиной бордюра.",
       "meta": {
-        "tags": [
-          "filters",
-          "date",
-          "presets",
-          "period"
-        ],
+        "tags": ["filters", "date", "presets", "period"],
         "preview": {
           "width": "full"
         },
@@ -585,7 +554,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Date Presets"
           }
         }
       }
@@ -593,11 +563,9 @@
     {
       "name": "filters-006",
       "type": "registry:component",
-      "title": "Value Search",
+      "title": "Поиск по значениям",
       "description": "Фильтр с поиском внутри собственных значений: список на двести строк не листают, а отмеченные пункты закреплены сверху и не пропадают из виду.",
-      "categories": [
-        "filters"
-      ],
+      "categories": ["filters"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -609,12 +577,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-filters-006-*. Клиентский: \"use client\" ради запроса и отметок. Поиск сужает только список значений, а не выдачу; отмеченные пункты вычисляются отдельно и всегда выводятся сверху с разделителем, даже если не подходят под запрос — иначе галочка исчезает с экрана и читается как снятая. Счётчик «показано N из M» стоит в role=\"status\".",
       "meta": {
-        "tags": [
-          "filters",
-          "search",
-          "list",
-          "checkbox"
-        ],
+        "tags": ["filters", "search", "list", "checkbox"],
         "preview": {
           "width": "full"
         },
@@ -708,7 +671,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Value Search"
           }
         }
       }
@@ -716,11 +680,9 @@
     {
       "name": "filters-007",
       "type": "registry:component",
-      "title": "Saved Views",
+      "title": "Сохранённые виды",
       "description": "Сохранённые наборы фильтров: каждый вид показывает не только имя, но и расшифровку условий, а общие виды помечены — их правка меняет экран всей команде.",
-      "categories": [
-        "filters"
-      ],
+      "categories": ["filters"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -732,12 +694,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-filters-007-*. Клиентский: \"use client\" ради выбора и сохранения. Вид — кнопка во всю строку с aria-pressed: мишень крупная, а состояние объявлено ролью, а не только цветом. Под именем стоит расшифровка условий, потому что по одному имени через неделю не вспомнить содержимое. Общие виды помечены отдельной меткой.",
       "meta": {
-        "tags": [
-          "filters",
-          "presets",
-          "views",
-          "saved"
-        ],
+        "tags": ["filters", "presets", "views", "saved"],
         "preview": {
           "width": "full"
         },
@@ -831,7 +788,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Saved Views"
           }
         }
       }
@@ -839,11 +797,9 @@
     {
       "name": "filters-008",
       "type": "registry:component",
-      "title": "Compact Sheet",
+      "title": "Компактный лист",
       "description": "Фильтры, свёрнутые в одну строку: даже закрытая панель отвечает, сколько условий включено и сколько записей осталось, а раскрытие держит браузер.",
-      "categories": [
-        "filters"
-      ],
+      "categories": ["filters"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -855,12 +811,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-filters-008-*. Серверный: раскрытие держит нативный <details>, состояния нет. В закрытом виде в <summary> стоят счётчик активных условий и число найденного. Раскладка внутри считается container query по собственной ширине блока и живёт на внутреннем [data-part=\"shell\"], а не на корне: контейнерный запрос не действует на объявивший его элемент.",
       "meta": {
-        "tags": [
-          "filters",
-          "mobile",
-          "details",
-          "compact"
-        ],
+        "tags": ["filters", "mobile", "details", "compact"],
         "preview": {
           "width": "full"
         },
@@ -965,7 +916,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Compact Sheet"
           }
         }
       }
@@ -973,11 +925,9 @@
     {
       "name": "filters-009",
       "type": "registry:component",
-      "title": "Deferred Apply",
+      "title": "Применение по кнопке",
       "description": "Фильтры с кнопкой вместо мгновенного применения: щелчки меняют черновик, а кнопка сообщает, сколько записей останется после «Показать».",
-      "categories": [
-        "filters"
-      ],
+      "categories": ["filters"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -989,12 +939,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-filters-009-*. Клиентский: \"use client\" ради черновика. В состоянии живут два набора — черновик и применённый; их расхождение поднимает data-dirty на корне и меняет строку состояния. Предсказанное число складывается из тех же счётчиков, что стоят у значений, поэтому кнопка не обещает того, чего не видно в списке. Кнопка выключена, пока черновик совпадает с применённым.",
       "meta": {
-        "tags": [
-          "filters",
-          "apply",
-          "draft",
-          "checkbox"
-        ],
+        "tags": ["filters", "apply", "draft", "checkbox"],
         "preview": {
           "width": "full"
         },
@@ -1088,7 +1033,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Deferred Apply"
           }
         }
       }
@@ -1096,11 +1042,9 @@
     {
       "name": "filters-010",
       "type": "registry:component",
-      "title": "Chip Toggles",
+      "title": "Чипы-переключатели",
       "description": "Панель фильтров-переключателей: каждая фишка сама включает и выключает значение по нажатию, а не только показывает уже применённое условие.",
-      "categories": [
-        "filters"
-      ],
+      "categories": ["filters"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1112,12 +1056,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-filters-010-*. Клиентский: \"use client\" ради переключения фишек. Каждая фишка сгруппирована по категории и объявлена aria-pressed — она сама переключатель, а не подпись к уже применённому условию. Счётчик выбранного стоит в role=\"status\". Кнопка сброса появляется от одной выбранной фишки: здесь это единственный способ снять выбор.",
       "meta": {
-        "tags": [
-          "filters",
-          "chips",
-          "toggle",
-          "multi-select"
-        ],
+        "tags": ["filters", "chips", "toggle", "multi-select"],
         "preview": {
           "width": "full"
         },
@@ -1209,7 +1148,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Chip Toggles"
           }
         }
       }
@@ -1217,11 +1157,9 @@
     {
       "name": "filters-011",
       "type": "registry:component",
-      "title": "Date Field Range",
+      "title": "Диапазон полями даты",
       "description": "Диапазон дат двумя видимыми полями «с» и «по»: пресеты «неделя», «месяц» и «квартал» подставляют готовые значения, не пряча поля за режимом выбора.",
-      "categories": [
-        "filters"
-      ],
+      "categories": ["filters"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1233,12 +1171,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-filters-011-*. Клиентский: \"use client\" ради значений и пресетов. Пресеты — кнопки с aria-pressed, вычисляющие даты от «сегодня» через обычный Date. Оба поля даты видимы всегда, пресет лишь подставляет в них значения. Перевёрнутые границы меняются местами по уходу фокуса, а сводка стоит в role=\"status\".",
       "meta": {
-        "tags": [
-          "filters",
-          "date",
-          "range",
-          "presets"
-        ],
+        "tags": ["filters", "date", "range", "presets"],
         "preview": {
           "width": "full"
         },
@@ -1317,7 +1250,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Date Field Range"
           }
         }
       }
@@ -1325,11 +1259,9 @@
     {
       "name": "filters-012",
       "type": "registry:component",
-      "title": "Query Presets",
+      "title": "Готовые запросы",
       "description": "Сохранённые наборы условий выбираются радиокнопкой и применяются отдельной кнопкой; удаление набора не зависит от выбора и не трогает уже применённый отбор.",
-      "categories": [
-        "filters"
-      ],
+      "categories": ["filters"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1341,12 +1273,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-filters-012-*. Клиентский: \"use client\" ради выбора и черновика применения. Список наборов размечен <fieldset> с <legend> и настоящими радиокнопками. Выбор и применение — разные шаги: кнопка применения выключена, пока черновик совпадает с уже применённым набором. Удаление набора — отдельная кнопка в строке, побочных эффектов на выбор не имеет.",
       "meta": {
-        "tags": [
-          "filters",
-          "presets",
-          "saved",
-          "radio"
-        ],
+        "tags": ["filters", "presets", "saved", "radio"],
         "preview": {
           "width": "full"
         },
@@ -1438,7 +1365,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Query Presets"
           }
         }
       }

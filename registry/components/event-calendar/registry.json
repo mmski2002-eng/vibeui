@@ -4,11 +4,9 @@
     {
       "name": "eventcalendar-001",
       "type": "registry:component",
-      "title": "Month Overflow",
+      "title": "Месяц с переполнением",
       "description": "Месяц с событиями прямо в клетках: клетка держит фиксированную высоту, а всё лишнее сворачивается в «ещё N» и раскрывается нативным <details>.",
-      "categories": [
-        "event-calendar"
-      ],
+      "categories": ["event-calendar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-eventcalendar-001-*. Серверный: хуков нет. Сетка 7×6 строится от первого понедельника, названия дней и месяца берутся из Intl. Клетка имеет min-height, поэтому загруженный день не растягивает строку месяца; события сверх visible уходят в <details>/<summary>, а всплывающий список позиционируется абсолютно и в нижних строках разворачивается вверх правилом :nth-child(n+29). Тип события различается цветом левой границы и её стилем.",
       "meta": {
-        "tags": [
-          "calendar",
-          "events",
-          "month",
-          "overflow"
-        ],
+        "tags": ["calendar", "events", "month", "overflow"],
         "preview": {
           "width": "full"
         },
@@ -104,7 +97,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Month Overflow"
           }
         }
       }
@@ -112,11 +106,9 @@
     {
       "name": "eventcalendar-002",
       "type": "registry:component",
-      "title": "Week Columns",
+      "title": "Колонки недели",
       "description": "Неделя семью колонками времени: событие ставится в проценты от рабочего дня, поэтому встреча с 9:40 не округляется до строки сетки.",
-      "categories": [
-        "event-calendar"
-      ],
+      "categories": ["event-calendar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -128,12 +120,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-eventcalendar-002-*. Серверный: хуков нет. Колонка дня — своя система координат: высота равна рабочему интервалу, а top и height события считаются в процентах от него. Часовые линии рисует repeating-linear-gradient, а не пустые ячейки. События на весь день вынесены в отдельную строку над шкалой, потому что положения во времени у них нет. Прокрутка вбок живёт в контейнере с tabindex=0 и видимым фокусом.",
       "meta": {
-        "tags": [
-          "calendar",
-          "events",
-          "week",
-          "schedule"
-        ],
+        "tags": ["calendar", "events", "week", "schedule"],
         "preview": {
           "width": "full"
         },
@@ -214,7 +201,8 @@
               "dayTo": {
                 "label": "Day ends at"
               }
-            }
+            },
+            "title": "Week Columns"
           }
         }
       }
@@ -222,11 +210,9 @@
     {
       "name": "eventcalendar-003",
       "type": "registry:component",
-      "title": "Day Lanes",
+      "title": "Дорожки дня",
       "description": "День с временной шкалой, где пересекающиеся события расходятся по дорожкам: ширина считается по своей группе наложений, а не по всему дню.",
-      "categories": [
-        "event-calendar"
-      ],
+      "categories": ["event-calendar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -238,12 +224,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-eventcalendar-003-*. Серверный: хуков нет, вся раскладка считается при рендере чистой функцией layout(). События сортируются по началу, разбиваются на связные группы пересечений, внутри группы каждое занимает первую свободную дорожку; ширина берётся от числа дорожек именно этой группы, поэтому одно наложение утром не сужает спокойный вечер. Часовые линии рисует repeating-linear-gradient, тип события различается цветом и стилем рамки.",
       "meta": {
-        "tags": [
-          "calendar",
-          "events",
-          "day",
-          "overlap"
-        ],
+        "tags": ["calendar", "events", "day", "overlap"],
         "preview": {
           "width": "full"
         },
@@ -322,7 +303,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Day Lanes"
           }
         }
       }
@@ -330,11 +312,9 @@
     {
       "name": "eventcalendar-004",
       "type": "registry:component",
-      "title": "Upcoming Feed",
+      "title": "Лента ближайших",
       "description": "Лента ближайших событий, сгруппированная по дням: заголовок дня липкий, «сегодня» и «завтра» названы словами, а не датой.",
-      "categories": [
-        "event-calendar"
-      ],
+      "categories": ["event-calendar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -346,12 +326,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-eventcalendar-004-*. Серверный: хуков нет. События фильтруются по окну days от today, сортируются по строке ISO и группируются в один проход. Заголовок дня липкий внутри прокручиваемой ленты с ограниченной высотой, поэтому карточка в сайдбаре не растёт вместе с числом встреч. Время стоит отдельной колонкой с моноширинными цифрами, тип события различается стилем левой границы, дедлайн дополнительно помечен словом.",
       "meta": {
-        "tags": [
-          "calendar",
-          "events",
-          "agenda",
-          "list"
-        ],
+        "tags": ["calendar", "events", "agenda", "list"],
         "preview": {
           "width": "full"
         },
@@ -432,7 +407,8 @@
               "days": {
                 "label": "Days ahead"
               }
-            }
+            },
+            "title": "Upcoming Feed"
           }
         }
       }
@@ -440,11 +416,9 @@
     {
       "name": "eventcalendar-005",
       "type": "registry:component",
-      "title": "Source Legend",
+      "title": "Легенда источников",
       "description": "Календарь нескольких источников: каждый различается и цветом, и формой метки, а показывать его или нет — переключается чекбоксом через :has().",
-      "categories": [
-        "event-calendar"
-      ],
+      "categories": ["event-calendar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -456,12 +430,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-eventcalendar-005-*. Серверный: хуков нет, фильтрация целиком на CSS. Легенда — fieldset с чекбоксами, снятая галочка прячет и метки в сетке, и строки списка правилом [data-vibeui-block]:has([data-index=N]:not(:checked)) [data-source=N]{display:none}. Источник кодируется дважды: цветом из данных и формой метки (круг, квадрат, ромб, треугольник) через border-radius, rotate и clip-path. Под сеткой стоит прокручиваемый список тех же событий.",
       "meta": {
-        "tags": [
-          "calendar",
-          "events",
-          "legend",
-          "filter"
-        ],
+        "tags": ["calendar", "events", "legend", "filter"],
         "preview": {
           "width": "full"
         },
@@ -542,7 +511,8 @@
               "weeks": {
                 "label": "Weeks in grid"
               }
-            }
+            },
+            "title": "Source Legend"
           }
         }
       }

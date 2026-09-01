@@ -4,11 +4,9 @@
     {
       "name": "menu-006",
       "type": "registry:component",
-      "title": "Mega Menu",
+      "title": "Мега-меню",
       "description": "Широкое меню навигации на details: колонки с пояснениями к ссылкам — список из двадцати названий это карта сайта, а не навигация.",
-      "categories": [
-        "navigation-menu"
-      ],
+      "categories": ["navigation-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-006-*. Серверный компонент: раскрытие держит нативный details, useId нужен для имени группы. Корень объявлен контейнером, колонки живут на внутренней панели: контейнерный запрос действует только на потомков. От 26rem собственной ширины панель складывается в одну колонку.",
       "meta": {
-        "tags": [
-          "menu",
-          "mega",
-          "navigation",
-          "no-js"
-        ],
+        "tags": ["menu", "mega", "navigation", "no-js"],
         "preview": {
           "width": "full"
         },
@@ -104,7 +97,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Mega Menu"
           }
         }
       }
@@ -112,11 +106,9 @@
     {
       "name": "navmenu-001",
       "type": "registry:component",
-      "title": "Column Navmenu",
+      "title": "Меню в колонки",
       "description": "Навигация сайта с выпадающей панелью из колонок: под каждой ссылкой строка пояснения, поэтому по разделу понятно, что внутри.",
-      "categories": [
-        "navigation-menu"
-      ],
+      "categories": ["navigation-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -128,12 +120,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-001-*. Серверный: хуков нет, панель открывает popover=\"auto\". Якорем служит вся полоса навигации (anchor-name на [data-part=\"bar\"]), поэтому широкая панель встаёт под полосой целиком, а не под отдельной кнопкой. Колонки раскладывает grid с auto-fit и minmax, так что их число подстраивается под ширину панели. Разделы без панели — обычные ссылки.",
       "meta": {
-        "tags": [
-          "navmenu",
-          "mega menu",
-          "popover",
-          "site nav"
-        ],
+        "tags": ["navmenu", "mega menu", "popover", "site nav"],
         "preview": {
           "width": "full"
         },
@@ -201,7 +188,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Column Navmenu"
           }
         }
       }
@@ -209,11 +197,9 @@
     {
       "name": "navmenu-002",
       "type": "registry:component",
-      "title": "Promo Navmenu",
+      "title": "Меню с промо-блоком",
       "description": "Выпадающая панель с приоритетом: слева промо-карточка на всю высоту, справа обычные ссылки — вместо ровного списка одинаковых пунктов.",
-      "categories": [
-        "navigation-menu"
-      ],
+      "categories": ["navigation-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -225,12 +211,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-002-*. Серверный: хуков нет, панель — popover=\"auto\" с якорем на полосе навигации. Панель разложена в две колонки grid: промо и список. Промо целиком является ссылкой, поэтому кликается вся карточка, а её фон собран из радиального градиента поверх плоского цвета — картинок компонент не тянет.",
       "meta": {
-        "tags": [
-          "navmenu",
-          "promo",
-          "popover",
-          "marketing"
-        ],
+        "tags": ["navmenu", "promo", "popover", "marketing"],
         "preview": {
           "width": "full"
         },
@@ -313,7 +294,8 @@
                 "label": "Promo title",
                 "default": "Email builder"
               }
-            }
+            },
+            "title": "Promo Navmenu"
           }
         }
       }
@@ -321,11 +303,9 @@
     {
       "name": "navmenu-003",
       "type": "registry:component",
-      "title": "Simple Navmenu",
+      "title": "Простое меню",
       "description": "Самое простое выпадающее меню разделов: столбик ссылок без описаний и картинок, взаимное закрытие держит атрибут name у details.",
-      "categories": [
-        "navigation-menu"
-      ],
+      "categories": ["navigation-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -337,12 +317,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-003-*. Серверный: хуков нет. Раздел с подпунктами — <details> с общим атрибутом name, поэтому браузер сам следит, что раскрыт только один. Меню позиционируется абсолютно от своей обёртки, anchor positioning не требуется. Галочка на кнопке переворачивается по атрибуту open, поэтому состояние видно на самой кнопке. Разделы без подпунктов — обычные ссылки.",
       "meta": {
-        "tags": [
-          "navmenu",
-          "dropdown",
-          "details",
-          "no-js"
-        ],
+        "tags": ["navmenu", "dropdown", "details", "no-js"],
         "preview": {
           "width": "full"
         },
@@ -410,7 +385,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Simple Navmenu"
           }
         }
       }
@@ -418,11 +394,9 @@
     {
       "name": "navmenu-004",
       "type": "registry:component",
-      "title": "Catalog Navmenu",
+      "title": "Меню каталога",
       "description": "Мега-меню каталога: плитки категорий со значками и счётчиками, где цвет значка выводится из названия и не хранится в данных.",
-      "categories": [
-        "navigation-menu"
-      ],
+      "categories": ["navigation-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -434,12 +408,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-004-*. Серверный: хуков нет, панель — popover=\"auto\" с якорем на полосе навигации. Оттенок значка считает функция hue: хеш подписи даёт число от 0 до 330, оно уходит переменной --vibeui-navmenu-004-hue и подставляется в oklch. Плитки раскладывает grid с auto-fit, поэтому их число зависит от ширины панели.",
       "meta": {
-        "tags": [
-          "navmenu",
-          "catalog",
-          "mega menu",
-          "icons"
-        ],
+        "tags": ["navmenu", "catalog", "mega menu", "icons"],
         "preview": {
           "width": "full"
         },
@@ -520,7 +489,8 @@
                 "label": "Footer link",
                 "default": "All categories"
               }
-            }
+            },
+            "title": "Catalog Navmenu"
           }
         }
       }
@@ -528,11 +498,9 @@
     {
       "name": "navmenu-005",
       "type": "registry:component",
-      "title": "Preview Navmenu",
+      "title": "Меню с предпросмотром",
       "description": "Меню с превью справа: наведение или фокус на строке показывает свою картинку, и всё это на :has(), без состояния и без JS.",
-      "categories": [
-        "navigation-menu"
-      ],
+      "categories": ["navigation-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -544,12 +512,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-005-*. Серверный: хуков нет. Превью лежат стопкой в общей области, а показывается то, чья строка под курсором или в фокусе — правилами :has() по data-index. Когда ничего не выбрано, показывается первое: за это отвечает отдельное правило с двойным :not(:has(...)). Картинки нарисованы градиентами по оттенку из подписи, поэтому меню не тянет ни одного файла изображения.",
       "meta": {
-        "tags": [
-          "navmenu",
-          "preview",
-          "has-selector",
-          "no-js"
-        ],
+        "tags": ["navmenu", "preview", "has-selector", "no-js"],
         "preview": {
           "width": "full"
         },
@@ -630,7 +593,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Preview Navmenu"
           }
         }
       }
@@ -638,11 +602,9 @@
     {
       "name": "navmenu-006",
       "type": "registry:component",
-      "title": "Mobile Navmenu",
+      "title": "Меню на телефоне",
       "description": "Мобильная навигация: бургер открывает лист, а разделы внутри раскрываются списком вниз, а не летящей панелью.",
-      "categories": [
-        "navigation-menu"
-      ],
+      "categories": ["navigation-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -654,12 +616,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-006-*. Серверный: хуков нет. Лист открывает чекбокс, состояние читается через :has(input:checked). Раскрытие сделано сменой grid-template-rows с 0fr на 1fr — так высота анимируется без магических чисел и без измерений. Разделы внутри — <details>. Полоски бургера складываются в крест по тому же состоянию чекбокса.",
       "meta": {
-        "tags": [
-          "navmenu",
-          "mobile",
-          "burger",
-          "no-js"
-        ],
+        "tags": ["navmenu", "mobile", "burger", "no-js"],
         "ai": {
           "export": "Navmenu006",
           "usage": "<Navmenu006\n  brand=\"Полотно\"\n  sections={[{ label: \"Продукт\", items: [\"Редактор\", \"Шаблоны\"] }]}\n/>",
@@ -737,7 +694,8 @@
                 "label": "Action",
                 "default": "Start free"
               }
-            }
+            },
+            "title": "Mobile Navmenu"
           }
         }
       }
@@ -745,11 +703,9 @@
     {
       "name": "navmenu-007",
       "type": "registry:component",
-      "title": "Brand Navmenu",
+      "title": "Меню с брендом",
       "description": "Шапка сайта целиком: логотип слева, разделы по центру, вход и главное действие справа, с уходом лишнего на узкой ширине.",
-      "categories": [
-        "navigation-menu"
-      ],
+      "categories": ["navigation-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -761,12 +717,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-007-*. Серверный: хуков нет, разделы с подпунктами — <details> с общим атрибутом name. Средняя часть растягивается flex:1, поэтому правая группа остаётся у края при любой ширине. Знак логотипа нарисован градиентом, а не картинкой. На узкой ширине контейнерный запрос убирает ссылки и вторичное действие, оставляя логотип и главную кнопку.",
       "meta": {
-        "tags": [
-          "navmenu",
-          "header",
-          "brand",
-          "cta"
-        ],
+        "tags": ["navmenu", "header", "brand", "cta"],
         "preview": {
           "width": "full"
         },
@@ -847,7 +798,8 @@
                 "label": "Button",
                 "default": "Start"
               }
-            }
+            },
+            "title": "Brand Navmenu"
           }
         }
       }
@@ -855,11 +807,9 @@
     {
       "name": "navmenu-008",
       "type": "registry:component",
-      "title": "Search Navmenu",
+      "title": "Меню с поиском",
       "description": "Навигация с панелью, которая начинается со строки поиска: под полем — частые запросы и недавнее, всё обычными ссылками.",
-      "categories": [
-        "navigation-menu"
-      ],
+      "categories": ["navigation-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -871,12 +821,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-navmenu-008-*. Серверный: хуков нет. Панель — popover=\"auto\" с якорем на полосе навигации и выравниванием по правому краю. Поле лежит в настоящей <form method=\"get\"> с role=\"search\", поэтому запрос уходит на страницу результатов и без JS. Подсказки под полем — обычные ссылки, а лупа нарисована кругом с чёрточкой из бордюров.",
       "meta": {
-        "tags": [
-          "navmenu",
-          "search",
-          "popover",
-          "form"
-        ],
+        "tags": ["navmenu", "search", "popover", "form"],
         "preview": {
           "width": "full"
         },
@@ -957,7 +902,8 @@
                 "label": "Trigger",
                 "default": "Search"
               }
-            }
+            },
+            "title": "Search Navmenu"
           }
         }
       }

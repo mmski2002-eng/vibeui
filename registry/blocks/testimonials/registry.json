@@ -4,7 +4,7 @@
     {
       "name": "testimonials-001",
       "type": "registry:block",
-      "title": "Featured Testimonials",
+      "title": "Отзывы с главным",
       "description": "Секция отзывов с иерархией: один крупный отзыв засечным шрифтом на две колонки, остальные мелкие. Стена одинаковых карточек читается как шум.",
       "categories": ["testimonials"],
       "dependencies": [],
@@ -72,7 +72,8 @@
                 "Do not lift the CSS variables into globals.css: the block has to stay a single file."
               ],
               "usage": "<Testimonials001\n  title=\"What people say after shipping\"\n  items={[{ quote: \"...\", name: \"Anna Kovalyova\", role: \"Art director\", featured: true }]}\n/>"
-            }
+            },
+            "title": "Featured Testimonials"
           }
         }
       }
@@ -80,7 +81,7 @@
     {
       "name": "testimonials-002",
       "type": "registry:block",
-      "title": "Even Testimonial Grid",
+      "title": "Ровная сетка отзывов",
       "description": "Ровная сетка отзывов карточками: все отзывы равны по весу, автор внизу, а рядом подписан источник — отзыв без источника читается как написанный маркетологом.",
       "categories": ["testimonials"],
       "dependencies": [],
@@ -179,7 +180,8 @@
                 "label": "Eyebrow",
                 "default": "Testimonials"
               }
-            }
+            },
+            "title": "Even Testimonial Grid"
           }
         }
       }
@@ -187,7 +189,7 @@
     {
       "name": "testimonials-003",
       "type": "registry:block",
-      "title": "Single Quote Testimonial",
+      "title": "Одна большая цитата",
       "description": "Одна крупная цитата вместо стены карточек: засечный набор во всю ширину, автор с компанией и три проверяемые цифры под ней.",
       "categories": ["testimonials"],
       "dependencies": [],
@@ -288,7 +290,8 @@
                 "label": "Company",
                 "default": "Artel"
               }
-            }
+            },
+            "title": "Single Quote Testimonial"
           }
         }
       }
@@ -296,7 +299,7 @@
     {
       "name": "testimonials-004",
       "type": "registry:block",
-      "title": "Logo Quote Row",
+      "title": "Строка логотипов с цитатой",
       "description": "Лента логотипов, где под каждым стоит своя цитата. Обычная полоса логотипов ничего не доказывает — здесь узнавание и доказательство собраны в одном элементе.",
       "categories": ["testimonials"],
       "dependencies": [],
@@ -395,7 +398,8 @@
                 "label": "Intro paragraph",
                 "default": "Four teams told us what actually changed after switching."
               }
-            }
+            },
+            "title": "Logo Quote Row"
           }
         }
       }
@@ -403,7 +407,7 @@
     {
       "name": "testimonials-005",
       "type": "registry:block",
-      "title": "Star Rating Reviews",
+      "title": "Отзывы со звёздами",
       "description": "Отзывы с оценками в звёздах: звёзды вырезаны clip-path и заливаются на нужную долю, а средняя оценка стоит в шапке вместе с числом отзывов.",
       "categories": ["testimonials"],
       "dependencies": [],
@@ -504,7 +508,8 @@
                 "label": "Rating count",
                 "default": "based on 1,214 ratings"
               }
-            }
+            },
+            "title": "Star Rating Reviews"
           }
         }
       }
@@ -512,7 +517,7 @@
     {
       "name": "testimonials-006",
       "type": "registry:block",
-      "title": "Testimonial Wall",
+      "title": "Стена отзывов",
       "description": "Стена отзывов колонками разной высоты на CSS columns: карточки укладываются встык без подсчёта высот, а длина цитаты остаётся такой, какой её написали.",
       "categories": ["testimonials"],
       "dependencies": [],
@@ -611,7 +616,8 @@
                 "label": "Intro paragraph",
                 "default": "We did not trim the quotes to a common length."
               }
-            }
+            },
+            "title": "Testimonial Wall"
           }
         }
       }

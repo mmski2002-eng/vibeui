@@ -4,11 +4,9 @@
     {
       "name": "separator-001",
       "type": "registry:component",
-      "title": "Labelled Separator",
+      "title": "Разделитель с подписью",
       "description": "Разделитель с подписью посередине: линия набрана сеткой из трёх колонок и работает на любой подложке.",
-      "categories": [
-        "separator"
-      ],
+      "categories": ["separator"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-separator-001-*. Серверный: хуков нет. Линия с подписью — грид из трёх колонок, поэтому не нужен приём с фоном под текстом и разделитель работает на любой подложке. Вертикальный вариант тянется по высоте соседей. Роль separator объявлена с aria-orientation.",
       "meta": {
-        "tags": [
-          "separator",
-          "divider",
-          "layout",
-          "a11y"
-        ],
+        "tags": ["separator", "divider", "layout", "a11y"],
         "preview": {
           "width": "full"
         },
@@ -67,10 +60,7 @@
             "label": "Направление",
             "type": "select",
             "default": "horizontal",
-            "options": [
-              "horizontal",
-              "vertical"
-            ]
+            "options": ["horizontal", "vertical"]
           }
         ],
         "i18n": {
@@ -108,7 +98,8 @@
               "orientation": {
                 "label": "Orientation"
               }
-            }
+            },
+            "title": "Labelled Separator"
           }
         }
       }
@@ -116,11 +107,9 @@
     {
       "name": "separator-002",
       "type": "registry:component",
-      "title": "Pill Label Divider",
+      "title": "Разделитель с пилюлей",
       "description": "Разделитель с подписью в пилюле, которая несёт собственный фон: приём с текстом цвета страницы ломается на градиенте, а пилюля работает на любой подложке.",
-      "categories": [
-        "separator"
-      ],
+      "categories": ["separator"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -132,12 +121,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Положение подписи задаётся числом колонок сетки: center — 1fr auto 1fr, start — auto 1fr, end — 1fr auto, поэтому линии всегда упираются в пилюлю без ручных отступов. Пилюля несёт свою заливку и рамку — популярный приём «закрасить текст цветом страницы» рассыпается на градиенте и на картинке, где подпись оказывается в прямоугольнике чужого цвета. У корня role=separator и aria-label с текстом подписи, так что граница слышна и названа. Пилюля светлая с тёмным текстом, поэтому подложка компоненту не нужна.",
       "meta": {
-        "tags": [
-          "separator",
-          "label",
-          "divider",
-          "pill"
-        ],
+        "tags": ["separator", "label", "divider", "pill"],
         "preview": {
           "width": "full"
         },
@@ -179,11 +163,7 @@
             "label": "Положение",
             "type": "select",
             "default": "center",
-            "options": [
-              "start",
-              "center",
-              "end"
-            ]
+            "options": ["start", "center", "end"]
           }
         ],
         "i18n": {
@@ -222,7 +202,8 @@
                 "label": "Position",
                 "default": "center"
               }
-            }
+            },
+            "title": "Pill Label Divider"
           }
         }
       }
@@ -230,11 +211,9 @@
     {
       "name": "separator-003",
       "type": "registry:component",
-      "title": "Vertical Stat Rules",
+      "title": "Вертикальные линии между показателями",
       "description": "Строка показателей с вертикальными разделителями: линия берёт высоту у соседей, а не задаёт её, поэтому строка не растёт от самой линии.",
-      "categories": [
-        "separator"
-      ],
+      "categories": ["separator"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -246,12 +225,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Ряд выровнен align-items:stretch, из-за чего разделитель шириной в один пиксель сам вытягивается до высоты самого высокого блока — задавать ему height вручную не нужно и вредно. Режим text ограничивает линию высотой строки значения: так делают в шапках, где полная линия выглядит как граница таблицы. Каждый разделитель помечен role=separator с aria-orientation=vertical, поэтому граница между показателями слышна. Промежуток вынесен в проп gap и подставляется переменной в пикселях. Подложка светлая: цифры и подписи тёмные.",
       "meta": {
-        "tags": [
-          "separator",
-          "vertical",
-          "stats",
-          "row"
-        ],
+        "tags": ["separator", "vertical", "stats", "row"],
         "ai": {
           "export": "Separator003",
           "usage": "<Separator003\n  items={[{ value: \"128\", caption: \"компонентов\" }, { value: \"24\", caption: \"категории\" }]}\n  gap={20}\n  dividerHeight=\"full\"\n/>",
@@ -291,10 +265,7 @@
             "label": "Высота линии",
             "type": "select",
             "default": "full",
-            "options": [
-              "text",
-              "full"
-            ]
+            "options": ["text", "full"]
           }
         ],
         "i18n": {
@@ -333,7 +304,8 @@
                 "label": "Rule height",
                 "default": "full"
               }
-            }
+            },
+            "title": "Vertical Stat Rules"
           }
         }
       }
@@ -341,11 +313,9 @@
     {
       "name": "separator-004",
       "type": "registry:component",
-      "title": "Dashed Rule Divider",
+      "title": "Пунктирный разделитель",
       "description": "Пунктирный разделитель с управляемым рисунком: длина штриха и промежуток заданы числами, поэтому пунктир повторяем в разных местах макета.",
-      "categories": [
-        "separator"
-      ],
+      "categories": ["separator"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -357,12 +327,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. border-style:dashed рисует штрих, длина которого зависит от браузера и от толщины границы, — одинакового пунктира в двух местах макета так не добиться. Здесь линия набрана repeating-linear-gradient, где длина штриха и промежуток вынесены в переменные --vibeui-separator-004-dash и --vibeui-separator-004-gap и подставляются из пропов в пикселях. Разделитель набран тегом hr со снятой рамкой, поэтому граница видна и скринридеру. Компонент показан в контексте двух строк раздела и несёт свою светлую подложку: подписи тёмные.",
       "meta": {
-        "tags": [
-          "separator",
-          "dashed",
-          "gradient",
-          "divider"
-        ],
+        "tags": ["separator", "dashed", "gradient", "divider"],
         "preview": {
           "width": "full"
         },
@@ -445,7 +410,8 @@
                 "label": "Gap",
                 "default": 6
               }
-            }
+            },
+            "title": "Dashed Rule Divider"
           }
         }
       }
@@ -453,11 +419,9 @@
     {
       "name": "separator-005",
       "type": "registry:component",
-      "title": "Icon Center Divider",
+      "title": "Разделитель с иконкой",
       "description": "Разделитель со знаком в кружке посередине линии: кружок несёт свою заливку, поэтому линия не просвечивает сквозь знак ни на светлом, ни на тёмном фоне.",
-      "categories": [
-        "separator"
-      ],
+      "categories": ["separator"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -469,12 +433,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Сетка из трёх колонок (1fr auto 1fr) держит кружок ровно по центру при любой ширине. Кружок несёт собственную заливку и рамку: без заливки линия проходит сквозь знак, а вырезать её маской пришлось бы под каждый фон отдельно. Знак декоративен и помечен aria-hidden — «✦» вслух ничего не сообщает; смысл границы несёт role=separator с aria-label. Тон переключается атрибутом data-tone и меняет три переменные разом. Кружок светлый с тёмным знаком, поэтому отдельная подложка компоненту не нужна.",
       "meta": {
-        "tags": [
-          "separator",
-          "icon",
-          "divider",
-          "ornament"
-        ],
+        "tags": ["separator", "icon", "divider", "ornament"],
         "preview": {
           "width": "full"
         },
@@ -516,10 +475,7 @@
             "label": "Тон",
             "type": "select",
             "default": "neutral",
-            "options": [
-              "neutral",
-              "accent"
-            ]
+            "options": ["neutral", "accent"]
           }
         ],
         "i18n": {
@@ -558,7 +514,8 @@
                 "label": "Tone",
                 "default": "neutral"
               }
-            }
+            },
+            "title": "Icon Center Divider"
           }
         }
       }
@@ -566,11 +523,9 @@
     {
       "name": "separator-006",
       "type": "registry:component",
-      "title": "Scaled Space Divider",
+      "title": "Разделитель по шкале отступов",
       "description": "Разделитель с отступами по шкале: пять ступеней кратны одному шагу, поэтому две границы в разных частях страницы дышат одинаково.",
-      "categories": [
-        "separator"
-      ],
+      "categories": ["separator"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -582,12 +537,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Шкала отступов объявлена как кратные переменной --vibeui-separator-006-step, а ступени xs…xl переключаются атрибутом data-space — правится шкала одним числом, а не пятью значениями. Отступ живёт на самом разделителе, а не на соседних блоках: так соседи ничего не знают друг о друге и не схлопывают margin. Втяжка включается булевым пропом inset и задаётся отдельной переменной, чтобы линия отходила от краёв списка, как в системных таблицах. Подложка светлая: строки списка набраны тёмным.",
       "meta": {
-        "tags": [
-          "separator",
-          "spacing",
-          "scale",
-          "rhythm"
-        ],
+        "tags": ["separator", "spacing", "scale", "rhythm"],
         "preview": {
           "width": "full"
         },
@@ -622,13 +572,7 @@
             "label": "Ступень отступа",
             "type": "select",
             "default": "md",
-            "options": [
-              "xs",
-              "sm",
-              "md",
-              "lg",
-              "xl"
-            ]
+            "options": ["xs", "sm", "md", "lg", "xl"]
           },
           {
             "prop": "inset",
@@ -673,7 +617,8 @@
                 "label": "Inset",
                 "default": false
               }
-            }
+            },
+            "title": "Scaled Space Divider"
           }
         }
       }

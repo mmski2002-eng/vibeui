@@ -89,7 +89,7 @@ export async function ItemPage({
               {category ? (
                 <>
                   <li aria-hidden="true">/</li>
-                  <li>{getCategoryLabel(category)}</li>
+                  <li>{getCategoryLabel(category, locale)}</li>
                 </>
               ) : null}
               <li aria-hidden="true">/</li>
@@ -102,7 +102,7 @@ export async function ItemPage({
           <header className="mb-10">
             {category ? (
               <p className="text-shell-muted mb-2 text-xs font-medium tracking-wide uppercase">
-                {getCategoryLabel(category)}
+                {getCategoryLabel(category, locale)}
               </p>
             ) : null}
             <h1 className="text-shell-fg text-3xl font-semibold tracking-tight sm:text-4xl">

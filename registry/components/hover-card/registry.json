@@ -4,7 +4,7 @@
     {
       "name": "hovercard-001",
       "type": "registry:component",
-      "title": "Hover Card",
+      "title": "Карточка по наведению",
       "description": "Карточка человека у упоминания: раскрывается по наведению и по фокусу, внутри только текст — до кнопок курсор не довести.",
       "categories": ["hover-card"],
       "dependencies": [],
@@ -107,7 +107,8 @@
                 "label": "Bio",
                 "default": "Runs the catalog and the design system, builds interfaces that explain themselves."
               }
-            }
+            },
+            "title": "Hover Card"
           }
         }
       }
@@ -115,7 +116,7 @@
     {
       "name": "hovercard-002",
       "type": "registry:component",
-      "title": "Link Preview",
+      "title": "Предпросмотр ссылки",
       "description": "Превью страницы у ссылки: обложка, домен, заголовок и отрывок — вместо скриншота градиент по оттенку домена, чтобы компонент работал без сети.",
       "categories": ["hover-card"],
       "dependencies": [],
@@ -210,7 +211,8 @@
                 "label": "Link text",
                 "default": "a review of layout mistakes"
               }
-            }
+            },
+            "title": "Link Preview"
           }
         }
       }
@@ -218,7 +220,7 @@
     {
       "name": "hovercard-003",
       "type": "registry:component",
-      "title": "Product Card",
+      "title": "Карточка товара",
       "description": "Карточка товара у названия в тексте: цена и наличие стоят выше отзывов, а дробный рейтинг залит градиентом по звёздам — 4,3 видно как 4,3.",
       "categories": ["hover-card"],
       "dependencies": [],
@@ -313,7 +315,8 @@
               "rating": {
                 "label": "Score"
               }
-            }
+            },
+            "title": "Product Card"
           }
         }
       }
@@ -321,7 +324,7 @@
     {
       "name": "hovercard-004",
       "type": "registry:component",
-      "title": "Repo Card",
+      "title": "Карточка репозитория",
       "description": "Карточка репозитория у ссылки владелец/имя: владелец набран тонко, имя жирно, язык помечен точкой и словом, а не одной цветной точкой.",
       "categories": ["hover-card"],
       "dependencies": [],
@@ -416,7 +419,8 @@
                 "label": "Stars",
                 "default": "3.1k"
               }
-            }
+            },
+            "title": "Repo Card"
           }
         }
       }
@@ -424,7 +428,7 @@
     {
       "name": "hovercard-005",
       "type": "registry:component",
-      "title": "Glossary Card",
+      "title": "Карточка термина",
       "description": "Словарная статья у сокращения в тексте: расшифровка, раздел, определение и смежные термины — это справочник, а не короткая реплика.",
       "categories": ["hover-card"],
       "dependencies": [],
@@ -519,7 +523,8 @@
                 "label": "Section",
                 "default": "infrastructure"
               }
-            }
+            },
+            "title": "Glossary Card"
           }
         }
       }
@@ -527,7 +532,7 @@
     {
       "name": "hovercard-006",
       "type": "registry:component",
-      "title": "Event Card",
+      "title": "Карточка события",
       "description": "Карточка события у названия встречи: дата вынесена в отрывной листок календаря, а участники сложены веером с остатком числом.",
       "categories": ["hover-card"],
       "dependencies": [],
@@ -622,7 +627,8 @@
                 "label": "Time",
                 "default": "11:00 – 12:00"
               }
-            }
+            },
+            "title": "Event Card"
           }
         }
       }
@@ -630,7 +636,7 @@
     {
       "name": "hovercard-007",
       "type": "registry:component",
-      "title": "Intent Card",
+      "title": "Карточка намерения",
       "description": "Карточка с намерением: пока курсор стоит на ссылке, под ней растёт полоска ожидания, и только потом карточка раскрывается — пролёт мышью ничего не открывает.",
       "categories": ["hover-card"],
       "dependencies": [],
@@ -725,7 +731,8 @@
                 "label": "Link text",
                 "default": "storage pricing"
               }
-            }
+            },
+            "title": "Intent Card"
           }
         }
       }
@@ -733,7 +740,7 @@
     {
       "name": "hovercard-008",
       "type": "registry:component",
-      "title": "Repo Snapshot",
+      "title": "Снимок репозитория",
       "description": "Снимок репозитория по наведению на пилюлю-ссылку: описание, язык, звёзды, открытые issue и время последнего коммита — больше, чем просто owner/name.",
       "categories": ["hover-card"],
       "dependencies": [],
@@ -839,7 +846,8 @@
                 "label": "Open issues",
                 "default": "12"
               }
-            }
+            },
+            "title": "Repo Snapshot"
           }
         }
       }

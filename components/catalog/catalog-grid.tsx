@@ -20,7 +20,7 @@ function searchText(item: CatalogItem, locale: Locale): string {
   return [
     localized.title ?? localized.name,
     localized.name,
-    category ? getCategoryLabel(category) : "",
+    category ? getCategoryLabel(category, locale) : "",
     ...(localized.meta?.tags ?? []),
   ]
     .join(" ")

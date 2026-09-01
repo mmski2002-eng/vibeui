@@ -4,7 +4,7 @@
     {
       "name": "select-001",
       "type": "registry:component",
-      "title": "Native Select",
+      "title": "Нативный список",
       "description": "Выпадающий список в собственной рамке: список открывает система, поэтому на телефоне это привычное колесо, а не самодельное меню. Стрелка нарисована на CSS.",
       "categories": ["select"],
       "dependencies": [],
@@ -128,7 +128,8 @@
               "disabled": {
                 "label": "Disabled"
               }
-            }
+            },
+            "title": "Native Select"
           }
         },
         "preview": {
@@ -139,7 +140,7 @@
     {
       "name": "select-002",
       "type": "registry:component",
-      "title": "Grouped Native Select",
+      "title": "Нативный список с группами",
       "description": "Нативный select, в котором длинный список поделён на разделы через optgroup: варианты сгруппированы по смыслу, а список рисует сама система.",
       "categories": ["select"],
       "dependencies": [],
@@ -234,7 +235,8 @@
                 "label": "Placeholder",
                 "default": "Pick a city"
               }
-            }
+            },
+            "title": "Grouped Native Select"
           }
         }
       }
@@ -242,7 +244,7 @@
     {
       "name": "select-003",
       "type": "registry:component",
-      "title": "Icon Trigger Select",
+      "title": "Список с иконкой",
       "description": "Select с иконкой выбранного варианта: кнопку рисуем сами, а список открывает нативный select, лежащий поверх неё прозрачным слоем.",
       "categories": ["select"],
       "dependencies": [],
@@ -337,7 +339,8 @@
                 "label": "Value",
                 "default": "card"
               }
-            }
+            },
+            "title": "Icon Trigger Select"
           }
         }
       }
@@ -345,7 +348,7 @@
     {
       "name": "select-004",
       "type": "registry:component",
-      "title": "Multiple List Select",
+      "title": "Список с множественным выбором",
       "description": "Множественный выбор на нативном select[multiple]: весь список виден сразу, выбранные строки подсвечиваются, выпадающее меню не нужно.",
       "categories": ["select"],
       "dependencies": [],
@@ -441,7 +444,8 @@
                 "label": "Hint",
                 "default": "Several — hold the key"
               }
-            }
+            },
+            "title": "Multiple List Select"
           }
         }
       }
@@ -449,7 +453,7 @@
     {
       "name": "select-005",
       "type": "registry:component",
-      "title": "Described Select",
+      "title": "Список с пояснениями",
       "description": "Select, под которым живёт объяснение выбранного варианта: короткое название в поле, последствия выбора — отдельной строкой.",
       "categories": ["select"],
       "dependencies": [],
@@ -544,7 +548,8 @@
                 "label": "Value",
                 "default": "editor"
               }
-            }
+            },
+            "title": "Described Select"
           }
         }
       }
@@ -552,7 +557,7 @@
     {
       "name": "select-006",
       "type": "registry:component",
-      "title": "Order Line Select",
+      "title": "Список в строке заказа",
       "description": "Строка заказа из двух select'ов: размер и количество рядом, итоговая сумма пересчитывается сразу и стоит на той же карточке.",
       "categories": ["select"],
       "dependencies": [],
@@ -648,7 +653,8 @@
                 "label": "Price",
                 "default": 4900
               }
-            }
+            },
+            "title": "Order Line Select"
           }
         }
       }
@@ -656,7 +662,7 @@
     {
       "name": "select-007",
       "type": "registry:component",
-      "title": "Loading Select",
+      "title": "Загружающийся список",
       "description": "Select в состоянии загрузки: поле выключено, рядом крутится кольцо, а под ним полоса-скелет и текст, объясняющий паузу.",
       "categories": ["select"],
       "dependencies": [],
@@ -750,7 +756,8 @@
                 "label": "Waiting text",
                 "default": "Loading the list of cities"
               }
-            }
+            },
+            "title": "Loading Select"
           }
         }
       }
@@ -758,7 +765,7 @@
     {
       "name": "select-008",
       "type": "registry:component",
-      "title": "Invalid Select",
+      "title": "Список с ошибкой",
       "description": "Select с ошибкой валидации, которая снимается сама при первом осмысленном выборе: красная рамка, заливка, значок и текст.",
       "categories": ["select"],
       "dependencies": [],
@@ -853,7 +860,8 @@
                 "label": "Placeholder",
                 "default": "Not chosen"
               }
-            }
+            },
+            "title": "Invalid Select"
           }
         }
       }
@@ -861,7 +869,7 @@
     {
       "name": "select-009",
       "type": "registry:component",
-      "title": "Required Select",
+      "title": "Обязательный список",
       "description": "Обязательный select без единой строки JS: заглушка с пустым value делает поле незаполненным, а :user-invalid подсвечивает его после попытки уйти дальше.",
       "categories": ["select"],
       "dependencies": [],
@@ -956,7 +964,8 @@
                 "label": "Hint",
                 "default": "Required: the courier arrives in this window."
               }
-            }
+            },
+            "title": "Required Select"
           }
         }
       }
@@ -964,7 +973,7 @@
     {
       "name": "select-010",
       "type": "registry:component",
-      "title": "Search Select",
+      "title": "Список с поиском",
       "description": "Комбобокс с текстовым поиском: набор фильтрует длинный список вариантов, а стрелки и Enter выбирают без мыши, без нативного select.",
       "categories": ["select"],
       "dependencies": [],
@@ -1081,7 +1090,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Search Select"
           }
         }
       }
@@ -1089,7 +1099,7 @@
     {
       "name": "select-011",
       "type": "registry:component",
-      "title": "Status Dot Select",
+      "title": "Список с точкой статуса",
       "description": "Select статуса: перед текущим значением цветная точка, которая передаёт состояние с одного взгляда, ещё до чтения текста.",
       "categories": ["select"],
       "dependencies": [],
@@ -1193,7 +1203,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Status Dot Select"
           }
         }
       }
@@ -1201,7 +1212,7 @@
     {
       "name": "select-012",
       "type": "registry:component",
-      "title": "Country Code Select",
+      "title": "Список кодов стран",
       "description": "Select страны с флагом-эмодзи и телефонным кодом в плитке-триггере: страну находят по флагу быстрее, чем по названию.",
       "categories": ["select"],
       "dependencies": [],
@@ -1305,7 +1316,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Country Code Select"
           }
         }
       }
@@ -1313,7 +1325,7 @@
     {
       "name": "select-013",
       "type": "registry:component",
-      "title": "Chip Multi Select",
+      "title": "Множественный выбор чипами",
       "description": "Множественный выбор чипами: выбранные значения показаны отдельными чипами с крестиком удаления, список открывает своя кнопка.",
       "categories": ["select"],
       "dependencies": [],
@@ -1430,7 +1442,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Chip Multi Select"
           }
         }
       }
@@ -1438,7 +1451,7 @@
     {
       "name": "select-014",
       "type": "registry:component",
-      "title": "Assignee Avatar Select",
+      "title": "Выбор исполнителя с аватаром",
       "description": "Select исполнителя: аватар с инициалами и подпись роли есть у каждого варианта и в самом триггере — человека узнают по лицу, а не только по фамилии.",
       "categories": ["select"],
       "dependencies": [],
@@ -1544,7 +1557,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Assignee Avatar Select"
           }
         }
       }
@@ -1552,7 +1566,7 @@
     {
       "name": "select-015",
       "type": "registry:component",
-      "title": "Two-Line Option Select",
+      "title": "Варианты в две строки",
       "description": "Select, где под названием каждого варианта в открытой панели живёт вторая строка с пояснением — сравнивать варианты можно до выбора, а не после.",
       "categories": ["select"],
       "dependencies": [],
@@ -1658,7 +1672,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Two-Line Option Select"
           }
         }
       }
@@ -1666,7 +1681,7 @@
     {
       "name": "select-016",
       "type": "registry:component",
-      "title": "Timezone Clock Select",
+      "title": "Часовой пояс с часами",
       "description": "Select часового пояса: у каждого варианта в открытой панели и в триггере — живое текущее время города, которое тикает раз в секунду.",
       "categories": ["select"],
       "dependencies": [],
@@ -1772,7 +1787,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Timezone Clock Select"
           }
         }
       }
@@ -1780,7 +1796,7 @@
     {
       "name": "select-017",
       "type": "registry:component",
-      "title": "Loading Error Retry Select",
+      "title": "Повтор после ошибки",
       "description": "Select с тремя состояниями списка: загрузка с индикатором, ошибка с кнопкой повтора и обычный рабочий режим — все три на одном и том же поле.",
       "categories": ["select"],
       "dependencies": [],
@@ -1886,7 +1902,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Loading Error Retry Select"
           }
         }
       }
@@ -1894,7 +1911,7 @@
     {
       "name": "select-018",
       "type": "registry:component",
-      "title": "Interface Language Select",
+      "title": "Язык интерфейса",
       "description": "Select языка интерфейса: полное имя слева, короткий код справа в той же плитке — переключение видно с одного взгляда, без захода в список.",
       "categories": ["select"],
       "dependencies": [],
@@ -1994,7 +2011,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Interface Language Select"
           }
         }
       }
@@ -2002,7 +2020,7 @@
     {
       "name": "select-019",
       "type": "registry:component",
-      "title": "Currency Rate Select",
+      "title": "Валюта с курсом",
       "description": "Select валюты со знаком в плитке-триггере и живым курсом к рублю отдельной строкой под полем — не нужно уходить со страницы, чтобы понять, сколько это в рублях.",
       "categories": ["select"],
       "dependencies": [],
@@ -2102,7 +2120,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Currency Rate Select"
           }
         }
       }
@@ -2110,7 +2129,7 @@
     {
       "name": "select-020",
       "type": "registry:component",
-      "title": "Period Range Select",
+      "title": "Выбор периода",
       "description": "Select периода: обычные пресеты сверху и пункт «Свой диапазон» последним — он раскрывает два поля дат прямо под полем, вместо перехода в календарь.",
       "categories": ["select"],
       "dependencies": [],
@@ -2210,7 +2229,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Period Range Select"
           }
         }
       }
@@ -2218,7 +2238,7 @@
     {
       "name": "select-021",
       "type": "registry:component",
-      "title": "Native Icon Option Select",
+      "title": "Нативный список с иконками",
       "description": "Честный нативный select, у которого перед каждым вариантом стоит символ-иконка прямо в тексте option — список по-прежнему открывает система, без своей плитки поверх.",
       "categories": ["select"],
       "dependencies": [],
@@ -2318,7 +2338,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Native Icon Option Select"
           }
         }
       }
@@ -2326,7 +2347,7 @@
     {
       "name": "select-022",
       "type": "registry:component",
-      "title": "Inline Sentence Select",
+      "title": "Список внутри предложения",
       "description": "Компактный select, вживлённый прямо в строку текста: без подписи и рамки поля он читается как переменная часть предложения, а не как отдельный элемент формы.",
       "categories": ["select"],
       "dependencies": [],
@@ -2437,7 +2458,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Inline Sentence Select"
           }
         }
       }
@@ -2445,7 +2467,7 @@
     {
       "name": "select-023",
       "type": "registry:component",
-      "title": "Size Select With Hint",
+      "title": "Размер с подсказкой",
       "description": "Select размера с постоянной подсказкой под полем: короткий совет не зависит от выбранного варианта и не исчезает после выбора, в отличие от подсказки-описания или ошибки валидации.",
       "categories": ["select"],
       "dependencies": [],
@@ -2545,7 +2567,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Size Select With Hint"
           }
         }
       }
@@ -2553,7 +2576,7 @@
     {
       "name": "select-024",
       "type": "registry:component",
-      "title": "Disabled Reason Select",
+      "title": "Причина недоступности",
       "description": "Select с частью запрещённых вариантов: недоступные строки остаются в списке с disabled, а причину недоступности видно и в самом тексте варианта, и отдельным списком под полем.",
       "categories": ["select"],
       "dependencies": [],
@@ -2653,7 +2676,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Disabled Reason Select"
           }
         }
       }
@@ -2661,7 +2685,7 @@
     {
       "name": "select-025",
       "type": "registry:component",
-      "title": "Dependent Category Select",
+      "title": "Зависимая категория",
       "description": "Связанные списки: второй select существует только в контексте первого — при смене категории список товаров пересобирается заново, а выбор сбрасывается на первый доступный пункт.",
       "categories": ["select"],
       "dependencies": [],
@@ -2772,7 +2796,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Dependent Category Select"
           }
         }
       }
@@ -2780,7 +2805,7 @@
     {
       "name": "select-026",
       "type": "registry:component",
-      "title": "Stock-Limited Quantity Select",
+      "title": "Количество по остатку",
       "description": "Select количества, ограниченный остатком на складе: вариантов больше, чем есть в наличии, в списке нет вовсе, а подпись честно называет остаток и меняет тон, когда он на исходе.",
       "categories": ["select"],
       "dependencies": [],
@@ -2882,7 +2907,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Stock-Limited Quantity Select"
           }
         }
       }
@@ -2890,7 +2916,7 @@
     {
       "name": "select-027",
       "type": "registry:component",
-      "title": "Alphabetical Jump Select",
+      "title": "Переход по алфавиту",
       "description": "Длинный список сгруппирован по первой букве через optgroup, а строка кнопок-букв над полем — быстрый переход: клик сразу ставит первый вариант нужной буквы.",
       "categories": ["select"],
       "dependencies": [],
@@ -2981,7 +3007,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Alphabetical Jump Select"
           }
         }
       }
@@ -2989,7 +3016,7 @@
     {
       "name": "select-028",
       "type": "registry:component",
-      "title": "Priority Badge Select",
+      "title": "Приоритет плашкой",
       "description": "Select приоритета задачи: цветная метка в поле выбора называет уровень с одного взгляда, а живая подпись под полем объясняет, что этот приоритет значит на практике.",
       "categories": ["select"],
       "dependencies": [],
@@ -3093,7 +3120,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Priority Badge Select"
           }
         }
       }
@@ -3101,7 +3129,7 @@
     {
       "name": "select-029",
       "type": "registry:component",
-      "title": "Template Thumbnail Select",
+      "title": "Шаблон миниатюрой",
       "description": "Select шаблона страницы с миниатюрой раскладки рядом с полем: маленькая схема из блоков на CSS показывает форму шаблона ещё до открытия предпросмотра.",
       "categories": ["select"],
       "dependencies": [],
@@ -3201,7 +3229,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Template Thumbnail Select"
           }
         }
       }
@@ -3209,7 +3238,7 @@
     {
       "name": "select-030",
       "type": "registry:component",
-      "title": "Compact Filter Row Select",
+      "title": "Компактная строка фильтров",
       "description": "Панель фильтров из нескольких независимых select'ов в одну плотную строку: каждое поле маленькое и своё, а на узком экране строка переносится в столбец.",
       "categories": ["select"],
       "dependencies": [],
@@ -3298,7 +3327,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Compact Filter Row Select"
           }
         }
       }
@@ -3306,7 +3336,7 @@
     {
       "name": "select-031",
       "type": "registry:component",
-      "title": "Recent Value Select",
+      "title": "Недавние значения",
       "description": "Select, который запоминает последний выбор в localStorage и предлагает его отдельным чипом «Недавнее» при следующем визите — вместо того чтобы молча подставить его как значение по умолчанию.",
       "categories": ["select"],
       "dependencies": [],
@@ -3397,7 +3427,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Recent Value Select"
           }
         }
       }
@@ -3405,7 +3436,7 @@
     {
       "name": "select-032",
       "type": "registry:component",
-      "title": "Confirm Change Select",
+      "title": "Подтверждение смены",
       "description": "Select со ступенчатым подтверждением смены значения: выбор нового варианта не применяется сразу, а открывает панель с вопросом и кнопками «Подтвердить» и «Отмена».",
       "categories": ["select"],
       "dependencies": [],
@@ -3509,7 +3540,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Confirm Change Select"
           }
         }
       }
@@ -3517,7 +3549,7 @@
     {
       "name": "select-033",
       "type": "registry:component",
-      "title": "Content-Width Select",
+      "title": "Список по ширине содержимого",
       "description": "Select, чья ширина рассчитана от самого длинного варианта в символах, а не задана фиксированной величиной и не растянута на всю ширину родителя — короткий список даёт короткое поле.",
       "categories": ["select"],
       "dependencies": [],
@@ -3617,7 +3649,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Content-Width Select"
           }
         }
       }

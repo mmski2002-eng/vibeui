@@ -4,7 +4,7 @@
     {
       "name": "auth-001",
       "type": "registry:block",
-      "title": "Sign In",
+      "title": "Вход",
       "description": "Вход: подсказки autocomplete для менеджеров паролей, «забыли пароль» рядом с полем, вход через сервисы под формой.",
       "categories": ["auth"],
       "dependencies": [],
@@ -96,7 +96,8 @@
                 "label": "Button",
                 "default": "Sign in"
               }
-            }
+            },
+            "title": "Sign In"
           }
         }
       }
@@ -104,7 +105,7 @@
     {
       "name": "auth-002",
       "type": "registry:block",
-      "title": "Sign Up",
+      "title": "Регистрация",
       "description": "Регистрация: оценка пароля словом и полосой, требования показаны заранее, а поля повтора пароля нет намеренно.",
       "categories": ["auth"],
       "dependencies": [],
@@ -196,7 +197,8 @@
                 "label": "Button",
                 "default": "Create account"
               }
-            }
+            },
+            "title": "Sign Up"
           }
         }
       }
@@ -204,7 +206,7 @@
     {
       "name": "auth-003",
       "type": "registry:block",
-      "title": "Password Reset",
+      "title": "Сброс пароля",
       "description": "Восстановление доступа: ответ не раскрывает, существует ли адрес, а экран отправки показывает почту и даёт повтор.",
       "categories": ["auth"],
       "dependencies": [],
@@ -295,7 +297,8 @@
                 "label": "Heading",
                 "default": "Recover access"
               }
-            }
+            },
+            "title": "Password Reset"
           }
         }
       }
@@ -303,7 +306,7 @@
     {
       "name": "auth-004",
       "type": "registry:block",
-      "title": "Code Verification",
+      "title": "Подтверждение кодом",
       "description": "Подтверждение кодом: вставка целиком раскладывается по клеткам, Backspace на пустой возвращает к предыдущей.",
       "categories": ["auth"],
       "dependencies": [],
@@ -395,7 +398,8 @@
                 "label": "Heading",
                 "default": "Confirm sign-in"
               }
-            }
+            },
+            "title": "Code Verification"
           }
         }
       }
@@ -403,7 +407,7 @@
     {
       "name": "auth-005",
       "type": "registry:block",
-      "title": "Split Sign In",
+      "title": "Вход в две колонки",
       "description": "Вход на две колонки: обещание слева исчезает на узкой ширине, а форма стоит первой в разметке.",
       "categories": ["auth"],
       "dependencies": [],
@@ -498,7 +502,8 @@
                 "label": "Form heading",
                 "default": "Sign in"
               }
-            }
+            },
+            "title": "Split Sign In"
           }
         }
       }
@@ -506,7 +511,7 @@
     {
       "name": "auth-006",
       "type": "registry:block",
-      "title": "Team Invite",
+      "title": "Приглашение в команду",
       "description": "Приглашение в проект: права роли перечислены до кнопки, а отказ — такая же кнопка рядом, а не ссылка в углу.",
       "categories": ["auth"],
       "dependencies": [],
@@ -598,7 +603,8 @@
                 "label": "Role",
                 "default": "Редактор"
               }
-            }
+            },
+            "title": "Team Invite"
           }
         }
       }
@@ -606,7 +612,7 @@
     {
       "name": "auth-007",
       "type": "registry:block",
-      "title": "Email Password",
+      "title": "Почта и пароль",
       "description": "Вход почтой и паролем: проверка полей на выходе из них, подсказка о Caps Lock и одна общая ошибка, которая не выдаёт, что именно не подошло.",
       "categories": ["auth"],
       "dependencies": [],
@@ -701,7 +707,8 @@
                 "label": "Button",
                 "default": "Sign in"
               }
-            }
+            },
+            "title": "Email Password"
           }
         }
       }
@@ -709,7 +716,7 @@
     {
       "name": "auth-008",
       "type": "registry:block",
-      "title": "Provider First",
+      "title": "Сначала вход через сервис",
       "description": "Вход через сервисы первым экраном: кнопки провайдеров сверху, разделитель «или», почта запасным путём и метка «в прошлый раз».",
       "categories": ["auth"],
       "dependencies": [],
@@ -804,7 +811,8 @@
                 "label": "Form button",
                 "default": "Send a sign-in link"
               }
-            }
+            },
+            "title": "Provider First"
           }
         }
       }
@@ -812,7 +820,7 @@
     {
       "name": "auth-009",
       "type": "registry:block",
-      "title": "Consent Signup",
+      "title": "Регистрация с согласиями",
       "description": "Регистрация с осознанным согласием: кнопка ждёт обязательной галочки, рассылка выключена по умолчанию, текст условий раскрывается на месте.",
       "categories": ["auth"],
       "dependencies": [],
@@ -907,7 +915,8 @@
                 "label": "Button",
                 "default": "Create account"
               }
-            }
+            },
+            "title": "Consent Signup"
           }
         }
       }
@@ -915,7 +924,7 @@
     {
       "name": "auth-010",
       "type": "registry:block",
-      "title": "Reset Steps",
+      "title": "Шаги сброса пароля",
       "description": "Запрос ссылки на смену пароля рядом с колонкой «что будет дальше»: адрес отправителя, срок жизни ссылки и обратный отсчёт до повтора.",
       "categories": ["auth"],
       "dependencies": [],
@@ -1010,7 +1019,8 @@
               "cooldown": {
                 "label": "Resend cooldown, s"
               }
-            }
+            },
+            "title": "Reset Steps"
           }
         }
       }
@@ -1018,7 +1028,7 @@
     {
       "name": "auth-011",
       "type": "registry:block",
-      "title": "New Password",
+      "title": "Новый пароль",
       "description": "Установка нового пароля: вместо полоски надёжности — четыре именованных требования с отметками и проверка совпадения прямо при вводе.",
       "categories": ["auth"],
       "dependencies": [],
@@ -1113,7 +1123,8 @@
               "minLength": {
                 "label": "Minimum length"
               }
-            }
+            },
+            "title": "New Password"
           }
         }
       }
@@ -1121,7 +1132,7 @@
     {
       "name": "auth-012",
       "type": "registry:block",
-      "title": "Single Field Code",
+      "title": "Код одним полем",
       "description": "Подтверждение почты кодом одним полем с широкой разрядкой вместо клеток: код вставляется и правится как обычный текст, попытки посчитаны.",
       "categories": ["auth"],
       "dependencies": [],
@@ -1216,7 +1227,8 @@
               "attempts": {
                 "label": "Attempts left"
               }
-            }
+            },
+            "title": "Single Field Code"
           }
         }
       }
@@ -1224,7 +1236,7 @@
     {
       "name": "auth-013",
       "type": "registry:block",
-      "title": "Magic Link",
+      "title": "Вход по ссылке",
       "description": "Вход по одноразовой ссылке: форма запроса с объяснением «как это работает» и экран отправки с предупреждением, что ссылку нельзя пересылать.",
       "categories": ["auth"],
       "dependencies": [],
@@ -1318,7 +1330,8 @@
                 "label": "Heading",
                 "default": "No-password sign-in"
               }
-            }
+            },
+            "title": "Magic Link"
           }
         }
       }
@@ -1326,7 +1339,7 @@
     {
       "name": "auth-014",
       "type": "registry:block",
-      "title": "Two Factor App",
+      "title": "Двухфакторная аутентификация",
       "description": "Второй шаг входа кодом из приложения: доверие браузеру с явным сроком и три запасных пути на случай потерянного телефона.",
       "categories": ["auth"],
       "dependencies": [],
@@ -1421,7 +1434,8 @@
               "trustDays": {
                 "label": "Trust for, days"
               }
-            }
+            },
+            "title": "Two Factor App"
           }
         }
       }
@@ -1429,7 +1443,7 @@
     {
       "name": "auth-015",
       "type": "registry:block",
-      "title": "Backup Codes",
+      "title": "Резервные коды",
       "description": "Экран резервных кодов двухфакторки: сетка кодов, три способа их унести и обязательное подтверждение перед закрытием.",
       "categories": ["auth"],
       "dependencies": [],
@@ -1524,7 +1538,8 @@
                 "label": "Button",
                 "default": "Done"
               }
-            }
+            },
+            "title": "Backup Codes"
           }
         }
       }
@@ -1532,7 +1547,7 @@
     {
       "name": "auth-016",
       "type": "registry:block",
-      "title": "Workspace Picker",
+      "title": "Выбор рабочего пространства",
       "description": "Выбор рабочего пространства после входа: под каждым названием стоит роль, список — настоящая radiogroup, сверху поиск по названию.",
       "categories": ["auth"],
       "dependencies": [],
@@ -1627,7 +1642,8 @@
                 "label": "Account",
                 "default": "anna@vibeui.ru"
               }
-            }
+            },
+            "title": "Workspace Picker"
           }
         }
       }
@@ -1635,7 +1651,7 @@
     {
       "name": "auth-017",
       "type": "registry:block",
-      "title": "Invite Banner",
+      "title": "Баннер приглашения",
       "description": "Приглашение в команду широким баннером: стопка аватаров с именами, три числа о проекте и два равноправных ответа вместо ссылки-отказа.",
       "categories": ["auth"],
       "dependencies": [],
@@ -1730,7 +1746,8 @@
                 "label": "Role",
                 "default": "Editor"
               }
-            }
+            },
+            "title": "Invite Banner"
           }
         }
       }
@@ -1738,7 +1755,7 @@
     {
       "name": "auth-018",
       "type": "registry:block",
-      "title": "Invited Signup",
+      "title": "Регистрация по приглашению",
       "description": "Регистрация по приглашению: почта подставлена и заблокирована с объяснением почему, остаются только имя и пароль.",
       "categories": ["auth"],
       "dependencies": [],
@@ -1833,7 +1850,8 @@
                 "label": "Invited email",
                 "default": "anna@vibeui.ru"
               }
-            }
+            },
+            "title": "Invited Signup"
           }
         }
       }
@@ -1841,7 +1859,7 @@
     {
       "name": "auth-019",
       "type": "registry:block",
-      "title": "Locked Out",
+      "title": "Вход заблокирован",
       "description": "Временная блокировка после неудачных попыток: живой отсчёт до разблокировки, полоса прогресса и два выхода — сброс пароля и «это были не вы».",
       "categories": ["auth"],
       "dependencies": [],
@@ -1936,7 +1954,8 @@
               "attempts": {
                 "label": "Attempts made"
               }
-            }
+            },
+            "title": "Locked Out"
           }
         }
       }
@@ -1944,7 +1963,7 @@
     {
       "name": "auth-020",
       "type": "registry:block",
-      "title": "Active Sessions",
+      "title": "Активные сессии",
       "description": "Выход со всех устройств списком: где открыт аккаунт, откуда и когда, текущий сеанс помечен, общий выход требует второго нажатия.",
       "categories": ["auth"],
       "dependencies": [],
@@ -2039,7 +2058,8 @@
                 "label": "Sign-out button",
                 "default": "Sign out everywhere else"
               }
-            }
+            },
+            "title": "Active Sessions"
           }
         }
       }
@@ -2047,7 +2067,7 @@
     {
       "name": "auth-021",
       "type": "registry:block",
-      "title": "Confirm Identity",
+      "title": "Подтверждение личности",
       "description": "Повторный запрос пароля перед опасным действием: сначала названы последствия списком, и только потом поле — согласие становится осознанным.",
       "categories": ["auth"],
       "dependencies": [],
@@ -2142,7 +2162,8 @@
                 "label": "Button",
                 "default": "Confirm and transfer"
               }
-            }
+            },
+            "title": "Confirm Identity"
           }
         }
       }
@@ -2150,7 +2171,7 @@
     {
       "name": "auth-022",
       "type": "registry:block",
-      "title": "Session Expired",
+      "title": "Сессия истекла",
       "description": "«Сессия истекла» окном поверх замороженной страницы: под ним виден размытый макет работы, а рядом с продолжением стоит честный выход.",
       "categories": ["auth"],
       "dependencies": [],
@@ -2245,7 +2266,8 @@
                 "label": "Sign-out button",
                 "default": "Sign out entirely"
               }
-            }
+            },
+            "title": "Session Expired"
           }
         }
       }
@@ -2253,7 +2275,7 @@
     {
       "name": "auth-023",
       "type": "registry:block",
-      "title": "Two Step Signup",
+      "title": "Регистрация в два шага",
       "description": "Регистрация в два шага: сначала доступ, потом профиль, который можно пропустить — аккаунт уже создан на первом шаге.",
       "categories": ["auth"],
       "dependencies": [],
@@ -2348,7 +2370,8 @@
                 "label": "Second step button",
                 "default": "Done, open catalog"
               }
-            }
+            },
+            "title": "Two Step Signup"
           }
         }
       }
@@ -2356,7 +2379,7 @@
     {
       "name": "auth-024",
       "type": "registry:block",
-      "title": "Onboarding Goals",
+      "title": "Цели при знакомстве",
       "description": "Онбординг после регистрации: цели карточками с объяснением, на что влияет ответ, ограничение выбора и честное «пропустить».",
       "categories": ["auth"],
       "dependencies": [],
@@ -2451,7 +2474,8 @@
                 "label": "Button",
                 "default": "Open the catalog"
               }
-            }
+            },
+            "title": "Onboarding Goals"
           }
         }
       }
@@ -2459,7 +2483,7 @@
     {
       "name": "auth-025",
       "type": "registry:block",
-      "title": "Plan Signup",
+      "title": "Регистрация с выбором тарифа",
       "description": "Выбор тарифа прямо в регистрации: цена пересчитывается при смене периода, бесплатный вариант стоит первым и выбран по умолчанию.",
       "categories": ["auth"],
       "dependencies": [],
@@ -2554,7 +2578,8 @@
                 "label": "Button",
                 "default": "Create account"
               }
-            }
+            },
+            "title": "Plan Signup"
           }
         }
       }
@@ -2562,7 +2587,7 @@
     {
       "name": "auth-026",
       "type": "registry:block",
-      "title": "Phone Code",
+      "title": "Код по телефону",
       "description": "Вход по телефону: код страны отдельным списком, цифровая клавиатура на номере, а на втором шаге номер видно рядом с кнопкой «изменить».",
       "categories": ["auth"],
       "dependencies": [],
@@ -2657,7 +2682,8 @@
                 "label": "Button",
                 "default": "Send the code"
               }
-            }
+            },
+            "title": "Phone Code"
           }
         }
       }
@@ -2665,7 +2691,7 @@
     {
       "name": "auth-027",
       "type": "registry:block",
-      "title": "Access Request",
+      "title": "Запрос доступа",
       "description": "Экран «нет доступа» как рабочий: что закрыто, какое право нужно, кто именно его выдаёт — и поле «зачем» рядом с кнопкой запроса.",
       "categories": ["auth"],
       "dependencies": [],
@@ -2760,7 +2786,8 @@
                 "label": "Button",
                 "default": "Request access"
               }
-            }
+            },
+            "title": "Access Request"
           }
         }
       }
@@ -2768,7 +2795,7 @@
     {
       "name": "auth-028",
       "type": "registry:block",
-      "title": "Data Consent",
+      "title": "Согласие на обработку данных",
       "description": "Согласие на обработку данных по целям: переключатели с объяснениями, обязательная категория заблокирована, а «принять всё» и «сохранить выбор» равны по весу.",
       "categories": ["auth"],
       "dependencies": [],
@@ -2863,7 +2890,8 @@
                 "label": "Choice button",
                 "default": "Save my choice"
               }
-            }
+            },
+            "title": "Data Consent"
           }
         }
       }
@@ -2871,7 +2899,7 @@
     {
       "name": "auth-029",
       "type": "registry:block",
-      "title": "Delete Account",
+      "title": "Удаление аккаунта",
       "description": "Удаление аккаунта двумя колонками: что пропадёт и что останется у сервиса, срок восстановления и подтверждение вводом собственной почты.",
       "categories": ["auth"],
       "dependencies": [],
@@ -2966,7 +2994,8 @@
                 "label": "Button",
                 "default": "Delete account"
               }
-            }
+            },
+            "title": "Delete Account"
           }
         }
       }

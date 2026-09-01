@@ -4,11 +4,9 @@
     {
       "name": "command-001",
       "type": "registry:component",
-      "title": "Command Palette",
+      "title": "Командная палитра",
       "description": "Командная палитра в нативном dialog: ловушка фокуса, Escape и затемнение достаются от браузера, а не пишутся заново.",
-      "categories": [
-        "command"
-      ],
+      "categories": ["command"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-001-*. Клиентский: \"use client\" ради поиска и стрелок. Модалка открывается методом showModal(), поэтому ловушка фокуса и закрытие по Escape работают сами. Стрелки идут по видимому порядку строк, а не по исходному массиву: после группировки он другой.",
       "meta": {
-        "tags": [
-          "command",
-          "palette",
-          "search",
-          "dialog"
-        ],
+        "tags": ["command", "palette", "search", "dialog"],
         "ai": {
           "export": "Command001",
           "usage": "<Command001 commands={[{ label: \"Создать компонент\", group: \"Действия\" }]} />",
@@ -103,7 +96,8 @@
                 "label": "Placeholder",
                 "default": "Command or page…"
               }
-            }
+            },
+            "title": "Command Palette"
           }
         }
       }
@@ -111,11 +105,9 @@
     {
       "name": "command-002",
       "type": "registry:component",
-      "title": "Inline Palette",
+      "title": "Палитра в строке",
       "description": "Встроенная в страницу палитра с группами и полным договором combobox: поле, listbox и aria-activedescendant написаны руками.",
-      "categories": [
-        "command"
-      ],
+      "categories": ["command"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -127,12 +119,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-002-*. Клиентский: \"use client\" ради поиска и клавиатуры. Панель не модальная, поэтому весь ARIA-договор объявлен явно: корень role=dialog, поле role=combobox с aria-expanded и aria-controls, список role=listbox, группы role=group, строки role=option. Фокус остаётся в поле, подсветка передаётся через aria-activedescendant. Стрелки ходят по плоскому видимому порядку — после группировки он не совпадает с исходным массивом.",
       "meta": {
-        "tags": [
-          "command",
-          "palette",
-          "combobox",
-          "listbox"
-        ],
+        "tags": ["command", "palette", "combobox", "listbox"],
         "preview": {
           "width": "full"
         },
@@ -213,7 +200,8 @@
                 "label": "Palette name",
                 "default": "Command palette"
               }
-            }
+            },
+            "title": "Inline Palette"
           }
         }
       }
@@ -221,11 +209,9 @@
     {
       "name": "command-003",
       "type": "registry:component",
-      "title": "Recent Commands",
+      "title": "Недавние команды",
       "description": "Палитра, которая на пустом запросе показывает недавние команды, а не весь алфавитный список: чаще всего повторяют последнее.",
-      "categories": [
-        "command"
-      ],
+      "categories": ["command"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -237,12 +223,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-003-*. Клиентский: \"use client\" ради useState на запросе и истории. Пустой запрос переключает список на историю, любой ввод — на фильтр по полному набору команд; заголовок над списком меняется вместе с режимом. Запуск команды поднимает её в начало истории и обрезает список до четырёх записей, поэтому история не растёт. Роли combobox, listbox и option проставлены явно, подсветка передаётся aria-activedescendant.",
       "meta": {
-        "tags": [
-          "command",
-          "palette",
-          "recent",
-          "history"
-        ],
+        "tags": ["command", "palette", "recent", "history"],
         "preview": {
           "width": "full"
         },
@@ -321,7 +302,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Recent Commands"
           }
         }
       }
@@ -329,11 +311,9 @@
     {
       "name": "command-004",
       "type": "registry:component",
-      "title": "Nested Commands",
+      "title": "Вложенные команды",
       "description": "Двухуровневая палитра: Enter по команде с параметром входит в подкоманды, Backspace на пустом запросе возвращает назад.",
-      "categories": [
-        "command"
-      ],
+      "categories": ["command"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -345,12 +325,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-004-*. Клиентский: \"use client\" ради состояния уровня и запроса. Команда с массивом children не выполняется, а открывает второй уровень: запрос сбрасывается, слева от поля появляется чип-крошка с именем родителя, список сменяется подкомандами. Возврат назад повешен на Backspace при пустом запросе и на Escape, а также на крестик в чипе. Роли combobox, listbox и option объявлены явно.",
       "meta": {
-        "tags": [
-          "command",
-          "palette",
-          "nested",
-          "keyboard"
-        ],
+        "tags": ["command", "palette", "nested", "keyboard"],
         "preview": {
           "width": "full"
         },
@@ -429,7 +404,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Nested Commands"
           }
         }
       }
@@ -437,11 +413,9 @@
     {
       "name": "command-005",
       "type": "registry:component",
-      "title": "Project Search",
+      "title": "Поиск по проекту",
       "description": "Поиск по всему проекту, где файлы, символы, настройки и документы лежат в одном списке и различаются значком типа.",
-      "categories": [
-        "command"
-      ],
+      "categories": ["command"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -453,12 +427,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-005-*. Клиентский: \"use client\" ради поиска и клавиатуры. Фильтр идёт и по названию, и по второй строке (путь или контекст), а группировка по полю kind считается из данных — новый тип сам заводит новую группу. Каждая строка несёт квадратный значок с первой буквой типа и приглушённый моноширинный путь с многоточием. Роли listbox, group и option объявлены явно, стрелки ходят по плоскому видимому порядку.",
       "meta": {
-        "tags": [
-          "command",
-          "search",
-          "results",
-          "types"
-        ],
+        "tags": ["command", "search", "results", "types"],
         "preview": {
           "width": "full"
         },
@@ -537,7 +506,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Project Search"
           }
         }
       }
@@ -545,11 +515,9 @@
     {
       "name": "command-006",
       "type": "registry:component",
-      "title": "Shortcut Cheatsheet",
+      "title": "Шпаргалка сочетаний",
       "description": "Палитра-шпаргалка по горячим клавишам: сочетание хранится массивом клавиш, поиск идёт и по названию, и по самим клавишам.",
-      "categories": [
-        "command"
-      ],
+      "categories": ["command"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -561,12 +529,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-006-*. Клиентский: \"use client\" ради поиска и стрелок. Сочетание описано массивом keys, а не строкой, поэтому каждая клавиша получает собственный <kbd> и последовательности вроде «G затем C» читаются как два нажатия. Фильтр проверяет и label, и склеенные клавиши: «⌘K» находит команду быстрее, чем попытка вспомнить её имя. Группе клавиш выдан aria-label, иначе строка озвучивается набором отдельных символов.",
       "meta": {
-        "tags": [
-          "command",
-          "shortcuts",
-          "kbd",
-          "palette"
-        ],
+        "tags": ["command", "shortcuts", "kbd", "palette"],
         "preview": {
           "width": "full"
         },
@@ -645,7 +608,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Shortcut Cheatsheet"
           }
         }
       }
@@ -653,11 +617,9 @@
     {
       "name": "command-007",
       "type": "registry:component",
-      "title": "Syntax Hints",
+      "title": "Подсказки синтаксиса",
       "description": "Палитра с префиксным синтаксисом, где пустой результат отвечает легендой символов, а не строчкой «ничего не найдено».",
-      "categories": [
-        "command"
-      ],
+      "categories": ["command"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -669,12 +631,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-007-*. Клиентский: \"use client\" ради разбора запроса. Первый символ запроса определяет режим: > команды, @ символы, # строки; он же показывается чипом слева от поля, поэтому связь «набрал префикс — сменился список» очевидна. Пустой результат заменён легендой префиксов: список без строк — это место, где пользователь застрял, и подсказка там полезнее сообщения об отсутствии совпадений. Роли combobox, listbox и option объявлены явно.",
       "meta": {
-        "tags": [
-          "command",
-          "syntax",
-          "empty-state",
-          "palette"
-        ],
+        "tags": ["command", "syntax", "empty-state", "palette"],
         "preview": {
           "width": "full"
         },
@@ -753,7 +710,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Syntax Hints"
           }
         }
       }
@@ -761,11 +719,9 @@
     {
       "name": "command-008",
       "type": "registry:component",
-      "title": "Go To File",
+      "title": "Переход к файлу",
       "description": "Режим «перейти к файлу»: имя отдельно от каталога, совпавший фрагмент в теге mark, полный путь закреплён в подвале.",
-      "categories": [
-        "command"
-      ],
+      "categories": ["command"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -777,12 +733,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-008-*. Клиентский: \"use client\" ради поиска и клавиатуры. Строка разложена на имя файла и каталог: имя выделено весом, каталог приглушён и урезается многоточием слева через direction:rtl, поэтому конец пути остаётся виден. Совпадение подсвечивается тегом <mark>, а не span с классом — выделение несёт смысл и в скринридере. Полный путь подсвеченной строки закреплён в подвале, чтобы обрезка каталога не мешала проверить адрес.",
       "meta": {
-        "tags": [
-          "command",
-          "files",
-          "path",
-          "palette"
-        ],
+        "tags": ["command", "files", "path", "palette"],
         "preview": {
           "width": "full"
         },
@@ -861,7 +812,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Go To File"
           }
         }
       }
@@ -869,11 +821,9 @@
     {
       "name": "command-009",
       "type": "registry:component",
-      "title": "Selection Actions",
+      "title": "Действия над выделением",
       "description": "Палитра действий над выделенным объектом: контекст закреплён над полем, опасное действие отделено линией и цветом.",
-      "categories": [
-        "command"
-      ],
+      "categories": ["command"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -885,12 +835,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-009-*. Клиентский: \"use client\" ради поиска и клавиатуры. Строка объекта стоит над полем и не участвует в прокрутке списка, а её id отдан в aria-labelledby диалога — так палитра объявляется вместе с объектом, к которому относится. Действия с tone=\"danger\" получают отступ, разделительную линию и собственный цвет подсветки: промах стрелкой по удалению стоит слишком дорого. Роли combobox, listbox и option объявлены явно.",
       "meta": {
-        "tags": [
-          "command",
-          "actions",
-          "context",
-          "palette"
-        ],
+        "tags": ["command", "actions", "context", "palette"],
         "preview": {
           "width": "full"
         },
@@ -971,7 +916,8 @@
                 "label": "Object type",
                 "default": "Layer"
               }
-            }
+            },
+            "title": "Selection Actions"
           }
         }
       }
@@ -979,11 +925,9 @@
     {
       "name": "command-010",
       "type": "registry:component",
-      "title": "Loading Results",
+      "title": "Загрузка результатов",
       "description": "Палитра с серверным поиском: пока ответ в пути, вместо пустого списка показываются скелетоны той же высоты и полоса под полем.",
-      "categories": [
-        "command"
-      ],
+      "categories": ["command"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -995,12 +939,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-010-*. Клиентский: \"use client\" ради useState и useEffect. Признак загрузки включается в обработчике ввода, а эффект только ждёт ответ по таймеру и перезапускается при смене запроса — так же ведёт себя обычный debounce вокруг настоящего запроса. Загрузка показана двумя способами: бегунок в полосе под полем и скелетоны строк той же высоты, поэтому после ответа список не прыгает. Поле несёт aria-busy, подвал — role=status, а стрелки во время загрузки заблокированы, чтобы подсветка не указывала на исчезающие строки.",
       "meta": {
-        "tags": [
-          "command",
-          "loading",
-          "skeleton",
-          "async"
-        ],
+        "tags": ["command", "loading", "skeleton", "async"],
         "preview": {
           "width": "full"
         },
@@ -1081,7 +1020,8 @@
                 "label": "Placeholder",
                 "default": "Searching the server…"
               }
-            }
+            },
+            "title": "Loading Results"
           }
         }
       }

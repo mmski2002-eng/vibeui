@@ -4,7 +4,7 @@
     {
       "name": "dashboard-001",
       "type": "registry:block",
-      "title": "Overview Panel",
+      "title": "Панель обзора",
       "description": "Обзорная панель: показатели, график установок и доли источников — всё без единой библиотеки графиков.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -97,7 +97,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Overview Panel"
           }
         }
       }
@@ -105,7 +106,7 @@
     {
       "name": "dashboard-002",
       "type": "registry:block",
-      "title": "App Shell",
+      "title": "Каркас приложения",
       "description": "Каркас приложения: шапка, боковая навигация на гриде и область контента, которая на узкой ширине складывается сама.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -206,7 +207,8 @@
                 "label": "Active item",
                 "default": "Компоненты"
               }
-            }
+            },
+            "title": "App Shell"
           }
         }
       }
@@ -214,7 +216,7 @@
     {
       "name": "dashboard-003",
       "type": "registry:block",
-      "title": "Settings Page",
+      "title": "Страница настроек",
       "description": "Страница настроек: оглавление слева, группы полей в fieldset и опасная зона, отделённая рамкой, а не одним цветом.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -309,7 +311,8 @@
                 "label": "Section",
                 "default": "Общие"
               }
-            }
+            },
+            "title": "Settings Page"
           }
         }
       }
@@ -317,7 +320,7 @@
     {
       "name": "dashboard-004",
       "type": "registry:block",
-      "title": "Team Members",
+      "title": "Участники команды",
       "description": "Участники проекта: роли, расход мест полосой и цифрой, оттенок аватара считается хешем имени, а не суммой кодов.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -412,7 +415,8 @@
               "seatsTotal": {
                 "label": "Seats total"
               }
-            }
+            },
+            "title": "Team Members"
           }
         }
       }
@@ -420,7 +424,7 @@
     {
       "name": "dashboard-005",
       "type": "registry:block",
-      "title": "Filter Sidebar",
+      "title": "Боковые фильтры",
       "description": "Панель фильтров: группы свёрнуты в details, а выбранные значения продублированы чипами — иначе фильтр в свёрнутой группе невидим.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -512,7 +516,8 @@
                 "label": "Found",
                 "default": "42 of 255 found"
               }
-            }
+            },
+            "title": "Filter Sidebar"
           }
         }
       }
@@ -520,7 +525,7 @@
     {
       "name": "dashboard-006",
       "type": "registry:block",
-      "title": "Week Schedule",
+      "title": "Расписание недели",
       "description": "Недельное расписание на CSS-гриде: событие занимает строки от начала до конца, поэтому длительность видна геометрией, а не подписью.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -615,7 +620,8 @@
                 "label": "Period",
                 "default": "9–13 March"
               }
-            }
+            },
+            "title": "Week Schedule"
           }
         }
       }
@@ -623,7 +629,7 @@
     {
       "name": "dashboard-007",
       "type": "registry:block",
-      "title": "Stats Row",
+      "title": "Строка показателей",
       "description": "Ряд показателей с кривой внутри плитки: направление подписано словом и периодом, а не одним цветом.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -718,7 +724,8 @@
                 "label": "Period",
                 "default": "8–14 March"
               }
-            }
+            },
+            "title": "Stats Row"
           }
         }
       }
@@ -726,7 +733,7 @@
     {
       "name": "dashboard-008",
       "type": "registry:block",
-      "title": "Records List",
+      "title": "Список записей",
       "description": "Список записей вместо таблицы: строку читают целиком, статус помечен формой значка, а вкладки-ссылки дают адрес отбору.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -821,7 +828,8 @@
                 "label": "Tab",
                 "default": "Все"
               }
-            }
+            },
+            "title": "Records List"
           }
         }
       }
@@ -829,7 +837,7 @@
     {
       "name": "dashboard-009",
       "type": "registry:block",
-      "title": "Empty Dashboard",
+      "title": "Пустая панель",
       "description": "Пустой экран, который объясняет следующий шаг: три шага с отметкой сделанного и одна главная кнопка вместо тупика.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -924,7 +932,8 @@
                 "label": "Button",
                 "default": "Connect a project"
               }
-            }
+            },
+            "title": "Empty Dashboard"
           }
         }
       }
@@ -932,7 +941,7 @@
     {
       "name": "dashboard-010",
       "type": "registry:block",
-      "title": "Profile Header",
+      "title": "Шапка профиля",
       "description": "Шапка профиля: аватар вынесен отступом, а не абсолютом, оттенок обложки считается хешем имени.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -1027,7 +1036,8 @@
                 "label": "Role",
                 "default": "Interface designer"
               }
-            }
+            },
+            "title": "Profile Header"
           }
         }
       }
@@ -1035,7 +1045,7 @@
     {
       "name": "dashboard-011",
       "type": "registry:block",
-      "title": "Setup Wizard",
+      "title": "Мастер настройки",
       "description": "Мастер из шагов: виден весь путь, «Назад» не исчезает, а на последнем шаге кнопка меняет подпись на завершающее действие.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -1130,7 +1140,8 @@
                 "label": "Final button",
                 "default": "Create project"
               }
-            }
+            },
+            "title": "Setup Wizard"
           }
         }
       }
@@ -1138,7 +1149,7 @@
     {
       "name": "dashboard-012",
       "type": "registry:block",
-      "title": "Form With Errors",
+      "title": "Форма с ошибками",
       "description": "Форма с разбором ошибок: список сверху — ссылки на поля, потому что в длинной форме до сломанного поля ещё надо доскроллить.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -1233,7 +1244,8 @@
                 "label": "Errors heading",
                 "default": "Could not save"
               }
-            }
+            },
+            "title": "Form With Errors"
           }
         }
       }
@@ -1241,7 +1253,7 @@
     {
       "name": "dashboard-013",
       "type": "registry:block",
-      "title": "Details Panel",
+      "title": "Панель подробностей",
       "description": "Панель подробностей справа на нативном dialog: ловушка фокуса, Escape и затемнение достаются от браузера.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -1336,7 +1348,8 @@
                 "label": "Heading",
                 "default": "Invoice 300"
               }
-            }
+            },
+            "title": "Details Panel"
           }
         }
       }
@@ -1344,7 +1357,7 @@
     {
       "name": "dashboard-014",
       "type": "registry:block",
-      "title": "Activity Feed",
+      "title": "Лента активности",
       "description": "Лента активности по дням: липкий заголовок дня и тон события формой точки — без группировки время ничего не значит.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -1439,7 +1452,8 @@
                 "label": "Button",
                 "default": "Show full history"
               }
-            }
+            },
+            "title": "Activity Feed"
           }
         }
       }
@@ -1447,7 +1461,7 @@
     {
       "name": "dashboard-015",
       "type": "registry:block",
-      "title": "Metrics Overview",
+      "title": "Обзор показателей",
       "description": "Обзор недели: четыре показателя и парные столбцы «текущий период против прошлого» — разница видна геометрией, а не только цифрой дельты.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -1542,7 +1556,8 @@
                 "label": "Period",
                 "default": "8–14 March"
               }
-            }
+            },
+            "title": "Metrics Overview"
           }
         }
       }
@@ -1550,7 +1565,7 @@
     {
       "name": "dashboard-016",
       "type": "registry:block",
-      "title": "Task Board",
+      "title": "Доска задач",
       "description": "Доска задач с колонками и фильтром: колонки прокручиваются, а не сжимаются, приоритет помечен полосой и словом, счётчик стоит в заголовке колонки.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -1644,7 +1659,8 @@
               "activeFilter": {
                 "label": "Assignee"
               }
-            }
+            },
+            "title": "Task Board"
           }
         }
       }
@@ -1652,7 +1668,7 @@
     {
       "name": "dashboard-017",
       "type": "registry:block",
-      "title": "Team Access",
+      "title": "Доступы команды",
       "description": "Участники и доступ: роль расписана правами прямо в строке, приглашение — форма на экране, а рядом список уже отправленных писем.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -1746,7 +1762,8 @@
               "inviteRole": {
                 "label": "Invite role"
               }
-            }
+            },
+            "title": "Team Access"
           }
         }
       }
@@ -1754,7 +1771,7 @@
     {
       "name": "dashboard-018",
       "type": "registry:block",
-      "title": "Notifications Inbox",
+      "title": "Входящие уведомления",
       "description": "Уведомления по дням: непрочитанное несёт полосу, точку и подложку, тип подписан словом, а действие живёт прямо в строке.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -1848,7 +1865,8 @@
               "activeTab": {
                 "label": "Tab"
               }
-            }
+            },
+            "title": "Notifications Inbox"
           }
         }
       }
@@ -1856,7 +1874,7 @@
     {
       "name": "dashboard-019",
       "type": "registry:block",
-      "title": "Profile Settings",
+      "title": "Настройки профиля",
       "description": "Настройки профиля с живой карточкой: превью перерисовывается на каждый символ, оттенок обложки считается хешем имени, у «о себе» виден остаток символов.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -1950,7 +1968,8 @@
               "visibility": {
                 "label": "Visibility"
               }
-            }
+            },
+            "title": "Profile Settings"
           }
         }
       }
@@ -1958,7 +1977,7 @@
     {
       "name": "dashboard-020",
       "type": "registry:block",
-      "title": "Security Settings",
+      "title": "Настройки безопасности",
       "description": "Безопасность одним экраном: двухфакторка со состоянием словом, смена пароля с правилами и список сеансов, где текущее устройство нельзя выкинуть промахом.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -2051,7 +2070,8 @@
               "twoFactorOn": {
                 "label": "Two-factor on"
               }
-            }
+            },
+            "title": "Security Settings"
           }
         }
       }
@@ -2059,7 +2079,7 @@
     {
       "name": "dashboard-021",
       "type": "registry:block",
-      "title": "Billing Overview",
+      "title": "Обзор биллинга",
       "description": "Биллинг одним экраном: текущий план, расход по лимитам полосой и дробью «использовано из» и история счетов настоящей таблицей.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -2154,7 +2174,8 @@
                 "label": "Price",
                 "default": "$240 / month"
               }
-            }
+            },
+            "title": "Billing Overview"
           }
         }
       }
@@ -2162,7 +2183,7 @@
     {
       "name": "dashboard-022",
       "type": "registry:block",
-      "title": "Integrations Grid",
+      "title": "Сетка интеграций",
       "description": "Карточки интеграций: подключённое отличается рамкой, значком и именем аккаунта, а «нужен доступ» вынесено в отдельное третье состояние.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -2263,7 +2284,8 @@
               "activeGroup": {
                 "label": "Category"
               }
-            }
+            },
+            "title": "Integrations Grid"
           }
         }
       }
@@ -2271,7 +2293,7 @@
     {
       "name": "dashboard-023",
       "type": "registry:block",
-      "title": "Log Viewer",
+      "title": "Просмотр логов",
       "description": "Журнал с фильтрами: подробности записи раскрываются на месте через details, уровень помечен буквой и рамкой, время идёт моноширинным.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -2369,7 +2391,8 @@
               "activeLevel": {
                 "label": "Level"
               }
-            }
+            },
+            "title": "Log Viewer"
           }
         }
       }
@@ -2377,7 +2400,7 @@
     {
       "name": "dashboard-024",
       "type": "registry:block",
-      "title": "API Keys",
+      "title": "Ключи API",
       "description": "Ключи API: только что созданный показан один раз в рамке с предупреждением, в таблице живут префиксы, а отозванный ключ остаётся зачёркнутой строкой.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -2471,7 +2494,8 @@
               "newScope": {
                 "label": "New key scope"
               }
-            }
+            },
+            "title": "API Keys"
           }
         }
       }
@@ -2479,7 +2503,7 @@
     {
       "name": "dashboard-025",
       "type": "registry:block",
-      "title": "Funnel Report",
+      "title": "Отчёт по воронке",
       "description": "Воронка по этапам: между ступенями стоит строка потерь, ступень считается от входа, а конверсия шага — от предыдущего этапа.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -2573,7 +2597,8 @@
               "activeSegment": {
                 "label": "Segment"
               }
-            }
+            },
+            "title": "Funnel Report"
           }
         }
       }
@@ -2581,7 +2606,7 @@
     {
       "name": "dashboard-026",
       "type": "registry:block",
-      "title": "Traffic Report",
+      "title": "Отчёт по трафику",
       "description": "Отчёт по трафику: кольцо каналов на conic-gradient и таблица источников, где доля продублирована заливкой ячейки, а не только процентом.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -2676,7 +2701,8 @@
                 "label": "Ring total",
                 "default": "44,760"
               }
-            }
+            },
+            "title": "Traffic Report"
           }
         }
       }
@@ -2684,7 +2710,7 @@
     {
       "name": "dashboard-027",
       "type": "registry:block",
-      "title": "Project Overview",
+      "title": "Обзор проекта",
       "description": "Страница проекта: шапка со статусом и составом команды, вкладки-ссылки, показатели, полоса готовности и лента активности справа.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -2779,7 +2805,8 @@
               "progress": {
                 "label": "Readiness, %"
               }
-            }
+            },
+            "title": "Project Overview"
           }
         }
       }
@@ -2787,7 +2814,7 @@
     {
       "name": "dashboard-028",
       "type": "registry:block",
-      "title": "Support Queue",
+      "title": "Очередь поддержки",
       "description": "Очередь обращений по сроку ответа: просрочка помечена полосой, словом и сдвинутым сроком, а свободное обращение берётся кнопкой в строке.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -2881,7 +2908,8 @@
               "activeQueue": {
                 "label": "Sub-queue"
               }
-            }
+            },
+            "title": "Support Queue"
           }
         }
       }
@@ -2889,7 +2917,7 @@
     {
       "name": "dashboard-029",
       "type": "registry:block",
-      "title": "File Browser",
+      "title": "Файловый менеджер",
       "description": "Файловый экран: дерево на вложенных details, папка и файл различаются формой значка, а предпросмотр держит рядом размер и дату.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -2984,7 +3012,8 @@
                 "label": "File name",
                 "default": "registry.json"
               }
-            }
+            },
+            "title": "File Browser"
           }
         }
       }
@@ -2992,7 +3021,7 @@
     {
       "name": "dashboard-030",
       "type": "registry:block",
-      "title": "Week Agenda",
+      "title": "Повестка недели",
       "description": "Неделя как семь карточек-дней со списком дел: загрузка видна счётчиком, сегодняшний день помечен рамкой, свободный говорит об этом словами.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -3087,7 +3116,8 @@
                 "label": "Period",
                 "default": "9–15 March"
               }
-            }
+            },
+            "title": "Week Agenda"
           }
         }
       }
@@ -3095,7 +3125,7 @@
     {
       "name": "dashboard-031",
       "type": "registry:block",
-      "title": "Goals Progress",
+      "title": "Прогресс по целям",
       "description": "Цели квартала: прогресс сравнивается с прошедшим временем, состояние подписано словом и формой значка, кольцо нарисовано conic-gradient.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -3190,7 +3220,8 @@
               "timeGone": {
                 "label": "Quarter elapsed, %"
               }
-            }
+            },
+            "title": "Goals Progress"
           }
         }
       }
@@ -3198,7 +3229,7 @@
     {
       "name": "dashboard-032",
       "type": "registry:block",
-      "title": "Period Compare",
+      "title": "Сравнение периодов",
       "description": "Сравнение двух периодов, где рост не всегда хорош: у каждой строки объявлено нужное направление, а изменение нарисовано полосой от центра.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -3297,7 +3328,8 @@
               "activePreset": {
                 "label": "Comparison base"
               }
-            }
+            },
+            "title": "Period Compare"
           }
         }
       }
@@ -3305,7 +3337,7 @@
     {
       "name": "dashboard-033",
       "type": "registry:block",
-      "title": "Onboarding Checklist",
+      "title": "Чеклист знакомства",
       "description": "Чек-лист запуска: шаги свёрнуты в details и не занимают экран, у каждого стоит оценка времени, прогресс считается из массива.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -3400,7 +3432,8 @@
                 "label": "Dismiss button",
                 "default": "Hide the checklist"
               }
-            }
+            },
+            "title": "Onboarding Checklist"
           }
         }
       }
@@ -3408,7 +3441,7 @@
     {
       "name": "dashboard-034",
       "type": "registry:block",
-      "title": "Empty Workspace",
+      "title": "Пустое рабочее пространство",
       "description": "Пустое рабочее пространство с первым шагом: три готовых старта на радиокнопках, выбранная карточка подсвечена через :has(), один рекомендуемый вариант выбран заранее.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -3502,7 +3535,8 @@
               "picked": {
                 "label": "Chosen set"
               }
-            }
+            },
+            "title": "Empty Workspace"
           }
         }
       }
@@ -3510,7 +3544,7 @@
     {
       "name": "dashboard-035",
       "type": "registry:block",
-      "title": "App Topbar",
+      "title": "Верхняя панель приложения",
       "description": "Шапка приложения, где поиск занимает всю свободную ширину, а меню профиля собрано на details — без состояния и без ловушки фокуса.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -3605,7 +3639,8 @@
                 "label": "Active tab",
                 "default": "Заявки"
               }
-            }
+            },
+            "title": "App Topbar"
           }
         }
       }
@@ -3613,7 +3648,7 @@
     {
       "name": "dashboard-036",
       "type": "registry:block",
-      "title": "Nav Sidebar",
+      "title": "Боковая навигация",
       "description": "Левое меню, которое сворачивается в узкую рейку без JS: состояние держит скрытый чекбокс, а ширину меняет :has() на корне панели.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -3715,7 +3750,8 @@
                 "label": "Active item",
                 "default": "Заявки"
               }
-            }
+            },
+            "title": "Nav Sidebar"
           }
         }
       }
@@ -3723,7 +3759,7 @@
     {
       "name": "dashboard-037",
       "type": "registry:block",
-      "title": "Request Queue",
+      "title": "Очередь заявок",
       "description": "Экран заявок: очередь по сроку ответа слева и назначение исполнителя справа, чтобы диспетчер не открывал карточку ради одного действия.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -3818,7 +3854,8 @@
                 "label": "Selected request",
                 "default": "ЗА-4821"
               }
-            }
+            },
+            "title": "Request Queue"
           }
         }
       }
@@ -3826,7 +3863,7 @@
     {
       "name": "dashboard-038",
       "type": "registry:block",
-      "title": "Customer History",
+      "title": "История клиента",
       "description": "Страница клиента, где главное — не реквизиты, а лента взаимодействий: звонки, письма и встречи сгруппированы по дням.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -3921,7 +3958,8 @@
                 "label": "Manager",
                 "default": "Maria Solovyova"
               }
-            }
+            },
+            "title": "Customer History"
           }
         }
       }
@@ -3929,7 +3967,7 @@
     {
       "name": "dashboard-039",
       "type": "registry:block",
-      "title": "Stock Levels",
+      "title": "Остатки на складе",
       "description": "Экран остатков, где запас показан отрезком с засечкой точки заказа: «сколько осталось» и «пора ли заказывать» читаются одним взглядом.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -4024,7 +4062,8 @@
                 "label": "Low-stock label",
                 "default": "below reorder point"
               }
-            }
+            },
+            "title": "Stock Levels"
           }
         }
       }
@@ -4032,7 +4071,7 @@
     {
       "name": "dashboard-040",
       "type": "registry:block",
-      "title": "Contract Terms",
+      "title": "Условия договора",
       "description": "Договоры, где срок — это отрезок с пройденной частью и остатком словами: «через 18 дней» понятнее, чем «до 31.03».",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -4133,7 +4172,8 @@
                 "label": "Filter",
                 "default": "Все"
               }
-            }
+            },
+            "title": "Contract Terms"
           }
         }
       }
@@ -4141,7 +4181,7 @@
     {
       "name": "dashboard-041",
       "type": "registry:block",
-      "title": "Approval Queue",
+      "title": "Очередь согласований",
       "description": "Очередь на подпись, где рядом с документом виден весь маршрут согласования: кто подписал, чей ход и кто ждёт дальше.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -4236,7 +4276,8 @@
                 "label": "Sign button",
                 "default": "Sign"
               }
-            }
+            },
+            "title": "Approval Queue"
           }
         }
       }
@@ -4244,7 +4285,7 @@
     {
       "name": "dashboard-042",
       "type": "registry:block",
-      "title": "Course Progress",
+      "title": "Прогресс по курсу",
       "description": "Страница обучения, где прогресс курса — кольцо на conic-gradient, а на карточке назван следующий урок, а не просто процент.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -4339,7 +4380,8 @@
                 "label": "Continue button",
                 "default": "Continue"
               }
-            }
+            },
+            "title": "Course Progress"
           }
         }
       }
@@ -4347,7 +4389,7 @@
     {
       "name": "dashboard-043",
       "type": "registry:block",
-      "title": "Service Status",
+      "title": "Статус сервисов",
       "description": "Статусная доска сервисов: рядом с текущим состоянием лежит лента доступности за тридцать дней, собранная из столбиков, а не из графика.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -4442,7 +4484,8 @@
                 "label": "Checked stamp",
                 "default": "checked 40 seconds ago"
               }
-            }
+            },
+            "title": "Service Status"
           }
         }
       }
@@ -4450,7 +4493,7 @@
     {
       "name": "dashboard-044",
       "type": "registry:block",
-      "title": "Incident Board",
+      "title": "Доска инцидентов",
       "description": "Инциденты, где приоритет — не точка, а колонка с кодом P1/P2/P3 и таймером, а дежурный назван в шапке раньше самих поломок.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -4545,7 +4588,8 @@
                 "label": "On call",
                 "default": "Maria Solovyova"
               }
-            }
+            },
+            "title": "Incident Board"
           }
         }
       }
@@ -4553,7 +4597,7 @@
     {
       "name": "dashboard-045",
       "type": "registry:block",
-      "title": "Backup Schedule",
+      "title": "Расписание резервных копий",
       "description": "Экран резервных копий: расписания переключателями рядом с точками восстановления, у каждой — кнопка восстановления прямо в строке.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -4648,7 +4692,8 @@
               "quotaGb": {
                 "label": "Storage quota, GB"
               }
-            }
+            },
+            "title": "Backup Schedule"
           }
         }
       }
@@ -4656,7 +4701,7 @@
     {
       "name": "dashboard-046",
       "type": "registry:block",
-      "title": "DNS Records",
+      "title": "Записи DNS",
       "description": "Страница домена: таблица DNS-записей с моноширинными значениями, переносом по символам и состоянием распространения у каждой строки.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -4751,7 +4796,8 @@
                 "label": "Add button",
                 "default": "Add record"
               }
-            }
+            },
+            "title": "DNS Records"
           }
         }
       }
@@ -4759,7 +4805,7 @@
     {
       "name": "dashboard-047",
       "type": "registry:block",
-      "title": "Job Queues",
+      "title": "Очереди задач",
       "description": "Очереди задач, где глубина показана полосой от предела, а повторы упавшей задачи — точками попыток: видно, что задача на последнем круге.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -4854,7 +4900,8 @@
                 "label": "Retry button",
                 "default": "Retry"
               }
-            }
+            },
+            "title": "Job Queues"
           }
         }
       }
@@ -4862,7 +4909,7 @@
     {
       "name": "dashboard-048",
       "type": "registry:block",
-      "title": "Webhook Log",
+      "title": "Журнал веб-хуков",
       "description": "Страница вебхука: история доставки, где каждая попытка раскрывается на месте через details, а секрет подписи спрятан под маску.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -4957,7 +5004,8 @@
                 "label": "Endpoint",
                 "default": "https://hooks.kontur.ru/billing/v2/incoming"
               }
-            }
+            },
+            "title": "Webhook Log"
           }
         }
       }
@@ -4965,7 +5013,7 @@
     {
       "name": "dashboard-049",
       "type": "registry:block",
-      "title": "Audit Trail",
+      "title": "Журнал аудита",
       "description": "Журнал действий, где тип операции — слово-глагол в плашке, а подробности изменения раскрываются прямо в строке.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -5060,7 +5108,8 @@
                 "label": "Period",
                 "default": "За 7 дней"
               }
-            }
+            },
+            "title": "Audit Trail"
           }
         }
       }
@@ -5068,7 +5117,7 @@
     {
       "name": "dashboard-050",
       "type": "registry:block",
-      "title": "Roles Matrix",
+      "title": "Матрица ролей",
       "description": "Матрица ролей и прав с тремя состояниями ячейки: полное право, частичное и его отсутствие — частичное иначе сливается с полным.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -5163,7 +5212,8 @@
                 "label": "Save button",
                 "default": "Save permissions"
               }
-            }
+            },
+            "title": "Roles Matrix"
           }
         }
       }
@@ -5171,7 +5221,7 @@
     {
       "name": "dashboard-051",
       "type": "registry:block",
-      "title": "Usage Limits",
+      "title": "Лимиты использования",
       "description": "Квоты с порогом предупреждения: засечка внутри полосы показывает, что расход уже в жёлтой зоне, а под каждой квотой сказано, что будет при превышении.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -5266,7 +5316,8 @@
                 "label": "Raise button",
                 "default": "Raise limits"
               }
-            }
+            },
+            "title": "Usage Limits"
           }
         }
       }
@@ -5274,7 +5325,7 @@
     {
       "name": "dashboard-052",
       "type": "registry:block",
-      "title": "Export Jobs",
+      "title": "Задания выгрузки",
       "description": "Экспорт как фоновое задание: форма заказа рядом со списком заданий, у готового файла подписан срок жизни ссылки.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -5369,7 +5420,8 @@
                 "label": "Format",
                 "default": "CSV"
               }
-            }
+            },
+            "title": "Export Jobs"
           }
         }
       }
@@ -5377,7 +5429,7 @@
     {
       "name": "dashboard-053",
       "type": "registry:block",
-      "title": "Notification Channels",
+      "title": "Каналы уведомлений",
       "description": "Уведомления по каналам, а не матрицей: карточка канала показывает адрес, состояние и сводку словами, а переключатели событий лежат внутри.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -5472,7 +5524,8 @@
                 "label": "Quiet hours from",
                 "default": "22:00"
               }
-            }
+            },
+            "title": "Notification Channels"
           }
         }
       }
@@ -5480,7 +5533,7 @@
     {
       "name": "dashboard-054",
       "type": "registry:block",
-      "title": "Global Search",
+      "title": "Глобальный поиск",
       "description": "Общий поиск по приложению: результаты разных типов в одном списке с ярлыком типа, подсветкой совпадения через mark и чипами отбора.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -5582,7 +5635,8 @@
                 "label": "Result type",
                 "default": "Всё"
               }
-            }
+            },
+            "title": "Global Search"
           }
         }
       }
@@ -5590,7 +5644,7 @@
     {
       "name": "dashboard-055",
       "type": "registry:block",
-      "title": "Saved Views Grid",
+      "title": "Сетка сохранённых видов",
       "description": "Сетка заявок с сохранёнными представлениями: список видов со счётчиками слева, активные фильтры чипами над таблицей и состояние срока в строке.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -5692,7 +5746,8 @@
                 "label": "Active view",
                 "default": "Мои на этой неделе"
               }
-            }
+            },
+            "title": "Saved Views Grid"
           }
         }
       }
@@ -5700,7 +5755,7 @@
     {
       "name": "dashboard-056",
       "type": "registry:block",
-      "title": "CSV Column Mapping",
+      "title": "Сопоставление колонок CSV",
       "description": "Экран импорта CSV: карточка файла, таблица сопоставления колонок с живым примером значения и состоянием каждой строки, итог цифрами перед запуском.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -5795,7 +5850,8 @@
                 "label": "Heading",
                 "default": "Import contacts from CSV"
               }
-            }
+            },
+            "title": "CSV Column Mapping"
           }
         }
       }
@@ -5803,7 +5859,7 @@
     {
       "name": "dashboard-057",
       "type": "registry:block",
-      "title": "Bulk Field Edit",
+      "title": "Массовая правка поля",
       "description": "Экран массового редактирования: каждое поле включается своим чекбоксом, рядом показано «было → станет», выключенные поля гаснут через :has().",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -5898,7 +5954,8 @@
                 "label": "Heading",
                 "default": "Bulk edit requests"
               }
-            }
+            },
+            "title": "Bulk Field Edit"
           }
         }
       }
@@ -5906,7 +5963,7 @@
     {
       "name": "dashboard-058",
       "type": "registry:block",
-      "title": "Duplicate Merge",
+      "title": "Слияние дублей",
       "description": "Экран дедупликации: группа похожих записей разложена таблицей «поле × кандидат», мастер выбирается радиокнопкой и подсвечивает свою колонку.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -6001,7 +6058,8 @@
                 "label": "Merge button",
                 "default": "Merge into selected"
               }
-            }
+            },
+            "title": "Duplicate Merge"
           }
         }
       }
@@ -6009,7 +6067,7 @@
     {
       "name": "dashboard-059",
       "type": "registry:block",
-      "title": "Source Reconcile",
+      "title": "Сверка источников",
       "description": "Экран сверки двух источников: строки с приговором посередине, пропуски показаны прочерком, а не спрятаны, сводка по видам расхождений сверху.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -6104,7 +6162,8 @@
                 "label": "Right source",
                 "default": "Ledger"
               }
-            }
+            },
+            "title": "Source Reconcile"
           }
         }
       }
@@ -6112,7 +6171,7 @@
     {
       "name": "dashboard-060",
       "type": "registry:block",
-      "title": "Validation Rules",
+      "title": "Правила проверки",
       "description": "Экран правил валидации: правило читается одним предложением «поле · условие · действие», рядом счётчик срабатываний, выключенные гаснут, а не прячутся.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -6215,7 +6274,8 @@
                 "label": "Heading",
                 "default": "Data validation rules"
               }
-            }
+            },
+            "title": "Validation Rules"
           }
         }
       }
@@ -6223,7 +6283,7 @@
     {
       "name": "dashboard-061",
       "type": "registry:block",
-      "title": "Record History",
+      "title": "История записи",
       "description": "История изменений записи: версии в вертикальной ленте, каждая свёрнута в details, внутри — diff изменённых полей «было → стало» и откат.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -6318,7 +6378,8 @@
                 "label": "Heading",
                 "default": "Change history"
               }
-            }
+            },
+            "title": "Record History"
           }
         }
       }
@@ -6326,7 +6387,7 @@
     {
       "name": "dashboard-062",
       "type": "registry:block",
-      "title": "Trash Restore",
+      "title": "Восстановление из корзины",
       "description": "Экран восстановления удалённых записей: остаток срока полосой и словами, связанные объекты названы в строке, «удалить навсегда» намеренно скромнее восстановления.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -6421,7 +6482,8 @@
                 "label": "Restore button",
                 "default": "Restore"
               }
-            }
+            },
+            "title": "Trash Restore"
           }
         }
       }
@@ -6429,7 +6491,7 @@
     {
       "name": "dashboard-063",
       "type": "registry:block",
-      "title": "Owner Assignment",
+      "title": "Назначение владельца",
       "description": "Экран назначения владельцев: слева нераспределённые записи с чекбоксами и сроком ожидания, справа люди с полосой нагрузки и отметкой отсутствия.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -6524,7 +6586,8 @@
                 "label": "Assign button",
                 "default": "Assign selected"
               }
-            }
+            },
+            "title": "Owner Assignment"
           }
         }
       }
@@ -6532,7 +6595,7 @@
     {
       "name": "dashboard-064",
       "type": "registry:block",
-      "title": "Bulk Tagging",
+      "title": "Массовое проставление меток",
       "description": "Экран тегирования пачкой: четыре состояния тега, включая «у части выбранных», предпросмотр «добавим / снимем / не тронем» и частые теги со счётчиком.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -6627,7 +6690,8 @@
                 "label": "Heading",
                 "default": "Tags for selected requests"
               }
-            }
+            },
+            "title": "Bulk Tagging"
           }
         }
       }
@@ -6635,7 +6699,7 @@
     {
       "name": "dashboard-065",
       "type": "registry:block",
-      "title": "Quick Actions Home",
+      "title": "Главная с быстрыми действиями",
       "description": "Главная приложения с быстрыми действиями: крупные кнопки с подписью последствия и горячей клавишей, возврат к недавним объектам и сводка дня.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -6730,7 +6794,8 @@
                 "label": "Recent heading",
                 "default": "Continue working"
               }
-            }
+            },
+            "title": "Quick Actions Home"
           }
         }
       }
@@ -6738,7 +6803,7 @@
     {
       "name": "dashboard-066",
       "type": "registry:block",
-      "title": "Assignee Status",
+      "title": "Статус по исполнителям",
       "description": "Статусы задач по исполнителям: составная полоса, где ширина сегментов равна числу задач, а длина полосы — загрузке относительно самого занятого.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -6833,7 +6898,8 @@
                 "label": "Period",
                 "default": "this week, 9–15 June"
               }
-            }
+            },
+            "title": "Assignee Status"
           }
         }
       }
@@ -6841,7 +6907,7 @@
     {
       "name": "dashboard-067",
       "type": "registry:block",
-      "title": "Project Timeline",
+      "title": "Лента проекта",
       "description": "Страница проекта с диаграммой сроков: этапы — строки CSS-грида, полоса занимает колонки от начала до конца, сегодняшний день нарисован линией.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -6936,7 +7002,8 @@
               "todayColumn": {
                 "label": "Today column"
               }
-            }
+            },
+            "title": "Project Timeline"
           }
         }
       }
@@ -6944,7 +7011,7 @@
     {
       "name": "dashboard-068",
       "type": "registry:block",
-      "title": "Team Capacity",
+      "title": "Загрузка команды",
       "description": "Экран капасити команды: план полосой, доступная ёмкость засечкой, разбивка плана по проектам долями и причина сокращения ёмкости словами.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -7039,7 +7106,8 @@
                 "label": "Period",
                 "default": "week of 9–15 June, planned hours"
               }
-            }
+            },
+            "title": "Team Capacity"
           }
         }
       }
@@ -7047,7 +7115,7 @@
     {
       "name": "dashboard-069",
       "type": "registry:block",
-      "title": "Sprint Backlog",
+      "title": "Бэклог спринта",
       "description": "Страница спринта с бэклогом: задачи одним потоком, накопленная сумма оценок и явная черта отсечения там, где ёмкость спринта заканчивается.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -7142,7 +7210,8 @@
                 "label": "Heading",
                 "default": "Sprint 24"
               }
-            }
+            },
+            "title": "Sprint Backlog"
           }
         }
       }
@@ -7150,7 +7219,7 @@
     {
       "name": "dashboard-070",
       "type": "registry:block",
-      "title": "Release Rollout",
+      "title": "Раскатка релиза",
       "description": "Экран релизов и версий: список версий с долей выката полосой, изменения сгруппированы по виду и подписаны словами, откаченный релиз остаётся в списке.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -7243,7 +7312,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Release Rollout"
           }
         }
       }
@@ -7251,7 +7321,7 @@
     {
       "name": "dashboard-071",
       "type": "registry:block",
-      "title": "Feature Flags",
+      "title": "Флаги функциональности",
       "description": "Страница фич-флагов: тумблер, доля выката числом и полосой, словесное описание аудитории и отметка флага, который не трогали больше полугода.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -7346,7 +7416,8 @@
                 "label": "Heading",
                 "default": "Feature flags"
               }
-            }
+            },
+            "title": "Feature Flags"
           }
         }
       }
@@ -7354,7 +7425,7 @@
     {
       "name": "dashboard-072",
       "type": "registry:block",
-      "title": "Experiment Verdict",
+      "title": "Итог эксперимента",
       "description": "Экран A/B-эксперимента: ветки показаны отрезками доверительных интервалов на общей шкале, приговор написан словами, выкат закрыт до набора данных.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -7449,7 +7520,8 @@
                 "label": "Heading",
                 "default": "Experiment: pricing page button"
               }
-            }
+            },
+            "title": "Experiment Verdict"
           }
         }
       }
@@ -7457,7 +7529,7 @@
     {
       "name": "dashboard-073",
       "type": "registry:block",
-      "title": "User Segments",
+      "title": "Сегменты пользователей",
       "description": "Страница сегментов пользователей: условия развёрнуты чипами, размер показан числом и долей от базы, живой сегмент отличается от зафиксированного.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -7552,7 +7624,8 @@
                 "label": "Heading",
                 "default": "User segments"
               }
-            }
+            },
+            "title": "User Segments"
           }
         }
       }
@@ -7560,7 +7633,7 @@
     {
       "name": "dashboard-074",
       "type": "registry:block",
-      "title": "Automation Recipes",
+      "title": "Сценарии автоматизации",
       "description": "Экран сценариев автоматизации: каждый сценарий читается как «когда — если — то» тремя шагами со стрелками, действия перечислены полностью.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -7655,7 +7728,8 @@
                 "label": "Create button",
                 "default": "New automation"
               }
-            }
+            },
+            "title": "Automation Recipes"
           }
         }
       }
@@ -7663,7 +7737,7 @@
     {
       "name": "dashboard-075",
       "type": "registry:block",
-      "title": "Email Templates",
+      "title": "Шаблоны писем",
       "description": "Страница шаблонов писем: карточка показывает конверт — тему и превью-строку так, как их увидит получатель, — плюс переменные, язык и место использования.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -7758,7 +7832,8 @@
                 "label": "Caption",
                 "default": "The preview shows the first lines exactly as a mail client would."
               }
-            }
+            },
+            "title": "Email Templates"
           }
         }
       }
@@ -7766,7 +7841,7 @@
     {
       "name": "dashboard-076",
       "type": "registry:block",
-      "title": "Campaign Queue",
+      "title": "Очередь рассылок",
       "description": "Экран очереди рассылок: полоса отправки с сегментом ошибок, абсолютные числа рядом с процентом, оценка окончания и пауза прямо в строке.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -7861,7 +7936,8 @@
                 "label": "Stop button",
                 "default": "Stop everything"
               }
-            }
+            },
+            "title": "Campaign Queue"
           }
         }
       }
@@ -7869,7 +7945,7 @@
     {
       "name": "dashboard-077",
       "type": "registry:block",
-      "title": "Event Subscriptions",
+      "title": "Подписки на события",
       "description": "Экран подписок на события: события собраны в группы на details со счётчиком выбранного, у каждого подписана частота в сутки, приёмник вынесен наверх.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -7968,7 +8044,8 @@
                 "label": "Body format",
                 "default": "JSON, версия 2024-06"
               }
-            }
+            },
+            "title": "Event Subscriptions"
           }
         }
       }
@@ -7976,7 +8053,7 @@
     {
       "name": "dashboard-078",
       "type": "registry:block",
-      "title": "Error Triage",
+      "title": "Разбор ошибок",
       "description": "Экран обработки ошибок приложения: число затронутых людей крупнее числа событий, спарклайн частоты из столбиков без SVG, первая строка стека моноширинным.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -8071,7 +8148,8 @@
                 "label": "Period",
                 "default": "last 24 hours, grouped by crash site"
               }
-            }
+            },
+            "title": "Error Triage"
           }
         }
       }
@@ -8079,7 +8157,7 @@
     {
       "name": "dashboard-079",
       "type": "registry:block",
-      "title": "Latency Percentiles",
+      "title": "Перцентили задержек",
       "description": "Страница производительности: у каждого маршрута отрезок от p50 до p99 с точками перцентилей на общей шкале и засечкой бюджета, ниже — распределение по бакетам.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -8174,7 +8252,8 @@
                 "label": "Period",
                 "default": "last 24 hours, 2.6M requests"
               }
-            }
+            },
+            "title": "Latency Percentiles"
           }
         }
       }
@@ -8182,7 +8261,7 @@
     {
       "name": "dashboard-080",
       "type": "registry:block",
-      "title": "Request Trace",
+      "title": "Трассировка запроса",
       "description": "Экран трассировки запроса: спаны на общей временной шкале, вложенность отступом имени, доля от общего времени процентом, ошибка помечена штриховкой.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -8277,7 +8356,8 @@
                 "label": "Trace id",
                 "default": "trace 8f31c0a4-2e7b-4d19-9a55-c0d81e4f7b22 · 14 June, 11:42:07"
               }
-            }
+            },
+            "title": "Request Trace"
           }
         }
       }
@@ -8285,7 +8365,7 @@
     {
       "name": "dashboard-081",
       "type": "registry:block",
-      "title": "Knowledge Base",
+      "title": "База знаний",
       "description": "Страница базы знаний с разделами: поиск, карточки разделов с описанием содержимого и датой обновления, колонка популярных статей с долей «помогло».",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -8380,7 +8460,8 @@
                 "label": "Popular heading",
                 "default": "Most read"
               }
-            }
+            },
+            "title": "Knowledge Base"
           }
         }
       }
@@ -8388,7 +8469,7 @@
     {
       "name": "dashboard-082",
       "type": "registry:block",
-      "title": "Team Notes",
+      "title": "Заметки команды",
       "description": "Экран заметок команды: закреплённые вынесены наверх, остальные уложены колонками, поэтому карточка занимает ровно свою высоту, а чек-листы показаны с отметками.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -8483,7 +8564,8 @@
                 "label": "Caption",
                 "default": "visible to everyone in the workspace, edits need no approval"
               }
-            }
+            },
+            "title": "Team Notes"
           }
         }
       }
@@ -8491,7 +8573,7 @@
     {
       "name": "dashboard-083",
       "type": "registry:block",
-      "title": "Process Checklists",
+      "title": "Чеклисты процессов",
       "description": "Страница чек-листов процессов: процессы свёрнуты в details с прогрессом в заголовке, у каждого шага ответственный и срок, заблокированный шаг несёт причину.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -8584,7 +8666,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Process Checklists"
           }
         }
       }
@@ -8592,7 +8675,7 @@
     {
       "name": "dashboard-084",
       "type": "registry:block",
-      "title": "On-Call Calendar",
+      "title": "График дежурств",
       "description": "Экран календаря дежурств: текущая смена вынесена в шапку с телефоном, сетка дней раскрашена по хешу имени, ночные смены помечены полосой.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -8687,7 +8770,8 @@
                 "label": "Heading",
                 "default": "On call"
               }
-            }
+            },
+            "title": "On-Call Calendar"
           }
         }
       }
@@ -8695,7 +8779,7 @@
     {
       "name": "dashboard-085",
       "type": "registry:block",
-      "title": "Department Goals",
+      "title": "Цели подразделений",
       "description": "Страница целей и KPI по отделам: у каждой цели полоса с засечкой «прошло времени», вес цели числом и взвешенный итог в шапке отдела.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -8790,7 +8874,8 @@
                 "label": "Period",
                 "default": "second quarter · 78 % elapsed, 20 days left"
               }
-            }
+            },
+            "title": "Department Goals"
           }
         }
       }
@@ -8798,7 +8883,7 @@
     {
       "name": "dashboard-086",
       "type": "registry:block",
-      "title": "Branch Deviation",
+      "title": "Отклонения по филиалам",
       "description": "Экран сравнения филиалов: вместо столбиков от нуля — отклонение от среднего с осью по центру, абсолютное значение рядом, метрика переключается вкладками.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -8893,7 +8978,8 @@
                 "label": "Heading",
                 "default": "Branch comparison"
               }
-            }
+            },
+            "title": "Branch Deviation"
           }
         }
       }
@@ -8901,7 +8987,7 @@
     {
       "name": "dashboard-087",
       "type": "registry:block",
-      "title": "Report Schedule",
+      "title": "Расписание отчётов",
       "description": "Страница отчётов с расписанием выгрузки: расписание словами, следующий запуск абсолютным временем с поясом, получатели поимённо, упавшая выгрузка с причиной.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -8996,7 +9082,8 @@
                 "label": "Caption",
                 "default": "Files are emailed and kept in the exports section for 30 days"
               }
-            }
+            },
+            "title": "Report Schedule"
           }
         }
       }
@@ -9004,7 +9091,7 @@
     {
       "name": "dashboard-088",
       "type": "registry:block",
-      "title": "Workspace Settings",
+      "title": "Настройки пространства",
       "description": "Экран настроек рабочего пространства: поля в fieldset с подписью последствия у каждого, неизменяемые параметры помечены, опасная зона отделена рамкой.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -9103,7 +9190,8 @@
                 "label": "Data region",
                 "default": "Россия, Москва"
               }
-            }
+            },
+            "title": "Workspace Settings"
           }
         }
       }
@@ -9111,7 +9199,7 @@
     {
       "name": "dashboard-089",
       "type": "registry:block",
-      "title": "Brand Theme",
+      "title": "Тема бренда",
       "description": "Страница брендинга и темы: выбор бренд-цвета радиокнопками, радиус и шрифт селектами, а справа живой кусок интерфейса на тех же переменных.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -9213,7 +9301,8 @@
                 "label": "Corner radius",
                 "default": "Средний"
               }
-            }
+            },
+            "title": "Brand Theme"
           }
         }
       }
@@ -9221,7 +9310,7 @@
     {
       "name": "dashboard-090",
       "type": "registry:block",
-      "title": "Interface Locales",
+      "title": "Языки интерфейса",
       "description": "Экран локализации интерфейса: полоса из двух сегментов — переведено и устарело после правки оригинала, остаток в строках, базовый и скрытый языки помечены.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -9316,7 +9405,8 @@
                 "label": "Upload button",
                 "default": "Upload translation"
               }
-            }
+            },
+            "title": "Interface Locales"
           }
         }
       }
@@ -9324,7 +9414,7 @@
     {
       "name": "dashboard-091",
       "type": "registry:block",
-      "title": "Legal Documents",
+      "title": "Юридические документы",
       "description": "Страница юридических документов: доля принятия полосой и дробью, история версий свёрнута в details под каждым документом, обязательные и черновики помечены.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -9417,7 +9507,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Legal Documents"
           }
         }
       }
@@ -9425,7 +9516,7 @@
     {
       "name": "dashboard-092",
       "type": "registry:block",
-      "title": "Account Offboarding",
+      "title": "Закрытие аккаунта",
       "description": "Экран прощания при отключении аккаунта: шаги с датами и пометкой обратимости, списки «останется» и «исчезнет», выгрузка данных до кнопки подтверждения.",
       "categories": ["dashboard"],
       "dependencies": [],
@@ -9520,7 +9611,8 @@
                 "label": "Confirm button",
                 "default": "Shut down the workspace"
               }
-            }
+            },
+            "title": "Account Offboarding"
           }
         }
       }

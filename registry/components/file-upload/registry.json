@@ -4,11 +4,9 @@
     {
       "name": "file-001",
       "type": "registry:component",
-      "title": "File Dropzone",
+      "title": "Зона перетаскивания файлов",
       "description": "Зона перетаскивания, которая остаётся кнопкой: внутри настоящий выбор файла, поэтому клавиатура и телефон работают так же.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-001-*. Клиентский: \"use client\". Зона — <label> со скрытым input type=\"file\", поэтому выбор доступен без мыши. Обработчики dragover и drop отменяют стандартное поведение браузера, состояние наведения выносится в data-over. Список выбранного показывает имена и размеры.",
       "meta": {
-        "tags": [
-          "input",
-          "file",
-          "upload",
-          "drag-and-drop"
-        ],
+        "tags": ["input", "file", "upload", "drag-and-drop"],
         "preview": {
           "width": "full"
         },
@@ -115,7 +108,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "File Dropzone"
           }
         }
       }
@@ -123,11 +117,9 @@
     {
       "name": "file-002",
       "type": "registry:component",
-      "title": "Paste Or Drop",
+      "title": "Вставка или перетаскивание",
       "description": "Зона загрузки с тремя равноправными путями: перетащить мышью, открыть диалог с клавиатуры и вставить файл из буфера обмена по Ctrl + V.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -139,12 +131,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-002-*. Клиентский: \"use client\". Зона — не label, а фокусируемый элемент с role=\"button\" и tabIndex 0: Enter и пробел открывают тот же системный диалог, что и клик по скрытому input, а обработчик onPaste принимает файлы из буфера. Наведение файла выносится в data-over, стандартное поведение dragover отменяется. Все три способа перечислены внутри зоны текстом.",
       "meta": {
-        "tags": [
-          "file",
-          "upload",
-          "paste",
-          "keyboard"
-        ],
+        "tags": ["file", "upload", "paste", "keyboard"],
         "preview": {
           "width": "full"
         },
@@ -238,7 +225,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Paste Or Drop"
           }
         }
       }
@@ -246,11 +234,9 @@
     {
       "name": "file-003",
       "type": "registry:component",
-      "title": "Upload Queue",
+      "title": "Очередь загрузки",
       "description": "Очередь загрузки, из которой можно выйти: у каждой строки своя полоска прогресса и своя отмена, называющая файл по имени, а не по номеру строки.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -262,12 +248,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-003-*. Клиентский: \"use client\" ради отмены. Прогресс — нативный <progress> с aria-label по имени файла, поэтому доля и подпись достаются вспомогательным технологиям без ручной разметки. Строки со стопроцентным прогрессом получают data-done: полоска зеленеет, а кнопка меняет подпись с «Отменить» на «Убрать». Значения прогресса приходят пропом items — компонент их не считает.",
       "meta": {
-        "tags": [
-          "file",
-          "upload",
-          "progress",
-          "cancel"
-        ],
+        "tags": ["file", "upload", "progress", "cancel"],
         "preview": {
           "width": "full"
         },
@@ -350,7 +331,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Upload Queue"
           }
         }
       }
@@ -358,11 +340,9 @@
     {
       "name": "file-004",
       "type": "registry:component",
-      "title": "Image Preview",
+      "title": "Предпросмотр изображения",
       "description": "Загрузка одной картинки, где превью появляется прямо на месте выбора: имя вроде IMG_2047.jpg не отличает нужный кадр от соседнего.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -374,12 +354,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-004-*. Клиентский: \"use client\". Превью строится из выбранного файла через URL.createObjectURL, поэтому на сервер до отправки формы ничего не летит; прошлая ссылка освобождается в useEffect через URL.revokeObjectURL, иначе вкладка копит изображения в памяти. Плитка — это <label> со скрытым input type=\"file\": и место выбора, и место показа совпадают.",
       "meta": {
-        "tags": [
-          "file",
-          "image",
-          "preview",
-          "upload"
-        ],
+        "tags": ["file", "image", "preview", "upload"],
         "preview": {
           "width": "full"
         },
@@ -484,7 +459,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Image Preview"
           }
         }
       }
@@ -492,11 +468,9 @@
     {
       "name": "file-005",
       "type": "registry:component",
-      "title": "Avatar Crop",
+      "title": "Кадрирование аватара",
       "description": "Загрузка аватара с круглой обрезкой: рамка показывает ровно то, что увидят другие, а ползунок масштаба спасает кадр с лицом у края.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -508,12 +482,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-005-*. Клиентский: \"use client\". Круглая рамка — <label> со скрытым input type=\"file\" и overflow:hidden, поэтому обрезка видна сразу. Масштаб живёт в переменной --vibeui-file-005-zoom и применяется через transform:scale, а не через размеры — картинка не перерисовывается. Ползунок — нативный input[type=range], поэтому стрелки с клавиатуры и объявление значения достаются даром. Прошлая ссылка освобождается через revokeObjectURL.",
       "meta": {
-        "tags": [
-          "file",
-          "avatar",
-          "crop",
-          "image"
-        ],
+        "tags": ["file", "avatar", "crop", "image"],
         "preview": {
           "width": "full"
         },
@@ -618,7 +587,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Avatar Crop"
           }
         }
       }
@@ -626,11 +596,9 @@
     {
       "name": "file-006",
       "type": "registry:component",
-      "title": "Guarded Upload",
+      "title": "Загрузка с проверкой",
       "description": "Загрузка с правилами, которые видны до выбора: список условий стоит рядом, а отказ называет и нарушенное правило, и его предел.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -642,12 +610,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-006-*. Клиентский: \"use client\" ради проверки. Расширение берётся из имени, размер — из file.size; нарушенное правило подсвечивается в списке через data-broken, а корень получает data-rejected. Сообщение об отказе стоит в role=\"alert\" и называет и правило, и предел. Атрибут accept собирается из списка formats и только фильтрует диалог, ничего не гарантируя.",
       "meta": {
-        "tags": [
-          "file",
-          "validation",
-          "limit",
-          "upload"
-        ],
+        "tags": ["file", "validation", "limit", "upload"],
         "preview": {
           "width": "full"
         },
@@ -741,7 +704,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Guarded Upload"
           }
         }
       }
@@ -749,11 +713,9 @@
     {
       "name": "file-007",
       "type": "registry:component",
-      "title": "Batch Progress",
+      "title": "Прогресс пакета",
       "description": "Одна полоска на всю пачку файлов: важен ответ «сколько ещё ждать», а подробности по каждому файлу спрятаны в раскрывающийся список.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -765,12 +727,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-007-*. Серверный: раскрытие держит нативный <details>, состояния нет и гидрации тоже. Общая доля показана нативным <progress> с max по числу файлов и aria-label вида «Загружено N из M», процент посчитан из тех же чисел. Список файлов лежит внутри <details> и не занимает места, пока не нужен.",
       "meta": {
-        "tags": [
-          "file",
-          "upload",
-          "progress",
-          "batch"
-        ],
+        "tags": ["file", "upload", "progress", "batch"],
         "preview": {
           "width": "full"
         },
@@ -875,7 +832,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Batch Progress"
           }
         }
       }
@@ -883,11 +841,9 @@
     {
       "name": "file-008",
       "type": "registry:component",
-      "title": "Replace File",
+      "title": "Замена файла",
       "description": "Замена уже загруженного файла с возвратом: прошлое имя остаётся на виду вместе с кнопкой «Вернуть», пока изменение не сохранено.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -899,12 +855,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-008-*. Клиентский: \"use client\" ради хранения прошлого имени. Кнопка замены — <label> со скрытым input type=\"file\", поэтому выбор доступен с клавиатуры. После замены прошлое имя сохраняется в состоянии и показывается строкой с role=\"status\" и кнопкой возврата; строка исчезает, как только возврат нажат. Значок файла нарисован бордюрами и псевдоэлементами.",
       "meta": {
-        "tags": [
-          "file",
-          "replace",
-          "undo",
-          "upload"
-        ],
+        "tags": ["file", "replace", "undo", "upload"],
         "preview": {
           "width": "full"
         },
@@ -1009,7 +960,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Replace File"
           }
         }
       }
@@ -1017,11 +969,9 @@
     {
       "name": "file-009",
       "type": "registry:component",
-      "title": "File Or Link",
+      "title": "Файл или ссылка",
       "description": "Вложение из двух источников: файл с диска или ссылка. Переключение панелей держит селектор :has, поэтому состояния и клиентского JS нет.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1033,12 +983,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-009-*. Серверный: вкладки собраны на двух радиокнопках внутри подписей, а показ панели решает :has на корне по атрибуту data-choice — идентификаторов в стилях нет, поэтому компонент переносится без единой правки. Радиокнопки скрыты визуально, но остаются фокусируемыми, кольцо фокуса рисуется на подписи через :has(input:focus-visible).",
       "meta": {
-        "tags": [
-          "file",
-          "link",
-          "tabs",
-          "upload"
-        ],
+        "tags": ["file", "link", "tabs", "upload"],
         "preview": {
           "width": "full"
         },
@@ -1143,7 +1088,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "File Or Link"
           }
         }
       }
@@ -1151,11 +1097,9 @@
     {
       "name": "file-010",
       "type": "registry:component",
-      "title": "Retry Upload",
+      "title": "Повтор загрузки",
       "description": "Сорванная загрузка с выходом: названа причина, а не «ошибка загрузки», и рядом стоит повтор — файл уже выбран, второй раз искать его не нужно.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1167,12 +1111,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-010-*. Клиентский: \"use client\" ради повтора. Состояние строки выносится в data-status на корне: по нему рисуются крест, кольцо ожидания или галочка. Повтор переводит строку в состояние ожидания, а useEffect по таймеру доводит её до успеха — в настоящем проекте на месте таймера запрос. Текст состояния стоит в role=\"status\", поэтому значок никогда не работает один.",
       "meta": {
-        "tags": [
-          "file",
-          "upload",
-          "error",
-          "retry"
-        ],
+        "tags": ["file", "upload", "error", "retry"],
         "preview": {
           "width": "full"
         },
@@ -1277,7 +1216,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Retry Upload"
           }
         }
       }

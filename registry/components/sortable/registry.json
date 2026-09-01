@@ -4,11 +4,9 @@
     {
       "name": "sortable-001",
       "type": "registry:component",
-      "title": "Sortable List",
+      "title": "Список с перетаскиванием",
       "description": "Список с ручной сортировкой: нативное перетаскивание плюс кнопки со стрелками — единственный путь для клавиатуры.",
-      "categories": [
-        "sortable"
-      ],
+      "categories": ["sortable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-001-*. Клиентский: \"use client\" ради порядка. Перенос сделан на HTML5 drag and drop, поэтому библиотека не нужна; кнопки «выше» и «ниже» дают тот же результат с клавиатуры и называют текущую позицию строки вслух.",
       "meta": {
-        "tags": [
-          "sortable",
-          "drag",
-          "list",
-          "a11y"
-        ],
+        "tags": ["sortable", "drag", "list", "a11y"],
         "ai": {
           "export": "Sortable001",
           "usage": "<Sortable001 items={[\"Hero\", \"Тарифы\"]} onChange={save} />",
@@ -101,7 +94,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Sortable List"
           }
         }
       }
@@ -109,11 +103,9 @@
     {
       "name": "sortable-002",
       "type": "registry:component",
-      "title": "Grip Keyboard Sort",
+      "title": "Перестановка с клавиатуры",
       "description": "Список, где ручка сама является клавиатурным органом: пробел берёт строку, стрелки несут, пробел кладёт, Escape возвращает порядок на момент захвата.",
-      "categories": [
-        "sortable"
-      ],
+      "categories": ["sortable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -125,12 +117,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-002-*. Клиентский: \"use client\" ради порядка и режима переноса. Ручка — button с aria-pressed, обрабатывающая пробел, стрелки вверх и вниз и Escape; снимок порядка делается в момент захвата, поэтому отмена возвращает исходный вид. Мышиный путь — нативный HTML5 drag and drop с линией места вставки. Живая область role=status с aria-live=assertive называет позицию после каждого шага.",
       "meta": {
-        "tags": [
-          "sortable",
-          "keyboard",
-          "drag",
-          "a11y"
-        ],
+        "tags": ["sortable", "keyboard", "drag", "a11y"],
         "preview": {
           "width": "full"
         },
@@ -209,7 +196,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Grip Keyboard Sort"
           }
         }
       }
@@ -217,11 +205,9 @@
     {
       "name": "sortable-003",
       "type": "registry:component",
-      "title": "Sortable Table Columns",
+      "title": "Перестановка колонок таблицы",
       "description": "Таблица, у которой переставляются колонки, а не строки: порядок живёт одним массивом, поэтому заголовок и данные не могут разъехаться.",
-      "categories": [
-        "sortable"
-      ],
+      "categories": ["sortable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -233,12 +219,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-003-*. Клиентский: \"use client\" ради порядка колонок. Ячейки тела рисуются по тому же массиву описаний колонок, что и заголовки, поэтому рассинхронизация невозможна. Заголовок остаётся тегом th со scope=\"col\": перетаскивание не повод превращать таблицу в набор div. Ручка внутри th — button со стрелками влево и вправо, мышиный путь — нативный drag с вертикальной линией места вставки, результат идёт в живую область role=status.",
       "meta": {
-        "tags": [
-          "sortable",
-          "table",
-          "columns",
-          "a11y"
-        ],
+        "tags": ["sortable", "table", "columns", "a11y"],
         "preview": {
           "width": "full"
         },
@@ -317,7 +298,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Sortable Table Columns"
           }
         }
       }
@@ -325,11 +307,9 @@
     {
       "name": "sortable-004",
       "type": "registry:component",
-      "title": "Two List Transfer",
+      "title": "Перенос между списками",
       "description": "Перенос между двумя списками, где приёмник не схлопывается в полоску: у пустого списка своя высота и объясняющая надпись, а у каждой строки — кнопка переноса.",
-      "categories": [
-        "sortable"
-      ],
+      "categories": ["sortable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -341,12 +321,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-004-*. Клиентский: \"use client\" ради состояния обоих списков. Панели описаны одним массивом и рисуются общей разметкой, поэтому обе стороны ведут себя одинаково. Минимальная высота панели задана явно, поэтому пустой список остаётся видимой целью для мыши. Кнопка со стрелкой у каждой строки называет обе стороны переноса, живая область role=status сообщает результат и остатки в обоих списках.",
       "meta": {
-        "tags": [
-          "sortable",
-          "transfer",
-          "dual-list",
-          "a11y"
-        ],
+        "tags": ["sortable", "transfer", "dual-list", "a11y"],
         "preview": {
           "width": "full"
         },
@@ -427,7 +402,8 @@
                 "label": "Right panel",
                 "default": "In the report"
               }
-            }
+            },
+            "title": "Two List Transfer"
           }
         }
       }
@@ -435,11 +411,9 @@
     {
       "name": "sortable-005",
       "type": "registry:component",
-      "title": "Reorderable Tile Grid",
+      "title": "Сетка плиток с перестановкой",
       "description": "Переупорядочивание в сетке, а не в столбце: стрелки влево и вправо двигают плитку на позицию, вверх и вниз — сразу на ширину ряда.",
-      "categories": [
-        "sortable"
-      ],
+      "categories": ["sortable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -451,12 +425,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-005-*. Клиентский: \"use client\" ради порядка плиток. Число колонок приходит пропом и подставляется и в grid-template-columns через переменную, и в шаг клавиатурного переноса, поэтому раскладка и клавиатура считают ряды одинаково. Плитка — button, поэтому фокус и стрелки работают без tabindex. Позиция называется рядом и колонкой, а не только номером; результат идёт в живую область role=status.",
       "meta": {
-        "tags": [
-          "sortable",
-          "grid",
-          "tiles",
-          "keyboard"
-        ],
+        "tags": ["sortable", "grid", "tiles", "keyboard"],
         "preview": {
           "width": "full"
         },
@@ -537,7 +506,8 @@
                 "label": "Heading",
                 "default": "Home page tiles"
               }
-            }
+            },
+            "title": "Reorderable Tile Grid"
           }
         }
       }
@@ -545,11 +515,9 @@
     {
       "name": "sortable-006",
       "type": "registry:component",
-      "title": "Pinned First Row",
+      "title": "Закреплённая первая строка",
       "description": "Список с закреплённой первой позицией: у закреплённой строки нет органов переноса, а подвижная не может встать выше неё — отказ проговаривается, а не игнорируется.",
-      "categories": [
-        "sortable"
-      ],
+      "categories": ["sortable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -561,12 +529,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-006-*. Клиентский: \"use client\" ради порядка. Закреплённая строка не входит в сортируемый массив: она отрисована отдельно, без ручки и кнопок, поэтому невозможных состояний просто не существует. Нумерация подвижных строк начинается с двойки, а попытка уйти выше первой позиции пишет причину в живую область role=status. Мышиный путь — нативный drag, клавиатурный — кнопки «выше» и «ниже».",
       "meta": {
-        "tags": [
-          "sortable",
-          "pinned",
-          "list",
-          "a11y"
-        ],
+        "tags": ["sortable", "pinned", "list", "a11y"],
         "preview": {
           "width": "full"
         },
@@ -647,7 +610,8 @@
                 "label": "Heading",
                 "default": "Dashboard widgets"
               }
-            }
+            },
+            "title": "Pinned First Row"
           }
         }
       }
@@ -655,11 +619,9 @@
     {
       "name": "sortable-007",
       "type": "registry:component",
-      "title": "Undoable Reorder",
+      "title": "Перестановка с отменой",
       "description": "Список с отменой последнего переноса: каждый перенос кладёт прежний порядок в стек, а полоса внизу называет действие словами и даёт кнопку возврата.",
-      "categories": [
-        "sortable"
-      ],
+      "categories": ["sortable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -671,12 +633,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-007-*. Клиентский: \"use client\" ради порядка и истории. Каждый перенос — мышью или кнопками — сохраняет прежний массив и подпись шага в стек, поэтому отмена не пересчитывает движение, а возвращает снимок. Полоса отмены отсутствует в разметке, пока история пуста: неактивная кнопка без причины сбивает с толку. Возвращённая строка подсвечивается, а отмена объявляется в живой области role=status.",
       "meta": {
-        "tags": [
-          "sortable",
-          "undo",
-          "history",
-          "list"
-        ],
+        "tags": ["sortable", "undo", "history", "list"],
         "preview": {
           "width": "full"
         },
@@ -757,7 +714,8 @@
                 "label": "Undo button",
                 "default": "Undo"
               }
-            }
+            },
+            "title": "Undoable Reorder"
           }
         }
       }
@@ -765,11 +723,9 @@
     {
       "name": "sortable-008",
       "type": "registry:component",
-      "title": "Task Checklist",
+      "title": "Чеклист задач",
       "description": "Список задач с перетаскиванием и кнопками «вверх / вниз» для клавиатуры: чекбокс готовности не двигает строку, а живая область называет новый порядок целиком.",
-      "categories": [
-        "sortable"
-      ],
+      "categories": ["sortable"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -781,12 +737,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-sortable-008-*. Клиентский: порядок и готовность задач в состоянии. Чекбокс отмечает задачу выполненной и зачёркивает текст, но не переставляет строку — готовность и порядок разведены осознанно. Перенос сделан на нативном drag and drop с кнопками «выше»/«ниже» как единственным путём для клавиатуры; после каждого переноса aria-live проговаривает список целиком, а не только сдвинутую строку.",
       "meta": {
-        "tags": [
-          "sortable",
-          "checklist",
-          "tasks",
-          "a11y"
-        ],
+        "tags": ["sortable", "checklist", "tasks", "a11y"],
         "ai": {
           "export": "Sortable008",
           "usage": "<Sortable008 tasks={[{ id: \"brief\", text: \"Собрать бриф\" }]} onChange={save} />",
@@ -860,7 +811,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Task Checklist"
           }
         }
       }

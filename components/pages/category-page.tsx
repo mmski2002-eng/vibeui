@@ -33,9 +33,9 @@ export function CategoryPage({
   }
 
   const t = getDictionary(locale)
-  const categories = getCategoryCards(kind)
+  const categories = getCategoryCards(kind, locale)
   const base = kind === "block" ? "/blocks" : "/components"
-  const label = getCategoryLabel(category)
+  const label = getCategoryLabel(category, locale)
 
   const heading = (
     <div key="heading" className="border-shell-border mb-6 border-b pb-6">

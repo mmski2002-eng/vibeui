@@ -4,11 +4,9 @@
     {
       "name": "menu-003",
       "type": "registry:component",
-      "title": "Menubar",
+      "title": "Строка меню",
       "description": "Строка меню как в настольной программе: стрелки ходят между разделами, стрелка вниз открывает список.",
-      "categories": [
-        "menubar"
-      ],
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-003-*. Клиентский: \"use client\". Ссылки на заголовки хранятся массивом ref, стрелки переносят фокус между ними, стрелка вниз открывает список, Escape закрывает и возвращает фокус. Открытое меню переключается наведением на соседний заголовок.",
       "meta": {
-        "tags": [
-          "menu",
-          "menubar",
-          "keyboard",
-          "desktop"
-        ],
+        "tags": ["menu", "menubar", "keyboard", "desktop"],
         "preview": {
           "width": "full"
         },
@@ -93,7 +86,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Menubar"
           }
         }
       }
@@ -101,11 +95,9 @@
     {
       "name": "menubar-001",
       "type": "registry:component",
-      "title": "App Menubar",
+      "title": "Строка меню приложения",
       "description": "Строка меню приложения: открытие, Escape и взаимное закрытие соседних меню держит HTML popover, а не свой код.",
-      "categories": [
-        "menubar"
-      ],
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -117,12 +109,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-001-*. Серверный: хуков нет, состояние держит браузер. Каждое меню — popover=\"auto\", поэтому Escape, клик мимо и закрытие соседа работают сами. Положение под своей кнопкой даёт CSS anchor positioning: имя якоря уникально для каждой пары и передаётся переменной.",
       "meta": {
-        "tags": [
-          "menubar",
-          "menu",
-          "popover",
-          "no-js"
-        ],
+        "tags": ["menubar", "menu", "popover", "no-js"],
         "ai": {
           "export": "Menubar001",
           "usage": "<Menubar001 menus={[{ label: \"Файл\", items: [{ label: \"Открыть\", keys: \"⌘O\" }] }]} />",
@@ -187,7 +174,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "App Menubar"
           }
         }
       }
@@ -195,11 +183,9 @@
     {
       "name": "menubar-002",
       "type": "registry:component",
-      "title": "Arrow Menubar",
+      "title": "Строка меню со стрелками",
       "description": "Строка меню, по которой ходят стрелками: влево и вправо переводят раздел, вниз открывает список и ставит фокус на первый пункт.",
-      "categories": [
-        "menubar"
-      ],
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -211,12 +197,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-002-*. Клиентский: \"use client\" ради состояния открытого меню и клавиатуры. Разметка следует паттерну menubar из WAI-ARIA: role=\"menubar\", кнопки role=\"menuitem\" с aria-haspopup и aria-expanded, списки role=\"menu\". В Tab-порядке живёт только один раздел (roving tabindex), переход между разделами идёт стрелками. Меню позиционируется абсолютно от своей обёртки, поэтому anchor positioning не требуется. Клик мимо закрывает список через слушатель pointerdown, снимаемый вместе с закрытием.",
       "meta": {
-        "tags": [
-          "menubar",
-          "keyboard",
-          "menu",
-          "aria"
-        ],
+        "tags": ["menubar", "keyboard", "menu", "aria"],
         "preview": {
           "width": "full"
         },
@@ -284,7 +265,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Arrow Menubar"
           }
         }
       }
@@ -292,11 +274,9 @@
     {
       "name": "menubar-003",
       "type": "registry:component",
-      "title": "Shortcut Menubar",
+      "title": "Строка меню с сочетаниями",
       "description": "Строка меню, где сочетания клавиш выстроены в общую колонку и записаны платформонезависимо: ⌘ на Mac, Ctrl на Windows.",
-      "categories": [
-        "menubar"
-      ],
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -308,12 +288,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-003-*. Серверный: хуков нет, состояние держит браузер. Каждый раздел — <details> с общим атрибутом name, поэтому браузер сам следит, что раскрыт только один. Пункт — сетка из двух колонок, сочетание всегда прижато к правому краю. Подписи клавиш хранятся как «Mod S» и разворачиваются функцией keysFor в ⌘ или Ctrl по пропу platform, каждая клавиша выводится отдельным <kbd>.",
       "meta": {
-        "tags": [
-          "menubar",
-          "shortcuts",
-          "no-js",
-          "kbd"
-        ],
+        "tags": ["menubar", "shortcuts", "no-js", "kbd"],
         "preview": {
           "width": "full"
         },
@@ -348,10 +323,7 @@
             "label": "Платформа",
             "type": "select",
             "default": "mac",
-            "options": [
-              "mac",
-              "windows"
-            ]
+            "options": ["mac", "windows"]
           },
           {
             "prop": "accent",
@@ -394,7 +366,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Shortcut Menubar"
           }
         }
       }
@@ -402,11 +375,9 @@
     {
       "name": "menubar-004",
       "type": "registry:component",
-      "title": "Checkable Menubar",
+      "title": "Строка меню с флажками",
       "description": "Меню «Вид», где пункты не запускают действие, а держат состояние: переключатели с галочкой и взаимоисключающие варианты с точкой.",
-      "categories": [
-        "menubar"
-      ],
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -418,12 +389,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-004-*. Клиентский: \"use client\" ради состояния переключателей. Меню — popover=\"auto\", поэтому Escape и клик мимо достаются от браузера, а клик внутри его не закрывает — это и нужно для пунктов-переключателей. Пункты помечены role=\"menuitemcheckbox\" и role=\"menuitemradio\" с aria-checked. Отметка живёт в отдельной колонке фиксированной ширины, поэтому подписи не разъезжаются при включении.",
       "meta": {
-        "tags": [
-          "menubar",
-          "checkbox",
-          "state",
-          "popover"
-        ],
+        "tags": ["menubar", "checkbox", "state", "popover"],
         "ai": {
           "export": "Menubar004",
           "usage": "<Menubar004\n  toggles={[{ id: \"grid\", label: \"Сетка\", keys: \"⌘'\" }]}\n  defaultOn={[\"grid\"]}\n  defaultChoice=\"cozy\"\n/>",
@@ -455,11 +421,7 @@
             "label": "Плотность",
             "type": "select",
             "default": "cozy",
-            "options": [
-              "compact",
-              "cozy",
-              "wide"
-            ]
+            "options": ["compact", "cozy", "wide"]
           },
           {
             "prop": "accent",
@@ -502,7 +464,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Checkable Menubar"
           }
         }
       }
@@ -510,11 +473,9 @@
     {
       "name": "menubar-005",
       "type": "registry:component",
-      "title": "Collapsing Menubar",
+      "title": "Сворачиваемая строка меню",
       "description": "Строка меню, которая на узкой ширине сворачивается в бургер: порог берётся от ширины самого блока, а не от размера окна.",
-      "categories": [
-        "menubar"
-      ],
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -526,12 +487,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-005-*. Серверный: хуков нет, состояние держат <details>. Широкий и узкий виды лежат в разметке одновременно, лишний убирается display:none — так он не попадает ни в порядок табуляции, ни в дерево доступности. Порог переключения задан контейнерным запросом на внутреннем [data-part=\"shell\"], потому что правило внутри @container не действует на сам контейнер. Разделы в широком виде закрывают друг друга через общий атрибут name.",
       "meta": {
-        "tags": [
-          "menubar",
-          "responsive",
-          "container-query",
-          "no-js"
-        ],
+        "tags": ["menubar", "responsive", "container-query", "no-js"],
         "preview": {
           "width": "full"
         },
@@ -610,7 +566,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Collapsing Menubar"
           }
         }
       }
@@ -618,11 +575,9 @@
     {
       "name": "menubar-006",
       "type": "registry:component",
-      "title": "Section Menubar",
+      "title": "Строка меню с разделами",
       "description": "Строка меню приложения, где активный раздел не просто подсвечен, а раскрыт: вторая строка показывает страницы именно этого раздела.",
-      "categories": [
-        "menubar"
-      ],
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -634,12 +589,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-006-*. Серверный: хуков нет, активный раздел приходит пропом activeLabel. Выпадающих списков нет вовсе — страницы активного раздела выводятся во вторую строку, поэтому и состояния не требуется. Активный раздел помечен aria-current=\"page\" и полосой через ::after. Обе строки — это <nav> с собственной подписью, счётчики набраны табличными цифрами.",
       "meta": {
-        "tags": [
-          "menubar",
-          "sections",
-          "app shell",
-          "no-js"
-        ],
+        "tags": ["menubar", "sections", "app shell", "no-js"],
         "preview": {
           "width": "full"
         },
@@ -674,12 +624,7 @@
             "label": "Активный раздел",
             "type": "select",
             "default": "Контент",
-            "options": [
-              "Обзор",
-              "Контент",
-              "Оформление",
-              "Настройки"
-            ]
+            "options": ["Обзор", "Контент", "Оформление", "Настройки"]
           },
           {
             "prop": "accent",
@@ -722,7 +667,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Section Menubar"
           }
         }
       }
@@ -730,11 +676,9 @@
     {
       "name": "menubar-007",
       "type": "registry:component",
-      "title": "Nested Menubar",
+      "title": "Строка меню с подменю",
       "description": "Строка меню с вложенными подменю, которые раскрываются вбок по наведению и по фокусу — без единой строки JS.",
-      "categories": [
-        "menubar"
-      ],
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -746,12 +690,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-007-*. Серверный: хуков нет. Разделы — <details> с общим атрибутом name, поэтому открыт всегда один. Подменю показывается правилом :hover и :focus-within у своей строки: фокус на родительском пункте уже раскрывает список, и в него можно уйти табуляцией, поэтому вложенность доступна и без мыши. Пункт с продолжением помечен aria-haspopup и стрелкой из бордюров.",
       "meta": {
-        "tags": [
-          "menubar",
-          "submenu",
-          "focus-within",
-          "no-js"
-        ],
+        "tags": ["menubar", "submenu", "focus-within", "no-js"],
         "ai": {
           "export": "Menubar007",
           "usage": "<Menubar007\n  menus={[\n    {\n      label: \"Файл\",\n      items: [{ label: \"Экспорт\", items: [{ label: \"В PDF\" }] }],\n    },\n  ]}\n/>",
@@ -816,7 +755,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Nested Menubar"
           }
         }
       }
@@ -824,11 +764,9 @@
     {
       "name": "menubar-008",
       "type": "registry:component",
-      "title": "Menubar With Actions",
+      "title": "Строка меню с действиями",
       "description": "Строка меню с правой частью: разделы слева, уведомления со счётчиком и профиль справа, прижатые к краю.",
-      "categories": [
-        "menubar"
-      ],
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -840,12 +778,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-008-*. Серверный: хуков нет, все меню — popover=\"auto\". Правая группа прижата margin-left:auto, а её меню выравниваются по правому краю кнопки через position-area:bottom span-left, иначе они вылезают за пределы окна. Число непрочитанных попадает в aria-label кнопки, сам значок скрыт от скринридера. В узком блоке имя пользователя прячется контейнерным запросом, остаётся кружок с инициалами.",
       "meta": {
-        "tags": [
-          "menubar",
-          "profile",
-          "notifications",
-          "popover"
-        ],
+        "tags": ["menubar", "profile", "notifications", "popover"],
         "preview": {
           "width": "full"
         },
@@ -926,7 +859,8 @@
               "unread": {
                 "label": "Unread"
               }
-            }
+            },
+            "title": "Menubar With Actions"
           }
         }
       }

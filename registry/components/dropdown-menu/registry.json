@@ -4,11 +4,9 @@
     {
       "name": "dropdown-001",
       "type": "registry:component",
-      "title": "Anchored Dropdown",
+      "title": "Привязанное меню",
       "description": "Выпадающее меню без JS: открытие держит HTML popover, а положение рядом с кнопкой — якорное позиционирование CSS.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dropdown-001-*. Открытие — атрибуты popover и popovertarget, положение — anchor-name у кнопки и position-anchor с position-area у меню, под @supports. Меню живёт в верхнем слое, поэтому стилизуется по атрибуту [data-vibeui-dropdown-001-menu] и получает палитру собственным style. Проп open переводит меню в поток страницы для витрины и скриншотов: popover в этом режиме не используется.",
       "meta": {
-        "tags": [
-          "dropdown",
-          "menu",
-          "popover",
-          "no-js"
-        ],
+        "tags": ["dropdown", "menu", "popover", "no-js"],
         "preview": {
           "props": {
             "open": true
@@ -121,7 +114,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Anchored Dropdown"
           }
         }
       }
@@ -129,11 +123,9 @@
     {
       "name": "menu-001",
       "type": "registry:component",
-      "title": "Action Menu",
+      "title": "Меню действий",
       "description": "Меню с разделами и подсказками клавиш на HTML popover: слой, Escape и клик вне даёт браузер, а не наш код.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -145,12 +137,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-001-*. Серверный компонент: useId нужен только для связи кнопки и слоя. Открытие держит атрибут popover и popovertarget, позиция — CSS anchor positioning с запасным правилом в @supports для браузеров без него. Разделы разделены чертой, опасное действие красится текстом.",
       "meta": {
-        "tags": [
-          "menu",
-          "popover",
-          "dropdown",
-          "no-js"
-        ],
+        "tags": ["menu", "popover", "dropdown", "no-js"],
         "ai": {
           "export": "Menu001",
           "usage": "<Menu001 label=\"Действия\" groups={[[{ label: \"Переименовать\", hint: \"F2\" }]]} />",
@@ -226,7 +213,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Action Menu"
           }
         }
       }
@@ -234,11 +222,9 @@
     {
       "name": "menu-004",
       "type": "registry:component",
-      "title": "Profile Menu",
+      "title": "Меню профиля",
       "description": "Меню профиля с шапкой: имя и почта внутри меню, а выход отделён чертой — это единственное необратимое действие.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -250,12 +236,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-004-*. Серверный компонент: открытие держит popover, позиция — anchor positioning с правым выравниванием и запасным правилом в @supports. Оттенок аватара считается из имени FNV-1a по двенадцати ступеням круга.",
       "meta": {
-        "tags": [
-          "menu",
-          "profile",
-          "account",
-          "popover"
-        ],
+        "tags": ["menu", "profile", "account", "popover"],
         "ai": {
           "export": "Menu004",
           "usage": "<Menu004 name=\"Анна Петрова\" email=\"anna@example.com\" plan=\"Команда\" />",
@@ -344,7 +325,8 @@
                 "label": "Plan",
                 "default": "Team"
               }
-            }
+            },
+            "title": "Profile Menu"
           }
         }
       }
@@ -352,11 +334,9 @@
     {
       "name": "menu-005",
       "type": "registry:component",
-      "title": "Settings Menu",
+      "title": "Меню настроек",
       "description": "Меню настроек с переключателями: оно не закрывается по нажатию, потому что настройки меняют пачкой.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -368,12 +348,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-005-*. Клиентский: \"use client\". Внутри настоящие radio и checkbox со скрытым полем и ролями menuitemradio и menuitemcheckbox. Место под отметку занято всегда, поэтому строки не прыгают при переключении. Разделитель объявлен role=\"separator\".",
       "meta": {
-        "tags": [
-          "menu",
-          "settings",
-          "toggle",
-          "view"
-        ],
+        "tags": ["menu", "settings", "toggle", "view"],
         "ai": {
           "export": "Menu005",
           "usage": "<Menu005 views={[\"Сетка\", \"Список\"]} toggles={[\"Только мои\"]} onChange={apply} />",
@@ -449,7 +424,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Settings Menu"
           }
         }
       }
@@ -457,11 +433,9 @@
     {
       "name": "dropdown-002",
       "type": "registry:component",
-      "title": "Section Menu",
+      "title": "Меню с разделами",
       "description": "Выпадающее меню, разложенное по разделам с видимыми заголовками и разделителями: длинный список команд перестаёт читаться сплошной стеной.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -473,12 +447,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра в переменных --vibeui-dropdown-002-*. Клиентский: обработчик стрелок водит фокус по пунктам. Открытие, верхний слой, Escape и клик мимо держит HTML popover; положение у кнопки — CSS anchor positioning (anchor-name на триггере, position-area на меню) внутри @supports, поэтому без якорей меню просто открывается по центру экрана. Разделы размечены role=group с aria-labelledby на видимый заголовок, между ними лежит role=separator. Пропс align меняет сторону раскрытия одним правилом position-area. Корень несёт собственную светлую подложку: на тёмной карточке каталога тёмный текст иначе не виден.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "sections",
-          "popover"
-        ],
+        "tags": ["menu", "dropdown", "sections", "popover"],
         "preview": {
           "width": "full"
         },
@@ -520,10 +489,7 @@
             "label": "Сторона",
             "type": "select",
             "default": "right",
-            "options": [
-              "left",
-              "right"
-            ]
+            "options": ["left", "right"]
           }
         ],
         "i18n": {
@@ -562,7 +528,8 @@
                 "label": "Side",
                 "default": "right"
               }
-            }
+            },
+            "title": "Section Menu"
           }
         }
       }
@@ -570,11 +537,9 @@
     {
       "name": "dropdown-003",
       "type": "registry:component",
-      "title": "Shortcut Menu",
+      "title": "Меню с сочетаниями клавиш",
       "description": "Меню с иконкой слева и сочетанием клавиш справа: колонка сочетаний набрана моноширинным шрифтом, чтобы её можно было читать сверху вниз.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -586,12 +551,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-003-*. Клиентский из-за навигации стрелками. Иконки нарисованы инлайновым SVG по таблице путей — пакет иконок сделал бы компонент зависимым. Пункт — грид из трёх колонок (иконка, подпись, сочетание), поэтому подписи и клавиши стоят ровными колонками при любой длине текста. Сочетания размечены тегом kbd и моноширинным шрифтом. Открытие и слой — HTML popover, положение — anchor-name плюс position-area под @supports. Опасный пункт отделён линией и покрашен только текстом.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "shortcuts",
-          "icons"
-        ],
+        "tags": ["menu", "dropdown", "shortcuts", "icons"],
         "ai": {
           "export": "Dropdown003",
           "usage": "<Dropdown003\n  trigger=\"Правка\"\n  keysLabel=\"⌘K\"\n  items={[{ label: \"Дублировать\", keys: \"⌘D\", icon: \"copy\" }]}\n/>",
@@ -669,7 +629,8 @@
                 "label": "Hint",
                 "default": "⌘K"
               }
-            }
+            },
+            "title": "Shortcut Menu"
           }
         }
       }
@@ -677,11 +638,9 @@
     {
       "name": "dropdown-004",
       "type": "registry:component",
-      "title": "Checkbox Menu",
+      "title": "Меню с флажками",
       "description": "Меню-переключатели видимости колонок: нажатие не закрывает список, а счётчик включённых пунктов живёт прямо в кнопке.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -693,12 +652,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-004-*. Клиентский: состояние включённых пунктов держит useState. Пункты размечены role=menuitemcheckbox с aria-checked, отметка нарисована рамкой и инлайновым SVG, место под неё зарезервировано всегда — иначе строки прыгают при переключении. Пропс mark переключает вид отметки (галочка или точка) через data-атрибут на корне. hidePopover при выборе намеренно не вызывается: настройки меняют пачкой. В подвале меню счёт включённого и кнопка сброса к начальному набору.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "checkbox",
-          "columns"
-        ],
+        "tags": ["menu", "dropdown", "checkbox", "columns"],
         "ai": {
           "export": "Dropdown004",
           "usage": "<Dropdown004\n  trigger=\"Колонки\"\n  mark=\"check\"\n  columns={[\"Статус\", \"Автор\", \"Срок\"]}\n  initial={[\"Статус\"]}\n/>",
@@ -737,10 +691,7 @@
             "label": "Отметка",
             "type": "select",
             "default": "check",
-            "options": [
-              "check",
-              "dot"
-            ]
+            "options": ["check", "dot"]
           }
         ],
         "i18n": {
@@ -779,7 +730,8 @@
                 "label": "Mark",
                 "default": "check"
               }
-            }
+            },
+            "title": "Checkbox Menu"
           }
         }
       }
@@ -787,11 +739,9 @@
     {
       "name": "dropdown-005",
       "type": "registry:component",
-      "title": "Theme Radio",
+      "title": "Выбор темы",
       "description": "Меню с радиогруппой внутри: выбор темы оформления, где у каждого варианта есть крошечный образец из двух полос вместо одного лишь слова.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -803,12 +753,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-005-*. Клиентский: выбранный вариант держит useState. Пункты размечены role=menuitemradio с aria-checked внутри обёртки role=group с aria-labelledby на заголовок «Тема». Образец темы собран двумя блоками с разной заливкой и переключается data-атрибутом индекса, поэтому вариантов не нужно рисовать иконками. Меню закрывается сразу после выбора — второго варианта выбирать уже нечего. Стрелка вниз с кнопки открывает меню и ставит фокус на выбранный пункт, а не на первый.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "radio",
-          "theme"
-        ],
+        "tags": ["menu", "dropdown", "radio", "theme"],
         "ai": {
           "export": "Dropdown005",
           "usage": "<Dropdown005\n  trigger=\"Оформление\"\n  value=\"Тёмная\"\n  themes={[\"Светлая\", \"Тёмная\", \"Как в системе\"]}\n/>",
@@ -847,11 +792,7 @@
             "label": "Тема",
             "type": "select",
             "default": "Как в системе",
-            "options": [
-              "Светлая",
-              "Тёмная",
-              "Как в системе"
-            ]
+            "options": ["Светлая", "Тёмная", "Как в системе"]
           }
         ],
         "i18n": {
@@ -890,7 +831,8 @@
                 "label": "Theme",
                 "default": "Как в системе"
               }
-            }
+            },
+            "title": "Theme Radio"
           }
         }
       }
@@ -898,11 +840,9 @@
     {
       "name": "dropdown-006",
       "type": "registry:component",
-      "title": "Nested Submenu",
+      "title": "Вложенное подменю",
       "description": "Меню с пунктом-подменю «Переместить в»: второй уровень раскрывается наведением и стрелкой вправо, а стрелка влево возвращает фокус на родителя.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -914,12 +854,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-006-*. Клиентский: раскрытие подменю держит useState. Первый уровень — HTML popover с якорным позиционированием, второй — обычный абсолютно спозиционированный слой внутри него: вложенный popover=auto закрыл бы родителя, потому что открытие второго auto-попапа гасит первый. Родительский пункт помечен aria-haspopup=menu и aria-expanded, подменю — role=menu с aria-label. Стрелка вправо открывает подменю и ставит фокус на первый пункт, влево — закрывает и возвращает фокус; без этого из подменю не выйти с клавиатуры. Пропс side меняет сторону раскрытия.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "submenu",
-          "keyboard"
-        ],
+        "tags": ["menu", "dropdown", "submenu", "keyboard"],
         "ai": {
           "export": "Dropdown006",
           "usage": "<Dropdown006\n  trigger=\"Письмо\"\n  side=\"right\"\n  submenuLabel=\"Переместить в\"\n  folders={[\"Входящие\", \"Архив\"]}\n/>",
@@ -958,10 +893,7 @@
             "label": "Сторона подменю",
             "type": "select",
             "default": "right",
-            "options": [
-              "right",
-              "left"
-            ]
+            "options": ["right", "left"]
           }
         ],
         "i18n": {
@@ -1000,7 +932,8 @@
                 "label": "Submenu side",
                 "default": "right"
               }
-            }
+            },
+            "title": "Nested Submenu"
           }
         }
       }
@@ -1008,11 +941,9 @@
     {
       "name": "dropdown-007",
       "type": "registry:component",
-      "title": "Danger Zone",
+      "title": "Опасная зона",
       "description": "Меню, где необратимое действие вынесено в отдельную зону внизу и требует подтверждения на месте, а не рядом с «дублировать».",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1024,12 +955,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-007-*. Клиентский: шаг подтверждения держит useState, сброс происходит на событие toggle попапа — закрытое меню всегда открывается в исходном виде. Опасная зона отрисована отдельным блоком с собственной подложкой, отрицательными полями до краёв меню и верхней границей, поэтому промах мышью по последнему пункту списка в неё не попадает. Подтверждение живёт в том же меню: диалог поверх открытого popover — это второй верхний слой, который нечем закрыть по Escape по очереди. Кнопка подтверждения связана с вопросом через aria-describedby.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "danger",
-          "confirm"
-        ],
+        "tags": ["menu", "dropdown", "danger", "confirm"],
         "ai": {
           "export": "Dropdown007",
           "usage": "<Dropdown007\n  trigger=\"Ещё\"\n  dangerLabel=\"Удалить проект\"\n  items={[\"Открыть\", \"Переименовать\"]}\n/>",
@@ -1107,7 +1033,8 @@
                 "label": "Destructive item",
                 "default": "Delete project"
               }
-            }
+            },
+            "title": "Danger Zone"
           }
         }
       }
@@ -1115,11 +1042,9 @@
     {
       "name": "dropdown-008",
       "type": "registry:component",
-      "title": "Account Menu",
+      "title": "Меню аккаунта",
       "description": "Меню профиля с шапкой пользователя и переключением рабочих пространств: имя, почта и тариф видны до того, как нажат «выход».",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1131,12 +1056,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-008-*. Клиентский: выбранное пространство держит useState. Шапка меню — не пункт, а справка: она не фокусируется и не нажимается, поэтому не мешает ходить стрелками. Инициалы считаются из имени функцией, аватар — цветной круг на color-mix от акцента. Пространства размечены role=menuitemradio с aria-checked внутри role=group: их выбирают, а не выполняют. Выход отделён линией и покрашен только текстом. Открытие и слой — HTML popover, положение — anchor-name и position-area под @supports.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "profile",
-          "account"
-        ],
+        "tags": ["menu", "dropdown", "profile", "account"],
         "ai": {
           "export": "Dropdown008",
           "usage": "<Dropdown008\n  name=\"Вера Логинова\"\n  email=\"vera@poldenstudio.ru\"\n  plan=\"Pro\"\n  workspaces={[\"Личное\", \"Студия «Полдень»\"]}\n/>",
@@ -1214,7 +1134,8 @@
                 "label": "Plan",
                 "default": "Pro"
               }
-            }
+            },
+            "title": "Account Menu"
           }
         }
       }
@@ -1222,11 +1143,9 @@
     {
       "name": "dropdown-009",
       "type": "registry:component",
-      "title": "Sort Menu",
+      "title": "Меню сортировки",
       "description": "Меню сортировки, где выбранное поле и направление написаны прямо в кнопке: закрытое меню больше нигде не рассказывает о порядке списка.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1238,12 +1157,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-009-*. Клиентский: поле и направление держит useState, наружу они уходят одним объектом через onChange. В меню две радиогруппы — поле и порядок, — каждая с role=group и aria-labelledby на свой заголовок; пункты помечены role=menuitemradio с aria-checked. Стрелка направления — инлайновый SVG, разворот на 180° делает data-desc на корне, а не второй значок. Стрелка вниз с кнопки открывает меню и ставит фокус на выбранное поле. Положение меню — anchor-name с position-area под @supports.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "sort",
-          "radio"
-        ],
+        "tags": ["menu", "dropdown", "sort", "radio"],
         "ai": {
           "export": "Dropdown009",
           "usage": "<Dropdown009\n  label=\"Сортировка\"\n  value=\"Название\"\n  fields={[\"Дата изменения\", \"Название\", \"Размер\"]}\n/>",
@@ -1282,12 +1196,7 @@
             "label": "Поле",
             "type": "select",
             "default": "Дата изменения",
-            "options": [
-              "Дата изменения",
-              "Название",
-              "Размер",
-              "Автор"
-            ]
+            "options": ["Дата изменения", "Название", "Размер", "Автор"]
           }
         ],
         "i18n": {
@@ -1326,7 +1235,8 @@
                 "label": "Field",
                 "default": "Дата изменения"
               }
-            }
+            },
+            "title": "Sort Menu"
           }
         }
       }
@@ -1334,11 +1244,9 @@
     {
       "name": "dropdown-010",
       "type": "registry:component",
-      "title": "Described Items",
+      "title": "Пункты с пояснением",
       "description": "Меню создания, где под каждым пунктом стоит строка пояснения: «доска» и «таблица» звучат одинаково важно, пока не сказано, для чего они.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1350,12 +1258,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-010-*. Клиентский только ради навигации стрелками. Пункт собран гридом: значок занимает обе строки, справа название и пояснение, поэтому текст не наезжает на иконку при переносе. Пояснение связано с пунктом через aria-describedby, а не просто лежит рядом. Ширину меню задаёт переменная --vibeui-dropdown-010-width из пропса menuWidth: пояснение в две строки на узком меню превращается в кашу. Открытие — HTML popover, положение — anchor-name и position-area под @supports.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "description",
-          "create"
-        ],
+        "tags": ["menu", "dropdown", "description", "create"],
         "ai": {
           "export": "Dropdown010",
           "usage": "<Dropdown010\n  trigger=\"Создать\"\n  menuWidth={18}\n  items={[{ label: \"Доска\", hint: \"Карточки в колонках\", glyph: \"▤\" }]}\n/>",
@@ -1434,7 +1337,8 @@
                 "label": "Menu width, rem",
                 "default": 18
               }
-            }
+            },
+            "title": "Described Items"
           }
         }
       }
@@ -1442,11 +1346,9 @@
     {
       "name": "dropdown-011",
       "type": "registry:component",
-      "title": "Searchable Select",
+      "title": "Список с поиском",
       "description": "Широкая кнопка-поле, у которой меню повторяет её ширину и начинается полем поиска: список из тридцати проектов быстрее отфильтровать, чем пролистать.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1458,12 +1360,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-011-*. Клиентский: запрос и выбранное значение держит useState. Ширина меню равна ширине кнопки через anchor-size(width) внутри @supports (anchor-name) — без якорей остаётся min-width. Фокус после открытия уходит в поле поиска: это делается на событии toggle попапа с проверкой :popover-open, потому что autoFocus в React сработал бы при монтировании. Пункты — role=menuitemradio с aria-checked, при пустой выборке показывается строка «ничего не найдено». Доступное имя кнопки собрано из подписи и значения через aria-labelledby.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "search",
-          "select"
-        ],
+        "tags": ["menu", "dropdown", "search", "select"],
         "preview": {
           "width": "full"
         },
@@ -1544,7 +1441,8 @@
                 "label": "Search hint",
                 "default": "Search by name"
               }
-            }
+            },
+            "title": "Searchable Select"
           }
         }
       }
@@ -1552,11 +1450,9 @@
     {
       "name": "dropdown-012",
       "type": "registry:component",
-      "title": "Bulk Actions",
+      "title": "Массовые действия",
       "description": "Меню массовых действий над таблицей: оно знает, сколько строк выбрано, гасит неприменимое и выключается, когда выделения нет.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1568,12 +1464,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-012-*. Клиентский: выделение строк держит useState. Шапка выделения показывает счётчик через role=status, кнопка меню помечена disabled при пустом выборе — исчезающая кнопка сдвигала бы шапку. Пункт «переименовать» помечен aria-disabled, когда выбрано не ровно одно: он остаётся видимым и объясняет причину подписью. Строки — обычные label с чекбоксом, подсветка выбранной строки сделана через :has(input:checked). Меню — HTML popover с якорным позиционированием под @supports, опасный пункт отделён линией и несёт число строк.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "table",
-          "bulk"
-        ],
+        "tags": ["menu", "dropdown", "table", "bulk"],
         "preview": {
           "width": "full"
         },
@@ -1654,7 +1545,8 @@
                 "label": "Menu button",
                 "default": "Actions"
               }
-            }
+            },
+            "title": "Bulk Actions"
           }
         }
       }
@@ -1662,11 +1554,9 @@
     {
       "name": "dropdown-013",
       "type": "registry:component",
-      "title": "Session Menu",
+      "title": "Меню сессии",
       "description": "Меню профиля, в котором строка с почтой копирует адрес по клику и объявляет об этом вслух: не нужно открывать настройки ради одного адреса.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1678,12 +1568,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра в переменных --vibeui-dropdown-013-*. Клиентский: состояние открытия меню и подтверждение копирования держит useState. Открытие, верхний слой, Escape и клик мимо — HTML popover, положение — anchor-name и position-area под @supports, для браузеров без якорей есть запасное правило position:absolute с position:relative на корне. Клик по строке почты вызывает navigator.clipboard.writeText и на 1.6 секунды меняет подпись на «Скопировано» с aria-live=\"polite\", чтобы это услышал и тот, кто не видит экран. Выход отделён чертой и покрашен только текстом. После выбора любого пункта фокус явно возвращается на кнопку-триггер.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "profile",
-          "clipboard"
-        ],
+        "tags": ["menu", "dropdown", "profile", "clipboard"],
         "ai": {
           "export": "Dropdown013",
           "usage": "<Dropdown013\n  name=\"Марк Соколов\"\n  email=\"mark@example.com\"\n  role=\"Продуктовый дизайнер\"\n/>",
@@ -1770,7 +1655,8 @@
                 "label": "Role",
                 "default": "Product designer"
               }
-            }
+            },
+            "title": "Session Menu"
           }
         }
       }
@@ -1778,11 +1664,9 @@
     {
       "name": "dropdown-014",
       "type": "registry:component",
-      "title": "Row Actions",
+      "title": "Действия строки",
       "description": "Контекстное меню одной строки таблицы: кнопка «⋯» стоит внутри строки, а опасный пункт помечен только цветом и линией внизу списка, без отдельной зоны.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1794,12 +1678,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-014-*. Клиентский: состояние открытия держит useState для aria-expanded. Кнопка-триггер получает доступное имя из содержимого строки через aria-label, а не общее «Действия» — иначе в таблице из тридцати строк кнопки неразличимы для скринридера. Опасный пункт отделён линией и покрашен текстом внизу списка: второй зоны с подтверждением здесь нет, это сценарий для менее рискового действия, чем полное удаление аккаунта. Открытие — HTML popover с anchor positioning под @supports и запасным position:absolute на position:relative корне. После выбора любого пункта фокус явно возвращается на кнопку.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "row",
-          "danger"
-        ],
+        "tags": ["menu", "dropdown", "row", "danger"],
         "ai": {
           "export": "Dropdown014",
           "usage": "<Dropdown014\n  row=\"Отчёт по продажам.xlsx\"\n  meta=\"Изменён вчера в 14:02\"\n/>",
@@ -1875,7 +1754,8 @@
                 "label": "Caption",
                 "default": "Edited yesterday at 14:02"
               }
-            }
+            },
+            "title": "Row Actions"
           }
         }
       }
@@ -1883,11 +1763,9 @@
     {
       "name": "dropdown-015",
       "type": "registry:component",
-      "title": "Export Submenu",
+      "title": "Подменю выгрузки",
       "description": "Меню «Поделиться» с пунктом-подменю «Экспортировать как»: второй уровень со списком форматов раскрывается наведением и стрелкой вправо, а стрелка влево возвращает фокус на родителя.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1899,12 +1777,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-015-*. Клиентский: раскрытие меню и подменю держит useState для aria-expanded на обоих уровнях. Первый уровень — HTML popover с якорным позиционированием под @supports и запасным position:absolute на position:relative корне; второй уровень — обычный абсолютно спозиционированный слой внутри первого, потому что вложенный popover=auto закрыл бы родителя. Родительский пункт помечен aria-haspopup=menu и aria-expanded, подменю — role=menu с aria-label. Стрелка вправо открывает подменю и ставит фокус на первый формат, влево — закрывает и возвращает фокус на родительский пункт. Каждый формат несёт короткое расширение файла, вынесенное в отдельный узел, а не встроенное в название.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "submenu",
-          "export"
-        ],
+        "tags": ["menu", "dropdown", "submenu", "export"],
         "ai": {
           "export": "Dropdown015",
           "usage": "<Dropdown015\n  trigger=\"Поделиться\"\n  side=\"right\"\n  submenuLabel=\"Экспортировать как\"\n  formats={[\"PDF-документ\", \"PNG-изображение\"]}\n/>",
@@ -1942,10 +1815,7 @@
             "label": "Сторона подменю",
             "type": "select",
             "default": "right",
-            "options": [
-              "right",
-              "left"
-            ]
+            "options": ["right", "left"]
           }
         ],
         "i18n": {
@@ -1983,7 +1853,8 @@
                 "label": "Submenu side",
                 "default": "right"
               }
-            }
+            },
+            "title": "Export Submenu"
           }
         }
       }
@@ -1991,11 +1862,9 @@
     {
       "name": "dropdown-016",
       "type": "registry:component",
-      "title": "Label Filter",
+      "title": "Фильтр по меткам",
       "description": "Меню-фильтр по меткам доски: у каждого пункта цветной кружок и число карточек, нажатие не закрывает список, а пустой выбор равен «показать всё».",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2007,12 +1876,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-016-*. Клиентский: набор включённых меток держит useState, aria-expanded синхронизирован с событием toggle. Пункты размечены role=menuitemcheckbox с aria-checked, место под отметку зарезервировано всегда, чтобы строки не прыгали при переключении. Цвет метки — переменная --vibeui-dropdown-016-dot, заданная инлайновым style на каждом пункте из числового hue в данных, а не классом: значения меток заранее неизвестны компоненту. Открытие — HTML popover с anchor positioning под @supports и запасным position:absolute на position:relative корне.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "filter",
-          "checkbox"
-        ],
+        "tags": ["menu", "dropdown", "filter", "checkbox"],
         "ai": {
           "export": "Dropdown016",
           "usage": "<Dropdown016\n  trigger=\"Метки\"\n  labels={[{ name: \"Срочно\", hue: 25, count: 4 }]}\n/>",
@@ -2077,7 +1941,8 @@
                 "label": "Button",
                 "default": "Labels"
               }
-            }
+            },
+            "title": "Label Filter"
           }
         }
       }
@@ -2085,11 +1950,9 @@
     {
       "name": "dropdown-017",
       "type": "registry:component",
-      "title": "Order Menu",
+      "title": "Меню заказа",
       "description": "Радиогруппа сортировки по одному полю за кнопкой-иконкой: без второй группы направления, а рекомендованное поле помечено бейджем.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2101,12 +1964,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-017-*. Клиентский: выбранное поле держит useState, aria-expanded синхронизирован с событием toggle. Кнопка-триггер — иконка без текста с aria-label, собранным из текущего значения; подпись поля стоит рядом отдельным узлом, поэтому компонент годится для тесной панели инструментов. Пункты размечены role=menuitemradio с aria-checked внутри role=group с aria-labelledby на заголовок «Сортировать по». Рекомендованное поле несёт бейдж вместо галочки, пока не выбрано; после выбора бейдж уступает место галочке. Стрелка вниз с кнопки открывает меню и ставит фокус на выбранный пункт.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "sort",
-          "radio"
-        ],
+        "tags": ["menu", "dropdown", "sort", "radio"],
         "ai": {
           "export": "Dropdown017",
           "usage": "<Dropdown017\n  value=\"Дата создания\"\n  fields={[\"Дата создания\", \"Название\", \"Приоритет\"]}\n  recommended=\"Дата создания\"\n/>",
@@ -2137,12 +1995,7 @@
             "label": "Поле",
             "type": "select",
             "default": "Дата создания",
-            "options": [
-              "Дата создания",
-              "Название",
-              "Приоритет",
-              "Исполнитель"
-            ]
+            "options": ["Дата создания", "Название", "Приоритет", "Исполнитель"]
           }
         ],
         "i18n": {
@@ -2176,7 +2029,8 @@
                 "label": "Field",
                 "default": "Дата создания"
               }
-            }
+            },
+            "title": "Order Menu"
           }
         }
       }
@@ -2184,11 +2038,9 @@
     {
       "name": "dropdown-018",
       "type": "registry:component",
-      "title": "Assignee Picker",
+      "title": "Выбор исполнителя",
       "description": "Круглая кнопка назначения исполнителя: меню открывается с полем поиска по имени, а список выбирают, а не выполняют — это радиогруппа, а не команды.",
-      "categories": [
-        "dropdown-menu"
-      ],
+      "categories": ["dropdown-menu"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2200,12 +2052,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-018-*. Клиентский: запрос, выбор и открытие меню держит useState для aria-expanded и фильтрации. Триггер — маленькая круглая кнопка: пунктирная рамка, пока исполнитель не назначен, сплошная и с инициалами после выбора. Фокус после открытия уходит в поле поиска на событии toggle, а не через autoFocus, иначе он уехал бы при монтировании страницы. Список размечен role=menuitemradio с aria-checked, при пустой выборке — строка «Никого не нашлось». Открытие — HTML popover с anchor positioning под @supports и запасным position:absolute на position:relative корне.",
       "meta": {
-        "tags": [
-          "menu",
-          "dropdown",
-          "search",
-          "assignee"
-        ],
+        "tags": ["menu", "dropdown", "search", "assignee"],
         "ai": {
           "export": "Dropdown018",
           "usage": "<Dropdown018\n  placeholder=\"Поиск по имени\"\n  people={[\"Илья Веснин\", \"Ольга Крылова\"]}\n/>",
@@ -2270,7 +2117,8 @@
                 "label": "Search hint",
                 "default": "Search by name"
               }
-            }
+            },
+            "title": "Assignee Picker"
           }
         }
       }

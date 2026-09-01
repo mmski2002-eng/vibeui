@@ -4,11 +4,9 @@
     {
       "name": "banner-001",
       "type": "registry:component",
-      "title": "Announcement Banner",
+      "title": "Баннер объявления",
       "description": "Полоса-объявление во всю ширину: метка, текст, ссылка и закрытие. Тёмная и спокойная — не притворяется уведомлением об ошибке.",
-      "categories": [
-        "banner"
-      ],
+      "categories": ["banner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-001-*. Подсветка слева — радиальный градиент от акцента, а не отдельный элемент. Кнопка закрытия появляется только когда передан onDismiss: полосе, которую нечем закрыть, крестик не нужен. На узкой ширине текст уходит на отдельную строку через @container, а метка и действие остаются в одну линию.",
       "meta": {
-        "tags": [
-          "banner",
-          "announcement",
-          "top bar",
-          "marketing"
-        ],
+        "tags": ["banner", "announcement", "top bar", "marketing"],
         "preview": {
           "width": "full"
         },
@@ -132,7 +125,8 @@
               "accent": {
                 "label": "Accent"
               }
-            }
+            },
+            "title": "Announcement Banner"
           }
         }
       }
@@ -140,11 +134,9 @@
     {
       "name": "banner-002",
       "type": "registry:component",
-      "title": "Update Banner",
+      "title": "Баннер обновления",
       "description": "Полоса «вышла новая версия» с одним честным действием — перезагрузить страницу; номер версии рядом, чтобы сообщение не читалось как реклама.",
-      "categories": [
-        "banner"
-      ],
+      "categories": ["banner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -156,12 +148,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-002-*. Серверный: хуков нет. Раскладка считается от собственной ширины через container-type:inline-size на корне и правило @container на внутреннем shell — контейнерный запрос не действует на сам контейнер. Пульсирующая точка сделана расширяющимся кольцом в ::after с медленным циклом: обновление можно отложить, тревожить не нужно. Полоса объявлена role=\"status\" с aria-live=\"polite\".",
       "meta": {
-        "tags": [
-          "banner",
-          "update",
-          "version",
-          "reload"
-        ],
+        "tags": ["banner", "update", "version", "reload"],
         "preview": {
           "width": "full"
         },
@@ -242,7 +229,8 @@
                 "label": "Action",
                 "default": "Reload"
               }
-            }
+            },
+            "title": "Update Banner"
           }
         }
       }
@@ -250,11 +238,9 @@
     {
       "name": "banner-003",
       "type": "registry:component",
-      "title": "Consent Banner",
+      "title": "Баннер согласия",
       "description": "Согласие на cookie, где отказ — такая же кнопка, как согласие: одинаковый размер и вес, разница только в заливке.",
-      "categories": [
-        "banner"
-      ],
+      "categories": ["banner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -266,12 +252,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-003-*. Серверный: хуков нет. Обе кнопки описаны одним правилом и различаются только заливкой, поэтому отказ невозможно случайно ослабить — тёмная кнопка «Принять» против серой ссылки «Отказаться» и есть тёмный паттерн. «Настроить» стоит третьим и отодвинуто margin-left:auto, чтобы не притворяться отказом. На узкой ширине через @container обе кнопки растягиваются на всю строку и остаются равными.",
       "meta": {
-        "tags": [
-          "banner",
-          "cookie",
-          "consent",
-          "privacy"
-        ],
+        "tags": ["banner", "cookie", "consent", "privacy"],
         "preview": {
           "width": "full"
         },
@@ -352,7 +333,8 @@
                 "label": "Reject",
                 "default": "Essential only"
               }
-            }
+            },
+            "title": "Consent Banner"
           }
         }
       }
@@ -360,11 +342,9 @@
     {
       "name": "banner-004",
       "type": "registry:component",
-      "title": "Staging Banner",
+      "title": "Баннер тестового стенда",
       "description": "Полоса тестового режима: косая штриховка, моноширинная метка и имя окружения — её невозможно спутать с боевым интерфейсом даже на скриншоте.",
-      "categories": [
-        "banner"
-      ],
+      "categories": ["banner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -376,12 +356,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-004-*. Серверный: хуков нет. Штриховка нарисована repeating-linear-gradient, а не картинкой, поэтому масштабируется без потерь. Раскладка считается от собственной ширины: container-type:inline-size на корне, @container на внутреннем shell. На узкой ширине штриховка и метка окружения скрываются — остаётся главное. Полоса объявлена role=\"note\" с доступным именем, включающим окружение.",
       "meta": {
-        "tags": [
-          "banner",
-          "staging",
-          "environment",
-          "warning"
-        ],
+        "tags": ["banner", "staging", "environment", "warning"],
         "preview": {
           "width": "full"
         },
@@ -462,7 +437,8 @@
                 "label": "Environment",
                 "default": "staging"
               }
-            }
+            },
+            "title": "Staging Banner"
           }
         }
       }
@@ -470,11 +446,9 @@
     {
       "name": "banner-005",
       "type": "registry:component",
-      "title": "Quota Banner",
+      "title": "Баннер лимита",
       "description": "Полоса тарифного лимита с цифрой вместо страшилки: заполнение считается из двух чисел, а цвет переключается сам, когда остаётся меньше десятой части.",
-      "categories": [
-        "banner"
-      ],
+      "categories": ["banner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -486,12 +460,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-005-*. Серверный: доля считается из used и limit, кладётся в --vibeui-banner-005-ratio, а ширину полосы выводит calc. Состояние (calm, tight, over) объявлено атрибутом data-state и переопределяет один тон — отдельных наборов правил под каждое состояние нет. Полоса размечена role=\"progressbar\" с aria-valuenow. Раскладка считается от собственной ширины через @container на внутреннем shell.",
       "meta": {
-        "tags": [
-          "banner",
-          "quota",
-          "plan",
-          "upgrade"
-        ],
+        "tags": ["banner", "quota", "plan", "upgrade"],
         "preview": {
           "width": "full"
         },
@@ -572,7 +541,8 @@
               "limit": {
                 "label": "Limit"
               }
-            }
+            },
+            "title": "Quota Banner"
           }
         }
       }
@@ -580,11 +550,9 @@
     {
       "name": "banner-006",
       "type": "registry:component",
-      "title": "Offline Banner",
+      "title": "Баннер офлайна",
       "description": "Полоса «нет сети», которая объясняет последствия: не просто «офлайн», а что произойдёт с набранным текстом, пока соединения нет.",
-      "categories": [
-        "banner"
-      ],
+      "categories": ["banner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -596,12 +564,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-006-*. Серверный: хуков нет. Индикатор — три чёрточки разной высоты, они гаснут по очереди через animation-delay, а последняя приглушена постоянно: оборванный сигнал читается по форме, а не только по цвету. Полоса тёмная и объявлена role=\"status\" с aria-live=\"polite\". Раскладка считается от собственной ширины: @container на внутреннем shell растягивает кнопку на узком экране.",
       "meta": {
-        "tags": [
-          "banner",
-          "offline",
-          "network",
-          "retry"
-        ],
+        "tags": ["banner", "offline", "network", "retry"],
         "preview": {
           "width": "full"
         },
@@ -682,7 +645,8 @@
                 "label": "Retry",
                 "default": "Check network"
               }
-            }
+            },
+            "title": "Offline Banner"
           }
         }
       }
@@ -690,11 +654,9 @@
     {
       "name": "banner-007",
       "type": "registry:component",
-      "title": "Maintenance Notice",
+      "title": "Сообщение о работах",
       "description": "Полоса плановых работ, где главный герой — время: окно недоступности вынесено в отдельный блок и размечено тегом time.",
-      "categories": [
-        "banner"
-      ],
+      "categories": ["banner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -706,12 +668,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-007-*. Серверный: хуков нет. Окно недоступности вынесено в отдельный блок и обёрнуто тегом <time> с машиночитаемым datetime, поэтому его понимает не только человек. Доступное имя полосы собирается из заголовка, даты и границ окна — вслух звучит вся суть без чтения абзаца. Раскладка считается от собственной ширины: на узком экране блок времени встаёт над текстом через @container.",
       "meta": {
-        "tags": [
-          "banner",
-          "maintenance",
-          "schedule",
-          "time"
-        ],
+        "tags": ["banner", "maintenance", "schedule", "time"],
         "preview": {
           "width": "full"
         },
@@ -792,7 +749,8 @@
                 "label": "To",
                 "default": "04:30"
               }
-            }
+            },
+            "title": "Maintenance Notice"
           }
         }
       }
@@ -800,11 +758,9 @@
     {
       "name": "banner-008",
       "type": "registry:component",
-      "title": "Promo Banner",
+      "title": "Промо-баннер",
       "description": "Закрываемая полоса акции без единой строки JS: крестик — это label к спрятанному чекбоксу, а :has(:checked) убирает полосу целиком.",
-      "categories": [
-        "banner"
-      ],
+      "categories": ["banner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -816,12 +772,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-008-*. Серверный: состояние закрытия живёт в DOM — визуально скрытый чекбокс плюс правило [data-vibeui-block]:has([data-part=\"switch\"]:checked){display:none}. Крестик оформлен тегом <label>, поэтому нажатие переключает чекбокс без обработчика. Чекбокс спрятан clip-path, а не display:none, иначе он потерял бы фокус. Промокод набран моноширинным шрифтом на пунктирной рамке: его переписывают глазами.",
       "meta": {
-        "tags": [
-          "banner",
-          "promo",
-          "dismiss",
-          "no-js"
-        ],
+        "tags": ["banner", "promo", "dismiss", "no-js"],
         "preview": {
           "width": "full"
         },
@@ -902,7 +853,8 @@
                 "label": "Action",
                 "default": "Get the discount"
               }
-            }
+            },
+            "title": "Promo Banner"
           }
         }
       }

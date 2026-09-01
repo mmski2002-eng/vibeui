@@ -4,7 +4,7 @@
     {
       "name": "footer-001",
       "type": "registry:block",
-      "title": "Light Footer",
+      "title": "Светлый подвал",
       "description": "Светлый подвал: подпись бренда, три колонки ссылок и нижняя строка с юридическим. Тёмная плита в конце спорила бы с финальной секцией призыва.",
       "categories": ["footer"],
       "dependencies": [],
@@ -74,7 +74,8 @@
                 "Do not lift the CSS variables into globals.css: the block has to stay a single file."
               ],
               "usage": "<Footer001\n  brand=\"Flight\"\n  columns={[{ title: \"Product\", links: [{ label: \"Pricing\", href: \"/pricing\" }] }]}\n  legal=\"© 2026 Flight Studio\"\n/>"
-            }
+            },
+            "title": "Light Footer"
           }
         }
       }
@@ -82,7 +83,7 @@
     {
       "name": "footer-002",
       "type": "registry:block",
-      "title": "Four Column Footer",
+      "title": "Подвал в четыре колонки",
       "description": "Тёмный подвал в четыре колонки ссылок: каждая группа — отдельная навигация со своей подписью, а в нижнем ряду живая строка состояния сервисов.",
       "categories": ["footer"],
       "dependencies": [],
@@ -185,7 +186,8 @@
                 "label": "Service status",
                 "default": "All systems operational"
               }
-            }
+            },
+            "title": "Four Column Footer"
           }
         }
       }
@@ -193,7 +195,7 @@
     {
       "name": "footer-003",
       "type": "registry:block",
-      "title": "Newsletter Footer",
+      "title": "Подвал с подпиской",
       "description": "Подвал с подпиской: форма занимает верхний ряд целиком, у поля видимая подпись, рядом честное согласие, а колонки ссылок идут под ней.",
       "categories": ["footer"],
       "dependencies": [],
@@ -296,7 +298,8 @@
                 "label": "Button",
                 "default": "Subscribe"
               }
-            }
+            },
+            "title": "Newsletter Footer"
           }
         }
       }
@@ -304,7 +307,7 @@
     {
       "name": "footer-004",
       "type": "registry:block",
-      "title": "Minimal Line Footer",
+      "title": "Подвал одной строкой",
       "description": "Минимальный подвал в одну строку: бренд, копирайт, три служебные ссылки и «наверх». Для коротких страниц, где четыре колонки выглядят чужой деталью.",
       "categories": ["footer"],
       "dependencies": [],
@@ -407,7 +410,8 @@
                 "label": "Copyright",
                 "default": "© 2026"
               }
-            }
+            },
+            "title": "Minimal Line Footer"
           }
         }
       }
@@ -415,7 +419,7 @@
     {
       "name": "footer-005",
       "type": "registry:block",
-      "title": "Sitemap Footer",
+      "title": "Подвал с картой сайта",
       "description": "Подвал-карта сайта: шесть групп ссылок и выбор языка. На телефоне группы сворачиваются, на широкой раскладке заголовки становятся инертными.",
       "categories": ["footer"],
       "dependencies": [],
@@ -516,7 +520,8 @@
                 "label": "Current language",
                 "default": "RU"
               }
-            }
+            },
+            "title": "Sitemap Footer"
           }
         }
       }
@@ -524,7 +529,7 @@
     {
       "name": "footer-006",
       "type": "registry:block",
-      "title": "Contacts Footer",
+      "title": "Подвал с контактами",
       "description": "Подвал с контактами и соцсетями: телефон и почта — настоящие ссылки tel: и mailto: с видимым значением, адрес размечен тегом address.",
       "categories": ["footer"],
       "dependencies": [],
@@ -627,7 +632,8 @@
                 "label": "Opening hours",
                 "default": "Mon–Fri, 9:00–19:00"
               }
-            }
+            },
+            "title": "Contacts Footer"
           }
         }
       }
@@ -635,7 +641,7 @@
     {
       "name": "footer-007",
       "type": "registry:block",
-      "title": "Storefront Footer",
+      "title": "Подвал магазина",
       "description": "Подвал магазина: колонки ссылок, полоса про доставку и ряд способов оплаты над копирайтом — там, где его ищут перед тем, как решиться на заказ.",
       "categories": ["footer"],
       "dependencies": [],
@@ -738,7 +744,8 @@
                 "label": "Delivery terms",
                 "default": "Free city delivery on orders over £50"
               }
-            }
+            },
+            "title": "Storefront Footer"
           }
         }
       }
@@ -746,7 +753,7 @@
     {
       "name": "footer-008",
       "type": "registry:block",
-      "title": "Legal Footer",
+      "title": "Юридический подвал",
       "description": "Юридический подвал: реквизиты списком определений, обязательные документы отдельной навигацией, дисклеймер и отдельная ссылка на настройки cookie.",
       "categories": ["footer"],
       "dependencies": [],
@@ -849,7 +856,8 @@
                 "label": "Cookie link",
                 "default": "Cookie settings"
               }
-            }
+            },
+            "title": "Legal Footer"
           }
         }
       }

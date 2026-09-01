@@ -4,11 +4,9 @@
     {
       "name": "otp-001",
       "type": "registry:component",
-      "title": "OTP Field",
+      "title": "Поле одноразового кода",
       "description": "Код из СМС по клеткам: вставка целиком раскладывается сама, а Backspace на пустой клетке уводит назад.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-001-*. Клиентский: \"use client\". Клетки — массив ref, ввод цифры переводит фокус вперёд, Backspace на пустой клетке — назад, стрелки ходят по клеткам. Вставка перехватывается на любой клетке и раскладывается целиком. У первой клетки autocomplete=\"one-time-code\".",
       "meta": {
-        "tags": [
-          "input",
-          "otp",
-          "code",
-          "auth"
-        ],
+        "tags": ["input", "otp", "code", "auth"],
         "ai": {
           "export": "Otp001",
           "usage": "<Otp001 length={6} onChange={(code) => verify(code)} />",
@@ -114,7 +107,8 @@
                 "label": "Hint",
                 "default": "Sent to +44 7700 000000. It should arrive within a minute"
               }
-            }
+            },
+            "title": "OTP Field"
           }
         }
       }
@@ -122,11 +116,9 @@
     {
       "name": "otp-002",
       "type": "registry:component",
-      "title": "Single Caret",
+      "title": "Одна каретка",
       "description": "Клеток шесть, а поле одно: прозрачный input лежит поверх ячеек, поэтому вставка, автопереход и системная подстановка кода работают сами.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -138,12 +130,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-002-*. Клиентский: \"use client\". Настоящий input растянут по всей сцепке (position:absolute; inset:0), полностью прозрачен и принимает щелчки, а ячейки — это отрисовка его значения с pointer-events:none. Такой приём отдаёт браузеру вставку, автопереход, Backspace, стрелки и отмену. Каретка нарисована отдельным элементом, потому что у прозрачного поля её не видно.",
       "meta": {
-        "tags": [
-          "otp",
-          "code",
-          "auth",
-          "input"
-        ],
+        "tags": ["otp", "code", "auth", "input"],
         "ai": {
           "export": "Otp002",
           "usage": "<Otp002 length={6} onChange={(code) => verify(code)} />",
@@ -221,7 +208,8 @@
               "length": {
                 "label": "Digits"
               }
-            }
+            },
+            "title": "Single Caret"
           }
         }
       }
@@ -229,11 +217,9 @@
     {
       "name": "otp-003",
       "type": "registry:component",
-      "title": "Resend Timer",
+      "title": "Таймер повтора",
       "description": "Код с повторной отправкой: пока идёт отсчёт, кнопка выключена, а остаток времени виден полосой и читается вслух словами.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -245,12 +231,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-003-*. Клиентский: \"use client\". Отсчёт ведётся от отметки времени (Date.now() + seconds*1000), а не сложением секунд по тикам: в свёрнутой вкладке таймеры тормозят и счёт по тикам врёт. Повторная отправка увеличивает счётчик round, от него перезапускается эффект. Ширина полосы — единственное инлайновое значение, потому что она вычисляется. Клетки — массив ref с автопереходом и вставкой.",
       "meta": {
-        "tags": [
-          "otp",
-          "timer",
-          "resend",
-          "auth"
-        ],
+        "tags": ["otp", "timer", "resend", "auth"],
         "ai": {
           "export": "Otp003",
           "usage": "<Otp003 seconds={45} onChange={(code) => verify(code)} />",
@@ -328,7 +309,8 @@
               "seconds": {
                 "label": "Seconds before resend"
               }
-            }
+            },
+            "title": "Resend Timer"
           }
         }
       }
@@ -336,11 +318,9 @@
     {
       "name": "otp-004",
       "type": "registry:component",
-      "title": "Shake Error",
+      "title": "Встряска при ошибке",
       "description": "Неверный код оформлен всерьёз: короткая встряска, красная рамка, счётчик оставшихся попыток и возврат фокуса на первую клетку.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -352,12 +332,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-004-*. Клиентский: \"use client\". Встряска перезапускается сменой имени анимации: два одинаковых набора кадров чередуются по счётчику ошибок, поэтому вторая подряд ошибка тоже тряхнёт поле, а клетки не размонтируются и фокус не теряется. Правило prefers-reduced-motion гасит анимацию целиком — смысл несут цвет и текст. Сообщение объявляется через aria-live=\"assertive\".",
       "meta": {
-        "tags": [
-          "otp",
-          "error",
-          "motion",
-          "auth"
-        ],
+        "tags": ["otp", "error", "motion", "auth"],
         "ai": {
           "export": "Otp004",
           "usage": "<Otp004 expected=\"482913\" attempts={3} onSubmit={(code) => enter(code)} />",
@@ -446,7 +421,8 @@
               "attempts": {
                 "label": "Attempts"
               }
-            }
+            },
+            "title": "Shake Error"
           }
         }
       }
@@ -454,11 +430,9 @@
     {
       "name": "otp-005",
       "type": "registry:component",
-      "title": "Split Code",
+      "title": "Код по группам",
       "description": "Код группами через дефис: внутри группы клетки сцеплены общей рамкой, а дефис нарисован — набирать его не нужно.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -470,12 +444,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-005-*. Клиентский: \"use client\". Группы задаются массивом длин, поэтому «3-3», «2-2-2» и «4-4» — один и тот же компонент. Внутри группы клетки сцеплены схлопнутыми границами, скругления только на концах группы, фокусная клетка поднимается z-index'ом. Дефис — отдельный элемент с aria-hidden. Вставка перехватывается на любой клетке и раскладывается по всем группам сразу.",
       "meta": {
-        "tags": [
-          "otp",
-          "code",
-          "groups",
-          "auth"
-        ],
+        "tags": ["otp", "code", "groups", "auth"],
         "ai": {
           "export": "Otp005",
           "usage": "<Otp005 groups={[3, 3]} onChange={(code) => verify(code)} />",
@@ -553,7 +522,8 @@
                 "label": "Hint",
                 "default": "No need to type the dash — it is drawn, not typed."
               }
-            }
+            },
+            "title": "Split Code"
           }
         }
       }
@@ -561,11 +531,9 @@
     {
       "name": "otp-006",
       "type": "registry:component",
-      "title": "Masked Line",
+      "title": "Скрытая строка",
       "description": "Код одной строкой без клеток: моноширинная разрядка, подложка из точек под всю длину и кнопка показа скрытых цифр.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -577,12 +545,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-006-*. Клиентский: \"use client\". Это обычный input с моноширинным шрифтом и letter-spacing, а место под недобранные цифры держит абсолютно спозиционированная подложка из точек с pointer-events:none — поэтому строка не растёт по мере набора и не двигает кнопку показа. Тип поля переключается между password и text, состояние кнопки объявляется через aria-pressed.",
       "meta": {
-        "tags": [
-          "otp",
-          "mask",
-          "single",
-          "auth"
-        ],
+        "tags": ["otp", "mask", "single", "auth"],
         "ai": {
           "export": "Otp006",
           "usage": "<Otp006 length={6} onChange={(code) => verify(code)} />",
@@ -660,7 +623,8 @@
               "length": {
                 "label": "Digits"
               }
-            }
+            },
+            "title": "Masked Line"
           }
         }
       }
@@ -668,11 +632,9 @@
     {
       "name": "otp-007",
       "type": "registry:component",
-      "title": "Auto Submit",
+      "title": "Автоотправка",
       "description": "Кнопки подтверждения нет: последняя цифра сама запускает проверку, а клетки блокируются и показывают полосу ожидания.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -684,12 +646,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-007-*. Клиентский: \"use client\". Ввод и вставка идут через один шаг push, и отправка запускается именно там: код можно дособрать вводом, вставкой или правкой средней клетки, и все пути обязаны привести к одному действию. На время проверки клетки disabled — это же и защита от повторной отправки, — поверх идёт полоса, состояние объявляется через aria-live. После успеха доступна кнопка «Ввести заново»: без неё поле осталось бы заблокированным навсегда.",
       "meta": {
-        "tags": [
-          "otp",
-          "autosubmit",
-          "auth",
-          "state"
-        ],
+        "tags": ["otp", "autosubmit", "auth", "state"],
         "ai": {
           "export": "Otp007",
           "usage": "<Otp007 length={6} onSubmit={(code) => enter(code)} />",
@@ -767,7 +724,8 @@
               "length": {
                 "label": "Digits"
               }
-            }
+            },
+            "title": "Auto Submit"
           }
         }
       }

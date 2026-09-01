@@ -4,11 +4,9 @@
     {
       "name": "slider-001",
       "type": "registry:component",
-      "title": "Value Slider",
+      "title": "Ползунок значения",
       "description": "Ползунок на нативном range: перетаскивание, касания и клавиатура достаются от браузера, а цифра стоит рядом с подписью.",
-      "categories": [
-        "slider"
-      ],
+      "categories": ["slider"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-slider-001-*. Клиентский: \"use client\" ради значения. Пройденная часть дорожки закрашена градиентом по проценту, процент передаётся переменной --vibeui-slider-001-fill. Идентификатор берётся из useId, поэтому два ползунка на странице не путают подписи.",
       "meta": {
-        "tags": [
-          "slider",
-          "range",
-          "value",
-          "form"
-        ],
+        "tags": ["slider", "range", "value", "form"],
         "ai": {
           "export": "Slider001",
           "usage": "<Slider001 label=\"Бюджет\" min={10} max={200} step={5} defaultValue={80} />",
@@ -103,7 +96,8 @@
               "defaultValue": {
                 "label": "Value"
               }
-            }
+            },
+            "title": "Value Slider"
           }
         }
       }
@@ -111,11 +105,9 @@
     {
       "name": "slider-002",
       "type": "registry:component",
-      "title": "Value Bubble Slider",
+      "title": "Ползунок с подписью значения",
       "description": "Ползунок с пузырём значения: цифра стоит прямо над ручкой и едет вместе с ней, поэтому глаз не прыгает между дорожкой и подписью в углу.",
-      "categories": [
-        "slider"
-      ],
+      "categories": ["slider"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -127,12 +119,7 @@
       ],
       "docs": "Клиентский компонент: useState хранит значение, из него считаются две переменные — процент заливки и та же доля числом. Пузырь позиционируется по проценту, а сдвиг поправлен на половину ширины ручки через calc с долей: без поправки на 0% и 100% он висит мимо ручки. Хвостик пузыря — квадрат под 45°. Заливка дорожки — линейный градиент по проценту. Палитра в --vibeui-slider-002-*.",
       "meta": {
-        "tags": [
-          "slider",
-          "range",
-          "bubble",
-          "value"
-        ],
+        "tags": ["slider", "range", "bubble", "value"],
         "preview": {
           "width": "full"
         },
@@ -214,7 +201,8 @@
                 "label": "Suffix",
                 "default": " of 10"
               }
-            }
+            },
+            "title": "Value Bubble Slider"
           }
         }
       }
@@ -222,11 +210,9 @@
     {
       "name": "slider-003",
       "type": "registry:component",
-      "title": "Labelled Ticks Slider",
+      "title": "Ползунок с делениями",
       "description": "Ползунок по именованным ступеням: деления нарисованы повторяющимся градиентом, а под ними стоят подписи вроде «раз в неделю».",
-      "categories": [
-        "slider"
-      ],
+      "categories": ["slider"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -238,12 +224,7 @@
       ],
       "docs": "Серверный компонент: состояние не нужно, значение читает форма. Деления — repeating-linear-gradient по ширине дорожки, поэтому лишних узлов нет, а количество штрихов задаётся переменной steps. Подписи разложены в grid с равными колонками по числу ступеней: крайние прижаты к краям, средние центрированы. Значение объявлено через aria-valuetext, потому что цифра шкалы ничего не значит. Палитра в --vibeui-slider-003-*.",
       "meta": {
-        "tags": [
-          "slider",
-          "ticks",
-          "steps",
-          "native"
-        ],
+        "tags": ["slider", "ticks", "steps", "native"],
         "preview": {
           "width": "full"
         },
@@ -325,7 +306,8 @@
                 "label": "Step",
                 "default": 2
               }
-            }
+            },
+            "title": "Labelled Ticks Slider"
           }
         }
       }
@@ -333,11 +315,9 @@
     {
       "name": "slider-004",
       "type": "registry:component",
-      "title": "Dual Range Slider",
+      "title": "Ползунок диапазона",
       "description": "Двойной ползунок диапазона: два нативных range лежат на одной дорожке, закрашен только промежуток между ручками, значения не перепрыгивают друг друга.",
-      "categories": [
-        "slider"
-      ],
+      "categories": ["slider"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -349,12 +329,7 @@
       ],
       "docs": "Клиентский компонент: useState на нижнюю и верхнюю границу, каждая ограничивает соседнюю на шаг при вводе. Дорожка нарисована один раз отдельным слоем — иначе на пересечении видно две полосы. Оба input'а прозрачны и получают pointer-events:none, а обратно события включаются только на псевдоэлементах ручек: без этого верхний input перекрывал бы нижний по всей ширине. Палитра в --vibeui-slider-004-*.",
       "meta": {
-        "tags": [
-          "slider",
-          "range",
-          "filter",
-          "price"
-        ],
+        "tags": ["slider", "range", "filter", "price"],
         "preview": {
           "width": "full"
         },
@@ -437,7 +412,8 @@
                 "label": "Upper bound",
                 "default": 14000
               }
-            }
+            },
+            "title": "Dual Range Slider"
           }
         }
       }
@@ -445,11 +421,9 @@
     {
       "name": "slider-005",
       "type": "registry:component",
-      "title": "Volume Slider",
+      "title": "Ползунок громкости",
       "description": "Ползунок громкости с живой иконкой: волны у динамика гаснут по мере убывания уровня, а кнопка слева глушит звук и возвращает прежний.",
-      "categories": [
-        "slider"
-      ],
+      "categories": ["slider"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -461,12 +435,7 @@
       ],
       "docs": "Клиентский компонент: useState на текущий уровень и на запомненный перед выключением. Уровень сводится к трём ступеням и кладётся в data-level на корне, откуда CSS гасит волны. Динамик вырезан clip-path, волны — дуги из кругов с прозрачными гранями, выбираются соседним комбинатором, а не nth-of-type: тип у всех узлов один и тот же span. Кнопка объявлена aria-pressed. Палитра в --vibeui-slider-005-*.",
       "meta": {
-        "tags": [
-          "slider",
-          "volume",
-          "media",
-          "icon"
-        ],
+        "tags": ["slider", "volume", "media", "icon"],
         "preview": {
           "width": "full"
         },
@@ -548,7 +517,8 @@
                 "label": "Button",
                 "default": "Mute"
               }
-            }
+            },
+            "title": "Volume Slider"
           }
         }
       }
@@ -556,11 +526,9 @@
     {
       "name": "slider-006",
       "type": "registry:component",
-      "title": "Stepper Slider",
+      "title": "Ползунок по шагам",
       "description": "Ползунок с шагом и единицей измерения: рядом стоят кнопки «−» и «+», которые двигают значение ровно на шаг, а единица написана рядом с числом.",
-      "categories": [
-        "slider"
-      ],
+      "categories": ["slider"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -572,12 +540,7 @@
       ],
       "docs": "Клиентский компонент: useState на значение, кнопки прибавляют и убавляют шаг с зажимом по границам и выключаются на краях шкалы. Знаки «−» и «+» нарисованы полосками на псевдоэлементах, поэтому не зависят от шрифта и не скачут по базовой линии. Значение объявляется через aria-valuetext вместе с единицей. Заливка дорожки — градиент по проценту. Палитра в --vibeui-slider-006-*.",
       "meta": {
-        "tags": [
-          "slider",
-          "stepper",
-          "units",
-          "precision"
-        ],
+        "tags": ["slider", "stepper", "units", "precision"],
         "preview": {
           "width": "full"
         },
@@ -659,7 +622,8 @@
                 "label": "Unit",
                 "default": "°C"
               }
-            }
+            },
+            "title": "Stepper Slider"
           }
         }
       }
@@ -667,11 +631,9 @@
     {
       "name": "slider-007",
       "type": "registry:component",
-      "title": "Vertical Slider",
+      "title": "Вертикальный ползунок",
       "description": "Вертикальный ползунок для величин, которые в голове «выше — больше»: поворот сделан writing-mode, поэтому раскладка и клавиатура остаются нормальными.",
-      "categories": [
-        "slider"
-      ],
+      "categories": ["slider"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -683,12 +645,7 @@
       ],
       "docs": "Клиентский компонент: useState держит значение, из него считается доля заливки. Вертикальность задана writing-mode:vertical-lr вместе с direction:rtl, а не трансформом: повёрнутый rotate элемент остаётся горизонтальным для раскладки и накрывает соседей своей коробкой. Заливка идёт градиентом to top. Шкала стоит столбиком рядом и подписана сверху вниз. Значение объявляется через aria-valuetext. Палитра в --vibeui-slider-007-*.",
       "meta": {
-        "tags": [
-          "slider",
-          "vertical",
-          "range",
-          "writing-mode"
-        ],
+        "tags": ["slider", "vertical", "range", "writing-mode"],
         "preview": {
           "width": "full"
         },
@@ -770,7 +727,8 @@
                 "label": "Unit",
                 "default": "%"
               }
-            }
+            },
+            "title": "Vertical Slider"
           }
         }
       }
@@ -778,11 +736,9 @@
     {
       "name": "slider-008",
       "type": "registry:component",
-      "title": "Slider With Number",
+      "title": "Ползунок с числовым полем",
       "description": "Ползунок и поле числа рядом: мышью прикидывают величину, с клавиатуры вводят точную цифру, оба входа держат одно значение.",
-      "categories": [
-        "slider"
-      ],
+      "categories": ["slider"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -794,12 +750,7 @@
       ],
       "docs": "Клиентский компонент: useState на значение и отдельно на строку ввода. Поле не приводится к диапазону на каждом нажатии — иначе «10» невозможно набрать, когда минимум равен 100; зажим по границам происходит на blur и по Enter. Стрелки числового поля убраны вендорными псевдоэлементами, цифры табличные, ширина фиксирована. Заливка дорожки — градиент по проценту. Палитра в --vibeui-slider-008-*.",
       "meta": {
-        "tags": [
-          "slider",
-          "number",
-          "input",
-          "form"
-        ],
+        "tags": ["slider", "number", "input", "form"],
         "preview": {
           "width": "full"
         },
@@ -881,7 +832,8 @@
                 "label": "Unit",
                 "default": "k ₽"
               }
-            }
+            },
+            "title": "Slider With Number"
           }
         }
       }
@@ -889,11 +841,9 @@
     {
       "name": "slider-009",
       "type": "registry:component",
-      "title": "Framed Volume Slider",
+      "title": "Громкость в рамке",
       "description": "Ползунок громкости между тихим и громким значками по краям: пузырь с текущим процентом всегда стоит над ручкой.",
-      "categories": [
-        "slider"
-      ],
+      "categories": ["slider"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -905,12 +855,7 @@
       ],
       "docs": "Клиентский компонент: useState на значение, пузырь считает сдвиг по проценту с поправкой на половину своей ширины — как в Value Bubble Slider. Значки по краям статичны и не реагируют на перетаскивание: они лишь подписывают направление шкалы столбиками возрастающей высоты, без иконочного пакета. Палитра в --vibeui-slider-009-*.",
       "meta": {
-        "tags": [
-          "slider",
-          "volume",
-          "icon",
-          "bubble"
-        ],
+        "tags": ["slider", "volume", "icon", "bubble"],
         "preview": {
           "width": "full"
         },
@@ -986,7 +931,8 @@
                 "label": "Caption",
                 "default": "Ringer volume"
               }
-            }
+            },
+            "title": "Framed Volume Slider"
           }
         }
       }
@@ -994,11 +940,9 @@
     {
       "name": "slider-010",
       "type": "registry:component",
-      "title": "Ruler Slider",
+      "title": "Ползунок-линейка",
       "description": "Непрерывный ползунок с делениями на произвольных значениях шкалы и подписями шагов под дорожкой, как на линейке.",
-      "categories": [
-        "slider"
-      ],
+      "categories": ["slider"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1010,12 +954,7 @@
       ],
       "docs": "Клиентский компонент: useState на значение, деления и подписи под ними позиционируются в процентах от диапазона через inline style, а не грид-колонками — так шкала с неравномерным шагом (6, 12, 24…) остаётся точной. Деления рисуются отдельным слоем поверх дорожки с pointer-events:none, ручка при этом свободно едет между ними. Палитра в --vibeui-slider-010-*.",
       "meta": {
-        "tags": [
-          "slider",
-          "ticks",
-          "marks",
-          "range"
-        ],
+        "tags": ["slider", "ticks", "marks", "range"],
         "preview": {
           "width": "full"
         },
@@ -1093,7 +1032,8 @@
                 "label": "Unit",
                 "default": " mo."
               }
-            }
+            },
+            "title": "Ruler Slider"
           }
         }
       }
@@ -1101,11 +1041,9 @@
     {
       "name": "slider-011",
       "type": "registry:component",
-      "title": "Live Price Slider",
+      "title": "Ползунок цены",
       "description": "Ползунок цены и поле ввода рядом, синхронизированные вживую без ожидания blur: значение видно и жирной цифрой, и в самом поле.",
-      "categories": [
-        "slider"
-      ],
+      "categories": ["slider"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1117,12 +1055,7 @@
       ],
       "docs": "Клиентский компонент: useState на значение и на строку черновика поля. В отличие от отложенного зажима, здесь синхронизация мгновенная на каждое нажатие — минимум цены равен нулю, поэтому число набирается с любого разряда без конфликта с нижней границей. Заголовок форматирует цену разрядами тысяч через Intl.NumberFormat, поле ввода остаётся простыми цифрами. Палитра в --vibeui-slider-011-*.",
       "meta": {
-        "tags": [
-          "slider",
-          "price",
-          "input",
-          "form"
-        ],
+        "tags": ["slider", "price", "input", "form"],
         "preview": {
           "width": "full"
         },
@@ -1200,7 +1133,8 @@
                 "label": "Currency",
                 "default": "$"
               }
-            }
+            },
+            "title": "Live Price Slider"
           }
         }
       }
@@ -1208,11 +1142,9 @@
     {
       "name": "slider-012",
       "type": "registry:component",
-      "title": "Zone Gradient Slider",
+      "title": "Ползунок с зонами",
       "description": "Ползунок с трёхцветной дорожкой-градиентом от зелёного к красному и таблеткой зоны рядом с подписью: низкий, средний, высокий.",
-      "categories": [
-        "slider"
-      ],
+      "categories": ["slider"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1224,12 +1156,7 @@
       ],
       "docs": "Клиентский компонент: useState на значение, дорожка закрашена фиксированным трёхцветным градиентом — это карта всей шкалы, а не индикатор заполнения, поэтому её фон не зависит от value. Зона считается по трети диапазона и кладётся в data-zone на корне, откуда CSS переключает цвет таблетки и рамки ручки одним атрибутом. Палитра в --vibeui-slider-012-*.",
       "meta": {
-        "tags": [
-          "slider",
-          "gradient",
-          "zone",
-          "status"
-        ],
+        "tags": ["slider", "gradient", "zone", "status"],
         "preview": {
           "width": "full"
         },
@@ -1307,7 +1234,8 @@
                 "label": "Caption",
                 "default": "Load level"
               }
-            }
+            },
+            "title": "Zone Gradient Slider"
           }
         }
       }
