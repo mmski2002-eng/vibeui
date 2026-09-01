@@ -9,6 +9,9 @@ export type Accordion006Step = {
   hint?: string
 }
 
+/** Что показывать в шапке над списком шагов. */
+export type Accordion006Progress = "bar" | "count" | "none"
+
 export type Accordion006Props = Omit<
   ComponentPropsWithoutRef<"div">,
   "children"
@@ -17,6 +20,9 @@ export type Accordion006Props = Omit<
   steps?: Accordion006Step[]
   /** Номер раскрытого шага. По умолчанию — первый невыполненный. */
   defaultOpen?: number
+  progress?: Accordion006Progress
+  /** Пусто — заливки нет, чеклист лежит на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,16 +30,19 @@ export type Accordion006Props = Omit<
 // плитки, выполненные помечены галочкой, сверху — счётчик и полоса прогресса,
 // которая считается из самих шагов, а не задаётся отдельно. Раскрыт по
 // умолчанию первый невыполненный шаг: пользователь попадает туда, где остановился.
+//
+// Заливки у чеклиста нет: он лежит на фоне страницы и держится рамкой. Тема
+// берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="accordion-006"]){
---vibeui-accordion-006-fg:oklch(0.22 0.014 265);
---vibeui-accordion-006-muted:oklch(0.52 0.014 265);
---vibeui-accordion-006-bg:oklch(1 0 0);
---vibeui-accordion-006-border:oklch(0.91 0.006 265);
---vibeui-accordion-006-track:oklch(0.93 0.006 265);
---vibeui-accordion-006-accent:oklch(0.55 0.2 262);
---vibeui-accordion-006-accent-fg:oklch(1 0 0);
---vibeui-accordion-006-done:oklch(0.58 0.15 152);
+--vibeui-accordion-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-accordion-006-muted:light-dark(oklch(0.52 0.014 265),oklch(0.68 0.01 265));
+--vibeui-accordion-006-bg:transparent;
+--vibeui-accordion-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
+--vibeui-accordion-006-track:light-dark(oklch(0.93 0.006 265),oklch(0.28 0.01 265));
+--vibeui-accordion-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
+--vibeui-accordion-006-accent-fg:light-dark(oklch(1 0 0),oklch(0.17 0.02 265));
+--vibeui-accordion-006-done:light-dark(oklch(0.58 0.15 152),oklch(0.75 0.15 155));
 --vibeui-accordion-006-radius:1rem;
 --vibeui-accordion-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -56,7 +65,10 @@ display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
 [data-vibeui-block="accordion-006"] [data-part="count"]{
 font-size:0.8125rem;color:var(--vibeui-accordion-006-muted);font-variant-numeric:tabular-nums;
 }
-/* Прогресс считается из шагов: разойтись со списком он не может. */
+/* Прогресс считается из шагов: разойтись со списком он не может. Полосу и
+   счётчик можно убрать по отдельности — шапка сама схлопывается. */
+[data-vibeui-block="accordion-006"][data-progress="none"] [data-part="head"]{display:none}
+[data-vibeui-block="accordion-006"][data-progress="count"] [data-part="track"]{display:none}
 [data-vibeui-block="accordion-006"] [data-part="track"]{
 height:0.25rem;border-radius:9999px;background:var(--vibeui-accordion-006-track);overflow:hidden;
 }
@@ -127,6 +139,28 @@ const DEFAULT_STEPS: Accordion006Step[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Аккордеон-чеклист онбординга: шаги, галочки и общий прогресс.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -134,19 +168,27 @@ export function Accordion006({
   title = "Настройка проекта",
   steps = DEFAULT_STEPS,
   defaultOpen,
+  progress = "bar",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Accordion006Props) {
   const done = steps.filter((step) => step.done).length
-  const progress = steps.length ? (done / steps.length) * 100 : 0
+  const percent = steps.length ? (done / steps.length) * 100 : 0
   const firstOpen = steps.findIndex((step) => !step.done)
   const openIndex = defaultOpen ?? (firstOpen === -1 ? 0 : firstOpen)
 
   const palette = {
-    "--vibeui-accordion-006-progress": progress,
+    "--vibeui-accordion-006-progress": percent,
     ...(accent ? { "--vibeui-accordion-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-accordion-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -158,6 +200,7 @@ export function Accordion006({
       <div
         {...props}
         data-vibeui-block="accordion-006"
+        data-progress={progress}
         className={className}
         style={palette}
       >

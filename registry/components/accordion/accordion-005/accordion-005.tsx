@@ -11,12 +11,25 @@ export type Accordion005Item = {
   status?: string
 }
 
+/** Значок раздела. Все фигуры рисует компонент, картинка одна во всех движках. */
+export type Accordion005Marker =
+  "chevron" | "triangle" | "square" | "plus" | "none"
+
+/** Чем отмечен раздел, требующий внимания. */
+export type Accordion005Stripe = "bar" | "ring" | "none"
+
 export type Accordion005Props = Omit<
   ComponentPropsWithoutRef<"div">,
   "children"
 > & {
   items?: Accordion005Item[]
   defaultOpen?: number
+  marker?: Accordion005Marker
+  stripe?: Accordion005Stripe
+  /** Цвет раздела, требующего внимания: полоса, рамка и подпись. */
+  warn?: string
+  /** Пусто — заливки нет, карточки держатся рамкой поверх фона страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,14 +38,23 @@ export type Accordion005Props = Omit<
 // внимания отмечен полосой у края и подписью, а не только цветом текста.
 // Недоступный раздел остаётся видимым: спрятать его — значит скрыть, что
 // шаг вообще существует.
+//
+// Заливки у карточек нет: они держатся рамкой и лежат на фоне страницы, а
+// подсветка состояний сделана полупрозрачной, поэтому работает на любом фоне.
+// Тема берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="accordion-005"]){
---vibeui-accordion-005-fg:oklch(0.22 0.014 265);
---vibeui-accordion-005-muted:oklch(0.52 0.014 265);
---vibeui-accordion-005-bg:oklch(1 0 0);
---vibeui-accordion-005-border:oklch(0.91 0.006 265);
---vibeui-accordion-005-accent:oklch(0.55 0.2 262);
---vibeui-accordion-005-warn:oklch(0.68 0.15 70);
+--vibeui-accordion-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-accordion-005-muted:light-dark(oklch(0.52 0.014 265),oklch(0.68 0.01 265));
+--vibeui-accordion-005-bg:transparent;
+--vibeui-accordion-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
+--vibeui-accordion-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
+--vibeui-accordion-005-warn:light-dark(oklch(0.68 0.15 70),oklch(0.78 0.15 75));
+/* Цвет подписи выводится из самого цвета внимания: заданный через проп warn
+   оттенок не должен требовать второй настройки. */
+--vibeui-accordion-005-warn-ink:light-dark(
+color-mix(in oklab,var(--vibeui-accordion-005-warn) 62%,black),
+color-mix(in oklab,var(--vibeui-accordion-005-warn) 80%,white));
 --vibeui-accordion-005-radius:0.75rem;
 --vibeui-accordion-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -63,14 +85,54 @@ background:color-mix(in oklab,var(--vibeui-accordion-005-border) 55%,transparent
 color:var(--vibeui-accordion-005-muted);
 font-size:0.6875rem;font-weight:600;white-space:nowrap;
 }
-[data-vibeui-block="accordion-005"] [data-part="chevron"]{
-flex:none;width:0.4375rem;height:0.4375rem;
+/* Бокс значка постоянного размера: подпись состояния не съезжает при смене
+   фигуры, а строки остаются выровненными между собой. */
+[data-vibeui-block="accordion-005"] [data-part="marker"]{
+position:relative;flex:none;width:0.625rem;height:0.625rem;
+}
+[data-vibeui-block="accordion-005"] [data-part="marker"]::before{
+content:"";position:absolute;left:50%;top:50%;
+transition:transform .18s ease,border-color .16s ease,background-color .16s ease;
+}
+[data-vibeui-block="accordion-005"][data-marker="chevron"] [data-part="marker"]::before{
+width:0.4375rem;height:0.4375rem;
 border-right:1.5px solid var(--vibeui-accordion-005-muted);
 border-bottom:1.5px solid var(--vibeui-accordion-005-muted);
-transform:rotate(45deg) translate(-0.0625rem,-0.0625rem);
-transition:transform .18s ease;
+transform:translate(-70%,-50%) rotate(-45deg);
 }
-[data-vibeui-block="accordion-005"] details[open] [data-part="chevron"]{transform:rotate(225deg) translate(-0.0625rem,-0.0625rem)}
+[data-vibeui-block="accordion-005"][data-marker="chevron"] details[open] [data-part="marker"]::before{
+transform:translate(-50%,-70%) rotate(45deg);
+border-right-color:var(--vibeui-accordion-005-accent);
+border-bottom-color:var(--vibeui-accordion-005-accent);
+}
+[data-vibeui-block="accordion-005"][data-marker="triangle"] [data-part="marker"]::before{
+width:0.5rem;height:0.5rem;transform:translate(-50%,-50%);
+background:var(--vibeui-accordion-005-muted);
+clip-path:polygon(15% 0,100% 50%,15% 100%);
+}
+[data-vibeui-block="accordion-005"][data-marker="triangle"] details[open] [data-part="marker"]::before{
+transform:translate(-50%,-50%) rotate(90deg);background:var(--vibeui-accordion-005-accent);
+}
+[data-vibeui-block="accordion-005"][data-marker="square"] [data-part="marker"]::before{
+width:0.5rem;height:0.5rem;border-radius:1px;transform:translate(-50%,-50%);
+box-shadow:inset 0 0 0 1.5px var(--vibeui-accordion-005-muted);
+}
+[data-vibeui-block="accordion-005"][data-marker="square"] details[open] [data-part="marker"]::before{
+transform:translate(-50%,-50%) rotate(45deg);
+background:var(--vibeui-accordion-005-accent);
+box-shadow:inset 0 0 0 1.5px var(--vibeui-accordion-005-accent);
+}
+[data-vibeui-block="accordion-005"][data-marker="plus"] [data-part="marker"]::before,
+[data-vibeui-block="accordion-005"][data-marker="plus"] [data-part="marker"]::after{
+content:"";position:absolute;left:0;top:50%;
+width:100%;height:1.5px;margin-top:-0.75px;border-radius:1px;transform:none;
+background:var(--vibeui-accordion-005-muted);
+transition:transform .18s ease,background-color .16s ease;
+}
+[data-vibeui-block="accordion-005"][data-marker="plus"] [data-part="marker"]::after{transform:rotate(90deg)}
+[data-vibeui-block="accordion-005"][data-marker="plus"] details[open] [data-part="marker"]::after{transform:rotate(0deg)}
+[data-vibeui-block="accordion-005"][data-marker="plus"] details[open] [data-part="marker"]::before,
+[data-vibeui-block="accordion-005"][data-marker="plus"] details[open] [data-part="marker"]::after{background:var(--vibeui-accordion-005-accent)}
 [data-vibeui-block="accordion-005"] [data-part="body"]{
 margin:0;padding:0 1.0625rem 1rem;
 font-size:0.875rem;line-height:1.6;color:var(--vibeui-accordion-005-muted);max-width:62ch;
@@ -80,13 +142,16 @@ font-size:0.875rem;line-height:1.6;color:var(--vibeui-accordion-005-muted);max-w
 border-color:color-mix(in oklab,var(--vibeui-accordion-005-warn) 45%,var(--vibeui-accordion-005-border));
 background:color-mix(in oklab,var(--vibeui-accordion-005-warn) 6%,var(--vibeui-accordion-005-bg));
 }
-[data-vibeui-block="accordion-005"] details[data-highlighted="true"]::before{
+[data-vibeui-block="accordion-005"][data-stripe="bar"] details[data-highlighted="true"]::before{
 content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
 background:var(--vibeui-accordion-005-warn);
 }
+[data-vibeui-block="accordion-005"][data-stripe="ring"] details[data-highlighted="true"]{
+box-shadow:0 0 0 2px color-mix(in oklab,var(--vibeui-accordion-005-warn) 30%,transparent);
+}
 [data-vibeui-block="accordion-005"] details[data-highlighted="true"] [data-part="status"]{
 background:color-mix(in oklab,var(--vibeui-accordion-005-warn) 18%,transparent);
-color:color-mix(in oklab,var(--vibeui-accordion-005-warn) 70%,black);
+color:var(--vibeui-accordion-005-warn-ink);
 }
 /* Недоступный раздел: не <details>, а статичный блок — раскрывать нечего. */
 [data-vibeui-block="accordion-005"] [data-part="locked"]{
@@ -135,12 +200,38 @@ const DEFAULT_ITEMS: Accordion005Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Аккордеон с состояниями разделов: подсвеченный и недоступный.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Accordion005({
   items = DEFAULT_ITEMS,
-  defaultOpen = 1,
+  defaultOpen = -1,
+  marker = "chevron",
+  stripe = "bar",
+  warn,
+  background = "",
   accent,
   className,
   style,
@@ -148,6 +239,13 @@ export function Accordion005({
 }: Accordion005Props) {
   const palette = {
     ...(accent ? { "--vibeui-accordion-005-accent": accent } : null),
+    ...(warn ? { "--vibeui-accordion-005-warn": warn } : null),
+    ...(background
+      ? {
+          "--vibeui-accordion-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -159,6 +257,8 @@ export function Accordion005({
       <div
         {...props}
         data-vibeui-block="accordion-005"
+        data-marker={marker}
+        data-stripe={stripe}
         className={className}
         style={palette}
       >
@@ -184,7 +284,9 @@ export function Accordion005({
                 {item.status ? (
                   <span data-part="status">{item.status}</span>
                 ) : null}
-                <span data-part="chevron" aria-hidden="true" />
+                {marker === "none" ? null : (
+                  <span data-part="marker" aria-hidden="true" />
+                )}
               </summary>
               <p data-part="body">{item.body}</p>
             </details>
