@@ -6,6 +6,9 @@ import {
   type Concept,
 } from "@/components/lab/accordion-concepts"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
+import type { ReactNode } from "react"
+
+import { AUTOCOMPLETE_CHECKS } from "@/components/lab/autocomplete-checks"
 import { AVATAR_CHECKS } from "@/components/lab/avatar-checks"
 import { ConceptPreview } from "@/components/lab/concept-preview"
 
@@ -133,26 +136,35 @@ function ControlsSection() {
  * дважды — на светлой и на тёмной подложке, потому что тему компоненты берут
  * из окружения, а не носят с собой.
  */
-function AvatarCheckSection() {
+function CheckSection({
+  id,
+  title,
+  note,
+  checks,
+}: {
+  id: string
+  title: string
+  note: string
+  checks: { name: string; title: string; notes: string[]; node: ReactNode }[]
+}) {
   return (
     <section
-      id="avatar-check"
+      id={id}
       className="border-shell-border scroll-mt-20 border-t pt-10"
     >
       <header className="flex max-w-3xl flex-col gap-3">
         <h2 className="text-shell-fg text-2xl font-semibold tracking-tight">
-          Прогон категории «Аватар»
+          {title}
         </h2>
         <p className="text-shell-muted text-sm leading-relaxed">
-          Все {AVATAR_CHECKS.length} компонента категории с настройками,
-          заведомо отличными от дефолтных: другой размер, другое состояние,
-          свои подписи и подставленные фотографии. Слева светлая подложка,
-          справа тёмная — под кадром перечислено, что именно подкручено.
+          Все {checks.length} компонента категории с настройками, заведомо
+          отличными от дефолтных. Слева светлая подложка, справа тёмная — под
+          кадром перечислено, что именно подкручено. {note}
         </p>
       </header>
 
       <ol className="mt-8 flex flex-col gap-4">
-        {AVATAR_CHECKS.map((check) => (
+        {checks.map((check) => (
           <li
             key={check.name}
             className="border-shell-border bg-shell-panel flex flex-col gap-3 rounded-xl border p-4"
@@ -243,6 +255,12 @@ export default function LabPage() {
             >
               Прогон «Аватар»
             </a>
+            <a
+              href="#autocomplete-check"
+              className="hover:text-shell-fg focus-visible:ring-shell-ring rounded-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+            >
+              Прогон «Автодополнение»
+            </a>
           </nav>
         </header>
 
@@ -251,7 +269,18 @@ export default function LabPage() {
             <ConceptSection key={concept.id} concept={concept} />
           ))}
           <ControlsSection />
-          <AvatarCheckSection />
+          <CheckSection
+            id="avatar-check"
+            title="Прогон категории «Аватар»"
+            note="Другой размер, другое состояние, свои подписи и подставленные фотографии."
+            checks={AVATAR_CHECKS}
+          />
+          <CheckSection
+            id="autocomplete-check"
+            title="Прогон категории «Автодополнение»"
+            note="Свои списки подсказок, чужие подписи и произвольные цвета подложки и акцента."
+            checks={AUTOCOMPLETE_CHECKS}
+          />
         </div>
       </main>
     </CatalogShell>
