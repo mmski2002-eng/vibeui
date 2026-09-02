@@ -118,7 +118,9 @@ function Control({
             disabled={value === ""}
             className="text-shell-muted hover:text-shell-fg text-xs disabled:opacity-40"
           >
-            {value === "" ? t.control.unset : t.control.clear}
+            {/* Та же подпись, что на карточке: пустое значение означает
+                «цвет берётся из темы окружения», а не «ничего не выбрано». */}
+            {t.card.themeColor}
           </button>
         </div>
       ) : null}

@@ -19,6 +19,17 @@ import {
   CalendarCheck,
   CalendarClock,
   Captions,
+  Check,
+  Fingerprint,
+  LogOut,
+  Pencil,
+  Trash2,
+  MousePointerClick,
+  AtSign,
+  Mail,
+  MessageSquare,
+  Info,
+  Quote,
   ChevronDown,
   ChevronsUp,
   ChevronsUpDown,
@@ -306,6 +317,29 @@ const BY_PROP: Record<string, LucideIcon> = {
   resetDelay: Timer,
   ring: Circle,
   role: UserCheck,
+  src: ImageIcon,
+  name: CircleUser,
+  hint: Info,
+  meta: Clock,
+  bio: Quote,
+  email: Mail,
+  seed: Fingerprint,
+  team: Users,
+  moreText: Ellipsis,
+  typingText: MessageSquare,
+  seenText: History,
+  label: Captions,
+  title: Type,
+  action: MousePointerClick,
+  handle: AtSign,
+  when: Clock,
+  since: CalendarDays,
+  output: Ruler,
+  signOutLabel: LogOut,
+  editLabel: Pencil,
+  removeLabel: Trash2,
+  saveLabel: Check,
+  resetLabel: RotateCcw,
   rowCount: Rows3,
   rows: List,
   saving: Percent,
@@ -582,14 +616,17 @@ const BY_VALUE: Record<string, Record<string, LucideIcon>> = {
 }
 
 /**
- * Типы, которые крутятся одной кнопкой. Текст на карточке не редактируется:
- * поле ввода в строку значков не помещается, и это работа страницы item'а.
+ * Типы, которые помещаются в строку значков. Select, boolean и number
+ * крутятся самой кнопкой, color открывает системную пипетку, а текст —
+ * маленькое поле под кнопкой: в строку значков оно не влезает, но и
+ * отправлять человека на страницу item'а ради подписи незачем.
  */
 const CARD_TYPES = new Set<ItemControl["type"]>([
   "select",
   "boolean",
   "number",
   "color",
+  "text",
 ])
 
 export function isCardControl(control: ItemControl): boolean {

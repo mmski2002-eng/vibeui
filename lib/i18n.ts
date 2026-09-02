@@ -55,6 +55,7 @@ type Dictionary = {
     toLight: string
     toDark: string
     reset: string
+    themeColor: string
     getCode: string
     install: string
     code: string
@@ -64,7 +65,6 @@ type Dictionary = {
     close: string
     loading: string
   }
-  control: { unset: string; clear: string }
   viewport: {
     desktop: string
     tablet: string
@@ -173,6 +173,7 @@ const RU: Dictionary = {
     toLight: "Светлая подложка превью",
     toDark: "Тёмная подложка превью",
     reset: "Сбросить настройки",
+    themeColor: "Цвет темы",
     getCode: "Показать код",
     install: "Установка",
     code: "Код",
@@ -182,7 +183,6 @@ const RU: Dictionary = {
     close: "Закрыть",
     loading: "Загружается…",
   },
-  control: { unset: "по умолчанию", clear: "сбросить" },
   viewport: {
     desktop: "Десктоп",
     tablet: "Планшет",
@@ -265,6 +265,7 @@ const EN: Dictionary = {
     toLight: "Switch preview to a light surface",
     toDark: "Switch preview to a dark surface",
     reset: "Reset settings",
+    themeColor: "Theme colour",
     getCode: "Get Code",
     install: "Installation",
     code: "Code",
@@ -274,7 +275,6 @@ const EN: Dictionary = {
     close: "Close",
     loading: "Loading…",
   },
-  control: { unset: "default", clear: "clear" },
   viewport: {
     desktop: "Desktop",
     tablet: "Tablet",
