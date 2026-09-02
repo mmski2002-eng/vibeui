@@ -51,6 +51,7 @@ export function CatalogThumbnail({
       // во flex-кадре он иначе схлопывается по содержимому и врёт про дизайн.
       full={preview?.width === "full"}
       props={preview?.props}
+      states={preview?.states}
     />
   )
 }

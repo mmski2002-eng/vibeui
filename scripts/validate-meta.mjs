@@ -298,9 +298,9 @@ function validateSource(where, directory, item) {
 }
 
 /**
- * Значки настроек в шапке карточки. Кнопка одна на контрол и крутит значение
- * по кругу, поэтому текст сюда не годится, а числу нужны обе границы —
- * иначе круг не замкнуть.
+ * Значки настроек в шапке карточки. Кнопка одна на контрол: select, boolean
+ * и number она крутит по кругу, у текста раскрывает поле под собой. Числу
+ * нужны обе границы — иначе круг не замкнуть.
  */
 function validateCardControls(where, item, controls) {
   const card = item.meta?.cardControls
@@ -332,15 +332,40 @@ function validateCardControls(where, item, controls) {
       continue
     }
 
-    if (control.type === "text") {
-      errors.push(`${where}: текстовый контрол ${prop} не крутится кнопкой`)
-    }
-
     if (
       control.type === "number" &&
       (control.min === undefined || control.max === undefined)
     ) {
       errors.push(`${where}: у числового ${prop} на карточке нужны min и max`)
+    }
+  }
+}
+
+/**
+ * Ряд состояний в миниатюре. Меньше двух — это обычный `preview.props`,
+ * больше четырёх ряд не влезает в кадр узкой карточки.
+ */
+function validatePreviewStates(where, item) {
+  const states = item.meta?.preview?.states
+
+  if (states === undefined) {
+    return
+  }
+
+  if (!Array.isArray(states)) {
+    errors.push(`${where}: meta.preview.states должен быть массивом`)
+    return
+  }
+
+  if (states.length < 2 || states.length > 4) {
+    errors.push(
+      `${where}: в ряду состояний ${states.length} штук, нужно от 2 до 4`,
+    )
+  }
+
+  for (const state of states) {
+    if (!state || typeof state !== "object" || Array.isArray(state)) {
+      errors.push(`${where}: элемент meta.preview.states должен быть объектом`)
     }
   }
 }
@@ -353,6 +378,7 @@ function validateItem(file, item, { requireApi }) {
   validateBase(where, item)
   validateI18n(where, item)
   validateSource(where, path.dirname(file), item)
+  validatePreviewStates(where, item)
 
   if (requireApi) {
     if (!ai?.export) {

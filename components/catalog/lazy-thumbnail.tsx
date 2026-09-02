@@ -38,6 +38,7 @@ export function LazyThumbnail({
   compact,
   full,
   props,
+  states,
 }: {
   slug: string
   kind: ItemKind
@@ -45,6 +46,7 @@ export function LazyThumbnail({
   compact: boolean
   full: boolean
   props?: Record<string, unknown>
+  states?: Record<string, unknown>[]
 }) {
   const frameRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
@@ -93,7 +95,21 @@ export function LazyThumbnail({
     }
   }, [category, kind, slug, visible])
 
-  const content = visible && Preview ? <Preview {...(props ?? {})} /> : null
+  // Ряд состояний: тот же компонент, разные пропсы. Кадр мелкого компонента
+  // иначе стоит почти пустым, а размеры и состояния присутствия с витрины
+  // не читаются. Высота кадра при этом не меняется — ряд идёт по горизонтали.
+  const row = states && states.length > 0 ? states : null
+
+  const content =
+    visible && Preview ? (
+      row ? (
+        row.map((state, index) => (
+          <Preview key={index} {...(props ?? {})} {...state} />
+        ))
+      ) : (
+        <Preview {...(props ?? {})} />
+      )
+    ) : null
 
   if (compact) {
     return (
@@ -101,7 +117,13 @@ export function LazyThumbnail({
         ref={frameRef}
         className="bg-preview-surface flex min-h-44 w-full flex-1 items-center justify-center overflow-hidden p-6 lg:px-8 lg:py-10"
       >
-        <div className={"preview-fade" + (full ? " w-full max-w-[30rem]" : "")}>
+        <div
+          className={
+            "preview-fade" +
+            (full ? " w-full max-w-[30rem]" : "") +
+            (row ? " flex flex-wrap items-center justify-center gap-4" : "")
+          }
+        >
           {content}
         </div>
       </div>
