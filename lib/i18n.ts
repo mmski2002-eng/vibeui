@@ -27,6 +27,7 @@ type Dictionary = {
     blocks: string
     items: (count: number) => string
     lab: string
+    animations: string
   }
   home: {
     title: string
@@ -117,6 +118,7 @@ const RU: Dictionary = {
       return `${count} элементов`
     },
     lab: "Рабочая область",
+    animations: "Анимации",
   },
   home: {
     title: "Выбери дизайн. Отдай ИИ. Получи сайт.",
@@ -226,6 +228,7 @@ const EN: Dictionary = {
     blocks: "Blocks",
     items: (count) => `${count} items`,
     lab: "Workspace",
+    animations: "Animations",
   },
   home: {
     title: "Pick a design. Hand it to your AI. Ship the page.",

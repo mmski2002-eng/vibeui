@@ -48,6 +48,12 @@ export function CatalogTopbar({
           >
             {t.topbar.lab}
           </Link>
+          <Link
+            href="/animations"
+            className="hover:text-shell-fg focus-visible:ring-shell-ring rounded-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+          >
+            {t.topbar.animations}
+          </Link>
           <LocaleSwitch locale={locale} />
         </nav>
       </div>
