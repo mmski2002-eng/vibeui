@@ -12,7 +12,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "registry:validate": "shadcn registry validate ./registry.json",
-    "registry:build": "node -e \"require('node:fs').rmSync('public/r',{recursive:true,force:true})\" && shadcn build",
+    "registry:build": "node -e \"require('node:fs').rmSync('public/r',{recursive:true,force:true})\" && shadcn build && node scripts/strip-preview.mjs",
     "indexes": "node scripts/build-indexes.mjs",
     "indexes:check": "node scripts/build-indexes.mjs --check",
     "predev": "npm run indexes",
